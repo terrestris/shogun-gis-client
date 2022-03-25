@@ -1,0 +1,1 @@
+# react-geo client template
