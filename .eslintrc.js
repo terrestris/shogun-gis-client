@@ -1,8 +1,6 @@
 module.exports = {
-  extends: ['@terrestris/eslint-config-typescript', 'prettier'],
-  plugins: ['prettier'],
+  extends: ['@terrestris/eslint-config-typescript'],
   rules: {
-    '@typescript-eslint/member-ordering': 'off',
-    'prettier/prettier': 'warn'
+    '@typescript-eslint/member-ordering': 'off'
   }
 };
