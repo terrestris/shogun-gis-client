@@ -26,6 +26,10 @@
     "tsc": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit --project tsconfig.json"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ],
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@terrestris/base-util": "^1.0.1",
