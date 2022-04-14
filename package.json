@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "This is a react-geo client template project",
+  "keywords": [
+    "react",
+    "react-geo",
+    "ol",
+    "typescript"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:terrestris/react-geo-client-template.gitt"
