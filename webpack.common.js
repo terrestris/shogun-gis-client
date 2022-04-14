@@ -11,8 +11,12 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules|\.d\.ts$/
+        exclude: /node_modules|\.d\.ts$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
       {
         test: /\.d\.ts$/,
@@ -21,16 +25,11 @@ module.exports = {
       {
         test: /\.less|\.css$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
-            // Creates style nodes from JS strings
-            loader: 'style-loader'
-          },
-          {
-            // Translates CSS into CommonJS
             loader: 'css-loader'
           },
           {
-            // Compiles Less to CSS
             loader: 'less-loader',
             options: {
               lessOptions: {
@@ -51,7 +50,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js']
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true
   },
@@ -59,14 +58,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       title: 'Hello World',
-      template: path.join(__dirname, 'resources', 'tpl', 'index.ejs'),
+      template: path.join(__dirname, 'resources', 'public', 'index.ejs'),
       hash: true,
       minify: {
+        removeComments: true,
         collapseWhitespace: true,
-        collapseInlineTagWhitespace: true,
-        removeComments: true
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
       }
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
+    })
   ]
 };

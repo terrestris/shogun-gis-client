@@ -3,10 +3,10 @@ import React from 'react';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerVector from 'ol/layer/Vector';
 
+import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import LayerTree, {
   LayerTreeProps
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
 export const BasicLayerTree: React.FC<Partial<LayerTreeProps>> = (
   props

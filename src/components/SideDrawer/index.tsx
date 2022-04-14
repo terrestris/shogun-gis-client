@@ -1,22 +1,35 @@
 import React from 'react';
 
-import { useTranslation } from 'react-i18next';
+import {
+  Drawer
+} from 'antd';
+import {
+  DrawerProps
+} from 'antd/lib/drawer';
 
-import Drawer, { DrawerProps } from 'antd/es/drawer';
+import {
+  useTranslation
+} from 'react-i18next';
 
-import BasicLayerTree from '../BasicLayerTree';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { toggleVisibility } from '../../store/drawer';
+const BasicLayerTree = React.lazy(() => import('../BasicLayerTree'));
+import {
+  useAppDispatch
+} from '../../hooks/useAppDispatch';
+import {
+  useAppSelector
+} from '../../hooks/useAppSelector';
+import {
+  toggleVisibility
+} from '../../store/drawer';
 
 import './index.less';
 
-export const SideDrawer: React.FC<Partial<DrawerProps>> = (
-  props
-): JSX.Element => {
+export const SideDrawer: React.FC<Partial<DrawerProps>> = (props): JSX.Element => {
   const dispatch = useAppDispatch();
   const visible = useAppSelector((state) => state.drawer.visible);
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
 
   const toggleDrawer = () => {
     dispatch(toggleVisibility());
@@ -31,7 +44,11 @@ export const SideDrawer: React.FC<Partial<DrawerProps>> = (
       mask={false}
       {...props}
     >
-      <BasicLayerTree />
+      <React.Suspense
+        fallback={null}
+      >
+        <BasicLayerTree />
+      </React.Suspense>
     </Drawer>
   );
 };
