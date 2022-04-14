@@ -1,11 +1,13 @@
 import React from 'react';
 
-import {
-  faBars
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
+// TODO Enable as soon as https://github.com/terrestris/react-geo/pull/2467
+//      is available
+// import {
+//   faBars
+// } from '@fortawesome/free-solid-svg-icons';
+// import {
+//   FontAwesomeIcon
+// } from '@fortawesome/react-fontawesome';
 
 import SimpleButton, {
   SimpleButtonProps
@@ -33,11 +35,12 @@ export const BasicNominatimSearch: React.FC<Partial<SimpleButtonProps>> = (
     <SimpleButton
       className="toggle-drawer-button"
       onClick={toggleDrawer}
-      icon={
-        <FontAwesomeIcon
-          icon={faBars}
-        />
-      }
+      iconName="bars"
+      // icon={
+      //   <FontAwesomeIcon
+      //     icon={faBars}
+      //   />
+      // }
     />
   );
 };
