@@ -15,6 +15,9 @@
   },
   "license": "BSD-2-Clause",
   "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
