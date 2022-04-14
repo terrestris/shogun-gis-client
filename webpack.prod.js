@@ -15,8 +15,9 @@ module.exports = merge(common, {
     new CopyPlugin({
       patterns: [
         {
-          from: 'resources/img',
-          to: 'img'
+          from: 'resources/public',
+          filter: (filepath) => !filepath.endsWith('.ejs'),
+          noErrorOnMissing: true
         }
       ]
     })
