@@ -1,28 +1,39 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-import { Provider } from 'react-redux';
+import {
+  Alert
+} from 'antd';
 
-import ConfigProvider from 'antd/es/config-provider';
-import enGB from 'antd/es/locale/en_GB';
-import deDE from 'antd/es/locale/de_DE';
-import Alert from 'antd/es/alert';
+import ConfigProvider from 'antd/lib/config-provider';
+import deDE from 'antd/lib/locale/de_DE';
+import enGB from 'antd/lib/locale/en_GB';
 
-import OlMap from 'ol/Map';
-import OlView from 'ol/View';
+import {
+  defaults as OlControlDefaults
+} from 'ol/control';
+import OlLayerGroup from 'ol/layer/Group';
 import OlLayerTile from 'ol/layer/Tile';
+import OlMap from 'ol/Map';
+import {
+  fromLonLat
+} from 'ol/proj';
 import OlSourceOsm from 'ol/source/OSM';
 import OlSourceTileWMS from 'ol/source/TileWMS';
-import OlLayerGroup from 'ol/layer/Group';
-import { defaults as OlControlDefaults } from 'ol/control';
-import { fromLonLat } from 'ol/proj';
+import OlView from 'ol/View';
+import {
+  render
+} from 'react-dom';
+import {
+  Provider
+} from 'react-redux';
 
 import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
 
 import App from './App';
-import { store } from './store/store';
-
 import i18n from './i18n';
+import {
+  store
+} from './store/store';
 
 import './index.less';
 
@@ -96,7 +107,7 @@ const renderApp = async () => {
   try {
     const map = await setupMap();
 
-    ReactDOM.render(
+    render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
           <ConfigProvider locale={getConfigLang(i18n.language)}>
@@ -114,7 +125,7 @@ const renderApp = async () => {
     // eslint-disable-next-line no-console
     console.error(error);
 
-    ReactDOM.render(
+    render(
       <React.StrictMode>
         <Alert
           className="error-boundary"

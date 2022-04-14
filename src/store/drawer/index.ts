@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  createSlice
+} from '@reduxjs/toolkit';
 
 interface DrawerState {
   visible: boolean;
@@ -18,6 +20,8 @@ export const slice = createSlice({
   }
 });
 
-export const { toggleVisibility } = slice.actions;
+export const {
+  toggleVisibility
+} = slice.actions;
 
 export default slice.reducer;

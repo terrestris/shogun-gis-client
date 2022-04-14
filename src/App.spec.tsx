@@ -1,20 +1,31 @@
 import React from 'react';
 
-import { Provider } from 'react-redux';
+import {
+  render, screen
+} from '@testing-library/react';
 
-import { render, screen } from '@testing-library/react';
+import {
+  Provider
+} from 'react-redux';
 
 import App from './App';
 
-import { store } from './store/store';
+import {
+  store
+} from './store/store';
 
 const createWrapper = () => {
-  return ({ children }: any) => <Provider store={store}>{children}</Provider>;
+  // eslint-disable-next-line react/display-name
+  return ({
+    children
+  }: any) => <Provider store={store}>{children}</Provider>;
 };
 
 describe('App', () => {
   it('can be rendered', () => {
-    const { container } = render(<App />, {
+    const {
+      container
+    } = render(<App />, {
       wrapper: createWrapper()
     });
 
