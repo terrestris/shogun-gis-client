@@ -59,7 +59,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       title: 'Hello World',
-      template: path.join(__dirname, 'resources', 'tpl', 'index.ejs'),
+      template: path.join(__dirname, 'resources', 'public', 'index.ejs'),
       hash: true,
       minify: {
         collapseWhitespace: true,
