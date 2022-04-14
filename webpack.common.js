@@ -25,16 +25,11 @@ module.exports = {
       {
         test: /\.less|\.css$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
-            // Creates style nodes from JS strings
-            loader: 'style-loader'
-          },
-          {
-            // Translates CSS into CommonJS
             loader: 'css-loader'
           },
           {
-            // Compiles Less to CSS
             loader: 'less-loader',
             options: {
               lessOptions: {
@@ -71,6 +66,8 @@ module.exports = {
         removeComments: true
       }
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
+    })
   ]
 };
