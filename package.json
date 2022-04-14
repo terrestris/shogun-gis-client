@@ -20,6 +20,8 @@
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
+    "build:analyze": "BUNDLE_ANALYZE=true npm run build",
+    "check": "npm run typecheck && npm run lint && npm run test",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
     "start": "webpack serve --config webpack.dev.js",
     "test": "jest --coverage",
