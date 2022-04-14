@@ -18,11 +18,11 @@
     "typecheck": "tsc --noEmit --project tsconfig.json"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.8.0",
+    "@reduxjs/toolkit": "^1.8.1",
     "@terrestris/base-util": "^1.0.1",
     "@terrestris/ol-util": "^6.0.1",
     "@terrestris/react-geo": "^16.2.5",
-    "antd": "^4.19.3",
+    "antd": "^4.19.5",
     "i18next": "^21.6.14",
     "i18next-browser-languagedetector": "^6.1.4",
     "normalize.css": "^8.0.1",
