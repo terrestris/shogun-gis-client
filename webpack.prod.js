@@ -1,5 +1,9 @@
-const { merge } = require('webpack-merge');
 const CopyPlugin = require('copy-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const {
+  merge
+} = require('webpack-merge');
 
 const common = require('./webpack.common.js');
 
@@ -7,6 +11,7 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   plugins: [
+    process.env.BUNDLE_ANALYZE && new (require('webpack-bundle-analyzer')).BundleAnalyzerPlugin(),
     new CopyPlugin({
       patterns: [
         {
