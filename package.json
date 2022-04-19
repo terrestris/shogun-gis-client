@@ -21,10 +21,11 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "build:analyze": "BUNDLE_ANALYZE=true npm run build",
-    "check": "npm run typecheck && npm run lint && npm run test",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run test:ui",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
     "start": "webpack serve --config webpack.dev.js",
     "test": "jest --coverage",
+    "test:ui": "playwright test",
     "tsc": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit --project tsconfig.json"
   },
@@ -52,6 +53,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@playwright/test": "^1.21.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
     "@terrestris/eslint-config-typescript": "^2.1.0",
     "@testing-library/jest-dom": "^5.16.4",
