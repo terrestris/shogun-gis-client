@@ -1,4 +1,4 @@
-# react-geo Client
+# react-geo client template
 
 This template application demonstrates the usage of [react-geo](https://github.com/terrestris/react-geo)
 and can easily be installed via the [create-react-geo-app (CRGA)](https://github.com/terrestris/create-react-geo-app)
