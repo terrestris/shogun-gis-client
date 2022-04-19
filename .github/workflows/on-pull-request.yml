@@ -27,7 +27,9 @@ jobs:
       run: npm ci
 
     - name: Install e2e browsers ⏬
-      run: npx playwright install
+      run: |
+        npx playwright install
+        npx playwright install-deps
 
     - name: Run typecheck, lint and tests 🧪
       run: npm run check
