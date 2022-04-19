@@ -1,9 +1,8 @@
-name: Update gh-pages
+name: Update gh-pages (release)
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -32,10 +31,14 @@ jobs:
     - name: Build artifacts 🏗️
       run: npm run build
 
-    - name: Deploy (to latest) 🚀
+    - name: Get react-geo-client-template version 🔖
+      run: |
+        echo "VERSION=$(node -pe "require('./package.json').version")" >> $GITHUB_ENV
+
+    - name: Deploy (to v${{ env.VERSION }}) 🚀
       uses: JamesIves/github-pages-deploy-action@v4.2.5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
         folder: dist
-        target-folder: latest
+        target-folder: v${{ env.VERSION }}
