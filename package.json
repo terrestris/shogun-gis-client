@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:terrestris/react-geo-client-template.gitt"
+    "url": "git@github.com:terrestris/react-geo-client-template.git"
   },
   "license": "BSD-2-Clause",
   "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
