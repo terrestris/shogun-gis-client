@@ -4,8 +4,8 @@ module.exports = {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.tsx?$': '<rootDir>/node_modules/babel-jest'
   },
-  testMatch: ['<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)'],
-  collectCoverageFrom: ['src/**/*.{tsx,jsx}'],
+  testMatch: ['<rootDir>/src/**/?!(*.ui)(spec|test).(j|t)s?(x)'],
+  collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx}'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
   transformIgnorePatterns: [
