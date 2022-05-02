@@ -1,6 +1,10 @@
 const path = require('path');
-const { merge } = require('webpack-merge');
+
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const {
+  merge
+} = require('webpack-merge');
 
 const common = require('./webpack.common.js');
 

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {
-  Alert
+  Alert,
+  notification
 } from 'antd';
 
 import ConfigProvider from 'antd/lib/config-provider';
@@ -27,7 +28,14 @@ import {
   Provider
 } from 'react-redux';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+
 import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
+
+import ShogunApplicationUtil from '@terrestris/shogun-util/dist/parser/ShogunApplicationUtil';
+
+import SHOGunClient from '@terrestris/shogun-util/dist/service/SHOGunClient';
 
 import App from './App';
 import i18n from './i18n';
@@ -49,6 +57,59 @@ const getConfigLang = (lang: string) => {
 };
 
 const setupMap = async () => {
+  const applicationId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+
+  if (applicationId) {
+    Logger.info(`Loading application with ID ${applicationId}`);
+
+    return await setupSHOGunMap(parseInt(applicationId, 10));
+  }
+
+  Logger.info('No application ID given, will load the default map configuration.');
+
+  return setupDefaultMap();
+
+};
+
+const setupSHOGunMap = async (applicationId: number) => {
+  const client = new SHOGunClient({
+    url: '/api/'
+  });
+  const parser = new ShogunApplicationUtil({
+    client
+  });
+
+  let application;
+  try {
+    application = await client.application().findOne(applicationId);
+  } catch (error) {
+    Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
+    Logger.info('Loading the default map configuration.');
+
+    notification.error({
+      message: i18n.t('Index.applicationLoadErrorMessage'),
+      description: i18n.t('Index.applicationLoadErrorDescription', {
+        applicationId: applicationId
+      }),
+      duration: 0
+    });
+
+    return setupDefaultMap();
+  }
+
+  const view = await parser.parseMapView(application);
+  const layers = await parser.parseLayerTree(application);
+
+  return new OlMap({
+    view,
+    layers,
+    controls: OlControlDefaults({
+      zoom: false
+    })
+  });
+};
+
+const setupDefaultMap = () => {
   const osmLayer = new OlLayerTile({
     source: new OlSourceOsm()
   });
@@ -122,15 +183,14 @@ const renderApp = async () => {
       document.getElementById('app')
     );
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    Logger.error(error);
 
     render(
       <React.StrictMode>
         <Alert
           className="error-boundary"
-          message="Error while loading the application"
-          description="An unexpected error occured while loading the application. Please try to reload the page."
+          message={i18n.t('Index.errorMessage')}
+          description={i18n.t('Index.errorDescription')}
           type="error"
           showIcon
         />
