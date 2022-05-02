@@ -4,15 +4,28 @@ This template application demonstrates the usage of [react-geo](https://github.c
 and can easily be installed via the [create-react-geo-app (CRGA)](https://github.com/terrestris/create-react-geo-app)
 command line tool.
 
+## Features:
+
+This application contains several features to increase the development experience, e.g.:
+
+- Written in [TypeScript](https://www.typescriptlang.org/)
+- Webpack [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/)
+- Analyis of the build output via [Webpack Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+- Optimized build including [code splitting](https://webpack.js.org/guides/code-splitting/)
+- Styling via [Less](https://lesscss.org/)
+- Preconfigured [Dockerfile](https://www.docker.com/) for production and development
+- Unit testing via [Jest](https://jestjs.io/) and [Testing Library](https://testing-library.com/)
+- End-To-End testing via [Playwright](https://playwright.dev/)
+
 ## Getting started 🧑‍💻
 
-- Install all required dependencies via:
+Install all required dependencies via:
 
 ```
 npm i
 ```
 
-- And start the local development server:
+And start the local development server:
 
 ```
 npm run start
