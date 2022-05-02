@@ -7,9 +7,10 @@ const config: PlaywrightTestConfig = {
   testMatch: /.*\.ui\.spec/,
   webServer: {
     command: 'npm run start',
-    port: 8080,
-    timeout: 120 * 1000,
-    reuseExistingServer: true
+    url: 'https://localhost:8080',
+    timeout: 240 * 1000,
+    reuseExistingServer: !process.env.CI,
+    ignoreHTTPSErrors: true
   },
   use: {
     baseURL: 'https://localhost:8080',
