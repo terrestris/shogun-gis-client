@@ -1,9 +1,9 @@
 {
-  "name": "react-geo-client-template",
+  "name": "shogun-demo-client",
   "version": "1.0.0",
-  "private": true,
-  "description": "This is a react-geo client template project",
+  "description": "This is a shogun demo client based on react-geo client template",
   "keywords": [
+    "shogun",
     "react",
     "react-geo",
     "ol",
@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:terrestris/react-geo-client-template.git"
+    "url": "git@github.com:terrestris/shogun-demo-client.git"
   },
   "license": "BSD-2-Clause",
   "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
