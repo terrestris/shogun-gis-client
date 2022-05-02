@@ -4,7 +4,7 @@ This template application demonstrates the usage of [react-geo](https://github.c
 and can easily be installed via the [create-react-geo-app (CRGA)](https://github.com/terrestris/create-react-geo-app)
 command line tool.
 
-## Features:
+## Features ⭐
 
 This application contains several features to increase the development experience, e.g.:
 
