@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no">
+    <% if (htmlWebpackPlugin.options.csrf && htmlWebpackPlugin.options.csrf.csrfToken &&
+      htmlWebpackPlugin.options.csrf.csrfHeader && htmlWebpackPlugin.options.csrf.csrfParameterName) { %>
+      <meta name="_csrf" content="<%= htmlWebpackPlugin.options.csrf.csrfToken %>" />
+      <meta name="_csrf_header" content="<%= htmlWebpackPlugin.options.csrf.csrfHeader %>" />
+      <meta name="_csrf_parameter_name" content="<%= htmlWebpackPlugin.options.csrf.csrfParameterName %>" />
+    <% } %>
+    <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <div id="loadmask" class="loadmask">
+      <img src="./loading.png" alt="Loading, please wait…">
+    </div>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      /* fade out the loadmask after react starts rendering */
+      .loadmask {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform: -webkit-translate(-50%, -50%);
+        transform: -moz-translate(-50%, -50%);
+        transform: -ms-translate(-50%, -50%);
+        z-index: 999;
+
+        opacity: 0;
+        animation-name: fadeOutOpacity;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-out;
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
+      }
+
+      .loadmask > img {
+        min-width: 50%;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @keyframes fadeOutOpacity {
+        0% {
+          opacity: 1;
+        }
+
+        99% {
+          opacity: 0.01;
+        }
+
+        100% {
+          opacity: 0;
+          z-index: -1;
+          display: none;
+        }
+      }
+
+      /* fade in app div */
+      .app {
+        animation-name: fadeInOpacity;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: 3s;
+      }
+
+      @keyframes fadeInOpacity {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="app" class="app"></div>
+  </body>
+</html>
