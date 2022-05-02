@@ -9,6 +9,7 @@ module.exports = {
 
     'arrow-spacing': 'warn',
     'comma-spacing': 'warn',
+    'comma-dangle': 'warn',
     'eol-last': 'warn',
     'no-multi-spaces': 'warn',
     'no-multiple-empty-lines': ['warn', {
@@ -19,7 +20,11 @@ module.exports = {
       'multiline': true,
       'minProperties': 1
     }],
-    'space-before-function-paren': ['warn', 'always'],
+    'space-before-function-paren': ['warn', {
+      'anonymous': 'always',
+      'named': 'never',
+      'asyncArrow': 'always'
+    }],
 
     'react/jsx-max-props-per-line': ['warn', {
       'maximum': 1
