@@ -20,6 +20,7 @@ import React from 'react';
 import LogoImg from '../../../resources/public/logo.png';
 //import ServiceMenu from '../ServiceMenu/ServiceMenu';
 import BasicNominatimSearch from '../BasicNominatimSearch';
+import Login from './Login';
 
 import './MainHeader.less';
 
@@ -41,6 +42,7 @@ export const MainHeader: React.FC<MainHeaderProps> = () => {
       <div className="item-container center-items">
         <BasicNominatimSearch />
       </div>
+        <Login />
       <div className="item-container right-items">
         Servicemenü
       </div>
