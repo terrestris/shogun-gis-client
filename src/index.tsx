@@ -115,33 +115,21 @@ const setupDefaultMap = () => {
   });
   osmLayer.set('name', 'OpenStreetMap');
 
-  const temperatureDayLayer = new OlLayerTile({
-    opacity: 0.5,
-    source: new OlSourceTileWMS({
-      url: 'https://neo.gsfc.nasa.gov/wms/wms',
-      projection: 'CRS:84',
-      params: {
-        LAYERS: 'MOD_LSTD_CLIM_M'
-      }
-    })
-  });
-  temperatureDayLayer.set('name', 'Average Land Surface Temperature (Day)');
-
-  const temperatureNightLayer = new OlLayerTile({
+  const temperatureLayer = new OlLayerTile({
     opacity: 0.5,
     visible: false,
     source: new OlSourceTileWMS({
-      url: 'https://neo.gsfc.nasa.gov/wms/wms',
-      projection: 'CRS:84',
+      url: 'https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi',
+      projection: 'EPSG:3857',
       params: {
-        LAYERS: 'MOD_LSTN_CLIM_M'
+        LAYERS: 'MERRA2_2m_Air_Temperature_Assimilated_Monthly'
       }
     })
   });
-  temperatureNightLayer.set('name', 'Average Land Surface Temperature (Night)');
+  temperatureLayer.set('name', '2-meter Air Temperature, Assimilated (Monthly, MERRA2)');
 
   const eoLayerGroup = new OlLayerGroup({
-    layers: [temperatureDayLayer, temperatureNightLayer]
+    layers: [temperatureLayer]
   });
   eoLayerGroup.set('name', 'NASA Earth Observations');
 
