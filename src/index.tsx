@@ -73,7 +73,7 @@ const setupMap = async () => {
 
 const setupSHOGunMap = async (applicationId: number) => {
   const client = new SHOGunClient({
-    url: '/api/'
+    url: '/'
   });
   const parser = new ShogunApplicationUtil({
     client
