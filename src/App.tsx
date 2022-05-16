@@ -2,6 +2,7 @@ import React from 'react';
 
 import BasicMapComponent from './components/BasicMapComponent';
 import BasicNominatimSearch from './components/BasicNominatimSearch';
+import Footer from './components/Footer';
 import SideDrawer from './components/SideDrawer';
 import ToggleDrawerButton from './components/ToggleDrawerButton';
 
@@ -14,6 +15,7 @@ export const App: React.FC = (): JSX.Element => {
       <BasicNominatimSearch />
       <ToggleDrawerButton />
       <SideDrawer />
+      <Footer />
     </div>
   );
 };

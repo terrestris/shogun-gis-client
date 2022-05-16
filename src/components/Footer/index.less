@@ -1,0 +1,82 @@
+@import '../../variables.less';
+
+.footer {
+  position: absolute;
+  height: var(--footer-height);
+  width: 100%;
+  min-height: 0;
+  bottom: 0;
+  margin-bottom: 0;
+  z-index: 2;
+
+  //background-color: rgba(var(--primaryColorR), var(--primaryColorG), var(--primaryColorB), .9);
+  background-color: rgba(255, 255, 255, .9);
+  display: flex;
+  padding: 0 .5rem;
+  box-shadow: var(--componentShadow);
+  font-size: .95em;
+
+  .item-container {
+    display: flex;
+    align-items: center;
+    color: var(--complementaryColor);
+
+    &.left-items {
+      justify-content: flex-start;
+      flex: 1;
+      column-gap: .5rem;
+      justify-content: flex-start;
+
+      #scale-line-container {
+        width: 8rem;
+
+        .ol-scale-line {
+          bottom: unset;
+          left: unset;
+          position: unset;
+          background: none;
+
+          &-inner {
+            border-width: 1px;
+            border-style: solid;
+            border-color: var(--complementaryColor);
+            color: var(--complementaryColor);
+            border-top: none;
+            text-align: center;
+            margin: 1px;
+            transition: all 0.25s;
+          }
+        }
+      }
+
+      #mouse-position {
+        justify-content: flex-start;
+
+        .ol-mouse-position {
+          top: 0;
+          right: 0;
+          position: inherit;
+        }
+      }
+
+      .react-geo-scalecombo {
+        width: 15%;
+      }
+    }
+
+    &.right-items {
+      width: 25%;
+      justify-content: flex-end;
+
+      >button {
+        padding: 0 10px;
+        color: var(--tertiaryColor);
+
+        >span {
+          text-decoration: underline;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+}
