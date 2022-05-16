@@ -28,7 +28,7 @@ test.describe('Basic application tests', () => {
   test('it successfully loads the example WMS layer', async ({
     page
   }) => {
-    const response = await page.waitForResponse(/https:\/\/neo.gsfc.nasa.gov\/wms\/wms/);
+    const response = await page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/);
     expect(response.status()).toBe(200);
   });
 
