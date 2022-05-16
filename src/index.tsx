@@ -117,7 +117,7 @@ const setupDefaultMap = () => {
 
   const temperatureLayer = new OlLayerTile({
     opacity: 0.5,
-    visible: false,
+    visible: true,
     source: new OlSourceTileWMS({
       url: 'https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi',
       projection: 'EPSG:3857',
