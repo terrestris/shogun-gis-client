@@ -52,7 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.16.7",
     "@playwright/test": "^1.22.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.6",
