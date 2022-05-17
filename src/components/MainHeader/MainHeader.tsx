@@ -2,7 +2,8 @@ import React from 'react';
 import LogoImg from '../../../resources/public/logo.png';
 //import ServiceMenu from '../ServiceMenu/ServiceMenu';
 import BasicNominatimSearch from '../BasicNominatimSearch';
-import Login from './Login';
+
+import Login from '../Login/Login';
 
 import './MainHeader.less';
 
