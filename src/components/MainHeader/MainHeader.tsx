@@ -1,6 +1,7 @@
 import React from 'react';
+
 import LogoImg from '../../../resources/public/logo.png';
-//import ServiceMenu from '../ServiceMenu/ServiceMenu';
+
 import BasicNominatimSearch from '../BasicNominatimSearch';
 
 import Login from '../Login/Login';
@@ -13,20 +14,33 @@ export interface MainHeaderProps extends Partial<DefaultMainHeaderProps> { };
 
 export const MainHeader: React.FC<MainHeaderProps> = () => {
   return (
-    <div className="main-header">
-      <div className="item-container left-items">
-        <img className="logo" src={LogoImg} />
-        <div className="title">
-          Geoportal Raumordnung
+    <div
+      className="main-header"
+    >
+      <div
+        className="item-container left-items"
+      >
+        <img
+          className="logo"
+          src={LogoImg}
+        />
+        <div
+          className="title"
+        >
+          SHOGun
           <br />
-          Baden-Württemberg
+          Demoapplikation
         </div>
       </div>
-      <div className="item-container center-items">
+      <div
+        className="item-container center-items"
+      >
         <BasicNominatimSearch />
       </div>
-        <Login />
-      <div className="item-container right-items">
+      <Login />
+      <div
+        className="item-container right-items"
+      >
         Servicemenü
       </div>
     </div>
