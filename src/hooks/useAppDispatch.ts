@@ -7,3 +7,5 @@ import type {
 } from '../store/store';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export default useAppDispatch;
