@@ -33,8 +33,8 @@ import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
 
+import Application from '@terrestris/shogun-util/dist/model/Application';
 import ShogunApplicationUtil from '@terrestris/shogun-util/dist/parser/ShogunApplicationUtil';
-
 import SHOGunClient from '@terrestris/shogun-util/dist/service/SHOGunClient';
 
 import App from './App';
@@ -43,7 +43,20 @@ import {
   store
 } from './store/store';
 
+import {
+  setTitle
+} from './store/title';
+
 import './index.less';
+
+const client = new SHOGunClient({
+  // TODO Make configurable
+  url: '/'
+});
+
+const parser = new ShogunApplicationUtil({
+  client
+});
 
 const getConfigLang = (lang: string) => {
   switch (lang) {
@@ -56,35 +69,23 @@ const getConfigLang = (lang: string) => {
   }
 };
 
-const setupMap = async () => {
+const getApplicationConfiguration = async () => {
   const applicationId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
 
-  if (applicationId) {
-    Logger.info(`Loading application with ID ${applicationId}`);
-
-    return await setupSHOGunMap(parseInt(applicationId, 10));
+  if (!applicationId) {
+    Logger.info('No application ID given, can\'t load any configuration.');
+    return;
   }
 
-  Logger.info('No application ID given, will load the default map configuration.');
-
-  return setupDefaultMap();
-
-};
-
-const setupSHOGunMap = async (applicationId: number) => {
-  const client = new SHOGunClient({
-    url: '/'
-  });
-  const parser = new ShogunApplicationUtil({
-    client
-  });
+  Logger.info(`Loading application with ID ${applicationId}`);
 
   let application;
   try {
     application = await client.application().findOne(applicationId);
+
+    return application;
   } catch (error) {
     Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
-    Logger.info('Loading the default map configuration.');
 
     notification.error({
       message: i18n.t('Index.applicationLoadErrorMessage'),
@@ -93,10 +94,22 @@ const setupSHOGunMap = async (applicationId: number) => {
       }),
       duration: 0
     });
+  }
+};
 
-    return setupDefaultMap();
+const setApplicationToStore = async (application?: Application) => {
+  if (!application) {
+    Logger.info('No application configuration provided, the default store will be loaded');
+
+    return;
   }
 
+  if (application.name) {
+    store.dispatch(setTitle(application.name));
+  }
+};
+
+const setupSHOGunMap = async (application: Application) => {
   const view = await parser.parseMapView(application);
   const layers = await parser.parseLayerTree(application);
 
@@ -154,7 +167,15 @@ const setupDefaultMap = () => {
 
 const renderApp = async () => {
   try {
-    const map = await setupMap();
+    const appConfig = await getApplicationConfiguration();
+
+    let map;
+    if (appConfig) {
+      setApplicationToStore(appConfig);
+      map = await setupSHOGunMap(appConfig);
+    } else {
+      map = setupDefaultMap();
+    }
 
     render(
       <React.StrictMode>
