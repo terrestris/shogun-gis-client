@@ -21,8 +21,9 @@ test.describe('Basic application tests', () => {
   }) => {
     await expect(page.locator('div#map').first()).toBeVisible();
     await expect(page.locator('canvas').first()).toBeVisible();
+    await expect(page.locator('div.header').first()).toBeVisible();
+    await expect(page.locator('div.footer').first()).toBeVisible();
     await expect(page.locator('div.react-geo-nominatimsearch').first()).toBeVisible();
-    await expect(page.locator('button.toggle-drawer-button').first()).toBeVisible();
   });
 
   test('it successfully loads the example WMS layer', async ({
