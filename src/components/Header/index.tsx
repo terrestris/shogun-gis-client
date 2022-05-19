@@ -1,7 +1,9 @@
 import React from 'react';
 
 import LogoImg from '../../../resources/public/loading.png';
-import { useAppSelector } from '../../hooks/useAppSelector';
+import {
+  useAppSelector
+} from '../../hooks/useAppSelector';
 
 import BasicNominatimSearch from '../BasicNominatimSearch';
 import ToggleDrawerButton from '../ToggleDrawerButton';
