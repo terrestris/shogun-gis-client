@@ -9,8 +9,6 @@ import NominatimSearch, {
 } from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
-import './index.less';
-
 export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = (props): JSX.Element => {
   const map = useMap();
   const {

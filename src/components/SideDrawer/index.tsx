@@ -37,6 +37,7 @@ export const SideDrawer: React.FC<Partial<DrawerProps>> = (props): JSX.Element =
 
   return (
     <Drawer
+      className="side-drawer"
       title={t('Drawer.title')}
       placement="right"
       onClose={toggleDrawer}

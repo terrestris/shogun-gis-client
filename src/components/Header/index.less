@@ -1,0 +1,51 @@
+@import '../../variables.less';
+
+.header {
+  position: absolute;
+  height: @headerHeight;
+  width: 100%;
+  min-height: 0;
+  top: 0;
+  margin-bottom: 0;
+  z-index: 2;
+
+  background-color: fade(lighten(@primary-color, 25%), 90%);
+  display: flex;
+  padding: 0 .5rem;
+  box-shadow: @componentShadow;
+  font-size: .95em;
+
+  .title {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-left: 2rem;
+  }
+
+  .logo {
+    height: 3rem;
+  }
+
+  .item-container {
+    display: flex;
+    align-items: center;
+
+    &.left-items {
+      justify-content: flex-start;
+    }
+
+    &.center-items {
+      flex: 4;
+      display: flex;
+      justify-content: center;
+
+      .react-geo-nominatimsearch.ant-select-auto-complete {
+        width: 60%;
+      }
+    }
+    &.right-items {
+      flex: 1;
+      justify-content: flex-end;
+    }
+  }
+}
