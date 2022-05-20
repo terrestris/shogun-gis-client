@@ -4,7 +4,6 @@ import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import SideDrawer from './components/SideDrawer';
-import ToggleDrawerButton from './components/ToggleDrawerButton';
 
 import './App.less';
 

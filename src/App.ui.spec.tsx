@@ -29,14 +29,24 @@ test.describe('Basic application tests', () => {
   test('it successfully loads the example WMS layer', async ({
     page
   }) => {
-    const response = await page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/);
+    const [, response] = await Promise.all([
+      page.waitForSelector('canvas'),
+      page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/),
+      page.mouse.dblclick(100, 100)
+    ]);
+
     expect(response.status()).toBe(200);
   });
 
   test('it successfully loads the OSM background layer', async ({
     page
   }) => {
-    const response = await page.waitForResponse(/tile.openstreetmap.org/);
+    const [, response] = await Promise.all([
+      page.waitForSelector('canvas'),
+      page.waitForResponse(/tile.openstreetmap.org/),
+      page.mouse.dblclick(100, 100)
+    ]);
+
     expect(response.status()).toBe(200);
   });
 
