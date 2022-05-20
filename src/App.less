@@ -1,4 +1,5 @@
 @import '~ol/ol.css';
+@import './variables.less';
 
 .App,
 #map {
@@ -6,4 +7,20 @@
   padding: 0;
   height: 100%;
   width: 100%;
+}
+
+.ol-control button {
+  background-color: @primary-color;
+  &:focus,
+  &:hover {
+    background-color: @primary-color;
+  }
+}
+
+.ol-attribution.ol-uncollapsible {
+  bottom: @footerHeight;
+}
+
+.ol-attribution {
+  bottom: calc(@footerHeight + 0.5em);
 }

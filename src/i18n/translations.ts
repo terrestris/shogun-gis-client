@@ -1,6 +1,14 @@
 export default {
   de: {
     translation: {
+      Footer: {
+        refSystem: 'Bezugssystem',
+        scale: 'Maßstab',
+        mousePosition: 'Mausposition',
+        imprint: 'Impressum',
+        contact: 'Kontakt',
+        privacypolicy: 'Datenschutz'
+      },
       Index: {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
         applicationLoadErrorDescription: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
@@ -19,6 +27,14 @@ export default {
   },
   en: {
     translation: {
+      Footer: {
+        refSystem: 'Reference system',
+        scale: 'Scale',
+        mousePosition: 'Mouse position',
+        imprint: 'Imprint',
+        contact: 'Contact',
+        privacypolicy: 'Privacy'
+      },
       Index: {
         applicationLoadErrorMessage: 'Error while loading the application',
         applicationLoadErrorDescription: 'The application with ID {{applicationId}} could not be loaded correctly. ' +

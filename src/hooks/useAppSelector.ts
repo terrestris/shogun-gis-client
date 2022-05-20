@@ -8,3 +8,5 @@ import type {
 } from '../store/store';
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export default useAppSelector;

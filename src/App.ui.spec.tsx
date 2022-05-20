@@ -21,21 +21,32 @@ test.describe('Basic application tests', () => {
   }) => {
     await expect(page.locator('div#map').first()).toBeVisible();
     await expect(page.locator('canvas').first()).toBeVisible();
+    await expect(page.locator('div.header').first()).toBeVisible();
+    await expect(page.locator('div.footer').first()).toBeVisible();
     await expect(page.locator('div.react-geo-nominatimsearch').first()).toBeVisible();
-    await expect(page.locator('button.toggle-drawer-button').first()).toBeVisible();
   });
 
   test('it successfully loads the example WMS layer', async ({
     page
   }) => {
-    const response = await page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/);
+    const [, response] = await Promise.all([
+      page.waitForSelector('canvas'),
+      page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/),
+      page.mouse.dblclick(100, 100)
+    ]);
+
     expect(response.status()).toBe(200);
   });
 
   test('it successfully loads the OSM background layer', async ({
     page
   }) => {
-    const response = await page.waitForResponse(/tile.openstreetmap.org/);
+    const [, response] = await Promise.all([
+      page.waitForSelector('canvas'),
+      page.waitForResponse(/tile.openstreetmap.org/),
+      page.mouse.dblclick(100, 100)
+    ]);
+
     expect(response.status()).toBe(200);
   });
 

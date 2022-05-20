@@ -13,6 +13,7 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     server: 'https',
+    port: 3000,
     hot: true,
     static: path.join(__dirname, 'resources', 'public')
   },

@@ -3,10 +3,12 @@ import {
 } from '@reduxjs/toolkit';
 
 import drawer from './drawer';
+import title from './title';
 
 export const store = configureStore({
   reducer: {
-    drawer
+    drawer,
+    title
   }
 });
 

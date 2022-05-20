@@ -18,9 +18,7 @@ import {
   toggleVisibility
 } from '../../store/drawer';
 
-import './index.less';
-
-export const BasicNominatimSearch: React.FC<Partial<SimpleButtonProps>> = (
+export const ToggleDrawerButton: React.FC<Partial<SimpleButtonProps>> = (
   props
 ): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -42,4 +40,4 @@ export const BasicNominatimSearch: React.FC<Partial<SimpleButtonProps>> = (
   );
 };
 
-export default BasicNominatimSearch;
+export default ToggleDrawerButton;
