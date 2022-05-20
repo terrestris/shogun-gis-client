@@ -9,6 +9,18 @@
   width: 100%;
 }
 
+.ol-control button {
+  background-color: @primary-color;
+  &:focus,
+  &:hover {
+    background-color: @primary-color;
+  }
+}
+
 .ol-attribution.ol-uncollapsible {
-  bottom: @footerHeight
+  bottom: @footerHeight;
+}
+
+.ol-attribution {
+  bottom: calc(@footerHeight + 0.5em);
 }
