@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkshogun_demo_client=self.webpackChunkshogun_demo_client||[]).push([[179],{53280:function(e,n,u){e.exports=u.p+"2fde4fbeedfcd8057573.png"}},function(e){e.O(0,[987,592],(function(){return n=24338,e(e.s=n);var n}));e.O()}]);
