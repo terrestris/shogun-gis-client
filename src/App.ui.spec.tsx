@@ -49,13 +49,4 @@ test.describe('Basic application tests', () => {
 
     expect(response.status()).toBe(200);
   });
-
-  test('it toggles the drawer visibility (inlcuding the layer tree) on button click', async ({
-    page
-  }) => {
-    await expect(page.locator('div.ant-drawer.ant-drawer-right.ant-drawer-open.no-mask').first()).toBeHidden();
-    await page.click('button.toggle-drawer-button');
-    await expect(page.locator('div.ant-drawer.ant-drawer-right.ant-drawer-open.no-mask').first()).toBeVisible();
-    await expect(page.locator('div.react-geo-layertree').first()).toBeVisible();
-  });
 });

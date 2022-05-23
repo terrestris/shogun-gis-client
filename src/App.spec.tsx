@@ -31,13 +31,4 @@ describe('App', () => {
 
     expect(container).toBeVisible();
   });
-
-  it('renders a toggle button', () => {
-    render(<App />, {
-      wrapper: createWrapper()
-    });
-
-    const linkElement = screen.getByRole(/button/i);
-    expect(linkElement).toBeInTheDocument();
-  });
 });
