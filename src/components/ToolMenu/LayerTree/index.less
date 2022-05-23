@@ -1,0 +1,69 @@
+.tool-menu .ant-menu .tree {
+  .layertree {
+    min-width: 25vw;
+
+    .ant-tree {
+      .ant-tree-treenode:first-of-type {
+        padding-top: 5px;
+      }
+
+      .ant-tree-treenode:last-of-type {
+        padding-bottom: 5px;
+      }
+
+      // .checkbox-style();
+
+      .ant-tree-node-selected,
+      .ant-tree-node-content-wrapper:hover {
+        background-color: transparent;
+      }
+
+      .ant-tree-node-content-wrapper {
+        flex: 1;
+        .ant-tree-title {
+          .tree-node-header {
+            display: flex;
+
+            :first-child {
+              flex: 1;
+            }
+
+            .anticon.ant-dropdown-trigger {
+              align-self: center;
+              margin-right: 5px;
+            }
+          }
+
+          .ant-slider {
+            flex: 1;
+            padding-left: 5px;
+          }
+
+          .ant-slider-track {
+            // background-color: rgb(var(--tetriaryColorR) var(--tetriaryColorG) var(--tetriaryColorB) / 80%);
+          }
+
+          .ant-slider-handle {
+            // border-color: var(--tertiaryColor);
+
+            &:focus {
+              // box-shadow: 0 0 0 5px rgb(var(--tetriaryColorR) var(--tetriaryColorG) var(--tetriaryColorB) / 10%)
+            }
+          }
+
+          .layer-transparency {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+
+  button {
+    border-radius: 0;
+    border: none;
+    text-align: left;
+    padding-left: 2rem;
+    width: 100%;
+  }
+}

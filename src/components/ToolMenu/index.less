@@ -1,0 +1,118 @@
+@import '../../variables.less';
+
+.tool-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: @headerHeight;
+  max-height: calc(100% - @headerHeight - @footerHeight);
+  overflow-y: auto; // TODO better make single submenus scrollable instead
+  max-width: 600px;
+
+  .ant-menu {
+    // background-color: @primary-color;
+    // color: var(--secondaryColor);
+
+    &.ant-menu-inline-collapsed {
+      width: 40px;
+    }
+
+    li:not(.ant-menu-item-only-child), li {
+      // border-bottom: solid 1px var(--secondaryColor);
+    }
+
+    li:last-child>span {
+      width: 100%;
+    }
+
+    .ant-menu-submenu-arrow {
+      // color: var(--secondaryColor);
+    }
+
+    .ant-menu-submenu-selected {
+      // color: var(--secondaryColor);
+    }
+
+    .ant-menu-sub.ant-menu-inline > .ant-menu-item {
+      height: auto;
+      width: 100%;
+      padding: 0 !important;
+      border: none;
+    }
+
+    &:not(.ant-menu-inline-collapsed) .ant-menu-submenu-title,
+    &:not(.ant-menu-inline-collapsed) .ant-menu-item {
+      padding-left: 1rem !important;
+    }
+
+    .ant-menu-item,
+    .ant-menu-submenu {
+      &:active,
+      &:focus {
+        background: none;
+      }
+
+      margin: 0;
+
+      .ant-menu-submenu-title {
+        margin: 0;
+
+        &:hover {
+          // color: var(--secondaryColor);
+
+          .ant-menu-submenu-arrow {
+            // color: var(--secondaryColor);
+          }
+        }
+      }
+
+      .ant-menu-submenu-title:hover,
+      &.ant-menu-item-active {
+        // background-color: var(--tertiaryColor);
+        // color: var(--secondaryColor);
+      }
+
+      &.ant-menu-item-selected,
+      &.ant-menu-submenu-open {
+        // background-color: var(--primaryColor);
+        // color: var(--tertiaryColor);
+
+        >.ant-menu-submenu-title {
+          // border-bottom: solid 2px var(--tertiaryColor);
+          font-weight: bolder;
+        }
+
+        &::after {
+          display: none;
+        }
+
+        .ant-menu-submenu-arrow {
+          // color: var(--tertiaryColor);
+        }
+      }
+    }
+  }
+}
+
+.tool-menu,
+.ant-menu-submenu-popup {
+  button,
+  button.react-geo-togglebutton {
+    // .button-style();
+    border: none !important;
+    border-radius: 0;
+  }
+
+  .wmsbox {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.ant-menu-submenu-popup > .ant-menu-sub > .ant-menu-item {
+  height: 100%;
+  padding: 0 !important;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 0;
+}
