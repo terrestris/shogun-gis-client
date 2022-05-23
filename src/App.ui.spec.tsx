@@ -32,7 +32,7 @@ test.describe('Basic application tests', () => {
     const [, response] = await Promise.all([
       page.waitForSelector('canvas'),
       page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/),
-      page.mouse.dblclick(100, 100)
+      page.mouse.dblclick(400, 400)
     ]);
 
     expect(response.status()).toBe(200);
@@ -44,7 +44,7 @@ test.describe('Basic application tests', () => {
     const [, response] = await Promise.all([
       page.waitForSelector('canvas'),
       page.waitForResponse(/tile.openstreetmap.org/),
-      page.mouse.dblclick(100, 100)
+      page.mouse.dblclick(400, 400)
     ]);
 
     expect(response.status()).toBe(200);
