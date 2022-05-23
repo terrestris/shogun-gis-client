@@ -204,7 +204,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         }
       ]
     },
-    (printManager && map) &&
     {
       key: 'print',
       onTitleClick: onSubmenuTitleClick,
@@ -215,8 +214,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'print-panel',
           label: (
             <PrintForm
-              printManager={printManager}
-              map={map}
+              printManager={printManager!}
+              map={map!}
             />
           )
         }
