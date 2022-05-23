@@ -6,7 +6,6 @@ import {
 } from '../../hooks/useAppSelector';
 
 import BasicNominatimSearch from '../BasicNominatimSearch';
-import ToggleDrawerButton from '../ToggleDrawerButton';
 
 import './index.less';
 
@@ -40,7 +39,6 @@ export const Header: React.FC<HeaderProps> = () => {
       <div
         className="item-container right-items"
       >
-        <ToggleDrawerButton />
       </div>
     </div>
   );

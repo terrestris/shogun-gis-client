@@ -2,13 +2,13 @@ import {
   configureStore
 } from '@reduxjs/toolkit';
 
-import drawer from './drawer';
 import title from './title';
+import toolMenu from './toolMenu';
 
 export const store = configureStore({
   reducer: {
-    drawer,
-    title
+    title,
+    toolMenu
   }
 });
 

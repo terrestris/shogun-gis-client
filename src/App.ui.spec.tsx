@@ -32,7 +32,7 @@ test.describe('Basic application tests', () => {
     const [, response] = await Promise.all([
       page.waitForSelector('canvas'),
       page.waitForResponse(/https:\/\/gibs.earthdata.nasa.gov/),
-      page.mouse.dblclick(100, 100)
+      page.mouse.dblclick(400, 400)
     ]);
 
     expect(response.status()).toBe(200);
@@ -44,18 +44,9 @@ test.describe('Basic application tests', () => {
     const [, response] = await Promise.all([
       page.waitForSelector('canvas'),
       page.waitForResponse(/tile.openstreetmap.org/),
-      page.mouse.dblclick(100, 100)
+      page.mouse.dblclick(400, 400)
     ]);
 
     expect(response.status()).toBe(200);
-  });
-
-  test('it toggles the drawer visibility (inlcuding the layer tree) on button click', async ({
-    page
-  }) => {
-    await expect(page.locator('div.ant-drawer.ant-drawer-right.ant-drawer-open.no-mask').first()).toBeHidden();
-    await page.click('button.toggle-drawer-button');
-    await expect(page.locator('div.ant-drawer.ant-drawer-right.ant-drawer-open.no-mask').first()).toBeVisible();
-    await expect(page.locator('div.react-geo-layertree').first()).toBeVisible();
   });
 });
