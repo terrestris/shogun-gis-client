@@ -1,6 +1,48 @@
 export default {
   de: {
     translation: {
+      Measure: {
+        title: 'Messen',
+        line: 'Entfernung',
+        area: 'Fläche',
+        clicktodrawline: 'Zum Zeichnen einer Linie klicken',
+        clicktodrawarea: 'Zum Zeichnen einer Fläche klicken'
+      },
+      LayerTree: {
+        transparency: 'Transparenz',
+        externalWmsFolder: 'Externe Dienste',
+        noLegendAvailable: 'Keine Legende verfügbar'
+      },
+      LayerTreeContextMenu: {
+        layerZoomToExtent: 'Auf Layerausdehnung zoomen',
+        extentError: 'Konnte nicht auf die Layerausdehnung zoomen',
+        removeLayer: 'Layer entfernen',
+        showLegend: 'Legende anzeigen',
+        hideLegend: 'Legende ausblenden'
+      },
+      ToolMenu: {
+        expand: 'Erweitern / Einklappen',
+        measure: 'Messen',
+        featureInfo: 'Karteninhalte abfragen',
+        addWms: 'WMS hinzufügen',
+        print: 'Export',
+        layertree: 'Karten'
+      },
+      PrintForm: {
+        title: 'Kartentitel',
+        initialTitle: 'Druckausgabe',
+        titlePlaceholder: 'Bitte geben Sie einen Titel ein',
+        comment: 'Bemerkung',
+        commentPlaceholder: 'Bitte geben Sie einen Kommentar ein',
+        layout: 'Vorlage',
+        dpi: 'Auflösung',
+        format: 'Format',
+        downloadBtnText: 'Ausdruck erzeugen',
+        printJobErrorMsg: 'Der Kartenausdruck konnte nicht erzeugt werden',
+        initErrorMsg: 'Der Kartendruck Generator konnte nicht initialisiert werden.',
+        outputFormatPlaceholder: 'Bitte wählen Sie ein Ausgabeformat aus',
+        resolutionPlaceholder: 'Bitte wählen Sie eine Ausgabequalität aus'
+      },
       Footer: {
         refSystem: 'Bezugssystem',
         scale: 'Maßstab',
@@ -27,6 +69,48 @@ export default {
   },
   en: {
     translation: {
+      Measure: {
+        title: 'Measure',
+        line: 'Distance',
+        area: 'Area',
+        clicktodrawline: 'Click to draw line',
+        clicktodrawarea: 'Click to draw area'
+      },
+      LayerTree: {
+        transparency: 'Transparency',
+        externalWmsFolder: 'External services',
+        noLegendAvailable: 'No legend available'
+      },
+      LayerTreeContextMenu: {
+        layerZoomToExtent: 'Zoom to layer extent',
+        extentError: 'Could not zoom to layer extent',
+        removeLayer: 'Remove layer',
+        showLegend: 'Show legend',
+        hideLegend: 'Hide legend'
+      },
+      ToolMenu: {
+        expand: 'Expand / Collapse',
+        measure: 'Measure',
+        featureInfo: 'Query map features',
+        addWms: 'Add WMS',
+        print: 'Export',
+        layertree: 'Maps'
+      },
+      PrintForm: {
+        title: 'Title',
+        initialTitle: 'Title',
+        titlePlaceholder: 'Please input a title…',
+        comment: 'Comment',
+        commentPlaceholder: 'Please enter a comment…',
+        layout: 'Layout',
+        dpi: 'Resolution',
+        format: 'Format',
+        downloadBtnText: 'Create print',
+        printJobErrorMsg: 'Could not generate PDF output',
+        initErrorMsg: 'PDF Generator could not be initialized',
+        outputFormatPlaceholder: 'Please select an output format',
+        resolutionPlaceholder: 'Please select an output quality'
+      },
       Footer: {
         refSystem: 'Reference system',
         scale: 'Scale',
