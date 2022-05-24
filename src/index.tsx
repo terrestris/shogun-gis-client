@@ -202,12 +202,15 @@ const setupDefaultMap = () => {
   });
 };
 
-const parseTheme = (theme: any): ThemeProperties => {
+const parseTheme = (theme?: any): ThemeProperties => {
   const style: any = {
     '--primaryColor': '#59666C',
     '--secondaryColor': '#70B3BE',
     '--complementaryColor': '#FFFFFF'
   };
+  if (!theme) {
+    return style;
+  }
   if (theme.primaryColor) {
     style['--primaryColor'] = theme.primaryColor;
   }
@@ -225,7 +228,7 @@ const renderApp = async () => {
     const appConfig = await getApplicationConfiguration();
 
     // @ts-ignore
-    const style = parseTheme(appConfig?.clientConfig.theme);
+    const style = parseTheme(appConfig?.clientConfig?.theme);
 
     ConfigProvider.config({
       theme: {
