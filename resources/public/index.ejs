@@ -80,6 +80,13 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <script src="/config/clientConfig.js"></script>
+    <script>
+      if (!window.clientConfig) {
+        console.warn('No config found, loading fallback from ./fallbackConfig.js.');
+        document.write('<script src="./fallbackConfig.js">\x3C/script>')
+      }
+    </script>
     <div id="app" class="app"></div>
   </body>
 </html>

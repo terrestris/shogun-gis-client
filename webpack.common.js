@@ -6,6 +6,9 @@ const customCssTheme = require('./antd.theme');
 
 module.exports = {
   entry: './src/index.tsx',
+  externals: {
+    clientConfig: 'clientConfig'
+  },
   module: {
     rules: [{
       test: /\.tsx?$/,

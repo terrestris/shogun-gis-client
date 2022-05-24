@@ -9,6 +9,8 @@ import ConfigProvider from 'antd/lib/config-provider';
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
+import ClientConfiguration from 'clientConfig';
+
 import {
   defaults as OlControlDefaults
 } from 'ol/control';
@@ -50,8 +52,7 @@ import {
 import './index.less';
 
 const client = new SHOGunClient({
-  // TODO Make configurable
-  url: '/'
+  url: ClientConfiguration.appPrefix || '/'
 });
 
 const parser = new ShogunApplicationUtil({
