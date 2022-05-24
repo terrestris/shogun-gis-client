@@ -64,7 +64,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     const loading = opts.loading;
 
     if (Object.keys(features).length === 0) {
-      return <span>Click on the map to get details about the clicked coordinate.</span>;
+      return <span>{t('FeatureInfo.usageHint')}</span>;
     }
 
     return Object.entries(features)

@@ -8,6 +8,9 @@ export default {
         clicktodrawline: 'Zum Zeichnen einer Linie klicken',
         clicktodrawarea: 'Zum Zeichnen einer Fläche klicken'
       },
+      FeatureInfo: {
+        usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
+      },
       LayerTree: {
         transparency: 'Transparenz',
         externalWmsFolder: 'Externe Dienste',
@@ -75,6 +78,9 @@ export default {
         area: 'Area',
         clicktodrawline: 'Click to draw line',
         clicktodrawarea: 'Click to draw area'
+      },
+      FeatureInfo: {
+        usageHint: 'Click on the map to get details about the clicked coordinate.'
       },
       LayerTree: {
         transparency: 'Transparency',
