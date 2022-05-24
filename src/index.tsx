@@ -217,13 +217,6 @@ const parseTheme = (theme: any): ThemeProperties => {
   if (theme.secondaryColor) {
     style['--complementaryColor'] = theme.complementaryColor;
   }
-
-  ConfigProvider.config({
-    theme: {
-      primaryColor: style['--primaryColor']
-    }
-  });
-
   return style;
 };
 
@@ -233,6 +226,12 @@ const renderApp = async () => {
 
     // @ts-ignore
     const style = parseTheme(appConfig?.clientConfig.theme);
+
+    ConfigProvider.config({
+      theme: {
+        primaryColor: style['--primaryColor']
+      }
+    });
 
     setApplicationTitle();
 
