@@ -2,10 +2,10 @@ import React from 'react';
 
 import {
   Alert,
+  ConfigProvider,
   notification
 } from 'antd';
 
-import ConfigProvider from 'antd/lib/config-provider';
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
@@ -41,15 +41,25 @@ import SHOGunClient from '@terrestris/shogun-util/dist/service/SHOGunClient';
 
 import App from './App';
 import i18n from './i18n';
+
+import {
+  setLogoPath
+} from './store/logoPath';
 import {
   store
 } from './store/store';
-
 import {
   setTitle
 } from './store/title';
 
 import './index.less';
+
+// TODO: extend antd properties too
+export interface ThemeProperties extends React.CSSProperties {
+  '--primaryColor'?: string;
+  '--secondaryColor'?: string;
+  '--complementaryColor'?: string;
+}
 
 const client = new SHOGunClient({
   url: ClientConfiguration.appPrefix || '/'
@@ -109,6 +119,11 @@ const setApplicationToStore = async (application?: Application) => {
 
   if (application.name) {
     store.dispatch(setTitle(application.name));
+  }
+  // @ts-ignore
+  if (application?.clientConfig?.theme?.logoPath) {
+    // @ts-ignore
+    store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 };
 
@@ -187,9 +202,39 @@ const setupDefaultMap = () => {
   });
 };
 
+const parseTheme = (theme: any): ThemeProperties => {
+  const style: any = {
+    '--primaryColor': '#008CD2',
+    '--secondaryColor': '#D1007F',
+    '--complementaryColor': '#EFEFEF',
+    '--ant-primary-color-hover': '#EFEFEF'
+  };
+  if (theme.primaryColor) {
+    style['--primaryColor'] = theme.primaryColor;
+  }
+  if (theme.secondaryColor) {
+    style['--secondaryColor'] = theme.secondaryColor;
+  }
+  if (theme.secondaryColor) {
+    style['--complementaryColor'] = theme.complementaryColor;
+    style['--antd-primary-color-hover'] = theme.complementaryColor;
+  }
+
+  ConfigProvider.config({
+    theme: {
+      primaryColor: style['--primaryColor']
+    }
+  });
+
+  return style;
+};
+
 const renderApp = async () => {
   try {
     const appConfig = await getApplicationConfiguration();
+
+    // @ts-ignore
+    const style = parseTheme(appConfig?.clientConfig.theme);
 
     setApplicationTitle();
 
@@ -203,7 +248,7 @@ const renderApp = async () => {
           <ConfigProvider locale={getConfigLang(i18n.language)}>
             <Provider store={store}>
               <MapContext.Provider value={map}>
-                <App />
+                <App style={style}/>
               </MapContext.Provider>
             </Provider>
           </ConfigProvider>

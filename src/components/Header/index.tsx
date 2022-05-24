@@ -1,6 +1,5 @@
 import React from 'react';
 
-import LogoImg from '../../../resources/public/loading.png';
 import {
   useAppSelector
 } from '../../hooks/useAppSelector';
@@ -15,6 +14,7 @@ export const Header: React.FC<HeaderProps> = ({
   ...restProps
 }): JSX.Element => {
   const title = useAppSelector((state) => state.title);
+  const logoPath = useAppSelector((state) => state.logoPath);
 
   return (
     <div
@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
       >
         <img
           className="logo"
-          src={LogoImg}
+          src={logoPath}
         />
         <div
           className="title"
