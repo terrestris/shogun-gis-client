@@ -1,3 +1,16 @@
+### [1.0.2](https://github.com/terrestris/shogun-demo-client/compare/v1.0.1...v1.0.2) (2022-05-24)
+
+
+### Changes in layout
+
+* adjust style for the gfi result layer ([716b326](https://github.com/terrestris/shogun-demo-client/commit/716b326fd8d9a1ad8e2bb8705b043e6e6de90e7e))
+
+
+### Bugfixes
+
+* i18n for usage hint ([a9d191b](https://github.com/terrestris/shogun-demo-client/commit/a9d191b58324e7e779d2b57b8972ae8f069bc0a8))
+* pass flat layers array to the CoordinateInfo ([34656f2](https://github.com/terrestris/shogun-demo-client/commit/34656f2829d3b8e0153a064d0e3e5e74d5e3d283))
+
 ### [1.0.1](https://github.com/terrestris/shogun-demo-client/compare/v1.0.0...v1.0.1) (2022-05-24)
 
 
