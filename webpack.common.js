@@ -53,7 +53,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      title: 'Hello World',
+      title: 'SHOGun Client',
       template: path.join(__dirname, 'resources', 'public', 'index.ejs'),
       hash: true,
       minify: {
