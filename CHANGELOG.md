@@ -1,3 +1,5 @@
+### [1.1.1](https://github.com/terrestris/shogun-demo-client/compare/v1.1.0...v1.1.1) (2022-05-24)
+
 ## [1.1.0](https://github.com/terrestris/shogun-demo-client/compare/v1.0.2...v1.1.0) (2022-05-24)
 
 
