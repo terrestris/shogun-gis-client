@@ -1,3 +1,17 @@
+## [1.1.0](https://github.com/terrestris/shogun-demo-client/compare/v1.0.2...v1.1.0) (2022-05-24)
+
+
+### Features
+
+* introduce client configuration file (currently for the appPrefix only) ([7651fa0](https://github.com/terrestris/shogun-demo-client/commit/7651fa01495e960328e3c3020cf5feda8952fd1f))
+
+
+### Bugfixes
+
+* provide empty clientConfig ([df63528](https://github.com/terrestris/shogun-demo-client/commit/df63528a376be4556b5ec75cbb4013c078d2705a))
+* remove fallback configration, make use of client's internal defaults instead ([dd04408](https://github.com/terrestris/shogun-demo-client/commit/dd044084433f46a9be5c7a32f5dc546338dcf158))
+* set correct default title ([4a455c2](https://github.com/terrestris/shogun-demo-client/commit/4a455c2fa372b622ab80868b6cff0c0d45288ff4))
+
 ### [1.0.2](https://github.com/terrestris/shogun-demo-client/compare/v1.0.1...v1.0.2) (2022-05-24)
 
 
