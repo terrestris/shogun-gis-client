@@ -1,3 +1,17 @@
+### [1.0.1](https://github.com/terrestris/shogun-demo-client/compare/v1.0.0...v1.0.1) (2022-05-24)
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([7eb64d4](https://github.com/terrestris/shogun-demo-client/commit/7eb64d40e9838d6207a4f2fa19e8f75d3a5acfed))
+* **deps-dev:** bump @typescript-eslint/parser from 5.25.0 to 5.26.0 ([faedbc0](https://github.com/terrestris/shogun-demo-client/commit/faedbc05ee3b9d5a30d97e93aa4de4d13f33f9e2))
+* **deps:** bump i18next from 21.8.3 to 21.8.4 ([da47779](https://github.com/terrestris/shogun-demo-client/commit/da477795382d4ce23556089a2c05f93eacdbdd92))
+
+
+### Bugfixes
+
+* harmonize component signature by specifying the return type and passing through the rest props ([bffd8e7](https://github.com/terrestris/shogun-demo-client/commit/bffd8e7c5dcf972fe56887305b3317950854ac01))
+
 ## 1.0.0 (2022-05-23)
 
 
