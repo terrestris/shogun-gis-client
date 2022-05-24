@@ -50,9 +50,7 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
-// Is the state variable needed?
 import {
-  setSelectedKey,
   unsetSelectedKey
 } from '../../store/toolMenu';
 

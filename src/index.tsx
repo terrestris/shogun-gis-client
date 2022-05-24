@@ -78,11 +78,13 @@ const getApplicationConfiguration = async () => {
     return;
   }
 
-  Logger.info(`Loading application with ID ${applicationId}`);
-
   let application;
   try {
+    Logger.info(`Loading application with ID ${applicationId}`);
+
     application = await client.application().findOne(applicationId);
+
+    Logger.info(`Successfully loaded application with ID ${applicationId}`);
 
     return application;
   } catch (error) {
@@ -108,6 +110,22 @@ const setApplicationToStore = async (application?: Application) => {
   if (application.name) {
     store.dispatch(setTitle(application.name));
   }
+};
+
+const setApplicationTitle = () => {
+  store.subscribe(() => {
+    document.title = store.getState().title;
+  });
+};
+
+const setupMap = async (application?: Application) => {
+  if (application) {
+    return await setupSHOGunMap(application);
+  }
+
+  Logger.info('No application configuration provided, the default map will be loaded');
+
+  return setupDefaultMap();
 };
 
 const setupSHOGunMap = async (application: Application) => {
@@ -140,7 +158,10 @@ const setupDefaultMap = () => {
       }
     })
   });
-  temperatureLayer.set('name', '2-meter Air Temperature, Assimilated (Monthly, MERRA2)');
+  temperatureLayer.setProperties({
+    name: '2-meter Air Temperature, Assimilated (Monthly, MERRA2)',
+    hoverable: true
+  });
 
   const eoLayerGroup = new OlLayerGroup({
     layers: [temperatureLayer]
@@ -170,13 +191,11 @@ const renderApp = async () => {
   try {
     const appConfig = await getApplicationConfiguration();
 
-    let map;
-    if (appConfig) {
-      setApplicationToStore(appConfig);
-      map = await setupSHOGunMap(appConfig);
-    } else {
-      map = setupDefaultMap();
-    }
+    setApplicationTitle();
+
+    setApplicationToStore(appConfig);
+
+    const map = await setupMap(appConfig);
 
     render(
       <React.StrictMode>
