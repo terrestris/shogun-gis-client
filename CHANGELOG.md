@@ -1,3 +1,16 @@
+## [2.0.0](https://github.com/terrestris/shogun-demo-client/compare/v1.1.1...v2.0.0) (2022-05-24)
+
+
+### Breaking changes
+
+* implement handling for theming ([cd9f687](https://github.com/terrestris/shogun-demo-client/commit/cd9f6870df38bfe4c36d8326ca6e4ba915af3c6b))
+
+
+### Bugfixes
+
+* catch undefined theme ([1bf523d](https://github.com/terrestris/shogun-demo-client/commit/1bf523d0663215a7c9a296455f39a14c0fb8fbac))
+* extract ConfigProvider from parseTheme ([5447e60](https://github.com/terrestris/shogun-demo-client/commit/5447e605439e6ac608c6ca32a88437ca3f01ce99))
+
 ### [1.1.1](https://github.com/terrestris/shogun-demo-client/compare/v1.1.0...v1.1.1) (2022-05-24)
 
 ## [1.1.0](https://github.com/terrestris/shogun-demo-client/compare/v1.0.2...v1.1.0) (2022-05-24)
