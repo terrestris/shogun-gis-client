@@ -9,6 +9,7 @@
       <meta name="_csrf_header" content="<%= htmlWebpackPlugin.options.csrf.csrfHeader %>" />
       <meta name="_csrf_parameter_name" content="<%= htmlWebpackPlugin.options.csrf.csrfParameterName %>" />
     <% } %>
+    <!-- TODO Check if needed -->
     <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <div id="loadmask" class="loadmask">
@@ -80,6 +81,13 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <script src="/config/clientConfig.js"></script>
+    <script>
+      if (!window.clientConfig) {
+        console.warn('No config found, client defaults will be used.');
+        window.clientConfig = {};
+      }
+    </script>
     <div id="app" class="app"></div>
   </body>
 </html>

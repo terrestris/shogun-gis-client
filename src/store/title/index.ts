@@ -3,7 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: string = 'Default title';
+const initialState: string = 'SHOGun Client';
 
 export const slice = createSlice({
   name: 'title',

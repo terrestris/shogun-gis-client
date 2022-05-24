@@ -6,6 +6,9 @@ const customCssTheme = require('./antd.theme');
 
 module.exports = {
   entry: './src/index.tsx',
+  externals: {
+    clientConfig: 'clientConfig'
+  },
   module: {
     rules: [{
       test: /\.tsx?$/,
@@ -50,7 +53,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      title: 'Hello World',
+      title: 'SHOGun Client',
       template: path.join(__dirname, 'resources', 'public', 'index.ejs'),
       hash: true,
       minify: {

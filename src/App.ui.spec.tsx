@@ -13,7 +13,7 @@ test.describe('Basic application tests', () => {
   test('it has set the correct title', async ({
     page
   }) => {
-    await expect(page).toHaveTitle('Hello World');
+    await expect(page).toHaveTitle('SHOGun Client');
   });
 
   test('it renders the most important components', async ({
