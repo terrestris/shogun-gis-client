@@ -24,6 +24,10 @@ import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
+import OlStyleCircle from 'ol/style/Circle';
+import OlStyleFill from 'ol/style/Fill';
+import OlStyleStroke from 'ol/style/Stroke';
+import OlStyle from 'ol/style/Style';
 
 import {
   useTranslation
@@ -78,10 +82,26 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
         features: features
       });
 
+      const fill = new OlStyleFill({
+        color: 'rgba(255, 255, 255, 0.15)'
+      });
+      const stroke = new OlStyleStroke({
+        color: 'rgba(209, 70, 47, 1)',
+        width: 2
+      });
+      const featureStyle = new OlStyle({
+        fill,
+        stroke,
+        image: new OlStyleCircle({
+          radius: 5,
+          fill,
+          stroke
+        })
+      });
+
       const layer = new OlLayerVector({
-        source: source
-        // TODO Set non default style
-        // style: featureStyle
+        source: source,
+        style: featureStyle
       });
 
       layer.set('name', vectorLayerName);
