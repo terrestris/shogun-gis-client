@@ -36,8 +36,8 @@ import './index.less';
 export type LayerTreeProps = {} & Partial<RgLayerTreeProps>;
 
 export const LayerTree: React.FC<LayerTreeProps> = ({
-  ...passThroughProps
-}) => {
+  ...restProps
+}): JSX.Element => {
   const map = useMap();
   const {
     t
@@ -124,7 +124,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         draggable={{
           icon: false
         }}
-        {...passThroughProps}
+        {...restProps}
       />
     </div>
   );

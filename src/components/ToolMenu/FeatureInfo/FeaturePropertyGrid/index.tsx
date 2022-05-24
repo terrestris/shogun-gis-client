@@ -46,8 +46,8 @@ export type FeatureInfoPropertyGridProps = {
 export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = ({
   features,
   layerName = 'Unknown layer',
-  ...passThroughProps
-}) => {
+  ...restProps
+}): JSX.Element => {
   const [currentPage, setCurrenPage] = useState<number>();
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
 
@@ -199,7 +199,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
             250 :
             undefined
         }}
-        {...passThroughProps}
+        {...restProps}
       />
     </>
   );

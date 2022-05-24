@@ -30,8 +30,8 @@ export type FeatureInfoProps = {
 
 export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   enabled,
-  ...passThroughProps
-}) => {
+  ...restProps
+}): JSX.Element => {
   const {
     t
   } = useTranslation();
@@ -93,7 +93,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       map={map}
       queryLayers={getQueryLayers}
       resultRenderer={resultRenderer}
-      {...passThroughProps}
+      {...restProps}
     />
   );
 };

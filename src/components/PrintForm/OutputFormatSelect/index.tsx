@@ -23,8 +23,9 @@ export const OutputFormatSelect: React.FC<OutputFormatSelectProps> = ({
   printManager,
   placeholder,
   value,
-  outputFormats
-}) => {
+  outputFormats,
+  ...restProps
+}): JSX.Element => {
 
   const [outputFormat, setOutputFormat] = useState<any>(value);
 
@@ -43,6 +44,7 @@ export const OutputFormatSelect: React.FC<OutputFormatSelectProps> = ({
       placeholder={placeholder}
       value={outputFormat}
       onChange={setOutputFormat}
+      {...restProps}
     >
       {
         outputFormats.map((f: string) => (

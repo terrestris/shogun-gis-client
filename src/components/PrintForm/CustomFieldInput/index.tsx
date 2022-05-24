@@ -23,8 +23,9 @@ export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
   value,
   id,
   placeholder,
-  maxLength
-}) => {
+  maxLength,
+  ...restProps
+}): JSX.Element => {
 
   const [inputText, setInputText] = useState<any>(value);
 
@@ -46,6 +47,7 @@ export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
       placeholder={placeholder}
       maxLength={maxLength}
       showCount={!!(maxLength && maxLength > 1)}
+      {...restProps}
     />
   );
 };

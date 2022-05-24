@@ -72,8 +72,8 @@ export interface TitleEventEntity {
 export type ToolMenuProps = {} & Partial<MenuProps>;
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
-  ...passThroughProps
-}) => {
+  ...restProps
+}): JSX.Element => {
   const {
     t
   } = useTranslation();
@@ -265,7 +265,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         multiple={true}
         selectedKeys={selectedKeys}
         items={items}
-        {...passThroughProps}
+        {...restProps}
       />
     </div>
   );
