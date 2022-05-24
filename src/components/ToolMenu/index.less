@@ -10,27 +10,13 @@
   max-width: 600px;
 
   .ant-menu {
-    // background-color: @primary-color;
-    // color: var(--secondaryColor);
 
     &.ant-menu-inline-collapsed {
       width: 40px;
     }
 
-    li:not(.ant-menu-item-only-child), li {
-      // border-bottom: solid 1px var(--secondaryColor);
-    }
-
     li:last-child>span {
       width: 100%;
-    }
-
-    .ant-menu-submenu-arrow {
-      // color: var(--secondaryColor);
-    }
-
-    .ant-menu-submenu-selected {
-      // color: var(--secondaryColor);
     }
 
     .ant-menu-sub.ant-menu-inline > .ant-menu-item {
@@ -56,29 +42,12 @@
 
       .ant-menu-submenu-title {
         margin: 0;
-
-        &:hover {
-          // color: var(--secondaryColor);
-
-          .ant-menu-submenu-arrow {
-            // color: var(--secondaryColor);
-          }
-        }
-      }
-
-      .ant-menu-submenu-title:hover,
-      &.ant-menu-item-active {
-        // background-color: var(--tertiaryColor);
-        // color: var(--secondaryColor);
       }
 
       &.ant-menu-item-selected,
       &.ant-menu-submenu-open {
-        // background-color: var(--primaryColor);
-        // color: var(--tertiaryColor);
 
         >.ant-menu-submenu-title {
-          // border-bottom: solid 2px var(--tertiaryColor);
           font-weight: bolder;
         }
 
@@ -86,9 +55,6 @@
           display: none;
         }
 
-        .ant-menu-submenu-arrow {
-          // color: var(--tertiaryColor);
-        }
       }
     }
   }
@@ -98,7 +64,6 @@
 .ant-menu-submenu-popup {
   button,
   button.react-geo-togglebutton {
-    // .button-style();
     border: none !important;
     border-radius: 0;
   }

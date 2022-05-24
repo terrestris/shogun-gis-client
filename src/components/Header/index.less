@@ -9,13 +9,14 @@
   margin-bottom: 0;
   z-index: 2;
 
-  background-color: fade(lighten(@primary-color, 25%), 90%);
+  background-color: var(--primaryColor);
   display: flex;
   padding: 0 .5rem;
   box-shadow: @componentShadow;
   font-size: .95em;
 
   .title {
+    color: var(--complementaryColor);
     text-align: center;
     font-size: 1.1rem;
     font-weight: bold;

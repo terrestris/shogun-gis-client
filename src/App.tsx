@@ -7,9 +7,16 @@ import ToolMenu from './components/ToolMenu';
 
 import './App.less';
 
-export const App: React.FC = (): JSX.Element => {
+export interface AppProps extends React.ComponentProps<'div'> { };
+
+export const App: React.FC<AppProps> = ({
+  ...restProps
+}): JSX.Element => {
   return (
-    <div className="App">
+    <div
+      className="App"
+      {...restProps}
+    >
       <Header />
       <BasicMapComponent />
       <ToolMenu />

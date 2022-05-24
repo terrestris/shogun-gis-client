@@ -1,4 +1,3 @@
-@import '~ol/ol.css';
 @import './variables.less';
 
 .App,
@@ -7,20 +6,21 @@
   padding: 0;
   height: 100%;
   width: 100%;
-}
 
-.ol-control button {
-  background-color: @primary-color;
-  &:focus,
-  &:hover {
-    background-color: @primary-color;
+  .ol-control button {
+    background-color: var(--primaryColor);
+    &:focus,
+    &:hover {
+      background-color: var(--primaryColor);
+    }
   }
-}
 
-.ol-attribution.ol-uncollapsible {
-  bottom: @footerHeight;
-}
+  .ol-attribution.ol-uncollapsible {
+    bottom: @footerHeight;
+  }
 
-.ol-attribution {
-  bottom: calc(@footerHeight + 0.5em);
+  .ol-attribution {
+    bottom: calc(@footerHeight + 0.5em);
+    right: 1em;
+  }
 }

@@ -6,8 +6,6 @@ const {
   merge
 } = require('webpack-merge');
 
-const customCssTheme = require('./antd.theme');
-
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -24,7 +22,6 @@ module.exports = merge(common, {
           loader: 'less-loader',
           options: {
             lessOptions: {
-              modifyVars: customCssTheme,
               javascriptEnabled: true
             }
           }

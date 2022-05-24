@@ -10,16 +10,5 @@ module.exports = {
     ],
     '@babel/preset-typescript',
     '@babel/preset-react'
-  ],
-  plugins: [
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'lib',
-        style: true
-      },
-      'import-antd'
-    ]
   ]
 };

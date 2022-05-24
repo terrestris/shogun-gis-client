@@ -9,7 +9,7 @@
   margin-bottom: 0;
   z-index: 2;
 
-  background-color: fade(lighten(@primary-color, 25%), 90%);
+  background-color: var(--primaryColor);;
   display: flex;
   padding: 0 .5rem;
   box-shadow: @componentShadow;
@@ -18,7 +18,7 @@
   .item-container {
     display: flex;
     align-items: center;
-    color: darken(@primary-color, 40%);
+    color: var(--complementaryColor);
 
     &.left-items {
       justify-content: flex-start;
@@ -38,8 +38,8 @@
           &-inner {
             border-width: 1px;
             border-style: solid;
-            border-color: darken(@primary-color, 40%);
-            color: darken(@primary-color, 40%);
+            border-color: var(--primaryColor);
+            color: var(--complementaryColor);
             border-top: none;
             text-align: center;
             margin: 1px;
@@ -69,7 +69,7 @@
 
       >button {
         padding: 0 10px;
-        color: darken(@primary-color, 40%);
+        color: var(--complementaryColor);
 
         >span {
           text-decoration: underline;
