@@ -5,7 +5,9 @@ import MapComponent, {
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
 
-export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = (props): JSX.Element => {
+export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
+  ...restProps
+}): JSX.Element => {
   const map = useMap();
 
   if (!map) {
@@ -15,7 +17,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = (props): 
   return (
     <MapComponent
       map={map}
-      {...props}
+      {...restProps}
     />
   );
 };

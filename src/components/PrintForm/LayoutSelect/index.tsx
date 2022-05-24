@@ -25,8 +25,9 @@ export interface LayoutSelectProps extends SelectProps<string> {
 export const LayoutSelect: React.FC<LayoutSelectProps> = ({
   printManager,
   placeholder = 'Bitte wählen Sie eine Vorlage aus',
-  value
-}) => {
+  value,
+  ...restProps
+}): JSX.Element => {
 
   const [layout, setLayout] = useState<any>(value);
 
@@ -45,6 +46,7 @@ export const LayoutSelect: React.FC<LayoutSelectProps> = ({
       placeholder={placeholder}
       value={layout}
       onChange={setLayout}
+      {...restProps}
     >
       {
         printManager?.getLayouts().map((l: Layout) => (

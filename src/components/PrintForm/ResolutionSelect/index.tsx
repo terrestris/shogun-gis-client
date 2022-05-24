@@ -21,8 +21,9 @@ export interface ResolutionSelectProps extends SelectProps<number> {
 export const ResolutionSelect: React.FC<ResolutionSelectProps> = ({
   printManager,
   placeholder,
-  value
-}) => {
+  value,
+  ...restProps
+}): JSX.Element => {
 
   const [resolution, setResolution] = useState<any>(value);
 
@@ -41,6 +42,7 @@ export const ResolutionSelect: React.FC<ResolutionSelectProps> = ({
       placeholder={placeholder}
       value={resolution}
       onChange={setResolution}
+      {...restProps}
     >
       {
         printManager?.getDpis().map((d: number) => (

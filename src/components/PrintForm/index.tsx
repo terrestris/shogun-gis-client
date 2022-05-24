@@ -60,8 +60,8 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   layerBlackList = [],
   map,
   printManager,
-  ...passThroughProps
-}) => {
+  ...restProps
+}): JSX.Element => {
   const [form] = Form.useForm();
   const {
     t
@@ -121,7 +121,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   };
 
   if (!printManager?.isInitiated()) {
-    return null;
+    return <></>;
   }
 
   return (
@@ -147,7 +147,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         wrapperCol={{
           span: 20
         }}
-        {...passThroughProps}
+        {...restProps}
       >
         <Form.Item
           name="title"

@@ -11,12 +11,15 @@ import './index.less';
 
 export interface HeaderProps extends React.ComponentProps<'div'> { };
 
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC<HeaderProps> = ({
+  ...restProps
+}): JSX.Element => {
   const title = useAppSelector((state) => state.title);
 
   return (
     <div
       className="header"
+      {...restProps}
     >
       <div
         className="item-container left-items"

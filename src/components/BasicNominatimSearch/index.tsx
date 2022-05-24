@@ -9,7 +9,9 @@ import NominatimSearch, {
 } from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
-export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = (props): JSX.Element => {
+export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = ({
+  ...restProps
+}): JSX.Element => {
   const map = useMap();
   const {
     t
@@ -26,7 +28,7 @@ export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = (pr
       allowClear={true}
       nominatimBaseUrl={'https://nominatim.terrestris.de/search.php?'}
       placeholder={t('Nominatim.placeholder')}
-      {...props}
+      {...restProps}
     />
   );
 };

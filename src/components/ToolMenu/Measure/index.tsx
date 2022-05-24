@@ -25,7 +25,7 @@ interface DefaultMeasureProps { }
 
 export interface MeasureProps extends Partial<DefaultMeasureProps> { }
 
-export const Measure: React.FC<MeasureProps> = () => {
+export const Measure: React.FC<MeasureProps> = (): JSX.Element => {
   const {
     t
   } = useTranslation();

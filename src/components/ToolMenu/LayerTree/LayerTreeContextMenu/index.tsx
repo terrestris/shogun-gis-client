@@ -57,8 +57,9 @@ export type LayerTreeContextMenuProps = {
 export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   layer,
   visibleLegendsIds,
-  setVisibleLegendsIds
-}) => {
+  setVisibleLegendsIds,
+  ...restProps
+}): JSX.Element => {
 
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [extentLoading, setExtentLoading] = useState<boolean>(false);
@@ -175,6 +176,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       onVisibleChange={setSettingsVisible}
       visible={settingsVisible}
       trigger={['click']}
+      {...restProps}
     >
       <FontAwesomeIcon icon={faEllipsisV} />
     </Dropdown>
