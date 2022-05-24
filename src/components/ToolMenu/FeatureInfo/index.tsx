@@ -9,6 +9,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+
 import CoordinateInfo, {
   CoordinateInfoState,
   CoordinateInfoProps
@@ -42,7 +44,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return <></>;
   }
 
-  const getQueryLayers = map.getLayers().getArray()
+  const getQueryLayers = MapUtil.getAllLayers(map)
     .filter((layer) => {
       if (!layer.get('hoverable')) {
         return false;
