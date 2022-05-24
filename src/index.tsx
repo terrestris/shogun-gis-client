@@ -204,10 +204,9 @@ const setupDefaultMap = () => {
 
 const parseTheme = (theme: any): ThemeProperties => {
   const style: any = {
-    '--primaryColor': '#008CD2',
-    '--secondaryColor': '#D1007F',
-    '--complementaryColor': '#EFEFEF',
-    '--ant-primary-color-hover': '#EFEFEF'
+    '--primaryColor': '#59666C',
+    '--secondaryColor': '#70B3BE',
+    '--complementaryColor': '#FFFFFF'
   };
   if (theme.primaryColor) {
     style['--primaryColor'] = theme.primaryColor;
@@ -217,7 +216,6 @@ const parseTheme = (theme: any): ThemeProperties => {
   }
   if (theme.secondaryColor) {
     style['--complementaryColor'] = theme.complementaryColor;
-    style['--antd-primary-color-hover'] = theme.complementaryColor;
   }
 
   ConfigProvider.config({
