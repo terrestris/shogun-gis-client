@@ -6,6 +6,7 @@ import Header from './components/Header';
 import ToolMenu from './components/ToolMenu';
 
 import './App.less';
+import AddLayerModal from './components/AddLayerModal/AddLayerModal';
 
 export interface AppProps extends React.ComponentProps<'div'> { };
 
@@ -21,6 +22,7 @@ export const App: React.FC<AppProps> = ({
       <BasicMapComponent />
       <ToolMenu />
       <Footer />
+      <AddLayerModal />
     </div>
   );
 };

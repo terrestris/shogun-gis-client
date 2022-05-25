@@ -61,6 +61,7 @@ import LayerTree from './LayerTree';
 import Measure from './Measure';
 
 import './index.less';
+import { show } from '../../store/addLayerModal';
 
 export interface TitleEventEntity {
   key: string;
@@ -234,7 +235,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               <Button
                 icon={<FontAwesomeIcon icon={faPlus} />}
                 // TODO Implement AddWMS modal
-                // onClick={() => dispatch(showAddLayerModal())}
+                onClick={() => dispatch(show())}
               >
                 {t('ToolMenu.addWms')}
               </Button>
