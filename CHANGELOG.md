@@ -1,3 +1,21 @@
+### [2.0.1](https://github.com/terrestris/shogun-demo-client/compare/v2.0.0...v2.0.1) (2022-05-30)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.18.0 to 7.18.2 ([defb552](https://github.com/terrestris/shogun-demo-client/commit/defb552b3253daac6fc8fc78afa58b1482c7e5fd))
+* **deps-dev:** bump @babel/preset-env from 7.18.0 to 7.18.2 ([45e3fcc](https://github.com/terrestris/shogun-demo-client/commit/45e3fccec138775990b3897b1e719ddec51cb6f2))
+* **deps-dev:** bump @commitlint/cli from 17.0.0 to 17.0.1 ([1909399](https://github.com/terrestris/shogun-demo-client/commit/1909399f874b66eab489697dd4d37207b175e318))
+* **deps-dev:** bump typescript from 4.6.4 to 4.7.2 ([a5d3e43](https://github.com/terrestris/shogun-demo-client/commit/a5d3e4324474b9ca72e94b5ecbba79f39c101943))
+* **deps:** bump @reduxjs/toolkit from 1.8.1 to 1.8.2 ([0b0852e](https://github.com/terrestris/shogun-demo-client/commit/0b0852e93acfbed8142a78d12592c6b84c67a77f))
+* **deps:** bump i18next from 21.8.4 to 21.8.5 ([32dd20b](https://github.com/terrestris/shogun-demo-client/commit/32dd20bb519c3364dd0067f5968defedc9711979))
+
+
+### Bugfixes
+
+* fix color for scale ([e0be63e](https://github.com/terrestris/shogun-demo-client/commit/e0be63e4c6acc00a34876ed280912da631ebf847))
+* open print in new browser tab ([a975959](https://github.com/terrestris/shogun-demo-client/commit/a97595946d59bb987c933aa105b78a0750b59ebc))
+
 ## [2.0.0](https://github.com/terrestris/shogun-demo-client/compare/v1.1.1...v2.0.0) (2022-05-24)
 
 
