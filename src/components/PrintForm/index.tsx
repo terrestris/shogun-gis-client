@@ -102,7 +102,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         throw new Error('No download URL available, the job has failed.');
       }
 
-      printManager.download(downloadUrl);
+      window.open(downloadUrl);
     } catch (error: any) {
       setErrorMsg(t('PrintForm.printJobErrorMsg'));
       Logger.error(error);
