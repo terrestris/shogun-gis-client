@@ -1,9 +1,6 @@
 name: Release
 
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch]
 
 env:
   DOCKER_REGISTRY: nexus.terrestris.de/repository/terrestris-public
