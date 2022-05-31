@@ -66,7 +66,11 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     const loading = opts.loading;
 
     if (Object.keys(features).length === 0) {
-      return <span>{t('FeatureInfo.usageHint')}</span>;
+      return (
+        <span className='usage-hint'>
+          {t('FeatureInfo.usageHint')}
+        </span>
+      );
     }
 
     return Object.entries(features)
@@ -90,13 +94,15 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   }
 
   return (
-    <CoordinateInfo
-      featureCount={10}
-      map={map}
-      queryLayers={getQueryLayers}
-      resultRenderer={resultRenderer}
-      {...restProps}
-    />
+    <div className='feature-info-panel'>
+      <CoordinateInfo
+        featureCount={10}
+        map={map}
+        queryLayers={getQueryLayers}
+        resultRenderer={resultRenderer}
+        {...restProps}
+      />
+    </div>
   );
 };
 
