@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies ⏬
       run: npm ci
 
-    - name: Adapt base path for gh-pages :twisted_rightwards_arrows:
+    - name: Adapt base path for gh-pages 🔀
       run: sed -i 's/\htmlWebpackPlugin.options.appPrefix/\/latest\//' resources/public/index.ejs
 
     - name: Build artifacts 🏗️
