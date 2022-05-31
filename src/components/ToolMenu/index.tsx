@@ -51,6 +51,9 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
 import {
+  show
+} from '../../store/addLayerModal';
+import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
@@ -233,8 +236,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               <LayerTree />
               <Button
                 icon={<FontAwesomeIcon icon={faPlus} />}
-                // TODO Implement AddWMS modal
-                // onClick={() => dispatch(showAddLayerModal())}
+                onClick={() => dispatch(show())}
               >
                 {t('ToolMenu.addWms')}
               </Button>

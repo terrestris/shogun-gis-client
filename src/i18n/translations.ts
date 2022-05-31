@@ -1,6 +1,16 @@
 export default {
   de: {
     translation: {
+      AddLayerModal: {
+        addSelectedLayers: 'Auswahl hinzufügen',
+        addAllLayers: 'Alle hinzufügen',
+        inputPlaceholder: 'WMS GetCapabilities URL angeben…',
+        externalWmsFolder: 'Externe Themen',
+        title: 'WMS hinzufügen',
+        columnTitle: 'Name',
+        errorMessage: 'Fehler',
+        errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
+      },
       Measure: {
         title: 'Messen',
         line: 'Entfernung',
@@ -72,6 +82,16 @@ export default {
   },
   en: {
     translation: {
+      AddLayerModal: {
+        addSelectedLayers: 'Add selected',
+        addAllLayers: 'Add all',
+        inputPlaceholder: 'Enter a WMS GetCapabilities URL…',
+        externalWmsFolder: 'External layers',
+        title: 'Add WMS',
+        columnTitle: 'Name',
+        errorMessage: 'Error',
+        errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
+      },
       Measure: {
         title: 'Measure',
         line: 'Distance',
