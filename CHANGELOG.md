@@ -1,3 +1,12 @@
+### [3.1.1](https://github.com/terrestris/shogun-demo-client/compare/v3.1.0...v3.1.1) (2022-05-31)
+
+
+### Changes in layout
+
+* updates style of feature info ([4e7b1f7](https://github.com/terrestris/shogun-demo-client/commit/4e7b1f77af5d9c9110518faaf761d6821166f8b5))
+* updates style of print form ([1cbba36](https://github.com/terrestris/shogun-demo-client/commit/1cbba36fcd27e0ef0c3b4c0097126bbc547d9fad))
+* updates style of ToolMenu ([25e1392](https://github.com/terrestris/shogun-demo-client/commit/25e13925de490e6a172d08dc0dafe48812a620a3))
+
 ## [3.1.0](https://github.com/terrestris/shogun-demo-client/compare/v3.0.0...v3.1.0) (2022-05-31)
 
 
