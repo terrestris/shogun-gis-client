@@ -236,7 +236,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               <LayerTree />
               <Button
                 icon={<FontAwesomeIcon icon={faPlus} />}
-                // TODO Implement AddWMS modal
                 onClick={() => dispatch(show())}
               >
                 {t('ToolMenu.addWms')}
