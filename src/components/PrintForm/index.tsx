@@ -204,18 +204,16 @@ export const PrintForm: React.FC<PrintFormProps> = ({
             placeholder={t('PrintForm.outputFormatPlaceholder')}
           />
         </Form.Item>
-        <Form.Item>
-          <Button
-            className='print-button'
-            disabled={!printManager?.isInitiated()}
-            icon={<FontAwesomeIcon icon={faDownload} />}
-            loading={loading}
-            onClick={onDownloadClick}
-          >
-            {t('PrintForm.downloadBtnText')}
-          </Button>
-        </Form.Item>
       </Form>
+      <Button
+        className='print-button tool-menu-button'
+        disabled={!printManager?.isInitiated()}
+        icon={<FontAwesomeIcon icon={faDownload} />}
+        loading={loading}
+        onClick={onDownloadClick}
+      >
+        {t('PrintForm.downloadBtnText')}
+      </Button>
     </div>
   );
 };

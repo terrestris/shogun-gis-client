@@ -229,9 +229,10 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         {
           key: 'tree-panel',
           label: (
-            <div className='wmsbox'>
+            <div className='tree-wrapper'>
               <LayerTree />
               <Button
+                className='add-wms-button tool-menu-button'
                 icon={<FontAwesomeIcon icon={faPlus} />}
                 // TODO Implement AddWMS modal
                 // onClick={() => dispatch(showAddLayerModal())}
@@ -245,6 +246,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     },
     {
       key: 'expand_collapse',
+      label:  collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse'),
       icon: collapsed ?
         <FontAwesomeIcon icon={faChevronRight} /> :
         <FontAwesomeIcon icon={faChevronLeft} />
