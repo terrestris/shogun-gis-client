@@ -53,6 +53,7 @@ import {
 } from './store/title';
 
 import './index.less';
+import GeoServerUtil from './util/GeoServerUtil';
 
 // TODO: extend antd properties too
 export interface ThemeProperties extends React.CSSProperties {
@@ -226,6 +227,10 @@ const parseTheme = (theme?: any): ThemeProperties => {
 const renderApp = async () => {
   try {
     const appConfig = await getApplicationConfiguration();
+
+    if (ClientConfiguration.loginToGeoServer) {
+      await GeoServerUtil.getGeoServerSession();
+    }
 
     // @ts-ignore
     const style = parseTheme(appConfig?.clientConfig?.theme);
