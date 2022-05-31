@@ -1,3 +1,20 @@
+## [3.1.0](https://github.com/terrestris/shogun-demo-client/compare/v3.0.0...v3.1.0) (2022-05-31)
+
+
+### Features
+
+* add addLayerModal ([34f3a4d](https://github.com/terrestris/shogun-demo-client/commit/34f3a4de84eefe488c3db644dce755230e6ffcdf))
+
+
+### Bugfixes
+
+* move locales to translation file and fix lint ([790f02e](https://github.com/terrestris/shogun-demo-client/commit/790f02ec14d45a7bdffccca91c94d809f680cd16))
+
+
+### Dependencies
+
+* remove TODO ([8ff0eb3](https://github.com/terrestris/shogun-demo-client/commit/8ff0eb3e212d5a8a9401c7aa70545be9d1de36aa))
+
 ## [3.0.0](https://github.com/terrestris/shogun-demo-client/compare/v2.0.1...v3.0.0) (2022-05-31)
 
 
