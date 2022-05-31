@@ -1,6 +1,6 @@
 {
   "name": "shogun-demo-client",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "This is a shogun demo client based on react-geo client template",
   "keywords": [
     "shogun",

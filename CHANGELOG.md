@@ -1,3 +1,23 @@
+## [3.0.0](https://github.com/terrestris/shogun-demo-client/compare/v2.0.1...v3.0.0) (2022-05-31)
+
+
+### Features
+
+* add option to login into geoserver ([a519699](https://github.com/terrestris/shogun-demo-client/commit/a519699382db0ae34d86c449ddbb66c6a5bdb307))
+* introduce GeoServerUtil ([9a0321d](https://github.com/terrestris/shogun-demo-client/commit/9a0321d88cdb3781f6c29d7d4c5057756296b88d))
+
+
+### Breaking changes
+
+* change path of client config ([42fc794](https://github.com/terrestris/shogun-demo-client/commit/42fc7944303febb6b2da0dd31aeff94a7e908410))
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([bff2460](https://github.com/terrestris/shogun-demo-client/commit/bff246097be6c9b393211c70ee25e00652033b54))
+* **deps-dev:** bump @typescript-eslint/parser from 5.26.0 to 5.27.0 ([3184238](https://github.com/terrestris/shogun-demo-client/commit/31842383220e118551efa997c8f82683f87c12a2))
+* **deps:** bump antd from 4.20.6 to 4.20.7 ([8c78b59](https://github.com/terrestris/shogun-demo-client/commit/8c78b590dbfd2d6b7d6b38918c463d7491d91fc5))
+
 ### [2.0.1](https://github.com/terrestris/shogun-demo-client/compare/v2.0.0...v2.0.1) (2022-05-30)
 
 
