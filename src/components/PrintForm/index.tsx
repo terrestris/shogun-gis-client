@@ -124,6 +124,15 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     return <></>;
   }
 
+  const layout = {
+    labelCol: {
+      span: 8
+    },
+    wrapperCol: {
+      span: 16
+    }
+  };
+
   return (
     <div className="print">
       {
@@ -141,23 +150,12 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         form={form}
         className="print-form"
         layout="horizontal"
-        labelCol={{
-          span: 4
-        }}
-        wrapperCol={{
-          span: 20
-        }}
+        {...layout}
         {...restProps}
       >
         <Form.Item
           name="title"
           label={t('PrintForm.title')}
-          labelCol={{
-            span: 6
-          }}
-          wrapperCol={{
-            span: 18
-          }}
           initialValue={t('PrintForm.initialTitle')}
         >
           <CustomFieldInput
@@ -169,12 +167,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         <Form.Item
           name="comment"
           label={t('PrintForm.comment')}
-          labelCol={{
-            span: 6
-          }}
-          wrapperCol={{
-            span: 18
-          }}
         >
           <CustomFieldInput
             maxLength={200}
@@ -212,17 +204,16 @@ export const PrintForm: React.FC<PrintFormProps> = ({
             placeholder={t('PrintForm.outputFormatPlaceholder')}
           />
         </Form.Item>
-        <Form.Item>
-          <Button
-            disabled={!printManager?.isInitiated()}
-            icon={<FontAwesomeIcon icon={faDownload} />}
-            loading={loading}
-            onClick={onDownloadClick}
-          >
-            {t('PrintForm.downloadBtnText')}
-          </Button>
-        </Form.Item>
       </Form>
+      <Button
+        className='print-button tool-menu-button'
+        disabled={!printManager?.isInitiated()}
+        icon={<FontAwesomeIcon icon={faDownload} />}
+        loading={loading}
+        onClick={onDownloadClick}
+      >
+        {t('PrintForm.downloadBtnText')}
+      </Button>
     </div>
   );
 };

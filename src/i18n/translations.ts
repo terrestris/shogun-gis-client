@@ -34,7 +34,8 @@ export default {
         hideLegend: 'Legende ausblenden'
       },
       ToolMenu: {
-        expand: 'Erweitern / Einklappen',
+        expand: 'Menu ausklappen',
+        collapse: 'Menu einklappen',
         measure: 'Messen',
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',

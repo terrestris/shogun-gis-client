@@ -73,17 +73,16 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     } else {
       return (
         <>
-          <div>
-            <div className="tree-node-header">
-              <span>{layer.get('name')}</span>
-              <LayerTreeContextMenu
-                layer={(layer as WmsLayer)}
-                visibleLegendsIds={visibleLegendsIds}
-                setVisibleLegendsIds={setVisibleLegendsIds}
-              />
-            </div>
-            {
-              layer.get('visible') &&
+          <div className="tree-node-header">
+            <span>{layer.get('name')}</span>
+            <LayerTreeContextMenu
+              layer={(layer as WmsLayer)}
+              visibleLegendsIds={visibleLegendsIds}
+              setVisibleLegendsIds={setVisibleLegendsIds}
+            />
+          </div>
+          {
+            layer.get('visible') &&
               <>
                 <div className="layer-transparency">
                   <LayerTransparencySlider
@@ -92,9 +91,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
                   />
                 </div>
               </>
-            }
-            {
-              layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
+          }
+          {
+            layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
               <Legend
                 layer={layer as WmsLayer}
                 errorMsg={t('LayerTree.noLegendAvailable')}
@@ -104,8 +103,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
                   TRANSPARENT: true
                 }}
               />
-            }
-          </div>
+          }
         </>
       );
     }
@@ -116,17 +114,16 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   }
 
   return (
-    <div className="layertree">
-      <RgLayerTree
-        map={map}
-        nodeTitleRenderer={treeNodeTitleRenderer}
-        filterFunction={treeFilterFunction}
-        draggable={{
-          icon: false
-        }}
-        {...restProps}
-      />
-    </div>
+    <RgLayerTree
+      className="layertree"
+      map={map}
+      nodeTitleRenderer={treeNodeTitleRenderer}
+      filterFunction={treeFilterFunction}
+      draggable={{
+        icon: false
+      }}
+      {...restProps}
+    />
   );
 };
 
