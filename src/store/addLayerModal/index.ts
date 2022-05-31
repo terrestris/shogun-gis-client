@@ -1,10 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  createSlice
+} from '@reduxjs/toolkit';
 
 interface AddLayerModalState {
   visible: boolean;
 }
 
-const initialState: AddLayerModalState = { visible: false };
+const initialState: AddLayerModalState = {
+  visible: false
+};
 
 const addLayerModalSlice = createSlice({
   name: 'addLayerModal',
@@ -22,5 +26,10 @@ const addLayerModalSlice = createSlice({
   }
 });
 
-export const { show, hide, toggle } = addLayerModalSlice.actions;
+export const {
+  show,
+  hide,
+  toggle
+} = addLayerModalSlice.actions;
+
 export default addLayerModalSlice.reducer;

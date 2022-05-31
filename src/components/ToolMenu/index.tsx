@@ -51,6 +51,9 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
 import {
+  show
+} from '../../store/addLayerModal';
+import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
@@ -61,7 +64,6 @@ import LayerTree from './LayerTree';
 import Measure from './Measure';
 
 import './index.less';
-import { show } from '../../store/addLayerModal';
 
 export interface TitleEventEntity {
   key: string;

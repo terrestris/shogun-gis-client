@@ -1,12 +1,12 @@
 import React from 'react';
 
+import AddLayerModal from './components/AddLayerModal/AddLayerModal';
 import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import ToolMenu from './components/ToolMenu';
 
 import './App.less';
-import AddLayerModal from './components/AddLayerModal/AddLayerModal';
 
 export interface AppProps extends React.ComponentProps<'div'> { };
 

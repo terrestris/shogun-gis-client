@@ -2,10 +2,10 @@ import {
   configureStore
 } from '@reduxjs/toolkit';
 
+import addLayerModal from './addLayerModal';
 import logoPath from './logoPath';
 import title from './title';
 import toolMenu from './toolMenu';
-import addLayerModal from './addLayerModal'
 
 export const store = configureStore({
   reducer: {

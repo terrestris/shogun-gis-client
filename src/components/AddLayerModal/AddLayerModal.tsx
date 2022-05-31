@@ -1,56 +1,93 @@
-import React from 'react';
+import React, {
+  useState
+} from 'react';
 
-import { useTranslation } from 'react-i18next';
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
+import {
+  Button,
+  Input,
+  Modal,
+  ModalProps,
+  notification,
+  Table
+} from 'antd';
 
-import { Button, Input, Modal, Table } from 'antd';
-
+import {
+  getUid
+} from 'ol';
 import OlLayerGroup from 'ol/layer/Group';
 
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useTranslation
+} from 'react-i18next';
 
-import { ProjectClientState } from '../../store/reducer';
-import { deselectKey } from '../../store/MenuSelectedKeys';
-import { hide } from '../../store';
-import { useState } from 'react';
-import { WMSLayer } from '@terrestris/ol-util/dist/types';
-import { CapabilitiesUtil, MapUtil } from '@terrestris/ol-util';
-import { getUid } from 'ol';
+import {
+  CapabilitiesUtil,
+  MapUtil
+} from '@terrestris/ol-util';
+import {
+  WMSLayer
+} from '@terrestris/ol-util/dist/types';
+
+import {
+  useMap
+} from '@terrestris/react-geo/dist/Hook/useMap';
+
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import {
+  hide
+} from '../../store/addLayerModal';
+import {
+  unsetSelectedKey
+} from '../../store/toolMenu';
 
 import './AddLayerModal.less';
 
-interface DefaultAddLayerModalProps { }
+export type AddLayerModalProps = {} & Partial<ModalProps>;
 
-export interface AddLayerModalProps extends Partial<DefaultAddLayerModalProps> { }
-
-export const AddLayerModal: React.FC<AddLayerModalProps> = () => {
-
-  const dispatch = useDispatch();
-  const isModalVisible = useSelector(
-    (state: ProjectClientState) => state.addLayerModalState.visible
-  );
+export const AddLayerModal: React.FC<AddLayerModalProps> = ({
+  ...restProps
+}): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [layers, setLayers] = useState<WMSLayer[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [url, setUrl] = useState(
     'https://sgx.geodatenzentrum.de/wms_topplus_open?request=GetCapabilities&service=wms'
   );
-  const map = useMap();
-  const { t } = useTranslation();
 
-  const getCapabilities = (capabilitiesUrl: string) => {
-    setLoading(true);
-    CapabilitiesUtil.getWmsCapabilities(capabilitiesUrl)
-      .then((capabilities: any) => CapabilitiesUtil.getLayersFromWmsCapabilities(capabilities, 'Title'))
-      .then(setLayers)
-      .finally(() => setLoading(false));
+  const isModalVisible = useAppSelector(state => state.addLayerModal.visible);
+
+  const dispatch = useAppDispatch();
+
+  const map = useMap();
+
+  const {
+    t
+  } = useTranslation();
+
+  const getCapabilities = async (capabilitiesUrl: string) => {
+    try {
+      setLoading(true);
+
+      const capabilities = await CapabilitiesUtil.getWmsCapabilities(capabilitiesUrl);
+      const externalLayers = CapabilitiesUtil.getLayersFromWmsCapabilities(capabilities, 'Title');
+
+      setLayers(externalLayers);
+    } catch (error) {
+      notification.error({
+        message: t('AddLayerModal.errorMessage'),
+        description: t('AddLayerModal.errorDescription')
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const closeModal = () => {
     setSelectedRowKeys([]);
     setLayers([]);
     dispatch(hide());
-    dispatch(deselectKey('addLayer'));
+    dispatch(unsetSelectedKey('addLayer'));
   };
 
   const onAddSelected = () => {
@@ -63,11 +100,11 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = () => {
   };
 
   const addLayers = (layersToAdd: WMSLayer[]) => {
-
     if (!map) {
       return;
     }
-    const targetFolderName = t('GproLayerTree.externalWmsFolder');
+
+    const targetFolderName = t('AddLayerModal.externalWmsFolder');
     let targetGroup = MapUtil.getLayerByName(map, targetFolderName) as OlLayerGroup;
     if (!targetGroup) {
       targetGroup = new OlLayerGroup();
@@ -84,13 +121,14 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = () => {
     });
 
     targetGroup.set('hideInLayerTree', targetGroup.getLayers().getLength() < 1);
+
     closeModal();
   };
 
   return (
     <Modal
       className="add-layer-modal"
-      title="WMS layer hinzufügen"
+      title={t('AddLayerModal.title')}
       visible={isModalVisible}
       onCancel={closeModal}
       footer={[
@@ -109,6 +147,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = () => {
           {t('AddLayerModal.addAllLayers')}
         </Button>
       ]}
+      {...restProps}
     >
       <Input.Search
         placeholder={t('AddLayerModal.inputPlaceholder')}
@@ -123,7 +162,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = () => {
         loading={loading}
         columns={[
           {
-            title: 'Name',
+            title: t('AddLayerModal.columnTitle'),
             render: (text: any, record: any) => {
               return record.get('title');
             }
