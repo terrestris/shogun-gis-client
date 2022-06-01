@@ -116,7 +116,8 @@ export default {
         hideLegend: 'Hide legend'
       },
       ToolMenu: {
-        expand: 'Expand / Collapse',
+        expand: 'Expand',
+        collapse: 'Collapse',
         measure: 'Measure',
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
