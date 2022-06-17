@@ -67,7 +67,7 @@
     "@semantic-release/github": "^8.0.4",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "@terrestris/eslint-config-typescript": "^2.1.0",
+    "@terrestris/eslint-config-typescript": "^2.2.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
     "@types/jest": "^28.1.0",
