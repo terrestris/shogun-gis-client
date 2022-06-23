@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  render, screen
+  render
 } from '@testing-library/react';
 
 import {
@@ -18,7 +18,11 @@ const createWrapper = () => {
   // eslint-disable-next-line react/display-name
   return ({
     children
-  }: any) => <Provider store={store}>{children}</Provider>;
+  }: any) => (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
 };
 
 describe('App', () => {

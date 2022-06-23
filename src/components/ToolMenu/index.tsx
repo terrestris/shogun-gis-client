@@ -53,8 +53,13 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import useSHOGunClient from '../../hooks/useSHOGunClient';
 
 import {
   show
@@ -90,6 +95,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     t
   } = useTranslation();
   const map = useMap();
+
+  const client = useSHOGunClient();
 
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
@@ -137,6 +144,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       map,
       timeout: 60000,
       layerFilter,
+      headers: {
+        ...getBearerTokenHeader()
+      },
       transformOpts: {
         rotate: false
       }

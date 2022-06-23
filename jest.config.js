@@ -1,4 +1,9 @@
 module.exports = {
+  globals: {
+    KEYCLOAK_HOST: 'localhost',
+    KEYCLOAK_REALM: 'SHOGun',
+    KEYCLOAK_CLIENT_ID: 'shogun-client'
+  },
   moduleFileExtensions: ['ts', 'js'],
   transform: {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',

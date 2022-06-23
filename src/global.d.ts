@@ -1,9 +1,18 @@
 declare module '*.png';
 
+declare const KEYCLOAK_HOST: string;
+declare const KEYCLOAK_REALM: string;
+declare const KEYCLOAK_CLIENT_ID: string;
+
 declare module 'clientConfig' {
   type ClientConfiguration = {
-    appPrefix?: string;
-    loginToGeoServer?: boolean;
+    shogunBase?: string;
+    keycloak?: {
+      enabled?: boolean;
+      host?: string;
+      realm?: string;
+      clientId?: string;
+    };
   };
   const config: ClientConfiguration;
 
