@@ -1,0 +1,43 @@
+.react-geo-userchip {
+  padding: 6px;
+
+  .ant-avatar {
+    border: 1px solid var(--secondaryColor);
+    height: 30px;
+    width: 30px;
+    transition: border 0.3s;
+  }
+
+  .username {
+    color: var(--secondaryColor);
+    transition: color 0.3s;
+
+    span {
+      font-size: 0.6em;
+    }
+  }
+
+  &:hover .username {
+    color: var(--complementaryColor);
+  }
+
+  &:hover .ant-avatar {
+    border: 1px solid var(--complementaryColor);
+  }
+}
+
+.user-chip-menu {
+  svg {
+    width: 20px;
+    padding-right: 10px;
+  }
+
+  div.user-name {
+    margin: 13px;
+    cursor: default;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
