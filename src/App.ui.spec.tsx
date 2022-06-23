@@ -19,6 +19,11 @@ test.describe('Basic application tests', () => {
   test('it renders the most important components', async ({
     page
   }) => {
+    await Promise.all([
+      page.waitForSelector('div#map'),
+      page.waitForSelector('canvas')
+    ]);
+
     await expect(page.locator('div#map').first()).toBeVisible();
     await expect(page.locator('canvas').first()).toBeVisible();
     await expect(page.locator('div.header').first()).toBeVisible();
