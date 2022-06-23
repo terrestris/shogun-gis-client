@@ -7,6 +7,7 @@ import appInfo from './appInfo';
 import logoPath from './logoPath';
 import title from './title';
 import toolMenu from './toolMenu';
+import user from './user';
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     title,
     logoPath,
     toolMenu,
-    addLayerModal
+    addLayerModal,
+    user
   }
 });
 
