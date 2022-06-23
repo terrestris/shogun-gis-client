@@ -40,6 +40,12 @@ import Logger from '@terrestris/base-util/dist/Logger';
 import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
+import MapFishPrintV3GeoJsonSerializer from
+  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
+import MapFishPrintV3OSMSerializer from
+  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
+import MapFishPrintV3WMTSSerializer from
+  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -59,11 +65,16 @@ import {
 
 import PrintForm from '../PrintForm';
 
+import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
+import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
+
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
 import Measure from './Measure';
 
 import './index.less';
+
+import '../PrintForm/Shared/Shared';
 
 export interface TitleEventEntity {
   key: string;
@@ -130,6 +141,14 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         rotate: false
       }
     });
+
+    pManager.serializers = [
+      new MapFishPrintV3GeoJsonSerializer(),
+      new MapFishPrintV3OSMSerializer(),
+      new MapFishPrintV3WMTSSerializer(),
+      new SHOGunMapFishPrintV3WMSSerializer(),
+      new SHOGunMapFishPrintV3TiledWMSSerializer()
+    ];
 
     await pManager.init()
       .then(() => {
