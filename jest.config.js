@@ -6,7 +6,10 @@ module.exports = {
   },
   testMatch: ['<rootDir>/src/**/?!(*.ui)(spec|test).(j|t)s?(x)'],
   collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: [
+    '<rootDir>/jest.setup.js',
+    '<rootDir>/jest/matchMediaMock.js'
+  ],
   testEnvironment: 'jest-environment-jsdom',
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'
