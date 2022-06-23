@@ -1,6 +1,11 @@
 export default {
   de: {
     translation: {
+      ApplicationInfo: {
+        title: 'Über',
+        versionTitle: 'Version',
+        buildTitle: 'Build'
+      },
       AddLayerModal: {
         addSelectedLayers: 'Auswahl hinzufügen',
         addAllLayers: 'Alle hinzufügen',
@@ -76,13 +81,21 @@ export default {
       Nominatim: {
         placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
       },
-      Drawer: {
-        title: 'Themen'
+      UserMenu: {
+        settingsMenuTitle: 'Profil bearbeiten',
+        infoMenuTitle: 'Über',
+        logoutMenuTitle: 'Ausloggen',
+        loginMenuTitle: 'Anmelden'
       }
     }
   },
   en: {
     translation: {
+      ApplicationInfo: {
+        title: 'About',
+        versionTitle: 'Version',
+        buildTitle: 'Build'
+      },
       AddLayerModal: {
         addSelectedLayers: 'Add selected',
         addAllLayers: 'Add all',
@@ -157,8 +170,11 @@ export default {
       Nominatim: {
         placeholder: 'Place name, street name, district name, POI, etc.'
       },
-      Drawer: {
-        title: 'Layers'
+      UserMenu: {
+        settingsMenuTitle: 'Edit profile',
+        infoMenuTitle: 'About',
+        logoutMenuTitle: 'Logout',
+        loginMenuTitle: 'Login'
       }
     }
   }
