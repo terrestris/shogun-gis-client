@@ -215,7 +215,7 @@ const initKeycloak = async () => {
   }
 
   const keycloak = new Keycloak({
-    url: `https://${keycloakHost}/auth`,
+    url: `${keycloakHost}`,
     realm: keycloakRealm,
     clientId: keycloakClientId
   });
