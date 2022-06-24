@@ -59,7 +59,7 @@ import {
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import useSHOGunClient from '../../hooks/useSHOGunClient';
+import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
   show
@@ -96,7 +96,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   } = useTranslation();
   const map = useMap();
 
-  const client = useSHOGunClient();
+  const client = useSHOGunAPIClient();
 
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);

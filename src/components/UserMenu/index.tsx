@@ -32,7 +32,7 @@ import {
 import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
 
 import useAppSelector from '../../hooks/useAppSelector';
-import useSHOGunClient from '../../hooks/useSHOGunClient';
+import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import {
   getGravatarUrl
 } from '../../utils/getGravatarUrl';
@@ -50,7 +50,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
     t
   } = useTranslation();
 
-  const client = useSHOGunClient();
+  const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
 
   const user = useAppSelector((state) => state.user);

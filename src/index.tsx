@@ -48,9 +48,8 @@ import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClien
 const App = React.lazy(() => import('./App'));
 
 import {
-  SHOGunClientProvider
-
-} from './context/SHOGunClientContext';
+  SHOGunAPIClientProvider
+} from './context/SHOGunAPIClientContext';
 import i18n from './i18n';
 
 import {
@@ -367,7 +366,7 @@ const renderApp = async () => {
     render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
-          <SHOGunClientProvider client={client}>
+          <SHOGunAPIClientProvider client={client}>
             <ConfigProvider locale={getConfigLang(i18n.language)}>
               <Provider store={store}>
                 <MapContext.Provider value={map}>
@@ -375,7 +374,7 @@ const renderApp = async () => {
                 </MapContext.Provider>
               </Provider>
             </ConfigProvider>
-          </SHOGunClientProvider>
+          </SHOGunAPIClientProvider>
         </React.Suspense>
       </React.StrictMode>,
       document.getElementById('app')
