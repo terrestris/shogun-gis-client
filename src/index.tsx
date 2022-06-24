@@ -42,8 +42,8 @@ import {
 } from '@terrestris/shogun-util/dist/model/AppInfo';
 import Application from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
-import ShogunApplicationUtil from '@terrestris/shogun-util/dist/parser/ShogunApplicationUtil';
-import SHOGunClient from '@terrestris/shogun-util/dist/service/SHOGunClient';
+import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
+import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 const App = React.lazy(() => import('./App'));
 
@@ -78,11 +78,11 @@ export interface ThemeProperties extends React.CSSProperties {
   '--complementaryColor'?: string;
 }
 
-const client = new SHOGunClient({
+const client = new SHOGunAPIClient({
   url: ClientConfiguration.shogunBase || '/'
 });
 
-const parser = new ShogunApplicationUtil({
+const parser = new SHOGunApplicationUtil({
   client
 });
 
