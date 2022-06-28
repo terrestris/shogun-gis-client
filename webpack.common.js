@@ -1,6 +1,8 @@
 const path = require('path');
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -65,6 +67,17 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true
       }
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: path.join(__dirname, 'resources', 'config', 'gis-client-config.js'),
+        to: '.'
+      }]
+    }),
+    new webpack.DefinePlugin({
+      KEYCLOAK_HOST: JSON.stringify(process.env.KEYCLOAK_HOST),
+      KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
+      KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.KEYCLOAK_CLIENT_ID)
     })
   ]
 };

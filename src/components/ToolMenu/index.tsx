@@ -40,6 +40,12 @@ import Logger from '@terrestris/base-util/dist/Logger';
 import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
+import MapFishPrintV3GeoJsonSerializer from
+  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
+import MapFishPrintV3OSMSerializer from
+  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
+import MapFishPrintV3WMTSSerializer from
+  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -47,8 +53,13 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
   show
@@ -59,11 +70,16 @@ import {
 
 import PrintForm from '../PrintForm';
 
+import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
+import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
+
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
 import Measure from './Measure';
 
 import './index.less';
+
+import '../PrintForm/Shared/Shared';
 
 export interface TitleEventEntity {
   key: string;
@@ -79,6 +95,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     t
   } = useTranslation();
   const map = useMap();
+
+  const client = useSHOGunAPIClient();
 
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
@@ -126,10 +144,21 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       map,
       timeout: 60000,
       layerFilter,
+      headers: {
+        ...getBearerTokenHeader()
+      },
       transformOpts: {
         rotate: false
       }
     });
+
+    pManager.serializers = [
+      new MapFishPrintV3GeoJsonSerializer(),
+      new MapFishPrintV3OSMSerializer(),
+      new MapFishPrintV3WMTSSerializer(),
+      new SHOGunMapFishPrintV3WMSSerializer(),
+      new SHOGunMapFishPrintV3TiledWMSSerializer()
+    ];
 
     await pManager.init()
       .then(() => {

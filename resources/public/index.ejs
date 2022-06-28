@@ -13,11 +13,10 @@
     <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <div id="loadmask" class="loadmask">
-      <img src="./loading.png" alt="Loading, please wait…">
+      <img src="./shogun_logo.png" alt="Loading, please wait…">
     </div>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
-      /* fade out the loadmask after react starts rendering */
       .loadmask {
         position: fixed;
         top: 50%;
@@ -29,11 +28,11 @@
         z-index: 999;
 
         opacity: 0;
-        animation-name: fadeOutOpacity;
-        animation-iteration-count: 1;
-        animation-timing-function: ease-out;
-        animation-duration: 3s;
-        animation-fill-mode: forwards;
+        animation: heartBeat 2s ease-in-out infinite;
+      }
+
+      .loadmask-hidden {
+        animation: fadeOut 1.5s forwards;
       }
 
       .loadmask > img {
@@ -42,37 +41,27 @@
         display: block;
       }
 
-      @keyframes fadeOutOpacity {
-        0% {
+      @keyframes fadeOut {
+        from {
           opacity: 1;
         }
-
-        99% {
-          opacity: 0.01;
-        }
-
-        100% {
+        to {
           opacity: 0;
-          z-index: -1;
-          display: none;
+          top: 0;
+          left: 0;
+          transform: scale(0.5);
         }
       }
 
-      /* fade in app div */
-      .app {
-        animation-name: fadeInOpacity;
-        animation-iteration-count: 1;
-        animation-timing-function: ease-in;
-        animation-duration: 3s;
-      }
-
-      @keyframes fadeInOpacity {
+      @keyframes heartBeat {
         0% {
-          opacity: 0;
+          opacity: 0.2;
         }
-
-        100% {
+        50% {
           opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
         }
       }
     </style>
@@ -81,7 +70,7 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <script src="/gis-client-config.js"></script>
+    <script src="./gis-client-config.js"></script>
     <script>
       if (!window.clientConfig) {
         console.warn('No config found, client defaults will be used.');

@@ -3,20 +3,22 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: string = './shogun_logo.png';
+import User from '@terrestris/shogun-util/dist/model/User';
+
+const initialState: User = { };
 
 export const slice = createSlice({
-  name: 'logoPath',
+  name: 'user',
   initialState,
   reducers: {
-    setLogoPath: (state, action: PayloadAction<string>) => {
+    setUser(state, action: PayloadAction<User>) {
       return action.payload;
     }
   }
 });
 
 export const {
-  setLogoPath
+  setUser
 } = slice.actions;
 
 export default slice.reducer;

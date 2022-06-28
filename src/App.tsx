@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useEffect
+} from 'react';
 
 import AddLayerModal from './components/AddLayerModal/AddLayerModal';
 import BasicMapComponent from './components/BasicMapComponent';
@@ -13,6 +15,15 @@ export interface AppProps extends React.ComponentProps<'div'> { };
 export const App: React.FC<AppProps> = ({
   ...restProps
 }): JSX.Element => {
+
+  useEffect(() => {
+    const loadingMask = document.querySelectorAll('.loadmask')[0];
+
+    if (loadingMask) {
+      loadingMask.classList.add('loadmask-hidden');
+    }
+  }, []);
+
   return (
     <div
       className="App"

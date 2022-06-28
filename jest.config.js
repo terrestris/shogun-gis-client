@@ -1,4 +1,9 @@
 module.exports = {
+  globals: {
+    KEYCLOAK_HOST: 'localhost',
+    KEYCLOAK_REALM: 'SHOGun',
+    KEYCLOAK_CLIENT_ID: 'shogun-client'
+  },
   moduleFileExtensions: ['ts', 'js'],
   transform: {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
@@ -6,7 +11,10 @@ module.exports = {
   },
   testMatch: ['<rootDir>/src/**/?!(*.ui)(spec|test).(j|t)s?(x)'],
   collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: [
+    '<rootDir>/jest.setup.js',
+    '<rootDir>/jest/matchMediaMock.js'
+  ],
   testEnvironment: 'jest-environment-jsdom',
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'

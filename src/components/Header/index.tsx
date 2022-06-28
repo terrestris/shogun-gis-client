@@ -5,6 +5,7 @@ import {
 } from '../../hooks/useAppSelector';
 
 import BasicNominatimSearch from '../BasicNominatimSearch';
+import UserMenu from '../UserMenu';
 
 import './index.less';
 
@@ -42,6 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div
         className="item-container right-items"
       >
+        <UserMenu />
       </div>
     </div>
   );

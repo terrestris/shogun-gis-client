@@ -11,6 +11,8 @@ import enGB from 'antd/lib/locale/en_GB';
 
 import ClientConfiguration from 'clientConfig';
 
+import Keycloak from 'keycloak-js';
+
 import {
   defaults as OlControlDefaults
 } from 'ol/control';
@@ -35,13 +37,24 @@ import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
 
+import {
+  AppInfo
+} from '@terrestris/shogun-util/dist/model/AppInfo';
 import Application from '@terrestris/shogun-util/dist/model/Application';
-import ShogunApplicationUtil from '@terrestris/shogun-util/dist/parser/ShogunApplicationUtil';
-import SHOGunClient from '@terrestris/shogun-util/dist/service/SHOGunClient';
+import User from '@terrestris/shogun-util/dist/model/User';
+import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
+import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
-import App from './App';
+const App = React.lazy(() => import('./App'));
+
+import {
+  SHOGunAPIClientProvider
+} from './context/SHOGunAPIClientContext';
 import i18n from './i18n';
 
+import {
+  setAppInfo
+} from './store/appInfo';
 import {
   setLogoPath
 } from './store/logoPath';
@@ -51,9 +64,11 @@ import {
 import {
   setTitle
 } from './store/title';
+import {
+  setUser
+} from './store/user';
 
 import './index.less';
-import GeoServerUtil from './util/GeoServerUtil';
 
 // TODO: extend antd properties too
 export interface ThemeProperties extends React.CSSProperties {
@@ -62,11 +77,11 @@ export interface ThemeProperties extends React.CSSProperties {
   '--complementaryColor'?: string;
 }
 
-const client = new SHOGunClient({
-  url: ClientConfiguration.appPrefix || '/'
+const client = new SHOGunAPIClient({
+  url: ClientConfiguration.shogunBase || '/'
 });
 
-const parser = new ShogunApplicationUtil({
+const parser = new SHOGunApplicationUtil({
   client
 });
 
@@ -89,11 +104,10 @@ const getApplicationConfiguration = async () => {
     return;
   }
 
-  let application;
   try {
     Logger.info(`Loading application with ID ${applicationId}`);
 
-    application = await client.application().findOne(applicationId);
+    const application = await client.application().findOne(applicationId);
 
     Logger.info(`Successfully loaded application with ID ${applicationId}`);
 
@@ -108,6 +122,39 @@ const getApplicationConfiguration = async () => {
       }),
       duration: 0
     });
+  }
+};
+
+const getApplicationInfo = async () => {
+  try {
+    Logger.info('Loading application info');
+
+    const appInfo = await client.info().getAppInfo();
+
+    Logger.info('Successfully loaded application info');
+
+    return appInfo;
+  } catch (error) {
+    Logger.error('Error while loading application info: ', error);
+  }
+};
+
+const getUser = async (userId?: number) => {
+  if (!userId) {
+    Logger.info('No user ID given, can\'t load it\'s details.');
+    return;
+  }
+
+  try {
+    Logger.info(`Loading user with ID ${userId}`);
+
+    const user = await client.user().findOne(userId);
+
+    Logger.info(`Successfully loaded user with ID ${userId}`);
+
+    return user;
+  } catch (error) {
+    Logger.error(`Error while loading user with ID ${userId}: `, error);
   }
 };
 
@@ -126,6 +173,65 @@ const setApplicationToStore = async (application?: Application) => {
     // @ts-ignore
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
+};
+
+const setAppInfoToStore = async (appInfo?: AppInfo) => {
+  if (!appInfo) {
+    return;
+  }
+
+  store.dispatch(setAppInfo(appInfo));
+};
+
+const setUserToStore = async (user?: User) => {
+  if (!user) {
+    return;
+  }
+
+  store.dispatch(setUser(user));
+};
+
+const initKeycloak = async () => {
+  const keycloakEnabled = ClientConfiguration.keycloak?.enabled;
+  const keycloakHost = ClientConfiguration.keycloak?.host || KEYCLOAK_HOST;
+  const keycloakRealm = ClientConfiguration.keycloak?.realm || KEYCLOAK_REALM;
+  const keycloakClientId = ClientConfiguration.keycloak?.clientId || KEYCLOAK_CLIENT_ID;
+
+  if (!keycloakEnabled) {
+    return undefined;
+  }
+
+  if (!keycloakHost) {
+    throw new Error('Neither config key keycloak.host nor environment KEYCLOAK_HOST is set');
+  }
+
+  if (!keycloakRealm) {
+    throw new Error('Neither config key keycloak.realm nor environment KEYCLOAK_REALM is set');
+  }
+
+  if (!keycloakClientId) {
+    throw new Error('Neither config key keycloak.clientId nor environment KEYCLOAK_CLIENT_ID is set');
+  }
+
+  const keycloak = new Keycloak({
+    url: `${keycloakHost}`,
+    realm: keycloakRealm,
+    clientId: keycloakClientId
+  });
+
+  keycloak.onTokenExpired = async () => {
+    try {
+      await keycloak.updateToken(0);
+    } catch (error) {
+      Logger.error('Error while refreshing the access token: ', error);
+    }
+  };
+
+  await keycloak.init({
+    onLoad: 'check-sso'
+  });
+
+  return keycloak;
 };
 
 const setApplicationTitle = () => {
@@ -226,11 +332,13 @@ const parseTheme = (theme?: any): ThemeProperties => {
 
 const renderApp = async () => {
   try {
-    const appConfig = await getApplicationConfiguration();
+    const keycloak = await initKeycloak();
 
-    if (ClientConfiguration.loginToGeoServer) {
-      await GeoServerUtil.getGeoServerSession();
+    if (keycloak) {
+      client.setKeycloak(keycloak);
     }
+
+    const appConfig = await getApplicationConfiguration();
 
     // @ts-ignore
     const style = parseTheme(appConfig?.clientConfig?.theme);
@@ -245,23 +353,39 @@ const renderApp = async () => {
 
     setApplicationToStore(appConfig);
 
+    const appInfo = await getApplicationInfo();
+
+    setAppInfoToStore(appInfo);
+
+    const user = await getUser(appInfo?.userId);
+
+    setUserToStore(user);
+
     const map = await setupMap(appConfig);
 
     render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
-          <ConfigProvider locale={getConfigLang(i18n.language)}>
-            <Provider store={store}>
-              <MapContext.Provider value={map}>
-                <App style={style}/>
-              </MapContext.Provider>
-            </Provider>
-          </ConfigProvider>
+          <SHOGunAPIClientProvider client={client}>
+            <ConfigProvider locale={getConfigLang(i18n.language)}>
+              <Provider store={store}>
+                <MapContext.Provider value={map}>
+                  <App style={style}/>
+                </MapContext.Provider>
+              </Provider>
+            </ConfigProvider>
+          </SHOGunAPIClientProvider>
         </React.Suspense>
       </React.StrictMode>,
       document.getElementById('app')
     );
   } catch (error) {
+    const loadingMask = document.querySelectorAll('.loadmask')[0];
+
+    if (loadingMask) {
+      loadingMask.classList.add('loadmask-hidden');
+    }
+
     Logger.error(error);
 
     render(
