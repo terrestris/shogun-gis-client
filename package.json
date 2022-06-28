@@ -44,7 +44,7 @@
     "@terrestris/react-geo": "^17.3.1",
     "@terrestris/shogun-util": "^2.0.0",
     "antd": "^4.21.4",
-    "i18next": "^21.8.10",
+    "i18next": "^21.8.11",
     "i18next-browser-languagedetector": "^6.1.4",
     "js-md5": "^0.7.3",
     "keycloak-js": "^18.0.0",
