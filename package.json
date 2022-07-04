@@ -75,7 +75,7 @@
     "@types/jest": "^28.1.3",
     "@types/js-md5": "^0.4.3",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
-    "@typescript-eslint/parser": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.4",
     "babel-jest": "^28.1.2",
     "babel-loader": "^8.2.5",
     "buffer": "^6.0.3",
