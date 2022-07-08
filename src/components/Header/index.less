@@ -23,8 +23,15 @@
     margin-left: 2rem;
   }
 
+  @media screen and (max-width: 680px) {
+    .title {
+      display: none;
+    }
+  }
+
   .logo {
     height: 3rem;
+    padding: 3px;
   }
 
   .item-container {
@@ -43,10 +50,22 @@
       .react-geo-nominatimsearch.ant-select-auto-complete {
         width: 60%;
       }
+
+      @media screen and (max-width: 680px) {
+        .react-geo-nominatimsearch.ant-select-auto-complete {
+          width: 90%;
+        }
+      }
     }
     &.right-items {
       flex: 1;
       justify-content: flex-end;
+    }
+
+    @media screen and (max-width: 680px) {
+      &.right-items {
+        display: none;
+      }
     }
   }
 }

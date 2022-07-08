@@ -48,18 +48,40 @@
         }
       }
 
-      #mouse-position {
-        justify-content: flex-start;
-
-        .ol-mouse-position {
-          top: 0;
-          right: 0;
-          position: inherit;
+      .scale-combo {
+        display: flex;
+        flex-direction: row;
+      }
+      @media screen and (max-width: 800px) {
+        .scale-combo {
+          display: none;
         }
       }
 
-      .react-geo-scalecombo {
-        width: 15%;
+      @media screen and (max-width: 1080px) {
+        .reference-system {
+          display: none;
+        }
+      }
+
+      .mouse-position-wrapper {
+        display: flex;
+        flex-direction: row;
+
+        #mouse-position {
+          justify-content: flex-start;
+
+          .ol-mouse-position {
+            top: 0;
+            right: 0;
+            position: inherit;
+          }
+        }
+      }
+      @media screen and (max-width: 680px) {
+        .mouse-position-wrapper {
+          display: none;
+        }
       }
     }
 
