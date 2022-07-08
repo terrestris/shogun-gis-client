@@ -104,26 +104,34 @@ export const Footer: React.FC<FooterProps> = ({
         <Divider
           type="vertical"
         />
-        {t('Footer.scale')}:
-        <ScaleCombo
-          map={map}
-        />
-        <Divider
-          type="vertical"
-        />
-        <div>
-          {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
-        </div>
-        <Divider
-          type="vertical"
-        />
-        <div>
-          {t('Footer.mousePosition')}:
+        <div
+          className="scale-combo"
+        >
+          {t('Footer.scale')}:
+          <ScaleCombo
+            map={map}
+          />
+          <Divider
+            type="vertical"
+          />
         </div>
         <div
-          id="mouse-position"
-          className="mouse-position"
-        />
+          className="reference-system"
+        >
+          {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
+          <Divider
+            type="vertical"
+          />
+        </div>
+        <div
+          className="mouse-position-wrapper"
+        >
+          {t('Footer.mousePosition')}:
+          <div
+            id="mouse-position"
+            className="mouse-position"
+          />
+        </div>
       </div>
       <div className="item-container right-items">
         <Button
