@@ -7,6 +7,7 @@ import React, {
 import {
   faRuler,
   faFileDownload,
+  faFile,
   faStream,
   faMousePointer,
   faPlus,
@@ -62,8 +63,11 @@ import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
-  show
+  show as showAdd
 } from '../../store/addLayerModal';
+import {
+  show as showSelect
+} from '../../store/saveSelectModal';
 import {
   unsetSelectedKey
 } from '../../store/toolMenu';
@@ -266,9 +270,16 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               <Button
                 className='add-wms-button tool-menu-button'
                 icon={<FontAwesomeIcon icon={faPlus} />}
-                onClick={() => dispatch(show())}
+                onClick={() => dispatch(showAdd())}
               >
                 {t('ToolMenu.addWms')}
+              </Button>
+              <Button
+                className='save-selection-button tool-menu-button'
+                icon={<FontAwesomeIcon icon={faFile} />}
+                onClick={() => dispatch(showSelect())}
+              >
+                {t('ToolMenu.saveSelection')}
               </Button>
             </div>
           )

@@ -16,6 +16,14 @@ export default {
         errorMessage: 'Fehler',
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
       },
+      SaveSelectModal: {
+        title: 'Auswahl Speichern',
+        info: 'Über die folgende URL können Sie die aktuelle Layerauswahl als Link speichern:',
+        tooltip: 'Link in die Zwischenablage kopieren',
+        success: 'Der Link wurde erfolgreich in die Zwischenablage kopiert',
+        failure: 'Der link konnte nicht kopiert werden',
+        close: 'Schließen'
+      },
       Measure: {
         title: 'Messen',
         line: 'Entfernung',
@@ -45,7 +53,8 @@ export default {
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
         print: 'Export',
-        layertree: 'Karten'
+        layertree: 'Karten',
+        saveSelection: 'Auswahl speichern'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -106,6 +115,14 @@ export default {
         errorMessage: 'Error',
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
       },
+      SaveSelectModal: {
+        title: 'Save selection',
+        info: 'You can use the following URL to save the current layer selection as a link:',
+        tooltip: 'Copy link to Clipboard',
+        success: 'The link has been copied successfully',
+        failure: 'The link could not be copied',
+        close: 'Close'
+      },
       Measure: {
         title: 'Measure',
         line: 'Distance',
@@ -135,7 +152,8 @@ export default {
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
         print: 'Export',
-        layertree: 'Maps'
+        layertree: 'Maps',
+        saveSelection: 'Save selection'
       },
       PrintForm: {
         title: 'Title',

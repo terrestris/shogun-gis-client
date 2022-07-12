@@ -3,6 +3,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import addLayerModal from './addLayerModal';
+import saveSelectModal from './saveSelectModal';
 import appInfo from './appInfo';
 import logoPath from './logoPath';
 import title from './title';
@@ -16,6 +17,7 @@ export const store = configureStore({
     logoPath,
     toolMenu,
     addLayerModal,
+    saveSelectModal,
     user
   }
 });

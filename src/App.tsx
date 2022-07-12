@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import AddLayerModal from './components/AddLayerModal/AddLayerModal';
+import SaveSelectModal from './components/SaveSelectModal/SaveSelectModal';
 import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -34,6 +35,7 @@ export const App: React.FC<AppProps> = ({
       <ToolMenu />
       <Footer />
       <AddLayerModal />
+      <SaveSelectModal />
     </div>
   );
 };
