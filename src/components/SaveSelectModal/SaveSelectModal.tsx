@@ -67,11 +67,6 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
       onCancel={closeModal}
       footer={[
         <Button
-          key="notVisible"
-          disabled={true}
-        >
-        </Button>,
-        <Button
           key="close"
           onClick={closeModal}
         >
