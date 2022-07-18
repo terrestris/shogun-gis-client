@@ -62,7 +62,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@playwright/test": "^1.23.2",
+    "@playwright/test": "^1.23.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
