@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { 
+import {
   CopyOutlined
 } from '@ant-design/icons';
 
@@ -20,13 +20,13 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import { 
+import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import { 
+import {
   hide as hideSelect
 } from '../../store/saveSelectModal';
 
@@ -43,21 +43,33 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const map = useMap();
-  const link = PermalinkUtil.getLink(map!);
+  let map = useMap();
 
   const closeModal = () => {
     dispatch(hideSelect());
   };
 
-  function onCopyClick() {
-    const success = copy(link);
-    if (success) {
-      message.info(t('SaveSelectModal.success'));
-    } else {
-      message.info(t('SaveSelectModal.failure'));
+    function link() {
+    if (map) {
+      let link = PermalinkUtil.getLink(map)
+      return link
     }
-  }
+  };
+
+  function onCopyClick() {
+    if (map) {
+
+      let link = PermalinkUtil.getLink(map)
+      const success = copy(link);
+
+      if (success) {
+        message.info(t('SaveSelectModal.success'));
+      } else {
+        message.info(t('SaveSelectModal.failure'));
+      }
+
+    }
+  };
 
   return (
     <Modal
@@ -87,10 +99,9 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={link} readOnly />
+        <Input value={link()} readOnly />
       </div>
     </Modal>
   );
 };
-
 export default SaveSelectModal;
