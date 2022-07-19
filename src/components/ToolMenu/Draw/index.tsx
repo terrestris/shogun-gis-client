@@ -48,6 +48,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         <FontAwesomeIcon icon={faCircle} />
         <span className="draw-text">{t('Draw.point')}</span>
       </DrawButton>
+
       <DrawButton
         name="drawLine"
         drawType="LineString"
