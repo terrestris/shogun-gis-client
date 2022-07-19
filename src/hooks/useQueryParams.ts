@@ -1,5 +1,5 @@
 /*
- * SHOGun GPRO, based on https://terrestris.github.io/shogun/
+ * SHOGun, based on https://terrestris.github.io/shogun/
  *
  * Copyright © 2022-present terrestris GmbH & Co. KG
  *
