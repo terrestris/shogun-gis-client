@@ -23,6 +23,14 @@ export default {
         clicktodrawline: 'Zum Zeichnen einer Linie klicken',
         clicktodrawarea: 'Zum Zeichnen einer Fläche klicken'
       },
+      Draw: {
+        point: 'Punkt',
+        line: 'Linie',
+        polygon: 'Polygon',
+        circle: 'Kreis',
+        rectangle: 'Rechteck',
+        text: 'Anmerkung'
+      },
       FeatureInfo: {
         usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
       },
@@ -42,6 +50,7 @@ export default {
         expand: 'Menu ausklappen',
         collapse: 'Menu einklappen',
         measure: 'Messen',
+        draw: 'Zeichnen',
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
         print: 'Export',
@@ -113,6 +122,14 @@ export default {
         clicktodrawline: 'Click to draw line',
         clicktodrawarea: 'Click to draw area'
       },
+      Draw: {
+        point: 'Point',
+        line: 'Line',
+        polygon: 'Polygon',
+        circle: 'Circle',
+        rectangle: 'Rectangle',
+        text: 'Annotation'
+      },
       FeatureInfo: {
         usageHint: 'Click on the map to get details about the clicked coordinate.'
       },
@@ -132,6 +149,7 @@ export default {
         expand: 'Expand',
         collapse: 'Collapse',
         measure: 'Measure',
+        draw: 'Draw',
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
         print: 'Export',
