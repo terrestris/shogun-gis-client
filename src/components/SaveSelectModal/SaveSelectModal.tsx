@@ -44,21 +44,33 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
   const { t } = useTranslation();
 
   let map = useMap();
-  let link = PermalinkUtil.getLink(map)
 
   const closeModal = () => {
     dispatch(hideSelect());
   };
 
   function onCopyClick() {
-    const success = copy(link);
+    if (map) {
 
-    if (success) {
-      message.info(t('SaveSelectModal.success'));
-    } else {
-      message.info(t('SaveSelectModal.failure'));
+      let link = PermalinkUtil.getLink(map)
+      const success = copy(link);
+
+      if (success) {
+        message.info(t('SaveSelectModal.success'));
+      } else {
+        message.info(t('SaveSelectModal.failure'));
+      }
     }
   };
+
+  function link() {
+    if (map) {
+      let link = PermalinkUtil.getLink(map)
+      return link
+    }
+  };
+
+
 
   return (
     <Modal
@@ -88,7 +100,7 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={link} readOnly />
+        <Input value={link()} readOnly />
       </div>
     </Modal>
   );

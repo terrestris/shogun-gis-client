@@ -18,7 +18,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   const queryParams = useQueryParams();
 
   useEffect(() => {
-    PermalinkUtil.applyLink(map);    
+    if (map) {PermalinkUtil.applyLink(map);}        
   }, [
     queryParams.get('center'),
     queryParams.get('zoom'),
