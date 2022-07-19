@@ -65,7 +65,6 @@ export default {
       Footer: {
         refSystem: 'Bezugssystem',
         scale: 'Maßstab',
-        version: 'Klient Version',
         mousePosition: 'Mausposition',
         imprint: 'Impressum',
         contact: 'Kontakt',
