@@ -6,7 +6,6 @@ import {
   faCircle,
   faFont,
   faSquare
-
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
