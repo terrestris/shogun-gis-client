@@ -29,7 +29,10 @@ export default {
         polygon: 'Polygon',
         circle: 'Kreis',
         rectangle: 'Rechteck',
-        text: 'Anmerkung'
+        text: 'Anmerkung',
+        modify: 'Bearbeitung',
+        upload: 'Hochladen',
+        delete: 'Löschen'
       },
       FeatureInfo: {
         usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
@@ -128,7 +131,10 @@ export default {
         polygon: 'Polygon',
         circle: 'Circle',
         rectangle: 'Rectangle',
-        text: 'Annotation'
+        text: 'Annotation',
+        modify: 'Edit',
+        upload: 'Upload',
+        delete: 'Delete'
       },
       FeatureInfo: {
         usageHint: 'Click on the map to get details about the clicked coordinate.'
