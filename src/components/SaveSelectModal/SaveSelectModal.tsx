@@ -51,7 +51,6 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
 
   function onCopyClick() {
     if (map) {
-
       let link = PermalinkUtil.getLink(map)
       const success = copy(link);
 
