@@ -3,8 +3,8 @@ export default {
     translation: {
       ApplicationInfo: {
         title: 'Über',
-        versionTitle: 'Version',
-        buildTitle: 'Build'
+        clientVersionTitle: 'Client Version',
+        backendVersionTitle: 'Backend Version'
       },
       AddLayerModal: {
         addSelectedLayers: 'Auswahl hinzufügen',
@@ -94,8 +94,8 @@ export default {
     translation: {
       ApplicationInfo: {
         title: 'About',
-        versionTitle: 'Version',
-        buildTitle: 'Build'
+        clientVersionTitle: 'Client version',
+        backendVersionTitle: 'Backend version'
       },
       AddLayerModal: {
         addSelectedLayers: 'Add selected',
@@ -156,7 +156,6 @@ export default {
       Footer: {
         refSystem: 'Reference system',
         scale: 'Scale',
-        version: 'Client version',
         mousePosition: 'Mouse position',
         imprint: 'Imprint',
         contact: 'Contact',
