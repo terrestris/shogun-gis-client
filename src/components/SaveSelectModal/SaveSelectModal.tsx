@@ -70,8 +70,6 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
     }
   };
 
-
-
   return (
     <Modal
       className="save-select-modal"
