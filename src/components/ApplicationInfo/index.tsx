@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  Divider,
   Modal,
   Statistic
 } from 'antd';
