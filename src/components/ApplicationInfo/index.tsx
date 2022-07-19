@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import {
+  Divider,
   Modal,
   Statistic
 } from 'antd';
@@ -16,6 +17,10 @@ import {
 } from 'react-i18next';
 
 import useAppSelector from '../../hooks/useAppSelector';
+
+import {
+  useClientVersion
+} from '../../hooks/useVersion';
 
 import './index.less';
 
@@ -72,12 +77,12 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
           src={logoPath}
         />
         <Statistic
-          title={t('ApplicationInfo.versionTitle')}
-          value={appInfo.version}
+          title={t('ApplicationInfo.clientVersionTitle')}
+          value={useClientVersion()}
         />
         <Statistic
-          title={t('ApplicationInfo.buildTitle')}
-          value={appInfo.buildTime}
+          title={t('ApplicationInfo.backendVersionTitle')}
+          value={`${appInfo.version} (${appInfo.buildTime})`}
         />
       </Modal>
     </>
