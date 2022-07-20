@@ -12,7 +12,7 @@ import {
   faPlus,
   faChevronRight,
   faChevronLeft,
-  faShareNodes
+  faShareNodes,
   faDrawPolygon
 } from '@fortawesome/free-solid-svg-icons';
 
