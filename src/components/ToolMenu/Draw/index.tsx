@@ -10,13 +10,17 @@ import {
   faSquare,
   faPenToSquare,
   faUpload,
-  faTrash
+  faTrash,
+  faDownload
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
+import {
+  Feature
+} from 'ol';
 import GeoJSON from 'ol/format/GeoJSON';
 
 import {
@@ -48,6 +52,36 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
   } = useTranslation();
 
   const map = useMap();
+
+  const onGeoJSONDownload = () => {
+    const clonedFeatures: Feature[] = [];
+    if (map) {
+      const mapProjection = map.getView().getProjection().getCode();
+      const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
+      const digitizedFeatures = digitizeLayer.getSource()?.getFeatures();
+      if (digitizedFeatures && digitizedFeatures.length > 0) {
+        digitizedFeatures.forEach(feat => {
+          const clonedFeature = feat.clone();
+          clonedFeature.getGeometry()?.transform(mapProjection, 'EPSG:4326');
+          clonedFeatures.push(clonedFeature);
+        });
+        const geoJSON = new GeoJSON().writeFeatures(clonedFeatures);
+
+        var fileToDownload = new Blob([geoJSON], {
+          type: 'application/geo+json'
+        });
+
+        // download the file
+        const url = window.URL.createObjectURL(fileToDownload);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'exportedFeatures.geojson');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
 
   const onGeoJSONUpload = (geoJSONFile: File) => {
     const fileReader = new FileReader();
@@ -149,6 +183,14 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
           <span className="draw-upload">{t('Draw.upload')}</span>
         </SimpleButton>
       </UploadButton>
+
+      <SimpleButton
+        name='draw-export'
+        onClick={onGeoJSONDownload}
+      >
+        <FontAwesomeIcon icon={faDownload} />
+        <span className="draw-export">{t('Draw.export')}</span>
+      </SimpleButton>
 
       <DeleteButton name='draw-delete'>
         <FontAwesomeIcon icon={faTrash} />
