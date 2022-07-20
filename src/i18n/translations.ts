@@ -32,7 +32,8 @@ export default {
         text: 'Anmerkung',
         modify: 'Bearbeitung',
         upload: 'Hochladen',
-        delete: 'Löschen'
+        delete: 'Löschen',
+        export: 'Exportieren'
       },
       FeatureInfo: {
         usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
@@ -134,7 +135,8 @@ export default {
         text: 'Annotation',
         modify: 'Edit',
         upload: 'Upload',
-        delete: 'Delete'
+        delete: 'Delete',
+        export: 'Export'
       },
       FeatureInfo: {
         usageHint: 'Click on the map to get details about the clicked coordinate.'
