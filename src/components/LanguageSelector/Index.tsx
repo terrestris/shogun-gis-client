@@ -19,25 +19,37 @@ import {
   Select
 } from 'antd';
 
-export const LanguageSelect = ( i18n: any ) => {
+import i18n from '../../i18n';
+
+export const LanguageSelect = () => {
   const {
     Option
   } = Select;
 
+  const supportedLanguages = Object.keys(i18n.services.resourceStore.data);
+
   const onLanguageChange = (lang: string) => {
-    if (i18n) {
-      i18n.changeLanguage(lang);
-    }
+    i18n.changeLanguage(lang);
   };
 
   return (
     <div className="languageSelect">
       <Select
-        defaultValue={i18n?.language || 'en'}
+        defaultValue={i18n.language || 'en'}
         onChange={onLanguageChange}
       >
-        <Option value="de">DE</Option>
-        <Option value="en">EN</Option>
+        {
+          supportedLanguages.map((supportedLanguage) => {
+            return (
+              <Option
+                key={supportedLanguage}
+                value={supportedLanguage}
+              >
+                {supportedLanguage.toUpperCase()}
+              </Option>
+            );
+          })
+        }
       </Select>
     </div>
   );

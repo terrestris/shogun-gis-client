@@ -4,10 +4,9 @@ import {
   useAppSelector
 } from '../../hooks/useAppSelector';
 
-import i18n from '../../i18n';
 import BasicNominatimSearch from '../BasicNominatimSearch';
 
-import LanguageSelect from '../LanguageSelector/LanguageSelect';
+import LanguageSelect from '../LanguageSelector/Index';
 import UserMenu from '../UserMenu';
 
 import './index.less';
@@ -46,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div
         className="item-container right-items"
       >
-        <LanguageSelect {...i18n} />
+        <LanguageSelect />
         <UserMenu />
       </div>
     </div>
