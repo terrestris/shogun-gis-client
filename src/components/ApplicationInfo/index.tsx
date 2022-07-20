@@ -17,6 +17,10 @@ import {
 
 import useAppSelector from '../../hooks/useAppSelector';
 
+import {
+  useClientVersion
+} from '../../hooks/useVersion';
+
 import './index.less';
 
 interface ApplicationInfoProps extends ModalProps {
@@ -72,12 +76,12 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
           src={logoPath}
         />
         <Statistic
-          title={t('ApplicationInfo.versionTitle')}
-          value={appInfo.version}
+          title={t('ApplicationInfo.clientVersionTitle')}
+          value={useClientVersion()}
         />
         <Statistic
-          title={t('ApplicationInfo.buildTitle')}
-          value={appInfo.buildTime}
+          title={t('ApplicationInfo.backendVersionTitle')}
+          value={`${appInfo.version} (${appInfo.buildTime})`}
         />
       </Modal>
     </>

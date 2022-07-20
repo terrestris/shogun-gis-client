@@ -193,6 +193,7 @@ const setUserToStore = async (user?: User) => {
 
 const initKeycloak = async () => {
   const keycloakEnabled = ClientConfiguration.keycloak?.enabled;
+  const keycloakOnLoad = ClientConfiguration.keycloak?.onLoadAction;
   const keycloakHost = ClientConfiguration.keycloak?.host || KEYCLOAK_HOST;
   const keycloakRealm = ClientConfiguration.keycloak?.realm || KEYCLOAK_REALM;
   const keycloakClientId = ClientConfiguration.keycloak?.clientId || KEYCLOAK_CLIENT_ID;
@@ -228,7 +229,7 @@ const initKeycloak = async () => {
   };
 
   await keycloak.init({
-    onLoad: 'check-sso'
+    onLoad: keycloakOnLoad
   });
 
   return keycloak;
