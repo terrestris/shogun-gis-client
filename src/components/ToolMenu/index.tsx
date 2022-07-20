@@ -69,7 +69,7 @@ import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
-import PermalinkModal from '../PermalinkModal';
+import Permalink from '../Permalink';
 import PrintForm from '../PrintForm';
 
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
@@ -285,7 +285,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       children: [
         {
           key: 'share-panel',
-          label: <PermalinkModal />
+          label: <Permalink />
         }
       ]
     },

@@ -21,7 +21,9 @@ export default {
         twitterTooltip: 'Link via Twitter teilen',
         whatsAppTooltip: 'Link via WhatsApp teilen',
         mailTooltip: 'Link via Mail teilen',
-        copyTooltip: 'Link in die Zwischenablage kopieren'
+        copyTooltip: 'Link in die Zwischenablage kopieren',
+        copiedToClipboard: 'Link wurde in Zwischenablage kopiert',
+        copyToClipboardFailed: 'Link konnte nicht kopiert werden'
       },
       Measure: {
         title: 'Messen',
@@ -52,8 +54,7 @@ export default {
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
         print: 'Export',
-        layertree: 'Karten',
-        saveSelection: 'Auswahl speichern'
+        layertree: 'Karten'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -119,7 +120,9 @@ export default {
         twitterTooltip: 'Share link via Twitter',
         whatsAppTooltip: 'Share link via WhatsApp',
         mailTooltip: 'Share link via Mail',
-        copyTooltip: 'Copy link to Clipboard'
+        copyTooltip: 'Copy link to Clipboard',
+        copiedToClipboard: 'Copied to clipboard',
+        copyToClipboardFailed: 'Could not copy link to clipboard'
       },
       Measure: {
         title: 'Measure',
@@ -150,8 +153,7 @@ export default {
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
         print: 'Export',
-        layertree: 'Maps',
-        saveSelection: 'Save selection'
+        layertree: 'Maps'
       },
       PrintForm: {
         title: 'Title',

@@ -22,11 +22,11 @@ import {
 
 import './index.less';
 
-interface DefaultSharePanelProps { }
+interface DefaultPermalinkProps { }
 
-export interface SharePanelProps extends Partial<DefaultSharePanelProps> { }
+export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
-export const SharePanel: React.FC<SharePanelProps> = () => {
+export const Permalink: React.FC<PermalinkProps> = () => {
 
   const map = useMap();
   const {
@@ -39,9 +39,8 @@ export const SharePanel: React.FC<SharePanelProps> = () => {
 
   const link = PermalinkUtil.getLink(map);
 
-  // TODO: these could be props
-  const mailSubject = 'Geoportal Raumordnung Kartenviewer';
-  const mailBody = `Hey,\r\nsieh dir an was ich im Geoportal Raumordnung Baden-Württemberg gefunden habe:\r\n${link}`;
+  const mailSubject = 'EO-Lab Web-GIS';
+  const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${link}`;
 
   function onTwitterClick() {
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
@@ -50,7 +49,7 @@ export const SharePanel: React.FC<SharePanelProps> = () => {
   }
 
   function onWhatsAppClick() {
-    const whatsAppUrl = new URL('http://wa.me');
+    const whatsAppUrl = new URL('https://wa.me');
     whatsAppUrl.searchParams.set('text', mailBody);
     window.open(whatsAppUrl);
   }
@@ -59,20 +58,20 @@ export const SharePanel: React.FC<SharePanelProps> = () => {
     const mailToUrl = new URL('mailto:');
     mailToUrl.searchParams.set('subject', mailSubject);
     mailToUrl.searchParams.set('body', mailBody);
-    window.open(mailToUrl.toString().replace(/\+/g, '%20'));
+    window.open(mailToUrl.toString().replace(/\+/g, '%20'), '_self');
   }
 
   function onCopyClick() {
     const success = copy(link);
     if (success) {
-      message.info(t('SharePanel.copiedToClipboard'));
+      message.info(t('Permalink.copiedToClipboard'));
     } else {
-      message.info(t('SharePanel.copyToClipboardFailed'));
+      message.info(t('Permalink.copyToClipboardFailed'));
     }
   }
 
   return (
-    <div className="share-panel">
+    <div className="permalink">
       <div className="icons">
         <Tooltip title={t('Permalink.twitterTooltip')}>
           <TwitterOutlined onClick={onTwitterClick} />
@@ -96,4 +95,4 @@ export const SharePanel: React.FC<SharePanelProps> = () => {
   );
 };
 
-export default SharePanel;
+export default Permalink;
