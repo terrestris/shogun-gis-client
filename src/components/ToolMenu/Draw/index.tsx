@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  ChangeEvent
+} from 'react';
 
 import {
   faDrawPolygon,
@@ -47,30 +49,25 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
 
   const map = useMap();
 
-  const onGeoJSONUpload = (geoJSONFile: any ) => {
-    const type = geoJSONFile.type !== 'application/geojson' ? geoJSONFile.type : 'NOT SUPPORTED';
-    if (type !== 'NOT SUPPORTED') {
+  const onGeoJSONUpload = (geoJSONFile: File) => {
+    var fileReader=new FileReader();
 
-      const fileReader = new FileReader();
+    fileReader.onload = () => {
+      const geoJSONFeatures = new GeoJSON().readFeatures(fileReader.result);
 
-      fileReader.onload = () => {
-        const geoJSONFeatures = new GeoJSON().readFeatures(fileReader.result);
+      if (map) {
+        const mapProjection = map.getView().getProjection().getCode();
         geoJSONFeatures.forEach(feat => {
-          // TODO: Add some rule to have this projection always 4326 or 3857
-          feat.getGeometry()?.transform('EPSG:4326', 'EPSG:3857');
+          feat.getGeometry()?.transform('EPSG:4326', mapProjection);
         });
-        if (map) {
-          const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
-          const digitizeLayerSource = digitizeLayer.getSource();
-          digitizeLayerSource?.addFeatures(geoJSONFeatures);
-        }
+        const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
+        const digitizeLayerSource = digitizeLayer.getSource();
+        digitizeLayerSource?.addFeatures(geoJSONFeatures);
+      }
 
-      };
+    };
 
-      fileReader.readAsText(geoJSONFile);
-    } else {
-      alert('NOT SUPPORTED');
-    }
+    fileReader.readAsText(geoJSONFile);
   };
 
   if (!map) {
@@ -133,9 +130,16 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
       </ModifyButton>
 
       <UploadButton
-        onChange={e => {
-          // @ts-ignore
-          onGeoJSONUpload(e.target.files[0]);
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          const uploadedFiles = e.target.files;
+          if (uploadedFiles && uploadedFiles.length === 1) {
+            if (
+              uploadedFiles[0].type === 'application/geo+json' ||
+              uploadedFiles[0].type === 'application/geojson'
+            ) {
+              onGeoJSONUpload(uploadedFiles[0]);
+            }
+          }
         }}
       >
         <SimpleButton>
