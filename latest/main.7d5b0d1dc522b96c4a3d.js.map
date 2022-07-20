@@ -1,1 +1,0 @@
-{"version":3,"file":"main.7d5b0d1dc522b96c4a3d.js","mappings":"0HAAAA,EAAOC,QAAUC,e","sources":["webpack://shogun-demo-client/external var \"clientConfig\""],"sourcesContent":["module.exports = clientConfig;"],"names":["module","exports","clientConfig"],"sourceRoot":""}
