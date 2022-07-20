@@ -1,20 +1,24 @@
 import React from 'react';
 
-import { useTranslation } from 'react-i18next';
-
-import { Input, Tooltip, message } from 'antd';
-
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
-
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   CopyOutlined,
   MailOutlined,
   TwitterOutlined,
   WhatsAppOutlined
 } from '@ant-design/icons';
-
+import {
+  Input, Tooltip, message
+} from 'antd';
 import copy from 'copy-to-clipboard';
+import {
+  useTranslation
+} from 'react-i18next';
+
+import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+
+import {
+  useMap
+} from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
 
@@ -25,12 +29,14 @@ export interface SharePanelProps extends Partial<DefaultSharePanelProps> { }
 export const SharePanel: React.FC<SharePanelProps> = () => {
 
   const map = useMap();
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
 
   if (!map) {
     return <></>;
   }
-  
+
   const link = PermalinkUtil.getLink(map);
 
   // TODO: these could be props
@@ -79,7 +85,9 @@ export const SharePanel: React.FC<SharePanelProps> = () => {
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={link} readOnly />
+        <Input value={link}
+          readOnly
+        />
         <Tooltip title={t('Permalink.copyTooltip')}>
           <CopyOutlined onClick={onCopyClick} />
         </Tooltip>

@@ -7,7 +7,6 @@ import React, {
 import {
   faRuler,
   faFileDownload,
-  faFile,
   faStream,
   faMousePointer,
   faPlus,
@@ -70,6 +69,7 @@ import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
+import PermalinkModal from '../PermalinkModal';
 import PrintForm from '../PrintForm';
 
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
@@ -82,7 +82,6 @@ import Measure from './Measure';
 import './index.less';
 
 import '../PrintForm/Shared/Shared';
-import PermalinkModal from '../PermalinkModal';
 
 export interface TitleEventEntity {
   key: string;
