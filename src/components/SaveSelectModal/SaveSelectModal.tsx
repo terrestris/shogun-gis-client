@@ -51,7 +51,6 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
 
   const onCopyClick = () => {
     if (map) {
-
       let link = PermalinkUtil.getLink(map)
       const success = copy(link);
 
@@ -103,4 +102,5 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
     </Modal>
   );
 };
+
 export default SaveSelectModal;
