@@ -39,7 +39,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
   const link = PermalinkUtil.getLink(map);
 
-  const mailSubject = 'EO-Lab Web-GIS';
+  const mailSubject = 'SHOGun Web-GIS';
   const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${link}`;
 
   function onTwitterClick() {
