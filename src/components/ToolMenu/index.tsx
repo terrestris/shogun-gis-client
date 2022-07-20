@@ -12,7 +12,8 @@ import {
   faMousePointer,
   faPlus,
   faChevronRight,
-  faChevronLeft
+  faChevronLeft,
+  faShareNodes
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
@@ -66,9 +67,6 @@ import {
   show as showAdd
 } from '../../store/addLayerModal';
 import {
-  show as showSelect
-} from '../../store/saveSelectModal';
-import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
@@ -84,6 +82,7 @@ import Measure from './Measure';
 import './index.less';
 
 import '../PrintForm/Shared/Shared';
+import PermalinkModal from '../PermalinkModal';
 
 export interface TitleEventEntity {
   key: string;
@@ -274,15 +273,20 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               >
                 {t('ToolMenu.addWms')}
               </Button>
-              <Button
-                className='save-selection-button tool-menu-button'
-                icon={<FontAwesomeIcon icon={faFile} />}
-                onClick={() => dispatch(showSelect())}
-              >
-                {t('ToolMenu.saveSelection')}
-              </Button>
             </div>
           )
+        }
+      ]
+    },
+    {
+      key: 'Permalink',
+      onTitleClick: onSubmenuTitleClick,
+      icon: <FontAwesomeIcon icon={faShareNodes} />,
+      label: t('Permalink.title'),
+      children: [
+        {
+          key: 'share-panel',
+          label: <PermalinkModal />
         }
       ]
     },

@@ -16,13 +16,12 @@ export default {
         errorMessage: 'Fehler',
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
       },
-      SaveSelectModal: {
-        title: 'Permalink generieren',
-        info: 'Über die folgende URL können Sie die aktuelle Layerauswahl als Link speichern:',
-        tooltip: 'Link in die Zwischenablage kopieren',
-        success: 'Der Link wurde erfolgreich in die Zwischenablage kopiert',
-        failure: 'Der link konnte nicht kopiert werden',
-        close: 'Schließen'
+      Permalink: {
+        title: 'Teilen',
+        twitterTooltip: 'Link via Twitter teilen',
+        whatsAppTooltip: 'Link via WhatsApp teilen',
+        mailTooltip: 'Link via Mail teilen',
+        copyTooltip: 'Link in die Zwischenablage kopieren'
       },
       Measure: {
         title: 'Messen',
@@ -115,13 +114,12 @@ export default {
         errorMessage: 'Error',
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
       },
-      SaveSelectModal: {
-        title: 'Create permalink',
-        info: 'You can use the following URL to save the current layer selection as a link:',
-        tooltip: 'Copy link to Clipboard',
-        success: 'The link has been copied successfully',
-        failure: 'The link could not be copied',
-        close: 'Close'
+      Permalink: {
+        title: 'Share',
+        twitterTooltip: 'Share link via Twitter',
+        whatsAppTooltip: 'Share link via WhatsApp',
+        mailTooltip: 'Share link via Mail',
+        copyTooltip: 'Copy link to Clipboard'
       },
       Measure: {
         title: 'Measure',

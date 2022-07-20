@@ -1,109 +1,91 @@
 import React from 'react';
 
-import {
-  CopyOutlined
-} from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
+import { Input, Tooltip, message } from 'antd';
+
+import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+
+import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
-  Button,
-  Modal,
-  ModalProps,
-  message,
-  Input,
-  Tooltip,
-  Divider
-} from 'antd';
+  CopyOutlined,
+  MailOutlined,
+  TwitterOutlined,
+  WhatsAppOutlined
+} from '@ant-design/icons';
 
 import copy from 'copy-to-clipboard';
 
-import {
-  useTranslation
-} from 'react-i18next';
-
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
-import {
-  useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-
-import useAppDispatch from '../../hooks/useAppDispatch';
-import useAppSelector from '../../hooks/useAppSelector';
-import {
-  hide as hideSelect
-} from '../../store/saveSelectModal';
-
 import './index.less';
 
-export type PermalinkModalProps = {} & Partial<ModalProps>;
+interface DefaultSharePanelProps { }
 
-export const PermalinkModal: React.FC<PermalinkModalProps> = ({ }): JSX.Element => {
-  const isModalVisible = useAppSelector(state => state.saveSelectModal.visible);
+export interface SharePanelProps extends Partial<DefaultSharePanelProps> { }
 
-  const dispatch = useAppDispatch();
-  const {
-    t
-  } = useTranslation();
+export const SharePanel: React.FC<SharePanelProps> = () => {
 
-  let map = useMap();
+  const map = useMap();
+  const { t } = useTranslation();
 
-  const closeModal = () => {
-    dispatch(hideSelect());
-  };
+  if (!map) {
+    return <></>;
+  }
+  
+  const link = PermalinkUtil.getLink(map);
 
-  const link = () => {
-    if (map) {
-      return PermalinkUtil.getLink(map);
-    }
-  };
+  // TODO: these could be props
+  const mailSubject = 'Geoportal Raumordnung Kartenviewer';
+  const mailBody = `Hey,\r\nsieh dir an was ich im Geoportal Raumordnung Baden-Württemberg gefunden habe:\r\n${link}`;
 
-  const onCopyClick = () => {
-    const permaLink = link();
-    let success = false;
+  function onTwitterClick() {
+    const twitterUrl = new URL('https://twitter.com/intent/tweet');
+    twitterUrl.searchParams.set('url', mailBody);
+    window.open(twitterUrl);
+  }
 
-    if (permaLink) {
-      success = copy(permaLink);
-    }
+  function onWhatsAppClick() {
+    const whatsAppUrl = new URL('http://wa.me');
+    whatsAppUrl.searchParams.set('text', mailBody);
+    window.open(whatsAppUrl);
+  }
 
+  function onMailClick() {
+    const mailToUrl = new URL('mailto:');
+    mailToUrl.searchParams.set('subject', mailSubject);
+    mailToUrl.searchParams.set('body', mailBody);
+    window.open(mailToUrl.toString().replace(/\+/g, '%20'));
+  }
+
+  function onCopyClick() {
+    const success = copy(link);
     if (success) {
-      message.info(t('SaveSelectModal.success'));
+      message.info(t('SharePanel.copiedToClipboard'));
     } else {
-      message.info(t('SaveSelectModal.failure'));
+      message.info(t('SharePanel.copyToClipboardFailed'));
     }
-  };
+  }
 
   return (
-    <Modal
-      className="PermalinkModal"
-      title={t('SaveSelectModal.title')}
-      visible={isModalVisible}
-      onCancel={closeModal}
-      footer={[
-        <Button
-          key="close"
-          onClick={closeModal}
-        >
-          {t('SaveSelectModal.close')}
-        </Button>
-      ]}
-    >
-      <p>
-        {t('SaveSelectModal.info')}
-      </p>
-      <div>
-        URL
-        <Divider
-          type="vertical"
-        />
-        <Tooltip title={t('SaveSelectModal.tooltip')}>
-          <CopyOutlined onClick={onCopyClick} />
+    <div className="share-panel">
+      <div className="icons">
+        <Tooltip title={t('Permalink.twitterTooltip')}>
+          <TwitterOutlined onClick={onTwitterClick} />
+        </Tooltip>
+        <Tooltip title={t('Permalink.whatsAppTooltip')}>
+          <WhatsAppOutlined onClick={onWhatsAppClick} />
+        </Tooltip>
+        <Tooltip title={t('Permalink.mailTooltip')}>
+          <MailOutlined onClick={onMailClick} />
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={link()}
-          readOnly
-        />
+        <Input value={link} readOnly />
+        <Tooltip title={t('Permalink.copyTooltip')}>
+          <CopyOutlined onClick={onCopyClick} />
+        </Tooltip>
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default PermalinkModal;
+export default SharePanel;

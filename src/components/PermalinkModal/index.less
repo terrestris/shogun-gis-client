@@ -1,7 +1,37 @@
-.save-select-modal {
+ .share-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 25vw;
+  padding-top: 1rem;
 
-  .ant-table-cell {
-    padding: 0.2rem;
+  .icons > span {
+    font-size: 1.5rem;
+    color: var(--tertiaryColor);
+
+    &.anticon {
+      cursor: pointer;
+      margin: 0 1rem;
+    }
   }
 
+  .link {
+    padding: 1rem 1rem;
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    color: unset;
+
+    .ant-input {
+      flex: 1;
+    }
+
+    .anticon {
+      cursor: pointer;
+      color: var(--tertiaryColor);
+      margin-left: 1rem;
+    }
+  }
 }
