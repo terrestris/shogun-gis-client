@@ -133,13 +133,14 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         name='draw-upload'
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           const uploadedFiles = e.target.files;
-          if (uploadedFiles && uploadedFiles.length === 1) {
-            if (
+          if (
+            (uploadedFiles && uploadedFiles.length === 1) &&
+            (
               uploadedFiles[0].type === 'application/geo+json' ||
               uploadedFiles[0].type === 'application/geojson'
-            ) {
-              onGeoJSONUpload(uploadedFiles[0]);
-            }
+            )
+          ) {
+            onGeoJSONUpload(uploadedFiles[0]);
           }
         }}
       >
