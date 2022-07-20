@@ -6,7 +6,7 @@ import {
 
 import BasicNominatimSearch from '../BasicNominatimSearch';
 
-import LanguageSelect from '../LanguageSelector/Index';
+import LanguageSelect from '../LanguageSelector';
 import UserMenu from '../UserMenu';
 
 import './index.less';
