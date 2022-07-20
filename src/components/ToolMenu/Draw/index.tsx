@@ -67,7 +67,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         });
         const geoJSON = new GeoJSON().writeFeatures(clonedFeatures);
 
-        var fileToDownload = new Blob([geoJSON], {
+        const fileToDownload = new Blob([geoJSON], {
           type: 'application/geo+json'
         });
 
