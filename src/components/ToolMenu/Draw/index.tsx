@@ -48,7 +48,6 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
   const map = useMap();
 
   const onGeoJSONUpload = (geoJSONFile: any ) => {
-    // console.log(geoJSONFile);
     const type = geoJSONFile.type !== 'application/geojson' ? geoJSONFile.type : 'NOT SUPPORTED';
     if (type !== 'NOT SUPPORTED') {
 
