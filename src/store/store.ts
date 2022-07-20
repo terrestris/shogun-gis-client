@@ -3,9 +3,9 @@ import {
 } from '@reduxjs/toolkit';
 
 import addLayerModal from './addLayerModal';
-import saveSelectModal from './saveSelectModal';
 import appInfo from './appInfo';
 import logoPath from './logoPath';
+import saveSelectModal from './saveSelectModal';
 import title from './title';
 import toolMenu from './toolMenu';
 import user from './user';

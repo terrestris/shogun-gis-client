@@ -20,6 +20,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
@@ -32,16 +33,15 @@ import {
 
 import './SaveSelectModal.less';
 
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
-
 export type SaveSelectModalProps = {} & Partial<ModalProps>;
 
-export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
-}): JSX.Element => {
+export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({}): JSX.Element => {
   const isModalVisible = useAppSelector(state => state.saveSelectModal.visible);
 
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
 
   let map = useMap();
 
@@ -49,9 +49,16 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
     dispatch(hideSelect());
   };
 
+  const link = () => {
+    if (map) {
+      let link = PermalinkUtil.getLink(map);
+      return link;
+    }
+  };
+
   const onCopyClick = () => {
     if (map) {
-      let link = PermalinkUtil.getLink(map)
+      let link = PermalinkUtil.getLink(map);
       const success = copy(link);
 
       if (success) {
@@ -59,13 +66,6 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
       } else {
         message.info(t('SaveSelectModal.failure'));
       }
-    }
-  };
-
-  const link = () => {
-    if (map) {
-      let link = PermalinkUtil.getLink(map)
-      return link
     }
   };
 
@@ -97,7 +97,9 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={link()} readOnly />
+        <Input value={link()}
+          readOnly
+        />
       </div>
     </Modal>
   );

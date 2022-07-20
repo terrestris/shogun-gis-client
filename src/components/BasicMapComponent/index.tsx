@@ -1,15 +1,18 @@
 import React, {
   useEffect
 } from 'react';
+
+import {
+  PermalinkUtil
+} from '@terrestris/ol-util';
+
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+
 import MapComponent, {
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
-import { 
-  PermalinkUtil
-} from '@terrestris/ol-util';
-import useQueryParams from '../../hooks/useQueryParams';
 
+import useQueryParams from '../../hooks/useQueryParams';
 
 export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   ...restProps
@@ -18,7 +21,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   const queryParams = useQueryParams();
 
   useEffect(() => {
-    if (map) {PermalinkUtil.applyLink(map);}        
+    if (map) {PermalinkUtil.applyLink(map);}
   }, [
     queryParams.get('center'),
     queryParams.get('zoom'),
