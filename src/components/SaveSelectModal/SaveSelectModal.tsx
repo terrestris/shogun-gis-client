@@ -49,7 +49,7 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
     dispatch(hideSelect());
   };
 
-  function onCopyClick() {
+  const onCopyClick = () => {
     if (map) {
 
       let link = PermalinkUtil.getLink(map)
@@ -63,7 +63,7 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
     }
   };
 
-  function link() {
+  const link = () => {
     if (map) {
       let link = PermalinkUtil.getLink(map)
       return link
@@ -72,7 +72,7 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({
 
   return (
     <Modal
-      className="save-select-modal"
+      className="PermalinkModal"
       title={t('SaveSelectModal.title')}
       visible={isModalVisible}
       onCancel={closeModal}
