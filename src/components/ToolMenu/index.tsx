@@ -11,7 +11,8 @@ import {
   faMousePointer,
   faPlus,
   faChevronRight,
-  faChevronLeft
+  faChevronLeft,
+  faDrawPolygon
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
@@ -73,6 +74,7 @@ import PrintForm from '../PrintForm';
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
 import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
 
+import Draw from './Draw';
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
 import Measure from './Measure';
@@ -215,6 +217,18 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         {
           key: 'measure-panel',
           label: <Measure />
+        }
+      ]
+    },
+    {
+      className: 'draw',
+      key: 'draw_tools',
+      icon: <FontAwesomeIcon icon={faDrawPolygon} />,
+      label: t('ToolMenu.draw'),
+      children: [
+        {
+          key: 'draw-panel',
+          label: <Draw />
         }
       ]
     },
