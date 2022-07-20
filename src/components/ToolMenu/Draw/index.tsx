@@ -50,7 +50,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
   const map = useMap();
 
   const onGeoJSONUpload = (geoJSONFile: File) => {
-    var fileReader=new FileReader();
+    const fileReader = new FileReader();
 
     fileReader.onload = () => {
       const geoJSONFeatures = new GeoJSON().readFeatures(fileReader.result);
