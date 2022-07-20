@@ -12,8 +12,10 @@ import {
   faPlus,
   faChevronRight,
   faChevronLeft,
+  faShareNodes,
   faDrawPolygon
 } from '@fortawesome/free-solid-svg-icons';
+
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
@@ -63,12 +65,13 @@ import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
-  show
+  show as showAdd
 } from '../../store/addLayerModal';
 import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
+import Permalink from '../Permalink';
 import PrintForm from '../PrintForm';
 
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
@@ -280,12 +283,24 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               <Button
                 className='add-wms-button tool-menu-button'
                 icon={<FontAwesomeIcon icon={faPlus} />}
-                onClick={() => dispatch(show())}
+                onClick={() => dispatch(showAdd())}
               >
                 {t('ToolMenu.addWms')}
               </Button>
             </div>
           )
+        }
+      ]
+    },
+    {
+      key: 'Permalink',
+      onTitleClick: onSubmenuTitleClick,
+      icon: <FontAwesomeIcon icon={faShareNodes} />,
+      label: t('Permalink.title'),
+      children: [
+        {
+          key: 'share-panel',
+          label: <Permalink />
         }
       ]
     },

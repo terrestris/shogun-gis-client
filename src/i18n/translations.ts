@@ -16,6 +16,15 @@ export default {
         errorMessage: 'Fehler',
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
       },
+      Permalink: {
+        title: 'Teilen',
+        twitterTooltip: 'Link via Twitter teilen',
+        whatsAppTooltip: 'Link via WhatsApp teilen',
+        mailTooltip: 'Link via Mail teilen',
+        copyTooltip: 'Link in die Zwischenablage kopieren',
+        copiedToClipboard: 'Link wurde in Zwischenablage kopiert',
+        copyToClipboardFailed: 'Link konnte nicht kopiert werden'
+      },
       Measure: {
         title: 'Messen',
         line: 'Entfernung',
@@ -117,6 +126,15 @@ export default {
         columnTitle: 'Name',
         errorMessage: 'Error',
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
+      },
+      Permalink: {
+        title: 'Share',
+        twitterTooltip: 'Share link via Twitter',
+        whatsAppTooltip: 'Share link via WhatsApp',
+        mailTooltip: 'Share link via Mail',
+        copyTooltip: 'Copy link to Clipboard',
+        copiedToClipboard: 'Copied to clipboard',
+        copyToClipboardFailed: 'Could not copy link to clipboard'
       },
       Measure: {
         title: 'Measure',
