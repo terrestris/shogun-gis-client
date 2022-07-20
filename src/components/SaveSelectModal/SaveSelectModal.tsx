@@ -35,7 +35,7 @@ import './SaveSelectModal.less';
 
 export type SaveSelectModalProps = {} & Partial<ModalProps>;
 
-export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({}): JSX.Element => {
+export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({ }): JSX.Element => {
   const isModalVisible = useAppSelector(state => state.saveSelectModal.visible);
 
   const dispatch = useAppDispatch();
@@ -51,21 +51,22 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({}): JSX.Element
 
   const link = () => {
     if (map) {
-      let link = PermalinkUtil.getLink(map);
-      return link;
+      return PermalinkUtil.getLink(map);
     }
   };
 
   const onCopyClick = () => {
-    if (map) {
-      let link = PermalinkUtil.getLink(map);
-      const success = copy(link);
+    const permaLink = link();
+    let success = false;
 
-      if (success) {
-        message.info(t('SaveSelectModal.success'));
-      } else {
-        message.info(t('SaveSelectModal.failure'));
-      }
+    if (permaLink) {
+      success = copy(permaLink);
+    }
+
+    if (success) {
+      message.info(t('SaveSelectModal.success'));
+    } else {
+      message.info(t('SaveSelectModal.failure'));
     }
   };
 
