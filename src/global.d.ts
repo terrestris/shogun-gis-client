@@ -12,6 +12,7 @@ declare module 'clientConfig' {
       host?: string;
       realm?: string;
       clientId?: string;
+      onLoadAction?: KeycloakOnLoad;
     };
   };
   const config: ClientConfiguration;

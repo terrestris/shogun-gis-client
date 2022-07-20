@@ -4,6 +4,7 @@ var clientConfig = {
     enabled: false,
     host: null,
     realm: null,
-    clientId: null
+    clientId: null,
+    onLoadAction: 'check-sso'
   }
 };
