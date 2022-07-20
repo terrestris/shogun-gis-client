@@ -31,11 +31,11 @@ import {
   hide as hideSelect
 } from '../../store/saveSelectModal';
 
-import './SaveSelectModal.less';
+import './index.less';
 
-export type SaveSelectModalProps = {} & Partial<ModalProps>;
+export type PermalinkModalProps = {} & Partial<ModalProps>;
 
-export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({ }): JSX.Element => {
+export const PermalinkModal: React.FC<PermalinkModalProps> = ({ }): JSX.Element => {
   const isModalVisible = useAppSelector(state => state.saveSelectModal.visible);
 
   const dispatch = useAppDispatch();
@@ -106,4 +106,4 @@ export const SaveSelectModal: React.FC<SaveSelectModalProps> = ({ }): JSX.Elemen
   );
 };
 
-export default SaveSelectModal;
+export default PermalinkModal;

@@ -17,7 +17,7 @@ export default {
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
       },
       SaveSelectModal: {
-        title: 'Auswahl Speichern',
+        title: 'Permalink generieren',
         info: 'Über die folgende URL können Sie die aktuelle Layerauswahl als Link speichern:',
         tooltip: 'Link in die Zwischenablage kopieren',
         success: 'Der Link wurde erfolgreich in die Zwischenablage kopiert',
@@ -116,7 +116,7 @@ export default {
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
       },
       SaveSelectModal: {
-        title: 'Save selection',
+        title: 'Create permalink',
         info: 'You can use the following URL to save the current layer selection as a link:',
         tooltip: 'Copy link to Clipboard',
         success: 'The link has been copied successfully',

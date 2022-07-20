@@ -6,7 +6,7 @@ import AddLayerModal from './components/AddLayerModal/AddLayerModal';
 import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import SaveSelectModal from './components/SaveSelectModal/SaveSelectModal';
+import PermalinkModal from './components/PermalinkModal';
 import ToolMenu from './components/ToolMenu';
 
 import './App.less';
@@ -35,7 +35,7 @@ export const App: React.FC<AppProps> = ({
       <ToolMenu />
       <Footer />
       <AddLayerModal />
-      <SaveSelectModal />
+      <PermalinkModal />
     </div>
   );
 };
