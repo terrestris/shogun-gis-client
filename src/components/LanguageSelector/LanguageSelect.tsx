@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Select } from 'antd';
-import React from 'react'
+import React from 'react';
+
+import {
+  Select
+} from 'antd';
 
 export const LanguageSelect = ( i18n: any ) => {
-  const { Option } = Select;
+  const {
+    Option
+  } = Select;
 
   const onLanguageChange = (lang: string) => {
     if (i18n) {
