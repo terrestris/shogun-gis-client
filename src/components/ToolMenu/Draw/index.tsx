@@ -81,7 +81,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         drawType="Point"
       >
         <FontAwesomeIcon icon={faCircle} />
-        <span className="draw-text">{t('Draw.point')}</span>
+        <span className="draw-point">{t('Draw.point')}</span>
       </DrawButton>
 
       <DrawButton
@@ -89,7 +89,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         drawType="LineString"
       >
         <FontAwesomeIcon icon={faGripLines} />
-        <span className="draw-text">{t('Draw.line')}</span>
+        <span className="draw-line">{t('Draw.line')}</span>
       </DrawButton>
 
       <DrawButton
@@ -97,7 +97,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         drawType="Polygon"
       >
         <FontAwesomeIcon icon={faDrawPolygon} />
-        <span className="draw-text">{t('Draw.polygon')}</span>
+        <span className="draw-polygon">{t('Draw.polygon')}</span>
       </DrawButton>
 
       <DrawButton
@@ -105,7 +105,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         drawType="Circle"
       >
         <FontAwesomeIcon icon={faCircle} />
-        <span className="draw-text">{t('Draw.circle')}</span>
+        <span className="draw-circle">{t('Draw.circle')}</span>
       </DrawButton>
 
       <DrawButton
@@ -113,7 +113,7 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         drawType="Rectangle"
       >
         <FontAwesomeIcon icon={faSquare} />
-        <span className="draw-text">{t('Draw.rectangle')}</span>
+        <span className="draw-rectangle">{t('Draw.rectangle')}</span>
       </DrawButton>
 
       <DrawButton
@@ -124,12 +124,13 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         <span className="draw-text">{t('Draw.text')}</span>
       </DrawButton>
 
-      <ModifyButton>
+      <ModifyButton name='draw-modify'>
         <FontAwesomeIcon icon={faPenToSquare} />
         <span className="draw-modify">{t('Draw.modify')}</span>
       </ModifyButton>
 
       <UploadButton
+        name='draw-upload'
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           const uploadedFiles = e.target.files;
           if (uploadedFiles && uploadedFiles.length === 1) {
@@ -144,13 +145,13 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
       >
         <SimpleButton>
           <FontAwesomeIcon icon={faUpload} />
-          <span className="draw-modify">{t('Draw.upload')}</span>
+          <span className="draw-upload">{t('Draw.upload')}</span>
         </SimpleButton>
       </UploadButton>
 
-      <DeleteButton>
+      <DeleteButton name='draw-delete'>
         <FontAwesomeIcon icon={faTrash} />
-        <span className="draw-modify">{t('Draw.delete')}</span>
+        <span className="draw-delete">{t('Draw.delete')}</span>
       </DeleteButton>
 
     </ToggleGroup>
