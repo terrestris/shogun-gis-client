@@ -107,7 +107,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div
           className="scale-combo"
         >
-          {t('Footer.scale')}:
+          {t('Footer.scale')}:&nbsp;
           <ScaleCombo
             map={map}
           />
@@ -126,7 +126,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div
           className="mouse-position-wrapper"
         >
-          {t('Footer.mousePosition')}:
+          {t('Footer.mousePosition')}:&nbsp;
           <div
             id="mouse-position"
             className="mouse-position"

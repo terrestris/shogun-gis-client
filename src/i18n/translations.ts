@@ -3,8 +3,8 @@ export default {
     translation: {
       ApplicationInfo: {
         title: 'Über',
-        versionTitle: 'Version',
-        buildTitle: 'Build'
+        clientVersionTitle: 'Client Version',
+        backendVersionTitle: 'Backend Version'
       },
       AddLayerModal: {
         addSelectedLayers: 'Auswahl hinzufügen',
@@ -32,6 +32,17 @@ export default {
         clicktodrawline: 'Zum Zeichnen einer Linie klicken',
         clicktodrawarea: 'Zum Zeichnen einer Fläche klicken'
       },
+      Draw: {
+        point: 'Punkt',
+        line: 'Linie',
+        polygon: 'Polygon',
+        circle: 'Kreis',
+        rectangle: 'Rechteck',
+        text: 'Anmerkung',
+        modify: 'Bearbeitung',
+        upload: 'Hochladen',
+        delete: 'Löschen'
+      },
       FeatureInfo: {
         usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
       },
@@ -51,6 +62,7 @@ export default {
         expand: 'Menu ausklappen',
         collapse: 'Menu einklappen',
         measure: 'Messen',
+        draw: 'Zeichnen',
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
         print: 'Export',
@@ -102,8 +114,8 @@ export default {
     translation: {
       ApplicationInfo: {
         title: 'About',
-        versionTitle: 'Version',
-        buildTitle: 'Build'
+        clientVersionTitle: 'Client version',
+        backendVersionTitle: 'Backend version'
       },
       AddLayerModal: {
         addSelectedLayers: 'Add selected',
@@ -131,6 +143,17 @@ export default {
         clicktodrawline: 'Click to draw line',
         clicktodrawarea: 'Click to draw area'
       },
+      Draw: {
+        point: 'Point',
+        line: 'Line',
+        polygon: 'Polygon',
+        circle: 'Circle',
+        rectangle: 'Rectangle',
+        text: 'Annotation',
+        modify: 'Edit',
+        upload: 'Upload',
+        delete: 'Delete'
+      },
       FeatureInfo: {
         usageHint: 'Click on the map to get details about the clicked coordinate.'
       },
@@ -150,6 +173,7 @@ export default {
         expand: 'Expand',
         collapse: 'Collapse',
         measure: 'Measure',
+        draw: 'Draw',
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
         print: 'Export',
