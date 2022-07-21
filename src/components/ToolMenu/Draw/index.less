@@ -1,11 +1,16 @@
-.tool-menu .ant-menu .draw {
-
+.tool-menu .ant-menu .draw,
+.ant-menu-submenu-popup.draw {
   button {
-    width: 100%;
     border-radius: 0;
     border: none;
     text-align: left;
     padding-left: 2rem;
+
+    &.btn-pressed {
+      background-color: white;
+      color: var(--ant-primary-10);
+      font-weight: 500;
+    }
   }
 
   .ant-btn > span {

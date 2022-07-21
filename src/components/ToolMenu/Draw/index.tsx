@@ -83,6 +83,19 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
     }
   };
 
+  const onUploadChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadedFiles = e.target.files;
+    if (
+      (uploadedFiles && uploadedFiles.length === 1) &&
+      (
+        uploadedFiles[0].type === 'application/geo+json' ||
+        uploadedFiles[0].type === 'application/geojson'
+      )
+    ) {
+      onGeoJSONUpload(uploadedFiles[0]);
+    }
+  };
+
   const onGeoJSONUpload = (geoJSONFile: File) => {
     const fileReader = new FileReader();
 
@@ -98,7 +111,6 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
         const digitizeLayerSource = digitizeLayer.getSource();
         digitizeLayerSource?.addFeatures(geoJSONFeatures);
       }
-
     };
 
     fileReader.readAsText(geoJSONFile);
@@ -113,88 +125,153 @@ export const Draw: React.FC<DrawProps> = (): JSX.Element => {
       <DrawButton
         name="drawPoint"
         drawType="Point"
+        type="link"
       >
-        <FontAwesomeIcon icon={faCircle} />
-        <span className="draw-point">{t('Draw.point')}</span>
+        <FontAwesomeIcon
+          icon={faCircle}
+        />
+        <span
+          className="draw-point"
+        >
+          {t('Draw.point')}
+        </span>
       </DrawButton>
 
       <DrawButton
         name="drawLine"
         drawType="LineString"
+        type="link"
       >
-        <FontAwesomeIcon icon={faGripLines} />
-        <span className="draw-line">{t('Draw.line')}</span>
+        <FontAwesomeIcon
+          icon={faGripLines}
+        />
+        <span
+          className="draw-line"
+        >
+          {t('Draw.line')}
+        </span>
       </DrawButton>
 
       <DrawButton
         name="drawPolygon"
         drawType="Polygon"
+        type="link"
       >
-        <FontAwesomeIcon icon={faDrawPolygon} />
-        <span className="draw-polygon">{t('Draw.polygon')}</span>
+        <FontAwesomeIcon
+          icon={faDrawPolygon}
+        />
+        <span
+          className="draw-polygon"
+        >
+          {t('Draw.polygon')}
+        </span>
       </DrawButton>
 
       <DrawButton
         name="drawCircle"
         drawType="Circle"
+        type="link"
       >
-        <FontAwesomeIcon icon={faCircle} />
-        <span className="draw-circle">{t('Draw.circle')}</span>
+        <FontAwesomeIcon
+          icon={faCircle}
+        />
+        <span
+          className="draw-circle"
+        >
+          {t('Draw.circle')}
+        </span>
       </DrawButton>
 
       <DrawButton
         name="drawRectangle"
         drawType="Rectangle"
+        type="link"
       >
-        <FontAwesomeIcon icon={faSquare} />
-        <span className="draw-rectangle">{t('Draw.rectangle')}</span>
+        <FontAwesomeIcon
+          icon={faSquare}
+        />
+        <span
+          className="draw-rectangle"
+        >
+          {t('Draw.rectangle')}
+        </span>
       </DrawButton>
 
       <DrawButton
         name="drawText"
         drawType="Text"
+        type="link"
       >
-        <FontAwesomeIcon icon={faFont} />
-        <span className="draw-text">{t('Draw.text')}</span>
+        <FontAwesomeIcon
+          icon={faFont}
+        />
+        <span
+          className="draw-text"
+        >
+          {t('Draw.text')}
+        </span>
       </DrawButton>
 
-      <ModifyButton name='draw-modify'>
-        <FontAwesomeIcon icon={faPenToSquare} />
-        <span className="draw-modify">{t('Draw.modify')}</span>
+      <ModifyButton
+        name="draw-modify"
+        type="link"
+      >
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+        />
+        <span
+          className="draw-modify"
+        >
+          {t('Draw.modify')}
+        </span>
       </ModifyButton>
 
       <UploadButton
-        name='draw-upload'
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          const uploadedFiles = e.target.files;
-          if (
-            (uploadedFiles && uploadedFiles.length === 1) &&
-            (
-              uploadedFiles[0].type === 'application/geo+json' ||
-              uploadedFiles[0].type === 'application/geojson'
-            )
-          ) {
-            onGeoJSONUpload(uploadedFiles[0]);
-          }
-        }}
+        name="draw-upload"
+        onChange={onUploadChange}
+        type="link"
       >
-        <SimpleButton>
-          <FontAwesomeIcon icon={faUpload} />
-          <span className="draw-upload">{t('Draw.upload')}</span>
+        <SimpleButton
+          type="link"
+        >
+          <FontAwesomeIcon
+            icon={faUpload}
+          />
+          <span
+            className="draw-upload"
+          >
+            {t('Draw.upload')}
+          </span>
         </SimpleButton>
       </UploadButton>
 
       <SimpleButton
-        name='draw-export'
+        name="draw-export"
         onClick={onGeoJSONDownload}
+        type="link"
       >
-        <FontAwesomeIcon icon={faDownload} />
-        <span className="draw-export">{t('Draw.export')}</span>
+        <FontAwesomeIcon
+          icon={faDownload}
+        />
+        <span
+          className="draw-export"
+        >
+          {t('Draw.export')}
+        </span>
       </SimpleButton>
 
-      <DeleteButton name='draw-delete'>
-        <FontAwesomeIcon icon={faTrash} />
-        <span className="draw-delete">{t('Draw.delete')}</span>
+      <DeleteButton
+        name="draw-delete"
+        type="link"
+      >
+        <FontAwesomeIcon
+          icon={faTrash}
+        />
+        <span
+          className="draw-delete"
+        >
+          {t('Draw.delete')}
+        </span>
       </DeleteButton>
 
     </ToggleGroup>
