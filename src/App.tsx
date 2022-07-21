@@ -6,7 +6,6 @@ import AddLayerModal from './components/AddLayerModal/AddLayerModal';
 import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Permalink from './components/Permalink';
 import ToolMenu from './components/ToolMenu';
 
 import './App.less';
@@ -35,7 +34,6 @@ export const App: React.FC<AppProps> = ({
       <ToolMenu />
       <Footer />
       <AddLayerModal />
-      <Permalink />
     </div>
   );
 };
