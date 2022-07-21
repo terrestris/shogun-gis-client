@@ -101,8 +101,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   } = useTranslation();
   const map = useMap();
 
-  const client = useSHOGunAPIClient();
-
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
 
@@ -199,7 +197,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const onOpenChange = (openKeys: string[]) => {
     if (collapsed) {
-      openKeys = openKeys.filter(k => k === 'measure_tools' || k === 'expand_collapse');
+      openKeys = openKeys.filter(k => k === 'measure_tools' || k === 'draw_tools' || k === 'expand_collapse');
     }
     setActiveSubmenuKeys(openKeys);
   };
@@ -214,6 +212,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     {
       className: 'measure',
       key: 'measure_tools',
+      popupClassName: 'measure',
       icon: <FontAwesomeIcon icon={faRuler} />,
       label: t('ToolMenu.measure'),
       children: [
@@ -226,6 +225,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     {
       className: 'draw',
       key: 'draw_tools',
+      popupClassName: 'draw',
       icon: <FontAwesomeIcon icon={faDrawPolygon} />,
       label: t('ToolMenu.draw'),
       children: [
