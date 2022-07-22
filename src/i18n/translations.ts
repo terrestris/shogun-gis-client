@@ -67,7 +67,8 @@ export default {
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
         print: 'Export',
-        layertree: 'Karten'
+        layertree: 'Karten',
+        languageSelect: 'Sprachauswahl'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -179,7 +180,8 @@ export default {
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
         print: 'Export',
-        layertree: 'Maps'
+        layertree: 'Maps',
+        languageSelect: 'Language selector'
       },
       PrintForm: {
         title: 'Title',

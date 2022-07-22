@@ -45,7 +45,6 @@ export const Header: React.FC<HeaderProps> = ({
       <div
         className="item-container right-items"
       >
-        <LanguageSelect />
         <UserMenu />
       </div>
     </div>
