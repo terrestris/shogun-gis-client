@@ -58,7 +58,7 @@ to have the application available at [https://localhost:8080](https://localhost:
 
 ## Road to production 🏭
 
-The build artifact of the client can either be build via
+The build artifact of the client can either be built via
 
 ```
 npm run build
