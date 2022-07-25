@@ -20,7 +20,7 @@ export const LanguageSelect = () => {
   };
 
   return (
-    <div className="languageSelect">
+    <div className="language-select">
       <Select
         defaultValue={i18n.language || 'en'}
         onChange={onLanguageChange}
