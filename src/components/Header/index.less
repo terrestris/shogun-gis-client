@@ -63,9 +63,10 @@
 
       &.left-items {
         width: 60px;
+        max-width: 60px;
 
         .logo {
-          width: 50px;
+          width: 55px;
           height: auto;
         }
       }
@@ -73,7 +74,7 @@
       &.center-items {
         align-items: center;
         justify-content: center;
-        width: auto;
+        width: 100%;
 
         .ant-select.ant-select-auto-complete.react-geo-nominatimsearch.ant-select-single.ant-select-allow-clear.ant-select-show-search {
           width: 250px;
@@ -85,9 +86,10 @@
       }
 
       &.right-items {
-        width: 70px;
+        width: 60px;
+        max-width: 60px;
         align-items: center;
-        justify-content: right;
+        justify-content: center;
 
         .username {
           display: none;
@@ -103,6 +105,7 @@
 
     .item-container.left-items {
       width: 100px;
+      max-width: 100px;
     }
 
     .item-container.center-items {
@@ -116,6 +119,7 @@
 
     .item-container.right-items {
       width: 100px;
+      max-width: 100px;
     }
   }
 }
