@@ -13,7 +13,8 @@ import {
   faChevronRight,
   faChevronLeft,
   faShareNodes,
-  faDrawPolygon
+  faDrawPolygon,
+  faLanguage
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -85,6 +86,7 @@ import Measure from './Measure';
 import './index.less';
 
 import '../PrintForm/Shared/Shared';
+import LanguageSelect from '../LanguageSelector';
 
 export interface TitleEventEntity {
   key: string;
@@ -301,6 +303,22 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         {
           key: 'share-panel',
           label: <Permalink />
+        }
+      ]
+    },
+    {
+      key: 'divider',
+      label: <Menu.Divider  />
+    },
+    {
+      key: 'LanguageSelect',
+      onTitleClick: onSubmenuTitleClick,
+      icon: <FontAwesomeIcon icon={faLanguage} />,
+      label: t('ToolMenu.languageSelect'),
+      children: [
+        {
+          key: 'LanguageSelect',
+          label: <LanguageSelect/>
         }
       ]
     },

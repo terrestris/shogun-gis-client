@@ -52,54 +52,70 @@
     }
   }
 
-  // @media (max-width:800px) {
-  //   display: grid;
-  //   grid-column-gap: 10px;
-  //   grid-template-rows: 42px;
-  //   grid-auto-rows: auto;
-  //   height: auto;
+  @media (max-width:599px) {
 
-  //   .logo {
-  //     max-block-size: 40px;
-  //     grid-column: 1;
-  //     grid-row: 1 / 2;
-  //     margin-top: 42px;
-  //     padding: auto;
-  //   }
+    .title {
+      display: none;
+    }
 
-  //   .title {
-  //     display: none;
-  //   }
+    .item-container {
+      display: flex;
 
-  //   .item-container {
-  //     &.center-items {
-  //       grid-column: 2;
-  //       grid-row: 1;
-  //       justify-content: left;
+      &.left-items {
+        width: 60px;
 
-  //       .react-geo-nominatimsearch.ant-select-auto-complete {
-  //         width: 100%;
-  //       }
-  //     }
+        .logo {
+          width: 50px;
+          height: auto;
+        }
+      }
 
-  //     &.right-items {
-  //       grid-column: 2;
-  //       grid-row: 2;
-  //       justify-content: space-between;
-  //       display: flex;
+      &.center-items {
+        align-items: center;
+        justify-content: center;
+        width: auto;
 
-  //       &.languageSelect {
-  //         grid-column: 1;
-  //         grid-row: 1;
-  //       }
+        .ant-select.ant-select-auto-complete.react-geo-nominatimsearch.ant-select-single.ant-select-allow-clear.ant-select-show-search {
+          width: 250px;
 
-  //       &.ant-dropdown-trigger.react-geo-userchip {
-  //         grid-column: 2;
-  //         grid-row: 1;
-  //         justify-content: right;
-  //       }
-  //     }
-  //   }
+          .ant-select-selector {
+            width: 100%;
+          }
+        }
+      }
 
-  // }
+      &.right-items {
+        width: 70px;
+        align-items: center;
+        justify-content: right;
+
+        .username {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (min-width:600px) {
+    .title {
+      display: none;
+    }
+
+    .item-container.left-items {
+      width: 100px;
+    }
+
+    .item-container.center-items {
+      width: 100%;
+      justify-content: center;
+
+      .ant-select.ant-select-auto-complete.react-geo-nominatimsearch.ant-select-single.ant-select-allow-clear.ant-select-show-search {
+        width: fit-content;
+      }
+    }
+
+    .item-container.right-items {
+      width: 100px;
+    }
+  }
 }
