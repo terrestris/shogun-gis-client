@@ -317,7 +317,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       label: t('ToolMenu.languageSelect'),
       children: [
         {
-          key: 'LanguageSelect',
+          key: 'languages-select-panel',
           label: <LanguageSelect/>
         }
       ]
