@@ -72,6 +72,7 @@ import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
+import LanguageSelect from '../LanguageSelector';
 import Permalink from '../Permalink';
 import PrintForm from '../PrintForm';
 
@@ -86,7 +87,6 @@ import Measure from './Measure';
 import './index.less';
 
 import '../PrintForm/Shared/Shared';
-import LanguageSelect from '../LanguageSelector';
 
 export interface TitleEventEntity {
   key: string;
@@ -308,7 +308,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     },
     {
       key: 'divider',
-      label: <Menu.Divider  />
+      label: <Menu.Divider />
     },
     {
       key: 'LanguageSelect',
