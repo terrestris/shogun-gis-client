@@ -26,6 +26,7 @@ import {
   MenuProps
 } from 'antd';
 
+import ClientConfiguration from 'clientConfig';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 import OlSource from 'ol/source/Source';
@@ -208,8 +209,12 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     setActiveSubmenuKeys([key.key]);
   };
 
-  const items = [
-    {
+  const items=[];
+
+  const availableMeasureTools = Object.keys(ClientConfiguration.toolMenu?.measure)
+    .filter((key) => ClientConfiguration.toolMenu?.measure[key] === true);
+  if (ClientConfiguration.toolMenu?.measure && availableMeasureTools.length > 0) {
+    items.push({
       className: 'measure',
       key: 'measure_tools',
       popupClassName: 'measure',
@@ -218,11 +223,21 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       children: [
         {
           key: 'measure-panel',
-          label: <Measure />
+          label: (
+            <Measure
+              showMeasureDistance={ClientConfiguration.toolMenu?.measure.distance}
+              showMeasureArea={ClientConfiguration.toolMenu?.measure.area}
+            />
+          )
         }
       ]
-    },
-    {
+    });
+  };
+
+  const availableDrawTools = Object.keys(ClientConfiguration.toolMenu?.draw)
+    .filter((key) => ClientConfiguration.toolMenu?.draw[key] === true);
+  if (ClientConfiguration.toolMenu?.draw && availableDrawTools.length > 0) {
+    items.push({
       className: 'draw',
       key: 'draw_tools',
       popupClassName: 'draw',
@@ -231,11 +246,27 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       children: [
         {
           key: 'draw-panel',
-          label: <Draw />
+          label: (
+            <Draw
+              showDrawPoint={ClientConfiguration.toolMenu?.draw.point}
+              showDrawLine={ClientConfiguration.toolMenu?.draw.line}
+              showDrawPolygon={ClientConfiguration.toolMenu?.draw.polygon}
+              showDrawCircle={ClientConfiguration.toolMenu?.draw.circle}
+              showDrawRectangle={ClientConfiguration.toolMenu?.draw.rectangle}
+              showDrawAnnotation={ClientConfiguration.toolMenu?.draw.annotation}
+              showModifyFeatures={ClientConfiguration.toolMenu?.draw.modify}
+              showUploadFeatures={ClientConfiguration.toolMenu?.draw.upload}
+              showDownloadFeatures={ClientConfiguration.toolMenu?.draw.download}
+              showDeleteFeatures={ClientConfiguration.toolMenu?.draw.delete}
+            />
+          )
         }
       ]
-    },
-    {
+    });
+  }
+
+  if (ClientConfiguration.toolMenu?.feature_info) {
+    items.push({
       key: 'feature_info',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faMousePointer} />,
@@ -250,8 +281,11 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           )
         }
       ]
-    },
-    {
+    });
+  }
+
+  if (ClientConfiguration.toolMenu?.print) {
+    items.push({
       key: 'print',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faFileDownload} />,
@@ -267,8 +301,11 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           )
         }
       ]
-    },
-    {
+    });
+  }
+
+  if (ClientConfiguration.toolMenu?.tree) {
+    items.push({
       className: 'tree',
       key: 'tree',
       onTitleClick: onSubmenuTitleClick,
@@ -291,9 +328,12 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           )
         }
       ]
-    },
-    {
-      key: 'Permalink',
+    });
+  }
+
+  if (ClientConfiguration.toolMenu?.permalink) {
+    items.push({
+      key: 'permalink',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faShareNodes} />,
       label: t('Permalink.title'),
@@ -303,15 +343,18 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           label: <Permalink />
         }
       ]
-    },
-    {
+    });
+  }
+
+  if (items.length > 0) {
+    items.push({
       key: 'expand_collapse',
       label:  collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse'),
       icon: collapsed ?
         <FontAwesomeIcon icon={faChevronRight} /> :
         <FontAwesomeIcon icon={faChevronLeft} />
-    }
-  ];
+    });
+  }
 
   return (
     <div className="tool-menu">

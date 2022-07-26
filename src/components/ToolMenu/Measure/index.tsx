@@ -21,11 +21,17 @@ import {
 
 import './index.less';
 
-interface DefaultMeasureProps { }
+interface DefaultMeasureProps {
+  showMeasureDistance?: boolean;
+  showMeasureArea?: boolean;
+}
 
 export interface MeasureProps extends Partial<DefaultMeasureProps> { }
 
-export const Measure: React.FC<MeasureProps> = (): JSX.Element => {
+export const Measure: React.FC<MeasureProps> = ({
+  showMeasureDistance,
+  showMeasureArea
+}): JSX.Element => {
   const {
     t
   } = useTranslation();
@@ -38,28 +44,33 @@ export const Measure: React.FC<MeasureProps> = (): JSX.Element => {
 
   return (
     <ToggleGroup>
-      <MeasureButton
-        geodesic
-        name="line"
-        map={map}
-        measureType="line"
-        type="link"
-        continueLineMsg={t('Measure.clicktodrawline')}
-      >
-        <FontAwesomeIcon icon={faPenRuler} />
-        <span className="measure-text">{t('Measure.line')}</span>
-      </MeasureButton>
-      <MeasureButton
-        geodesic
-        name="poly"
-        map={map}
-        measureType="polygon"
-        type="link"
-        continuePolygonMsg={t('Measure.clicktodrawarea')}
-      >
-        <FontAwesomeIcon icon={faDrawPolygon} />
-        <span className="measure-text">{t('Measure.area')}</span>
-      </MeasureButton>
+      {showMeasureDistance && (
+        <MeasureButton
+          geodesic
+          name="line"
+          map={map}
+          measureType="line"
+          type="link"
+          continueLineMsg={t('Measure.clicktodrawline')}
+        >
+          <FontAwesomeIcon icon={faPenRuler} />
+          <span className="measure-text">{t('Measure.line')}</span>
+        </MeasureButton>
+      )}
+
+      {showMeasureArea && (
+        <MeasureButton
+          geodesic
+          name="poly"
+          map={map}
+          measureType="polygon"
+          type="link"
+          continuePolygonMsg={t('Measure.clicktodrawarea')}
+        >
+          <FontAwesomeIcon icon={faDrawPolygon} />
+          <span className="measure-text">{t('Measure.area')}</span>
+        </MeasureButton>
+      )}
     </ToggleGroup>
   );
 };
