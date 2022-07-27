@@ -43,12 +43,12 @@ jobs:
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
-      - name: Checking out
-        uses: actions/checkout@master
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v2
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
-      - name: SonarQube Scan
+      - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.0
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
