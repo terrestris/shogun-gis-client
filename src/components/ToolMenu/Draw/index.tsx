@@ -144,174 +144,188 @@ export const Draw: React.FC<DrawProps> = ({
 
   return (
     <ToggleGroup>
-      {showDrawPoint && (
-        <DrawButton
-          name="drawPoint"
-          drawType="Point"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faCircle}
-          />
-          <span
-            className="draw-point"
-          >
-            {t('Draw.point')}
-          </span>
-        </DrawButton>
-      )}
-      {showDrawLine && (
-        <DrawButton
-          name="drawLine"
-          drawType="LineString"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faGripLines}
-          />
-          <span
-            className="draw-line"
-          >
-            {t('Draw.line')}
-          </span>
-        </DrawButton>
-      )}
-      {showDrawPolygon && (
-        <DrawButton
-          name="drawPolygon"
-          drawType="Polygon"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faDrawPolygon}
-          />
-          <span
-            className="draw-polygon"
-          >
-            {t('Draw.polygon')}
-          </span>
-        </DrawButton>
-      )}
-      {showDrawCircle && (
-        <DrawButton
-          name="drawCircle"
-          drawType="Circle"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faCircle}
-          />
-          <span
-            className="draw-circle"
-          >
-            {t('Draw.circle')}
-          </span>
-        </DrawButton>
-      )}
-
-      {showDrawRectangle && (
-        <DrawButton
-          name="drawRectangle"
-          drawType="Rectangle"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faSquare}
-          />
-          <span
-            className="draw-rectangle"
-          >
-            {t('Draw.rectangle')}
-          </span>
-        </DrawButton>
-      )}
-
-      {showDrawAnnotation && (
-        <DrawButton
-          name="drawText"
-          drawType="Text"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faFont}
-          />
-          <span
-            className="draw-text"
-          >
-            {t('Draw.text')}
-          </span>
-        </DrawButton>
-      )}
-
-      {showModifyFeatures && (
-        <ModifyButton
-          name="draw-modify"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-          />
-          <span
-            className="draw-modify"
-          >
-            {t('Draw.modify')}
-          </span>
-        </ModifyButton>
-      )}
-
-      {showUploadFeatures && (
-        <UploadButton
-          name="draw-upload"
-          onChange={onUploadChange}
-          type="link"
-        >
-          <SimpleButton
+      <>
+        {showDrawPoint && (
+          <DrawButton
+            name="drawPoint"
+            drawType="Point"
             type="link"
           >
             <FontAwesomeIcon
-              icon={faUpload}
+              icon={faCircle}
             />
             <span
-              className="draw-upload"
+              className="draw-point"
             >
-              {t('Draw.upload')}
+              {t('Draw.point')}
+            </span>
+          </DrawButton>
+        )}
+      </>
+      <>
+        {showDrawLine && (
+          <DrawButton
+            name="drawLine"
+            drawType="LineString"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faGripLines}
+            />
+            <span
+              className="draw-line"
+            >
+              {t('Draw.line')}
+            </span>
+          </DrawButton>
+        )}
+      </>
+      <>
+        {showDrawPolygon && (
+          <DrawButton
+            name="drawPolygon"
+            drawType="Polygon"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faDrawPolygon}
+            />
+            <span
+              className="draw-polygon"
+            >
+              {t('Draw.polygon')}
+            </span>
+          </DrawButton>
+        )}
+      </>
+      <>
+        {showDrawCircle && (
+          <DrawButton
+            name="drawCircle"
+            drawType="Circle"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faCircle}
+            />
+            <span
+              className="draw-circle"
+            >
+              {t('Draw.circle')}
+            </span>
+          </DrawButton>
+        )}
+      </>
+      <>
+        {showDrawRectangle && (
+          <DrawButton
+            name="drawRectangle"
+            drawType="Rectangle"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faSquare}
+            />
+            <span
+              className="draw-rectangle"
+            >
+              {t('Draw.rectangle')}
+            </span>
+          </DrawButton>
+        )}
+      </>
+      <>
+        {showDrawAnnotation && (
+          <DrawButton
+            name="drawText"
+            drawType="Text"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faFont}
+            />
+            <span
+              className="draw-text"
+            >
+              {t('Draw.text')}
+            </span>
+          </DrawButton>
+        )}
+      </>
+      <>
+        {showModifyFeatures && (
+          <ModifyButton
+            name="draw-modify"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+            />
+            <span
+              className="draw-modify"
+            >
+              {t('Draw.modify')}
+            </span>
+          </ModifyButton>
+        )}
+      </>
+      <>
+        {showUploadFeatures && (
+          <UploadButton
+            name="draw-upload"
+            onChange={onUploadChange}
+            type="link"
+          >
+            <SimpleButton
+              type="link"
+            >
+              <FontAwesomeIcon
+                icon={faUpload}
+              />
+              <span
+                className="draw-upload"
+              >
+                {t('Draw.upload')}
+              </span>
+            </SimpleButton>
+          </UploadButton>
+        )}
+      </>
+      <>
+        {showDownloadFeatures && (
+          <SimpleButton
+            name="draw-export"
+            onClick={onGeoJSONDownload}
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faDownload}
+            />
+            <span
+              className="draw-export"
+            >
+              {t('Draw.export')}
             </span>
           </SimpleButton>
-        </UploadButton>
-      )}
-
-      {showDownloadFeatures && (
-        <SimpleButton
-          name="draw-export"
-          onClick={onGeoJSONDownload}
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faDownload}
-          />
-          <span
-            className="draw-export"
+        )}
+      </>
+      <>
+        {showDeleteFeatures && (
+          <DeleteButton
+            name="draw-delete"
+            type="link"
           >
-            {t('Draw.export')}
-          </span>
-        </SimpleButton>
-      )}
-
-      {showDeleteFeatures && (
-        <DeleteButton
-          name="draw-delete"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faTrash}
-          />
-          <span
-            className="draw-delete"
-          >
-            {t('Draw.delete')}
-          </span>
-        </DeleteButton>
-      )}
+            <FontAwesomeIcon
+              icon={faTrash}
+            />
+            <span
+              className="draw-delete"
+            >
+              {t('Draw.delete')}
+            </span>
+          </DeleteButton>
+        )}
+      </>
     </ToggleGroup>
   );
 };
