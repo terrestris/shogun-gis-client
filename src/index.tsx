@@ -177,9 +177,10 @@ const setApplicationToStore = async (application?: Application) => {
     // @ts-ignore
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
+
   if (application.toolConfig) {
     const availableTools: string[] = [];
-    const visibleTools = application.toolConfig
+    application.toolConfig
       .map((tool: DefaultApplicationToolConfig) => {
         if (tool.config.visible) {
           availableTools.push(tool.name);
@@ -187,7 +188,8 @@ const setApplicationToStore = async (application?: Application) => {
       });
     store.dispatch(setSelectedKey(availableTools)
     );
-  }
+  };
+
 };
 
 const setAppInfoToStore = async (appInfo?: AppInfo) => {

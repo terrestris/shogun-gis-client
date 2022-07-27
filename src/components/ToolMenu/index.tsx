@@ -207,12 +207,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const onSubmenuTitleClick = (key: TitleEventEntity) => {
     setCollapsed(false);
     // WHY ???
-    // selectedKeys.forEach(selKey => dispatch(unsetSelectedKey(selKey)));
+    // toolMenu.forEach(selKey => dispatch(unsetSelectedKey(selKey)));
     setActiveSubmenuKeys([key.key]);
   };
 
   const items=[];
-  if (toolMenu.includes('measure_tools')) {
+
+  if (toolMenu.includes('default') || toolMenu.includes('measure_tools')) {
     items.push({
       className: 'measure',
       key: 'measure_tools',
@@ -224,8 +225,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'measure-panel',
           label: (
             <Measure
-              showMeasureDistance={toolMenu.includes('measure_distance')}
-              showMeasureArea={toolMenu.includes('measure_area')}
+              showMeasureDistance={toolMenu.includes('default') || toolMenu.includes('measure_tools_distance')}
+              showMeasureArea={toolMenu.includes('default') || toolMenu.includes('measure_tools_area')}
             />
           )
         }
@@ -233,7 +234,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   };
 
-  if (toolMenu.includes('draw_tools')) {
+  if (toolMenu.includes('default') || toolMenu.includes('draw_tools')) {
     items.push({
       className: 'draw',
       key: 'draw_tools',
@@ -245,16 +246,16 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'draw-panel',
           label: (
             <Draw
-              showDrawPoint={toolMenu.includes('draw_tools_point')}
-              showDrawLine={toolMenu.includes('draw_tools_line')}
-              showDrawPolygon={toolMenu.includes('draw_tools_polygon')}
-              showDrawCircle={toolMenu.includes('draw_tools_circle')}
-              showDrawRectangle={toolMenu.includes('draw_tools_rectangle')}
-              showDrawAnnotation={toolMenu.includes('draw_tools_annotation')}
-              showModifyFeatures={toolMenu.includes('draw_tools_modify')}
-              showUploadFeatures={toolMenu.includes('draw_tools_upload')}
-              showDownloadFeatures={toolMenu.includes('draw_tools_download')}
-              showDeleteFeatures={toolMenu.includes('draw_tools_delete')}
+              showDrawPoint={toolMenu.includes('default') || toolMenu.includes('draw_tools_point')}
+              showDrawLine={toolMenu.includes('default') || toolMenu.includes('draw_tools_line')}
+              showDrawPolygon={toolMenu.includes('default') || toolMenu.includes('draw_tools_polygon')}
+              showDrawCircle={toolMenu.includes('default') || toolMenu.includes('draw_tools_circle')}
+              showDrawRectangle={toolMenu.includes('default') || toolMenu.includes('draw_tools_rectangle')}
+              showDrawAnnotation={toolMenu.includes('default') || toolMenu.includes('draw_tools_annotation')}
+              showModifyFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_modify')}
+              showUploadFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_upload')}
+              showDownloadFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_download')}
+              showDeleteFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_delete')}
             />
           )
         }
@@ -262,7 +263,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('feature_info')) {
+  if (toolMenu.includes('default') || toolMenu.includes('feature_info')) {
     items.push({
       key: 'feature_info',
       onTitleClick: onSubmenuTitleClick,
@@ -281,7 +282,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('print')) {
+  if (toolMenu.includes('default') || toolMenu.includes('print')) {
     items.push({
       key: 'print',
       onTitleClick: onSubmenuTitleClick,
@@ -300,8 +301,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       ]
     });
   }
-
-  if (toolMenu.includes('tree')) {
+  if (toolMenu.includes('default') || toolMenu.includes('tree')) {
     items.push({
       className: 'tree',
       key: 'tree',
@@ -328,7 +328,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('permalink')) {
+  if (toolMenu.includes('default') || toolMenu.includes('permalink')) {
     items.push({
       key: 'permalink',
       onTitleClick: onSubmenuTitleClick,
@@ -343,7 +343,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('language_selector')) {
+  if (toolMenu.includes('default') || toolMenu.includes('language_selector')) {
     items.push(
       {
         key: 'divider',

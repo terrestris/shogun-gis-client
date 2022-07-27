@@ -8,7 +8,8 @@ export interface ToolMenuState {
 }
 
 const initialState: ToolMenuState = {
-  selectedKeys: []
+  // This is the default state. If no config is given, then load all tools
+  selectedKeys: ['default']
 };
 
 export const slice = createSlice({

@@ -44,36 +44,36 @@ export const Measure: React.FC<MeasureProps> = ({
 
   return (
     <ToggleGroup>
-      <>
-        {showMeasureDistance && (
-          <MeasureButton
-            geodesic
-            name="line"
-            map={map}
-            measureType="line"
-            type="link"
-            continueLineMsg={t('Measure.clicktodrawline')}
-          >
-            <FontAwesomeIcon icon={faPenRuler} />
-            <span className="measure-text">{t('Measure.line')}</span>
-          </MeasureButton>
-        )}
-      </>
-      <>
-        {showMeasureArea && (
-          <MeasureButton
-            geodesic
-            name="poly"
-            map={map}
-            measureType="polygon"
-            type="link"
-            continuePolygonMsg={t('Measure.clicktodrawarea')}
-          >
-            <FontAwesomeIcon icon={faDrawPolygon} />
-            <span className="measure-text">{t('Measure.area')}</span>
-          </MeasureButton>
-        )}
-      </>
+      {showMeasureDistance ? (
+        <MeasureButton
+          geodesic
+          name="line"
+          map={map}
+          measureType="line"
+          type="link"
+          continueLineMsg={t('Measure.clicktodrawline')}
+          key="measure_distance"
+        >
+          <FontAwesomeIcon icon={faPenRuler} />
+          <span className="measure-text">{t('Measure.line')}</span>
+        </MeasureButton>
+      ) : <></>}
+
+      {showMeasureArea ? (
+        <MeasureButton
+          geodesic
+          name="poly"
+          map={map}
+          measureType="polygon"
+          type="link"
+          continuePolygonMsg={t('Measure.clicktodrawarea')}
+          key="measure_area"
+        >
+          <FontAwesomeIcon icon={faDrawPolygon} />
+          <span className="measure-text">{t('Measure.area')}</span>
+        </MeasureButton>
+      ) : <></>}
+
     </ToggleGroup>
   );
 };
