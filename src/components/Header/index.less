@@ -24,7 +24,7 @@
   }
 
   .logo {
-    height: 3rem;
+    height: 100%;
     padding: 3px;
   }
 
@@ -37,7 +37,7 @@
     }
 
     &.center-items {
-      flex: 4;
+      flex: 1;
       display: flex;
       justify-content: center;
 
@@ -47,80 +47,53 @@
     }
 
     &.right-items {
-      flex: 1;
       justify-content: flex-end;
     }
   }
 
   // Adjustments for Smartphones
-  @media (max-width:599px) {
-
-    .title {
-      display: none;
-    }
-
+  @media (max-width: 599px) {
     .item-container {
+      .title {
+        display: none;
+      }
 
       &.left-items {
-        width: 60px;
-        // max-width: 60px;
-
         .logo {
-          width: 55px;
+          max-width: 60px;
           height: auto;
         }
       }
 
       &.center-items {
-        // align-items: center;
-        // justify-content: center;
-        // width: 100%;
-
-        .ant-select.ant-select-auto-complete.react-geo-nominatimsearch.ant-select-single.ant-select-allow-clear.ant-select-show-search {
-          width: 250px;
-
-          .ant-select-selector {
-            // width: 100%;
-          }
-        }
-      }
-
-      &.right-items {
-        // width: 60px;
-        max-width: 60px;
-        // align-items: center;
-        justify-content: center;
-
-        .username {
-          display: none;
+        .react-geo-nominatimsearch.ant-select-auto-complete {
+          width: 90%;
+          max-width: 200px;
         }
       }
     }
   }
 
   // Adjustments for Tablets
-  @media (min-width:600px) {
-    .title {
-      display: none;
-    }
-
-    .item-container.left-items {
-      width: 100px;
-      max-width: 100px;
-    }
-
-    .item-container.center-items {
-      // width: 100%;
-      justify-content: center;
-
-      .ant-select.ant-select-auto-complete.react-geo-nominatimsearch.ant-select-single.ant-select-allow-clear.ant-select-show-search {
-        // width: fit-content;
+  @media (min-width: 600px) {
+    .item-container {
+      .title {
+        display: none;
       }
-    }
 
-    .item-container.right-items {
-      width: 100px;
-      max-width: 100px;
+      &.left-items {
+        width: 100px;
+      }
+
+      &.center-items {
+        .react-geo-nominatimsearch.ant-select-auto-complete {
+          width: 90%;
+        }
+      }
+
+      &.right-items {
+        width: 100px;
+      }
     }
   }
 }
