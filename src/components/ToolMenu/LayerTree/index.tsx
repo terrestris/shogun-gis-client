@@ -3,12 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  faBars
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
-import {
   getUid
 } from 'ol';
 import OlBaseLayer from 'ol/layer/Base';
@@ -74,7 +68,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       return (
         <div>
           {layer.get('name')}
-          <FontAwesomeIcon icon={faBars} />
         </div>
       );
     } else {
@@ -126,9 +119,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       map={map}
       nodeTitleRenderer={treeNodeTitleRenderer}
       filterFunction={treeFilterFunction}
-      draggable={{
-        icon: false
-      }}
+      draggable
       {...restProps}
     />
   );
