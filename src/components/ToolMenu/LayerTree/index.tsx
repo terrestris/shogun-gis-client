@@ -119,9 +119,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       map={map}
       nodeTitleRenderer={treeNodeTitleRenderer}
       filterFunction={treeFilterFunction}
-      draggable={{
-        icon: false
-      }}
+      draggable
       {...restProps}
     />
   );

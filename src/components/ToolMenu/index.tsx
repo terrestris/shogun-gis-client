@@ -13,7 +13,8 @@ import {
   faChevronRight,
   faChevronLeft,
   faShareNodes,
-  faDrawPolygon
+  faDrawPolygon,
+  faLanguage
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -71,6 +72,7 @@ import {
   unsetSelectedKey
 } from '../../store/toolMenu';
 
+import LanguageSelect from '../LanguageSelector';
 import Permalink from '../Permalink';
 import PrintForm from '../PrintForm';
 
@@ -339,6 +341,27 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         }
       ]
     });
+  }
+
+  if (toolMenu.includes('language_selector')) {
+    items.push(
+      {
+        key: 'divider',
+        label: <Menu.Divider />
+      },
+      {
+        key: 'language_selector',
+        onTitleClick: onSubmenuTitleClick,
+        icon: <FontAwesomeIcon icon={faLanguage} />,
+        label: t('ToolMenu.languageSelect'),
+        children: [
+          {
+            key: 'languages-select-panel',
+            label: <LanguageSelect/>
+          }
+        ]
+      }
+    );
   }
 
   if (items.length > 0) {

@@ -23,14 +23,8 @@
     margin-left: 2rem;
   }
 
-  @media screen and (max-width: 680px) {
-    .title {
-      display: none;
-    }
-  }
-
   .logo {
-    height: 3rem;
+    height: 100%;
     padding: 3px;
   }
 
@@ -43,28 +37,62 @@
     }
 
     &.center-items {
-      flex: 4;
+      flex: 1;
       display: flex;
       justify-content: center;
 
       .react-geo-nominatimsearch.ant-select-auto-complete {
         width: 60%;
       }
+    }
 
-      @media screen and (max-width: 680px) {
+    &.right-items {
+      justify-content: flex-end;
+    }
+  }
+
+  // Adjustments for Smartphones
+  @media (max-width: 599px) {
+    .item-container {
+      .title {
+        display: none;
+      }
+
+      &.left-items {
+        .logo {
+          max-width: 60px;
+          height: auto;
+        }
+      }
+
+      &.center-items {
+        .react-geo-nominatimsearch.ant-select-auto-complete {
+          width: 90%;
+          max-width: 200px;
+        }
+      }
+    }
+  }
+
+  // Adjustments for Tablets
+  @media (min-width: 600px) {
+    .item-container {
+      .title {
+        display: none;
+      }
+
+      &.left-items {
+        width: 100px;
+      }
+
+      &.center-items {
         .react-geo-nominatimsearch.ant-select-auto-complete {
           width: 90%;
         }
       }
-    }
-    &.right-items {
-      flex: 1;
-      justify-content: flex-end;
-    }
 
-    @media screen and (max-width: 680px) {
       &.right-items {
-        display: none;
+        width: 100px;
       }
     }
   }
