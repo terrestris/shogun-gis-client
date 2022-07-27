@@ -40,7 +40,9 @@ import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext
 import {
   AppInfo
 } from '@terrestris/shogun-util/dist/model/AppInfo';
-import Application from '@terrestris/shogun-util/dist/model/Application';
+import Application, {
+  DefaultApplicationToolConfig
+} from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
@@ -64,6 +66,9 @@ import {
 import {
   setTitle
 } from './store/title';
+import {
+  setSelectedKey
+} from './store/toolMenu';
 import {
   setUser
 } from './store/user';
@@ -164,7 +169,6 @@ const setApplicationToStore = async (application?: Application) => {
 
     return;
   }
-
   if (application.name) {
     store.dispatch(setTitle(application.name));
   }
@@ -172,6 +176,17 @@ const setApplicationToStore = async (application?: Application) => {
   if (application?.clientConfig?.theme?.logoPath) {
     // @ts-ignore
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
+  }
+  if (application.toolConfig) {
+    const availableTools: string[] = [];
+    const visibleTools = application.toolConfig
+      .map((tool: DefaultApplicationToolConfig) => {
+        if (tool.config.visible) {
+          availableTools.push(tool.name);
+        };
+      });
+    store.dispatch(setSelectedKey(availableTools)
+    );
   }
 };
 

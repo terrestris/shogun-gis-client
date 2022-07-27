@@ -26,7 +26,6 @@ import {
   MenuProps
 } from 'antd';
 
-import ClientConfiguration from 'clientConfig';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 import OlSource from 'ol/source/Source';
@@ -103,7 +102,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const map = useMap();
 
   const dispatch = useAppDispatch();
-  const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
+  const toolMenu = useAppSelector(state => state.toolMenu.selectedKeys);
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [activeSubMenuKeys, setActiveSubmenuKeys] = useState<string[]>([]);
@@ -205,15 +204,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const onSubmenuTitleClick = (key: TitleEventEntity) => {
     setCollapsed(false);
-    selectedKeys.forEach(selKey => dispatch(unsetSelectedKey(selKey)));
+    // WHY ???
+    // selectedKeys.forEach(selKey => dispatch(unsetSelectedKey(selKey)));
     setActiveSubmenuKeys([key.key]);
   };
 
   const items=[];
-
-  const availableMeasureTools = Object.keys(ClientConfiguration.toolMenu?.measure)
-    .filter((key) => ClientConfiguration.toolMenu?.measure[key] === true);
-  if (ClientConfiguration.toolMenu?.measure && availableMeasureTools.length > 0) {
+  if (toolMenu.includes('measure_tools')) {
     items.push({
       className: 'measure',
       key: 'measure_tools',
@@ -225,8 +222,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'measure-panel',
           label: (
             <Measure
-              showMeasureDistance={ClientConfiguration.toolMenu?.measure.distance}
-              showMeasureArea={ClientConfiguration.toolMenu?.measure.area}
+              showMeasureDistance={toolMenu.includes('measure_distance')}
+              showMeasureArea={toolMenu.includes('measure_area')}
             />
           )
         }
@@ -234,9 +231,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   };
 
-  const availableDrawTools = Object.keys(ClientConfiguration.toolMenu?.draw)
-    .filter((key) => ClientConfiguration.toolMenu?.draw[key] === true);
-  if (ClientConfiguration.toolMenu?.draw && availableDrawTools.length > 0) {
+  if (toolMenu.includes('draw_tools')) {
     items.push({
       className: 'draw',
       key: 'draw_tools',
@@ -248,16 +243,16 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'draw-panel',
           label: (
             <Draw
-              showDrawPoint={ClientConfiguration.toolMenu?.draw.point}
-              showDrawLine={ClientConfiguration.toolMenu?.draw.line}
-              showDrawPolygon={ClientConfiguration.toolMenu?.draw.polygon}
-              showDrawCircle={ClientConfiguration.toolMenu?.draw.circle}
-              showDrawRectangle={ClientConfiguration.toolMenu?.draw.rectangle}
-              showDrawAnnotation={ClientConfiguration.toolMenu?.draw.annotation}
-              showModifyFeatures={ClientConfiguration.toolMenu?.draw.modify}
-              showUploadFeatures={ClientConfiguration.toolMenu?.draw.upload}
-              showDownloadFeatures={ClientConfiguration.toolMenu?.draw.download}
-              showDeleteFeatures={ClientConfiguration.toolMenu?.draw.delete}
+              showDrawPoint={toolMenu.includes('draw_tools_point')}
+              showDrawLine={toolMenu.includes('draw_tools_line')}
+              showDrawPolygon={toolMenu.includes('draw_tools_polygon')}
+              showDrawCircle={toolMenu.includes('draw_tools_circle')}
+              showDrawRectangle={toolMenu.includes('draw_tools_rectangle')}
+              showDrawAnnotation={toolMenu.includes('draw_tools_annotation')}
+              showModifyFeatures={toolMenu.includes('draw_tools_modify')}
+              showUploadFeatures={toolMenu.includes('draw_tools_upload')}
+              showDownloadFeatures={toolMenu.includes('draw_tools_download')}
+              showDeleteFeatures={toolMenu.includes('draw_tools_delete')}
             />
           )
         }
@@ -265,7 +260,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (ClientConfiguration.toolMenu?.feature_info) {
+  if (toolMenu.includes('feature_info')) {
     items.push({
       key: 'feature_info',
       onTitleClick: onSubmenuTitleClick,
@@ -284,7 +279,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (ClientConfiguration.toolMenu?.print) {
+  if (toolMenu.includes('print')) {
     items.push({
       key: 'print',
       onTitleClick: onSubmenuTitleClick,
@@ -304,7 +299,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (ClientConfiguration.toolMenu?.tree) {
+  if (toolMenu.includes('tree')) {
     items.push({
       className: 'tree',
       key: 'tree',
@@ -331,7 +326,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (ClientConfiguration.toolMenu?.permalink) {
+  if (toolMenu.includes('permalink')) {
     items.push({
       key: 'permalink',
       onTitleClick: onSubmenuTitleClick,
@@ -366,7 +361,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         openKeys={activeSubMenuKeys}
         onOpenChange={onOpenChange}
         multiple={true}
-        selectedKeys={selectedKeys}
+        selectedKeys={toolMenu}
         items={items}
         {...restProps}
       />

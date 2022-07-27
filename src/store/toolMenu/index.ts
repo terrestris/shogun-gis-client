@@ -15,8 +15,8 @@ export const slice = createSlice({
   name: 'toolMenu',
   initialState,
   reducers: {
-    setSelectedKey(state, action: PayloadAction<string>) {
-      state.selectedKeys.push(action.payload);
+    setSelectedKey(state, action: PayloadAction<string[]>) {
+      state.selectedKeys = [...action.payload];
     },
     unsetSelectedKey(state, action: PayloadAction<string>) {
       state.selectedKeys = state.selectedKeys.filter((key) => key !== action.payload);
