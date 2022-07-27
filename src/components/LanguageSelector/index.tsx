@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './index.less';
+
 import {
   Select
 } from 'antd';
@@ -18,7 +20,7 @@ export const LanguageSelect = () => {
   };
 
   return (
-    <div className="languageSelect">
+    <div className="language-select">
       <Select
         defaultValue={i18n.language || 'en'}
         onChange={onLanguageChange}
