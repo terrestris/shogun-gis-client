@@ -1,3 +1,74 @@
+## [3.3.0](https://github.com/terrestris/shogun-demo-client/compare/v3.2.0...v3.3.0) (2022-07-28)
+
+
+### Features
+
+* **draw-export:** added button to draw tools and method to export drawn features ([c09a2f5](https://github.com/terrestris/shogun-demo-client/commit/c09a2f537a390e0493dfdac8b176334d17c0f237))
+* **draw:** added draw component and translations ([f8b7a05](https://github.com/terrestris/shogun-demo-client/commit/f8b7a0536d0847772a17538ce738ad6edcd904e7))
+* **draw:** added edit, remove and delete buttons ([31e0a67](https://github.com/terrestris/shogun-demo-client/commit/31e0a67ad7476e5494962a53a8e921c6d5022b74))
+* implements the client version into the footer ([410564c](https://github.com/terrestris/shogun-demo-client/commit/410564c80ed9e4b15f279208fc5a6b1de6de2d54))
+* language selector ([#172](https://github.com/terrestris/shogun-demo-client/issues/172)) ([78418c1](https://github.com/terrestris/shogun-demo-client/commit/78418c113d6c8b3f89748a0d359c17a6f36436c3))
+* make keycloak onload action configurable ([83a8f66](https://github.com/terrestris/shogun-demo-client/commit/83a8f66359a66e7d5a5c09ffac04ba0e6fe6db3c))
+* save selection ([#176](https://github.com/terrestris/shogun-demo-client/issues/176)) ([d06b215](https://github.com/terrestris/shogun-demo-client/commit/d06b215f8c8235ca8f676cb69ecfc065c973386a))
+
+
+### Bugfixes
+
+* deletes empty line ([9f481d6](https://github.com/terrestris/shogun-demo-client/commit/9f481d654ef04c5035bb0a9a01e8459f4fd3fd46))
+* deletes unneccessary translation ([9166a47](https://github.com/terrestris/shogun-demo-client/commit/9166a478bb7f200761ddc64fa0db11a27df4b3a7))
+* lower z-index to prevent icon from overlap app elements ([b463610](https://github.com/terrestris/shogun-demo-client/commit/b4636102d8ae1b677141fdfb69d8aaf419951b8c))
+* make Header and Footer more responsive ([badde0e](https://github.com/terrestris/shogun-demo-client/commit/badde0ec442266c232b2a98b0531cbfe01818915))
+* remove the unneeded integration of the Permalink component in the main application ([57d961e](https://github.com/terrestris/shogun-demo-client/commit/57d961ec68b1aed17afb595f4479ba2c1d55f96a))
+* removes unwanted imports ([cd7e8c1](https://github.com/terrestris/shogun-demo-client/commit/cd7e8c1207e73481e78cd041cdcd8e09ce5f774a))
+* show the expand/collapse buttons in the tree ([aac41b7](https://github.com/terrestris/shogun-demo-client/commit/aac41b77924aba62dd7724a6e8b36748e832933c))
+
+
+### Changes in layout
+
+* adjust pressed style and set style for collapsed submenu as well ([a0cb522](https://github.com/terrestris/shogun-demo-client/commit/a0cb5222b42ec0d7e215bcf4739e80ec8ee6ae16))
+* align items and add space between label and value ([b9592a7](https://github.com/terrestris/shogun-demo-client/commit/b9592a7b28de67527b8b3ab2edd3a3981d762677))
+* reformat and set type to link ([14def14](https://github.com/terrestris/shogun-demo-client/commit/14def14945dc191af1cc0be6362200e2b3bfeaf3))
+* Toolmenu styling ([#206](https://github.com/terrestris/shogun-demo-client/issues/206)) ([4fa4daa](https://github.com/terrestris/shogun-demo-client/commit/4fa4daabd5965d6fe334bc5caa67ca0d517672a2))
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.18.6 to 7.18.9 ([0523b77](https://github.com/terrestris/shogun-demo-client/commit/0523b77d52f142593cd1d82e63e210b770d9ae39))
+* **deps-dev:** bump @babel/preset-env from 7.18.6 to 7.18.9 ([32f2c94](https://github.com/terrestris/shogun-demo-client/commit/32f2c947d6c075260dff473857a7cc04b97d698f))
+* **deps-dev:** bump @playwright/test from 1.23.2 to 1.23.4 ([859de2c](https://github.com/terrestris/shogun-demo-client/commit/859de2c7d529dd94408c09cf29fd45dadc43dae6))
+* **deps-dev:** bump @playwright/test from 1.23.4 to 1.24.0 ([f6a13bd](https://github.com/terrestris/shogun-demo-client/commit/f6a13bd100f591f91728d04cac9f7e5faeb4535c))
+* **deps-dev:** bump @playwright/test from 1.24.0 to 1.24.1 ([706e30c](https://github.com/terrestris/shogun-demo-client/commit/706e30cc1a096fd3835fe9a7516bfc8dec2bdcfd))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([1585157](https://github.com/terrestris/shogun-demo-client/commit/15851578630be8b71e452c9b43fa0a1ecf8afd96))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([a7e4ea4](https://github.com/terrestris/shogun-demo-client/commit/a7e4ea4c35132198122a51fba85d7ffcd55a0d32))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([b23098d](https://github.com/terrestris/shogun-demo-client/commit/b23098d12bf398c15e139127ff7036675e3cc5d5))
+* **deps-dev:** bump @typescript-eslint/parser from 5.30.5 to 5.30.6 ([3bd08d9](https://github.com/terrestris/shogun-demo-client/commit/3bd08d97dffcf462813832eb9c247367540d95aa))
+* **deps-dev:** bump @typescript-eslint/parser from 5.30.6 to 5.30.7 ([67f9ded](https://github.com/terrestris/shogun-demo-client/commit/67f9dedf3533e09033a14ba2eeb1b4e41e5d0c03))
+* **deps-dev:** bump @typescript-eslint/parser from 5.30.7 to 5.31.0 ([59eae8c](https://github.com/terrestris/shogun-demo-client/commit/59eae8c26cbc47210ed3aa0198cd10d7d92afb73))
+* **deps-dev:** bump eslint from 8.19.0 to 8.20.0 ([26ae94d](https://github.com/terrestris/shogun-demo-client/commit/26ae94dce9487d9e77de2673a81859f78fc39eeb))
+* **deps-dev:** bump jest and @types/jest ([cf08d99](https://github.com/terrestris/shogun-demo-client/commit/cf08d994a22544b2ab9025891e607f888552c777))
+* **deps-dev:** bump jest-environment-jsdom from 28.1.2 to 28.1.3 ([d904c83](https://github.com/terrestris/shogun-demo-client/commit/d904c83f23ab14d1e2b5bbbcdc2f3a88fe04b93c))
+* **deps-dev:** bump webpack from 5.73.0 to 5.74.0 ([f17da3a](https://github.com/terrestris/shogun-demo-client/commit/f17da3a5f61b8e4e21bbf76362100d6b1418cb20))
+* **deps:** bump @terrestris/react-geo from 17.4.1 to 17.5.0 ([8c5f242](https://github.com/terrestris/shogun-demo-client/commit/8c5f24281ec827712c506a80e0b0278a563a9845))
+* **deps:** bump @terrestris/react-geo from 19.0.0 to 19.1.0 ([b36bec5](https://github.com/terrestris/shogun-demo-client/commit/b36bec5cac0baaacebef4442c854dd113cd2951d))
+* **deps:** bump @terrestris/react-geo from 19.1.0 to 19.1.1 ([9c4da40](https://github.com/terrestris/shogun-demo-client/commit/9c4da40706a2225c904d0ba71f43d8d4e5246fad))
+* **deps:** bump antd from 4.21.5 to 4.21.7 ([9aab769](https://github.com/terrestris/shogun-demo-client/commit/9aab769a92a8553bafb3d267ca36e7acba7dabb5))
+* **deps:** bump antd from 4.21.7 to 4.22.0 ([3f99355](https://github.com/terrestris/shogun-demo-client/commit/3f9935516256fa72addc3a016942312999bb95c5))
+* **deps:** bump antd from 4.22.0 to 4.22.1 ([e6fdade](https://github.com/terrestris/shogun-demo-client/commit/e6fdadef0af57a22bc3d9f1f8886b3c8107f0c5e))
+* **deps:** bump i18next from 21.8.13 to 21.8.14 ([98195cb](https://github.com/terrestris/shogun-demo-client/commit/98195cb93851c27ccbafc72e96e2f072b3f89c1a))
+* **deps:** bump react-i18next from 11.18.0 to 11.18.1 ([db2545f](https://github.com/terrestris/shogun-demo-client/commit/db2545fbeaccf96662fb26dda4506abeb216ddd3))
+* **deps:** bump react-i18next from 11.18.1 to 11.18.3 ([4739e06](https://github.com/terrestris/shogun-demo-client/commit/4739e06cd5e9e8c0b34ffda4814e2175a40854e9))
+* **draw-export:** added translations ([5755bc1](https://github.com/terrestris/shogun-demo-client/commit/5755bc1eb8968e547f9c11c4f2d442e9ed63f5b9))
+* **draw:** added missing file ([d928b85](https://github.com/terrestris/shogun-demo-client/commit/d928b85cfaa70f7af9f22d408bc0e90d2feba319))
+* **draw:** condensed if conditions in one if statement ([f6a8451](https://github.com/terrestris/shogun-demo-client/commit/f6a8451f3856a095d4a43deafcca40b02395b736))
+* **draw:** fixed bug that was selecting modify and delete at the same time ([28faedf](https://github.com/terrestris/shogun-demo-client/commit/28faedf9db92b740f1caca377eaeaa70c05eeb84))
+* **draw:** uploaded data is now transformed to map projection, cleanup ([aecc3f0](https://github.com/terrestris/shogun-demo-client/commit/aecc3f0336b3541f091c7c2f18896f44932f077d))
+* **unit-tests:** added basic rendering unit tests to all components ([3bf444c](https://github.com/terrestris/shogun-demo-client/commit/3bf444c88b3e615d05e369f71d9e39046ef6aff6))
+* **unit-tests:** added missing files ([ef3fd9c](https://github.com/terrestris/shogun-demo-client/commit/ef3fd9c65dcb3e4a7ddabd8f815c84cad3ed5aee))
+* **unit-tests:** removed uneeded comments ([e86de02](https://github.com/terrestris/shogun-demo-client/commit/e86de0289d6c97a74721c586ffc03aa736f825f0))
+* update react-geo ([e065bdd](https://github.com/terrestris/shogun-demo-client/commit/e065bddd42244991ca4baa8e7821edac801392d8))
+* update README ([1b57ceb](https://github.com/terrestris/shogun-demo-client/commit/1b57ceb1f99fb2ddb32aba9603f1eaecdd592c32))
+* update shogun-util ([8cd7c76](https://github.com/terrestris/shogun-demo-client/commit/8cd7c76dab166081fe422e4c3a65be17bd695338))
+
 ## [3.2.0](https://github.com/terrestris/shogun-demo-client/compare/v3.1.1...v3.2.0) (2022-07-08)
 
 
