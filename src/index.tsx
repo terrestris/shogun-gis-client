@@ -67,7 +67,7 @@ import {
   setTitle
 } from './store/title';
 import {
-  setSelectedKey
+  setAvailableTools
 } from './store/toolMenu';
 import {
   setUser
@@ -181,12 +181,13 @@ const setApplicationToStore = async (application?: Application) => {
   if (application.toolConfig) {
     const availableTools: string[] = [];
     application.toolConfig
+      // @ts-ignore
       .map((tool: DefaultApplicationToolConfig) => {
         if (tool.config.visible) {
           availableTools.push(tool.name);
         };
       });
-    store.dispatch(setSelectedKey(availableTools)
+    store.dispatch(setAvailableTools(availableTools)
     );
   };
 

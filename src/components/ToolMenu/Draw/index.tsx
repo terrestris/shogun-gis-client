@@ -147,10 +147,10 @@ export const Draw: React.FC<DrawProps> = ({
 
       {showDrawPoint ? (
         <DrawButton
-          name="draw_point"
-          key="draw_point"
+          name="draw-point"
           drawType="Point"
           type="link"
+          pressed={false}
         >
           <FontAwesomeIcon
             icon={faCircle}
@@ -165,8 +165,7 @@ export const Draw: React.FC<DrawProps> = ({
 
       {showDrawLine ? (
         <DrawButton
-          name="draw_line"
-          key="draw_line"
+          name="draw-line"
           drawType="LineString"
           type="link"
         >
@@ -183,7 +182,7 @@ export const Draw: React.FC<DrawProps> = ({
 
       {showDrawPolygon ? (
         <DrawButton
-          name="drawPolygon"
+          name="draw-polygon"
           drawType="Polygon"
           type="link"
         >
@@ -200,7 +199,7 @@ export const Draw: React.FC<DrawProps> = ({
 
       {showDrawCircle ? (
         <DrawButton
-          name="drawCircle"
+          name="draw-circle"
           drawType="Circle"
           type="link"
         >
@@ -217,7 +216,7 @@ export const Draw: React.FC<DrawProps> = ({
 
       {showDrawRectangle ? (
         <DrawButton
-          name="drawRectangle"
+          name="draw-rectangle"
           drawType="Rectangle"
           type="link"
         >
@@ -234,7 +233,7 @@ export const Draw: React.FC<DrawProps> = ({
 
       {showDrawAnnotation ? (
         <DrawButton
-          name="drawText"
+          name="draw-text"
           drawType="Text"
           type="link"
         >

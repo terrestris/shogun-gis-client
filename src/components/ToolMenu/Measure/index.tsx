@@ -52,7 +52,6 @@ export const Measure: React.FC<MeasureProps> = ({
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
-          key="measure_distance"
         >
           <FontAwesomeIcon icon={faPenRuler} />
           <span className="measure-text">{t('Measure.line')}</span>
@@ -67,7 +66,6 @@ export const Measure: React.FC<MeasureProps> = ({
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}
-          key="measure_area"
         >
           <FontAwesomeIcon icon={faDrawPolygon} />
           <span className="measure-text">{t('Measure.area')}</span>

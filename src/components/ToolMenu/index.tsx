@@ -104,7 +104,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const map = useMap();
 
   const dispatch = useAppDispatch();
-  const toolMenu = useAppSelector(state => state.toolMenu.selectedKeys);
+  const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
+  const availableTools = useAppSelector(state => state.toolMenu.availableTools);
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [activeSubMenuKeys, setActiveSubmenuKeys] = useState<string[]>([]);
@@ -206,14 +207,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const onSubmenuTitleClick = (key: TitleEventEntity) => {
     setCollapsed(false);
-    // WHY ???
-    // toolMenu.forEach(selKey => dispatch(unsetSelectedKey(selKey)));
+    selectedKeys.forEach(selKey => dispatch(unsetSelectedKey(selKey)));
     setActiveSubmenuKeys([key.key]);
   };
 
   const items=[];
 
-  if (toolMenu.includes('default') || toolMenu.includes('measure_tools')) {
+  if (availableTools.includes('default') || availableTools.includes('measure_tools')) {
     items.push({
       className: 'measure',
       key: 'measure_tools',
@@ -225,8 +225,10 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'measure-panel',
           label: (
             <Measure
-              showMeasureDistance={toolMenu.includes('default') || toolMenu.includes('measure_tools_distance')}
-              showMeasureArea={toolMenu.includes('default') || toolMenu.includes('measure_tools_area')}
+              showMeasureDistance={
+                availableTools.includes('default') || availableTools.includes('measure_tools_distance')
+              }
+              showMeasureArea={availableTools.includes('default') || availableTools.includes('measure_tools_area')}
             />
           )
         }
@@ -234,7 +236,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   };
 
-  if (toolMenu.includes('default') || toolMenu.includes('draw_tools')) {
+  if (availableTools.includes('default') || availableTools.includes('draw_tools')) {
     items.push({
       className: 'draw',
       key: 'draw_tools',
@@ -246,16 +248,20 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           key: 'draw-panel',
           label: (
             <Draw
-              showDrawPoint={toolMenu.includes('default') || toolMenu.includes('draw_tools_point')}
-              showDrawLine={toolMenu.includes('default') || toolMenu.includes('draw_tools_line')}
-              showDrawPolygon={toolMenu.includes('default') || toolMenu.includes('draw_tools_polygon')}
-              showDrawCircle={toolMenu.includes('default') || toolMenu.includes('draw_tools_circle')}
-              showDrawRectangle={toolMenu.includes('default') || toolMenu.includes('draw_tools_rectangle')}
-              showDrawAnnotation={toolMenu.includes('default') || toolMenu.includes('draw_tools_annotation')}
-              showModifyFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_modify')}
-              showUploadFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_upload')}
-              showDownloadFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_download')}
-              showDeleteFeatures={toolMenu.includes('default') || toolMenu.includes('draw_tools_delete')}
+              showDrawPoint={availableTools.includes('default') || availableTools.includes('draw_tools_point')}
+              showDrawLine={availableTools.includes('default') || availableTools.includes('draw_tools_line')}
+              showDrawPolygon={availableTools.includes('default') || availableTools.includes('draw_tools_polygon')}
+              showDrawCircle={availableTools.includes('default') || availableTools.includes('draw_tools_circle')}
+              showDrawRectangle={availableTools.includes('default') || availableTools.includes('draw_tools_rectangle')}
+              showDrawAnnotation={
+                availableTools.includes('default') || availableTools.includes('draw_tools_annotation')
+              }
+              showModifyFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_modify')}
+              showUploadFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_upload')}
+              showDownloadFeatures={
+                availableTools.includes('default') || availableTools.includes('draw_tools_download')
+              }
+              showDeleteFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_delete')}
             />
           )
         }
@@ -263,7 +269,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('default') || toolMenu.includes('feature_info')) {
+  if (availableTools.includes('default') || availableTools.includes('feature_info')) {
     items.push({
       key: 'feature_info',
       onTitleClick: onSubmenuTitleClick,
@@ -282,7 +288,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('default') || toolMenu.includes('print')) {
+  if (availableTools.includes('default') || availableTools.includes('print')) {
     items.push({
       key: 'print',
       onTitleClick: onSubmenuTitleClick,
@@ -301,7 +307,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       ]
     });
   }
-  if (toolMenu.includes('default') || toolMenu.includes('tree')) {
+  if (availableTools.includes('default') || availableTools.includes('tree')) {
     items.push({
       className: 'tree',
       key: 'tree',
@@ -328,7 +334,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('default') || toolMenu.includes('permalink')) {
+  if (availableTools.includes('default') || availableTools.includes('permalink')) {
     items.push({
       key: 'permalink',
       onTitleClick: onSubmenuTitleClick,
@@ -343,7 +349,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     });
   }
 
-  if (toolMenu.includes('default') || toolMenu.includes('language_selector')) {
+  if (availableTools.includes('default') || availableTools.includes('language_selector')) {
     items.push(
       {
         key: 'divider',
@@ -384,7 +390,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         openKeys={activeSubMenuKeys}
         onOpenChange={onOpenChange}
         multiple={true}
-        selectedKeys={toolMenu}
+        selectedKeys={selectedKeys}
         items={items}
         {...restProps}
       />
