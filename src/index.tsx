@@ -187,8 +187,10 @@ const setApplicationToStore = async (application?: Application) => {
           availableTools.push(tool.name);
         };
       });
+
     store.dispatch(setAvailableTools(availableTools)
     );
+
   };
 
 };
