@@ -186,8 +186,7 @@ const setApplicationToStore = async (application?: Application) => {
           availableTools.push(tool.name);
         };
       });
-    store.dispatch(setSelectedKey(availableTools)
-    );
+    store.dispatch(setSelectedKey(availableTools));
   };
 
 };
