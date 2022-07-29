@@ -5,10 +5,13 @@ import {
 
 export interface ToolMenuState {
   selectedKeys: string[];
+  availableTools: string[];
 }
 
 const initialState: ToolMenuState = {
-  selectedKeys: []
+  // This is the default state. If no config is given, then load all tools
+  selectedKeys: [],
+  availableTools: ['default']
 };
 
 export const slice = createSlice({
@@ -20,13 +23,17 @@ export const slice = createSlice({
     },
     unsetSelectedKey(state, action: PayloadAction<string>) {
       state.selectedKeys = state.selectedKeys.filter((key) => key !== action.payload);
+    },
+    setAvailableTools(state, action: PayloadAction<string[]>) {
+      state.availableTools = [...action.payload];
     }
   }
 });
 
 export const {
   setSelectedKey,
-  unsetSelectedKey
+  unsetSelectedKey,
+  setAvailableTools
 } = slice.actions;
 
 export default slice.reducer;

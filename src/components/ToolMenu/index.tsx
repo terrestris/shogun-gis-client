@@ -105,6 +105,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
+  const availableTools = useAppSelector(state => state.toolMenu.availableTools);
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [activeSubMenuKeys, setActiveSubmenuKeys] = useState<string[]>([]);
@@ -210,8 +211,10 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     setActiveSubmenuKeys([key.key]);
   };
 
-  const items = [
-    {
+  const items=[];
+
+  if (availableTools.includes('default') || availableTools.includes('measure_tools')) {
+    items.push({
       className: 'measure',
       key: 'measure_tools',
       popupClassName: 'measure',
@@ -220,11 +223,21 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       children: [
         {
           key: 'measure-panel',
-          label: <Measure />
+          label: (
+            <Measure
+              showMeasureDistance={
+                availableTools.includes('default') || availableTools.includes('measure_tools_distance')
+              }
+              showMeasureArea={availableTools.includes('default') || availableTools.includes('measure_tools_area')}
+            />
+          )
         }
       ]
-    },
-    {
+    });
+  };
+
+  if (availableTools.includes('default') || availableTools.includes('draw_tools')) {
+    items.push({
       className: 'draw',
       key: 'draw_tools',
       popupClassName: 'draw',
@@ -233,11 +246,31 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       children: [
         {
           key: 'draw-panel',
-          label: <Draw />
+          label: (
+            <Draw
+              showDrawPoint={availableTools.includes('default') || availableTools.includes('draw_tools_point')}
+              showDrawLine={availableTools.includes('default') || availableTools.includes('draw_tools_line')}
+              showDrawPolygon={availableTools.includes('default') || availableTools.includes('draw_tools_polygon')}
+              showDrawCircle={availableTools.includes('default') || availableTools.includes('draw_tools_circle')}
+              showDrawRectangle={availableTools.includes('default') || availableTools.includes('draw_tools_rectangle')}
+              showDrawAnnotation={
+                availableTools.includes('default') || availableTools.includes('draw_tools_annotation')
+              }
+              showModifyFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_modify')}
+              showUploadFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_upload')}
+              showDownloadFeatures={
+                availableTools.includes('default') || availableTools.includes('draw_tools_download')
+              }
+              showDeleteFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_delete')}
+            />
+          )
         }
       ]
-    },
-    {
+    });
+  }
+
+  if (availableTools.includes('default') || availableTools.includes('feature_info')) {
+    items.push({
       key: 'feature_info',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faMousePointer} />,
@@ -252,8 +285,11 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           )
         }
       ]
-    },
-    {
+    });
+  }
+
+  if (availableTools.includes('default') || availableTools.includes('print')) {
+    items.push({
       key: 'print',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faFileDownload} />,
@@ -269,8 +305,10 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           )
         }
       ]
-    },
-    {
+    });
+  }
+  if (availableTools.includes('default') || availableTools.includes('tree')) {
+    items.push({
       className: 'tree',
       key: 'tree',
       onTitleClick: onSubmenuTitleClick,
@@ -293,9 +331,12 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           )
         }
       ]
-    },
-    {
-      key: 'Permalink',
+    });
+  }
+
+  if (availableTools.includes('default') || availableTools.includes('permalink')) {
+    items.push({
+      key: 'permalink',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faShareNodes} />,
       label: t('Permalink.title'),
@@ -305,31 +346,39 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           label: <Permalink />
         }
       ]
-    },
-    {
-      key: 'divider',
-      label: <Menu.Divider />
-    },
-    {
-      key: 'LanguageSelect',
-      onTitleClick: onSubmenuTitleClick,
-      icon: <FontAwesomeIcon icon={faLanguage} />,
-      label: t('ToolMenu.languageSelect'),
-      children: [
-        {
-          key: 'languages-select-panel',
-          label: <LanguageSelect/>
-        }
-      ]
-    },
-    {
+    });
+  }
+
+  if (availableTools.includes('default') || availableTools.includes('language_selector')) {
+    items.push(
+      {
+        key: 'divider',
+        label: <Menu.Divider />
+      },
+      {
+        key: 'language_selector',
+        onTitleClick: onSubmenuTitleClick,
+        icon: <FontAwesomeIcon icon={faLanguage} />,
+        label: t('ToolMenu.languageSelect'),
+        children: [
+          {
+            key: 'languages-select-panel',
+            label: <LanguageSelect/>
+          }
+        ]
+      }
+    );
+  }
+
+  if (items.length > 0) {
+    items.push({
       key: 'expand_collapse',
       label:  collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse'),
       icon: collapsed ?
         <FontAwesomeIcon icon={faChevronRight} /> :
         <FontAwesomeIcon icon={faChevronLeft} />
-    }
-  ];
+    });
+  }
 
   return (
     <div className="tool-menu">
