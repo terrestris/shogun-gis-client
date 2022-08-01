@@ -102,6 +102,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     t
   } = useTranslation();
   const map = useMap();
+  const client = useSHOGunAPIClient();
 
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
@@ -151,7 +152,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       timeout: 60000,
       layerFilter,
       headers: {
-        ...getBearerTokenHeader()
+        ...getBearerTokenHeader(client?.getKeycloak())
       },
       transformOpts: {
         rotate: false
