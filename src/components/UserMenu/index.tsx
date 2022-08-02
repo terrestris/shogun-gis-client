@@ -81,7 +81,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
   };
 
   const getMenu = () => {
-    const login = {
+    const login: ItemType = {
       key: 'login',
       icon: (
         <FontAwesomeIcon
@@ -91,7 +91,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       label: t('UserMenu.loginMenuTitle')
     };
 
-    const username = {
+    const username: ItemType = {
       key: 'username',
       label: (
         <div
@@ -106,12 +106,11 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       )
     };
 
-    const divider = {
-      key: 'divider',
+    const divider: ItemType = {
       type: 'divider'
     };
 
-    const settings = {
+    const settings: ItemType = {
       key: 'settings',
       icon: (
         <FontAwesomeIcon
@@ -121,7 +120,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       label: t('UserMenu.settingsMenuTitle')
     };
 
-    const info = {
+    const info: ItemType = {
       key: 'info',
       icon: (
         <FontAwesomeIcon
@@ -141,7 +140,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       )
     };
 
-    const logout = {
+    const logout: ItemType = {
       key: 'logout',
       icon: (
         <FontAwesomeIcon
