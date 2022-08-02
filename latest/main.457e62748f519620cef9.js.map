@@ -1,1 +1,1 @@
-{"version":3,"file":"main.457e62748f519620cef9.js","mappings":"0HAAAA,EAAOC,QAAUC,e","sources":["webpack://shogun-demo-client/external var \"clientConfig\""],"sourcesContent":["module.exports = clientConfig;"],"names":["module","exports","clientConfig"],"sourceRoot":""}
+{"version":3,"file":"main.457e62748f519620cef9.js","mappings":"0HAAAA,EAAOC,QAAUC,Y","sources":["webpack://shogun-demo-client/external var \"clientConfig\""],"sourcesContent":["module.exports = clientConfig;"],"names":["module","exports","clientConfig"],"sourceRoot":""}
