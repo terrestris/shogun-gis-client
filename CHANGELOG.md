@@ -1,3 +1,44 @@
+## [3.4.0](https://github.com/terrestris/shogun-demo-client/compare/v3.3.0...v3.4.0) (2022-08-02)
+
+
+### Features
+
+* **toolconfig:** added possibility to control tools that are shown through client config ([2f1a87e](https://github.com/terrestris/shogun-demo-client/commit/2f1a87ef05ea45ceaed53d55165566b5e5465495))
+
+
+### Dependencies
+
+* conflicts resolved ([1e595d6](https://github.com/terrestris/shogun-demo-client/commit/1e595d625142fbdbafc962eea365efbcd65553fa))
+* **deps-dev:** bump @babel/core from 7.18.9 to 7.18.10 ([100ea3e](https://github.com/terrestris/shogun-demo-client/commit/100ea3e35e30e9bbc3dbd0078dd332cddfa01618))
+* **deps-dev:** bump @babel/preset-env from 7.18.9 to 7.18.10 ([7295958](https://github.com/terrestris/shogun-demo-client/commit/7295958cb7fee9141a41432ddfbdad0066a4e271))
+* **deps-dev:** bump @playwright/test from 1.24.1 to 1.24.2 ([3ba31a3](https://github.com/terrestris/shogun-demo-client/commit/3ba31a30ab50786356bfb293243bff078834a248))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([15f6fe1](https://github.com/terrestris/shogun-demo-client/commit/15f6fe11a5b2823c3d29097dc4b67be38faeca2a))
+* **deps-dev:** bump @typescript-eslint/parser from 5.31.0 to 5.32.0 ([f7ec393](https://github.com/terrestris/shogun-demo-client/commit/f7ec393bc1564354d85b5b0a601ce0ce3a0af9dc))
+* **deps-dev:** bump eslint from 8.20.0 to 8.21.0 ([eb7d209](https://github.com/terrestris/shogun-demo-client/commit/eb7d209c13785f4dbb0b010ac143c3b949942f7c))
+* **deps:** bump @terrestris/shogun-util from 3.2.0 to 3.2.2 ([b6250d1](https://github.com/terrestris/shogun-demo-client/commit/b6250d140b8bc81e36bc91cc02c1ab9ff1d39829))
+* **deps:** bump antd from 4.22.1 to 4.22.2 ([60f7fde](https://github.com/terrestris/shogun-demo-client/commit/60f7fde003c16d5fa54808093d3132fca36ae92d))
+* **deps:** bump antd from 4.22.2 to 4.22.3 ([c87c217](https://github.com/terrestris/shogun-demo-client/commit/c87c217a9ab9a1fda68e1bc640d7796ae6e2f1b1))
+* **deps:** bump i18next from 21.8.14 to 21.8.16 ([38c7c2e](https://github.com/terrestris/shogun-demo-client/commit/38c7c2e28a4960399921c192803ca04d14cc13f4))
+* **deps:** bump keycloak-js from 18.0.1 to 19.0.0 ([fb16dbd](https://github.com/terrestris/shogun-demo-client/commit/fb16dbd03b2e6ad999e429782fa53192ac3688fa))
+* **deps:** bump keycloak-js from 19.0.0 to 19.0.1 ([907e82d](https://github.com/terrestris/shogun-demo-client/commit/907e82d9b74afb0095aa9adecde25a205db6ce92))
+* **draw-and-modify:** fixed types issues ([bd4e708](https://github.com/terrestris/shogun-demo-client/commit/bd4e708853632460881de9e2f3ff1727af853d0b))
+* **tool-filter:** added separate store for available tools ([0a0d772](https://github.com/terrestris/shogun-demo-client/commit/0a0d772a5f446f5fdff40425a4c49a8977ed5a12))
+* **tool-filter:** conflicts resolved ([36ddf6d](https://github.com/terrestris/shogun-demo-client/commit/36ddf6dc4e9c34321454f219be706db2a7881977))
+* **tool-filtering:** fixed bug due to previous type linting. Added default fallback ([e90a23c](https://github.com/terrestris/shogun-demo-client/commit/e90a23ca9bd8652008a281d6b05e91fc451dcce6))
+* **tools:** cleaned clientconfig. Changes to get the tools config from the store ([b6d2456](https://github.com/terrestris/shogun-demo-client/commit/b6d2456aa576bfaaee3e56de7635adffbdfa7822))
+* update ol-util ([7c8fd20](https://github.com/terrestris/shogun-demo-client/commit/7c8fd20a1f2d77f28c1f212e9243111328f7084a))
+* update ol, react-geo and shogun-util ([faef47a](https://github.com/terrestris/shogun-demo-client/commit/faef47a6c6880f51b86ed05ae603d751d39f1c6b))
+* update react-geo ([28c99f5](https://github.com/terrestris/shogun-demo-client/commit/28c99f5be87628c43dd7da727bb8d78d26bf30f2))
+
+
+### Bugfixes
+
+* activate semantic-release/github plugin ([a0a4ed1](https://github.com/terrestris/shogun-demo-client/commit/a0a4ed1b3c938bd49bfea92ef7e4d21a81da8bd3))
+* apply bearer token for GFI if needed ([9819b6b](https://github.com/terrestris/shogun-demo-client/commit/9819b6b23d07749955ba8b5cdb5b6f364ccf225d))
+* pass the keycloak client to the bearer token header generator ([e05a29b](https://github.com/terrestris/shogun-demo-client/commit/e05a29b3e1affbb95198591226ff42df7ee5be5f))
+* set correct types ([9451c2e](https://github.com/terrestris/shogun-demo-client/commit/9451c2e7c452b6b6a6be7e02906aba70cae44f09))
+* take warning about duplicated key and correct menu divider into account ([5d3b37c](https://github.com/terrestris/shogun-demo-client/commit/5d3b37ca4ff407c0c7737d74793055abad8e907f))
+
 ## [3.3.0](https://github.com/terrestris/shogun-demo-client/compare/v3.2.0...v3.3.0) (2022-07-28)
 
 
