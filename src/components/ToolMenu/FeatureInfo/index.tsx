@@ -1,5 +1,8 @@
 import React from 'react';
 
+import {
+  getUid
+} from 'ol';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
@@ -22,6 +25,12 @@ import {
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
+import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
+
 import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
 import './index.less';
@@ -39,12 +48,13 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   } = useTranslation();
 
   const map = useMap();
+  const client = useSHOGunAPIClient();
 
   if (!map) {
     return <></>;
   }
 
-  const getQueryLayers = MapUtil.getAllLayers(map)
+  const queryLayers = MapUtil.getAllLayers(map)
     .filter((layer) => {
       if (!layer.get('hoverable')) {
         return false;
@@ -93,13 +103,33 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return <></>;
   }
 
+  const getFetchOpts = () => {
+    const opts: {
+      [uid: string]: RequestInit;
+    } = {};
+
+    queryLayers.forEach(layer => {
+      const layerUid = getUid(layer);
+      opts[layerUid] = {
+        headers: {
+          ...layer.get('useBearerToken') ? {
+            ...getBearerTokenHeader(client?.getKeycloak())
+          } : undefined
+        }
+      };
+    });
+
+    return opts;
+  };
+
   return (
     <div className='feature-info-panel'>
       <CoordinateInfo
         featureCount={10}
         map={map}
-        queryLayers={getQueryLayers}
+        queryLayers={queryLayers}
         resultRenderer={resultRenderer}
+        fetchOpts={getFetchOpts()}
         {...restProps}
       />
     </div>

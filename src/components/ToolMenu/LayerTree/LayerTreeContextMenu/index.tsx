@@ -23,6 +23,9 @@ import {
 import {
   getUid
 } from 'ol';
+import {
+  Extent as OlExtent
+} from 'ol/extent';
 import LayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 import {
@@ -102,7 +105,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     setExtentLoading(true);
 
     try {
-      let extent = await LayerUtil.getExtentForLayer(layer);
+      let extent = await LayerUtil.getExtentForLayer(layer) as OlExtent;
       extent = transformExtent(extent, 'EPSG:4326', map.getView().getProjection());
       map.getView().fit(extent);
     } catch (error) {
