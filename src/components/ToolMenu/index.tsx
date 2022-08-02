@@ -26,6 +26,9 @@ import {
   Menu,
   MenuProps
 } from 'antd';
+import {
+  ItemType
+} from 'antd/lib/menu/hooks/useItems';
 
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
@@ -212,7 +215,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     setActiveSubmenuKeys([key.key]);
   };
 
-  const items=[];
+  const items = [];
 
   if (availableTools.includes('default') || availableTools.includes('measure_tools')) {
     items.push({
@@ -354,7 +357,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     items.push(
       {
         type: 'divider'
-      },
+      } as ItemType,
       {
         key: 'language_selector',
         onTitleClick: onSubmenuTitleClick,
