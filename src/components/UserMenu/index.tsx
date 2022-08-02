@@ -107,7 +107,6 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
     };
 
     const divider = {
-      key: 'divider',
       type: 'divider'
     };
 

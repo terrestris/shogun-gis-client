@@ -353,8 +353,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   if (availableTools.includes('default') || availableTools.includes('language_selector')) {
     items.push(
       {
-        key: 'divider',
-        label: <Menu.Divider />
+        type: 'divider'
       },
       {
         key: 'language_selector',
