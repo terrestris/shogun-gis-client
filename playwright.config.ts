@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
     headless: true,
     viewport: {
       width: 1280,
-      height: 720
+      height: 1024
     },
     ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure'

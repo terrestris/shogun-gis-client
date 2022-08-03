@@ -218,6 +218,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     items.push({
       className: 'measure',
       key: 'measure_tools',
+      name: 'measure_tools',
       popupClassName: 'measure',
       icon: <FontAwesomeIcon icon={faRuler} />,
       label: t('ToolMenu.measure'),
@@ -241,6 +242,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     items.push({
       className: 'draw',
       key: 'draw_tools',
+      name: 'draw_tools',
       popupClassName: 'draw',
       icon: <FontAwesomeIcon icon={faDrawPolygon} />,
       label: t('ToolMenu.draw'),
@@ -273,6 +275,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   if (availableTools.includes('default') || availableTools.includes('feature_info')) {
     items.push({
       key: 'feature_info',
+      name: 'feature_info',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faMousePointer} />,
       label: t('ToolMenu.featureInfo'),
@@ -292,6 +295,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   if (availableTools.includes('default') || availableTools.includes('print')) {
     items.push({
       key: 'print',
+      name: 'print',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faFileDownload} />,
       label: t('ToolMenu.print'),
@@ -312,6 +316,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     items.push({
       className: 'tree',
       key: 'tree',
+      name: 'layer_tree',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faStream} />,
       label: t('ToolMenu.layertree'),
@@ -338,6 +343,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   if (availableTools.includes('default') || availableTools.includes('permalink')) {
     items.push({
       key: 'permalink',
+      name: 'permalink',
       onTitleClick: onSubmenuTitleClick,
       icon: <FontAwesomeIcon icon={faShareNodes} />,
       label: t('Permalink.title'),
@@ -358,6 +364,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       },
       {
         key: 'language_selector',
+        name: 'language_selector',
         onTitleClick: onSubmenuTitleClick,
         icon: <FontAwesomeIcon icon={faLanguage} />,
         label: t('ToolMenu.languageSelect'),
@@ -374,6 +381,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   if (items.length > 0) {
     items.push({
       key: 'expand_collapse',
+      name: 'expand_collapse',
       label:  collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse'),
       icon: collapsed ?
         <FontAwesomeIcon icon={faChevronRight} /> :
