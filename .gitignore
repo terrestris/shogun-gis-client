@@ -131,3 +131,7 @@ dist
 
 # Playwright test output
 test-results
+
+# SonarQube
+sonar-project.properties
+.scannerwork/
