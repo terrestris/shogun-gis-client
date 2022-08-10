@@ -123,7 +123,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       return;
     }
 
-    const targetFolderName = t('LayerTree.externalWmsFolder');
+    const targetFolderName = t('AddLayerModal.externalWmsFolder');
     const targetGroup: LayerGroup = MapUtil.getLayerByName(map, targetFolderName) as LayerGroup;
     if (targetGroup) {
       const existingLayers = targetGroup.getLayers();

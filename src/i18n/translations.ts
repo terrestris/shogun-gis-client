@@ -49,7 +49,6 @@ export default {
       },
       LayerTree: {
         transparency: 'Transparenz',
-        externalWmsFolder: 'Externe Dienste',
         noLegendAvailable: 'Keine Legende verfügbar'
       },
       LayerTreeContextMenu: {
@@ -162,7 +161,6 @@ export default {
       },
       LayerTree: {
         transparency: 'Transparency',
-        externalWmsFolder: 'External services',
         noLegendAvailable: 'No legend available'
       },
       LayerTreeContextMenu: {
