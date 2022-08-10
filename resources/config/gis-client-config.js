@@ -6,5 +6,6 @@ var clientConfig = {
     realm: null,
     clientId: null,
     onLoadAction: 'check-sso'
-  }
+  },
+  plugins: []
 };
