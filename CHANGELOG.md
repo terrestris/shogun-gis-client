@@ -1,3 +1,25 @@
+## [3.4.1](https://github.com/terrestris/shogun-demo-client/compare/v3.4.0...v3.4.1) (2022-08-10)
+
+
+### Changes in configuration
+
+* scans the jest coverage and sends a report to sonarqube ([#239](https://github.com/terrestris/shogun-demo-client/issues/239)) ([3159cc7](https://github.com/terrestris/shogun-demo-client/commit/3159cc7ce470d67c0d194e2e8c23da63fd86006c))
+
+
+### Dependencies
+
+* **deps-dev:** bump @testing-library/jest-dom from 5.16.4 to 5.16.5 ([c26f1af](https://github.com/terrestris/shogun-demo-client/commit/c26f1afc620259d68ae4c6c15255353dedf81116))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([84f9fe2](https://github.com/terrestris/shogun-demo-client/commit/84f9fe2b404b95d0b054246d4be92e97ca0a3035))
+* **deps-dev:** bump @typescript-eslint/parser from 5.32.0 to 5.33.0 ([19b78d3](https://github.com/terrestris/shogun-demo-client/commit/19b78d364ec09301d7def229a9e175cff8aa42e3))
+* **deps:** bump antd from 4.22.3 to 4.22.4 ([14abf62](https://github.com/terrestris/shogun-demo-client/commit/14abf620d7c3469e395e71002a694469b27815df))
+* **deps:** bump i18next from 21.8.16 to 21.9.0 ([55ca251](https://github.com/terrestris/shogun-demo-client/commit/55ca251df22678bdbbf59f287b716880e180534c))
+
+
+### Bugfixes
+
+* adjusts the [@media](https://github.com/media) query ([bbadcf9](https://github.com/terrestris/shogun-demo-client/commit/bbadcf94a216d9ab942b9a8ebc409b1b7c272c4f))
+* assigns the correct name to identify the layer ([8cd702b](https://github.com/terrestris/shogun-demo-client/commit/8cd702baabf8a0864b9f4520bc767583844e34e2))
+
 ## [3.4.0](https://github.com/terrestris/shogun-demo-client/compare/v3.3.0...v3.4.0) (2022-08-02)
 
 
