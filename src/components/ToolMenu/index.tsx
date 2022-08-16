@@ -229,9 +229,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       {
         key: 'eo-processing-panel',
         label: (
-          <NDVIButton
-
-          />
+          <NDVIButton />
         )
       }
     ]
