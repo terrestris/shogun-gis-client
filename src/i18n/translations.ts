@@ -32,6 +32,9 @@ export default {
         clicktodrawline: 'Zum Zeichnen einer Linie klicken',
         clicktodrawarea: 'Zum Zeichnen einer Fläche klicken'
       },
+      NDVI: {
+        title: 'NDVI berechnen'
+      },
       Draw: {
         point: 'Punkt',
         line: 'Linie',
@@ -67,7 +70,8 @@ export default {
         addWms: 'WMS hinzufügen',
         print: 'Export',
         layertree: 'Karten',
-        languageSelect: 'Sprachauswahl'
+        languageSelect: 'Sprachauswahl',
+        eoProcessing: 'EO-Prozessierung'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -144,6 +148,9 @@ export default {
         clicktodrawline: 'Click to draw line',
         clicktodrawarea: 'Click to draw area'
       },
+      NDVI: {
+        title: 'Calculate NDVI'
+      },
       Draw: {
         point: 'Point',
         line: 'Line',
@@ -179,7 +186,8 @@ export default {
         addWms: 'Add WMS',
         print: 'Export',
         layertree: 'Maps',
-        languageSelect: 'Language selector'
+        languageSelect: 'Language selector',
+        eoProcessing: 'EO-processing'
       },
       PrintForm: {
         title: 'Title',

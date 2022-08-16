@@ -14,6 +14,7 @@ import {
   faChevronLeft,
   faShareNodes,
   faDrawPolygon,
+  faGear,
   faLanguage
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -90,6 +91,7 @@ import Measure from './Measure';
 import './index.less';
 
 import '../PrintForm/Shared/Shared';
+import NDVIButton from './NDVIButton';
 
 export interface TitleEventEntity {
   key: string;
@@ -216,6 +218,24 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   };
 
   const items = [];
+
+  items.push({
+    className: 'eo-processing',
+    key: 'eo-processing',
+    popupClassName: 'eo-processing',
+    icon: <FontAwesomeIcon icon={faGear} />,
+    label: t('ToolMenu.eoProcessing'),
+    children: [
+      {
+        key: 'eo-processing-panel',
+        label: (
+          <NDVIButton
+
+          />
+        )
+      }
+    ]
+  });
 
   if (availableTools.includes('default') || availableTools.includes('measure_tools')) {
     items.push({
