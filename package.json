@@ -43,7 +43,7 @@
     "@terrestris/ol-util": "^7.3.0",
     "@terrestris/react-geo": "^19.2.4",
     "@terrestris/shogun-util": "^3.4.0",
-    "antd": "^4.22.4",
+    "antd": "^4.22.5",
     "i18next": "^21.9.0",
     "i18next-browser-languagedetector": "^6.1.5",
     "js-md5": "^0.7.3",
