@@ -74,7 +74,7 @@
     "@testing-library/react": "^12.1.5",
     "@types/jest": "^28.1.7",
     "@types/js-md5": "^0.4.3",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "babel-jest": "^28.1.2",
     "babel-loader": "^8.2.5",
