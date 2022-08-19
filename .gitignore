@@ -133,6 +133,5 @@ dist
 test-results
 
 # SonarQube
-sonar-project.properties
 .scannerwork/
 test-report.xml
