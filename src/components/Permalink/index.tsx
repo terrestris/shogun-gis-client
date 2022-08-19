@@ -21,6 +21,9 @@ import {
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
+import VectorLayer from 'ol/layer/Vector';
+import ImageLayer from 'ol/layer/Image';
+import TileLayer from 'ol/layer/Tile';
 
 interface DefaultPermalinkProps { }
 
@@ -37,7 +40,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     return <></>;
   }
 
-  const link = PermalinkUtil.getLink(map);
+  const link = PermalinkUtil.getLink(map, ';', l => l.get('name'), l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible());
 
   const mailSubject = 'SHOGun Web-GIS';
   const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${link}`;
