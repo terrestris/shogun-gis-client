@@ -64,6 +64,9 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
 
+      - name: Install karma-sonarqube
+        run: npm install karma-sonarqube-reporter --save-dev
+
       - name: Install dependencies ⏬
         run: npm ci
 
