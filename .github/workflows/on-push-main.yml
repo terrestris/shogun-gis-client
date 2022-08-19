@@ -64,9 +64,6 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
 
-      - name: Install jest-sonar-scanner
-        run: npm i -D jest-sonar-reporter
-
       - name: Install dependencies ⏬
         run: npm ci
 
@@ -80,3 +77,4 @@ jobs:
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
+          testExecutionReportPaths: test-report.xml
