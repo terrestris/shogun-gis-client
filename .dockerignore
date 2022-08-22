@@ -2,6 +2,7 @@
 .github
 coverage
 dist
+build
 node_modules
 test-results
 .dockerignore

@@ -97,12 +97,7 @@
         }
       }
     ],
-    [
-      "@semantic-release/npm",
-      {
-        "npmPublish": false
-      }
-    ],
+    "@semantic-release/npm",
     "@semantic-release/changelog",
     [
       "@semantic-release/git",

@@ -30,7 +30,7 @@
     "test:ui": "playwright test",
     "test": "jest --coverage",
     "tsc": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit --project tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "browserslist": [
     "defaults",
