@@ -2,7 +2,7 @@ import {
   createSlice
 } from '@reduxjs/toolkit';
 
-interface AddLayerModalState {
+export interface AddLayerModalState {
   visible: boolean;
 }
 
