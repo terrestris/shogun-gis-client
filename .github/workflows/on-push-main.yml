@@ -3,7 +3,7 @@ name: Update gh-pages (latest)
 on:
   push:
     branches:
-      - fixing-sonar
+      - fixing-sonar-oldbranch
 
 jobs:
   # build:
