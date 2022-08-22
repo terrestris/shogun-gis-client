@@ -40,5 +40,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
-        folder: dist
+        folder: build
         target-folder: v${{ env.VERSION }}
