@@ -72,6 +72,9 @@ jobs:
         env:
           CI: true
 
+      - name: mjmjmj
+        run: cat /home/runner/work/shogun-demo-client/shogun-demo-client/src/components/ToolMenu/LayerTree/LayerTreeContextMenu/index.spec.tsx
+
       - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.0
         with:
