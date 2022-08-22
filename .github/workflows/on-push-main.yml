@@ -72,14 +72,9 @@ jobs:
         env:
           CI: true
 
-      - name: mjmjmj
-        run: cat reports/test-reporter.xml
-
       - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.0
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
 
-      - name: mjmjmj2
-        run: cat reports/test-reporter.xml

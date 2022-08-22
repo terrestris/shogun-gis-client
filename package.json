@@ -60,6 +60,7 @@
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
+    "@casualbot/jest-sonar-reporter": "^2.2.5",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@playwright/test": "^1.25.0",
@@ -90,7 +91,6 @@
     "ignore-loader": "^0.1.2",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.3",
-    "jest-sonar-reporter": "^2.0.0",
     "karma-sonarqube-reporter": "^1.4.0",
     "less": "^4.1.3",
     "less-loader": "^11.0.0",
@@ -109,9 +109,15 @@
     "node": ">=14",
     "npm": ">=7"
   },
-  "jestSonar": {
-    "reportPath": "reports",
-    "reportFile": "test-reporter.xml",
-    "indent": 4
+  "@casualbot/jest-sonar-reporter": {
+    "suiteName": "jest tests",
+    "outputDirectory": "coverage",
+    "outputName": "jest-report.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true",
+    "relativePaths": "true"
   }
 }

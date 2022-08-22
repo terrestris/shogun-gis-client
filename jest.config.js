@@ -25,5 +25,5 @@ module.exports = {
     '^.+\\.(css|less)$': '<rootDir>/jest/cssTransform.js'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
-  testResultsProcessor: "jest-sonar-reporter"
+  reporters: [ "default", "@casualbot/jest-sonar-reporter" ]
 };
