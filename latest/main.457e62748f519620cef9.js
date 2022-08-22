@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkshogun_demo_client=self.webpackChunkshogun_demo_client||[]).push([[179],{87617:function(n){n.exports=clientConfig}},function(n){n.O(0,[987,592],(function(){return e=18581,n(n.s=e);var e}));n.O()}]);
-//# sourceMappingURL=main.457e62748f519620cef9.js.map
