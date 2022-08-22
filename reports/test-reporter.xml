@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/BasicMapComponent/index.spec.tsx">
+        <testCase name="&lt;BasicMapComponent /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/PrintForm/OutputFormatSelect/index.spec.tsx">
+        <testCase name="&lt;OutputFormatSelect /&gt; is defined" duration="4"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/PrintForm/ResolutionSelect/index.spec.tsx">
+        <testCase name="&lt;ResolutionSelect /&gt; is defined" duration="4"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/PrintForm/CustomFieldInput/index.spec.tsx">
+        <testCase name="&lt;CustomFieldInput /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/PrintForm/LayoutSelect/index.spec.tsx">
+        <testCase name="&lt;LayoutSelect /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ApplicationInfo/index.spec.tsx">
+        <testCase name="&lt;ApplicationInfo /&gt; is defined" duration="4"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/BasicNominatimSearch/index.spec.tsx">
+        <testCase name="&lt;BasicNominatimSearch /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/LanguageSelector/index.spec.tsx">
+        <testCase name="&lt;LanguageSelector /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/LayerTree/index.spec.tsx">
+        <testCase name="&lt;LayerTree /&gt; is defined" duration="4"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/PrintForm/index.spec.tsx">
+        <testCase name="&lt;PrintForm /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/LayerTree/LayerTreeContextMenu/index.spec.tsx">
+        <testCase name="&lt;LayerTreeContextMenu /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/Header/index.spec.tsx">
+        <testCase name="&lt;Header /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/UserMenu/index.spec.tsx">
+        <testCase name="&lt;UserMenu /&gt; is defined" duration="4"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/AddLayerModal/index.spec.tsx">
+        <testCase name="&lt;AddLayerModal /&gt; is defined" duration="2"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/Footer/index.spec.tsx">
+        <testCase name="&lt;Footer /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/Measure/index.spec.tsx">
+        <testCase name="&lt;Measure /&gt; is defined" duration="2"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/FeatureInfo/FeaturePropertyGrid/index.spec.tsx">
+        <testCase name="&lt;FeaturePropertyGrid /&gt; is defined" duration="2"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/FeatureInfo/index.spec.tsx">
+        <testCase name="&lt;FeatureInfo /&gt; is defined" duration="2"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/Draw/index.spec.tsx">
+        <testCase name="&lt;Draw /&gt; is defined" duration="3"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/NDVIButton/index.spec.tsx">
+        <testCase name="&lt;Measure /&gt; is defined" duration="1"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/ToolMenu/index.spec.tsx">
+        <testCase name="&lt;ToolMenu /&gt; is defined" duration="1"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/App.spec.tsx">
+        <testCase name="App can be rendered" duration="256"/>
+    </file>
+    <file path="/home/fhoeing/Dokumente/workspace/eo-lab/shogun-demo-client/src/components/Permalink/index.spec.tsx">
+        <testCase name="&lt;Permalink /&gt; is defined" duration="0"/>
+    </file>
+</testExecutions>

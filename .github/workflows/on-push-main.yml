@@ -64,9 +64,6 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
 
-      - name: install jest-sonar-reporter
-        run: npm i -D jest-sonar-reporter
-
       - name: Install dependencies ⏬
         run: npm ci
 

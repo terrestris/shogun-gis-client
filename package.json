@@ -108,5 +108,10 @@
   "devEngines": {
     "node": ">=14",
     "npm": ">=7"
+  },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-reporter.xml",
+    "indent": 4
   }
 }
