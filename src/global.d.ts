@@ -1,5 +1,6 @@
 declare module '*.png';
 
+declare const PROJECT_VERSION: string;
 declare const KEYCLOAK_HOST: string;
 declare const KEYCLOAK_REALM: string;
 declare const KEYCLOAK_CLIENT_ID: string;

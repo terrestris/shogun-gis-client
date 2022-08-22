@@ -75,6 +75,7 @@ module.exports = {
       }]
     }),
     new webpack.DefinePlugin({
+      PROJECT_VERSION: JSON.stringify(require('./package.json').version),
       KEYCLOAK_HOST: JSON.stringify(process.env.KEYCLOAK_HOST),
       KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
       KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.KEYCLOAK_CLIENT_ID)
