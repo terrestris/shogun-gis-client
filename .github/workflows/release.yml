@@ -40,7 +40,7 @@ jobs:
         with:
           context: .
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:latest
+            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
           load: true
 
       - name: Build docker image (version)
@@ -49,14 +49,14 @@ jobs:
         with:
           context: .
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:${{ steps.semantic.outputs.new_release_version }}
+            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
           load: true
 
       - name: Push docker image to Nexus (latest)
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:latest
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
 
       - name: Push docker image to Nexus (version)
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:${{ steps.semantic.outputs.new_release_version }}
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
