@@ -1,4 +1,4 @@
-# SHOGun demo client
+# SHOGun GIS client
 
 This repository contains the default WebGIS client used within the [SHOGun project](https://github.com/terrestris/shogun-docker).
 
@@ -6,7 +6,7 @@ The client was initialized with [create-react-geo-app](https://github.com/terres
 
 ## Installation 💾
 
-We recommended to install the client via the prebuilt Docker image `nexus.terrestris.de/repository/terrestris-public/shogun-demo-client`.
+We recommended to install the client via the prebuilt Docker image `nexus.terrestris.de/repository/terrestris-public/shogun-gis-client`.
 
 ## Usage 🖱️
 
@@ -15,7 +15,7 @@ If no ID is given (e.g. because no backend is available) or the requested applic
 
 ## Configuration 🎨
 
-Several global settings for the client can be configured via the [`gis-client-config.js`](https://github.com/terrestris/shogun-demo-client/blob/main/resources/config/gis-client-config.js) file:
+Several global settings for the client can be configured via the [`gis-client-config.js`](https://github.com/terrestris/shogun-gis-client/blob/main/resources/config/gis-client-config.js) file:
 
 | Name | Description | Default |
 | ---- | ----------- | ------- |
@@ -31,8 +31,8 @@ The configuration file is not bundled and will be loaded before application star
 ```yml
 version: '3.7'
 services:
-  shogun-demo-client:
-    image: nexus.terrestris.de/repository/terrestris-public/shogun-demo-client:latest
+  shogun-gis-client:
+    image: nexus.terrestris.de/repository/terrestris-public/shogun-gis-client:latest
     volumes:
       - ./gis-client-config.js:/usr/share/nginx/html/gis-client-config.js
     (…)
@@ -67,10 +67,10 @@ npm run build
 or directly included in an `nginx` based Docker image via:
 
 ```
-docker build -t shogun-demo-client:1.0.0 .
+docker build -t shogun-gis-client:1.0.0 .
 ```
 
-Run `docker run -p 80:80 shogun-demo-client:1.0.0` to start it locally.
+Run `docker run -p 80:80 shogun-gis-client:1.0.0` to start it locally.
 
 ## Contributing 💫
 

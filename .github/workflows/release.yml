@@ -10,16 +10,19 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout 🔰
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Setup Node.js 🧮
         uses: actions/setup-node@v1
         with:
           node-version: 16
 
       - name: Install dependencies ⏬
         run: npm ci
+
+      - name: Build (dist) artifacts 🏗️
+        run: npm run tsc
 
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
@@ -28,35 +31,35 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Login to Nexus
+      - name: Login to Nexus ⌨️
         uses: docker/login-action@v1
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
           username: ${{ secrets.NEXUS_USERNAME }}
           password: ${{ secrets.NEXUS_PASSWORD }}
 
-      - name: Build docker image (latest)
+      - name: Build docker image (latest) 🏗️
         uses: docker/build-push-action@v2
         with:
           context: .
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:latest
+            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
           load: true
 
-      - name: Build docker image (version)
+      - name: Build docker image (version) 🏗️
         if: steps.semantic.outputs.new_release_published == 'true'
         uses: docker/build-push-action@v2
         with:
           context: .
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:${{ steps.semantic.outputs.new_release_version }}
+            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
           load: true
 
-      - name: Push docker image to Nexus (latest)
+      - name: Push docker image to Nexus (latest) 📠
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:latest
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
 
-      - name: Push docker image to Nexus (version)
+      - name: Push docker image to Nexus (version) 📠
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-demo-client:${{ steps.semantic.outputs.new_release_version }}
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
