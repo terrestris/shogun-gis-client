@@ -19,16 +19,16 @@
     "dist"
   ],
   "scripts": {
-    "build:analyze": "BUNDLE_ANALYZE=true npm run build",
     "build": "webpack --config webpack.prod.js",
+    "build:analyze": "BUNDLE_ANALYZE=true npm run build",
     "check": "npm run typecheck && npm run lint && npm run test && npm run test:ui",
     "husky": "husky install",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
     "prepare": "npm run husky",
-    "start": "webpack serve --config webpack.dev.js",
     "semantic-release": "npm run clean; npm run build; npx semantic-release",
-    "test:ui": "playwright test",
+    "start": "webpack serve --config webpack.dev.js",
     "test": "jest --coverage",
+    "test:ui": "playwright test",
     "tsc": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
