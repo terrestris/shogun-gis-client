@@ -2,6 +2,11 @@ import React, {
   useEffect
 } from 'react';
 
+import BaseLayer from 'ol/layer/Base';
+
+import ImageLayer from 'ol/layer/Image';
+import TileLayer from 'ol/layer/Tile';
+
 import {
   PermalinkUtil
 } from '@terrestris/ol-util';
@@ -22,7 +27,10 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
 
   useEffect(() => {
     if (map) {
-      PermalinkUtil.applyLink(map);
+      const identifier = (l: BaseLayer) => l.get('name');
+      const filter = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
+
+      PermalinkUtil.applyLink(map, ';', identifier, filter);
     }
   }, [
     queryParams.get('center'),
