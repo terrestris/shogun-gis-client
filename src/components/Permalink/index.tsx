@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useEffect, useState
+} from 'react';
 
 import {
   CopyOutlined,
@@ -11,6 +13,16 @@ import {
 } from 'antd';
 import copy from 'copy-to-clipboard';
 import {
+  EventsKey
+} from 'ol/events';
+import BaseLayer from 'ol/layer/Base';
+import LayerGroup from 'ol/layer/Group';
+import ImageLayer from 'ol/layer/Image';
+import TileLayer from 'ol/layer/Tile';
+import {
+  unByKey
+} from 'ol/Observable';
+import {
   useTranslation
 } from 'react-i18next';
 
@@ -21,15 +33,14 @@ import {
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
-import VectorLayer from 'ol/layer/Vector';
-import ImageLayer from 'ol/layer/Image';
-import TileLayer from 'ol/layer/Tile';
 
 interface DefaultPermalinkProps { }
 
 export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
+
+  const [permalink, setPermalink] = useState('');
 
   const map = useMap();
   const {
@@ -40,10 +51,46 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     return <></>;
   }
 
-  const link = PermalinkUtil.getLink(map, ';', l => l.get('name'), l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible());
-
   const mailSubject = 'SHOGun Web-GIS';
-  const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${link}`;
+  const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${permalink}`;
+
+  useEffect(
+    () => {
+      let eventKeys: EventsKey[] = [];
+
+      const identifier = (l: BaseLayer) => l.get('name');
+      const filter = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
+      const updatePermalink = () => setPermalink(PermalinkUtil.getLink(map, ';', identifier, filter));
+
+      const registerLayerCallback = (layerGroup: LayerGroup) => {
+        const layersInGroup = layerGroup.getLayers().getArray();
+        for (let i = 0; i < layersInGroup.length; i++) {
+          const layerInGroup = layersInGroup[i];
+
+          if (layerInGroup instanceof LayerGroup) {
+            registerLayerCallback(layerInGroup);
+          } else {
+            let eventKey = layerInGroup.on('change:visible', updatePermalink);
+            eventKeys.push(eventKey);
+          }
+        }
+      };
+
+      let mapLayerGroup = map.getLayerGroup();
+
+      const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
+      const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
+
+      registerLayerCallback(mapLayerGroup);
+
+      return () => {
+        unByKey(listenerKeyCenter);
+        unByKey(listenerKeyResolution);
+        unByKey(eventKeys);
+      };
+    },
+    []
+  );
 
   function onTwitterClick() {
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
@@ -65,7 +112,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
   }
 
   function onCopyClick() {
-    const success = copy(link);
+    const success = copy(permalink);
     if (success) {
       message.info(t('Permalink.copiedToClipboard'));
     } else {
@@ -87,7 +134,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={link}
+        <Input value={permalink}
           readOnly
         />
         <Tooltip title={t('Permalink.copyTooltip')}>
