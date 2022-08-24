@@ -39,9 +39,6 @@ interface DefaultPermalinkProps { }
 export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
-
-  const [permalink, setPermalink] = useState('');
-
   const map = useMap();
   const {
     t
@@ -50,6 +47,8 @@ export const Permalink: React.FC<PermalinkProps> = () => {
   if (!map) {
     return <></>;
   }
+
+  const [permalink, setPermalink] = useState(PermalinkUtil.getLink(map, ';', l => l.get('name'), l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible()));
 
   const mailSubject = 'SHOGun Web-GIS';
   const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${permalink}`;
