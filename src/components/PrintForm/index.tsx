@@ -200,7 +200,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         >
           <OutputFormatSelect
             printManager={printManager}
-            outputFormats={['pdf', 'jpg', 'png']}
+            outputFormats={['pdf', 'png']}
             placeholder={t('PrintForm.outputFormatPlaceholder')}
           />
         </Form.Item>
