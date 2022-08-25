@@ -121,6 +121,18 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const [printManager, setPrintManager] = useState<MapFishPrintV3Manager | null>(null);
 
   useEffect(() => {
+    const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
+      'only screen and (max-width: 750px) and (orientation: landscape), only screen and (max-width: 580px)');
+    const mobileNavigatorRegEx = new RegExp('/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle' +
+      '|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/');
+    const isMobile = mobileQuery.matches || mobileNavigatorRegEx.test(window.navigator.userAgent);
+
+    if (isMobile) {
+      setCollapsed(true);
+    }
+  }, []);
+
+  useEffect(() => {
     if (activeSubMenuKeys.includes('print') && !printManager) {
       initializeMapProvider();
     }
@@ -366,7 +378,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         children: [
           {
             key: 'languages-select-panel',
-            label: <LanguageSelect/>
+            label: <LanguageSelect />
           }
         ]
       }
@@ -376,7 +388,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   if (items.length > 0) {
     items.push({
       key: 'expand_collapse',
-      label:  collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse'),
+      label: collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse'),
       icon: collapsed ?
         <FontAwesomeIcon icon={faChevronRight} /> :
         <FontAwesomeIcon icon={faChevronLeft} />
