@@ -1,3 +1,33 @@
+## [4.1.0](https://github.com/terrestris/shogun-gis-client/compare/v4.0.0...v4.1.0) (2022-08-25)
+
+
+### Features
+
+* support plugins via webpack module federation ([df44377](https://github.com/terrestris/shogun-gis-client/commit/df44377a9779045c594b454681aaf90b2157d9f8))
+
+
+### Changes in configuration
+
+* adds jest-sonar-reporter to report testcoverage and unittests to sonarqube ([ed08ba4](https://github.com/terrestris/shogun-gis-client/commit/ed08ba4ab7f5eb690c17460da6ce6e5ac73d1729))
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.25.0 to 1.25.1 ([6ec0732](https://github.com/terrestris/shogun-gis-client/commit/6ec0732d3270319ce70f5d790cc115ab76f8c75c))
+* **deps-dev:** bump @types/jest from 28.1.7 to 28.1.8 ([b815f3f](https://github.com/terrestris/shogun-gis-client/commit/b815f3f7f939d1f837f98d0167101ba7cb5df6d6))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([a6ef3f4](https://github.com/terrestris/shogun-gis-client/commit/a6ef3f4ac2fea6bfba283e862a765a38bf67f2f3))
+* **deps-dev:** bump @typescript-eslint/parser from 5.34.0 to 5.35.1 ([65d67e7](https://github.com/terrestris/shogun-gis-client/commit/65d67e73a447ffb907bcd4c233cc96142205d580))
+* **deps-dev:** bump eslint-plugin-react from 7.30.1 to 7.31.0 ([cc9723c](https://github.com/terrestris/shogun-gis-client/commit/cc9723cc4a10e9ad768ec2d7a48f5b7b7ed8c5c8))
+* **deps-dev:** bump semantic-release from 19.0.4 to 19.0.5 ([0f86acc](https://github.com/terrestris/shogun-gis-client/commit/0f86acc72cb6d1228bbb7c9c59c598fa2bb90207))
+
+
+### Bugfixes
+
+* defines linebreak ([3276f24](https://github.com/terrestris/shogun-gis-client/commit/3276f247aff6198c025653411f9d2d74e3b7fcc1))
+* removes jpeg from print ([a48d7bb](https://github.com/terrestris/shogun-gis-client/commit/a48d7bbf4d1c95c2e84537d21259006852b2583a))
+* removes unneded dependencies ([b28d606](https://github.com/terrestris/shogun-gis-client/commit/b28d60603b00280e70fde30427223ee48ab00ef4))
+* toolbox is collapsed when run on phone or tablet ([#293](https://github.com/terrestris/shogun-gis-client/issues/293)) ([5da52d9](https://github.com/terrestris/shogun-gis-client/commit/5da52d976bb681d085d2e59595a9a63e35cbf37c))
+
 ## [4.0.0](https://github.com/terrestris/shogun-gis-client/compare/v3.4.1...v4.0.0) (2022-08-23)
 
 
