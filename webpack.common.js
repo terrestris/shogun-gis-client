@@ -3,6 +3,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -79,6 +80,30 @@ module.exports = {
       KEYCLOAK_HOST: JSON.stringify(process.env.KEYCLOAK_HOST),
       KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
       KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.KEYCLOAK_CLIENT_ID)
+    }),
+    new ModuleFederationPlugin({
+      name: 'SHOGunGISClient',
+      shared: {
+        ...require('./package.json').dependencies,
+        'react': {
+          singleton: true
+        },
+        'react-dom': {
+          singleton: true
+        },
+        'react-redux': {
+          singleton: true
+        },
+        'react-i18next': {
+          singleton: true
+        },
+        'ol': {
+          singleton: true
+        },
+        '@reduxjs/toolkit': {
+          singleton: true
+        }
+      }
     })
   ]
 };

@@ -66,6 +66,7 @@ import {
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import usePlugins from '../../hooks/usePlugins';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
@@ -96,7 +97,7 @@ export interface TitleEventEntity {
   domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 }
 
-export type ToolMenuProps = {} & Partial<MenuProps>;
+export type ToolMenuProps = { } & Partial<MenuProps>;
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
   ...restProps
@@ -106,6 +107,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   } = useTranslation();
   const map = useMap();
   const client = useSHOGunAPIClient();
+  const plugins = usePlugins();
 
   const dispatch = useAppDispatch();
   const selectedKeys = useAppSelector(state => state.toolMenu.selectedKeys);
@@ -227,7 +229,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     setActiveSubmenuKeys([key.key]);
   };
 
-  const items = [];
+  const items: ItemType[] = [];
 
   if (availableTools.includes('default') || availableTools.includes('measure_tools')) {
     items.push({
@@ -383,6 +385,38 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         ]
       }
     );
+  }
+
+  if (plugins) {
+    plugins.forEach(plugin => {
+      if (plugin.integration?.placement === 'tool-menu') {
+        const {
+          key,
+          wrappedComponent: WrappedPluginComponent,
+          integration: {
+            placement,
+            label = 'Plugin',
+            insertionIndex,
+            icon,
+            ...passThroughProps
+          }
+        } = plugin;
+
+        items.splice(insertionIndex || 0, 0, {
+          key: key,
+          onTitleClick: onSubmenuTitleClick,
+          icon: icon ? <FontAwesomeIcon icon={icon}/> : undefined,
+          label: t(label),
+          children: [
+            {
+              key: `${key}-child`,
+              label: <WrappedPluginComponent />
+            }
+          ],
+          ...passThroughProps
+        });
+      }
+    });
   }
 
   if (items.length > 0) {

@@ -1,5 +1,7 @@
 import {
-  configureStore
+  combineReducers,
+  configureStore,
+  Reducer
 } from '@reduxjs/toolkit';
 
 import addLayerModal from './addLayerModal';
@@ -9,15 +11,24 @@ import title from './title';
 import toolMenu from './toolMenu';
 import user from './user';
 
-export const store = configureStore({
-  reducer: {
+type AsyncReducer = {
+  [key: string]: Reducer;
+};
+
+export const createReducer = (asyncReducers?: AsyncReducer) => {
+  return combineReducers({
     appInfo,
     title,
     logoPath,
     toolMenu,
     addLayerModal,
-    user
-  }
+    user,
+    ...asyncReducers
+  });
+};
+
+export const store = configureStore({
+  reducer: createReducer()
 });
 
 export type RootState = ReturnType<typeof store.getState>;
