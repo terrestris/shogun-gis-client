@@ -48,7 +48,8 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     return <></>;
   }
 
-  const [permalink, setPermalink] = useState(PermalinkUtil.getLink(map, ';', l => l.get('name'), l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible()));
+  const [permalink, setPermalink] = useState(PermalinkUtil.getLink(map, ';',
+    l => l.get('name'), l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible()));
 
   const mailSubject = 'SHOGun Web-GIS';
   const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${permalink}`;
