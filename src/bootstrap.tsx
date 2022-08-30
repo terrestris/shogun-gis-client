@@ -11,6 +11,8 @@ import enGB from 'antd/lib/locale/en_GB';
 
 import ClientConfiguration from 'clientConfig';
 
+import Color from 'color';
+
 import Keycloak from 'keycloak-js';
 
 import {
@@ -481,7 +483,9 @@ const renderApp = async () => {
 
     ConfigProvider.config({
       theme: {
-        primaryColor: style['--primaryColor']
+        primaryColor: Color(style['--primaryColor']).isLight() ?
+          Color(style['--primaryColor']).darken(0.5).hexa() :
+          style['--primaryColor']
       }
     });
 
