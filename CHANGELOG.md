@@ -1,3 +1,35 @@
+## [4.1.1](https://github.com/terrestris/shogun-gis-client/compare/v4.1.0...v4.1.1) (2022-08-30)
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 17.0.3 to 17.1.1 ([cae65bb](https://github.com/terrestris/shogun-gis-client/commit/cae65bb02a6c0df0a9549375b71fad20a6f319b7))
+* **deps-dev:** bump @commitlint/cli from 17.1.1 to 17.1.2 ([60e2991](https://github.com/terrestris/shogun-gis-client/commit/60e29910273d3117b17927706cf836615303c221))
+* **deps-dev:** bump @commitlint/config-conventional ([cdec796](https://github.com/terrestris/shogun-gis-client/commit/cdec796e3b5aa5d265a9e0eef0db9154fe868fe9))
+* **deps-dev:** bump @semantic-release/github from 8.0.5 to 8.0.6 ([7161a94](https://github.com/terrestris/shogun-gis-client/commit/7161a94789845b7b5a65a2c28579126cf394aaca))
+* **deps-dev:** bump @types/jest from 28.1.8 to 29.0.0 ([c52a8fe](https://github.com/terrestris/shogun-gis-client/commit/c52a8fe32b1f5d6eff1f4652b5394f28b60051e1))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([4533000](https://github.com/terrestris/shogun-gis-client/commit/4533000169cc98f7f3a572ca933d41c2d5edfb10))
+* **deps-dev:** bump @typescript-eslint/parser from 5.35.1 to 5.36.0 ([719125d](https://github.com/terrestris/shogun-gis-client/commit/719125df957200bf9e5db4f7dafd5be98f666323))
+* **deps-dev:** bump babel-jest from 28.1.3 to 29.0.0 ([e2f4d82](https://github.com/terrestris/shogun-gis-client/commit/e2f4d828873de240df2e44770a538b61a0a38d28))
+* **deps-dev:** bump babel-jest from 29.0.0 to 29.0.1 ([b8a063d](https://github.com/terrestris/shogun-gis-client/commit/b8a063de7b59352202870f97059c4c9b246824eb))
+* **deps-dev:** bump eslint from 8.22.0 to 8.23.0 ([31457c1](https://github.com/terrestris/shogun-gis-client/commit/31457c1d82ded4d792c73cac769181d248b69aac))
+* **deps-dev:** bump eslint-plugin-react from 7.31.0 to 7.31.1 ([446249a](https://github.com/terrestris/shogun-gis-client/commit/446249aaef29ef9e5401d09376b25cf61479d52e))
+* **deps-dev:** bump jest from 29.0.0 to 29.0.1 ([77868c3](https://github.com/terrestris/shogun-gis-client/commit/77868c3ff9476f1a318c73b52d0d48bf40c857f8))
+* **deps-dev:** bump jest-environment-jsdom from 28.1.3 to 29.0.0 ([a774ac3](https://github.com/terrestris/shogun-gis-client/commit/a774ac3d5273b8ee343c1df7b977c58f634125ec))
+* **deps-dev:** bump jest-environment-jsdom from 29.0.0 to 29.0.1 ([bfdd3e0](https://github.com/terrestris/shogun-gis-client/commit/bfdd3e06a49b7b8f82d774dd7be01b46026d55d1))
+* **deps-dev:** bump terser-webpack-plugin from 5.3.5 to 5.3.6 ([f7fc3c9](https://github.com/terrestris/shogun-gis-client/commit/f7fc3c928af97956b6486377ea9bdc155e843fd6))
+* **deps-dev:** bump typescript from 4.7.4 to 4.8.2 ([50d05b7](https://github.com/terrestris/shogun-gis-client/commit/50d05b7c015bdcf543c9378e2a59eb8c21517167))
+* **deps-dev:** bump webpack-dev-server from 4.10.0 to 4.10.1 ([830c7e3](https://github.com/terrestris/shogun-gis-client/commit/830c7e334a91da1ce9a23378e1f150081fad9b72))
+* **deps:** bump antd from 4.22.7 to 4.22.8 ([3283020](https://github.com/terrestris/shogun-gis-client/commit/328302001ccb14f5ec4655ebadabfbc26ee85d88))
+* installs color library ([4897643](https://github.com/terrestris/shogun-gis-client/commit/48976431c503f51a0aca0a4489d25079e643aa71))
+* update react-i18next & jest ([26557ab](https://github.com/terrestris/shogun-gis-client/commit/26557ab51ea39d56365ef2b4c2cd45075805b64a))
+
+
+### Changes in layout
+
+* define a max width for the logo image ([e0f3d8c](https://github.com/terrestris/shogun-gis-client/commit/e0f3d8cff8edefd652bc5da4096bcba15d78bf9a))
+* if color is too light, it will be manipulated a bit darker ([ee10f00](https://github.com/terrestris/shogun-gis-client/commit/ee10f0005d05a49d3185d2cb4977b170db92740e))
+
 ## [4.1.0](https://github.com/terrestris/shogun-gis-client/compare/v4.0.0...v4.1.0) (2022-08-25)
 
 
