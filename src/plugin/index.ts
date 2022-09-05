@@ -43,9 +43,17 @@ export type ClientPluginIntegrationToolMenu = ClientPluginIntegration &
   theme?: 'dark' | 'light';
 };
 
+export type HeaderPlacementOrientation = 'left' | 'center' | 'right';
+
+export type ClientPluginIntegrationHeader = ClientPluginIntegration & {
+  placement: 'header';
+  placementOrientation: HeaderPlacementOrientation;
+  insertionIndex?: number;
+};
+
 export type ClientPlugin = {
   key: string;
-  integration?: ClientPluginIntegrationToolMenu;
+  integration?: ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader;
   component: React.FunctionComponent<ClientPluginComponentProps>;
   i18n?: ClientPluginLocale;
   reducers?: {

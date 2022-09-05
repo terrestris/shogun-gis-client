@@ -3,6 +3,13 @@ import React from 'react';
 import {
   useAppSelector
 } from '../../hooks/useAppSelector';
+import {
+  usePlugins
+} from '../../hooks/usePlugins';
+
+import {
+  HeaderPlacementOrientation
+} from '../../plugin';
 
 import BasicNominatimSearch from '../BasicNominatimSearch';
 
@@ -17,6 +24,70 @@ export const Header: React.FC<HeaderProps> = ({
 }): JSX.Element => {
   const title = useAppSelector((state) => state.title);
   const logoPath = useAppSelector((state) => state.logoPath);
+  const plugins = usePlugins();
+
+  const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
+    plugins
+      .filter(plugin => plugin.integration?.placement === 'header' &&
+        plugin.integration?.placementOrientation === itemPosition)
+      .forEach(plugin => {
+        const {
+          key,
+          wrappedComponent: WrappedPluginComponent
+        } = plugin;
+
+        items.splice(plugin.integration?.insertionIndex || 0, 0,
+          <WrappedPluginComponent
+            key={key}
+          />
+        );
+      });
+  };
+
+  const getLeftItems = () => {
+    const items = [(
+      <img
+        key="logo"
+        className="logo"
+        src={logoPath}
+      />
+    ), (
+      <div
+        key="title"
+        className="title"
+      >
+        {title}
+      </div>
+    )];
+
+    insertPlugins('left', items);
+
+    return items;
+  };
+
+  const getCenterItems = () => {
+    const items = [
+      <BasicNominatimSearch
+        key="search"
+      />
+    ];
+
+    insertPlugins('center', items);
+
+    return items;
+  };
+
+  const getRightItems = () => {
+    const items = [
+      <UserMenu
+        key="user-menu"
+      />
+    ];
+
+    insertPlugins('right', items);
+
+    return items;
+  };
 
   return (
     <div
@@ -26,25 +97,23 @@ export const Header: React.FC<HeaderProps> = ({
       <div
         className="item-container left-items"
       >
-        <img
-          className="logo"
-          src={logoPath}
-        />
-        <div
-          className="title"
-        >
-          {title}
-        </div>
+        {
+          getLeftItems()
+        }
       </div>
       <div
         className="item-container center-items"
       >
-        <BasicNominatimSearch />
+        {
+          getCenterItems()
+        }
       </div>
       <div
         className="item-container right-items"
       >
-        <UserMenu />
+        {
+          getRightItems()
+        }
       </div>
     </div>
   );
