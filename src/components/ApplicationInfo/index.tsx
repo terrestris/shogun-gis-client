@@ -79,10 +79,13 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
           title={t('ApplicationInfo.clientVersionTitle')}
           value={useClientVersion()}
         />
-        <Statistic
-          title={t('ApplicationInfo.backendVersionTitle')}
-          value={`${appInfo.version} (${appInfo.buildTime})`}
-        />
+        {
+          (appInfo.version && appInfo.buildTime) &&
+          <Statistic
+            title={t('ApplicationInfo.backendVersionTitle')}
+            value={`${appInfo.version} (${appInfo.buildTime})`}
+          />
+        }
       </Modal>
     </>
   );
