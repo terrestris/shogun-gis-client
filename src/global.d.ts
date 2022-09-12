@@ -9,7 +9,7 @@ declare module 'clientConfig' {
   type PluginConfiguration = {
     name: string;
     resourcePath: string;
-    exposedPath: string;
+    exposedPaths: string[];
   };
   type ClientConfiguration = {
     shogunBase?: string;
