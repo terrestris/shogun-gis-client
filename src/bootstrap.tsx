@@ -363,7 +363,7 @@ const parseTheme = (theme?: any): ThemeProperties => {
 };
 
 // ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
-const loadPlugin = async (moduleName: string, moduleUrl: string, remoteName: string) => {
+const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
   await __webpack_init_sharing__('default');
 
   await new Promise<void>((resolve, reject) => {
@@ -388,12 +388,18 @@ const loadPlugin = async (moduleName: string, moduleUrl: string, remoteName: str
 
   // @ts-ignore
   const container = window[moduleName];
+
   // eslint-disable-next-line camelcase
   await container.init(__webpack_share_scopes__.default);
 
-  const factory = await container.get(remoteName);
+  const modules = [];
+  for (const remoteName of remoteNames) {
+    const factory = await container.get(remoteName);
+    const module = factory();
+    modules.push(module);
+  }
 
-  return factory();
+  return modules;
 };
 
 const loadPlugins = async (map: OlMap) => {
@@ -409,7 +415,7 @@ const loadPlugins = async (map: OlMap) => {
   for (const plugin of ClientConfiguration.plugins) {
     const name = plugin.name;
     const resourcePath = plugin.resourcePath;
-    const exposedPath = plugin.exposedPath;
+    const exposedPaths = plugin.exposedPaths;
 
     if (!name) {
       Logger.error('Required plugin configuration \'name\' is not set');
@@ -421,48 +427,50 @@ const loadPlugins = async (map: OlMap) => {
       return clientPlugins;
     }
 
-    if (!exposedPath) {
-      Logger.error('Required plugin configuration \'exposedPath\' is not set');
+    if (!exposedPaths) {
+      Logger.error('Required plugin configuration \'exposedPaths\' is not set');
       return clientPlugins;
     }
 
-    Logger.info(`Loading plugin ${name} (${exposedPath}) from ${resourcePath}`);
+    Logger.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
 
-    let clientPlugin;
+    let clientPluginModules: any[];
     try {
-      clientPlugin = await loadPlugin(name, resourcePath, exposedPath);
+      clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
       Logger.info(`Successfully loaded plugin ${name}`);
     } catch (error) {
       Logger.error(`Could not load plugin ${name}:`, error);
       return clientPlugins;
     }
 
-    const clientPluginDefault: ClientPluginInternal = clientPlugin.default;
-    const PluginComponent = clientPluginDefault.component;
+    clientPluginModules.forEach(module => {
+      const clientPluginDefault: ClientPluginInternal = module.default;
+      const PluginComponent = clientPluginDefault.component;
 
-    const WrappedPluginComponent = () => (
-      <PluginComponent
-        map={map}
-        client={client}
-      />
-    );
+      const WrappedPluginComponent = () => (
+        <PluginComponent
+          map={map}
+          client={client}
+        />
+      );
 
-    clientPluginDefault.wrappedComponent = WrappedPluginComponent;
+      clientPluginDefault.wrappedComponent = WrappedPluginComponent;
 
-    if (clientPluginDefault.i18n) {
-      Object.entries(clientPluginDefault.i18n).forEach(locale => {
-        const lng = locale[0];
-        const resources = locale[1].translation;
-        i18n.addResourceBundle(lng, 'translation', resources, true, true);
-      });
-    }
+      if (clientPluginDefault.i18n) {
+        Object.entries(clientPluginDefault.i18n).forEach(locale => {
+          const lng = locale[0];
+          const resources = locale[1].translation;
+          i18n.addResourceBundle(lng, 'translation', resources, true, true);
+        });
+      }
 
-    if (clientPluginDefault.reducers) {
-      const reducers = createReducer(clientPluginDefault.reducers);
-      store.replaceReducer(reducers);
-    }
+      if (clientPluginDefault.reducers) {
+        const reducers = createReducer(clientPluginDefault.reducers);
+        store.replaceReducer(reducers);
+      }
 
-    clientPlugins.push(clientPluginDefault);
+      clientPlugins.push(clientPluginDefault);
+    });
   }
 
   return clientPlugins;
