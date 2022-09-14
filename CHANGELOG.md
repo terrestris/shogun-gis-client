@@ -1,3 +1,24 @@
+## [4.2.1](https://github.com/terrestris/shogun-gis-client/compare/v4.2.0...v4.2.1) (2022-09-14)
+
+
+### Bugfixes
+
+* optimize loading of plugins with multiple exposed paths ([9c069ce](https://github.com/terrestris/shogun-gis-client/commit/9c069ce24dd0182d42b564ae5a76569e321bf76d))
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([01e4386](https://github.com/terrestris/shogun-gis-client/commit/01e4386851b6d6e4363958e34fccc6ae4ab5dd5a))
+* **deps-dev:** bump @typescript-eslint/parser from 5.36.2 to 5.37.0 ([716c805](https://github.com/terrestris/shogun-gis-client/commit/716c8055c515fa7da17c1821d64a23c01b6b7bd9))
+* **deps-dev:** bump babel-jest from 29.0.2 to 29.0.3 ([2f2f73a](https://github.com/terrestris/shogun-gis-client/commit/2f2f73a6c0422d5e705fc1a86993e8ea6f0db4fd))
+* **deps-dev:** bump css-minimizer-webpack-plugin from 4.0.0 to 4.1.0 ([c5019b9](https://github.com/terrestris/shogun-gis-client/commit/c5019b921b236e6e84351e14ab81ea718333cf4d))
+* **deps-dev:** bump eslint from 8.23.0 to 8.23.1 ([24d939b](https://github.com/terrestris/shogun-gis-client/commit/24d939bd64a616377b86fc52c72fcead1370ca8f))
+* **deps-dev:** bump eslint-plugin-react from 7.31.7 to 7.31.8 ([95986c5](https://github.com/terrestris/shogun-gis-client/commit/95986c5843f34883b0a0e2453e822e2f935a1fe6))
+* **deps-dev:** bump jest-environment-jsdom from 29.0.2 to 29.0.3 ([e0d6d8a](https://github.com/terrestris/shogun-gis-client/commit/e0d6d8a99b913fcfdcd067c0cb4c4dc211e08340))
+* **deps-dev:** bump typescript from 4.8.2 to 4.8.3 ([7f06490](https://github.com/terrestris/shogun-gis-client/commit/7f06490fea6022c1ca8d0422e1740634ea6f57cc))
+* **deps:** bump antd from 4.23.0 to 4.23.1 ([c6f44cd](https://github.com/terrestris/shogun-gis-client/commit/c6f44cd0fd647c818d14e251516d13dcb4aa5354))
+* **deps:** bump react-i18next from 11.18.5 to 11.18.6 ([7b8d9ce](https://github.com/terrestris/shogun-gis-client/commit/7b8d9ce9e8755d2e982dfc20a8ff39a39dd362c0))
+
 ## [4.2.0](https://github.com/terrestris/shogun-gis-client/compare/v4.1.1...v4.2.0) (2022-09-08)
 
 
