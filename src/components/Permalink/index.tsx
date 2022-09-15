@@ -60,9 +60,14 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     () => {
       let eventKeys: EventsKey[] = [];
 
-      const identifier = (l: BaseLayer) => l.get('name');
-      const filter = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
-      const updatePermalink = () => setPermalink(PermalinkUtil.getLink(map, ';', identifier, filter));
+      const identifierFunction = (l: BaseLayer) => l.get('name');
+      const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
+      const updatePermalink = () => setPermalink(PermalinkUtil.getLink(map, ';', identifierFunction, filterFunction));
+
+      const filterFunctionForLayers = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
+      const updateLayersInPermalink = () => setPermalink(
+        PermalinkUtil.getLink(map, ';', identifierFunction, filterFunctionForLayers)
+      );
 
       const registerLayerCallback = (layerGroup: LayerGroup) => {
         const layersInGroup = layerGroup.getLayers().getArray();
@@ -82,12 +87,14 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
       const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
       const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
+      const listenerLayerGroup = map.on('change:layergroup', updateLayersInPermalink);
 
       registerLayerCallback(mapLayerGroup);
 
       return () => {
         unByKey(listenerKeyCenter);
         unByKey(listenerKeyResolution);
+        unByKey(listenerLayerGroup);
         unByKey(eventKeys);
       };
     },
