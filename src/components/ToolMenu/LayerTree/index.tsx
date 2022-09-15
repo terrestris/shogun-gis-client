@@ -72,7 +72,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const resolution = mapView.getResolution();
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
 
-    if (layer instanceof OlLayerGroup) {
+    // @ts-ignore
+    if (layer.getLayers) {
       return (
         <div>
           {layer.get('name')}
