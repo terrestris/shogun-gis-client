@@ -5,6 +5,13 @@ module.exports = {
     'plugin:import/recommended'
   ],
   rules: {
+    'max-len': [
+      'warn',
+      {
+        'code': 160
+      }
+    ],
+
     '@typescript-eslint/member-ordering': 'off',
 
     'arrow-spacing': 'warn',
