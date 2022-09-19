@@ -47,6 +47,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
+    if (layer instanceof OlLayerGroup && !layer.getVisible() && layer.getLayers().getLength() === 0) {
+      return false;
+    }
     if (layer.get('name') === 'react-geo_digitize') {
       return false;
     }
