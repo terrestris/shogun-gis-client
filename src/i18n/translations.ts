@@ -16,6 +16,9 @@ export default {
         errorMessage: 'Fehler',
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
       },
+      BasicMapComponent: {
+        processedLayersFolder: 'Prozessierte Layer'
+      },
       Permalink: {
         title: 'Teilen',
         twitterTooltip: 'Link via Twitter teilen',
@@ -127,6 +130,9 @@ export default {
         columnTitle: 'Name',
         errorMessage: 'Error',
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
+      },
+      BasicMapComponent: {
+        processedLayersFolder: 'Processed layers'
       },
       Permalink: {
         title: 'Share',

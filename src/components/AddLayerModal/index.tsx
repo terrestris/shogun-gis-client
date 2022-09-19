@@ -15,6 +15,8 @@ import {
   getUid
 } from 'ol';
 import OlLayerGroup from 'ol/layer/Group';
+import ImageLayer from 'ol/layer/Image';
+import TileLayer from 'ol/layer/Tile';
 
 import {
   useTranslation
@@ -116,6 +118,18 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     layersToAdd.forEach(layerToAdd => {
       if (!targetGroup.getLayers().getArray().includes(layerToAdd)) {
         layerToAdd.set('isExternalLayer', true);
+        const layerUrl = layerToAdd instanceof TileLayer || layerToAdd instanceof ImageLayer ? layerToAdd.getSource().getUrl() : '';
+
+        const layerConfig = {
+          name: layerToAdd.get('name'),
+          type: layerToAdd instanceof TileLayer ? 'TILEWMS' : 'WMS',
+          sourceConfig: {
+            layerNames: layerToAdd.getSource()?.getParams().LAYERS,
+            url: layerUrl,
+            useBearerToken: false
+          }
+        };
+        layerToAdd.set('layerConfig', layerConfig);
         targetGroup.getLayers().push(layerToAdd);
       }
     });

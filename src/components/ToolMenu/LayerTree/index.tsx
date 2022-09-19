@@ -8,7 +8,6 @@ import {
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
-import OlLayerVector from 'ol/layer/Vector';
 import OlSource from 'ol/source/Source';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -50,6 +49,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (layer instanceof OlLayerGroup && !layer.getVisible() && layer.getLayers().getLength() === 0) {
       return false;
     }
+
     if (layer.get('name') === 'react-geo_digitize') {
       return false;
     }
@@ -75,8 +75,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const resolution = mapView.getResolution();
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
 
-    // @ts-ignore
-    if (layer.getLayers) {
+    if (layer instanceof OlLayerGroup) {
       return (
         <div>
           {layer.get('name')}

@@ -286,6 +286,20 @@ const setupSHOGunMap = async (application: Application) => {
 
   view.setConstrainResolution(true);
 
+  const processLayerGroup = new OlLayerGroup({
+    layers: []
+  });
+  processLayerGroup.set('name', i18n.t('BasicMapComponent.processedLayersFolder'));
+  processLayerGroup.setVisible(false);
+
+  const externalWmsLayerGroup = new OlLayerGroup({
+    layers: []
+  });
+  externalWmsLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
+  externalWmsLayerGroup.setVisible(false);
+
+  layers?.getLayers().extend([processLayerGroup, externalWmsLayerGroup]);
+
   return new OlMap({
     view,
     layers,
