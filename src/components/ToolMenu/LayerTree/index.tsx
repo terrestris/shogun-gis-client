@@ -46,12 +46,23 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
+    if (layer instanceof OlLayerGroup && !layer.getVisible() && layer.getLayers().getLength() === 0) {
+      return false;
+    }
+
+    if (layer.get('name') === 'react-geo_digitize') {
+      return false;
+    }
+
     if (layer instanceof OlLayerGroup) {
       return !layer.get('hideInLayerTree');
-    } else {
-      return !layer.get('isBackgroundLayer') &&
-        !(layer.getSource && layer.getSource() instanceof OlSourceVector);
     }
+
+    if (layer.getSource && layer.getSource() instanceof OlSourceVector) {
+      return false;
+    }
+
+    return !layer.get('isBackgroundLayer') && !(layer.getSource && layer.getSource() instanceof OlSourceVector);
   };
 
   const treeNodeTitleRenderer = (layer: OlBaseLayer) => {
@@ -83,26 +94,26 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           </div>
           {
             layer.get('visible') &&
-              <>
-                <div className="layer-transparency">
-                  <LayerTransparencySlider
-                    tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
-                    layer={layer}
-                  />
-                </div>
-              </>
+            <>
+              <div className="layer-transparency">
+                <LayerTransparencySlider
+                  tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
+                  layer={layer}
+                />
+              </div>
+            </>
           }
           {
             layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
-              <Legend
-                layer={layer as WmsLayer}
-                errorMsg={t('LayerTree.noLegendAvailable')}
-                extraParams={{
-                  scale,
-                  LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
-                  TRANSPARENT: true
-                }}
-              />
+            <Legend
+              layer={layer as WmsLayer}
+              errorMsg={t('LayerTree.noLegendAvailable')}
+              extraParams={{
+                scale,
+                LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
+                TRANSPARENT: true
+              }}
+            />
           }
         </>
       );

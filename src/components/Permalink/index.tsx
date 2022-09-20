@@ -40,6 +40,7 @@ export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
   const map = useMap();
+  const layerAttributes = ['layerConfig', 'isProcessedLayer', 'isExternalLayer'];
   const {
     t
   } = useTranslation();
@@ -48,8 +49,13 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     return <></>;
   }
 
-  const [permalink, setPermalink] = useState(PermalinkUtil.getLink(map, ';',
-    l => l.get('name'), l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible()));
+  const [permalink, setPermalink] = useState(PermalinkUtil.getLink(
+    map,
+    ';',
+    l => l.get('name'),
+    l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible(),
+    layerAttributes
+  ));
 
   const mailSubject = 'SHOGun Web-GIS';
   const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${permalink}`;
@@ -58,9 +64,26 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     () => {
       let eventKeys: EventsKey[] = [];
 
-      const identifier = (l: BaseLayer) => l.get('name');
-      const filter = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
-      const updatePermalink = () => setPermalink(PermalinkUtil.getLink(map, ';', identifier, filter));
+      const identifierFunction = (l: BaseLayer) => l.get('name');
+      const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
+      const updatePermalink = () => setPermalink(PermalinkUtil.getLink(
+        map,
+        ';',
+        identifierFunction,
+        filterFunction,
+        layerAttributes
+      ));
+
+      const filterFunctionForLayers = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
+      const updateLayersInPermalink = () => setPermalink(
+        PermalinkUtil.getLink(
+          map,
+          ';',
+          identifierFunction,
+          filterFunctionForLayers,
+          layerAttributes
+        )
+      );
 
       const registerLayerCallback = (layerGroup: LayerGroup) => {
         const layersInGroup = layerGroup.getLayers().getArray();
@@ -80,12 +103,17 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
       const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
       const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
+      const listenerLayerGroup = map.on('change:layergroup', () => {
+        // todo: test if permalink is updated correctly
+        updateLayersInPermalink();
+      });
 
       registerLayerCallback(mapLayerGroup);
 
       return () => {
         unByKey(listenerKeyCenter);
         unByKey(listenerKeyResolution);
+        unByKey(listenerLayerGroup);
         unByKey(eventKeys);
       };
     },

@@ -94,6 +94,9 @@ module.exports = {
         'react-redux': {
           singleton: true
         },
+        '@terrestris/react-geo': {
+          singleton: true
+        },
         'react-i18next': {
           singleton: true
         },
