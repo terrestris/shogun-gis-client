@@ -27,10 +27,6 @@ import MapComponent, {
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
 
-import {
-  useAsyncEffect
-} from '@terrestris/react-util';
-
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 
 import useQueryParams from '../../hooks/useQueryParams';
@@ -46,7 +42,46 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     t
   } = useTranslation();
 
-  useAsyncEffect(async () => {
+  const restoreTransientLayers = async (configString: string) => {
+    if (!map) {
+      return;
+    }
+    const processedFolderName = t('BasicMapComponent.processedLayersFolder');
+    const processedLayerGroup = MapUtil.getLayerByName(map, processedFolderName) as LayerGroup;
+    const externalFolderName = t('AddLayerModal.externalWmsFolder');
+    const externalLayerGroup = MapUtil.getLayerByName(map, externalFolderName) as LayerGroup;
+
+    try {
+      const config = JSON.parse(configString);
+
+      if (!client) {
+        throw new Error('Client is not available');
+      }
+      const parser = new SHOGunApplicationUtil({
+        client
+      });
+
+      for (let i = 0; i < config.length; i++) {
+        const cfg = config[i];
+        if (!_isEmpty(cfg)) {
+          const layerConfig = cfg.layerConfig;
+          const olLayer = await parser.parseLayer(layerConfig);
+          if (cfg.isExternalLayer) {
+            externalLayerGroup.getLayers().extend([olLayer]);
+            externalLayerGroup.setVisible(true);
+          } else if (cfg.isProcessedLayer) {
+            processedLayerGroup.getLayers().extend([olLayer]);
+            processedLayerGroup.setVisible(true);
+          }
+        }
+      }
+
+    } catch (error) {
+      Logger.error(error);
+    }
+  };
+
+  useEffect(() => {
     if (map) {
       const identifier = (l: BaseLayer) => l.get('name');
       const filter = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
@@ -55,45 +90,13 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       if (!configString) {
         return;
       }
-      const processedFolderName = t('BasicMapComponent.processedLayersFolder');
-      const processedLayerGroup = MapUtil.getLayerByName(map, processedFolderName) as LayerGroup;
-      const externalFolderName = t('AddLayerModal.externalWmsFolder');
-      const externalLayerGroup = MapUtil.getLayerByName(map, externalFolderName) as LayerGroup;
-
-      try {
-        const config = JSON.parse(configString);
-
-        if (!client) {
-          throw new Error('Client is not available');
-        }
-        const parser = new SHOGunApplicationUtil({
-          client
-        });
-
-        for (let i = 0; i < config.length; i++) {
-          const cfg = config[i];
-          if (!_isEmpty(cfg)) {
-            const layerConfig = cfg.layerConfig;
-            const olLayer = await parser.parseLayer(layerConfig);
-            if (cfg.isExternalLayer) {
-              externalLayerGroup.getLayers().extend([olLayer]);
-              externalLayerGroup.setVisible(true);
-            } else if (cfg.isProcessedLayer) {
-              processedLayerGroup.getLayers().extend([olLayer]);
-              processedLayerGroup.setVisible(true);
-            }
-          }
-        }
-
-      } catch (error) {
-        Logger.error(error);
-      }
-
+      restoreTransientLayers(configString);
     }
   }, [
     queryParams.get('center'),
     queryParams.get('zoom'),
-    queryParams.get('layers')
+    queryParams.get('layers'),
+    queryParams.get('customLayerAttributes')
   ]);
 
   if (!map) {

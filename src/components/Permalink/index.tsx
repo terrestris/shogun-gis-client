@@ -26,7 +26,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-// todo: move permalink util to shogun-util
 import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
