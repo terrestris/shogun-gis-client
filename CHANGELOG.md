@@ -1,3 +1,40 @@
+## [4.3.0](https://github.com/terrestris/shogun-gis-client/compare/v4.2.1...v4.3.0) (2022-09-20)
+
+
+### Features
+
+* add change:layer listener for permalink ([abc443f](https://github.com/terrestris/shogun-gis-client/commit/abc443fc4ca22ef1ed5bf0c86ab55f119fa6d825))
+* add watchBuild script ([01e6b6f](https://github.com/terrestris/shogun-gis-client/commit/01e6b6fcd2514c34a0b9f595b133ecd0d28d7763))
+* hide empty invisible layer groups ([c1981be](https://github.com/terrestris/shogun-gis-client/commit/c1981becf51a944816b4e0523740ce50da51071b))
+* save external layers in permalink ([2693f0b](https://github.com/terrestris/shogun-gis-client/commit/2693f0b2e740bd9c79ca1a2950ae7823b5ed53c0))
+
+
+### Changes in configuration
+
+* (dev) increase maximum line length ([53a2175](https://github.com/terrestris/shogun-gis-client/commit/53a21759fdd5cfa38c84f4c9bb4313af7faa9828))
+
+
+### Bugfixes
+
+* (WIP) add addLayer util ([6f6d229](https://github.com/terrestris/shogun-gis-client/commit/6f6d22907d461120fe4b5db54bc61cc2dcefee6a))
+* add header offset to notification ([a426323](https://github.com/terrestris/shogun-gis-client/commit/a42632366abbd683665837ba84aebe7edbc4be5b))
+* adjust webpack config ([7638615](https://github.com/terrestris/shogun-gis-client/commit/7638615177ebb6d8d4457969d9fd2e87745bad34))
+* bugfixes ([747865a](https://github.com/terrestris/shogun-gis-client/commit/747865a2a84644131f822bc2fbca6e4abb676083))
+* make layertree dropdown icon clickable ([a451528](https://github.com/terrestris/shogun-gis-client/commit/a4515289d1bcf4551168257d4ead8b2ae2d2d023))
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.19.0 to 7.19.1 ([6049244](https://github.com/terrestris/shogun-gis-client/commit/60492441d089f86ffa0e5e8c839645ebde2d8a4a))
+* **deps-dev:** bump @babel/preset-env from 7.19.0 to 7.19.1 ([93a852c](https://github.com/terrestris/shogun-gis-client/commit/93a852c34fee3d0ecb4ee15a1eb314ee13d165b4))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([1eff3f7](https://github.com/terrestris/shogun-gis-client/commit/1eff3f76f2f39ae09728f2fbf7a707267563c5cd))
+* **deps-dev:** bump @typescript-eslint/parser from 5.37.0 to 5.38.0 ([d496014](https://github.com/terrestris/shogun-gis-client/commit/d496014aae418e411b78dcf338a0dff7726842df))
+* **deps-dev:** bump webpack-dev-server from 4.11.0 to 4.11.1 ([1d8dbf1](https://github.com/terrestris/shogun-gis-client/commit/1d8dbf137c28594daaf0b7c30f79609ccf20ac49))
+* **deps:** bump antd from 4.23.1 to 4.23.2 ([5a17c23](https://github.com/terrestris/shogun-gis-client/commit/5a17c23c171a5d07d15ce7559f5de6438182ca3a))
+* **deps:** bump i18next from 21.9.1 to 21.9.2 ([6aeb4da](https://github.com/terrestris/shogun-gis-client/commit/6aeb4da39fd6787eaf95b4072e4a89c9bf0cea5d))
+* **deps:** bump keycloak-js from 19.0.1 to 19.0.2 ([4d3c9e4](https://github.com/terrestris/shogun-gis-client/commit/4d3c9e4edd03df4f1038d10e0ac032f042e34a9e))
+* update ol-util to 7.4.0 ([5925553](https://github.com/terrestris/shogun-gis-client/commit/592555382986ff4a498a32764bbcf686fb02503a))
+
 ## [4.2.1](https://github.com/terrestris/shogun-gis-client/compare/v4.2.0...v4.2.1) (2022-09-14)
 
 
