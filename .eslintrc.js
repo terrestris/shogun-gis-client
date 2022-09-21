@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
     '@terrestris/eslint-config-typescript',
+    '@terrestris/eslint-config-typescript-react',
     'plugin:react/recommended',
     'plugin:import/recommended'
   ],

@@ -122,7 +122,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     initVectorLayer();
 
     return () => deinitVectorLayer();
-  }, [map]);
+  }, [features, map, vectorLayerName]);
 
   useEffect(() => {
     if (!map) {
@@ -141,7 +141,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     if (features.length > 0) {
       setSelectedFeature(features[0]);
     }
-  }, [features, map]);
+  }, [features, map, vectorLayerName]);
 
   useEffect(() => {
     if (!selectedFeature || !map) {
@@ -157,7 +157,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     vectorLayer.getSource()?.clear();
 
     vectorLayer.getSource()?.addFeature(selectedFeature);
-  }, [selectedFeature, map]);
+  }, [selectedFeature, map, vectorLayerName]);
 
   if (!selectedFeature) {
     return <></>;

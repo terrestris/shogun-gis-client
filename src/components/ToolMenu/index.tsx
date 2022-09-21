@@ -122,31 +122,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   // dublicated instantiation of mapfish manager 🤦‍♂️
   const [printManager, setPrintManager] = useState<MapFishPrintV3Manager | null>(null);
 
-  useEffect(() => {
-    const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
-      'only screen and (max-width: 750px) and (orientation: landscape), only screen and (max-width: 580px)');
-    const mobileNavigatorRegEx = new RegExp('/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle' +
-      '|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/');
-    const isMobile = mobileQuery.matches || mobileNavigatorRegEx.test(window.navigator.userAgent);
-
-    if (isMobile) {
-      setCollapsed(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (activeSubMenuKeys.includes('print') && !printManager) {
-      initializeMapProvider();
-    }
-    return () => {
-      if (printManager && activeSubMenuKeys.includes('print')) {
-        printManager.shutdownManager();
-        setPrintManager(null);
-      }
-    };
-  }, [activeSubMenuKeys, printManager]);
-
-  const layerFilter = (l: OlLayer<OlSource>) => {
+  const layerFilter = useCallback((l: OlLayer<OlSource>) => {
     if (!map) {
       return;
     }
@@ -160,7 +136,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     return layerName && !layerBlackList.includes(layerName) &&
       l.getVisible() && !(l instanceof OlLayerGroup) &&
       MapUtil.layerInResolutionRange(l, map);
-  };
+  }, [map]);
 
   const initializeMapProvider = useCallback(async () => {
     const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
@@ -194,7 +170,31 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         Logger.error(error);
       });
     setPrintManager(pManager);
-  }, [map, t]);
+  }, [client, layerFilter, map]);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
+      'only screen and (max-width: 750px) and (orientation: landscape), only screen and (max-width: 580px)');
+    const mobileNavigatorRegEx = new RegExp('/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle' +
+      '|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/');
+    const isMobile = mobileQuery.matches || mobileNavigatorRegEx.test(window.navigator.userAgent);
+
+    if (isMobile) {
+      setCollapsed(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeSubMenuKeys.includes('print') && !printManager) {
+      initializeMapProvider();
+    }
+    return () => {
+      if (printManager && activeSubMenuKeys.includes('print')) {
+        printManager.shutdownManager();
+        setPrintManager(null);
+      }
+    };
+  }, [activeSubMenuKeys, initializeMapProvider, printManager]);
 
   const onMenuSelect = (evt: SelectInfo) => {
     switch (evt.key) {
@@ -405,7 +405,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         items.splice(insertionIndex || 0, 0, {
           key: key,
           onTitleClick: onSubmenuTitleClick,
-          icon: icon ? <FontAwesomeIcon icon={icon}/> : undefined,
+          icon: icon ? <FontAwesomeIcon icon={icon} /> : undefined,
           label: t(label),
           children: [
             {

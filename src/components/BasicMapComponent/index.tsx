@@ -1,5 +1,6 @@
 import React, {
-  useEffect
+  useEffect,
+  useCallback
 } from 'react';
 
 import _isEmpty from 'lodash/isEmpty';
@@ -38,11 +39,17 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   const map = useMap();
   const client = useSHOGunAPIClient();
   const queryParams = useQueryParams();
+
+  const center = queryParams.get('center');
+  const zoom = queryParams.get('zoom');
+  const layers = queryParams.get('layers');
+  const customLayerAttributes = queryParams.get('customLayerAttributes');
+
   const {
     t
   } = useTranslation();
 
-  const restoreTransientLayers = async (configString: string) => {
+  const restoreTransientLayers = useCallback(async (configString: string) => {
     if (!map) {
       return;
     }
@@ -79,7 +86,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     } catch (error) {
       Logger.error(error);
     }
-  };
+  }, [client, map, t]);
 
   useEffect(() => {
     if (map) {
@@ -93,10 +100,12 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       restoreTransientLayers(configString);
     }
   }, [
-    queryParams.get('center'),
-    queryParams.get('zoom'),
-    queryParams.get('layers'),
-    queryParams.get('customLayerAttributes')
+    map,
+    restoreTransientLayers,
+    center,
+    zoom,
+    layers,
+    customLayerAttributes
   ]);
 
   if (!map) {
