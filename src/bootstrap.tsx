@@ -331,6 +331,12 @@ const setupDefaultMap = () => {
     hoverable: true
   });
 
+  const processLayerGroup = new OlLayerGroup({
+    layers: []
+  });
+  processLayerGroup.set('name', i18n.t('BasicMapComponent.processedLayersFolder'));
+  processLayerGroup.setVisible(false);
+
   const eoLayerGroup = new OlLayerGroup({
     layers: [temperatureLayer]
   });
@@ -348,7 +354,7 @@ const setupDefaultMap = () => {
       center: center,
       zoom: 0
     }),
-    layers: [backgroundLayerGroup, eoLayerGroup],
+    layers: [backgroundLayerGroup, eoLayerGroup, processLayerGroup],
     controls: OlControlDefaults({
       zoom: false
     })
