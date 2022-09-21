@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useState
+  useEffect, useState, useMemo
 } from 'react';
 
 import {
@@ -26,6 +26,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
@@ -40,85 +41,95 @@ export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
   const map = useMap();
-  const layerAttributes = ['layerConfig', 'isProcessedLayer', 'isExternalLayer'];
+  const layerAttributes = useMemo(() => ['layerConfig', 'isProcessedLayer', 'isExternalLayer'], []);
   const {
     t
   } = useTranslation();
 
-  if (!map) {
-    return <></>;
-  }
-
-  const [permalink, setPermalink] = useState(PermalinkUtil.getLink(
+  const initialPermalink = map ? PermalinkUtil.getLink(
     map,
     ';',
     l => l.get('name'),
     l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible(),
     layerAttributes
-  ));
+  ) : '';
+
+  const [permalink, setPermalink] = useState(initialPermalink);
 
   const mailSubject = 'SHOGun Web-GIS';
   const mailBody = `Hey,\r\ncheck out the layer-composition I created:\r\n\r\n${permalink}`;
 
-  useEffect(
-    () => {
-      let eventKeys: EventsKey[] = [];
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+    let eventKeys: EventsKey[] = [];
 
-      const identifierFunction = (l: BaseLayer) => l.get('name');
-      const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
-      const updatePermalink = () => setPermalink(PermalinkUtil.getLink(
+    const identifierFunction = (l: BaseLayer) => l.get('name');
+    const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
+    const updatePermalink = () => {
+      setPermalink(PermalinkUtil.getLink(
         map,
         ';',
         identifierFunction,
         filterFunction,
         layerAttributes
       ));
+    };
 
-      const filterFunctionForLayers = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
-      const updateLayersInPermalink = () => setPermalink(
-        PermalinkUtil.getLink(
-          map,
-          ';',
-          identifierFunction,
-          filterFunctionForLayers,
-          layerAttributes
-        )
-      );
+    const filterFunctionForLayers = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
+    const updateLayersInPermalink = () => setPermalink(
+      PermalinkUtil.getLink(
+        map,
+        ';',
+        identifierFunction,
+        filterFunctionForLayers,
+        layerAttributes
+      )
+    );
 
-      const registerLayerCallback = (layerGroup: LayerGroup) => {
-        const layersInGroup = layerGroup.getLayers().getArray();
-        for (let i = 0; i < layersInGroup.length; i++) {
-          const layerInGroup = layersInGroup[i];
+    const registerLayerCallback = (layerGroup: LayerGroup) => {
+      const layersInGroup = layerGroup.getLayers().getArray();
+      for (let i = 0; i < layersInGroup.length; i++) {
+        const layerInGroup = layersInGroup[i];
 
-          if (layerInGroup instanceof LayerGroup) {
-            registerLayerCallback(layerInGroup);
-          } else {
-            let eventKey = layerInGroup.on('change:visible', updatePermalink);
-            eventKeys.push(eventKey);
-          }
+        if (layerInGroup instanceof LayerGroup) {
+          registerLayerCallback(layerInGroup);
+        } else {
+          let eventKey = layerInGroup.on('change:visible', updatePermalink);
+          eventKeys.push(eventKey);
         }
-      };
+      }
+    };
 
-      let mapLayerGroup = map.getLayerGroup();
+    let mapLayerGroup = map.getLayerGroup();
 
-      const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
-      const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
-      const listenerLayerGroup = map.on('change:layergroup', () => {
-        // todo: test if permalink is updated correctly
-        updateLayersInPermalink();
-      });
+    const externalLayerGroupName = t('AddLayerModal.externalWmsFolder');
+    const externalLayerGroup = MapUtil.getLayerByName(map, externalLayerGroupName) as LayerGroup;
 
-      registerLayerCallback(mapLayerGroup);
+    const processedLayerGroupName = t('BasicMapComponent.processedLayersFolder');
+    const processedLayerGroup = MapUtil.getLayerByName(map, processedLayerGroupName) as LayerGroup;
 
-      return () => {
-        unByKey(listenerKeyCenter);
-        unByKey(listenerKeyResolution);
-        unByKey(listenerLayerGroup);
-        unByKey(eventKeys);
-      };
-    },
-    []
-  );
+    const externalLayerGroupAddListener = externalLayerGroup.getLayers().on('add', updateLayersInPermalink);
+    const externalLayerGroupRemoveListener = externalLayerGroup.getLayers().on('remove', updateLayersInPermalink);
+    const processedLayerGroupAddListener = processedLayerGroup.getLayers().on('add', updateLayersInPermalink);
+    const processedLayerGroupRemoveListener = processedLayerGroup.getLayers().on('remove', updateLayersInPermalink);
+
+    const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
+    const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
+
+    registerLayerCallback(mapLayerGroup);
+
+    return () => {
+      unByKey(listenerKeyCenter);
+      unByKey(listenerKeyResolution);
+      unByKey(externalLayerGroupAddListener);
+      unByKey(externalLayerGroupRemoveListener);
+      unByKey(processedLayerGroupAddListener);
+      unByKey(processedLayerGroupRemoveListener);
+      unByKey(eventKeys);
+    };
+  }, [layerAttributes, map, t]);
 
   function onTwitterClick() {
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
