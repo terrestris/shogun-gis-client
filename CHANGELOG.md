@@ -1,3 +1,17 @@
+## [4.3.1](https://github.com/terrestris/shogun-gis-client/compare/v4.3.0...v4.3.1) (2022-09-22)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/runtime from 7.18.9 to 7.19.0 ([3993477](https://github.com/terrestris/shogun-gis-client/commit/3993477607424baeab7083392d5f2ffc985fd6f6))
+
+
+### Bugfixes
+
+* create processed layergroup in public apps ([620724b](https://github.com/terrestris/shogun-gis-client/commit/620724b88fdd58fb842d89e956f1b479c55012b2))
+* permalink change listener for addLayer ([5687dbf](https://github.com/terrestris/shogun-gis-client/commit/5687dbf43e1d56856a045cd65535c179e0b94ce0))
+* update hooks and their dependencies ([3fd7494](https://github.com/terrestris/shogun-gis-client/commit/3fd7494d32b5d20ae3a2424fb23cab8aa626906a))
+
 ## [4.3.0](https://github.com/terrestris/shogun-gis-client/compare/v4.2.1...v4.3.0) (2022-09-20)
 
 
