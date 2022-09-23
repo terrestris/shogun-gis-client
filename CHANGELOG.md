@@ -1,3 +1,10 @@
+## [4.4.0](https://github.com/terrestris/shogun-gis-client/compare/v4.3.1...v4.4.0) (2022-09-23)
+
+
+### Features
+
+* use docker-public.terrestris.de registry ([37a8e21](https://github.com/terrestris/shogun-gis-client/commit/37a8e217db98960db120eb0882b7024802f713f6))
+
 ## [4.3.1](https://github.com/terrestris/shogun-gis-client/compare/v4.3.0...v4.3.1) (2022-09-22)
 
 
