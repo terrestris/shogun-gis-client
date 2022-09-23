@@ -3,7 +3,7 @@ name: Release
 on: [workflow_dispatch]
 
 env:
-  DOCKER_REGISTRY: nexus.terrestris.de/repository/terrestris-public
+  DOCKER_REGISTRY: docker-public.terrestris.de/terrestris
 
 jobs:
   release:
