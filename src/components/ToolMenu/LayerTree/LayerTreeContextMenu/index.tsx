@@ -45,7 +45,6 @@ import {
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
@@ -123,19 +122,21 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       return;
     }
 
-    const targetFolderName = t('AddLayerModal.externalWmsFolder');
-    const targetGroup: LayerGroup = MapUtil.getLayerByName(map, targetFolderName) as LayerGroup;
-    if (targetGroup) {
-      const existingLayers = targetGroup.getLayers();
-      try {
-        if (existingLayers.getLength() === 1) {
-          targetGroup.set('hideInLayerTree', true);
+    const layerGroups = map.getLayers().getArray();
+
+    layerGroups.forEach(layerGroup => {
+      if ((layerGroup as LayerGroup).getLayers) {
+        const existingLayers = (layerGroup as LayerGroup).getLayers();
+        try {
+          if (existingLayers.getLength() === 1) {
+            layerGroup.setVisible(false);
+          }
+          existingLayers.remove(layer);
+        } catch (e) {
+          Logger.error('Could not remove external layer from map.');
         }
-        existingLayers.remove(layer);
-      } catch (e) {
-        Logger.error('Could not remove external layer from map.');
       }
-    }
+    });
   };
 
   let items: ItemType[] = [{
@@ -157,7 +158,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  if (layer.get('isExternalLayer')) {
+  if (layer.get('isImported')) {
     items.push({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'
