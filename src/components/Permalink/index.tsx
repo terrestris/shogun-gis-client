@@ -26,7 +26,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
@@ -41,7 +40,7 @@ export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
   const map = useMap();
-  const layerAttributes = useMemo(() => ['layerConfig', 'isProcessedLayer', 'isExternalLayer'], []);
+  const layerAttributes = useMemo(() => ['layerConfig', 'isExternalLayer', 'groupName'], []);
   const {
     t
   } = useTranslation();
@@ -78,15 +77,17 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     };
 
     const filterFunctionForLayers = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
-    const updateLayersInPermalink = () => setPermalink(
-      PermalinkUtil.getLink(
-        map,
-        ';',
-        identifierFunction,
-        filterFunctionForLayers,
-        layerAttributes
-      )
-    );
+    const updateLayersInPermalink = () => {
+      setPermalink(
+        PermalinkUtil.getLink(
+          map,
+          ';',
+          identifierFunction,
+          filterFunctionForLayers,
+          layerAttributes
+        )
+      );
+    };
 
     const registerLayerCallback = (layerGroup: LayerGroup) => {
       const layersInGroup = layerGroup.getLayers().getArray();
@@ -102,31 +103,24 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       }
     };
 
-    let mapLayerGroup = map.getLayerGroup();
+    const layerGroups = map.getLayers().getArray().filter((l) => l.get('isGroupForImportedLayers'));
+    layerGroups.forEach((layerGroup) => {
+      // @ts-ignore
+      eventKeys.push(layerGroup.getLayers().on('add', updateLayersInPermalink));
+      // @ts-ignore
+      eventKeys.push(layerGroup.getLayers().on('remove', updateLayersInPermalink));
 
-    const externalLayerGroupName = t('AddLayerModal.externalWmsFolder');
-    const externalLayerGroup = MapUtil.getLayerByName(map, externalLayerGroupName) as LayerGroup;
-
-    const processedLayerGroupName = t('BasicMapComponent.processedLayersFolder');
-    const processedLayerGroup = MapUtil.getLayerByName(map, processedLayerGroupName) as LayerGroup;
-
-    const externalLayerGroupAddListener = externalLayerGroup.getLayers().on('add', updateLayersInPermalink);
-    const externalLayerGroupRemoveListener = externalLayerGroup.getLayers().on('remove', updateLayersInPermalink);
-    const processedLayerGroupAddListener = processedLayerGroup.getLayers().on('add', updateLayersInPermalink);
-    const processedLayerGroupRemoveListener = processedLayerGroup.getLayers().on('remove', updateLayersInPermalink);
+    })
 
     const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
     const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
 
+    let mapLayerGroup = map.getLayerGroup();
     registerLayerCallback(mapLayerGroup);
 
     return () => {
       unByKey(listenerKeyCenter);
       unByKey(listenerKeyResolution);
-      unByKey(externalLayerGroupAddListener);
-      unByKey(externalLayerGroupRemoveListener);
-      unByKey(processedLayerGroupAddListener);
-      unByKey(processedLayerGroupRemoveListener);
       unByKey(eventKeys);
     };
   }, [layerAttributes, map, t]);
