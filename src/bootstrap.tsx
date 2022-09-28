@@ -286,19 +286,13 @@ const setupSHOGunMap = async (application: Application) => {
 
   view.setConstrainResolution(true);
 
-  const processLayerGroup = new OlLayerGroup({
-    layers: []
-  });
-  processLayerGroup.set('name', i18n.t('BasicMapComponent.processedLayersFolder'));
-  processLayerGroup.setVisible(false);
-
   const externalWmsLayerGroup = new OlLayerGroup({
     layers: []
   });
   externalWmsLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
   externalWmsLayerGroup.setVisible(false);
 
-  layers?.getLayers().extend([processLayerGroup, externalWmsLayerGroup]);
+  layers?.getLayers().extend([externalWmsLayerGroup]);
 
   return new OlMap({
     view,
@@ -331,11 +325,12 @@ const setupDefaultMap = () => {
     hoverable: true
   });
 
-  const processLayerGroup = new OlLayerGroup({
+  const externalLayerGroup = new OlLayerGroup({
     layers: []
   });
-  processLayerGroup.set('name', i18n.t('BasicMapComponent.processedLayersFolder'));
-  processLayerGroup.setVisible(false);
+  externalLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
+  externalLayerGroup.set('isGroupForImportedLayers', true);
+  externalLayerGroup.setVisible(false);
 
   const eoLayerGroup = new OlLayerGroup({
     layers: [temperatureLayer]
@@ -354,7 +349,7 @@ const setupDefaultMap = () => {
       center: center,
       zoom: 0
     }),
-    layers: [backgroundLayerGroup, eoLayerGroup, processLayerGroup],
+    layers: [backgroundLayerGroup, eoLayerGroup, externalLayerGroup],
     controls: OlControlDefaults({
       zoom: false
     })

@@ -53,10 +53,8 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     if (!map) {
       return;
     }
-    const processedFolderName = t('BasicMapComponent.processedLayersFolder');
-    const processedLayerGroup = MapUtil.getLayerByName(map, processedFolderName) as LayerGroup;
-    const externalFolderName = t('AddLayerModal.externalWmsFolder');
-    const externalLayerGroup = MapUtil.getLayerByName(map, externalFolderName) as LayerGroup;
+
+    const externalLayerGroup = MapUtil.getLayerByName(map, t('AddLayerModal.externalWmsFolder')) as LayerGroup;
 
     try {
       const config = JSON.parse(configString);
@@ -76,9 +74,14 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
           if (cfg.isExternalLayer) {
             externalLayerGroup.getLayers().extend([olLayer]);
             externalLayerGroup.setVisible(true);
-          } else if (cfg.isProcessedLayer) {
-            processedLayerGroup.getLayers().extend([olLayer]);
-            processedLayerGroup.setVisible(true);
+          } else {
+            const customFolderName = cfg.groupName;
+            const customLayerGroup = MapUtil.getLayerByName(map, customFolderName) as LayerGroup;
+
+            if (customLayerGroup) {
+              customLayerGroup.getLayers().extend([olLayer]);
+              customLayerGroup.setVisible(true);
+            }
           }
         }
       }

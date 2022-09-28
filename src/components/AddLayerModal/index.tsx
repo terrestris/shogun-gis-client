@@ -118,6 +118,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     layersToAdd.forEach(layerToAdd => {
       if (!targetGroup.getLayers().getArray().includes(layerToAdd)) {
         layerToAdd.set('isExternalLayer', true);
+        layerToAdd.set('isImported', true);
         const layerUrl = layerToAdd instanceof TileLayer || layerToAdd instanceof ImageLayer ? layerToAdd.getSource().getUrl() : '';
 
         const layerConfig = {

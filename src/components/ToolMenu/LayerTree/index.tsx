@@ -9,7 +9,6 @@ import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 import OlSource from 'ol/source/Source';
-import OlSourceVector from 'ol/source/Vector';
 
 import {
   useTranslation
@@ -46,23 +45,17 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
-    if (layer instanceof OlLayerGroup && !layer.getVisible() && layer.getLayers().getLength() === 0) {
-      return false;
-    }
 
-    if (layer.get('name') === 'react-geo_digitize') {
-      return false;
-    }
-
-    if (layer instanceof OlLayerGroup) {
+    // @ts-ignore
+    if (layer.getLayers) {
       return !layer.get('hideInLayerTree');
     }
 
-    if (layer.getSource && layer.getSource() instanceof OlSourceVector) {
+    // @ts-ignore
+    if (layer.getSource && layer.getSource().forEachFeature) {
       return false;
     }
-
-    return !layer.get('isBackgroundLayer') && !(layer.getSource && layer.getSource() instanceof OlSourceVector);
+    return true;
   };
 
   const treeNodeTitleRenderer = (layer: OlBaseLayer) => {
@@ -75,7 +68,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const resolution = mapView.getResolution();
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
 
-    if (layer instanceof OlLayerGroup) {
+    // @ts-ignore
+    if (layer.getLayers) {
       return (
         <div>
           {layer.get('name')}
