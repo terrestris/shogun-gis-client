@@ -30,6 +30,8 @@ import {
   ItemType
 } from 'antd/lib/menu/hooks/useItems';
 
+import ClientConfiguration from 'clientConfig';
+
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 import OlSource from 'ol/source/Source';
@@ -140,7 +142,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const initializeMapProvider = useCallback(async () => {
     const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
-      url: '/print',
+      url: ClientConfiguration.print?.url || '/print',
       map,
       timeout: 60000,
       layerFilter,

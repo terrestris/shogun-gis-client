@@ -20,6 +20,9 @@ declare module 'clientConfig' {
       clientId?: string;
       onLoadAction?: KeycloakOnLoad;
     };
+    print?: {
+      url?: string;
+    };
     plugins: PluginConfiguration[];
   };
   const config: ClientConfiguration;
