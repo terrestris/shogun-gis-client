@@ -109,8 +109,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       eventKeys.push(layerGroup.getLayers().on('add', updateLayersInPermalink));
       // @ts-ignore
       eventKeys.push(layerGroup.getLayers().on('remove', updateLayersInPermalink));
-
-    })
+    });
 
     const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
     const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);

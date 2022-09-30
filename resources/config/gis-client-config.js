@@ -7,5 +7,8 @@ var clientConfig = {
     clientId: null,
     onLoadAction: 'check-sso'
   },
+  print: {
+    url: '/print'
+  },
   plugins: []
 };

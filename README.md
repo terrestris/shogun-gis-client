@@ -25,6 +25,7 @@ Several global settings for the client can be configured via the [`gis-client-co
 | keycloak.realm | The Keycloak realm that should be used for authentication, e.g. `SHOGun` | null |
 | keycloak.clientId | The Keycloak client that should be used for authentication, e.g. `shogun-client` | null |
 | keycloak.onLoadAction | See [here](https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter) for details | 'check-sso' |
+| print.url | The url of the MapFish Print servlet | '/print' |
 
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 
