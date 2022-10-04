@@ -1,3 +1,18 @@
+## [4.5.1](https://github.com/terrestris/shogun-gis-client/compare/v4.5.0...v4.5.1) (2022-10-04)
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([1acaa08](https://github.com/terrestris/shogun-gis-client/commit/1acaa0829b5cd398c4a24f44bb8ea770cad43d63))
+* **deps-dev:** bump babel-jest from 29.1.0 to 29.1.2 ([3383340](https://github.com/terrestris/shogun-gis-client/commit/33833400f5120514930a5fb1d4319d4e99064b9a))
+* **deps-dev:** bump jest-environment-jsdom from 29.1.1 to 29.1.2 ([e2aefaf](https://github.com/terrestris/shogun-gis-client/commit/e2aefaf7a883e5a25de3accbc4512539a6a1c108))
+* **deps:** bump antd from 4.23.3 to 4.23.4 ([f276b2c](https://github.com/terrestris/shogun-gis-client/commit/f276b2cdee4d13189b3508b3655dd51f8ef3fac6))
+
+
+### Bugfixes
+
+* update outdated package-lock ([0a7ba9b](https://github.com/terrestris/shogun-gis-client/commit/0a7ba9b41a6d8522260ed14101e4ba3d3ea617f6))
+
 ## [4.5.0](https://github.com/terrestris/shogun-gis-client/compare/v4.4.0...v4.5.0) (2022-09-30)
 
 
