@@ -31,15 +31,30 @@ export type ClientPluginComponentProps = {
 };
 
 export type ClientPluginIntegration = {
+  /**
+   * The main identifier of the integration point of the plugin.
+   */
   placement: string;
 };
 
 export type ClientPluginIntegrationToolMenu = ClientPluginIntegration &
   Omit<RcSubMenuType, 'children' | 'label' | 'key'> & {
   placement: 'tool-menu';
+  /**
+   * The label for the plugin in the tool menu.
+   */
   label?: string;
+  /**
+   * The insertion index for the plugin in the tool menu, starting from 0 which is on top.
+   */
   insertionIndex?: number;
+  /**
+   * The icon for the plugin in the tool menu.
+   */
   icon?: IconDefinition;
+  /**
+   * The theme for the plugin in the tool menu.
+   */
   theme?: 'dark' | 'light';
 };
 
@@ -47,23 +62,47 @@ export type HeaderPlacementOrientation = 'left' | 'center' | 'right';
 
 export type ClientPluginIntegrationHeader = ClientPluginIntegration & {
   placement: 'header';
+  /**
+   * The placement orientation for the plugin in the header.
+   */
   placementOrientation: HeaderPlacementOrientation;
+  /**
+   * The insertion index for the plugin in the header, starting from 0 which is on the left.
+   */
   insertionIndex?: number;
 };
 
 export type ClientPluginIntegrationFeatureInfo = ClientPluginIntegration & {
   placement: 'feature-info';
-  // TODO Add option to apply plugin for every layer, e.g. a boolean
-  layers: string[];
+  /**
+   * The list of layer names the plugin component should be rendered for. If not
+   * specified, the component will be rendered for all layers.
+   */
+  layers?: string[];
 };
 
 export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader | ClientPluginIntegrationFeatureInfo;
 
 export type ClientPlugin = {
+  /**
+   * The key of the plugin, usually used for internal references (e.g. element class names) only.
+   */
   key: string;
+  /**
+   * The definition of the integration point.
+   */
   integration: ClientPluginIntegrations;
+  /**
+   * The actual component of the plugin.
+   */
   component: React.FunctionComponent<ClientPluginComponentProps>;
+  /**
+   * The i18n definition to be used in the plugin.
+   */
   i18n?: ClientPluginLocale;
+  /**
+   * A set of redux reducers to be used in the plugin.
+   */
   reducers?: {
     [key: string]: Reducer;
   };
