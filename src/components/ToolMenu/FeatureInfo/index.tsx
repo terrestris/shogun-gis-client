@@ -165,18 +165,16 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const onSuccess = (coordinateInfoState: CoordinateInfoState) => {
     const features = coordinateInfoState.features;
 
-    const o: SelectedFeatures = {};
+    const serializedFeatures: SelectedFeatures = {};
     Object.entries(features).forEach(entry => {
       const layerName = entry[0];
-      const feats = entry[1];
+      const selectedFeatures = entry[1];
 
-      o[layerName] = new OlFormatGeoJSON().writeFeatures(feats);
+      serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
     });
 
-    dispatch(setSelectedFeatures(o));
+    dispatch(setSelectedFeatures(serializedFeatures));
   };
-
-  const onError = () => {};
 
   return (
     <div className='feature-info-panel'>
@@ -187,7 +185,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         resultRenderer={resultRenderer}
         fetchOpts={getFetchOpts()}
         onSuccess={onSuccess}
-        onError={onError}
         {...restProps}
       />
     </div>
