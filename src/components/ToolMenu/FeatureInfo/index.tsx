@@ -104,13 +104,11 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
       plugins.forEach(plugin => {
         if (isFeatureInfoIntegration(plugin.integration) &&
-          plugin.integration.layers.includes(layerName)) {
+          ((Array.isArray(plugin.integration.layers) && plugin.integration.layers.includes(layerName)) ||
+          !plugin.integration.layers)) {
           const {
             key,
             wrappedComponent: WrappedPluginComponent
-            // integration: {
-            //   showDefault
-            // }
           } = plugin;
 
           renderers.push(
