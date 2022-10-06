@@ -8,7 +8,8 @@ import {
 } from '../../hooks/usePlugins';
 
 import {
-  HeaderPlacementOrientation
+  HeaderPlacementOrientation,
+  isHeaderIntegration
 } from '../../plugin';
 
 import BasicNominatimSearch from '../BasicNominatimSearch';
@@ -27,10 +28,8 @@ export const Header: React.FC<HeaderProps> = ({
   const plugins = usePlugins();
 
   const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
-    plugins
-      .filter(plugin => plugin.integration?.placement === 'header' &&
-        plugin.integration?.placementOrientation === itemPosition)
-      .forEach(plugin => {
+    plugins.forEach(plugin => {
+      if (isHeaderIntegration(plugin.integration)) {
         const {
           key,
           wrappedComponent: WrappedPluginComponent
@@ -41,7 +40,8 @@ export const Header: React.FC<HeaderProps> = ({
             key={key}
           />
         );
-      });
+      }
+    });
   };
 
   const getLeftItems = () => {

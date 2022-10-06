@@ -51,9 +51,17 @@ export type ClientPluginIntegrationHeader = ClientPluginIntegration & {
   insertionIndex?: number;
 };
 
+export type ClientPluginIntegrationFeatureInfo = ClientPluginIntegration & {
+  placement: 'feature-info';
+  // TODO Add option to apply plugin for every layer, e.g. a boolean
+  layers: string[];
+};
+
+export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader | ClientPluginIntegrationFeatureInfo;
+
 export type ClientPlugin = {
   key: string;
-  integration?: ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader;
+  integration: ClientPluginIntegrations;
   component: React.FunctionComponent<ClientPluginComponentProps>;
   i18n?: ClientPluginLocale;
   reducers?: {
@@ -62,5 +70,17 @@ export type ClientPlugin = {
 };
 
 export type ClientPluginInternal = ClientPlugin & {
-  wrappedComponent: React.FunctionComponent;
+  wrappedComponent: React.FunctionComponent<ClientPluginComponentProps>;
 };
+
+export function isToolMenuIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationToolMenu {
+  return pluginIntegration && pluginIntegration.placement === 'tool-menu';
+}
+
+export function isHeaderIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationHeader {
+  return pluginIntegration && pluginIntegration.placement === 'header';
+}
+
+export function isFeatureInfoIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationFeatureInfo {
+  return pluginIntegration && pluginIntegration.placement === 'feature-info';
+}
