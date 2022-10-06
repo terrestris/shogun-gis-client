@@ -7,6 +7,7 @@ import {
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
 import logoPath from './logoPath';
+import selectedFeatures from './selectedFeatures';
 import title from './title';
 import toolMenu from './toolMenu';
 import user from './user';
@@ -23,6 +24,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     toolMenu,
     addLayerModal,
     user,
+    selectedFeatures,
     ...asyncReducers
   });
 };
