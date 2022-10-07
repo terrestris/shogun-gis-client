@@ -72,6 +72,10 @@ import usePlugins from '../../hooks/usePlugins';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
+  isToolMenuIntegration
+} from '../../plugin';
+
+import {
   show as showAdd
 } from '../../store/addLayerModal';
 import {
@@ -391,7 +395,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   if (plugins) {
     plugins.forEach(plugin => {
-      if (plugin.integration?.placement === 'tool-menu') {
+      if (isToolMenuIntegration(plugin.integration)) {
         const {
           key,
           wrappedComponent: WrappedPluginComponent,

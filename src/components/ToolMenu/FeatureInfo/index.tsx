@@ -3,6 +3,7 @@ import React from 'react';
 import {
   getUid
 } from 'ol';
+import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
@@ -29,7 +30,18 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import usePlugins from '../../../hooks/usePlugins';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
+
+import {
+  isFeatureInfoIntegration
+} from '../../../plugin';
+
+import {
+  SelectedFeatures,
+  setSelectedFeatures
+} from '../../../store/selectedFeatures';
 
 import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
@@ -49,6 +61,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
   const map = useMap();
   const client = useSHOGunAPIClient();
+  const plugins = usePlugins();
+  const dispatch = useAppDispatch();
 
   if (!map) {
     return <></>;
@@ -71,9 +85,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       return false;
     }) as WmsLayer[];
 
-  const resultRenderer = (opts: CoordinateInfoState) => {
-    const features = opts.features;
-    const loading = opts.loading;
+  const resultRenderer = (coordinateInfoState: CoordinateInfoState) => {
+    const features = coordinateInfoState.features;
+    const loading = coordinateInfoState.loading;
 
     if (Object.keys(features).length === 0) {
       return (
@@ -83,20 +97,46 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    return Object.entries(features)
-      .map(([layerName, feats]) => {
-        return (
+    const renderers: JSX.Element[] = [];
+
+    Object.keys(features).forEach(layerName => {
+      let pluginRendererAvailable = false;
+
+      plugins.forEach(plugin => {
+        if (isFeatureInfoIntegration(plugin.integration) &&
+          ((Array.isArray(plugin.integration.layers) && plugin.integration.layers.includes(layerName)) ||
+          !plugin.integration.layers)) {
+          const {
+            key,
+            wrappedComponent: WrappedPluginComponent
+          } = plugin;
+
+          renderers.push(
+            <WrappedPluginComponent
+              key={key}
+            />
+          );
+
+          pluginRendererAvailable = true;
+        }
+      });
+
+      if (!pluginRendererAvailable) {
+        renderers.push(
           <div
             key={layerName}
           >
             <FeatureInfoPropertyGrid
-              features={feats}
+              features={features[layerName]}
               layerName={layerName}
               loading={loading}
             />
           </div>
         );
-      });
+      }
+    });
+
+    return renderers;
   };
 
   if (!enabled) {
@@ -122,6 +162,20 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return opts;
   };
 
+  const onSuccess = (coordinateInfoState: CoordinateInfoState) => {
+    const features = coordinateInfoState.features;
+
+    const serializedFeatures: SelectedFeatures = {};
+    Object.entries(features).forEach(entry => {
+      const layerName = entry[0];
+      const selectedFeatures = entry[1];
+
+      serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
+    });
+
+    dispatch(setSelectedFeatures(serializedFeatures));
+  };
+
   return (
     <div className='feature-info-panel'>
       <CoordinateInfo
@@ -130,6 +184,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         queryLayers={queryLayers}
         resultRenderer={resultRenderer}
         fetchOpts={getFetchOpts()}
+        onSuccess={onSuccess}
         {...restProps}
       />
     </div>

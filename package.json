@@ -46,7 +46,7 @@
     "@terrestris/mapfish-print-manager": "^6.5.1",
     "@terrestris/ol-util": "^7.4.1",
     "@terrestris/react-util": "^2.1.1",
-    "@terrestris/react-geo": "^19.4.2",
+    "@terrestris/react-geo": "^19.5.0",
     "@terrestris/shogun-util": "^3.4.1",
     "antd": "^4.22.7",
     "color": "^4.2.3",
