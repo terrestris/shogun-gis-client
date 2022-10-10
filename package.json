@@ -47,7 +47,7 @@
     "@terrestris/ol-util": "^7.4.1",
     "@terrestris/react-util": "^2.1.1",
     "@terrestris/react-geo": "^19.5.0",
-    "@terrestris/shogun-util": "^3.4.1",
+    "@terrestris/shogun-util": "^3.6.0",
     "antd": "^4.22.7",
     "color": "^4.2.3",
     "i18next": "^21.9.1",

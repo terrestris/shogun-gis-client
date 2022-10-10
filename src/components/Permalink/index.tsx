@@ -40,7 +40,7 @@ export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
   const map = useMap();
-  const layerAttributes = useMemo(() => ['layerConfig', 'isExternalLayer', 'groupName', 'opacity'], []);
+  const layerAttributes = useMemo(() => ['layerConfig', 'isExternalLayer', 'groupName'], []);
   const {
     t
   } = useTranslation();
@@ -89,18 +89,17 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       );
     };
 
-    // const updateLayerConfig = () => {
-    //   console.log('opacity changed!!!');
-    //   const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer'));
-    //   externalLayers.forEach((externalLayer) => {
-    //     const layerConfig = externalLayer.get('layerConfig');
-    //     if (layerConfig) {
-    //       layerConfig.opacity = externalLayer.getOpacity();
-    //       console.log('setting opacity for layer to x', externalLayer.getOpacity());
-    //       externalLayer.set('layerConfig', layerConfig);
-    //     }
-    //   });
-    // };
+    const updateLayerConfig = () => {
+      const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer'));
+      externalLayers.forEach((externalLayer) => {
+        const layerConfig = externalLayer.get('layerConfig');
+        if (layerConfig) {
+          layerConfig.opacity = externalLayer.getOpacity();
+          externalLayer.set('layerConfig', layerConfig);
+        }
+      });
+      updatePermalink();
+    };
 
     const registerLayerCallback = (layerGroup: LayerGroup) => {
       const layersInGroup = layerGroup.getLayers().getArray();
@@ -111,8 +110,8 @@ export const Permalink: React.FC<PermalinkProps> = () => {
           registerLayerCallback(layerInGroup);
         } else {
           let eventKeyVisibility = layerInGroup.on('change:visible', updatePermalink);
-          // let eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
-          eventKeys.push(eventKeyVisibility);
+          let eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
+          eventKeys.push(eventKeyVisibility, eventKeyOpacity);
         }
       }
     };
@@ -130,6 +129,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
     let mapLayerGroup = map.getLayerGroup();
     registerLayerCallback(mapLayerGroup);
+    updateLayerConfig();
 
     return () => {
       unByKey(listenerKeyCenter);
