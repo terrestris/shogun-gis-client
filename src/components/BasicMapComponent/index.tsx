@@ -68,7 +68,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
 
       for (let i = 0; i < config.length; i++) {
         const cfg = config[i];
-        if (!_isEmpty(cfg)) {
+        if (!_isEmpty(cfg?.layerConfig)) {
           const layerConfig = cfg.layerConfig;
           const olLayer = await parser.parseLayer(layerConfig);
           if (cfg.isExternalLayer) {
