@@ -28,6 +28,7 @@ import MapComponent, {
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
 
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 
 import useQueryParams from '../../hooks/useQueryParams';
@@ -68,8 +69,8 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
 
       for (let i = 0; i < config.length; i++) {
         const cfg = config[i];
-        if (!_isEmpty(cfg)) {
-          const layerConfig = cfg.layerConfig;
+        if (!_isEmpty(cfg?.layerConfig)) {
+          const layerConfig: Layer = cfg.layerConfig;
           const olLayer = await parser.parseLayer(layerConfig);
           if (cfg.isExternalLayer) {
             externalLayerGroup.getLayers().extend([olLayer]);

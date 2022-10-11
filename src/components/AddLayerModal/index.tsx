@@ -125,6 +125,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         const layerConfig = {
           name: layerToAdd.get('name'),
           type: layerToAdd instanceof TileLayer ? 'TILEWMS' : 'WMS',
+          opacity: layerToAdd.getOpacity(),
           sourceConfig: {
             layerNames: layerToAdd.getSource()?.getParams().LAYERS,
             url: layerUrl,

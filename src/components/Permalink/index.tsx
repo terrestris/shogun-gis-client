@@ -32,6 +32,8 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+
 import './index.less';
 
 interface DefaultPermalinkProps { }
@@ -89,6 +91,24 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       );
     };
 
+    const updateLayerConfig = () => {
+      const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer'));
+      externalLayers.forEach((externalLayer) => {
+        const layerConfig = externalLayer.get('layerConfig') as Layer;
+        if (layerConfig) {
+          if (layerConfig.clientConfig) {
+            layerConfig.clientConfig.opacity = externalLayer.getOpacity();
+          } else {
+            layerConfig.clientConfig = {
+              opacity: externalLayer.getOpacity()
+            };
+          }
+          externalLayer.set('layerConfig', layerConfig);
+        }
+      });
+      updatePermalink();
+    };
+
     const registerLayerCallback = (layerGroup: LayerGroup) => {
       const layersInGroup = layerGroup.getLayers().getArray();
       for (let i = 0; i < layersInGroup.length; i++) {
@@ -97,8 +117,9 @@ export const Permalink: React.FC<PermalinkProps> = () => {
         if (layerInGroup instanceof LayerGroup) {
           registerLayerCallback(layerInGroup);
         } else {
-          let eventKey = layerInGroup.on('change:visible', updatePermalink);
-          eventKeys.push(eventKey);
+          let eventKeyVisibility = layerInGroup.on('change:visible', updatePermalink);
+          let eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
+          eventKeys.push(eventKeyVisibility, eventKeyOpacity);
         }
       }
     };
@@ -116,6 +137,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
     let mapLayerGroup = map.getLayerGroup();
     registerLayerCallback(mapLayerGroup);
+    updateLayerConfig();
 
     return () => {
       unByKey(listenerKeyCenter);
