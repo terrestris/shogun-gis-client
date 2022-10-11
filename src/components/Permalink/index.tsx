@@ -32,6 +32,8 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+
 import './index.less';
 
 interface DefaultPermalinkProps { }
@@ -92,9 +94,15 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     const updateLayerConfig = () => {
       const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer'));
       externalLayers.forEach((externalLayer) => {
-        const layerConfig = externalLayer.get('layerConfig');
+        const layerConfig = externalLayer.get('layerConfig') as Layer;
         if (layerConfig) {
-          layerConfig.opacity = externalLayer.getOpacity();
+          if (layerConfig.clientConfig) {
+            layerConfig.clientConfig.opacity = externalLayer.getOpacity();
+          } else {
+            layerConfig.clientConfig = {
+              opacity: externalLayer.getOpacity()
+            };
+          }
           externalLayer.set('layerConfig', layerConfig);
         }
       });
