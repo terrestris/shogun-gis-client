@@ -89,6 +89,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         }
         setVisibleLegendsIds(newLegendIds);
         break;
+      case 'downloadLayer':
+        downloadLayer();
+        break;
       default:
         break;
     }
@@ -137,6 +140,12 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         }
       }
     });
+  };
+
+  const downloadLayer = () => {
+    if (!map || !layer) {
+      return;
+    }
   };
 
   let items: ItemType[] = [{
