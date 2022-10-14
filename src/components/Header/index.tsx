@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
     plugins.forEach(plugin => {
-      if (isHeaderIntegration(plugin.integration)) {
+      if (isHeaderIntegration(plugin.integration) && plugin.integration?.placementOrientation === itemPosition) {
         const {
           key,
           wrappedComponent: WrappedPluginComponent
