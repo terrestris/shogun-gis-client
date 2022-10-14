@@ -82,10 +82,15 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     t
   } = useTranslation();
 
+  const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
+
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
-      const url = evt.key.split(';')[1];
-      downloadLayer(url);
+      const formatName = evt.key.split('|')[1];
+      const selectedConfig = downloadConfig?.find((config: DownloadConfig) => config.formatName === formatName);
+      if (selectedConfig?.downloadUrl) {
+        downloadLayer(selectedConfig?.downloadUrl);
+      }
     }
     switch (evt?.key) {
       case 'zoomToExtent':
@@ -202,17 +207,16 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  if (layer.get('downloadConfig')) {
-    const downloadConfig = layer.get('downloadConfig');
+  if (downloadConfig) {
     const downloadItems = downloadConfig.map((dlConfig: DownloadConfig) => {
       return {
         label: t('LayerTreeContextMenu.downloadLayer', {
           formatName: dlConfig.formatName
         }),
-        key: `downloadLayer;${dlConfig.downloadUrl}`
+        key: `downloadLayer|${dlConfig.formatName}`
       };
     });
-    items.push(downloadItems);
+    items.push(...downloadItems);
   }
 
   const settingsMenu = (
