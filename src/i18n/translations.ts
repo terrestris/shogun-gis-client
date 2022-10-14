@@ -59,7 +59,8 @@ export default {
         extentError: 'Konnte nicht auf die Layerausdehnung zoomen',
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
-        hideLegend: 'Legende ausblenden'
+        hideLegend: 'Legende ausblenden',
+        downloadLayer: 'Layer exportieren ({{formatName}})'
       },
       ToolMenu: {
         expand: 'Menu ausklappen',
@@ -174,7 +175,8 @@ export default {
         extentError: 'Could not zoom to layer extent',
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
-        hideLegend: 'Hide legend'
+        hideLegend: 'Hide legend',
+        downloadLayer: 'Export layer as {{formatName}}'
       },
       ToolMenu: {
         expand: 'Expand',

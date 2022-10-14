@@ -50,6 +50,16 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import {
+  DownloadConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
+
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
+import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
+
 export type LayerTreeContextMenuProps = {
   layer: OlLayer<OlImageWMS | OlTileWMS>;
   visibleLegendsIds: string[];
@@ -66,12 +76,19 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [extentLoading, setExtentLoading] = useState<boolean>(false);
 
+  const client = useSHOGunAPIClient();
   const map = useMap();
   const {
     t
   } = useTranslation();
 
+  const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
+
   const onContextMenuItemClick = (evt: MenuInfo): void => {
+    if (evt?.key.startsWith('downloadLayer')) {
+      const url = evt.key.split('|')[1];
+      downloadLayer(decodeURI(url));
+    }
     switch (evt?.key) {
       case 'zoomToExtent':
         zoomToLayerExtent();
@@ -139,6 +156,27 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   };
 
+  const downloadLayer = async (url: string) => {
+    if (!layer) {
+      return;
+    }
+    const reqOpts = {
+      method: 'GET',
+      headers: {
+        ...layer.get('useBearerToken') ? {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        } : undefined
+      }
+    };
+
+    const res = await fetch(url, reqOpts);
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.setAttribute('download', layer.get('name'));
+    a.click();
+  };
+
   let items: ItemType[] = [{
     label: (
       <Spin
@@ -163,6 +201,18 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'
     });
+  }
+
+  if (downloadConfig) {
+    const downloadItems = downloadConfig.map((dlConfig: DownloadConfig) => {
+      return {
+        label: t('LayerTreeContextMenu.downloadLayer', {
+          formatName: dlConfig.formatName ?? 'XML'
+        }),
+        key: `downloadLayer|${encodeURI(dlConfig.downloadUrl)}`
+      };
+    });
+    items.push(...downloadItems);
   }
 
   const settingsMenu = (
