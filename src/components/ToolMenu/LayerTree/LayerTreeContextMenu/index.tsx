@@ -159,7 +159,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   };
 
-  const downloadLayer = (url: string) => {
+  const downloadLayer = async (url: string) => {
     if (!layer) {
       return;
     }
@@ -169,16 +169,13 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         ...getBearerTokenHeader(client?.getKeycloak())
       }
     };
-    fetch(url, reqOpts)
-      .then((res) => {
-        return res.blob();
-      })
-      .then((blob) => {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.setAttribute('download', layer.get('name'));
-        a.click();
-      });
+
+    const res = await fetch(url, reqOpts);
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.setAttribute('download', layer.get('name'));
+    a.click();
   };
 
   let items: ItemType[] = [{
