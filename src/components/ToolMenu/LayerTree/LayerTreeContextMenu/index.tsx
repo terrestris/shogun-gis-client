@@ -86,11 +86,8 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
 
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
-      const formatName = evt.key.split('|')[1];
-      const selectedConfig = downloadConfig?.find((config: DownloadConfig) => config.formatName === formatName);
-      if (selectedConfig?.downloadUrl) {
-        downloadLayer(selectedConfig?.downloadUrl);
-      }
+      const url = evt.key.split('|')[1];
+      downloadLayer(decodeURI(url));
     }
     switch (evt?.key) {
       case 'zoomToExtent':
@@ -210,9 +207,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     const downloadItems = downloadConfig.map((dlConfig: DownloadConfig) => {
       return {
         label: t('LayerTreeContextMenu.downloadLayer', {
-          formatName: dlConfig.formatName
+          formatName: dlConfig.formatName ?? 'XML'
         }),
-        key: `downloadLayer|${dlConfig.formatName}`
+        key: `downloadLayer|${encodeURI(dlConfig.downloadUrl)}`
       };
     });
     items.push(...downloadItems);
