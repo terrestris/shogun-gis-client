@@ -166,7 +166,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     const reqOpts = {
       method: 'GET',
       headers: {
-        ...getBearerTokenHeader(client?.getKeycloak())
+        ...layer.get('useBearerToken') ? {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        } : undefined
       }
     };
 
