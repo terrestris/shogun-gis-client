@@ -103,6 +103,27 @@ module.exports = {
         'ol': {
           singleton: true
         },
+        'ol/layer/': {
+          singleton: true
+        },
+        'ol/interaction/': {
+          singleton: true
+        },
+        'ol/control/': {
+          singleton: true
+        },
+        'ol/render/': {
+          singleton: true
+        },
+        'ol/geom/': {
+          singleton: true
+        },
+        'ol/style/': {
+          singleton: true
+        },
+        'ol/source/': {
+          singleton: true
+        },
         '@reduxjs/toolkit': {
           singleton: true
         }
