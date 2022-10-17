@@ -1,3 +1,31 @@
+## [4.7.0](https://github.com/terrestris/shogun-gis-client/compare/v4.6.0...v4.7.0) (2022-10-17)
+
+
+### Features
+
+* add context menu items ([eb8bf34](https://github.com/terrestris/shogun-gis-client/commit/eb8bf342be74761a5d817635eb2305dbdd4361ab))
+* add download layer option ([3e0c608](https://github.com/terrestris/shogun-gis-client/commit/3e0c608f06d33087ff4ed2e1ff36397a90416be4))
+* implement download layer function ([7d39d83](https://github.com/terrestris/shogun-gis-client/commit/7d39d83a38a1dfc5441753c28a50e74b29434fd9))
+
+
+### Bugfixes
+
+* consider the placement of the header plugin (again) ([f378102](https://github.com/terrestris/shogun-gis-client/commit/f378102e8b63cdf89e2d95cc11636f7261bd4c17))
+* only send bearerToken header when required ([f629ac2](https://github.com/terrestris/shogun-gis-client/commit/f629ac295ecbfdd482fc0ac57a2372203e845453))
+* switch to async/await ([7e07cc7](https://github.com/terrestris/shogun-gis-client/commit/7e07cc76c5179b2f01be452d57a32fe7458148d9))
+* use XML as default download format ([c3b9d8e](https://github.com/terrestris/shogun-gis-client/commit/c3b9d8e8e1b217d50fa20dfe1c8fed84f459db36))
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.27.0 to 1.27.1 ([42764b7](https://github.com/terrestris/shogun-gis-client/commit/42764b71fb2c727e23e6a8c09790938f288ad2e1))
+* **deps-dev:** bump babel-jest from 29.1.2 to 29.2.0 ([a07a2f8](https://github.com/terrestris/shogun-gis-client/commit/a07a2f8a3353459d057286f98940be65f6b774a6))
+* **deps-dev:** bump css-minimizer-webpack-plugin from 4.2.1 to 4.2.2 ([b3ca66b](https://github.com/terrestris/shogun-gis-client/commit/b3ca66ba4831c61c064ade7803bf209135414c10))
+* **deps-dev:** bump jest from 29.1.2 to 29.2.0 ([ae79d78](https://github.com/terrestris/shogun-gis-client/commit/ae79d78a3c17a7b041349ce2baa0b81744186e32))
+* **deps-dev:** bump jest-environment-jsdom from 29.1.2 to 29.2.0 ([2267057](https://github.com/terrestris/shogun-gis-client/commit/226705783080a1ad0bf0bea62b279b1d1582a44a))
+* **deps:** bump @terrestris/react-geo from 19.5.0 to 19.6.0 ([698868f](https://github.com/terrestris/shogun-gis-client/commit/698868ff324fe8c1a3cc457f6ab6d2c81e17c1a8))
+* update shogun-util to 3.7.0 ([9d117d2](https://github.com/terrestris/shogun-gis-client/commit/9d117d21d872df22358fff5c5f934d334f1ee8a2))
+
 ## [4.6.0](https://github.com/terrestris/shogun-gis-client/compare/v4.5.1...v4.6.0) (2022-10-11)
 
 
