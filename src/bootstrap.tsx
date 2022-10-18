@@ -290,7 +290,8 @@ const setupSHOGunMap = async (application: Application) => {
     layers: []
   });
   externalWmsLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
-  externalWmsLayerGroup.setVisible(false);
+
+  externalWmsLayerGroup.set('hideInLayerTree', externalWmsLayerGroup.getLayers().getLength() < 1);
 
   layers?.getLayers().extend([externalWmsLayerGroup]);
 
@@ -330,7 +331,8 @@ const setupDefaultMap = () => {
   });
   externalLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
   externalLayerGroup.set('isGroupForImportedLayers', true);
-  externalLayerGroup.setVisible(false);
+
+  externalLayerGroup.set('hideInLayerTree', externalLayerGroup.getLayers().getLength() < 1);
 
   const eoLayerGroup = new OlLayerGroup({
     layers: [temperatureLayer]
