@@ -1,3 +1,17 @@
+## [4.7.1](https://github.com/terrestris/shogun-gis-client/compare/v4.7.0...v4.7.1) (2022-10-18)
+
+
+### Bugfixes
+
+* fix instanceof checks ([a43559a](https://github.com/terrestris/shogun-gis-client/commit/a43559a83035699f0431542fe083b0e5ab86d829))
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([ec3cd63](https://github.com/terrestris/shogun-gis-client/commit/ec3cd637b85f46182d8b9438a7a1feb8ccfbde6e))
+* **deps-dev:** bump @typescript-eslint/parser from 5.40.0 to 5.40.1 ([b9ada21](https://github.com/terrestris/shogun-gis-client/commit/b9ada212a09e95e640480022103d67bacb873eba))
+* **deps:** bump antd from 4.23.5 to 4.23.6 ([0905b15](https://github.com/terrestris/shogun-gis-client/commit/0905b154874e944940c3712d0703df10604b9e44))
+
 ## [4.7.0](https://github.com/terrestris/shogun-gis-client/compare/v4.6.0...v4.7.0) (2022-10-17)
 
 
