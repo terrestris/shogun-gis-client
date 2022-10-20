@@ -2,6 +2,11 @@ import React, {
   useEffect
 } from 'react';
 
+import {
+  BackgroundLayerChooser,
+  useMap
+} from '@terrestris/react-geo';
+
 import AddLayerModal from './components/AddLayerModal/index';
 import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
@@ -24,12 +29,15 @@ export const App: React.FC<AppProps> = ({
     }
   }, []);
 
+  const map = useMap();
+
   return (
     <div
       className="App"
       {...restProps}
     >
       <Header />
+      <BackgroundLayerChooser layers={map?.getLayers().getArray() as any} />
       <BasicMapComponent />
       <ToolMenu />
       <Footer />
