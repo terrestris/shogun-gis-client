@@ -50,7 +50,7 @@
     "@terrestris/shogun-util": "^3.7.0",
     "antd": "^4.22.7",
     "color": "^4.2.3",
-    "i18next": "^21.9.1",
+    "i18next": "^22.0.1",
     "i18next-browser-languagedetector": "^6.1.5",
     "js-md5": "^0.7.3",
     "keycloak-js": "^19.0.1",
