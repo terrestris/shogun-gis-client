@@ -30,6 +30,10 @@ export const App: React.FC<AppProps> = ({
   }, []);
 
   const map = useMap();
+  let layers: any[] = [];
+  if (map) {
+    layers = map.getLayers().getArray();
+  }
 
   return (
     <div
@@ -37,7 +41,7 @@ export const App: React.FC<AppProps> = ({
       {...restProps}
     >
       <Header />
-      <BackgroundLayerChooser layers={map?.getLayers().getArray() as any} />
+      <BackgroundLayerChooser layers={layers as any} />
       <BasicMapComponent />
       <ToolMenu />
       <Footer />
