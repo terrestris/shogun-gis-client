@@ -31,3 +31,5 @@ export const getGravatarUrl = ({
 
   return url;
 };
+
+export default getGravatarUrl;
