@@ -47,6 +47,10 @@ export default {
         delete: 'Löschen',
         export: 'Exportieren'
       },
+      StylingDrawer: {
+        pickColor: 'Farbschema bearbeiten',
+        title: 'Farbschema bearbeiten'
+      },
       FeatureInfo: {
         usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
       },
@@ -162,6 +166,10 @@ export default {
         upload: 'Upload',
         delete: 'Delete',
         export: 'Export'
+      },
+      StylingDrawer: {
+        pickColor: 'Modify color scheme',
+        title: 'Modify color scheme'
       },
       FeatureInfo: {
         usageHint: 'Click on the map to get details about the clicked coordinate.'

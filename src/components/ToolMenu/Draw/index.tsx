@@ -42,6 +42,8 @@ import {
 
 import './index.less';
 
+import StylingDrawer from './StylingDrawer';
+
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
   showDrawLine?: boolean;
@@ -317,6 +319,7 @@ export const Draw: React.FC<DrawProps> = ({
           </span>
         </DeleteButton>
       ) : <></>}
+      <StylingDrawer />
     </ToggleGroup>
   );
 };
