@@ -88,7 +88,7 @@
     "@typescript-eslint/eslint-plugin": "^5.34.0",
     "@typescript-eslint/parser": "^5.34.0",
     "babel-jest": "^29.0.0",
-    "babel-loader": "^8.2.5",
+    "babel-loader": "^9.0.0",
     "buffer": "^6.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
