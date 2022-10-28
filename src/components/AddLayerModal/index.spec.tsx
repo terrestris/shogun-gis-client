@@ -1,9 +1,75 @@
+import React from 'react';
+
+import {
+  getByRole,
+  render,
+  screen,
+  fireEvent
+} from '@testing-library/react';
+
+import {
+  Provider
+} from 'react-redux';
+
+import {
+  show,
+  hide
+} from '../../store/addLayerModal';
+
+import {
+  store
+} from '../../store/store';
+
 import AddLayerModal from './index';
 
+const createWrapper = () => {
+  // eslint-disable-next-line react/display-name
+  return ({
+    children
+  }: any) => (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
+};
+
 describe('<AddLayerModal />', () => {
+
+  beforeEach(() => {
+    store.dispatch(show());
+  });
+
+  afterEach(() => {
+    store.dispatch(hide());
+  });
 
   it('is defined', () => {
     expect(AddLayerModal).not.toBeUndefined();
   });
 
+  it('can be rendered', () => {
+    const {
+      container
+    } = render(<AddLayerModal />, {
+      wrapper: createWrapper()
+    });
+
+    expect(container).toBeVisible();
+  });
+
+  it('can toggle its visibility', () => {
+    render(<AddLayerModal />, {
+      wrapper: createWrapper()
+    });
+
+    const modal = screen.getByRole('dialog');
+
+    expect(modal).toBeVisible();
+
+    const closeButton = screen.getByLabelText('Close');
+
+    fireEvent.click(closeButton);
+
+    expect(modal).not.toBeVisible();
+  });
 });
