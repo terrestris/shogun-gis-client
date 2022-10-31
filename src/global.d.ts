@@ -30,6 +30,10 @@ declare module 'clientConfig' {
   export default config;
 };
 
+// todo: remove when react-geo test util types are exported properly
+declare module '@terrestris/react-geo/dist/Util/rtlTestUtils';
+declare module '@terrestris/react-geo/dist/Util/antdTestQueries';
+
 type Scope = unknown;
 type Factory = () => any;
 // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
