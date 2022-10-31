@@ -85,6 +85,7 @@
     "@terrestris/eslint-config-typescript-react": "^2.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
+    "@testing-library/user-event": "^14.4.3",
     "@types/color": "^3.0.3",
     "@types/jest": "^29.2.1",
     "@types/js-md5": "^0.4.3",

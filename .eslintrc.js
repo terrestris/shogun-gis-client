@@ -25,8 +25,8 @@ module.exports = {
     }],
     'object-property-newline': 'warn',
     'object-curly-newline': ['warn', {
-      'multiline': true,
-      'minProperties': 1
+      'consistent': true,
+      'minProperties': 2
     }],
     'space-before-function-paren': ['warn', {
       'anonymous': 'always',

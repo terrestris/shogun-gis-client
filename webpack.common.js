@@ -85,7 +85,7 @@ module.exports = {
       name: 'SHOGunGISClient',
       shared: {
         ...require('./package.json').dependencies,
-        'react': {
+        react: {
           singleton: true
         },
         'react-dom': {
