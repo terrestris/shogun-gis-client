@@ -1,5 +1,6 @@
 module.exports = {
   globals: {
+    PROJECT_VERSION: '42.0.0',
     KEYCLOAK_HOST: 'localhost',
     KEYCLOAK_REALM: 'SHOGun',
     KEYCLOAK_CLIENT_ID: 'shogun-client'
@@ -23,7 +24,7 @@ module.exports = {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/jest/fileMock.js',
     '^.+\\.(css|less)$': '<rootDir>/jest/cssTransform.js',
-    'clientConfig': '<rootDir>/resources/config/gis-client-config.js'
+    clientConfig: '<rootDir>/resources/config/gis-client-config.js'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   reporters: [

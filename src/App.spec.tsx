@@ -4,33 +4,15 @@ import {
   render
 } from '@testing-library/react';
 
-import {
-  Provider
-} from 'react-redux';
-
 import App from './App';
-
-import {
-  store
-} from './store/store';
-
-const createWrapper = () => {
-  // eslint-disable-next-line react/display-name
-  return ({
-    children
-  }: any) => (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
-};
+import { createReduxWrapper } from './utils/testUtils';
 
 describe('App', () => {
   it('can be rendered', () => {
     const {
       container
     } = render(<App />, {
-      wrapper: createWrapper()
+      wrapper: createReduxWrapper()
     });
 
     expect(container).toBeVisible();

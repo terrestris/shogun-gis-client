@@ -1,15 +1,10 @@
 import React from 'react';
 
 import {
-  getByRole,
   render,
   screen,
   fireEvent
 } from '@testing-library/react';
-
-import {
-  Provider
-} from 'react-redux';
 
 import {
   show,
@@ -20,18 +15,9 @@ import {
   store
 } from '../../store/store';
 
-import AddLayerModal from './index';
+import { createReduxWrapper } from '../../utils/testUtils';
 
-const createWrapper = () => {
-  // eslint-disable-next-line react/display-name
-  return ({
-    children
-  }: any) => (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
-};
+import AddLayerModal from './index';
 
 describe('<AddLayerModal />', () => {
 
@@ -51,7 +37,7 @@ describe('<AddLayerModal />', () => {
     const {
       container
     } = render(<AddLayerModal />, {
-      wrapper: createWrapper()
+      wrapper: createReduxWrapper()
     });
 
     expect(container).toBeVisible();
@@ -59,7 +45,7 @@ describe('<AddLayerModal />', () => {
 
   it('can toggle its visibility', () => {
     render(<AddLayerModal />, {
-      wrapper: createWrapper()
+      wrapper: createReduxWrapper()
     });
 
     const modal = screen.getByRole('dialog');

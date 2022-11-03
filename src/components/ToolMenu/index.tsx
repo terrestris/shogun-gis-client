@@ -125,7 +125,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   // inside of PrintForm component itself, but this is not possible due to the
   // dubious antd menu implementaion: https://ant.design/components/menu/#FAQ
   // According to this, all menu children will be rendered twice, what leads to
-  // dublicated instantiation of mapfish manager 🤦‍♂️
+  // duplicated instantiation of mapfish manager 🤦‍♂️
   const [printManager, setPrintManager] = useState<MapFishPrintV3Manager | null>(null);
 
   const layerFilter = useCallback((l: OlLayer<OlSource>) => {
