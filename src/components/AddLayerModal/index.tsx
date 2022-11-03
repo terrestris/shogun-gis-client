@@ -146,7 +146,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     <Modal
       className="add-layer-modal"
       title={t('AddLayerModal.title')}
-      visible={isModalVisible}
+      open={isModalVisible}
       onCancel={closeModal}
       footer={[
         <Button
