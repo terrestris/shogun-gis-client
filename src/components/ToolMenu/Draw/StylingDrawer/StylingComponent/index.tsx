@@ -41,80 +41,67 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 }): JSX.Element => {
 
   const defaultStyle = {
-    'name': 'Default Style',
-    'rules': [
-      {
-        'name': 'Area',
-        'symbolizers': [
-          {
-            'kind': 'Fill',
-            'color': '#00b72b',
-            'strokeColor': '#00b72b',
-            'outlineOpacity': 0.8,
-            'opacity': 0.5,
-            'fillOpacity': 0.8,
-            'outlineWidth': 2,
-            'outlineColor': '#00b72b'
-          }
-        ]
-      },
-      {
-        'name': 'Line',
-        'symbolizers': [
-          {
-            'kind': 'Line',
-            'color': '#00b72b',
-            'width': 2,
-            'opacity': 0.8
-          }
-        ]
-      },
-      {
-        'name': 'Point',
-        'symbolizers': [
-          {
-            'kind': 'Mark',
-            'wellKnownName': 'circle',
-            'color': '#00b72b',
-            'strokeColor': '#00b72b',
-            'outlineOpacity': 0.8,
-            'opacity': 0.5,
-            'radius': 7
-          }
+    name: 'Default Style',
+    rules: [{
+      name: 'Area',
+      symbolizers: [{
+        kind: 'Fill',
+        color: '#00b72b',
+        strokeColor: '#00b72b',
+        outlineOpacity: 0.8,
+        opacity: 0.5,
+        fillOpacity: 0.8,
+        outlineWidth: 2,
+        outlineColor: '#00b72b'
+      }]
+    }, {
+      name: 'Line',
+      symbolizers: [{
+        kind: 'Line',
+        color: '#00b72b',
+        width: 2,
+        opacity: 0.8
+      }]
+    }, {
+      name: 'Point',
+      symbolizers: [{
+        kind: 'Mark',
+        wellKnownName: 'circle',
+        color: '#00b72b',
+        strokeColor: '#00b72b',
+        outlineOpacity: 0.8,
+        opacity: 0.5,
+        radius: 7
+      }],
+      filter: [
+        '==',
+        'label',
+        'undefined'
+      ]
+    }, {
+      name: 'Text',
+      symbolizers: [{
+        kind: 'Text',
+        label: '{{label}}',
+        size: 12,
+        font: [
+          'sans-serif'
         ],
-        'filter': [
-          '==',
-          'label',
-          'undefined'
-        ]
-      },
-      {
-        'name': 'Text',
-        'symbolizers': [
-          {
-            'kind': 'Text',
-            'label': '{{label}}',
-            'size': 12,
-            'font': [
-              'sans-serif'
-            ],
-            'opacity': 0.8,
-            'color': '#00b72b',
-            'offset': [
-              5,
-              5
-            ],
-            'haloColor': '#00b72b',
-            'haloWidth': 1
-          }
+        opacity: 0.8,
+        color: '#00b72b',
+        offset: [
+          5,
+          5
         ],
-        'filter': [
-          '!=',
-          'label',
-          'undefined'
-        ]
-      }
-    ]
+        haloColor: '#00b72b',
+        haloWidth: 1
+      }],
+      filter: [
+        '!=',
+        'label',
+        'undefined'
+      ]
+    }]
   };
 
   // @ts-ignore - TS-Error due to old Geostyler-Style version.

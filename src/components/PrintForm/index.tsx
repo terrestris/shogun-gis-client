@@ -81,7 +81,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       const res = map.getView().getResolution();
       if (res) {
         l.set('customPrintLegendParams', {
-          'SCALE': MapUtil.getScaleForResolution(res, 'm')
+          SCALE: MapUtil.getScaleForResolution(res, 'm')
         });
       }
       return true;
