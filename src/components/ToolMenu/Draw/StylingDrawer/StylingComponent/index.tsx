@@ -130,6 +130,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
           rules: [rule]
         };
 
+        // @ts-ignore - TS-Error due to old Geostyler-Style version.
         const olStyle = await olParser.writeStyle(newStyle);
 
         if (!olStyle.output) {
