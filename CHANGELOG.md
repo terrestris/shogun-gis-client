@@ -1,3 +1,10 @@
+## [4.8.1](https://github.com/terrestris/shogun-gis-client/compare/v4.8.0...v4.8.1) (2022-11-03)
+
+
+### Bugfixes
+
+* trigger release ([091a778](https://github.com/terrestris/shogun-gis-client/commit/091a7781c12c90d36929a09d4439a90ccfe3ddc0))
+
 ## [4.8.0](https://github.com/terrestris/shogun-gis-client/compare/v4.7.1...v4.8.0) (2022-11-03)
 
 
