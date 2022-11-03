@@ -2,10 +2,8 @@
 import React from 'react';
 
 import {
-  getByRole,
   render,
-  screen,
-  fireEvent
+  screen
 } from '@testing-library/react';
 
 import OlMap from 'ol/Map';
