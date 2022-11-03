@@ -1,7 +1,9 @@
 import React from 'react';
 
 import {
-  render
+  render,
+  screen,
+  waitFor
 } from '@testing-library/react';
 
 import {
@@ -36,14 +38,16 @@ describe('StylingDrawer', () => {
     expect(container).toBeVisible();
   });
 
-  it('renders the correct drawer title', () => {
-    const {
-      getByText
-    } = render(<StylingDrawer />, {
+  it('renders the correct drawer title', async () => {
+    render(<StylingDrawer />, {
       wrapper: createWrapper()
     });
-    getByText('StylingDrawer.pickColor').click();
-    expect(getByText('StylingDrawer.title')).toBeInTheDocument();
+
+    screen.getByText('StylingDrawer.pickColor').click();
+
+    await waitFor(() => screen.getByText('StylingDrawer.title'));
+
+    expect(screen.getByText('StylingDrawer.title')).toBeInTheDocument();
   });
 
 });
