@@ -104,7 +104,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
 
       window.open(downloadUrl);
     } catch (error: any) {
-      setErrorMsg(t('PrintForm.printJobErrorMsg'));
+      setErrorMsg(t('PrintForm.printJobErrorMsg') || null);
       Logger.error(error);
     } finally {
       setLoading(false);
