@@ -19,6 +19,11 @@ export default {
       BasicMapComponent: {
         processedLayersFolder: 'Prozessierte Layer'
       },
+      CookieBanner: {
+        info: 'Diese Website verwendet Cookies, um Ihnen ein besseres Surferlebnis zu bieten. Darunter fällt die Speicherung des sog. Session-Cookies, ' +
+          'der in die Rubrik der essentiell notwendigen Cookies fällt.',
+        button: 'Akzeptieren'
+      },
       Permalink: {
         title: 'Teilen',
         twitterTooltip: 'Link via Twitter teilen',
@@ -143,6 +148,11 @@ export default {
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'
+      },
+      CookieBanner: {
+        info: 'This website uses cookies to provide you with a better browsing experience. This includes the ' +
+          'storage of the so-called session cookie, which is classified as an essential cookie.',
+        button: 'Accept'
       },
       Permalink: {
         title: 'Share',
