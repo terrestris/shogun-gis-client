@@ -44,7 +44,7 @@
     "@reduxjs/toolkit": "^1.8.6",
     "@terrestris/base-util": "^1.0.1",
     "@terrestris/mapfish-print-manager": "^6.5.1",
-    "@terrestris/ol-util": "^7.4.1",
+    "@terrestris/ol-util": "^8.1.0",
     "@terrestris/react-geo": "^19.8.1",
     "@terrestris/react-util": "^2.1.1",
     "@terrestris/shogun-util": "^3.7.0",
