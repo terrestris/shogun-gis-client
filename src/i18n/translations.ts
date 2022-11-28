@@ -118,7 +118,7 @@ export default {
         loginMenuTitle: 'Anmelden'
       },
       WmsTimeSlider: {
-        title: 'Aufnahmezeitpunkt',
+        title: 'Zeitlicher Bezug',
         default: 'Keine Daten gefunden'
       }
     }
@@ -241,7 +241,7 @@ export default {
         loginMenuTitle: 'Login'
       },
       WmsTimeSlider: {
-        title: 'Time of recording',
+        title: 'Time reference',
         default: 'No data found'
       }
     }

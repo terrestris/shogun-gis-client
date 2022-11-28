@@ -48,13 +48,12 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
   const [value, setValue] = useState<string | [string, string]>(layer.getSource()?.getParams().TIME);
   const [min, setMin] = useState<string>();
   const [max, setMax] = useState<string>();
-  const [marks, setMarks] = useState<Record<string | number, ReactNode | MarkObj> | undefined>();
+  const [marks, setMarks] = useState<Record<string | number, string> | undefined>();
 
   const {
     t
   } = useTranslation();
 
-  // TODO Limit CRS list in GS?
   useEffect(() => {
     const timeValues = layer.get('dimension')?.values?.split(',');
 
@@ -66,7 +65,7 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
     setMax(timeValues[timeValues.length - 1]);
     setValue(timeValues[timeValues.length - 1]);
 
-    const m: Record<string | number, ReactNode | MarkObj> = {};
+    const m: Record<string | number, string> = {};
     timeValues.forEach((val: string, idx: number) => {
       m[val] = moment(val).format('YYYY-MM-DD');
     });
@@ -76,11 +75,9 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
     if (timeValues.default === 'current') {
       let nearest: [number, string] = [NaN, ''];
       Object.values(m).forEach(d => {
-        // @ts-ignore
         let diff = moment().diff(moment(d));
 
         if (diff < nearest[0]) {
-          // @ts-ignore
           nearest = [diff, d];
         }
       });
