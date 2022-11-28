@@ -116,6 +116,9 @@ export default {
         infoMenuTitle: 'Über',
         logoutMenuTitle: 'Ausloggen',
         loginMenuTitle: 'Anmelden'
+      },
+      WmsTimeSlider: {
+        title: 'Aufnahmezeitpunkt'
       }
     }
   },
@@ -235,6 +238,9 @@ export default {
         infoMenuTitle: 'About',
         logoutMenuTitle: 'Logout',
         loginMenuTitle: 'Login'
+      },
+      WmsTimeSlider: {
+        title: 'Time of recording'
       }
     }
   }
