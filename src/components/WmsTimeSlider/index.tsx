@@ -64,6 +64,7 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
 
     setMin(timeValues[0]);
     setMax(timeValues[timeValues.length - 1]);
+    setValue(timeValues[timeValues.length - 1]);
 
     const m: Record<string | number, ReactNode | MarkObj> = {};
     timeValues.forEach((val: string, idx: number) => {
@@ -96,7 +97,6 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
     });
   };
 
-  // TODO i18n
   return (
     <div
       className="wms-time-slider"
