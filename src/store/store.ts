@@ -6,6 +6,7 @@ import {
 
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
+import description from './description';
 import logoPath from './logoPath';
 import selectedFeatures from './selectedFeatures';
 import title from './title';
@@ -20,6 +21,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
   return combineReducers({
     appInfo,
     title,
+    description,
     logoPath,
     toolMenu,
     addLayerModal,
