@@ -28,9 +28,6 @@ import RgLayerTree, {
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
 import Legend from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
-import {
-  WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
 
@@ -87,40 +84,45 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         <>
           <div className="tree-node-header">
             <span>{layer.get('name')}</span>
-            <LayerTreeContextMenu
-              layer={(layer as WmsLayer)}
-              visibleLegendsIds={visibleLegendsIds}
-              setVisibleLegendsIds={setVisibleLegendsIds}
-            />
+            {
+              (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
+                <LayerTreeContextMenu
+                  layer={(layer)}
+                  visibleLegendsIds={visibleLegendsIds}
+                  setVisibleLegendsIds={setVisibleLegendsIds}
+                />
+              )
+            }
+
           </div>
           {
             layer.get('visible') &&
-              <div className="layer-transparency">
-                <LayerTransparencySlider
-                  tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
-                  layer={layer}
-                />
-              </div>
+            <div className="layer-transparency">
+              <LayerTransparencySlider
+                tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
+                layer={layer}
+              />
+            </div>
           }
           {
             (layer.get('visible') && layer.get('type') as LayerType === 'WMSTime') &&
-              <div className="layer-time-slider">
-                <WmsTimeSlider
-                  layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
-                />
-              </div>
+            <div className="layer-time-slider">
+              <WmsTimeSlider
+                layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+              />
+            </div>
           }
           {
             layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
-              <Legend
-                layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
-                errorMsg={t('LayerTree.noLegendAvailable')}
-                extraParams={{
-                  scale,
-                  LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
-                  TRANSPARENT: true
-                }}
-              />
+            <Legend
+              layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+              errorMsg={t('LayerTree.noLegendAvailable')}
+              extraParams={{
+                scale,
+                LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
+                TRANSPARENT: true
+              }}
+            />
           }
         </>
       );

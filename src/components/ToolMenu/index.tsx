@@ -145,6 +145,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   }, [map]);
 
   const initializeMapProvider = useCallback(async () => {
+    // @ts-ignore
     const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
       url: ClientConfiguration.print?.url || '/print',
       map,
