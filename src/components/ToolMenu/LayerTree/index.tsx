@@ -7,8 +7,12 @@ import {
 } from 'ol';
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
+import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
+import OlLayerTile from 'ol/layer/Tile';
+import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSource from 'ol/source/Source';
+import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import {
   useTranslation
@@ -27,6 +31,10 @@ import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTran
 import {
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
+
+import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
 
@@ -68,8 +76,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const resolution = mapView.getResolution();
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
 
-    // @ts-ignore
-    if (layer.getLayers) {
+    if (layer instanceof OlLayerGroup) {
       return (
         <div>
           {layer.get('name')}
@@ -88,26 +95,32 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           </div>
           {
             layer.get('visible') &&
-            <>
               <div className="layer-transparency">
                 <LayerTransparencySlider
                   tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
                   layer={layer}
                 />
               </div>
-            </>
+          }
+          {
+            (layer.get('visible') && layer.get('type') as LayerType === 'WMSTime') &&
+              <div className="layer-time-slider">
+                <WmsTimeSlider
+                  layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+                />
+              </div>
           }
           {
             layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
-            <Legend
-              layer={layer as WmsLayer}
-              errorMsg={t('LayerTree.noLegendAvailable')}
-              extraParams={{
-                scale,
-                LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
-                TRANSPARENT: true
-              }}
-            />
+              <Legend
+                layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+                errorMsg={t('LayerTree.noLegendAvailable')}
+                extraParams={{
+                  scale,
+                  LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
+                  TRANSPARENT: true
+                }}
+              />
           }
         </>
       );
