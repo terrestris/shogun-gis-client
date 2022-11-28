@@ -18,6 +18,7 @@ describe('<ResolutionSelect />', () => {
   let printManager: MapFishPrintV3Manager;
 
   beforeEach(() => {
+    // @ts-ignore
     printManager = new MapFishPrintV3Manager({});
   });
 

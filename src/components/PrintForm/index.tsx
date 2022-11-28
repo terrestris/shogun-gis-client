@@ -113,6 +113,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
 
   const setCustomPrintParams = async () => {
     printManager.legendFilter = legendFilter;
+    // @ts-ignore
     printManager.customParams.printLegend = false;
   };
 

@@ -40,6 +40,10 @@ module.exports = {
     }]
   },
   resolve: {
+    alias: {
+      fs: false,
+      path: false
+    },
     extensions: [
       '.tsx',
       '.ts',
