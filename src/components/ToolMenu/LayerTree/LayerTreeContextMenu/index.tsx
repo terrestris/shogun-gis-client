@@ -54,7 +54,6 @@ import {
 import {
   DownloadConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
-
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
@@ -114,7 +113,6 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   };
 
   const zoomToLayerExtent = async (): Promise<void> => {
-
     if (!map) {
       return;
     }
@@ -122,7 +120,11 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     setExtentLoading(true);
 
     try {
-      let extent = await LayerUtil.getExtentForLayer(layer) as OlExtent;
+      let extent = await LayerUtil.getExtentForLayer(layer, {
+        headers: layer.get('useBearerToken') ? {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        } : {}
+      });
       extent = transformExtent(extent, 'EPSG:4326', map.getView().getProjection());
       map.getView().fit(extent);
     } catch (error) {
