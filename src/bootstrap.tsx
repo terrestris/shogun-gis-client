@@ -70,6 +70,9 @@ import {
   setAppInfo
 } from './store/appInfo';
 import {
+  setDescription
+} from './store/description';
+import {
   setLogoPath
 } from './store/logoPath';
 import {
@@ -185,6 +188,10 @@ const setApplicationToStore = async (application?: Application) => {
 
   if (application.name) {
     store.dispatch(setTitle(application.name));
+  }
+
+  if (application.clientConfig?.description) {
+    store.dispatch(setDescription(application.clientConfig?.description));
   }
 
   if (application?.clientConfig?.theme?.logoPath) {

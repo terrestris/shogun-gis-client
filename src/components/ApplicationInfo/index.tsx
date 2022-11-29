@@ -35,8 +35,9 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
     t
   } = useTranslation();
 
-  const appInfo = useAppSelector((state) => state.appInfo);
-  const logoPath = useAppSelector((state) => state.logoPath);
+  const appInfo = useAppSelector(state => state.appInfo);
+  const logoPath = useAppSelector(state => state.logoPath);
+  const appDescription = useAppSelector(state => state.description);
 
   const [isVisible, setVisible] = useState<boolean>(false);
 
@@ -75,6 +76,11 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
           className="logo"
           src={logoPath}
         />
+        <div
+          className="description"
+        >
+          {appDescription}
+        </div>
         <Statistic
           title={t('ApplicationInfo.clientVersionTitle')}
           value={useClientVersion()}
