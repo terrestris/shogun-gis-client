@@ -17,6 +17,8 @@ import {
 import OlLayerGroup from 'ol/layer/Group';
 import ImageLayer from 'ol/layer/Image';
 import TileLayer from 'ol/layer/Tile';
+import ImageWMSSource from 'ol/source/ImageWMS';
+import TileWMSSource from 'ol/source/TileWMS';
 
 import {
   useTranslation
@@ -26,9 +28,6 @@ import {
   CapabilitiesUtil,
   MapUtil
 } from '@terrestris/ol-util';
-import {
-  WMSLayer
-} from '@terrestris/ol-util/dist/types';
 
 import {
   useMap
@@ -51,7 +50,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   ...restProps
 }): JSX.Element => {
   const [loading, setLoading] = useState(false);
-  const [layers, setLayers] = useState<WMSLayer[]>([]);
+  const [layers, setLayers] = useState<(ImageLayer<ImageWMSSource> | TileLayer<TileWMSSource>)[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [url, setUrl] = useState(
     'https://sgx.geodatenzentrum.de/wms_topplus_open?request=GetCapabilities&service=wms'
@@ -101,7 +100,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     addLayers(layers);
   };
 
-  const addLayers = (layersToAdd: WMSLayer[]) => {
+  const addLayers = (layersToAdd: (ImageLayer<ImageWMSSource> | TileLayer<TileWMSSource>)[]) => {
     if (!map) {
       return;
     }
@@ -120,7 +119,15 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         layerToAdd.set('isExternalLayer', true);
         layerToAdd.set('isImported', true);
 
-        const layerUrl = layerToAdd instanceof TileLayer || layerToAdd instanceof ImageLayer ? layerToAdd.getSource().getUrl() : '';
+        let layerUrl: string | undefined;
+        if (layerToAdd instanceof ImageLayer) {
+          layerUrl = layerToAdd.getSource()?.getUrl();
+        }
+
+        if (layerToAdd instanceof TileLayer) {
+          const urls = layerToAdd.getSource()?.getUrls();
+          layerUrl = urls?.length === 1 ? urls[0] : undefined;
+        }
 
         const layerConfig = {
           name: layerToAdd.get('name'),

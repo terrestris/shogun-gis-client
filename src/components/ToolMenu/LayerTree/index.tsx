@@ -7,8 +7,12 @@ import {
 } from 'ol';
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
+import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
+import OlLayerTile from 'ol/layer/Tile';
+import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSource from 'ol/source/Source';
+import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import {
   useTranslation
@@ -24,9 +28,10 @@ import RgLayerTree, {
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
 import Legend from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
-import {
-  WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
+
+import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
 
@@ -68,8 +73,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const resolution = mapView.getResolution();
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
 
-    // @ts-ignore
-    if (layer.getLayers) {
+    if (layer instanceof OlLayerGroup) {
       return (
         <div>
           {layer.get('name')}
@@ -80,27 +84,38 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         <>
           <div className="tree-node-header">
             <span>{layer.get('name')}</span>
-            <LayerTreeContextMenu
-              layer={(layer as WmsLayer)}
-              visibleLegendsIds={visibleLegendsIds}
-              setVisibleLegendsIds={setVisibleLegendsIds}
-            />
+            {
+              (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
+                <LayerTreeContextMenu
+                  layer={(layer)}
+                  visibleLegendsIds={visibleLegendsIds}
+                  setVisibleLegendsIds={setVisibleLegendsIds}
+                />
+              )
+            }
+
           </div>
           {
             layer.get('visible') &&
-            <>
-              <div className="layer-transparency">
-                <LayerTransparencySlider
-                  tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
-                  layer={layer}
-                />
-              </div>
-            </>
+            <div className="layer-transparency">
+              <LayerTransparencySlider
+                tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
+                layer={layer}
+              />
+            </div>
+          }
+          {
+            (layer.get('visible') && layer.get('type') as LayerType === 'WMSTime') &&
+            <div className="layer-time-slider">
+              <WmsTimeSlider
+                layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+              />
+            </div>
           }
           {
             layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
             <Legend
-              layer={layer as WmsLayer}
+              layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
               errorMsg={t('LayerTree.noLegendAvailable')}
               extraParams={{
                 scale,

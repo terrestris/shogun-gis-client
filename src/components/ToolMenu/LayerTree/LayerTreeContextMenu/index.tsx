@@ -27,12 +27,13 @@ import {
   Extent as OlExtent
 } from 'ol/extent';
 import LayerGroup from 'ol/layer/Group';
-import OlLayer from 'ol/layer/Layer';
+import OlLayerImage from 'ol/layer/Image';
+import OlLayerTile from 'ol/layer/Tile';
 import {
   transformExtent
 } from 'ol/proj';
-import OlImageWMS from 'ol/source/ImageWMS';
-import OlTileWMS from 'ol/source/TileWMS';
+import OlSourceImageWMS from 'ol/source/ImageWMS';
+import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import {
   MenuInfo
@@ -61,7 +62,7 @@ import {
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 export type LayerTreeContextMenuProps = {
-  layer: OlLayer<OlImageWMS | OlTileWMS>;
+  layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
   visibleLegendsIds: string[];
   setVisibleLegendsIds: (ids: string[]) => void;
 } & Partial<DropDownProps>;

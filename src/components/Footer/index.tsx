@@ -68,7 +68,6 @@ export const Footer: React.FC<FooterProps> = ({
       new OlControlMousePosition({
         coordinateFormat: createStringXY(2),
         projection: 'EPSG:25832',
-        undefinedHTML: '&nbsp;',
         target: 'mouse-position'
       })
     );

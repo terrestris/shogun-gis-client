@@ -116,6 +116,10 @@ export default {
         infoMenuTitle: 'Über',
         logoutMenuTitle: 'Ausloggen',
         loginMenuTitle: 'Anmelden'
+      },
+      WmsTimeSlider: {
+        title: 'Zeitlicher Bezug',
+        default: 'Keine Daten gefunden'
       }
     }
   },
@@ -235,6 +239,10 @@ export default {
         infoMenuTitle: 'About',
         logoutMenuTitle: 'Logout',
         loginMenuTitle: 'Login'
+      },
+      WmsTimeSlider: {
+        title: 'Time reference',
+        default: 'No data found'
       }
     }
   }
