@@ -99,7 +99,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             layer.get('visible') &&
             <div className="layer-transparency">
               <LayerTransparencySlider
-                tipFormatter={val => `${t('LayerTree.transparency')}: ${val}%`}
+                tooltip={{
+                  formatter: val => `${t('LayerTree.transparency')}: ${val}%`
+                }}
                 layer={layer}
               />
             </div>

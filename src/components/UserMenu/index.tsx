@@ -164,13 +164,10 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         logout
       ];
 
-    return (
-      <Menu
-        onClick={onMenuClick}
-        className="user-chip-menu"
-        items={items}
-      />
-    );
+    return {
+      items,
+      onClick: onMenuClick
+    };
   };
 
   return (
