@@ -88,7 +88,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     setSelectedRowKeys([]);
     setLayers([]);
     dispatch(hide());
-    dispatch(unsetSelectedKey('addLayer'));
+    // dispatch(unsetSelectedKey('addLayer'));
   };
 
   const onAddSelected = () => {
