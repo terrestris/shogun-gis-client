@@ -74,7 +74,12 @@ export type ClientPluginIntegrationFeatureInfo = ClientPluginIntegration & {
   layers?: string[];
 };
 
-export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader | ClientPluginIntegrationFeatureInfo;
+export type ClientPluginIntegrationMap = ClientPluginIntegration & {
+  placement: 'map';
+};
+
+export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader |
+  ClientPluginIntegrationFeatureInfo | ClientPluginIntegrationMap;
 
 export type ClientPlugin = {
   /**
@@ -115,4 +120,8 @@ export function isHeaderIntegration(pluginIntegration: ClientPluginIntegrations)
 
 export function isFeatureInfoIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationFeatureInfo {
   return pluginIntegration && pluginIntegration.placement === 'feature-info';
+}
+
+export function isMapIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationMap {
+  return pluginIntegration && pluginIntegration.placement === 'map';
 }
