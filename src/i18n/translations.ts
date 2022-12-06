@@ -64,7 +64,7 @@ export default {
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
-        downloadLayer: 'Layer exportieren ({{formatName}})'
+        downloadLayer: 'Layer als TIFF exportieren'
       },
       ToolMenu: {
         expand: 'Menu ausklappen',
@@ -188,7 +188,7 @@ export default {
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
-        downloadLayer: 'Export layer as {{formatName}}'
+        downloadLayer: 'Export layer as TIFF'
       },
       ToolMenu: {
         expand: 'Expand',

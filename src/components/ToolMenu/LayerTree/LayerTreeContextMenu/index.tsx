@@ -23,9 +23,6 @@ import {
 import {
   getUid
 } from 'ol';
-import {
-  Extent as OlExtent
-} from 'ol/extent';
 import LayerGroup from 'ol/layer/Group';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
@@ -86,8 +83,12 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
 
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
-      const url = evt.key.split('|')[1];
-      downloadLayer(decodeURI(url));
+      // eslint-disable-next-line no-underscore-dangle
+      let layerName = layer.getProperties().source.params_.LAYERS;
+      let workspace = layerName.split(':')[0];
+      let downloadurl = `/geoserver/${workspace}/wcs?service=WCS&version=2.0.1` +
+        `&request=GetCoverage&CoverageId=${layerName}&format=image/tiff`;
+      downloadLayer(decodeURI(downloadurl));
     }
     switch (evt?.key) {
       case 'zoomToExtent':
@@ -163,7 +164,8 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     if (!layer) {
       return;
     }
-    const reqOpts = {
+
+    const reqOpts: RequestInit = {
       method: 'GET',
       headers: {
         ...layer.get('useBearerToken') ? {
@@ -203,6 +205,13 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     items.push({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'
+    });
+  }
+
+  if (layer.get('isImported')) {
+    items.push({
+      label: t('LayerTreeContextMenu.downloadLayer'),
+      key: 'downloadLayer'
     });
   }
 
