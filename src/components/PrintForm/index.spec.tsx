@@ -42,7 +42,7 @@ describe('<PrintForm />', () => {
     } = render(
       <PrintForm
         map={map}
-        printManager={printManager}
+        active={false}
       />
     );
     expect(container).toBeVisible();
