@@ -6,11 +6,8 @@ import type {
   Reducer
 } from '@reduxjs/toolkit';
 
+import { CollapsePanelProps } from 'antd';
 import type OlMap from 'ol/Map';
-
-import type {
-  SubMenuType as RcSubMenuType
-} from 'rc-menu/lib/interface';
 
 import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
@@ -38,7 +35,7 @@ export type ClientPluginIntegration = {
 };
 
 export type ClientPluginIntegrationToolMenu = ClientPluginIntegration &
-  Omit<RcSubMenuType, 'children' | 'label' | 'key'> & {
+  Omit<CollapsePanelProps, 'key' | 'header'> & {
   placement: 'tool-menu';
   /**
    * The label for the plugin in the tool menu.
@@ -52,10 +49,6 @@ export type ClientPluginIntegrationToolMenu = ClientPluginIntegration &
    * The icon for the plugin in the tool menu.
    */
   icon?: IconDefinition;
-  /**
-   * The theme for the plugin in the tool menu.
-   */
-  theme?: 'dark' | 'light';
 };
 
 export type HeaderPlacementOrientation = 'left' | 'center' | 'right';

@@ -3,17 +3,13 @@ import React, {
   useState
 } from 'react';
 
+import type {
+  IconDefinition
+} from '@fortawesome/fontawesome-common-types';
+
 import {
-  faRuler,
-  faFileDownload,
-  faStream,
-  faMousePointer,
-  faPlus,
-  faChevronRight,
-  faChevronLeft,
-  faShareNodes,
-  faDrawPolygon,
-  faLanguage
+  faChevronLeft, faChevronRight, faDrawPolygon, faFileDownload, faLanguage, faMousePointer,
+  faPlus, faRuler, faShareNodes, faStream
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -72,6 +68,12 @@ export interface TitleEventEntity {
   domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 }
 
+export type ToolPanelConfig = {
+  icon: IconDefinition;
+  title: string;
+  wrappedComponent: JSX.Element;
+};
+
 export type ToolMenuProps = {} & Partial<CollapsePanelProps>;
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
@@ -121,38 +123,94 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
   }, [menuTools, availableTools]);
 
-  const getToolPanel = (toolKey: string) => {
-    switch (toolKey) {
-      case 'measure_tools':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faRuler} />
-                <span>{t('ToolMenu.measure')}</span>
-              </>
+  const getToolPanels = (): JSX.Element[] => {
+
+    const panels: JSX.Element[] = [];
+
+    menuTools.forEach((tool: string) => {
+      const toolPanelConfig: ToolPanelConfig | undefined = getToolPanelConfig(tool);
+
+      if (!toolPanelConfig) {
+        return;
+      }
+      const {
+        icon,
+        title,
+        wrappedComponent
+      } = toolPanelConfig;
+
+      const panel = (
+        <Panel
+          header={
+            <>
+              {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+              <span>{title}</span>
+            </>
+          }
+          key={tool}
+        >
+          {wrappedComponent}
+        </Panel>
+      );
+      panels.push(panel);
+    });
+
+    if (plugins) {
+      plugins.forEach(plugin => {
+        if (isToolMenuIntegration(plugin.integration)) {
+          const {
+            key,
+            wrappedComponent: WrappedPluginComponent,
+            integration: {
+              placement,
+              label = 'Plugin',
+              insertionIndex,
+              icon,
+              ...passThroughProps
             }
-            key="measure_tools"
-          >
+          } = plugin;
+
+          panels.splice(insertionIndex || 0, 0, (
+            <Panel
+              header={
+                <>
+                  {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+                  <span>{t(label)}</span>
+                </>
+              }
+              key={key}
+              {...passThroughProps}
+            >
+              <WrappedPluginComponent />
+            </Panel>
+          ));
+        }
+      });
+    }
+    return panels;
+  };
+
+  const getToolPanelConfig = (tool: string): ToolPanelConfig | undefined => {
+
+    switch (tool) {
+      case 'measure_tools':
+        return {
+          icon: faRuler,
+          title: t('ToolMenu.measure'),
+          wrappedComponent: (
             <Measure
               showMeasureDistance={
                 availableTools.includes('default') || availableTools.includes('measure_tools_distance')
               }
               showMeasureArea={availableTools.includes('default') || availableTools.includes('measure_tools_area')}
             />
-          </Panel>
-        );
+          )
+        };
       case 'draw_tools':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faDrawPolygon} />
-                <span>{t('ToolMenu.draw')}</span>
-              </>
-            }
-            key="draw_tools"
-          >
+        return {
+          icon: faDrawPolygon,
+          title: t('ToolMenu.draw'),
+          wrappedComponent: (
             <Draw
               showDrawPoint={availableTools.includes('default') || availableTools.includes('draw_tools_point')}
               showDrawLine={availableTools.includes('default') || availableTools.includes('draw_tools_line')}
@@ -169,35 +227,23 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               }
               showDeleteFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_delete')}
             />
-          </Panel>
-        );
+          )
+        };
       case 'feature_info':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faMousePointer} />
-                <span>{t('ToolMenu.featureInfo')}</span>
-              </>
-            }
-            key="feature_info"
-          >
+        return {
+          icon: faMousePointer,
+          title: t('ToolMenu.featureInfo'),
+          wrappedComponent: (
             <FeatureInfo
               enabled={activeKeys.includes('feature_info')}
             />
-          </Panel>
-        );
+          )
+        };
       case 'print':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faFileDownload} />
-                <span>{t('ToolMenu.print')}</span>
-              </>
-            }
-            key="print"
-          >
+        return {
+          icon: faFileDownload,
+          title: t('ToolMenu.print'),
+          wrappedComponent: (
             <PrintForm
               active={activeKeys.includes('print')}
               map={map!}
@@ -206,19 +252,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
                 'hoverVectorLayer'
               ]}
             />
-          </Panel>
-        );
+          )
+        };
       case 'tree':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faStream} />
-                <span>{t('ToolMenu.layertree')}</span>
-              </>
-            }
-            key="tree"
-          >
+        return {
+          icon: faStream,
+          title: t('ToolMenu.layertree'),
+          wrappedComponent: (
             <div className='tree-wrapper'>
               <LayerTree />
               <Button
@@ -229,73 +269,24 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
                 {t('ToolMenu.addWms')}
               </Button>
             </div>
-          </Panel>
-        );
+          )
+        };
       case 'permalink':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faShareNodes} />
-                <span>{t('Permalink.title')}</span>
-              </>
-            }
-            key="permalink"
-          >
-            <Permalink />
-          </Panel>
-        );
+        return {
+          icon: faShareNodes,
+          title: t('Permalink.title'),
+          wrappedComponent: <Permalink />
+        };
       case 'language_selector':
-        return (
-          <Panel
-            header={
-              <>
-                <FontAwesomeIcon icon={faLanguage} />
-                <span>{t('ToolMenu.languageSelect')}</span>
-              </>
-            }
-            key="language_selector"
-          >
-            <LanguageSelect />
-          </Panel>
-        );
+        return {
+          icon: faLanguage,
+          title: t('ToolMenu.languageSelect'),
+          wrappedComponent: <LanguageSelect />
+        };
       default:
         break;
     }
   };
-
-  // TODO reenable
-  // if (plugins) {
-  //   plugins.forEach(plugin => {
-  //     if (isToolMenuIntegration(plugin.integration)) {
-  //       const {
-  //         key,
-  //         wrappedComponent: WrappedPluginComponent,
-  //         integration: {
-  //           placement,
-  //           label = 'Plugin',
-  //           insertionIndex,
-  //           icon,
-  //           ...passThroughProps
-  //         }
-  //       } = plugin;
-
-  //       items.splice(insertionIndex || 0, 0, {
-  //         key: key,
-  //         onTitleClick: onSubmenuTitleClick,
-  //         icon: icon ? <FontAwesomeIcon icon={icon} /> : undefined,
-  //         label: t(label),
-  //         children: [
-  //           {
-  //             key: `${key}-child`,
-  //             label: <WrappedPluginComponent />
-  //           }
-  //         ],
-  //         ...passThroughProps
-  //       });
-  //     }
-  //   });
-  // }
 
   return (
     <div className="tool-menu">
@@ -308,7 +299,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         }}
         {...restProps}
       >
-        {menuTools.map(getToolPanel)}
+        {getToolPanels()}
       </Collapse>
       <Tooltip
         placement={'right'}
