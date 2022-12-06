@@ -8,7 +8,7 @@ import type {
 } from '@fortawesome/fontawesome-common-types';
 
 import {
-  faChevronLeft, faChevronRight, faDrawPolygon, faFileDownload, faLanguage, faMousePointer,
+  faChevronDown, faChevronLeft, faChevronRight, faDrawPolygon, faFileDownload, faLanguage, faMousePointer,
   faPlus, faRuler, faShareNodes, faStream
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -141,6 +141,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
       const panel = (
         <Panel
+          className={tool}
           header={
             <>
               {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
@@ -289,8 +290,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   };
 
   return (
-    <div className="tool-menu">
+    <div className={`tool-menu ${collapsed ? 'collapsed' : ''}`}>
       <Collapse
+        expandIcon={() => <FontAwesomeIcon icon={faChevronDown} />}
         expandIconPosition='end'
         activeKey={activeKeys}
         onChange={(keys: string[] | string) => {
