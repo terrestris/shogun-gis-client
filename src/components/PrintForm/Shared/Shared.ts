@@ -44,6 +44,11 @@ Shared.getLegendGraphicUrl = (layer: OlLayer<OlSource, OlRendererLayer<any>>): s
       return `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
     }).join('&');
 
+    if (url.startsWith('/geoserver/SHOGUN')) {
+      url = `http://shogun-geoserver:8080${url}/service?`;
+      return `${url}${queryParams}`;
+    }
+
     if (url.endsWith('?')) {
       return `${url}${queryParams}`;
     } else {

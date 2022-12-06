@@ -23,6 +23,10 @@ export class SHOGunMapFishPrintV3WMSSerializer extends MapFishPrintV3WMSSerializ
       serialized.baseURL = `http://shogun-geoserver:8080${serialized.baseURL}`;
     }
 
+    if (serialized.baseURL.startsWith('/geoserver/SHOGUN')) {
+      serialized.baseURL = `http://shogun-geoserver:8080${serialized.baseURL}`;
+    }
+
     return serialized;
   }
 }
