@@ -123,16 +123,15 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       new SHOGunMapFishPrintV3TiledWMSSerializer()
     ];
 
-    await pManager.init()
-      .then(() => {
-        pManager.setOutputFormat(pManager.getOutputFormats()[0]);
-        pManager.setDpi(pManager.getDpis()[0]);
-        pManager.setLayout(pManager.getLayouts()[0]?.name);
-      })
-      .catch((error: any) => {
-        Logger.error(error);
-      });
-    setPrintManager(pManager);
+    await pManager.init();
+    if (pManager.isInitiated()) {
+      pManager.setOutputFormat(pManager.getOutputFormats()[0]);
+      pManager.setDpi(pManager.getDpis()[0]);
+      pManager.setLayout(pManager.getLayouts()[0]?.name);
+      setPrintManager(pManager);
+    } else {
+      Logger.error('Could not initialize print manager');
+    }
   }, [client, layerFilter, map]);
 
   useEffect(() => {
