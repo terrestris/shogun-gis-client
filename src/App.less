@@ -1,5 +1,3 @@
-@import './variables.less';
-
 .App,
 #map {
   margin: 0;
@@ -16,11 +14,11 @@
   }
 
   .ol-attribution.ol-uncollapsible {
-    bottom: @footerHeight;
+    bottom:var(--footerHeight);
   }
 
   .ol-attribution {
-    bottom: calc(@footerHeight + 0.5em);
+    bottom: calc(var(--footerHeight) + 0.5em);
     right: 1em;
   }
 }

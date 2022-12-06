@@ -1,8 +1,6 @@
-@import '../../variables.less';
-
 .footer {
   position: absolute;
-  height: @footerHeight;
+  height: var(--footerHeight);
   width: 100%;
   min-height: 0;
   bottom: 0;
@@ -12,7 +10,7 @@
   background-color: var(--primaryColor);;
   display: flex;
   padding: 0 .5rem;
-  box-shadow: @componentShadow;
+  box-shadow: var(--componentShadow);
   font-size: .95em;
 
   .item-container {

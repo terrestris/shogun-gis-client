@@ -1,11 +1,9 @@
-@import '../../variables.less';
-
 .tool-menu {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: @headerHeight;
-  max-height: calc(100% - @headerHeight - @footerHeight);
+  margin-top: var(--headerHeight);
+  max-height: calc(100% - var(--headerHeight) - var(--footerHeight));
   overflow-y: auto; // TODO better make single submenus scrollable instead
   max-width: 600px;
 
