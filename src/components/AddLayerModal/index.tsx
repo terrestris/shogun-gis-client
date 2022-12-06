@@ -38,9 +38,6 @@ import useAppSelector from '../../hooks/useAppSelector';
 import {
   hide
 } from '../../store/addLayerModal';
-import {
-  unsetSelectedKey
-} from '../../store/toolMenu';
 
 import './index.less';
 
@@ -88,7 +85,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     setSelectedRowKeys([]);
     setLayers([]);
     dispatch(hide());
-    dispatch(unsetSelectedKey('addLayer'));
   };
 
   const onAddSelected = () => {

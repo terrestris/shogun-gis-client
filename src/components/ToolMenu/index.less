@@ -1,104 +1,90 @@
-@import '../../variables.less';
-
 .tool-menu {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: @headerHeight;
-  max-height: calc(100% - @headerHeight - @footerHeight);
-  overflow-y: auto; // TODO better make single submenus scrollable instead
+  margin-top: var(--headerHeight);
+  max-height: calc(100% - var(--headerHeight) - var(--footerHeight));
+  overflow: hidden;
   max-width: 600px;
+  box-shadow: var(--componentShadow);
+  overflow-x: hidden;
 
-  .ant-menu {
-    &.ant-menu-inline-collapsed {
-      width: 40px;
-    }
+  &.collapsed {
 
-    li:last-child>span {
-      width: 100%;
-    }
+    width: 40px;
 
-    .ant-menu-sub.ant-menu-inline > .ant-menu-item {
-      height: auto;
-      width: 100%;
-      padding: 0 !important;
-      border: none;
-    }
+    .ant-collapse-item {
 
-    &:not(.ant-menu-inline-collapsed) .ant-menu-submenu-title,
-    &:not(.ant-menu-inline-collapsed) .ant-menu-item {
-      padding-left: 1rem !important;
-    }
+      .ant-collapse-header {
+        padding-right: 0;
+        padding-left: 0;
+        justify-content: center;
 
-    .ant-menu-item,
-    .ant-menu-submenu {
-      &:active,
-      &:focus {
-        background: none;
-      }
-
-      margin: 0;
-
-      .ant-menu-submenu-title {
-        margin: 0;
-      }
-
-      &.ant-menu-item-selected,
-      &.ant-menu-submenu-open {
-        >.ant-menu-submenu-title {
-          font-weight: bolder;
+        .ant-collapse-header-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        &::after {
+        .ant-collapse-header-text>span:last-of-type,
+        .ant-collapse-expand-icon {
           display: none;
         }
       }
     }
-
-    .tool-menu-button {
-      svg.svg-inline--fa {
-        margin-right: 5px;
-      }
-      background-color: rgb(239, 239, 239);
-    }
-
-    .ant-menu-title-content {
-      border-bottom: 1px solid var(--primaryColor);
-    }
-
   }
-}
 
-.tool-menu,
-.ant-menu-submenu-popup {
-  button,
-  button.react-geo-togglebutton {
-    border-radius: 0;
+  .ant-collapse {
     border: none;
+    max-height: calc(100vh - var(--headerHeight) - var(--footerHeight) - 32px);
+    overflow-y: auto;
+
+    .ant-collapse-item {
+
+      .ant-collapse-header {
+        background-color: #fff;
+
+        .ant-collapse-header-text span {
+          padding-left: 10px;
+        }
+      }
+
+      .ant-collapse-content-box {
+        padding: 10px;
+        overflow-y: auto;
+        max-height: 25vh;
+
+        .tool-menu-button {
+          background-color: #efefef;
+          width: 100%;
+
+          svg.svg-inline--fa {
+            margin-right: 5px;
+          }
+        }
+
+        .tree-wrapper {
+          display: flex;
+          flex-direction: column;
+          background-color: white;
+
+        }
+      }
+
+      &.ant-collapse-item-active {
+        .ant-collapse-expand-icon svg {
+          transform: translateY(-50%) rotate(180deg);
+        }
+        .ant-collapse-header-text span {
+          font-weight: bolder;
+        }
+      }
+    }
   }
 
-  .tree-wrapper {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 0.5rem;
-
-    .add-wms-button {
-      margin-right: 20px;
-      margin-left: 20px;
-    }
-
-    .save-selection-button {
-      margin-right: 20px;
-      margin-left: 20px;
-    }
+  button.collapse-btn {
+    width: 100%;
+    border: none;
+    border-radius: 0;
   }
-}
-
-.ant-menu-submenu-popup > .ant-menu-sub > .ant-menu-item {
-  height: 100%;
-  padding: 0 !important;
-  border: none;
-  margin-top: 0;
-  margin-bottom: 0;
 }

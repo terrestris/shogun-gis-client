@@ -1,10 +1,8 @@
-.permalink {
+.permalink-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  padding-top: 1rem;
 
   .icons > span {
     font-size: 1.5rem;
@@ -17,7 +15,7 @@
   }
 
   .link {
-    padding: 1rem 1rem;
+    padding-top: 1rem;
     display: flex;
     align-self: stretch;
     align-items: center;
@@ -30,9 +28,7 @@
     .anticon {
       cursor: pointer;
       color: var(--tertiaryColor);
-      // creates clickable area around tiny svg
       padding: 1rem;
-      margin: -1rem -1rem -1rem 0rem; // effectively margin-left: 1rem;
     }
   }
 }

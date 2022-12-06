@@ -12,7 +12,6 @@ import {
 import {
   Dropdown,
   DropDownProps,
-  Menu,
   notification,
   Spin
 } from 'antd';
@@ -180,7 +179,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     a.click();
   };
 
-  let items: ItemType[] = [{
+  let dropdownMenuItems: ItemType[] = [{
     label: (
       <Spin
         spinning={extentLoading}
@@ -193,14 +192,14 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
 
   const legendVisible = visibleLegendsIds.includes(getUid(layer));
   if (layer.getVisible()) {
-    items.push({
+    dropdownMenuItems.push({
       label: legendVisible ? t('LayerTreeContextMenu.hideLegend') : t('LayerTreeContextMenu.showLegend'),
       key: 'toggleLegend'
     });
   }
 
   if (layer.get('isImported')) {
-    items.push({
+    dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'
     });
@@ -215,23 +214,18 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         key: `downloadLayer|${encodeURI(dlConfig.downloadUrl)}`
       };
     });
-    items.push(...downloadItems);
+    dropdownMenuItems.push(...downloadItems);
   }
-
-  const settingsMenu = (
-    <Menu
-      items={items}
-      selectable={false}
-      onClick={onContextMenuItemClick}
-    />
-  );
 
   return (
     <Dropdown
-      overlay={settingsMenu}
+      menu={{
+        items: dropdownMenuItems,
+        onClick: onContextMenuItemClick
+      }}
       placement="bottomLeft"
-      onVisibleChange={setSettingsVisible}
-      visible={settingsVisible}
+      onOpenChange={setSettingsVisible}
+      open={settingsVisible}
       trigger={['click']}
       {...restProps}
     >

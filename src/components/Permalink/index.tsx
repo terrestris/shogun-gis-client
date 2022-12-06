@@ -175,7 +175,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
   }
 
   return (
-    <div className="permalink">
+    <div className="permalink-wrapper">
       <div className="icons">
         <Tooltip title={t('Permalink.twitterTooltip')}>
           <TwitterOutlined onClick={onTwitterClick} />
