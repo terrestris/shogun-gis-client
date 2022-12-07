@@ -34,7 +34,7 @@
     }
   }
 
-  .ant-collapse {
+  >.ant-collapse {
     border: none;
     max-height: calc(100vh - var(--headerHeight) - var(--footerHeight) - 32px);
     overflow-y: auto;
@@ -43,6 +43,7 @@
 
       .ant-collapse-header {
         background-color: #fff;
+        padding: 6px 40px 6px 16px;
 
         .ant-collapse-header-text span {
           padding-left: 10px;
@@ -52,7 +53,6 @@
       .ant-collapse-content-box {
         padding: 10px;
         overflow-y: auto;
-        max-height: 25vh;
 
         .tool-menu-button {
           background-color: #efefef;
@@ -72,9 +72,6 @@
       }
 
       &.ant-collapse-item-active {
-        .ant-collapse-expand-icon svg {
-          transform: translateY(-50%) rotate(180deg);
-        }
         .ant-collapse-header-text span {
           font-weight: bolder;
         }

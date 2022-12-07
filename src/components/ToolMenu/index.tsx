@@ -292,7 +292,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   return (
     <div className={`tool-menu ${collapsed ? 'collapsed' : ''}`}>
       <Collapse
-        expandIcon={() => <FontAwesomeIcon icon={faChevronDown} />}
         expandIconPosition='end'
         activeKey={activeKeys}
         onChange={(keys: string[] | string) => {
