@@ -146,7 +146,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       {...restProps}
     >
       {
-        pluginComponents.map(el => el)
+        pluginComponents
       }
     </MapComponent>
   );
