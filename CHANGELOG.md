@@ -1,3 +1,62 @@
+## [4.10.0](https://github.com/terrestris/shogun-gis-client/compare/v4.9.0...v4.10.0) (2022-12-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* tool menu plugins extend CollapsePanelProps in favour of MenuProps now
+
+### Features
+
+* add support for map plugins ([db3945d](https://github.com/terrestris/shogun-gis-client/commit/db3945def87c0bfbfe0d6514765274f62547c7be))
+
+
+* reintegrate plugins invocation as collapse panel item, generalize tools creation ([291f0cd](https://github.com/terrestris/shogun-gis-client/commit/291f0cd87f75634b6aded2841f040856ce67de02))
+
+
+### Changes in configuration
+
+* copy missing less files to dist files ([7794255](https://github.com/terrestris/shogun-gis-client/commit/7794255c0f967a0c9b908ff0beb32d2828e57b5d))
+
+
+### Dependencies
+
+* bump react-geo v21.0.1 ([b27d386](https://github.com/terrestris/shogun-gis-client/commit/b27d38675161821f942774a14ecaf8bd7db803aa))
+* bump shogun-util v4.1.2 ([8d63fc1](https://github.com/terrestris/shogun-gis-client/commit/8d63fc1f872a60f8b1f5531683728c632713cd78))
+* **deps-dev:** bump @types/jest from 29.2.3 to 29.2.4 ([59b4b17](https://github.com/terrestris/shogun-gis-client/commit/59b4b177ac9fa18414d2b0aa8a17e7e5bac5fa81))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([d310b54](https://github.com/terrestris/shogun-gis-client/commit/d310b54f6c63813f16389739440e37101be60cce))
+* **deps-dev:** bump @typescript-eslint/parser from 5.45.0 to 5.45.1 ([37c2ce1](https://github.com/terrestris/shogun-gis-client/commit/37c2ce1e0417f75b347d0cca89ecbad5850a20ee))
+* **deps-dev:** bump eslint from 8.28.0 to 8.29.0 ([6a1af61](https://github.com/terrestris/shogun-gis-client/commit/6a1af61700af43cf6be0d5528f70524d76ffd912))
+* **deps-dev:** bump fs-extra from 11.0.0 to 11.1.0 ([524ad8f](https://github.com/terrestris/shogun-gis-client/commit/524ad8f474f56cb964fcdebb9f9bd4a083085be8))
+* **deps-dev:** bump mini-css-extract-plugin from 2.7.0 to 2.7.1 ([5a211a6](https://github.com/terrestris/shogun-gis-client/commit/5a211a676fa8e3b994bb698a2e5e24339f90519c))
+* **deps-dev:** bump mini-css-extract-plugin from 2.7.1 to 2.7.2 ([66cbae8](https://github.com/terrestris/shogun-gis-client/commit/66cbae8560282e9203f9a687a397213ad56d760a))
+* **deps-dev:** bump webpack-cli from 5.0.0 to 5.0.1 ([01b7db1](https://github.com/terrestris/shogun-gis-client/commit/01b7db14266f5f1be0ba89a18d08d2cd7334f0dc))
+* **deps:** bump @reduxjs/toolkit from 1.9.0 to 1.9.1 ([e54c3a7](https://github.com/terrestris/shogun-gis-client/commit/e54c3a7bf89b1f85d0d47e35487eee28711c3f8f))
+* **deps:** bump @terrestris/react-geo from 20.0.0 to 20.1.0 ([ad1c82a](https://github.com/terrestris/shogun-gis-client/commit/ad1c82a4a34dd28a95964d6288afd93ec44db190))
+* **deps:** bump @terrestris/react-geo from 20.1.0 to 20.1.1 ([62d8be3](https://github.com/terrestris/shogun-gis-client/commit/62d8be3797143409d902531afea41d164ff82091))
+* **deps:** bump @terrestris/shogun-util from 4.1.0 to 4.1.1 ([0b47a84](https://github.com/terrestris/shogun-gis-client/commit/0b47a84f1e69e34cfcd077e7b35029b18a549694))
+* **deps:** bump antd from 4.24.4 to 4.24.5 ([a525c14](https://github.com/terrestris/shogun-gis-client/commit/a525c1410c4d95ed3b227e1dea3b03d6abca2ad6))
+* **deps:** bump i18next from 22.0.6 to 22.0.8 ([aa366e9](https://github.com/terrestris/shogun-gis-client/commit/aa366e9b07ef9b682223c19edc6114d54773bf21))
+* **deps:** bump react-i18next from 12.0.0 to 12.1.0 ([572e3ef](https://github.com/terrestris/shogun-gis-client/commit/572e3ef93493ef5fc38715e74f7f989adb22927a))
+* fix typo ([9cae721](https://github.com/terrestris/shogun-gis-client/commit/9cae72146bd26908819718ecb993060ce6dfa3ef))
+
+
+### Bugfixes
+
+* fix menu styling after refactoring ([7b0ab81](https://github.com/terrestris/shogun-gis-client/commit/7b0ab81d3322a1d625110adf5dae2dba4c7d1581))
+* fixes print for a larger variety of layers ([06c3305](https://github.com/terrestris/shogun-gis-client/commit/06c330520edacc6f59e2460ea32699bba1a4ee26))
+* get rid of antd deprecation warnings ([5769e63](https://github.com/terrestris/shogun-gis-client/commit/5769e63f9f703817b9c732da5bc88c5446bc3c43))
+* ignore spec files in tsc ([d48915e](https://github.com/terrestris/shogun-gis-client/commit/d48915eb0109cc17f611671e48fbd25cd540cf8f))
+* pass correct props to print form ([ce63d7a](https://github.com/terrestris/shogun-gis-client/commit/ce63d7aeef3fe0e7c3cb1e17d1780d79765dbdbb))
+* remove non more existing dispatch key ([4037fa1](https://github.com/terrestris/shogun-gis-client/commit/4037fa14c56c0833c903848502cc65ca3419ff1b))
+* remove unnecessary chaining ([e20f4b5](https://github.com/terrestris/shogun-gis-client/commit/e20f4b5c1e0fa094c9df89a14741fd9a97fb63cc))
+* remove unneeded mapping ([e901b8e](https://github.com/terrestris/shogun-gis-client/commit/e901b8ed6f8e18f6616b5a8a2dc71dee1b9fe634))
+* specify babel ignore files in cli only ([b0da51f](https://github.com/terrestris/shogun-gis-client/commit/b0da51f9dffe068d5a87f363e586e7b5fb5d292b))
+
+
+### Changes in layout
+
+* adjusts cotainer heigt & item padding ([e8decd5](https://github.com/terrestris/shogun-gis-client/commit/e8decd54c9b78f5ca4237f40db2f18f236fc4ade))
+
 ## [4.9.0](https://github.com/terrestris/shogun-gis-client/compare/v4.8.1...v4.9.0) (2022-11-29)
 
 
