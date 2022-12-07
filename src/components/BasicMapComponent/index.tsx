@@ -31,8 +31,12 @@ import MapComponent, {
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 
+import usePlugins from '../../hooks/usePlugins';
 import useQueryParams from '../../hooks/useQueryParams';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+import {
+  isMapIntegration
+} from '../../plugin';
 
 export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   ...restProps
@@ -40,6 +44,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   const map = useMap();
   const client = useSHOGunAPIClient();
   const queryParams = useQueryParams();
+  const plugins = usePlugins();
 
   const center = queryParams.get('center');
   const zoom = queryParams.get('zoom');
@@ -112,6 +117,25 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     customLayerAttributes
   ]);
 
+  const pluginComponents: JSX.Element[] = [];
+
+  if (plugins) {
+    plugins.forEach(plugin => {
+      if (isMapIntegration(plugin.integration)) {
+        const {
+          key,
+          wrappedComponent: WrappedPluginComponent
+        } = plugin;
+
+        pluginComponents.push(
+          <WrappedPluginComponent
+            key={key}
+          />
+        );
+      }
+    });
+  }
+
   if (!map) {
     return <></>;
   }
@@ -120,7 +144,11 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     <MapComponent
       map={map}
       {...restProps}
-    />
+    >
+      {
+        pluginComponents
+      }
+    </MapComponent>
   );
 };
 
