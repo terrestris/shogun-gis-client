@@ -19,12 +19,13 @@
     "dist"
   ],
   "scripts": {
-    "build:declaration": "tsc --emitDeclarationOnly",
     "build": "webpack --config webpack.prod.js",
-    "build:dist": "npm run clean:dist && BABEL_ENV=production babel src --out-dir dist --copy-files --no-copy-ignored --extensions '.ts,.tsx' --source-maps && npm run build:declaration",
-    "clean:dist": "rimraf ./dist/*",
     "build:analyze": "BUNDLE_ANALYZE=true npm run build",
+    "build:babel": "BABEL_ENV=production babel src --out-dir dist --copy-files --no-copy-ignored --ignore 'src/**/*.spec.tsx' --ignore 'src/**/*.spec.js' --extensions '.ts,.tsx' --source-maps",
+    "build:declaration": "tsc --emitDeclarationOnly",
+    "build:dist": "npm run clean:dist && npm run build:babel && npm run build:declaration",
     "check": "npm run typecheck && npm run lint && npm run test && npm run test:ui",
+    "clean:dist": "rimraf ./dist/*",
     "husky": "husky install",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
     "prepare": "npm run husky",
@@ -124,10 +125,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "devEngines": {
-    "node": ">=14",
-    "npm": ">=7"
-  },
   "@casualbot/jest-sonar-reporter": {
     "suiteName": "jest tests",
     "outputDirectory": "coverage",
@@ -138,5 +135,9 @@
     "ancestorSeparator": " › ",
     "usePathForSuiteName": "true",
     "relativePaths": "true"
+  },
+  "devEngines": {
+    "node": ">=14",
+    "npm": ">=7"
   }
 }

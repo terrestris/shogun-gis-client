@@ -10,9 +10,5 @@ module.exports = {
     ],
     '@babel/preset-typescript',
     '@babel/preset-react'
-  ],
-  ignore: [
-    /\.spec\.(j|t)s?(x)/,
-    /\.spec\.d\.(j|t)s?(x)/
   ]
 };
