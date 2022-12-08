@@ -29,10 +29,6 @@ import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyle from 'ol/style/Style';
 
-import {
-  useTranslation
-} from 'react-i18next';
-
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
@@ -56,10 +52,6 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
 
   const map = useMap();
-
-  const {
-    t
-  } = useTranslation();
 
   const vectorLayerName = `selection-layer-${layerName}`;
 
