@@ -31,10 +31,8 @@ import OlStyle from 'ol/style/Style';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import {
-  useMap
-} from '@terrestris/react-geo';
 import PropertyGrid from '@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid';
+import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
 
