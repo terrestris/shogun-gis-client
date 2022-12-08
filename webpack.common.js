@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
+const deps = require('./package.json').dependencies;
+
 module.exports = {
   entry: './src/index.tsx',
   externals: {
@@ -88,48 +90,35 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'SHOGunGISClient',
       shared: {
-        ...require('./package.json').dependencies,
         react: {
-          singleton: true
+          singleton: true,
+          eager: true,
+          requiredVersion: deps.react
         },
         'react-dom': {
-          singleton: true
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['react-dom']
         },
         'react-redux': {
-          singleton: true
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['react-redux']
         },
-        '@terrestris/react-geo': {
-          singleton: true
+        '@terrestris/react-geo/': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['@terrestris/react-geo']
         },
         'react-i18next': {
-          singleton: true
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['react-i18next']
         },
-        'ol': {
-          singleton: true
-        },
-        'ol/layer/': {
-          singleton: true
-        },
-        'ol/interaction/': {
-          singleton: true
-        },
-        'ol/control/': {
-          singleton: true
-        },
-        'ol/render/': {
-          singleton: true
-        },
-        'ol/geom/': {
-          singleton: true
-        },
-        'ol/style/': {
-          singleton: true
-        },
-        'ol/source/': {
-          singleton: true
-        },
-        '@reduxjs/toolkit': {
-          singleton: true
+        'ol/': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps.ol
         }
       }
     })
