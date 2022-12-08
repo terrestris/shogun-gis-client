@@ -1,3 +1,19 @@
+## [4.10.1](https://github.com/terrestris/shogun-gis-client/compare/v4.10.0...v4.10.1) (2022-12-08)
+
+
+### Dependencies
+
+* **deps-dev:** bump typescript from 4.9.3 to 4.9.4 ([215ba36](https://github.com/terrestris/shogun-gis-client/commit/215ba36bcd60f8bb1c04c0aeb24c71010b09357a))
+* **deps:** bump @terrestris/shogun-util from 4.1.2 to 4.1.3 ([4e485a7](https://github.com/terrestris/shogun-gis-client/commit/4e485a73edeeb9bb37ea2eb1151b76eef59e3f01))
+* **deps:** bump geostyler from 10.2.0 to 10.3.0 ([05b7798](https://github.com/terrestris/shogun-gis-client/commit/05b7798da67bbd51a78273d5c560421dc5211e25))
+* **deps:** bump i18next from 22.0.8 to 22.1.4 ([57f0c75](https://github.com/terrestris/shogun-gis-client/commit/57f0c757dfbb551a3822c445c1bab78c161e8827))
+* **deps:** bump react-i18next from 12.1.0 to 12.1.1 ([f7ef7ff](https://github.com/terrestris/shogun-gis-client/commit/f7ef7ff139a214bd613aec3b4bb4389fd53582d4))
+
+
+### Bugfixes
+
+* avoid scrollbar on collapsed menu ([e8f8828](https://github.com/terrestris/shogun-gis-client/commit/e8f882862f70f52b8666b58c6387142127d3f95d))
+
 ## [4.10.0](https://github.com/terrestris/shogun-gis-client/compare/v4.9.0...v4.10.0) (2022-12-07)
 
 
