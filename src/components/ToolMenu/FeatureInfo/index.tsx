@@ -46,6 +46,10 @@ import {
 import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
 import './index.less';
+import { Tabs } from 'antd';
+import {
+  Tab
+} from 'rc-tabs/lib/interface';
 
 export type FeatureInfoProps = {
   enabled?: boolean;
@@ -97,10 +101,20 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    const renderers: JSX.Element[] = [];
+    const items: Tab[] = [];
 
     Object.keys(features).forEach(layerName => {
       let pluginRendererAvailable = false;
+
+      const mapLayer = map.getAllLayers().find(l => {
+        if (l instanceof OlLayerImage || l instanceof OlLayerTile) {
+          const unqualifiedMapLayerName = getUnqualifiedLayerName(l.getSource().getParams().LAYERS);
+          const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
+
+          return unqualifiedLayerName === unqualifiedMapLayerName;
+        }
+        return false;
+      });
 
       plugins.forEach(plugin => {
         if (isFeatureInfoIntegration(plugin.integration) &&
@@ -111,32 +125,50 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
             wrappedComponent: WrappedPluginComponent
           } = plugin;
 
-          renderers.push(
-            <WrappedPluginComponent
-              key={key}
-            />
-          );
+          items.push({
+            label: layerName,
+            key: layerName,
+            children: (
+              <WrappedPluginComponent
+                key={key}
+              />
+            )
+          });
 
           pluginRendererAvailable = true;
         }
       });
 
       if (!pluginRendererAvailable) {
-        renderers.push(
-          <div
-            key={layerName}
-          >
-            <FeatureInfoPropertyGrid
-              features={features[layerName]}
-              layerName={layerName}
-              loading={loading}
-            />
-          </div>
-        );
+        items.push({
+          label: mapLayer?.get('name') || layerName,
+          key: layerName,
+          children: (
+            <div
+              key={layerName}
+            >
+              <FeatureInfoPropertyGrid
+                features={features[layerName]}
+                layerName={layerName}
+                loading={loading}
+              />
+            </div>
+          )
+        });
       }
     });
 
-    return renderers;
+    return (
+      <Tabs
+        items={items}
+      />
+    );
+  };
+
+  const getUnqualifiedLayerName = (layerName: string) => {
+    return layerName.split(':').length > 1 ?
+      layerName.split(':')[1] :
+      layerName.split(':')[0];
   };
 
   if (!enabled) {

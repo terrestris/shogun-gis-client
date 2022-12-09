@@ -38,12 +38,12 @@ import './index.less';
 
 export type FeatureInfoPropertyGridProps = {
   features: OlFeature[];
-  layerName?: string;
+  layerName: string;
 } & TableProps<OlFeature>;
 
 export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = ({
   features,
-  layerName = 'Unknown layer',
+  layerName,
   ...restProps
 }): JSX.Element => {
   const [currentPage, setCurrenPage] = useState<number>();
@@ -154,64 +154,58 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
   }
 
   return (
-    <>
-      <div
-        className='property-grid-header'
-      >
-        {
-          layerName && <span>{layerName}</span>
-        }
-        <div
-          className='right-elements'
-        >
-          <Pagination
-            simple
-            total={features.length}
-            size="small"
-            pageSize={1}
-            current={currentPage}
-            onChange={onChange}
-          />
-          <Tooltip
-            title="Copy to clipboard"
-          >
-            <Button
-              type="primary"
-              onClick={() => {
-                copy(new OlFormatGeoJSON().writeFeature(selectedFeature));
-              }}
-              icon={<FontAwesomeIcon icon={faCopy} />}
+    <PropertyGrid
+      className="property-grid"
+      feature={selectedFeature}
+      size="small"
+      sticky={true}
+      title={() => {
+        return (
+          <>
+            <Pagination
+              simple
+              total={features.length}
+              size="small"
+              pageSize={1}
+              current={currentPage}
+              onChange={onChange}
             />
-          </Tooltip>
-        </div>
-      </div>
-      <PropertyGrid
-        feature={selectedFeature}
-        size="small"
-        sticky={true}
-        columns={[{
-          title: 'Key',
-          dataIndex: 'attributeName',
-          key: 'attributeName',
-          width: '50%',
-          ellipsis: true,
-          defaultSortOrder: 'ascend',
-          sorter: (a, b) => a.key.localeCompare(b.key)
-        }, {
-          title: 'Value',
-          dataIndex: 'attributeValue',
-          key: 'attributeValue',
-          width: '50%',
-          ellipsis: true
-        }]}
-        scroll={{
-          y: Object.keys(selectedFeature.getProperties()).length > 6 ?
-            250 :
-            undefined
-        }}
-        {...restProps}
-      />
-    </>
+            <Tooltip
+              // TODO Move to i18n
+              title="Copy to clipboard"
+            >
+              <Button
+                type="primary"
+                onClick={() => {
+                  copy(new OlFormatGeoJSON().writeFeature(selectedFeature));
+                }}
+                icon={<FontAwesomeIcon icon={faCopy} />}
+              />
+            </Tooltip>
+          </>
+        );
+      }}
+      columns={[{
+        title: 'Key',
+        dataIndex: 'attributeName',
+        key: 'attributeName',
+        width: '50%',
+        ellipsis: true,
+        defaultSortOrder: 'ascend',
+        sorter: (a, b) => a.key.localeCompare(b.key)
+      }, {
+        title: 'Value',
+        dataIndex: 'attributeValue',
+        key: 'attributeValue',
+        width: '50%',
+        ellipsis: true
+      }]}
+      scroll={{
+        scrollToFirstRowOnChange: true,
+        y: 'calc(100% - 90px)'
+      }}
+      {...restProps}
+    />
   );
 };
 
