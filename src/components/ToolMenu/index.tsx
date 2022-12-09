@@ -8,8 +8,16 @@ import type {
 } from '@fortawesome/fontawesome-common-types';
 
 import {
-  faChevronDown, faChevronLeft, faChevronRight, faDrawPolygon, faFileDownload, faLanguage, faMousePointer,
-  faPlus, faRuler, faShareNodes, faStream
+  faChevronLeft,
+  faChevronRight,
+  faDrawPolygon,
+  faFileDownload,
+  faLanguage,
+  faMousePointer,
+  faPlus,
+  faRuler,
+  faShareNodes,
+  faStream
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -38,6 +46,7 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import usePlugins from '../../hooks/usePlugins';
+import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
   isToolMenuIntegration
@@ -61,8 +70,6 @@ import Measure from './Measure';
 
 import './index.less';
 
-import '../PrintForm/Shared/Shared';
-
 export interface TitleEventEntity {
   key: string;
   domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
@@ -85,6 +92,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const map = useMap();
 
   const plugins = usePlugins();
+
+  const client = useSHOGunAPIClient();
 
   const dispatch = useAppDispatch();
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
@@ -192,7 +201,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   };
 
   const getToolPanelConfig = (tool: string): ToolPanelConfig | undefined => {
-
     switch (tool) {
       case 'measure_tools':
         return {
@@ -244,16 +252,17 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         return {
           icon: faFileDownload,
           title: t('ToolMenu.print'),
-          wrappedComponent: (
+          wrappedComponent: map ? (
             <PrintForm
               active={activeKeys.includes('print')}
-              map={map!}
+              map={map}
+              client={client}
               layerBlackList={[
                 'react-geo_measure',
                 'hoverVectorLayer'
               ]}
             />
-          )
+          ) : <></>
         };
       case 'tree':
         return {
