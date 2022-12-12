@@ -1,6 +1,10 @@
 import React from 'react';
 
 import {
+  Tabs
+} from 'antd';
+
+import {
   getUid
 } from 'ol';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
@@ -8,6 +12,10 @@ import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
+
+import {
+  Tab
+} from 'rc-tabs/lib/interface';
 
 import {
   useTranslation
@@ -46,10 +54,6 @@ import {
 import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
 import './index.less';
-import { Tabs } from 'antd';
-import {
-  Tab
-} from 'rc-tabs/lib/interface';
 
 export type FeatureInfoProps = {
   enabled?: boolean;
