@@ -1,3 +1,31 @@
+## [4.10.2](https://github.com/terrestris/shogun-gis-client/compare/v4.10.1...v4.10.2) (2022-12-12)
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([01de24f](https://github.com/terrestris/shogun-gis-client/commit/01de24fcf14779d64e03e8e0bbd7198842a7e57c))
+* **deps-dev:** bump @typescript-eslint/parser from 5.45.1 to 5.46.0 ([aebbd1c](https://github.com/terrestris/shogun-gis-client/commit/aebbd1ce7ac76666edf189717cfbf76dc6c6abc5))
+* **deps:** bump @terrestris/ol-util from 10.0.0 to 10.0.1 ([b71f089](https://github.com/terrestris/shogun-gis-client/commit/b71f089eb420d8aa05dec6256775f0cd2f355435))
+* **deps:** bump @terrestris/react-geo from 21.0.1 to 22.0.0 ([0075b6a](https://github.com/terrestris/shogun-gis-client/commit/0075b6a1b8c88d091f4d627f5b574e39688f8fab))
+* **deps:** bump @terrestris/shogun-util from 4.1.3 to 4.1.4 ([f3ae87b](https://github.com/terrestris/shogun-gis-client/commit/f3ae87b1772d3ed070a2f02911f1312996760bf0))
+* **deps:** bump i18next from 22.1.4 to 22.4.1 ([26bde0c](https://github.com/terrestris/shogun-gis-client/commit/26bde0c1548dbea8500bd3c439a906ad4a5ad812))
+* fix shared modules config ([8876a22](https://github.com/terrestris/shogun-gis-client/commit/8876a22d15632554dbc5968200d0dc0b8c5b2bd0))
+
+
+### Changes in layout
+
+* fix positioning of icon and title ([dcf80ff](https://github.com/terrestris/shogun-gis-client/commit/dcf80ff2ac33a6a447d66f6277e6499caf52e3cd))
+* remove unused hook ([6f82bc2](https://github.com/terrestris/shogun-gis-client/commit/6f82bc2edef56a36622f985cae89c01e9b17ac02))
+* show feature info results in tabs and make it nicer ([f44da10](https://github.com/terrestris/shogun-gis-client/commit/f44da10c6703ce8264a278f3f64409bdba4b1634))
+
+
+### Bugfixes
+
+* lint warnings ([8c0bdb8](https://github.com/terrestris/shogun-gis-client/commit/8c0bdb890b28a47bf0f938c902cdc6560e33ba75))
+* make use of path import ([457c4d6](https://github.com/terrestris/shogun-gis-client/commit/457c4d6827e58ccdf9975d414697b68d99d0bb76))
+* pass client as prop ([2a869bd](https://github.com/terrestris/shogun-gis-client/commit/2a869bd3ea6481c428fd463544323eea1f30fd7d))
+* prevent scrollbar on viewport ([af45d28](https://github.com/terrestris/shogun-gis-client/commit/af45d2875c5173c29b7682159d6dd1868ac4bb02))
+
 ## [4.10.1](https://github.com/terrestris/shogun-gis-client/compare/v4.10.0...v4.10.1) (2022-12-08)
 
 
