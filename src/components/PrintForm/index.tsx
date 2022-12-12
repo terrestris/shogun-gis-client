@@ -47,8 +47,8 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
-import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
 import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
 
@@ -56,6 +56,8 @@ import CustomFieldInput from './CustomFieldInput';
 import LayoutSelect from './LayoutSelect';
 import OutputFormatSelect from './OutputFormatSelect';
 import ResolutionSelect from './ResolutionSelect';
+
+import '../PrintForm/Shared/Shared';
 
 import './index.less';
 
@@ -70,19 +72,20 @@ export interface PrintFormProps extends Omit<FormProps, 'form'> {
   outputFormats?: string[];
   layouts?: Layout[];
   active: boolean;
+  client?: SHOGunAPIClient | null;
 }
 
 export const PrintForm: React.FC<PrintFormProps> = ({
   layerBlackList = [],
   map,
   active,
+  client,
   ...restProps
 }): JSX.Element => {
   const [form] = Form.useForm();
   const {
     t
   } = useTranslation();
-  const client = useSHOGunAPIClient();
 
   const [printManager, setPrintManager] = useState<MapFishPrintV3Manager | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
