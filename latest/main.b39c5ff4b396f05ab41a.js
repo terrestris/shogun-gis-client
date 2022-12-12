@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_terrestris_shogun_gis_client=self.webpackChunk_terrestris_shogun_gis_client||[]).push([[179],{87617:function(n){n.exports=clientConfig}},function(n){n.O(0,[592],(function(){return s=21302,n(n.s=s);var s}));n.O()}]);
-//# sourceMappingURL=main.b39c5ff4b396f05ab41a.js.map

@@ -1,1 +1,0 @@
-{"version":3,"file":"main.b39c5ff4b396f05ab41a.js","mappings":"gJAAAA,EAAOC,QAAUC,Y","sources":["webpack://@terrestris/shogun-gis-client/external var \"clientConfig\""],"sourcesContent":["module.exports = clientConfig;"],"names":["module","exports","clientConfig"],"sourceRoot":""}
