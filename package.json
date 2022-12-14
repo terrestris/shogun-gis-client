@@ -51,7 +51,7 @@
     "@terrestris/shogun-util": "^4.1.2",
     "antd": "^4.24.4",
     "color": "^4.2.3",
-    "geostyler": "^10.2.0",
+    "geostyler": "^11.0.0",
     "geostyler-openlayers-parser": "^4.0.0",
     "geostyler-style": "^7.2.0",
     "i18next": "^22.0.6",
