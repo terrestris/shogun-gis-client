@@ -22,10 +22,8 @@ import {
 import {
   getUid
 } from 'ol';
-import {
-  Extent as OlExtent
-} from 'ol/extent';
-import LayerGroup from 'ol/layer/Group';
+import OlLayerBase from 'ol/layer/Base';
+import OlLayerGroup from 'ol/layer/Group';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import {
@@ -45,6 +43,7 @@ import {
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
@@ -136,26 +135,47 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     }
   };
 
+  const getParentLayerGroups = (l: OlLayerBase): OlLayerGroup[] => {
+    if (!map) {
+      return [];
+    }
+
+    const layerGroups = getAllLayerGroups(map.getLayerGroup())
+      .filter(layerGroup => layerGroup.getLayers().getArray().includes(l));
+
+    return layerGroups;
+  };
+
+  const getAllLayerGroups = (layerGroup: OlLayerGroup): OlLayerGroup[] => {
+    const layerGroups = [layerGroup];
+
+    for (const l of layerGroup.getLayers().getArray()) {
+      if (l instanceof OlLayerGroup) {
+        layerGroups.push(...getAllLayerGroups(l));
+      }
+    }
+
+    return layerGroups;
+  };
+
+  const removeLayer = (l: OlLayerBase) => {
+    const parentGroups = getParentLayerGroups(l);
+
+    parentGroups.forEach(parentGroup => parentGroup.getLayers().remove(l));
+  };
+
   const removeExternalLayer = () => {
     if (!map) {
       return;
     }
 
-    const layerGroups = map.getLayers().getArray();
+    removeLayer(layer);
 
-    layerGroups.forEach(layerGroup => {
-      if ((layerGroup as LayerGroup).getLayers) {
-        const existingLayers = (layerGroup as LayerGroup).getLayers();
-        try {
-          if (existingLayers.getLength() === 1) {
-            layerGroup.setVisible(false);
-          }
-          existingLayers.remove(layer);
-        } catch (e) {
-          Logger.error('Could not remove external layer from map.');
-        }
-      }
-    });
+    const externalLayerGroup = MapUtil.getLayerByName(map, t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
+
+    if (externalLayerGroup && externalLayerGroup.getLayers().getLength() === 0) {
+      removeLayer(externalLayerGroup);
+    }
   };
 
   const downloadLayer = async (url: string) => {
