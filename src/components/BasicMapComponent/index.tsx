@@ -55,16 +55,20 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     t
   } = useTranslation();
 
-  const restoreTransientLayers = useCallback(async (configString: string) => {
+  const restoreTransientLayers = useCallback(async (configString: string, permaLinkLayers?: string | null) => {
     if (!map) {
       return;
     }
 
     const addLayerGroup = (name: string) => {
-      const layerGroup = new OlLayerGroup();
+      const layerGroup = new OlLayerGroup({
+        layers: []
+      });
       layerGroup.set('name', name);
       const existingGroups = map.getLayerGroup().getLayers();
       existingGroups.insertAt(existingGroups?.getLength() || 0, layerGroup);
+
+      return layerGroup;
     };
 
     try {
@@ -87,6 +91,8 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
           olLayer.set('groupName', cfg.groupName);
           olLayer.set('layerConfig', cfg.layerConfig);
 
+          olLayer.setVisible(!!permaLinkLayers?.split(';').some(l => l === layerConfig.name));
+
           if (!olLayer.get('isExternalLayer')) {
             continue;
           }
@@ -97,19 +103,18 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
             targetGroup = MapUtil.getLayerByName(map, olLayer.get('groupName')) as OlLayerGroup;
 
             if (!targetGroup) {
-              addLayerGroup(olLayer.get('groupName'));
+              targetGroup = addLayerGroup(olLayer.get('groupName'));
             }
           } else {
             targetGroup = MapUtil.getLayerByName(map,
               t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
 
             if (!targetGroup) {
-              addLayerGroup(t('AddLayerModal.externalWmsFolder'));
+              targetGroup = addLayerGroup(t('AddLayerModal.externalWmsFolder'));
             }
           }
 
           targetGroup.getLayers().push(olLayer);
-          targetGroup.setVisible(true);
         }
       }
     } catch (error) {
@@ -126,7 +131,8 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       if (!configString) {
         return;
       }
-      restoreTransientLayers(configString);
+
+      restoreTransientLayers(configString, layers);
     }
   }, [
     map,
