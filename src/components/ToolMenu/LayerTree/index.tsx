@@ -13,6 +13,7 @@ import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSource from 'ol/source/Source';
 import OlSourceTileWMS from 'ol/source/TileWMS';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   useTranslation
@@ -51,13 +52,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
 
-    // @ts-ignore
-    if (layer.getLayers) {
+    if ((layer as OlLayerGroup).getLayers) {
       return !layer.get('hideInLayerTree');
     }
 
-    // @ts-ignore
-    if (layer.getSource && layer.getSource().forEachFeature) {
+    if ((layer as OlLayer).getSource && ((layer as OlLayer).getSource() as OlSourceVector)?.forEachFeature) {
       return false;
     }
     return true;
