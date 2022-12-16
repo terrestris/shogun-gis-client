@@ -198,7 +198,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  if (layer.get('isImported')) {
+  if (layer.get('isExternalLayer')) {
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'

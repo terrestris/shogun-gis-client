@@ -103,6 +103,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
 
     const targetFolderName = t('AddLayerModal.externalWmsFolder');
     let targetGroup = MapUtil.getLayerByName(map, targetFolderName) as OlLayerGroup;
+
     if (!targetGroup) {
       targetGroup = new OlLayerGroup();
       targetGroup.set('name', targetFolderName);
@@ -113,7 +114,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     layersToAdd.forEach(layerToAdd => {
       if (!targetGroup.getLayers().getArray().includes(layerToAdd)) {
         layerToAdd.set('isExternalLayer', true);
-        layerToAdd.set('isImported', true);
 
         let layerUrl: string | undefined;
         if (layerToAdd instanceof ImageLayer) {
