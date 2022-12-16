@@ -153,18 +153,18 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       onCancel={closeModal}
       footer={[
         <Button
-          key="add-selected"
-          disabled={selectedRowKeys?.length < 1}
-          onClick={onAddSelected}
-        >
-          {t('AddLayerModal.addSelectedLayers')}
-        </Button>,
-        <Button
           key="add-all"
           disabled={layers?.length < 1}
           onClick={onAddAll}
         >
           {t('AddLayerModal.addAllLayers')}
+        </Button>,
+        <Button
+          key="add-selected"
+          disabled={selectedRowKeys?.length < 1}
+          onClick={onAddSelected}
+        >
+          {t('AddLayerModal.addSelectedLayers')}
         </Button>
       ]}
       {...restProps}
