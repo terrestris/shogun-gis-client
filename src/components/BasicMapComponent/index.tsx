@@ -60,6 +60,13 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       return;
     }
 
+    const addLayerGroup = (name: string) => {
+      const layerGroup = new OlLayerGroup();
+      layerGroup.set('name', name);
+      const existingGroups = map.getLayerGroup().getLayers();
+      existingGroups.insertAt(existingGroups?.getLength() || 0, layerGroup);
+    };
+
     try {
       const config = JSON.parse(configString);
 
@@ -80,34 +87,29 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
           olLayer.set('groupName', cfg.groupName);
           olLayer.set('layerConfig', cfg.layerConfig);
 
-          if (olLayer.get('isExternalLayer')) {
-            let defaultExternalLayerGroup = MapUtil.getLayerByName(map,
+          if (!olLayer.get('isExternalLayer')) {
+            continue;
+          }
+
+          let targetGroup: OlLayerGroup;
+
+          if (olLayer.get('groupName')) {
+            targetGroup = MapUtil.getLayerByName(map, olLayer.get('groupName')) as OlLayerGroup;
+
+            if (!targetGroup) {
+              addLayerGroup(olLayer.get('groupName'));
+            }
+          } else {
+            targetGroup = MapUtil.getLayerByName(map,
               t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
 
-            if (!defaultExternalLayerGroup) {
-              defaultExternalLayerGroup = new OlLayerGroup();
-              defaultExternalLayerGroup.set('name', t('AddLayerModal.externalWmsFolder'));
-              const existingGroups = map.getLayerGroup().getLayers();
-              existingGroups.insertAt(existingGroups?.getLength() || 0, defaultExternalLayerGroup);
+            if (!targetGroup) {
+              addLayerGroup(t('AddLayerModal.externalWmsFolder'));
             }
-
-            defaultExternalLayerGroup.getLayers().push(olLayer);
-            defaultExternalLayerGroup.setVisible(true);
           }
 
-          if (olLayer.get('isExternalLayer') && olLayer.get('groupName')) {
-            let customExternalLayerGroup = MapUtil.getLayerByName(map, olLayer.get('groupName')) as OlLayerGroup;
-
-            if (!customExternalLayerGroup) {
-              customExternalLayerGroup = new OlLayerGroup();
-              customExternalLayerGroup.set('name', olLayer.get('groupName'));
-              const existingGroups = map.getLayerGroup().getLayers();
-              existingGroups.insertAt(existingGroups?.getLength() || 0, customExternalLayerGroup);
-            }
-
-            customExternalLayerGroup.getLayers().push(olLayer);
-            customExternalLayerGroup.setVisible(true);
-          }
+          targetGroup.getLayers().push(olLayer);
+          targetGroup.setVisible(true);
         }
       }
     } catch (error) {
