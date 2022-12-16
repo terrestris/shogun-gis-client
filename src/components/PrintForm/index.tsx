@@ -103,53 +103,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       MapUtil.layerInResolutionRange(l, map);
   }, [map, layerBlackList]);
 
-  const initializeMapProvider = useCallback(async () => {
-    // @ts-ignore
-    const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
-      url: ClientConfiguration.print?.url || '/print',
-      map,
-      timeout: 60000,
-      layerFilter,
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak())
-      },
-      transformOpts: {
-        rotate: false
-      }
-    });
-
-    pManager.serializers = [
-      new MapFishPrintV3GeoJsonSerializer(),
-      new MapFishPrintV3OSMSerializer(),
-      new MapFishPrintV3WMTSSerializer(),
-      new SHOGunMapFishPrintV3WMSSerializer(),
-      new SHOGunMapFishPrintV3TiledWMSSerializer()
-    ];
-
-    await pManager.init();
-    if (pManager.isInitiated()) {
-      pManager.setOutputFormat(pManager.getOutputFormats()[0]);
-      pManager.setDpi(pManager.getDpis()[0]);
-      pManager.setLayout(pManager.getLayouts()[0]?.name);
-      setPrintManager(pManager);
-    } else {
-      Logger.error('Could not initialize print manager');
-    }
-  }, [client, layerFilter, map]);
-
-  useEffect(() => {
-    if (active) {
-      if (!printManager) {
-        initializeMapProvider();
-      }
-    } else {
-      printManager?.shutdownManager();
-      setPrintManager(null);
-    };
-
-  }, [printManager, active, initializeMapProvider]);
-
-  const legendFilter = (l: OlLayer<OlSource>) => {
+  const legendFilter = useCallback((l: OlLayer<OlSource>) => {
     const layerName = l.get('name');
     const notBlacklisted = !layerBlackList.includes(layerName);
     const notHidden = !l.get('hideLegendInPrint');
@@ -166,7 +120,58 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       return true;
     }
     return false;
-  };
+  }, [map, layerBlackList]);
+
+  const initializeMapProvider = useCallback(async () => {
+    const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
+      url: ClientConfiguration.print?.url || '/print',
+      map,
+      timeout: 60000,
+      layerFilter,
+      headers: {
+        ...getBearerTokenHeader(client?.getKeycloak())
+      },
+      transformOpts: {
+        rotate: false
+      },
+      serializers: [
+        new MapFishPrintV3GeoJsonSerializer(),
+        new MapFishPrintV3OSMSerializer(),
+        new MapFishPrintV3WMTSSerializer(),
+        new SHOGunMapFishPrintV3WMSSerializer(),
+        new SHOGunMapFishPrintV3TiledWMSSerializer()
+      ],
+      legendFilter,
+      customParams: {
+        printLegend: false
+      }
+    });
+
+    try {
+      await pManager.init();
+
+      pManager.setOutputFormat(pManager.getOutputFormats()[0]);
+      pManager.setDpi(pManager.getDpis()[0]);
+      pManager.setLayout(pManager.getLayouts()[0]?.name);
+
+      setPrintManager(pManager);
+    } catch (error) {
+      setErrorMsg(() => t('PrintForm.managerErrorMessage'));
+      Logger.error('Could not initialize print manager: ', error);
+    }
+  }, [client, layerFilter, legendFilter, map, t]);
+
+  useEffect(() => {
+    if (active) {
+      if (!printManager) {
+        initializeMapProvider();
+      }
+    } else {
+      printManager?.shutdownManager();
+      setPrintManager(null);
+    };
+
+  }, [printManager, active, initializeMapProvider]);
 
   const onDownloadClick = async () => {
     try {
@@ -176,8 +181,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       if (!printManager) {
         return;
       }
-
-      await setCustomPrintParams();
 
       const downloadUrl = await printManager.print(false);
 
@@ -194,21 +197,9 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     }
   };
 
-  const setCustomPrintParams = async () => {
-    if (printManager) {
-      printManager.legendFilter = legendFilter;
-      // @ts-ignore
-      printManager.customParams.printLegend = false;
-    }
-  };
-
   const onAlertClose = () => {
     setErrorMsg(null);
   };
-
-  if (!printManager?.isInitiated()) {
-    return <></>;
-  }
 
   const layout = {
     labelCol: {
@@ -232,74 +223,80 @@ export const PrintForm: React.FC<PrintFormProps> = ({
           onClose={onAlertClose}
         />
       }
-      <Form
-        form={form}
-        className="print-form"
-        layout="horizontal"
-        {...layout}
-        {...restProps}
-      >
-        <Form.Item
-          name="title"
-          label={t('PrintForm.title')}
-          initialValue={t('PrintForm.initialTitle')}
-        >
-          <CustomFieldInput
-            maxLength={50}
-            printManager={printManager}
-            placeholder={t('PrintForm.titlePlaceholder')}
-          />
-        </Form.Item>
-        <Form.Item
-          name="comment"
-          label={t('PrintForm.comment')}
-        >
-          <CustomFieldInput
-            maxLength={200}
-            printManager={printManager}
-            placeholder={t('PrintForm.commentPlaceholder')}
-          />
-        </Form.Item>
-        <Form.Item
-          name="layout"
-          label={t('PrintForm.layout')}
-          initialValue={printManager?.getLayouts()[0]?.name}
-        >
-          <LayoutSelect
-            printManager={printManager}
-          />
-        </Form.Item>
-        <Form.Item
-          name="dpi"
-          label={t('PrintForm.dpi')}
-          initialValue={72}
-        >
-          <ResolutionSelect
-            printManager={printManager}
-            placeholder={t('PrintForm.resolutionPlaceholder')}
-          />
-        </Form.Item>
-        <Form.Item
-          name="format"
-          label={t('PrintForm.format')}
-          initialValue="pdf"
-        >
-          <OutputFormatSelect
-            printManager={printManager}
-            outputFormats={['pdf', 'png']}
-            placeholder={t('PrintForm.outputFormatPlaceholder')}
-          />
-        </Form.Item>
-      </Form>
-      <Button
-        className='print-button tool-menu-button'
-        disabled={!printManager?.isInitiated()}
-        icon={<FontAwesomeIcon icon={faDownload} />}
-        loading={loading}
-        onClick={onDownloadClick}
-      >
-        {t('PrintForm.downloadBtnText')}
-      </Button>
+      {
+        printManager?.isInitiated() && (
+          <>
+            <Form
+              form={form}
+              className="print-form"
+              layout="horizontal"
+              {...layout}
+              {...restProps}
+            >
+              <Form.Item
+                name="title"
+                label={t('PrintForm.title')}
+                initialValue={t('PrintForm.initialTitle')}
+              >
+                <CustomFieldInput
+                  maxLength={50}
+                  printManager={printManager}
+                  placeholder={t('PrintForm.titlePlaceholder')}
+                />
+              </Form.Item>
+              <Form.Item
+                name="comment"
+                label={t('PrintForm.comment')}
+              >
+                <CustomFieldInput
+                  maxLength={200}
+                  printManager={printManager}
+                  placeholder={t('PrintForm.commentPlaceholder')}
+                />
+              </Form.Item>
+              <Form.Item
+                name="layout"
+                label={t('PrintForm.layout')}
+                initialValue={printManager?.getLayouts()[0]?.name}
+              >
+                <LayoutSelect
+                  printManager={printManager}
+                />
+              </Form.Item>
+              <Form.Item
+                name="dpi"
+                label={t('PrintForm.dpi')}
+                initialValue={72}
+              >
+                <ResolutionSelect
+                  printManager={printManager}
+                  placeholder={t('PrintForm.resolutionPlaceholder')}
+                />
+              </Form.Item>
+              <Form.Item
+                name="format"
+                label={t('PrintForm.format')}
+                initialValue="pdf"
+              >
+                <OutputFormatSelect
+                  printManager={printManager}
+                  outputFormats={['pdf', 'png']}
+                  placeholder={t('PrintForm.outputFormatPlaceholder')}
+                />
+              </Form.Item>
+            </Form>
+            <Button
+              className='print-button tool-menu-button'
+              disabled={!printManager?.isInitiated()}
+              icon={<FontAwesomeIcon icon={faDownload} />}
+              loading={loading}
+              onClick={onDownloadClick}
+            >
+              {t('PrintForm.downloadBtnText')}
+            </Button>
+          </>
+        )
+      }
     </div>
   );
 };

@@ -90,7 +90,8 @@ export default {
         printJobErrorMsg: 'Der Kartenausdruck konnte nicht erzeugt werden',
         initErrorMsg: 'Der Kartendruck Generator konnte nicht initialisiert werden.',
         outputFormatPlaceholder: 'Bitte wählen Sie ein Ausgabeformat aus',
-        resolutionPlaceholder: 'Bitte wählen Sie eine Ausgabequalität aus'
+        resolutionPlaceholder: 'Bitte wählen Sie eine Ausgabequalität aus',
+        managerErrorMessage: 'Fehler bei der Initialisierung der Export-Engine'
       },
       Footer: {
         refSystem: 'Bezugssystem',
@@ -214,7 +215,8 @@ export default {
         printJobErrorMsg: 'Could not generate PDF output',
         initErrorMsg: 'PDF Generator could not be initialized',
         outputFormatPlaceholder: 'Please select an output format',
-        resolutionPlaceholder: 'Please select an output quality'
+        resolutionPlaceholder: 'Please select an output quality',
+        managerErrorMessage: 'Error while initializing the export engine'
       },
       Footer: {
         refSystem: 'Reference system',

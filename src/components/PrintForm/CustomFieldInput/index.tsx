@@ -31,8 +31,7 @@ export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
 
   useEffect(() => {
     if (printManager && id) {
-      // @ts-ignore
-      printManager.customParams[id] = inputText;
+      printManager.setCustomParam(id, inputText);
     }
   }, [printManager, inputText, id]);
 

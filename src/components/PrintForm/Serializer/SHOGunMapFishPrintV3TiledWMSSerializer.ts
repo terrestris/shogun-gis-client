@@ -3,24 +3,17 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import OlLayer from 'ol/layer/Layer';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
+import MapFishPrintV3TiledWMSSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3TiledWMSSerializer';
+
 import SHOGunMapFishPrintV3WMSSerializer from './SHOGunMapFishPrintV3WMSSerializer';
 
 export class SHOGunMapFishPrintV3TiledWMSSerializer extends SHOGunMapFishPrintV3WMSSerializer {
 
-  static TYPE_WMS: string = 'tiledwms';
-
-  static sourceCls: any[] = [
-    OlSourceTileWMS
-  ];
-
-  constructor() {
-    super();
-  }
-
-  serialize(layer: OlLayer<OlSourceTileWMS>, opts: any = {}, resolution: number) {
-    defaultsDeep(opts, {
-      tileSize: [512, 512]
-    });
+  serialize(layer: OlLayer<OlSourceTileWMS>, opts: any) {
+    const optsToApply = {
+      tileSize: [512, 512],
+      ...opts
+    };
 
     const source = layer.getSource();
 
@@ -29,10 +22,9 @@ export class SHOGunMapFishPrintV3TiledWMSSerializer extends SHOGunMapFishPrintV3
     }
 
     const serialized = {
-      ...super.serialize(layer, opts, resolution),
+      ...super.serialize(layer, optsToApply),
       ...{
-        // @ts-ignore
-        type: this.constructor.TYPE_WMS
+        type: MapFishPrintV3TiledWMSSerializer.TYPE_WMS
       },
       ...opts
     };
