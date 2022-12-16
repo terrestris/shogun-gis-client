@@ -105,7 +105,9 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     let targetGroup = MapUtil.getLayerByName(map, targetFolderName) as OlLayerGroup;
 
     if (!targetGroup) {
-      targetGroup = new OlLayerGroup();
+      targetGroup = new OlLayerGroup({
+        layers: []
+      });
       targetGroup.set('name', targetFolderName);
       const existingGroups = map.getLayerGroup().getLayers();
       existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
@@ -139,8 +141,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         targetGroup.getLayers().push(layerToAdd);
       }
     });
-
-    targetGroup.set('hideInLayerTree', targetGroup.getLayers().getLength() < 1);
 
     closeModal();
   };
