@@ -48,6 +48,9 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
+import {
+  isWmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import {
   DownloadConfig
@@ -199,19 +202,23 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     a.click();
   };
 
-  let dropdownMenuItems: ItemType[] = [{
-    label: (
-      <Spin
-        spinning={extentLoading}
-      >
-        {t('LayerTreeContextMenu.layerZoomToExtent')}
-      </Spin>
-    ),
-    key: 'zoomToExtent'
-  }];
+  let dropdownMenuItems: ItemType[] = [];
+
+  if (isWmsLayer(layer)) {
+    dropdownMenuItems.push({
+      label: (
+        <Spin
+          spinning={extentLoading}
+        >
+          {t('LayerTreeContextMenu.layerZoomToExtent')}
+        </Spin>
+      ),
+      key: 'zoomToExtent'
+    });
+  }
 
   const legendVisible = visibleLegendsIds.includes(getUid(layer));
-  if (layer.getVisible()) {
+  if (isWmsLayer(layer) && layer.getVisible()) {
     dropdownMenuItems.push({
       label: legendVisible ? t('LayerTreeContextMenu.hideLegend') : t('LayerTreeContextMenu.showLegend'),
       key: 'toggleLegend'
