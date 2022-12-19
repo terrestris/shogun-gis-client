@@ -44,7 +44,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "@terrestris/base-util": "^1.0.1",
-    "@terrestris/mapfish-print-manager": "^7.0.2",
+    "@terrestris/mapfish-print-manager": "^8.0.0",
     "@terrestris/ol-util": "^10.0.0",
     "@terrestris/react-geo": "^22.0.0",
     "@terrestris/react-util": "^2.1.1",
