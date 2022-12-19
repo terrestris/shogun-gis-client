@@ -31,6 +31,11 @@ import Legend from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
 
 import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
+import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
 import WmsTimeSlider from '../../WmsTimeSlider';
 
@@ -44,6 +49,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps
 }): JSX.Element => {
   const map = useMap();
+  const client = useSHOGunAPIClient();
   const {
     t
   } = useTranslation();
@@ -86,7 +92,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
                 <LayerTreeContextMenu
-                  layer={(layer)}
+                  layer={layer}
                   visibleLegendsIds={visibleLegendsIds}
                   setVisibleLegendsIds={setVisibleLegendsIds}
                 />
@@ -114,7 +120,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             </div>
           }
           {
-            layer.get('visible') && visibleLegendsIds.includes(getUid(layer)) &&
+            (layer.get('visible') && visibleLegendsIds.includes(getUid(layer))) &&
             <Legend
               layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
               errorMsg={t('LayerTree.noLegendAvailable')}
@@ -123,6 +129,13 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
                 LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
                 TRANSPARENT: true
               }}
+              headers={
+                layer.get('useBearerToken') ?
+                  {
+                    ...getBearerTokenHeader(client?.getKeycloak())
+                  } :
+                  {}
+              }
             />
           }
         </>
