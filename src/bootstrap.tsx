@@ -293,15 +293,6 @@ const setupSHOGunMap = async (application: Application) => {
 
   view.setConstrainResolution(true);
 
-  const externalWmsLayerGroup = new OlLayerGroup({
-    layers: []
-  });
-  externalWmsLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
-
-  externalWmsLayerGroup.set('hideInLayerTree', externalWmsLayerGroup.getLayers().getLength() < 1);
-
-  layers?.getLayers().extend([externalWmsLayerGroup]);
-
   return new OlMap({
     view,
     layers,
@@ -333,14 +324,6 @@ const setupDefaultMap = () => {
     hoverable: true
   });
 
-  const externalLayerGroup = new OlLayerGroup({
-    layers: []
-  });
-  externalLayerGroup.set('name', i18n.t('AddLayerModal.externalWmsFolder'));
-  externalLayerGroup.set('isGroupForImportedLayers', true);
-
-  externalLayerGroup.set('hideInLayerTree', externalLayerGroup.getLayers().getLength() < 1);
-
   const eoLayerGroup = new OlLayerGroup({
     layers: [temperatureLayer]
   });
@@ -358,7 +341,7 @@ const setupDefaultMap = () => {
       center: center,
       zoom: 0
     }),
-    layers: [backgroundLayerGroup, eoLayerGroup, externalLayerGroup],
+    layers: [backgroundLayerGroup, eoLayerGroup],
     controls: OlControlDefaults({
       zoom: false
     })

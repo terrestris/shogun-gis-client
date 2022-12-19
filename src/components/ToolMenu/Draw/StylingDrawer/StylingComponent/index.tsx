@@ -40,14 +40,13 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 
-  const defaultStyle = {
+  const defaultStyle: GsStyle = {
     name: 'Default Style',
     rules: [{
       name: 'Area',
       symbolizers: [{
         kind: 'Fill',
         color: '#00b72b',
-        strokeColor: '#00b72b',
         outlineOpacity: 0.8,
         opacity: 0.5,
         fillOpacity: 0.8,
@@ -69,7 +68,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
         wellKnownName: 'circle',
         color: '#00b72b',
         strokeColor: '#00b72b',
-        outlineOpacity: 0.8,
+        strokeOpacity: 0.8,
         opacity: 0.5,
         radius: 7
       }],
@@ -104,7 +103,6 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
     }]
   };
 
-  // @ts-ignore - TS-Error due to old Geostyler-Style version.
   const [style, setStyle] = useState<GsStyle>(defaultStyle);
 
   const map = useMap();
@@ -130,7 +128,6 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
           rules: [rule]
         };
 
-        // @ts-ignore - TS-Error due to old Geostyler-Style version.
         const olStyle = await olParser.writeStyle(newStyle);
 
         if (!olStyle.output) {

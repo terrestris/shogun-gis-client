@@ -7,9 +7,9 @@ import _isEmpty from 'lodash/isEmpty';
 
 import BaseLayer from 'ol/layer/Base';
 
-import LayerGroup from 'ol/layer/Group';
-import ImageLayer from 'ol/layer/Image';
-import TileLayer from 'ol/layer/Tile';
+import OlLayerGroup from 'ol/layer/Group';
+import OlLayerImage from 'ol/layer/Image';
+import OlLayerTile from 'ol/layer/Tile';
 
 import {
   useTranslation
@@ -55,12 +55,21 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     t
   } = useTranslation();
 
-  const restoreTransientLayers = useCallback(async (configString: string) => {
+  const restoreTransientLayers = useCallback(async (configString: string, permaLinkLayers?: string | null) => {
     if (!map) {
       return;
     }
 
-    const externalLayerGroup = MapUtil.getLayerByName(map, t('AddLayerModal.externalWmsFolder')) as LayerGroup;
+    const addLayerGroup = (name: string) => {
+      const layerGroup = new OlLayerGroup({
+        layers: []
+      });
+      layerGroup.set('name', name);
+      const existingGroups = map.getLayerGroup().getLayers();
+      existingGroups.insertAt(existingGroups?.getLength() || 0, layerGroup);
+
+      return layerGroup;
+    };
 
     try {
       const config = JSON.parse(configString);
@@ -68,6 +77,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       if (!client) {
         throw new Error('Client is not available');
       }
+
       const parser = new SHOGunApplicationUtil({
         client
       });
@@ -77,21 +87,36 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
         if (!_isEmpty(cfg?.layerConfig)) {
           const layerConfig: Layer = cfg.layerConfig;
           const olLayer = await parser.parseLayer(layerConfig);
-          if (cfg.isExternalLayer) {
-            externalLayerGroup.getLayers().extend([olLayer]);
-            externalLayerGroup.setVisible(true);
-          } else {
-            const customFolderName = cfg.groupName;
-            const customLayerGroup = MapUtil.getLayerByName(map, customFolderName) as LayerGroup;
+          olLayer.set('isExternalLayer', cfg.isExternalLayer);
+          olLayer.set('groupName', cfg.groupName);
+          olLayer.set('layerConfig', cfg.layerConfig);
 
-            if (customLayerGroup) {
-              customLayerGroup.getLayers().extend([olLayer]);
-              customLayerGroup.setVisible(true);
+          olLayer.setVisible(!!permaLinkLayers?.split(';').some(l => l === layerConfig.name));
+
+          if (!olLayer.get('isExternalLayer')) {
+            continue;
+          }
+
+          let targetGroup: OlLayerGroup;
+
+          if (olLayer.get('groupName')) {
+            targetGroup = MapUtil.getLayerByName(map, olLayer.get('groupName')) as OlLayerGroup;
+
+            if (!targetGroup) {
+              targetGroup = addLayerGroup(olLayer.get('groupName'));
+            }
+          } else {
+            targetGroup = MapUtil.getLayerByName(map,
+              t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
+
+            if (!targetGroup) {
+              targetGroup = addLayerGroup(t('AddLayerModal.externalWmsFolder'));
             }
           }
+
+          targetGroup.getLayers().push(olLayer);
         }
       }
-
     } catch (error) {
       Logger.error(error);
     }
@@ -100,13 +125,14 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   useEffect(() => {
     if (map) {
       const identifier = (l: BaseLayer) => l.get('name');
-      const filter = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
+      const filter = (l: BaseLayer) => (l instanceof OlLayerTile || l instanceof OlLayerImage);
       const configString = PermalinkUtil.applyLink(map, ';', identifier, filter);
 
       if (!configString) {
         return;
       }
-      restoreTransientLayers(configString);
+
+      restoreTransientLayers(configString, layers);
     }
   }, [
     map,

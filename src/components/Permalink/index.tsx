@@ -93,7 +93,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
     const updateLayerConfig = () => {
       const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer'));
-      externalLayers.forEach((externalLayer) => {
+      externalLayers.forEach(externalLayer => {
         const layerConfig = externalLayer.get('layerConfig') as Layer;
         if (layerConfig) {
           if (layerConfig.clientConfig) {
@@ -123,14 +123,6 @@ export const Permalink: React.FC<PermalinkProps> = () => {
         }
       }
     };
-
-    const layerGroups = map.getLayers().getArray().filter((l) => l.get('isGroupForImportedLayers'));
-    layerGroups.forEach((layerGroup) => {
-      // @ts-ignore
-      eventKeys.push(layerGroup.getLayers().on('add', updateLayersInPermalink));
-      // @ts-ignore
-      eventKeys.push(layerGroup.getLayers().on('remove', updateLayersInPermalink));
-    });
 
     const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
     const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);

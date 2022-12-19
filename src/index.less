@@ -26,8 +26,9 @@ body,
   overflow: hidden;
 }
 
-.ant-notification-notice {
-  margin-top: var(--headerHeight);
+// adds margin to make login button clickable when notifications are shown
+.ant-notification-topRight {
+  top: calc(var(--headerHeight) + 25px) !important;
 }
 
 .error-boundary {

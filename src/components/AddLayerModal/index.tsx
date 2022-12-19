@@ -103,8 +103,11 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
 
     const targetFolderName = t('AddLayerModal.externalWmsFolder');
     let targetGroup = MapUtil.getLayerByName(map, targetFolderName) as OlLayerGroup;
+
     if (!targetGroup) {
-      targetGroup = new OlLayerGroup();
+      targetGroup = new OlLayerGroup({
+        layers: []
+      });
       targetGroup.set('name', targetFolderName);
       const existingGroups = map.getLayerGroup().getLayers();
       existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
@@ -113,7 +116,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     layersToAdd.forEach(layerToAdd => {
       if (!targetGroup.getLayers().getArray().includes(layerToAdd)) {
         layerToAdd.set('isExternalLayer', true);
-        layerToAdd.set('isImported', true);
 
         let layerUrl: string | undefined;
         if (layerToAdd instanceof ImageLayer) {
@@ -140,8 +142,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       }
     });
 
-    targetGroup.set('hideInLayerTree', targetGroup.getLayers().getLength() < 1);
-
     closeModal();
   };
 
@@ -153,18 +153,18 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       onCancel={closeModal}
       footer={[
         <Button
-          key="add-selected"
-          disabled={selectedRowKeys?.length < 1}
-          onClick={onAddSelected}
-        >
-          {t('AddLayerModal.addSelectedLayers')}
-        </Button>,
-        <Button
           key="add-all"
           disabled={layers?.length < 1}
           onClick={onAddAll}
         >
           {t('AddLayerModal.addAllLayers')}
+        </Button>,
+        <Button
+          key="add-selected"
+          disabled={selectedRowKeys?.length < 1}
+          onClick={onAddSelected}
+        >
+          {t('AddLayerModal.addSelectedLayers')}
         </Button>
       ]}
       {...restProps}
