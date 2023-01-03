@@ -8,6 +8,8 @@ import {
   Modal,
   ModalProps,
   notification,
+  Select,
+  Space,
   Table
 } from 'antd';
 
@@ -52,6 +54,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   const [url, setUrl] = useState(
     'https://sgx.geodatenzentrum.de/wms_topplus_open?request=GetCapabilities&service=wms'
   );
+  const [version, setVersion] = useState<string>('1.3.0');
 
   const isModalVisible = useAppSelector(state => state.addLayerModal.visible);
 
@@ -67,7 +70,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     try {
       setLoading(true);
 
-      const capabilities = await CapabilitiesUtil.getWmsCapabilities(capabilitiesUrl);
+      const capabilities = await CapabilitiesUtil.getWmsCapabilities(completeUrl(capabilitiesUrl));
       const externalLayers = CapabilitiesUtil.getLayersFromWmsCapabilities(capabilities, 'Title');
 
       setLayers(externalLayers);
@@ -80,6 +83,28 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       setLoading(false);
     }
   };
+
+  /**
+   * Checks and completes a WMS GetCapabilities URL.
+   * The params request, service and version will be completed.
+   * @param url The input url
+   * @returns The completed URL
+   */
+  const completeUrl = (url: string) => {
+    let completeUrl = new URL(url);
+
+    if (!completeUrl.searchParams.has('request')) {
+      completeUrl.searchParams.append('request', 'GetCapabilities');
+    }
+    if (!completeUrl.searchParams.has('service')) {
+      completeUrl.searchParams.append('service', 'wms');
+    }
+    if (!completeUrl.searchParams.has('version')) {
+      completeUrl.searchParams.append('version', version);
+    }
+
+    return completeUrl.toString();
+  }
 
   const closeModal = () => {
     setSelectedRowKeys([]);
@@ -169,33 +194,56 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       ]}
       {...restProps}
     >
-      <Input.Search
-        placeholder={t('AddLayerModal.inputPlaceholder')}
-        value={url}
-        onChange={(event) => {
-          setUrl(event.target.value);
-        }}
-        onSearch={getCapabilities}
-        enterButton={true}
-      />
-      <Table
-        loading={loading}
-        columns={[
-          {
-            title: t('AddLayerModal.columnTitle'),
-            render: (text: any, record: any) => {
-              return record.get('title');
+      <Space direction="vertical" style={{ display: 'flex' }}>
+        <Input.Search
+          placeholder={t('AddLayerModal.inputPlaceholder')}
+          value={url}
+          onChange={(event) => {
+            setUrl(event.target.value);
+          }}
+          onSearch={getCapabilities}
+          enterButton={true}
+        />
+        <Space>
+          {t('AddLayerModal.version')}:
+          <Select
+            defaultValue='1.3.0'
+            onChange={(newVersion) => {
+              setVersion(newVersion);
+              getCapabilities(url);
+              }
             }
-          }
-        ]}
-        rowKey={(record: any) => getUid(record)}
-        rowSelection={{
-          selectedRowKeys,
-          onChange: setSelectedRowKeys
-        }}
-        pagination={false}
-        dataSource={layers}
-      />
+            options={[
+              {
+                value: '1.3.0',
+                label: '1.3.0'
+              },
+              {
+                value: '1.1.1',
+                label: '1.1.1'
+              }
+            ]}>
+          </Select>
+        </Space>
+        <Table
+          loading={loading}
+          columns={[
+            {
+              title: t('AddLayerModal.columnTitle'),
+              render: (text: any, record: any) => {
+                return record.get('title');
+              }
+            }
+          ]}
+          rowKey={(record: any) => getUid(record)}
+          rowSelection={{
+            selectedRowKeys,
+            onChange: setSelectedRowKeys
+          }}
+          pagination={false}
+          dataSource={layers}
+        />
+      </Space>
     </Modal>
   );
 };
