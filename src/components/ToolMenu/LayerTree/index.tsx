@@ -153,10 +153,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               format={() => ''}
               width={16}
               strokeWidth={20}
-              strokeColor={{
-                '0%': '#108ee9',
-                '100%': '#87d068'
-              }}
             />
             <span>{layer.get('name')}</span>
             {

@@ -21,10 +21,17 @@
 
         .loading-indicator {
           flex: 1;
+          opacity: 0.75;
+          transition: opacity 2s;
+        }
+
+        .loading-indicator.ant-progress-status-success {
+          opacity: 0;
+          transition: opacity 2s;
         }
 
         span {
-          flex: 10;
+          flex: 16;
         }
 
         .ant-dropdown-trigger {
@@ -40,7 +47,7 @@
 
       .ant-slider {
         flex: 1;
-        margin-left: 8px;
+        margin-left: 27px;
       }
 
       .layer-transparency {
