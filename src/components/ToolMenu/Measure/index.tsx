@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   faDrawPolygon,
@@ -19,6 +19,11 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+
+import { setActiveKeys } from '../../../store/toolMenu';
+
 import './index.less';
 
 interface DefaultMeasureProps {
@@ -37,13 +42,19 @@ export const Measure: React.FC<MeasureProps> = ({
   } = useTranslation();
 
   const map = useMap();
+  const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
+  const dispatch = useAppDispatch();
+  const [activeMeasureToolName, setActiveMeasureToolName] =
+    useState<string>('');
 
   if (!map) {
     return <></>;
   }
 
   return (
-    <ToggleGroup>
+    <ToggleGroup
+      selectedName={activeKeys.includes('print') ? '' : activeMeasureToolName}
+    >
       {showMeasureDistance ? (
         <MeasureButton
           geodesic
@@ -52,6 +63,16 @@ export const Measure: React.FC<MeasureProps> = ({
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
+          onToggle={(pressed: boolean) => {
+            if (pressed) {
+              if (activeKeys.includes('print')) {
+                dispatch(
+                  setActiveKeys(activeKeys.filter(keys => keys !== 'print'))
+                );
+                setActiveMeasureToolName('line');
+              }
+            }
+          }}
         >
           <FontAwesomeIcon icon={faPenRuler} />
           <span className="measure-text">{t('Measure.line')}</span>
@@ -66,6 +87,16 @@ export const Measure: React.FC<MeasureProps> = ({
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}
+          onToggle={(pressed: boolean) => {
+            if (pressed) {
+              if (activeKeys.includes('print')) {
+                dispatch(
+                  setActiveKeys(activeKeys.filter(keys => keys !== 'print'))
+                );
+                setActiveMeasureToolName('poly');
+              }
+            }
+          }}
         >
           <FontAwesomeIcon icon={faDrawPolygon} />
           <span className="measure-text">{t('Measure.area')}</span>

@@ -35,6 +35,8 @@ import _toArray from 'lodash/toArray';
 
 const { Panel } = Collapse;
 
+import OlInteractionDraw from 'ol/interaction/Draw';
+import Interaction from 'ol/interaction/Interaction';
 import {
   useTranslation
 } from 'react-i18next';
@@ -307,6 +309,17 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         onChange={(keys: string[] | string) => {
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));
+
+          if (_toArray(keys).includes('print') && map) {
+            const interactions = map
+              .getInteractions()
+              .getArray()
+              .filter(item => item instanceof OlInteractionDraw);
+
+            interactions.forEach((interaction: Interaction) => {
+              interaction.setActive(false);
+            });
+          }
         }}
         {...restProps}
       >
