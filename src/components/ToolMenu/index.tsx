@@ -35,8 +35,6 @@ import _toArray from 'lodash/toArray';
 
 const { Panel } = Collapse;
 
-import OlInteractionDraw from 'ol/interaction/Draw';
-import Interaction from 'ol/interaction/Interaction';
 import {
   useTranslation
 } from 'react-i18next';
@@ -133,6 +131,21 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       }
     }
   }, [menuTools, availableTools]);
+
+  useEffect(() => {
+    if (
+      activeKeys.includes('print') &&
+      activeKeys.includes('measure_tools')
+    ) {
+      if (activeKeys.indexOf('print') < activeKeys.indexOf('measure_tools')) {
+        dispatch(setActiveKeys(activeKeys.filter(keys => keys !== 'print')));
+      } else {
+        dispatch(
+          setActiveKeys(activeKeys.filter(keys => keys !== 'measure_tools'))
+        );
+      }
+    }
+  }, [activeKeys, dispatch]);
 
   const getToolPanels = (): JSX.Element[] => {
 
@@ -309,17 +322,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         onChange={(keys: string[] | string) => {
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));
-
-          if (_toArray(keys).includes('print') && map) {
-            const interactions = map
-              .getInteractions()
-              .getArray()
-              .filter(item => item instanceof OlInteractionDraw);
-
-            interactions.forEach((interaction: Interaction) => {
-              interaction.setActive(false);
-            });
-          }
         }}
         {...restProps}
       >
