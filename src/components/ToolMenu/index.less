@@ -6,8 +6,40 @@
   max-height: calc(100% - var(--headerHeight) - var(--footerHeight));
   overflow: hidden;
   max-width: 600px;
+  min-width: 280px;
   box-shadow: var(--componentShadow);
   overflow-x: hidden;
+
+  .ant-collapse-header-text {
+    display: flex;
+      width: 100%;
+
+      svg {
+        padding-top: 4px;
+        flex: 2;
+      }
+
+      span {
+        flex: 10;
+      }
+  }
+
+  .react-geo-togglegroup.vertical-toggle-group {
+
+    button {
+      display: flex;
+      width: 100%;
+
+      svg {
+        padding-top: 4px;
+        flex: 2;
+      }
+
+      span {
+        flex: 10;
+      }
+    }
+  }
 
   &.collapsed {
 
