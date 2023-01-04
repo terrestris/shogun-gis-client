@@ -132,6 +132,21 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
   }, [menuTools, availableTools]);
 
+  useEffect(() => {
+    if (
+      activeKeys.includes('print') &&
+      activeKeys.includes('measure_tools')
+    ) {
+      if (activeKeys.indexOf('print') < activeKeys.indexOf('measure_tools')) {
+        dispatch(setActiveKeys(activeKeys.filter(keys => keys !== 'print')));
+      } else {
+        dispatch(
+          setActiveKeys(activeKeys.filter(keys => keys !== 'measure_tools'))
+        );
+      }
+    }
+  }, [activeKeys, dispatch]);
+
   const getToolPanels = (): JSX.Element[] => {
 
     const panels: JSX.Element[] = [];
