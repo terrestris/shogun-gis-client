@@ -20,8 +20,8 @@ export default {
         processedLayersFolder: 'Prozessierte Layer'
       },
       CookieBanner: {
-        info: 'Diese Website verwendet Cookies, um Ihnen ein besseres Surferlebnis zu bieten. Darunter fällt die Speicherung des sog. Session-Cookies, ' +
-          'der in die Rubrik der essentiell notwendigen Cookies fällt.',
+        info: 'Wir verwenden Cookies, um Ihnen die bestmögliche Nutzung unserer Website zu ermöglichen. ' +
+          'Wenn Sie diese Website weiterhin nutzen, gehen wir davon aus, dass Sie damit zufrieden sind.',
         button: 'Akzeptieren'
       },
       Permalink: {
@@ -150,8 +150,8 @@ export default {
         processedLayersFolder: 'Processed layers'
       },
       CookieBanner: {
-        info: 'This website uses cookies to provide you with a better browsing experience. This includes the ' +
-          'storage of the so-called session cookie, which is classified as an essential cookie.',
+        info: 'We use cookies to ensure that we give you the best experience on our website. ' +
+          'If you continue to use this site we will assume that you are happy with it.',
         button: 'Accept'
       },
       Permalink: {
