@@ -1,5 +1,6 @@
 import React, {
   useState
+  , useEffect
 } from 'react';
 
 import {
@@ -26,6 +27,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 import {
   CapabilitiesUtil,
   MapUtil
@@ -52,8 +54,9 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   const [layers, setLayers] = useState<(ImageLayer<ImageWMSSource> | TileLayer<TileWMSSource>)[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [url, setUrl] = useState(
-    'https://sgx.geodatenzentrum.de/wms_topplus_open?request=GetCapabilities&service=wms'
+    'https://sgx.geodatenzentrum.de/wms_topplus_open'
   );
+  const [sanitizedUrl, setSanitizedUrl] = useState<string>();
   const [version, setVersion] = useState<string>('1.3.0');
 
   const isModalVisible = useAppSelector(state => state.addLayerModal.visible);
@@ -66,11 +69,21 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     t
   } = useTranslation();
 
-  const getCapabilities = async (capabilitiesUrl: string) => {
+  useEffect(() => {
+    if (!isModalVisible) {
+      return;
+    }
+    setSanitizedUrl(UrlUtil.createValidGetCapabilitiesRequest(url, 'WMS', version));
+  }, [version, isModalVisible, url]);
+
+  const getCapabilities = async () => {
+    if (!sanitizedUrl) {
+      return;
+    }
     try {
       setLoading(true);
 
-      const capabilities = await CapabilitiesUtil.getWmsCapabilities(completeUrl(capabilitiesUrl));
+      const capabilities = await CapabilitiesUtil.getWmsCapabilities(sanitizedUrl);
       const externalLayers = CapabilitiesUtil.getLayersFromWmsCapabilities(capabilities, 'Title');
 
       setLayers(externalLayers);
@@ -83,28 +96,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       setLoading(false);
     }
   };
-
-  /**
-   * Checks and completes a WMS GetCapabilities URL.
-   * The params request, service and version will be completed.
-   * @param url The input url
-   * @returns The completed URL
-   */
-  const completeUrl = (url: string) => {
-    let completeUrl = new URL(url);
-
-    if (!completeUrl.searchParams.has('request')) {
-      completeUrl.searchParams.append('request', 'GetCapabilities');
-    }
-    if (!completeUrl.searchParams.has('service')) {
-      completeUrl.searchParams.append('service', 'wms');
-    }
-    if (!completeUrl.searchParams.has('version')) {
-      completeUrl.searchParams.append('version', version);
-    }
-
-    return completeUrl.toString();
-  }
 
   const closeModal = () => {
     setSelectedRowKeys([]);
@@ -176,6 +167,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       title={t('AddLayerModal.title')}
       open={isModalVisible}
       onCancel={closeModal}
+      width={600}
       footer={[
         <Button
           key="add-all"
@@ -194,7 +186,9 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       ]}
       {...restProps}
     >
-      <Space direction="vertical" style={{ display: 'flex' }}>
+      <Space direction="vertical"
+        style={{ display: 'flex' }}
+      >
         <Input.Search
           placeholder={t('AddLayerModal.inputPlaceholder')}
           value={url}
@@ -203,28 +197,24 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
           }}
           onSearch={getCapabilities}
           enterButton={true}
+          addonBefore={
+            <Select
+              defaultValue='1.3.0'
+              onChange={setVersion}
+              options={[
+                {
+                  value: '1.3.0',
+                  label: `${t('AddLayerModal.version')} 1.3.0`
+                },
+                {
+                  value: '1.1.1',
+                  label: `${t('AddLayerModal.version')} 1.1.1`
+                }
+              ]}
+            >
+            </Select>
+          }
         />
-        <Space>
-          {t('AddLayerModal.version')}:
-          <Select
-            defaultValue='1.3.0'
-            onChange={(newVersion) => {
-              setVersion(newVersion);
-              getCapabilities(url);
-              }
-            }
-            options={[
-              {
-                value: '1.3.0',
-                label: '1.3.0'
-              },
-              {
-                value: '1.1.1',
-                label: '1.1.1'
-              }
-            ]}>
-          </Select>
-        </Space>
         <Table
           loading={loading}
           columns={[
