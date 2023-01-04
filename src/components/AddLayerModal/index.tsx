@@ -1,6 +1,6 @@
 import React, {
-  useState
-  , useEffect
+  useState,
+  useEffect
 } from 'react';
 
 import {
