@@ -6,7 +6,7 @@ import React, {
 import { Progress } from 'antd';
 
 import {
-  getUid
+  getUid, MapBrowserEvent
 } from 'ol';
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
@@ -48,6 +48,14 @@ import './index.less';
 
 export type LayerTreeProps = {} & Partial<RgLayerTreeProps>;
 
+export type LayerTileLoadCounter = {
+  [key: string]: {
+    loading: number;
+    loaded: number;
+    percent: number;
+  };
+};
+
 export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps
 }): JSX.Element => {
@@ -58,7 +66,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   } = useTranslation();
 
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
-  const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<any>({});
+  const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
 
   useEffect(() => {
     if (!map) {
@@ -69,48 +77,76 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       if (layer instanceof OlLayer) {
         const source = layer.getSource();
         if (!source.hasListener('tileloadstart')) {
-          source.on('tileloadstart', () => {
-            setLayerTileLoadCounter((counter: any) => {
-              const uid = parseInt(getUid(source), 10);
-              const update = {...counter};
-              // reset when load was finished
-              if (update[uid] && update[uid].loaded >= update[uid].loading) {
-                update[uid].loading = 1;
-                update[uid].loaded = 0;
-                update[uid].percent = 0;
-                return update;
-              }
-              if (!update[uid]) {
-                update[uid] = {};
-              }
-              update[uid].loading = Number.isInteger(update[uid].loading) ?
-                update[uid].loading + 1 : 1;
-              return update;
-            });
-          });
+          source.on('tileloadstart', tileLoadStartListener);
         }
-
         if (!source.hasListener('tileloadend') && !source.hasListener('tileloaderror')) {
-          source.on(['tileloadend', 'tileloaderror'], () => {
-            setLayerTileLoadCounter((counter: any) => {
-              const uid = parseInt(getUid(source), 10);
-              const update = {...counter};
-              if (!update[uid]) {
-                update[uid] = {};
-              }
-              update[uid].loaded = Number.isInteger(update[uid].loaded) ?
-                update[uid].loaded + 1 : 1;
-              const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
-              if (percent > update[uid].percent) {
-                update[uid].percent = percent;
-              }
-              return update;
-            });
-          });
+          source.on(['tileloadend', 'tileloaderror'], tileLoadEndListener);
         }
       }
     });
-  });
+
+    return () => {
+      allLayers.forEach(layer => {
+        if (layer instanceof OlLayer) {
+          const source = layer.getSource();
+          if (source.hasListener('tileloadstart')) {
+            source.un('tileloadstart', tileLoadStartListener);
+          }
+          if (source.hasListener('tileloadend')) {
+            source.un('tileloadend', tileLoadEndListener);
+          }
+          if (source.hasListener('tileloaderror')) {
+            source.un('tileloaderror', tileLoadEndListener);
+          }
+        }
+      });
+    };
+  }, [map]);
+
+  const tileLoadStartListener = (evt: MapBrowserEvent<UIEvent>) => {
+    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
+      const uid = parseInt(getUid(evt.target), 10);
+      const update = {...counter};
+      // reset when load was finished
+      if (update[uid] && update[uid].loaded >= update[uid].loading) {
+        update[uid].loading = 1;
+        update[uid].loaded = 0;
+        update[uid].percent = 0;
+        return update;
+      }
+      if (!update[uid]) {
+        update[uid] = {
+          loading: 0,
+          loaded: 0,
+          percent: 0
+        };
+      }
+      update[uid].loading = Number.isInteger(update[uid].loading) ?
+        update[uid].loading + 1 : 1;
+      return update;
+    });
+  };
+
+  const tileLoadEndListener = (evt: MapBrowserEvent<UIEvent>) => {
+    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
+      const uid = parseInt(getUid(evt.target), 10);
+      const update = {...counter};
+      if (!update[uid]) {
+        update[uid] = {
+          loading: 0,
+          loaded: 0,
+          percent: 0
+        };
+      }
+      update[uid].loaded = Number.isInteger(update[uid].loaded) ?
+        update[uid].loaded + 1 : 1;
+      const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
+      if (percent > update[uid].percent) {
+        update[uid].percent = percent;
+      }
+      return update;
+    });
+  };
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
 
