@@ -14,7 +14,8 @@ export default {
         title: 'WMS hinzufügen',
         columnTitle: 'Name',
         errorMessage: 'Fehler',
-        errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL'
+        errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL',
+        version: 'Version'
       },
       BasicMapComponent: {
         processedLayersFolder: 'Prozessierte Layer'
@@ -139,7 +140,8 @@ export default {
         title: 'Add WMS',
         columnTitle: 'Name',
         errorMessage: 'Error',
-        errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL'
+        errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL',
+        version: 'Version'
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'
