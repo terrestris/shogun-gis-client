@@ -1,9 +1,12 @@
 import React, {
-  useState
+  useState,
+  useEffect
 } from 'react';
 
+import { Progress } from 'antd';
+
 import {
-  getUid
+  getUid, MapBrowserEvent
 } from 'ol';
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
@@ -45,6 +48,14 @@ import './index.less';
 
 export type LayerTreeProps = {} & Partial<RgLayerTreeProps>;
 
+export type LayerTileLoadCounter = {
+  [key: string]: {
+    loading: number;
+    loaded: number;
+    percent: number;
+  };
+};
+
 export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps
 }): JSX.Element => {
@@ -55,6 +66,87 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   } = useTranslation();
 
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
+  const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+    const allLayers = MapUtil.getAllLayers(map);
+    allLayers.forEach(layer => {
+      if (layer instanceof OlLayer) {
+        const source = layer.getSource();
+        if (!source.hasListener('tileloadstart')) {
+          source.on('tileloadstart', tileLoadStartListener);
+        }
+        if (!source.hasListener('tileloadend') && !source.hasListener('tileloaderror')) {
+          source.on(['tileloadend', 'tileloaderror'], tileLoadEndListener);
+        }
+      }
+    });
+
+    return () => {
+      allLayers.forEach(layer => {
+        if (layer instanceof OlLayer) {
+          const source = layer.getSource();
+          if (source.hasListener('tileloadstart')) {
+            source.un('tileloadstart', tileLoadStartListener);
+          }
+          if (source.hasListener('tileloadend')) {
+            source.un('tileloadend', tileLoadEndListener);
+          }
+          if (source.hasListener('tileloaderror')) {
+            source.un('tileloaderror', tileLoadEndListener);
+          }
+        }
+      });
+    };
+  }, [map]);
+
+  const tileLoadStartListener = (evt: MapBrowserEvent<UIEvent>) => {
+    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
+      const uid = parseInt(getUid(evt.target), 10);
+      const update = {...counter};
+      // reset when load was finished
+      if (update[uid] && update[uid].loaded >= update[uid].loading) {
+        update[uid].loading = 1;
+        update[uid].loaded = 0;
+        update[uid].percent = 0;
+        return update;
+      }
+      if (!update[uid]) {
+        update[uid] = {
+          loading: 0,
+          loaded: 0,
+          percent: 0
+        };
+      }
+      update[uid].loading = Number.isInteger(update[uid].loading) ?
+        update[uid].loading + 1 : 1;
+      return update;
+    });
+  };
+
+  const tileLoadEndListener = (evt: MapBrowserEvent<UIEvent>) => {
+    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
+      const uid = parseInt(getUid(evt.target), 10);
+      const update = {...counter};
+      if (!update[uid]) {
+        update[uid] = {
+          loading: 0,
+          loaded: 0,
+          percent: 0
+        };
+      }
+      update[uid].loaded = Number.isInteger(update[uid].loaded) ?
+        update[uid].loaded + 1 : 1;
+      const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
+      if (percent > update[uid].percent) {
+        update[uid].percent = percent;
+      }
+      return update;
+    });
+  };
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
 
@@ -77,6 +169,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const unit = mapView.getProjection().getUnits() || 'm';
     const resolution = mapView.getResolution();
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
+    const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
+      layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
 
     if (layer instanceof OlLayerGroup) {
       return (
@@ -88,6 +182,14 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       return (
         <>
           <div className="tree-node-header">
+            <Progress
+              className='loading-indicator'
+              type="circle"
+              percent={percent}
+              format={() => ''}
+              width={16}
+              strokeWidth={20}
+            />
             <span>{layer.get('name')}</span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
