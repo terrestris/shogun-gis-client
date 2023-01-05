@@ -10,7 +10,6 @@ import {
   ModalProps,
   notification,
   Select,
-  Space,
   Table
 } from 'antd';
 
@@ -186,54 +185,50 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       ]}
       {...restProps}
     >
-      <Space direction="vertical"
-        style={{ display: 'flex' }}
-      >
-        <Input.Search
-          placeholder={t('AddLayerModal.inputPlaceholder')}
-          value={url}
-          onChange={(event) => {
-            setUrl(event.target.value);
-          }}
-          onSearch={getCapabilities}
-          enterButton={true}
-          addonBefore={
-            <Select
-              defaultValue='1.3.0'
-              onChange={setVersion}
-              options={[
-                {
-                  value: '1.3.0',
-                  label: `${t('AddLayerModal.version')} 1.3.0`
-                },
-                {
-                  value: '1.1.1',
-                  label: `${t('AddLayerModal.version')} 1.1.1`
-                }
-              ]}
-            >
-            </Select>
-          }
-        />
-        <Table
-          loading={loading}
-          columns={[
-            {
-              title: t('AddLayerModal.columnTitle'),
-              render: (text: any, record: any) => {
-                return record.get('title');
+      <Input.Search
+        placeholder={t('AddLayerModal.inputPlaceholder')}
+        value={url}
+        onChange={(event) => {
+          setUrl(event.target.value);
+        }}
+        onSearch={getCapabilities}
+        enterButton={true}
+        addonBefore={
+          <Select
+            defaultValue='1.3.0'
+            onChange={setVersion}
+            options={[
+              {
+                value: '1.3.0',
+                label: `${t('AddLayerModal.version')} 1.3.0`
+              },
+              {
+                value: '1.1.1',
+                label: `${t('AddLayerModal.version')} 1.1.1`
               }
+            ]}
+          >
+          </Select>
+        }
+      />
+      <Table
+        loading={loading}
+        columns={[
+          {
+            title: t('AddLayerModal.columnTitle'),
+            render: (text: any, record: any) => {
+              return record.get('title');
             }
-          ]}
-          rowKey={(record: any) => getUid(record)}
-          rowSelection={{
-            selectedRowKeys,
-            onChange: setSelectedRowKeys
-          }}
-          pagination={false}
-          dataSource={layers}
-        />
-      </Space>
+          }
+        ]}
+        rowKey={(record: any) => getUid(record)}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: setSelectedRowKeys
+        }}
+        pagination={false}
+        dataSource={layers}
+      />
     </Modal>
   );
 };
