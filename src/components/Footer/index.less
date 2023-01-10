@@ -7,7 +7,7 @@
   margin-bottom: 0;
   z-index: 2;
 
-  background-color: var(--primaryColor);;
+  background-color: var(--primaryColor);
   display: flex;
   padding: 0 .5rem;
   box-shadow: var(--componentShadow);
@@ -95,6 +95,10 @@
         >span {
           text-decoration: underline;
           font-weight: bolder;
+          transition: color .3s;
+          &:hover {
+            color: var(--secondaryColor);
+          }
         }
       }
     }
