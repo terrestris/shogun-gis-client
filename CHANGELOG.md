@@ -1,3 +1,24 @@
+## [4.12.0](https://github.com/terrestris/shogun-gis-client/compare/v4.11.0...v4.12.0) (2023-01-11)
+
+
+### Features
+
+* make view extent accessible per getter ([fc57f46](https://github.com/terrestris/shogun-gis-client/commit/fc57f46eaaa82a63d74393fd6f5fbcc85f601c85))
+* set custom on style on document body ([68ba851](https://github.com/terrestris/shogun-gis-client/commit/68ba85162652c3debb69e097cd2bb63d7fa4722b))
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 17.4.0 to 17.4.1 ([1f75aa5](https://github.com/terrestris/shogun-gis-client/commit/1f75aa5b8e6ad3587088f8c52ac1568358a981b4))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([f07c140](https://github.com/terrestris/shogun-gis-client/commit/f07c140d84f1ff0c7fbba65333678af1f91b636d))
+* **deps-dev:** bump @typescript-eslint/parser from 5.48.0 to 5.48.1 ([37918a0](https://github.com/terrestris/shogun-gis-client/commit/37918a07f5069a0b02e3aa51c3074c25aa457791))
+
+
+### Changes in layout
+
+* add hover style on some elements ([d12b207](https://github.com/terrestris/shogun-gis-client/commit/d12b207fe1c65a288d245a501dbdaf87e17418af))
+* use equal spacing from bottom and right ([7267c44](https://github.com/terrestris/shogun-gis-client/commit/7267c44205189050ce3de8f40e3c94d021fedd4e))
+
 ## [4.11.0](https://github.com/terrestris/shogun-gis-client/compare/v4.10.3...v4.11.0) (2023-01-09)
 
 
