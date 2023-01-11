@@ -45,6 +45,7 @@ import {
   AppInfo
 } from '@terrestris/shogun-util/dist/model/AppInfo';
 import Application, {
+  DefaultApplicationTheme,
   DefaultApplicationToolConfig
 } from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
@@ -348,8 +349,8 @@ const setupDefaultMap = () => {
   });
 };
 
-const parseTheme = (theme?: any): ThemeProperties => {
-  const style: any = {
+const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
+  const style: ThemeProperties = {
     '--primaryColor': '#59666C',
     '--secondaryColor': '#70B3BE',
     '--complementaryColor': '#FFFFFF'
@@ -493,7 +494,6 @@ const renderApp = async () => {
 
     const appConfig = await getApplicationConfiguration();
 
-    // @ts-ignore
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
     ConfigProvider.config({
@@ -502,6 +502,10 @@ const renderApp = async () => {
           Color(style['--primaryColor']).darken(0.5).hexa() :
           style['--primaryColor']
       }
+    });
+
+    Object.keys(style).forEach((key: any) => {
+      document.body.style.setProperty(key, style[key as keyof ThemeProperties] as string);
     });
 
     setApplicationTitle();
@@ -528,7 +532,7 @@ const renderApp = async () => {
               <ConfigProvider locale={getConfigLang(i18n.language)}>
                 <Provider store={store}>
                   <MapContext.Provider value={map}>
-                    <App style={style} />
+                    <App />
                   </MapContext.Provider>
                 </Provider>
               </ConfigProvider>
