@@ -2,27 +2,26 @@
   padding: 6px;
 
   .ant-avatar {
-    border: 1px solid var(--secondaryColor);
+    border: 1px solid var(--complementaryColor);
     height: 30px;
     width: 30px;
-    transition: border 0.3s;
-  }
+    transition: border .3s;
 
-  .username {
-    color: var(--secondaryColor);
-    transition: color 0.3s;
-
-    span {
-      font-size: 0.6em;
+    &:hover {
+      border-color: var(--secondaryColor);
     }
   }
 
-  &:hover .username {
-    color: var(--complementaryColor);
-  }
+  .username {
+    span {
+      font-size: 0.6em;
+    }
 
-  &:hover .ant-avatar {
-    border: 1px solid var(--complementaryColor);
+    transition: color .3s;
+
+    &:hover {
+      color: var(--secondaryColor);
+    }
   }
 }
 

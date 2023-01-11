@@ -4,9 +4,13 @@
   justify-content: center;
   align-items: center;
 
-  .icons > span {
+  .icons>span {
     font-size: 1.5rem;
-    color: var(--tertiaryColor);
+    transition: color .3s;
+
+    &:hover {
+      color: var(--secondaryColor);
+    }
 
     &.anticon {
       cursor: pointer;
@@ -27,7 +31,6 @@
 
     .anticon {
       cursor: pointer;
-      color: var(--tertiaryColor);
       padding: 1rem;
     }
   }

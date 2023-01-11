@@ -12,16 +12,21 @@
 
   .ant-collapse-header-text {
     display: flex;
-      width: 100%;
+    width: 100%;
+    transition: color .3s;
 
-      svg {
-        padding-top: 4px;
-        flex: 2;
-      }
+    &:hover {
+      color: var(--secondaryColor);
+    }
 
-      span {
-        flex: 10;
-      }
+    svg {
+      padding-top: 4px;
+      flex: 2;
+    }
+
+    span {
+      flex: 10;
+    }
   }
 
   .react-geo-togglegroup.vertical-toggle-group {
@@ -116,6 +121,10 @@
     width: 100%;
     border: none;
     border-radius: 0;
+  }
+
+  button:hover {
+    color: var(--secondaryColor);
   }
 
   .react-geo-togglebutton.btn-pressed {
