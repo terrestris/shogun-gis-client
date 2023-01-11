@@ -289,10 +289,30 @@ const setupMap = async (application?: Application) => {
 };
 
 const setupSHOGunMap = async (application: Application) => {
-  const view = await parser.parseMapView(application);
-  const layers = await parser.parseLayerTree(application);
+  const view = await parser.parseMapView(application, {
+    constrainOnlyCenter: true
+  });
+
+  let extent;
+  const projection = application.clientConfig?.mapView.projection;
+  const mapView = application.clientConfig?.mapView;
+  if (projection && mapView?.extent && mapView.extent.length === 4) {
+    const ll = fromLonLat([mapView.extent[0], mapView.extent[1]], projection);
+    const ur = fromLonLat([mapView.extent[2], mapView.extent[3]], projection);
+    extent = [
+      ll[0],
+      ll[1],
+      ur[0],
+      ur[1]
+    ];
+  }
+  if (extent) {
+    view.set('extent', extent);
+  }
 
   view.setConstrainResolution(true);
+
+  const layers = await parser.parseLayerTree(application);
 
   return new OlMap({
     view,
