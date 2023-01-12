@@ -1,3 +1,23 @@
+## [4.12.1](https://github.com/terrestris/shogun-gis-client/compare/v4.12.0...v4.12.1) (2023-01-12)
+
+
+### Bugfixes
+
+* add mock for ResizeObserver ([778d8b8](https://github.com/terrestris/shogun-gis-client/commit/778d8b8b9e54f05fc01e5bf01ccedb8b7e35c1fc))
+* add mock for ResizeObserver ([f10d052](https://github.com/terrestris/shogun-gis-client/commit/f10d052f7ec06d72730bebcb354d99fabaca7f0f))
+* make use of custom github personal access token ([894ab5a](https://github.com/terrestris/shogun-gis-client/commit/894ab5aa9c36428b68543c3dca8e11dfe735c798))
+* use default imports ([cb1c10a](https://github.com/terrestris/shogun-gis-client/commit/cb1c10ae7c06d9fb6bdd30d2a0653396587f9b45))
+
+
+### Dependencies
+
+* bump geostyler v11.1.0, geostyler-openlayers-parser v4.1.0 ([0f1015d](https://github.com/terrestris/shogun-gis-client/commit/0f1015de14101a913d0547070dde723128955921))
+* bump ol v7.2.2 ([04623c4](https://github.com/terrestris/shogun-gis-client/commit/04623c4dbed1d4146520ab53f4947c722d2b7cc2))
+* **deps-dev:** bump eslint-plugin-import from 2.26.0 to 2.27.2 ([f153dee](https://github.com/terrestris/shogun-gis-client/commit/f153dee5f83e200fc7076bac33f7696c732d8042))
+* **deps-dev:** bump eslint-plugin-react from 7.31.11 to 7.32.0 ([7dbcdd3](https://github.com/terrestris/shogun-gis-client/commit/7dbcdd317e60ffef9d7b0093aecac08359609bb3))
+* **deps:** bump @terrestris/react-geo from 22.1.0 to 22.1.1 ([3d4c7c6](https://github.com/terrestris/shogun-gis-client/commit/3d4c7c6776debfa35e3c938d58b9a49d86617657))
+* update package-lock.json ([53c27a3](https://github.com/terrestris/shogun-gis-client/commit/53c27a381ccbe7d77fd33a6f81de1fc9c778ca5b))
+
 ## [4.12.0](https://github.com/terrestris/shogun-gis-client/compare/v4.11.0...v4.12.0) (2023-01-11)
 
 
