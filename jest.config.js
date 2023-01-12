@@ -14,7 +14,8 @@ module.exports = {
   collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
-    '<rootDir>/jest/matchMediaMock.js'
+    '<rootDir>/jest/matchMediaMock.js',
+    '<rootDir>/jest/resizeObserverMock.js'
   ],
   testEnvironment: 'jest-environment-jsdom',
   transformIgnorePatterns: [

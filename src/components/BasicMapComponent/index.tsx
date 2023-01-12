@@ -17,10 +17,8 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import {
-  MapUtil,
-  PermalinkUtil
-} from '@terrestris/ol-util';
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
