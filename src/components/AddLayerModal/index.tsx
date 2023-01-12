@@ -27,10 +27,8 @@ import {
 } from 'react-i18next';
 
 import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
-import {
-  CapabilitiesUtil,
-  MapUtil
-} from '@terrestris/ol-util';
+import CapabilitiesUtil from '@terrestris/ol-util/dist/CapabilitiesUtil/CapabilitiesUtil';
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap

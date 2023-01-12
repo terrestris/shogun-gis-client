@@ -26,9 +26,7 @@ import {
   StyleLike as OlStyleLike
 } from 'ol/style/Style';
 
-import {
-  MapUtil
-} from '@terrestris/ol-util';
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
