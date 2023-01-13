@@ -67,7 +67,7 @@ export const Footer: React.FC<FooterProps> = ({
     map.addControl(
       new OlControlMousePosition({
         coordinateFormat: createStringXY(2),
-        projection: 'EPSG:25832',
+        projection: map.getView().getProjection(),
         target: 'mouse-position'
       })
     );
