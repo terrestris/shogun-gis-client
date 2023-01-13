@@ -1,3 +1,19 @@
+## [4.12.2](https://github.com/terrestris/shogun-gis-client/compare/v4.12.1...v4.12.2) (2023-01-13)
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 17.4.1 to 17.4.2 ([43853d3](https://github.com/terrestris/shogun-gis-client/commit/43853d3f425fccfeb7fb65790b754c446ab1f9ed))
+* **deps-dev:** bump @commitlint/config-conventional ([24de816](https://github.com/terrestris/shogun-gis-client/commit/24de816b5339797ff849d8b77c0f194a400e9419))
+* **deps:** bump keycloak-js from 20.0.2 to 20.0.3 ([0e8cf7e](https://github.com/terrestris/shogun-gis-client/commit/0e8cf7e399f5b5c52a7f42d2dea291f1f8475973))
+
+
+### Bugfixes
+
+* adds a check for array length ([cc27dc3](https://github.com/terrestris/shogun-gis-client/commit/cc27dc3d6aa483235715239d9f93dee6aca199aa))
+* pass projection to layer tree parser ([b7ae469](https://github.com/terrestris/shogun-gis-client/commit/b7ae469a58804e2e6b509e30660204e9a6725492))
+* show mouse position for configured crs ([6c301c2](https://github.com/terrestris/shogun-gis-client/commit/6c301c24b804e17fff7cd9d5bb912b71d6bcfbf7))
+
 ## [4.12.1](https://github.com/terrestris/shogun-gis-client/compare/v4.12.0...v4.12.1) (2023-01-12)
 
 
