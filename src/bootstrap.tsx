@@ -312,7 +312,7 @@ const setupSHOGunMap = async (application: Application) => {
 
   view.setConstrainResolution(true);
 
-  const layers = await parser.parseLayerTree(application);
+  const layers = await parser.parseLayerTree(application, projection);
 
   return new OlMap({
     view,
