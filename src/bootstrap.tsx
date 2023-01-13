@@ -199,7 +199,7 @@ const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 
-  if (application.toolConfig) {
+  if (application.toolConfig && application.toolConfig.length > 0) {
     const availableTools: string[] = [];
     application.toolConfig
       .map((tool: DefaultApplicationToolConfig) => {
