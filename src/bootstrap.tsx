@@ -45,8 +45,7 @@ import {
   AppInfo
 } from '@terrestris/shogun-util/dist/model/AppInfo';
 import Application, {
-  DefaultApplicationTheme,
-  DefaultApplicationToolConfig
+  DefaultApplicationTheme
 } from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
@@ -87,8 +86,8 @@ import {
   setTitle
 } from './store/title';
 import {
-  setAvailableTools
-} from './store/toolMenu';
+  setToolConfig
+} from './store/toolConfig';
 import {
   setUser
 } from './store/user';
@@ -207,15 +206,7 @@ const setApplicationToStore = async (application?: Application) => {
   }
 
   if (application.toolConfig && application.toolConfig.length > 0) {
-    const availableTools: string[] = [];
-    application.toolConfig
-      .map((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible) {
-          availableTools.push(tool.name);
-        };
-      });
-
-    store.dispatch(setAvailableTools(availableTools));
+    store.dispatch(setToolConfig(application.toolConfig));
   };
 };
 
