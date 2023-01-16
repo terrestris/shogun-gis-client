@@ -28,6 +28,9 @@ export default {
       BasicMapComponent: {
         processedLayersFolder: 'Prozessierte Layer'
       },
+      Header: {
+        loadedStateTooltip: 'Der Client basiert auf einer eigenen Applikationskonfiguration'
+      },
       Permalink: {
         title: 'Teilen',
         twitterTooltip: 'Link via Twitter teilen',
@@ -163,6 +166,9 @@ export default {
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'
+      },
+      Header: {
+        loadedStateTooltip: 'You\'re viewing an application based on a custom application configuration'
       },
       Permalink: {
         title: 'Share',
