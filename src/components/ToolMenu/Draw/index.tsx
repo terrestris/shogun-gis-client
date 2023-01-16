@@ -55,6 +55,7 @@ interface DefaultDrawProps {
   showUploadFeatures?: boolean;
   showDownloadFeatures?: boolean;
   showDeleteFeatures?: boolean;
+  showStyleEditor?: boolean;
 }
 
 export interface DrawProps extends Partial<DefaultDrawProps> { }
@@ -69,7 +70,8 @@ export const Draw: React.FC<DrawProps> = ({
   showModifyFeatures,
   showUploadFeatures,
   showDownloadFeatures,
-  showDeleteFeatures
+  showDeleteFeatures,
+  showStyleEditor
 }): JSX.Element => {
   const {
     t
@@ -319,7 +321,10 @@ export const Draw: React.FC<DrawProps> = ({
           </span>
         </DeleteButton>
       ) : <></>}
-      <StylingDrawer />
+
+      {showStyleEditor ?
+        <StylingDrawer /> : <></>
+      }
     </ToggleGroup>
   );
 };
