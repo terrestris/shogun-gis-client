@@ -1,6 +1,14 @@
 export default {
   de: {
     translation: {
+      AppContextDownload: {
+        tooltip: 'Applikationskonfiguration herunterladen',
+        title: 'Speichern'
+      },
+      AppContextUpload: {
+        tooltip: 'Applikationskonfiguration laden',
+        title: 'Laden'
+      },
       ApplicationInfo: {
         title: 'Über',
         clientVersionTitle: 'Client Version',
@@ -76,6 +84,7 @@ export default {
         addWms: 'WMS hinzufügen',
         print: 'Export',
         layertree: 'Karten',
+        saveLoad: 'Speichern / Laden',
         languageSelect: 'Sprachauswahl'
       },
       PrintForm: {
@@ -128,6 +137,14 @@ export default {
   },
   en: {
     translation: {
+      AppContextDownload: {
+        tooltip: 'Download application configuration',
+        title: 'Save'
+      },
+      AppContextUpload: {
+        tooltip: 'Load application configuration',
+        title: 'Load'
+      },
       ApplicationInfo: {
         title: 'About',
         clientVersionTitle: 'Client version',
@@ -203,6 +220,7 @@ export default {
         addWms: 'Add WMS',
         print: 'Export',
         layertree: 'Maps',
+        saveLoad: 'Save / Load',
         languageSelect: 'Language selector'
       },
       PrintForm: {
