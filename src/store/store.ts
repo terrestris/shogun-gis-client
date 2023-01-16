@@ -7,6 +7,7 @@ import {
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
 import description from './description';
+import id from './id';
 import legal from './legal';
 import logoPath from './logoPath';
 import selectedFeatures from './selectedFeatures';
@@ -20,6 +21,7 @@ type AsyncReducer = {
 
 export const createReducer = (asyncReducers?: AsyncReducer) => {
   return combineReducers({
+    id,
     appInfo,
     title,
     description,
