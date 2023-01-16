@@ -1,6 +1,22 @@
 import React from 'react';
 
 import {
+  faFile
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
+  Tooltip
+} from 'antd';
+
+import {
+  useTranslation
+} from 'react-i18next';
+
+import {
   useAppSelector
 } from '../../hooks/useAppSelector';
 import {
@@ -23,8 +39,12 @@ export interface HeaderProps extends React.ComponentProps<'div'> { };
 export const Header: React.FC<HeaderProps> = ({
   ...restProps
 }): JSX.Element => {
-  const title = useAppSelector((state) => state.title);
-  const logoPath = useAppSelector((state) => state.logoPath);
+  const title = useAppSelector(state => state.title);
+  const stateOnly = useAppSelector(state => state.stateOnly);
+  const logoPath = useAppSelector(state => state.logoPath);
+
+  const { t } = useTranslation();
+
   const plugins = usePlugins();
 
   const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
@@ -57,6 +77,16 @@ export const Header: React.FC<HeaderProps> = ({
         className="title"
       >
         {title}
+        {
+          stateOnly &&
+          <Tooltip
+            title={t('Header.loadedStateTooltip')}
+          >
+            <FontAwesomeIcon
+              icon={faFile}
+            />
+          </Tooltip>
+        }
       </div>
     )];
 
