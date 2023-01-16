@@ -12,6 +12,9 @@ import enGB from 'antd/lib/locale/en_GB';
 import ClientConfiguration from 'clientConfig';
 
 import Color from 'color';
+import {
+  locale as GsLocale
+} from 'geostyler';
 
 import Keycloak from 'keycloak-js';
 
@@ -110,11 +113,21 @@ const parser = new SHOGunApplicationUtil({
 const getConfigLang = (lang: string) => {
   switch (lang) {
     case 'en':
-      return enGB;
+      return {
+        ...enGB,
+        ...GsLocale.en_US
+      };
+
     case 'de':
-      return deDE;
+      return {
+        ...deDE,
+        ...GsLocale.de_DE
+      };
     default:
-      return enGB;
+      return {
+        ...enGB,
+        ...GsLocale.en_US
+      };
   }
 };
 

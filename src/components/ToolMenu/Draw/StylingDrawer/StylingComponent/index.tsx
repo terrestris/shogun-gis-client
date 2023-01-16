@@ -5,15 +5,18 @@ import {
   useState
 } from 'react';
 
+import {
+  locale as locale
+} from 'geostyler';
+
+import CardStyle, {
+  CardStyleProps
+} from 'geostyler/dist/Component/CardStyle/CardStyle';
 import OlParser from 'geostyler-openlayers-parser';
 
 import {
   Style as GsStyle
 } from 'geostyler-style';
-
-import CardStyle, {
-  CardStyleProps
-} from 'geostyler/dist/Component/CardStyle/CardStyle';
 
 import OlFeature from 'ol/Feature';
 
@@ -181,6 +184,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 
   return (
     <CardStyle
+      locale={locale.de_DE.CardStyle}
       style={style}
       onStyleChange={setStyle}
       {...passThroughProps}
