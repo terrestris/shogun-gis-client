@@ -73,11 +73,17 @@ import {
   setDescription
 } from './store/description';
 import {
+  setId
+} from './store/id';
+import {
   setLegal
 } from './store/legal';
 import {
   setLogoPath
 } from './store/logoPath';
+import {
+  setStateOnly
+} from './store/stateOnly';
 import {
   createReducer,
   store
@@ -187,6 +193,14 @@ const setApplicationToStore = async (application?: Application) => {
     Logger.info('No application configuration provided, the default store will be loaded');
 
     return;
+  }
+
+  if (application.id) {
+    store.dispatch(setId(application.id));
+  }
+
+  if (application.stateOnly) {
+    store.dispatch(setStateOnly(application.stateOnly));
   }
 
   if (application.name) {
