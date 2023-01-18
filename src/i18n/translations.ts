@@ -65,7 +65,8 @@ export default {
         title: 'Farbschema bearbeiten'
       },
       FeatureInfo: {
-        usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
+        usageHint:
+          'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
       },
       FileUpload: {
         upload: 'Dateien hochladen'
@@ -133,7 +134,8 @@ export default {
         scale: 'Maßstab',
         downloadBtnText: 'Ausdruck erzeugen',
         printJobErrorMsg: 'Der Kartenausdruck konnte nicht erzeugt werden',
-        initErrorMsg: 'Der Kartendruck Generator konnte nicht initialisiert werden.',
+        initErrorMsg:
+          'Der Kartendruck Generator konnte nicht initialisiert werden.',
         outputFormatPlaceholder: 'Bitte wählen Sie ein Ausgabeformat aus',
         resolutionPlaceholder: 'Bitte wählen Sie eine Ausgabequalität aus',
         managerErrorMessage: 'Fehler bei der Initialisierung der Export-Engine'
@@ -148,7 +150,8 @@ export default {
       },
       Index: {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
-        applicationLoadErrorDescription: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
+        applicationLoadErrorDescription:
+          'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
           'Die Standardkonfiguration wird stattdessen geladen.',
         errorMessage: 'Fehler beim Laden der Applikation',
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
@@ -313,7 +316,8 @@ export default {
         title: 'Modify color scheme'
       },
       FeatureInfo: {
-        usageHint: 'Click on the map to get details about the clicked coordinate.'
+        usageHint:
+          'Click on the map to get details about the clicked coordinate.'
       },
       FileUpload: {
         upload: 'Upload files'
@@ -396,7 +400,8 @@ export default {
       },
       Index: {
         applicationLoadErrorMessage: 'Error while loading the application',
-        applicationLoadErrorDescription: 'The application with ID {{applicationId}} could not be loaded correctly. ' +
+        applicationLoadErrorDescription:
+          'The application with ID {{applicationId}} could not be loaded correctly. ' +
           'You\'re seeing the default application configuration.',
         errorMessage: 'Error while loading the application',
         errorDescription: 'An unexpected error occurred while loading the application.',
