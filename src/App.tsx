@@ -5,6 +5,7 @@ import React, {
 import AddLayerModal from './components/AddLayerModal/index';
 import BasicMapComponent from './components/BasicMapComponent';
 import EditFeatureDrawer from './components/EditFeatureDrawer';
+import CookieBanner from './components/CookieBanner';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import LayerDetailsModal from './components/LayerDetailsModal';
@@ -41,6 +42,7 @@ export const App: React.FC<AppProps> = ({
       <BasicMapComponent />
       <ToolMenu />
       <Footer />
+      <CookieBanner />
       <AddLayerModal />
       <UploadDataModal />
       <EditFeatureDrawer />

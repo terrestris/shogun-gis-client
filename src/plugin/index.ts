@@ -89,8 +89,17 @@ export type ClientPluginIntegrationFooter = ClientPluginIntegration & {
   insertionIndex?: number;
 };
 
-export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader |
-  ClientPluginIntegrationFeatureInfo | ClientPluginIntegrationMap | ClientPluginIntegrationFooter;
+export type ClientPluginIntegrationCookieConsent = ClientPluginIntegration & {
+  placement: 'cookie-banner';
+};
+
+export type ClientPluginIntegrations =
+  | ClientPluginIntegrationToolMenu
+  | ClientPluginIntegrationHeader
+  | ClientPluginIntegrationFeatureInfo
+  | ClientPluginIntegrationMap
+  | ClientPluginIntegrationFooter
+  | ClientPluginIntegrationCookieConsent;
 
 export type ClientPlugin = {
   /**
@@ -139,4 +148,10 @@ export function isMapIntegration(pluginIntegration: ClientPluginIntegrations): p
 
 export function isFooterIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationFooter {
   return pluginIntegration && pluginIntegration.placement === 'footer';
+}
+
+export function isCookieConsentIntegration(
+  pluginIntegration: ClientPluginIntegrations
+): pluginIntegration is ClientPluginIntegrationCookieConsent {
+  return pluginIntegration && pluginIntegration.placement === 'cookie-banner';
 }

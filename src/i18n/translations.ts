@@ -25,6 +25,12 @@ export default {
       BasicMapComponent: {
         processedLayersFolder: 'Prozessierte Layer'
       },
+      CookieBanner: {
+        info:
+          'Wir verwenden Cookies, um Ihnen die bestmögliche Nutzung unserer Website zu ermöglichen. ' +
+          'Wenn Sie diese Website weiterhin nutzen, gehen wir davon aus, dass Sie damit zufrieden sind.',
+        button: 'Akzeptieren'
+      },
       Permalink: {
         title: 'Teilen',
         whatsAppTooltip: 'Link via WhatsApp teilen',
@@ -266,6 +272,12 @@ export default {
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'
+      },
+      CookieBanner: {
+        info:
+          'We use cookies to ensure that we give you the best experience on our website. ' +
+          'If you continue to use this site we will assume that you are happy with it.',
+        button: 'Accept'
       },
       Permalink: {
         title: 'Share',
