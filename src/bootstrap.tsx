@@ -74,6 +74,9 @@ import {
   setDescription
 } from './store/description';
 import {
+  setLegal
+} from './store/legal';
+import {
   setLogoPath
 } from './store/logoPath';
 import {
@@ -91,7 +94,6 @@ import {
 } from './store/user';
 
 import './index.less';
-import { setLegal } from './store/legal';
 
 // TODO: extend antd properties too
 export interface ThemeProperties extends React.CSSProperties {
