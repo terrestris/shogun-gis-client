@@ -74,6 +74,9 @@ import {
   setDescription
 } from './store/description';
 import {
+  setLegal
+} from './store/legal';
+import {
   setLogoPath
 } from './store/logoPath';
 import {
@@ -193,6 +196,10 @@ const setApplicationToStore = async (application?: Application) => {
 
   if (application.clientConfig?.description) {
     store.dispatch(setDescription(application.clientConfig?.description));
+  }
+
+  if (application.clientConfig?.legal) {
+    store.dispatch(setLegal(application.clientConfig.legal));
   }
 
   if (application?.clientConfig?.theme?.logoPath) {

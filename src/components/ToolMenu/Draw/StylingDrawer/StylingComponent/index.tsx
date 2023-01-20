@@ -5,15 +5,15 @@ import {
   useState
 } from 'react';
 
+import CardStyle, {
+  CardStyleProps
+} from 'geostyler/dist/Component/CardStyle/CardStyle';
+
 import OlParser from 'geostyler-openlayers-parser';
 
 import {
   Style as GsStyle
 } from 'geostyler-style';
-
-import CardStyle, {
-  CardStyleProps
-} from 'geostyler/dist/Component/CardStyle/CardStyle';
 
 import OlFeature from 'ol/Feature';
 

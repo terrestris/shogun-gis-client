@@ -1,36 +1,30 @@
-import React, {
-  useEffect
-} from 'react';
+import React, { useEffect } from 'react';
 
 import {
-  Button,
-  Divider
+  Button, Divider
 } from 'antd';
 
 import OlControlMousePosition from 'ol/control/MousePosition';
 import OlControlScaleLine from 'ol/control/ScaleLine';
-import {
-  createStringXY
-} from 'ol/coordinate';
+import { createStringXY } from 'ol/coordinate';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import ScaleCombo from '@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
+import useAppSelector from '../../hooks/useAppSelector';
+import { Legal } from '../../store/legal';
 
-export interface FooterProps extends React.ComponentProps<'div'> { }
+export interface FooterProps extends React.ComponentProps<'div'> {}
 
 export const Footer: React.FC<FooterProps> = ({
   ...restProps
 }): JSX.Element => {
-  const {
-    t
-  } = useTranslation();
+  const { t } = useTranslation();
 
+  const legalInformation: Legal = useAppSelector(state => state.legal);
   const map = useMap();
 
   useEffect(() => {
@@ -38,7 +32,9 @@ export const Footer: React.FC<FooterProps> = ({
       return;
     }
 
-    const existingControl = map.getControls().getArray()
+    const existingControl = map
+      .getControls()
+      .getArray()
       .find(control => control instanceof OlControlScaleLine);
 
     if (existingControl) {
@@ -57,7 +53,9 @@ export const Footer: React.FC<FooterProps> = ({
       return;
     }
 
-    const existingControl = map.getControls().getArray()
+    const existingControl = map
+      .getControls()
+      .getArray()
       .find(control => control instanceof OlControlMousePosition);
 
     if (existingControl) {
@@ -74,15 +72,15 @@ export const Footer: React.FC<FooterProps> = ({
   }, [map]);
 
   const openContactModal = (): void => {
-    window.open('https://www.terrestris.de/de/kontakt/', '_blank');
+    window.open(legalInformation.contact, '_blank');
   };
 
   const openImprintModal = (): void => {
-    window.open('https://www.terrestris.de/de/impressum/', '_blank');
+    window.open(legalInformation.imprint, '_blank');
   };
 
   const openPrivacyModal = (): void => {
-    window.open('https://www.terrestris.de/de/datenschutzerklaerung/', '_blank');
+    window.open(legalInformation.privacy, '_blank');
   };
 
   if (!map) {
@@ -94,37 +92,19 @@ export const Footer: React.FC<FooterProps> = ({
       className="footer"
       {...restProps}
     >
-      <div
-        className="item-container left-items"
-      >
-        <div
-          id="scale-line-container"
-        />
-        <Divider
-          type="vertical"
-        />
-        <div
-          className="scale-combo"
-        >
+      <div className="item-container left-items">
+        <div id="scale-line-container" />
+        <Divider type="vertical" />
+        <div className="scale-combo">
           {t('Footer.scale')}:&nbsp;
-          <ScaleCombo
-            map={map}
-          />
-          <Divider
-            type="vertical"
-          />
+          <ScaleCombo map={map} />
+          <Divider type="vertical" />
         </div>
-        <div
-          className="reference-system"
-        >
+        <div className="reference-system">
           {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
-          <Divider
-            type="vertical"
-          />
+          <Divider type="vertical" />
         </div>
-        <div
-          className="mouse-position-wrapper"
-        >
+        <div className="mouse-position-wrapper">
           {t('Footer.mousePosition')}:&nbsp;
           <div
             id="mouse-position"
