@@ -8,14 +8,22 @@ export type Legal = {
   privacy?: string;
 };
 
-const initialState: Legal = {};
+const initialState: Legal = {
+  contact: 'https://www.terrestris.de/de/kontakt/',
+  imprint: 'https://www.terrestris.de/de/impressum/',
+  privacy: 'https://www.terrestris.de/de/datenschutzerklaerung/'
+};
 
 export const slice = createSlice({
   name: 'legal',
   initialState,
   reducers: {
     setLegal: (state, action: PayloadAction<Legal>) => {
-      return action.payload;
+      return {
+        contact: action.payload.contact || initialState.contact,
+        imprint: action.payload.imprint || initialState.imprint,
+        privacy: action.payload.privacy || initialState.privacy
+      };
     }
   }
 });

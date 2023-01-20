@@ -72,25 +72,15 @@ export const Footer: React.FC<FooterProps> = ({
   }, [map]);
 
   const openContactModal = (): void => {
-    window.open(
-      legalInformation.contact || 'https://www.terrestris.de/de/kontakt/',
-      '_blank'
-    );
+    window.open(legalInformation.contact, '_blank');
   };
 
   const openImprintModal = (): void => {
-    window.open(
-      legalInformation.imprint || 'https://www.terrestris.de/de/impressum/',
-      '_blank'
-    );
+    window.open(legalInformation.imprint, '_blank');
   };
 
   const openPrivacyModal = (): void => {
-    window.open(
-      legalInformation.privacy ||
-        'https://www.terrestris.de/de/datenschutzerklaerung/',
-      '_blank'
-    );
+    window.open(legalInformation.privacy, '_blank');
   };
 
   if (!map) {
