@@ -91,6 +91,7 @@ import {
 } from './store/user';
 
 import './index.less';
+import { setLegal } from './store/legal';
 
 // TODO: extend antd properties too
 export interface ThemeProperties extends React.CSSProperties {
@@ -193,6 +194,10 @@ const setApplicationToStore = async (application?: Application) => {
 
   if (application.clientConfig?.description) {
     store.dispatch(setDescription(application.clientConfig?.description));
+  }
+
+  if (application.clientConfig?.legal) {
+    store.dispatch(setLegal(application.clientConfig.legal));
   }
 
   if (application?.clientConfig?.theme?.logoPath) {
