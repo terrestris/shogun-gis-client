@@ -16,8 +16,6 @@ export const CookieBanner = () => {
   const getPlugin = () => {
     let cookiePlugin: React.ReactElement | null = null;
 
-    // TODO: warn if more than one cookie-plugin has been detected
-
     plugins.forEach(plugin => {
       if (isCookieConsentIntegration(plugin.integration)) {
         const {
@@ -34,6 +32,7 @@ export const CookieBanner = () => {
   return (
     <div className="CookieBanner">
       <CookieConsent
+        disableStyles={true}
         key="default-cookie-consent"
         location="bottom"
         buttonText={t('CookieBanner.button')}

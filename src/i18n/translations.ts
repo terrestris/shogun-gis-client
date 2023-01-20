@@ -27,8 +27,9 @@ export default {
       },
       CookieBanner: {
         info:
-          'Wir verwenden Cookies, um Ihnen die bestmögliche Nutzung unserer Website zu ermöglichen. ' +
-          'Wenn Sie diese Website weiterhin nutzen, gehen wir davon aus, dass Sie damit zufrieden sind.',
+          'Wir verwenden technisch notwendige Erstanbieter-Cookies, um Ihnen die bestmögliche Nutzung unserer ' +
+          'Website zu ermöglichen. Wenn Sie diese Website weiterhin nutzen, gehen wir davon aus, ' +
+          'dass Sie damit zufrieden sind.',
         button: 'Akzeptieren'
       },
       Permalink: {
@@ -278,8 +279,8 @@ export default {
       },
       CookieBanner: {
         info:
-          'We use cookies to ensure that we give you the best experience on our website. ' +
-          'If you continue to use this site we will assume that you are happy with it.',
+          'We use technically necessary first-party cookies to ensure that we give you the best experience ' +
+          'on our website. If you continue to use this site we will assume that you are happy with it.',
         button: 'Accept'
       },
       Permalink: {

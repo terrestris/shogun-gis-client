@@ -1,9 +1,31 @@
 .cookie-container {
-  background: var(--primaryColor) !important;
-}
+  background: var(--primaryColor);
+  bottom: 0px;
+  align-items: baseline;
+  color: var(--complementaryColor);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  left: 0px;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
 
-.cookie-button {
-  position: relative;
-  color: var(--complementaryColor) !important;
-  background: var(--secondaryColor) !important;
+  .cookie-content {
+    flex: 1 0 300px;
+    margin: 15px;
+  }
+
+  .cookie-button {
+    position: relative;
+    color: var(--complementaryColor);
+    background: var(--secondaryColor);
+    border: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+    cursor: pointer;
+    flex: 0 0 auto;
+    padding: 5px 10px;
+    margin: 15px;
+  }
 }
