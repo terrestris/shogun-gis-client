@@ -1,3 +1,5 @@
+import _cloneDeep from 'lodash/cloneDeep';
+
 import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
@@ -25,7 +27,7 @@ import Application, {
 } from '@terrestris/shogun-util/dist/model/Application';
 
 import {
-  ClientTools
+  ClientTools, DrawToolConfig
 } from '../store/toolConfig';
 
 import useAppSelector from './useAppSelector';
@@ -39,6 +41,8 @@ const useWriteAppContext = () => {
   const appDescription = useAppSelector(state => state.description);
   const appLogoPath = useAppSelector(state => state.logoPath);
   const appToolConfig = useAppSelector(state => state.toolConfig);
+  const drawStyle = useAppSelector(state => state.drawStyle);
+  const drawFeatures = useAppSelector(state => state.drawFeatures);
 
   const client = useSHOGunAPIClient();
 
@@ -94,46 +98,20 @@ const useWriteAppContext = () => {
     };
   };
 
-  const getDigitizedFeatures = () => {
-    const clonedFeatures: OlFeature[] = [];
-    const mapProjection = map.getView().getProjection().getCode();
-    const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
-    const digitizedFeatures = digitizeLayer.getSource()?.getFeatures();
+  const getToolConfig = (): DefaultApplicationToolConfig[] => {
+    const toolConfigCopy = _cloneDeep(appToolConfig);
+    const drawToolConfigIdx = toolConfigCopy.findIndex(toolConfig => toolConfig.name === ClientTools.DRAW_TOOLS);
 
-    if (!digitizedFeatures || digitizedFeatures.length === 0) {
-      return [];
+    if (drawToolConfigIdx > -1) {
+      const drawToolConfig = toolConfigCopy[drawToolConfigIdx] as DrawToolConfig;
+
+      drawToolConfig.config.features = drawFeatures;
+      drawToolConfig.config.style = drawStyle;
+
+      return toolConfigCopy;
     }
 
-    digitizedFeatures.forEach(feat => {
-      const clonedFeature = feat.clone();
-      clonedFeature.getGeometry()?.transform(mapProjection, 'EPSG:4326');
-      clonedFeatures.push(clonedFeature);
-    });
-
-    return new OlFormatGeoJSON().writeFeaturesObject(clonedFeatures);
-  };
-
-  const getDigitizeStyle = () => {
-    const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
-
-    return digitizeLayer.get('gsStyle');
-  };
-
-  const getToolConfig = (): DefaultApplicationToolConfig[] => {
-    const filteredToolConfig = appToolConfig.filter(toolConfig => toolConfig.name !== ClientTools.DRAW_TOOLS);
-    const drawToolConfig = appToolConfig.find(toolConfig => toolConfig.name === ClientTools.DRAW_TOOLS);
-
-    return [
-      ...filteredToolConfig,
-      {
-        name: ClientTools.DRAW_TOOLS,
-        config: {
-          visible: drawToolConfig?.config.visible,
-          features: getDigitizedFeatures(),
-          style: getDigitizeStyle()
-        }
-      }
-    ];
+    return toolConfigCopy;
   };
 
   const getLayerTreeChildren = (layers: OlLayerBase[]): DefaultLayerTree[] => {
