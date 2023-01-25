@@ -323,7 +323,10 @@ export const Draw: React.FC<DrawProps> = ({
       ) : <></>}
 
       {showStyleEditor ?
-        <StylingDrawer /> : <></>
+        <StylingDrawer
+          forceRender={true}
+        /> :
+        <></>
       }
     </ToggleGroup>
   );
