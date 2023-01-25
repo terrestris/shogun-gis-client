@@ -150,11 +150,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       const {
         icon,
         title,
-        wrappedComponent
+        wrappedComponent,
+        forceRender
       } = toolPanelConfig;
 
       const panel = (
         <Panel
+          forceRender={forceRender}
           className={config.name}
           header={
             <>
@@ -223,6 +225,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         return {
           icon: faDrawPolygon,
           title: t('ToolMenu.draw'),
+          // We want to render the draw toolbar immediately to restore
+          // any features from the store if set.
+          forceRender: true,
           wrappedComponent: (
             <Draw
               showDrawPoint={config.config.showDrawPoint}
