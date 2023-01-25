@@ -1,12 +1,15 @@
 import React, {
-  useEffect,
-  useState
+  useEffect
 } from 'react';
 
 import OlParser from 'geostyler-openlayers-parser';
 
 import {
-  Style as GsStyle
+  VectorData
+} from 'geostyler-data';
+
+import {
+  Style
 } from 'geostyler-style';
 
 import CardStyle, {
@@ -30,72 +33,18 @@ import {
   DigitizeUtil
 } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
+import useAppDispatch from '../../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../../hooks/useAppSelector';
+
+import {
+  ClientTools,
+  DrawToolConfig,
+  setDrawStyle
+} from '../../../../../store/toolConfig';
+
 import {
   parseStyle
 } from '../../../../../utils/parseStyle';
-
-const defaultStyle: GsStyle = {
-  name: 'Default Style',
-  rules: [{
-    name: 'Area',
-    symbolizers: [{
-      kind: 'Fill',
-      color: '#00b72b',
-      outlineOpacity: 0.8,
-      opacity: 0.5,
-      fillOpacity: 0.8,
-      outlineWidth: 2,
-      outlineColor: '#00b72b'
-    }]
-  }, {
-    name: 'Line',
-    symbolizers: [{
-      kind: 'Line',
-      color: '#00b72b',
-      width: 2,
-      opacity: 0.8
-    }]
-  }, {
-    name: 'Point',
-    symbolizers: [{
-      kind: 'Mark',
-      wellKnownName: 'circle',
-      color: '#00b72b',
-      strokeColor: '#00b72b',
-      strokeOpacity: 0.8,
-      opacity: 0.5,
-      radius: 7
-    }],
-    filter: [
-      '==',
-      'label',
-      'undefined'
-    ]
-  }, {
-    name: 'Text',
-    symbolizers: [{
-      kind: 'Text',
-      label: '{{label}}',
-      size: 12,
-      font: [
-        'sans-serif'
-      ],
-      opacity: 0.8,
-      color: '#00b72b',
-      offset: [
-        5,
-        5
-      ],
-      haloColor: '#00b72b',
-      haloWidth: 1
-    }],
-    filter: [
-      '!=',
-      'label',
-      'undefined'
-    ]
-  }]
-};
 
 export type StylingComponentProps = CardStyleProps & {};
 
@@ -103,7 +52,79 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 
-  const [style, setStyle] = useState<GsStyle>(defaultStyle);
+  const style = useAppSelector(state => {
+    const drawToolConfig = state.toolConfig.find(config => config.name === ClientTools.DRAW_TOOLS);
+
+    if (!drawToolConfig) {
+      return;
+    }
+
+    return (drawToolConfig as DrawToolConfig).config.style;
+  });
+
+  const data = useAppSelector(state => {
+    const drawToolConfig = state.toolConfig.find(config => config.name === ClientTools.DRAW_TOOLS);
+
+    if (!drawToolConfig) {
+      return;
+    }
+
+    const features = (drawToolConfig as DrawToolConfig).config.features;
+
+    if (!features) {
+      return;
+    }
+
+    const d: VectorData = {
+      exampleFeatures: {
+        type: 'FeatureCollection',
+        features: []
+      },
+      schema: {
+        properties: {},
+        type: 'FeatureCollection'
+      }
+    };
+
+    features.features.forEach(feature => {
+      d.exampleFeatures.features.push(feature);
+      const properties = feature.properties;
+
+      if (!properties) {
+        return;
+      }
+
+      Object.entries(properties).forEach(([key, value]) => {
+        let type: 'string' | 'number' | 'boolean' | null = null;
+
+        if (typeof value === 'string') {
+          type = 'string';
+        }
+
+        if (typeof value === 'number') {
+          type = 'number';
+        }
+
+        if (typeof value === 'boolean') {
+          type = 'boolean';
+        }
+
+        if (!type) {
+          return;
+        }
+
+        d.schema.properties[key] = {
+          type: type,
+          minimum: d.schema.properties[key] < value ? d.schema.properties[key] : value,
+          maximum: d.schema.properties[key] > value ? d.schema.properties[key] : value
+        };
+      });
+    });
+
+    return d;
+  });
+
+  const dispatch = useAppDispatch();
 
   const map = useMap();
 
@@ -117,18 +138,21 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 
       const drawLayerStyleFunction = await parseStyle(style);
 
-      drawVectorLayer.set('gsStyle', style);
-
       drawVectorLayer.setStyle(drawLayerStyleFunction as OlStyleFunction);
     };
 
     setStyleToLayer();
   }, [style, map]);
 
+  const onStyleChange = (gsStyle: Style) => {
+    dispatch(setDrawStyle(gsStyle));
+  };
+
   return (
     <CardStyle
       style={style}
-      onStyleChange={setStyle}
+      data={data}
+      onStyleChange={onStyleChange}
       {...passThroughProps}
     />
   );
