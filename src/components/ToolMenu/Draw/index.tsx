@@ -1,5 +1,7 @@
 import React, {
-  ChangeEvent
+  ChangeEvent,
+  useEffect,
+  useState
 } from 'react';
 
 import {
@@ -42,6 +44,7 @@ import {
 
 import './index.less';
 
+import AttributionDrawer from './Attributions';
 import StylingDrawer from './StylingDrawer';
 
 interface DefaultDrawProps {
@@ -71,6 +74,9 @@ export const Draw: React.FC<DrawProps> = ({
   showDownloadFeatures,
   showDeleteFeatures
 }): JSX.Element => {
+  const [openAttributeDrawer, setopenAttributeDrawer] = useState(false);
+  const [selectedButton, setSelectedButton] = useState<string>();
+
   const {
     t
   } = useTranslation();
@@ -144,183 +150,207 @@ export const Draw: React.FC<DrawProps> = ({
     return <></>;
   }
 
+  const onToggleChange = (childProps: any) => {
+    setSelectedButton(childProps.name);
+  };
+
+  const attributeDrawer = (active: any) => {
+    if (openAttributeDrawer === false && active === true) {
+      setopenAttributeDrawer(true);
+    }
+    if (openAttributeDrawer === true && active === false && selectedButton === 'draw-modify') {
+      setopenAttributeDrawer(false);
+    }
+  };
+
   return (
-    <ToggleGroup>
+    <>
+      <ToggleGroup
+        selectedName={selectedButton}
+        onChange={onToggleChange}
+      >
 
-      {showDrawPoint ? (
-        <DrawButton
-          name="draw-point"
-          drawType="Point"
-          type="link"
-          pressed={false}
-        >
-          <FontAwesomeIcon
-            icon={faCircle}
-          />
-          <span
-            className="draw-point"
+        {showDrawPoint ? (
+          <DrawButton
+            name="draw-point"
+            drawType="Point"
+            type="link"
+            pressed={false}
           >
-            {t('Draw.point')}
-          </span>
-        </DrawButton>
-      ) : <></>}
+            <FontAwesomeIcon
+              icon={faCircle}
+            />
+            <span
+              className="draw-point"
+            >
+              {t('Draw.point')}
+            </span>
+          </DrawButton>
+        ) : <></>}
 
-      {showDrawLine ? (
-        <DrawButton
-          name="draw-line"
-          drawType="LineString"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faGripLines}
-          />
-          <span
-            className="draw-line"
-          >
-            {t('Draw.line')}
-          </span>
-        </DrawButton>
-      ) : <></>}
-
-      {showDrawPolygon ? (
-        <DrawButton
-          name="draw-polygon"
-          drawType="Polygon"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faDrawPolygon}
-          />
-          <span
-            className="draw-polygon"
-          >
-            {t('Draw.polygon')}
-          </span>
-        </DrawButton>
-      ) : <></>}
-
-      {showDrawCircle ? (
-        <DrawButton
-          name="draw-circle"
-          drawType="Circle"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faCircle}
-          />
-          <span
-            className="draw-circle"
-          >
-            {t('Draw.circle')}
-          </span>
-        </DrawButton>
-      ) : <></>}
-
-      {showDrawRectangle ? (
-        <DrawButton
-          name="draw-rectangle"
-          drawType="Rectangle"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faSquare}
-          />
-          <span
-            className="draw-rectangle"
-          >
-            {t('Draw.rectangle')}
-          </span>
-        </DrawButton>
-      ) : <></>}
-
-      {showDrawAnnotation ? (
-        <DrawButton
-          name="draw-text"
-          drawType="Text"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faFont}
-          />
-          <span
-            className="draw-text"
-          >
-            {t('Draw.text')}
-          </span>
-        </DrawButton>
-      ) : <></>}
-
-      {showModifyFeatures ? (
-        <ModifyButton
-          name="draw-modify"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-          />
-          <span
-            className="draw-modify"
-          >
-            {t('Draw.modify')}
-          </span>
-        </ModifyButton>
-      ) : <></>}
-
-      {showUploadFeatures ? (
-        <UploadButton
-          name="draw-upload"
-          onChange={onUploadChange}
-          type="link"
-        >
-          <SimpleButton
+        {showDrawLine ? (
+          <DrawButton
+            name="draw-line"
+            drawType="LineString"
             type="link"
           >
             <FontAwesomeIcon
-              icon={faUpload}
+              icon={faGripLines}
             />
             <span
-              className="draw-upload"
+              className="draw-line"
             >
-              {t('Draw.upload')}
+              {t('Draw.line')}
+            </span>
+          </DrawButton>
+        ) : <></>}
+
+        {showDrawPolygon ? (
+          <DrawButton
+            name="draw-polygon"
+            drawType="Polygon"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faDrawPolygon}
+            />
+            <span
+              className="draw-polygon"
+            >
+              {t('Draw.polygon')}
+            </span>
+          </DrawButton>
+        ) : <></>}
+
+        {showDrawCircle ? (
+          <DrawButton
+            name="draw-circle"
+            drawType="Circle"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faCircle}
+            />
+            <span
+              className="draw-circle"
+            >
+              {t('Draw.circle')}
+            </span>
+          </DrawButton>
+        ) : <></>}
+
+        {showDrawRectangle ? (
+          <DrawButton
+            name="draw-rectangle"
+            drawType="Rectangle"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faSquare}
+            />
+            <span
+              className="draw-rectangle"
+            >
+              {t('Draw.rectangle')}
+            </span>
+          </DrawButton>
+        ) : <></>}
+
+        {showDrawAnnotation ? (
+          <DrawButton
+            name="draw-text"
+            drawType="Text"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faFont}
+            />
+            <span
+              className="draw-text"
+            >
+              {t('Draw.text')}
+            </span>
+          </DrawButton>
+        ) : <></>}
+
+        {showModifyFeatures ? (
+          <ModifyButton
+            name="draw-modify"
+            type="link"
+            onToggle={(evt) => attributeDrawer(evt)}
+          >
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+            />
+            <span
+              className="draw-modify"
+            >
+              {t('Draw.modify')}
+            </span>
+          </ModifyButton>
+
+        ) : <></>}
+
+        {showUploadFeatures ? (
+          <UploadButton
+            name="draw-upload"
+            onChange={onUploadChange}
+            type="link"
+          >
+            <SimpleButton
+              type="link"
+            >
+              <FontAwesomeIcon
+                icon={faUpload}
+              />
+              <span
+                className="draw-upload"
+              >
+                {t('Draw.upload')}
+              </span>
+            </SimpleButton>
+          </UploadButton>
+        ) : <></>}
+
+        {showDownloadFeatures ? (
+          <SimpleButton
+            name="draw-export"
+            onClick={onGeoJSONDownload}
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faDownload}
+            />
+            <span
+              className="draw-export"
+            >
+              {t('Draw.export')}
             </span>
           </SimpleButton>
-        </UploadButton>
-      ) : <></>}
+        ) : <></>}
 
-      {showDownloadFeatures ? (
-        <SimpleButton
-          name="draw-export"
-          onClick={onGeoJSONDownload}
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faDownload}
-          />
-          <span
-            className="draw-export"
+        {showDeleteFeatures ? (
+          <DeleteButton
+            name="draw-delete"
+            type="link"
           >
-            {t('Draw.export')}
-          </span>
-        </SimpleButton>
-      ) : <></>}
-
-      {showDeleteFeatures ? (
-        <DeleteButton
-          name="draw-delete"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faTrash}
-          />
-          <span
-            className="draw-delete"
-          >
-            {t('Draw.delete')}
-          </span>
-        </DeleteButton>
-      ) : <></>}
-      <StylingDrawer />
-    </ToggleGroup>
+            <FontAwesomeIcon
+              icon={faTrash}
+            />
+            <span
+              className="draw-delete"
+            >
+              {t('Draw.delete')}
+            </span>
+          </DeleteButton>
+        ) : <></>}
+        <StylingDrawer />
+      </ToggleGroup>
+      <AttributionDrawer
+        openAttributeDrawer={openAttributeDrawer}
+        onClose={() => setopenAttributeDrawer(false)}
+      />
+    </>
   );
 };
 
