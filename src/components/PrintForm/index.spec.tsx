@@ -26,7 +26,6 @@ describe('<PrintForm />', () => {
         zoom: 10
       })
     });
-    // @ts-ignore
     printManager = new MapFishPrintV3Manager({
       map
     });
