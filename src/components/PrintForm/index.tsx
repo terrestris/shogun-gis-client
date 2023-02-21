@@ -36,6 +36,9 @@ import Logger from '@terrestris/base-util/dist/Logger';
 import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
+import {
+  MapFishPrintV3ManagerOpts
+} from '@terrestris/mapfish-print-manager/dist/manager/MapFishPrintV3Manager';
 import MapFishPrintV3GeoJsonSerializer from
   '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
 import MapFishPrintV3OSMSerializer from
@@ -56,6 +59,7 @@ import CustomFieldInput from './CustomFieldInput';
 import LayoutSelect from './LayoutSelect';
 import OutputFormatSelect from './OutputFormatSelect';
 import ResolutionSelect from './ResolutionSelect';
+import ScaleSelect from './ScaleSelect';
 
 import '../PrintForm/Shared/Shared';
 
@@ -67,12 +71,13 @@ export interface Layout {
 }
 
 export interface PrintFormProps extends Omit<FormProps, 'form'> {
+  active: boolean;
   map: OlMap;
+  client?: SHOGunAPIClient | null;
+  customPrintScales?: number[];
+  layouts?: Layout[];
   layerBlackList?: string[];
   outputFormats?: string[];
-  layouts?: Layout[];
-  active: boolean;
-  client?: SHOGunAPIClient | null;
 }
 
 export const PrintForm: React.FC<PrintFormProps> = ({
@@ -80,8 +85,11 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   map,
   active,
   client,
+  customPrintScales = [],
+  outputFormats=['pdf', 'png'],
   ...restProps
 }): JSX.Element => {
+
   const [form] = Form.useForm();
   const {
     t
@@ -123,7 +131,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   }, [map, layerBlackList]);
 
   const initializeMapProvider = useCallback(async () => {
-    const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
+    let pManagerOpts: MapFishPrintV3ManagerOpts = {
       url: ClientConfiguration.print?.url || '/print',
       map,
       timeout: 60000,
@@ -145,7 +153,18 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       customParams: {
         printLegend: false
       }
-    });
+    };
+
+    if (customPrintScales.length > 0) {
+      pManagerOpts = {
+        ...pManagerOpts,
+        ...{
+          customPrintScales: customPrintScales.reverse()
+        }
+      };
+    }
+
+    const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager(pManagerOpts);
 
     try {
       await pManager.init();
@@ -159,7 +178,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [client, layerFilter, legendFilter, map, t]);
+  }, [client, layerFilter, legendFilter, map, t, customPrintScales]);
 
   useEffect(() => {
     if (active) {
@@ -260,6 +279,15 @@ export const PrintForm: React.FC<PrintFormProps> = ({
                 initialValue={printManager?.getLayouts()[0]?.name}
               >
                 <LayoutSelect
+                  printManager={printManager}
+                />
+              </Form.Item>
+              <Form.Item
+                name='scale'
+                label={t('PrintForm.scale')}
+                initialValue={printManager?.getClosestScaleToFitMap()}
+              >
+                <ScaleSelect
                   printManager={printManager}
                 />
               </Form.Item>
