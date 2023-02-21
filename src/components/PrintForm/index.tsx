@@ -294,7 +294,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               <Form.Item
                 name="dpi"
                 label={t('PrintForm.dpi')}
-                initialValue={72}
+                initialValue={printManager.getDpis()[0]}
               >
                 <ResolutionSelect
                   printManager={printManager}
@@ -308,7 +308,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               >
                 <OutputFormatSelect
                   printManager={printManager}
-                  outputFormats={['pdf', 'png']}
+                  outputFormats={outputFormats}
                   placeholder={t('PrintForm.outputFormatPlaceholder')}
                 />
               </Form.Item>
