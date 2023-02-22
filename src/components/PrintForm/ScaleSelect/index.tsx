@@ -29,10 +29,10 @@ export const ScaleSelect: React.FC<ScaleSelectProps> = ({
 
   const map = useMap();
 
-  const [scale, setScale] = useState<any>(value);
+  const [scale, setScale] = useState<number>(0);
 
   useEffect(() => {
-    if (printManager) {
+    if (printManager && scale) {
       printManager.setScale(scale);
     }
   }, [printManager, scale]);
@@ -40,7 +40,10 @@ export const ScaleSelect: React.FC<ScaleSelectProps> = ({
   useEffect(() => {
 
     const updateScale = () => {
-      setScale(printManager.getScale());
+      const pmScale = printManager.getScale();
+      if (pmScale) {
+        setScale(pmScale);
+      }
     };
     const transformInteraction = map?.getInteractions().getArray().find(i => {
       return i.get('name') === MapFishPrintV3Manager.TRANSFORM_INTERACTION_NAME;
@@ -60,7 +63,9 @@ export const ScaleSelect: React.FC<ScaleSelectProps> = ({
   }, [printManager, map]);
 
   useEffect(() => {
-    setScale(value);
+    if (value) {
+      setScale(value);
+    }
   }, [value]);
 
   return (
