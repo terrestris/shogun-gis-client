@@ -38,7 +38,6 @@ export const ScaleSelect: React.FC<ScaleSelectProps> = ({
   }, [printManager, scale]);
 
   useEffect(() => {
-
     const updateScale = () => {
       const pmScale = printManager.getScale();
       if (pmScale) {
