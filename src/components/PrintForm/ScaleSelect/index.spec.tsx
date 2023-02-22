@@ -10,9 +10,9 @@ import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
 
-import ResolutionSelect from './index';
+import ScaleSelect from './index';
 
-describe('<ResolutionSelect />', () => {
+describe('<ScaleSelect />', () => {
 
   let printManager: MapFishPrintV3Manager;
 
@@ -23,13 +23,13 @@ describe('<ResolutionSelect />', () => {
   });
 
   it('is defined', () => {
-    expect(ResolutionSelect).not.toBeUndefined();
+    expect(ScaleSelect).not.toBeUndefined();
   });
 
   it('can be rendered', () => {
     const {
       container
-    } = render(<ResolutionSelect printManager={printManager} />);
+    } = render(<ScaleSelect printManager={printManager} />);
     expect(container).toBeVisible();
   });
 

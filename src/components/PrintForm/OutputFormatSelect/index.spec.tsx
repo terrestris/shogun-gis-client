@@ -7,6 +7,8 @@ import {
 
 import userEvent from '@testing-library/user-event';
 
+import OlMap from 'ol/Map';
+
 import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
@@ -22,8 +24,9 @@ describe('<OutputFormatSelect />', () => {
   let printManager: MapFishPrintV3Manager;
 
   beforeEach(() => {
-    // @ts-ignore
-    printManager = new MapFishPrintV3Manager({});
+    printManager = new MapFishPrintV3Manager({
+      map: new OlMap()
+    });
   });
 
   it('is defined', () => {
