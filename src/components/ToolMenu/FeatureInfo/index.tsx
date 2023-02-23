@@ -12,6 +12,7 @@ import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
+import OlSourceWMTS from 'ol/source/WMTS';
 
 import {
   Tab
@@ -112,10 +113,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
       const mapLayer = map.getAllLayers().find(l => {
         if (l instanceof OlLayerImage || l instanceof OlLayerTile) {
-          const unqualifiedMapLayerName = getUnqualifiedLayerName(l.getSource().getParams().LAYERS);
-          const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
-
-          return unqualifiedLayerName === unqualifiedMapLayerName;
+          const source = l.getSource();
+          if (source instanceof OlSourceWMTS) {
+            return false;
+          } else {
+            const unqualifiedMapLayerName = getUnqualifiedLayerName(l.getSource().getParams().LAYERS);
+            const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
+            return unqualifiedLayerName === unqualifiedMapLayerName;
+          }
         }
         return false;
       });
