@@ -78,7 +78,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
   const queryLayers = MapUtil.getAllLayers(map)
     .filter((layer) => {
-      if (!layer.get('hoverable')) {
+      if (!layer.get('hoverable') || !layer.getVisible()) {
         return false;
       }
 
