@@ -63,12 +63,15 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
 
   const onFinish = (values: any) => {
     // set input as property
-    let key = (`${values.attributions[0].first}`);
-    let value = (`${values.attributions[0].last}`);
+    values.attributions.forEach( e => {
+      let key = e.key;
+      let value = e.value;
 
-    selectedFeature?.setProperties({
-      [key]: value
+      selectedFeature?.setProperties({
+        [key]: value
+      });
     });
+
     console.log(selectedFeature?.getProperties());
 
   };
@@ -148,7 +151,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
                       >
                         <Form.Item
                           {...restField}
-                          name={[name, 'first']}
+                          name={[name, 'key']}
                           rules={[{
                             required: true,
                             message: 'Missing Key'
@@ -158,7 +161,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
                         </Form.Item>
                         <Form.Item
                           {...restField}
-                          name={[name, 'last']}
+                          name={[name, 'value']}
                           rules={[{
                             required: true,
                             message: 'Missing Value'
