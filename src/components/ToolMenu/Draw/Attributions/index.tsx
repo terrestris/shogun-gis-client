@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   MinusCircleOutlined, PlusOutlined
@@ -6,9 +6,12 @@ import {
 import {
   Button, Drawer, Form, Input, Space, Divider, List, Row, Typography
 } from 'antd';
+import OlFeature from 'ol/Feature';
 import OlLayerVector from 'ol/layer/Vector';
 
 import VectorSource from 'ol/source/Vector';
+
+import Geometry from 'ol/geom/Geometry.js';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -17,6 +20,7 @@ import {
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
+import useAppSelector from '../../../../hooks/useAppSelector';
 
 export type AttributionDrawerProps = {
   openAttributeDrawer: boolean;
@@ -28,33 +32,58 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   onClose
 }) => {
 
+  const [attributions, setAttributions] = useState([]);
+  const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
+
+
+  // ToDo: will be used in future once react-geo library triggeres selected events
+  // const selectedFeatures: OlFeature[] = useAppSelector(state => state.selectedFeatures);
+
   const map = useMap();
+
+  // ToDo: will be removed in future once react-geo library triggeres selected events
+  const selectInteraction: any = map?.getInteractions().getArray().filter(interaction => {
+    if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
+      return true;
+    } else {
+      return false;
+    }
+  })[0];
+
+  if (selectInteraction) {
+    selectInteraction.on('select', () => {
+      setSelectedFeature(selectInteraction.getFeatures().getArray()[0]);
+    });
+
+  }
 
   const handleClose = () => {
     onClose(false);
   };
 
   const onFinish = (values: any) => {
-    console.log('Received values of form:', values);
+    // set input as property
+    let key = (`${values.attributions[0].first}`);
+    let value = (`${values.attributions[0].last}`);
+
+    selectedFeature?.setProperties({
+      [key]: value
+    });
+    console.log(selectedFeature?.getProperties());
+
   };
 
-  // Get the created Layer
-  // let drawVectorLayer = MapUtil.getLayerByName(map!, 'react-geo_digitize') as OlLayerVector<VectorSource>;
-  // let features = drawVectorLayer.getSource()?.getFeatures();
+  // List all Properties of the selected layer as []
+  if (selectedFeature) {
+    let allProperties = Object.entries(selectedFeature?.getProperties());
+    let geometryType = selectedFeature?.getGeometry()?.getType();
+    console.log(allProperties);
+    // console.log(geometryType === 'Circle');
+    // console.log(allProperties.indexOf('geometry'))
+  }
 
+  // set new Properties
 
-
-
-  // method to call
-  // features[0].set()
-
-  let attributions = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.'
-  ];
 
   return (
     <>
@@ -67,17 +96,24 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
         onClose={handleClose}
         open={openAttributeDrawer}
       >
-        <Row>
+        <>
+          {!selectedFeature &&
+            <>
+              Please select a feature
+            </>
+          }
+        </>
+        {/* <Row>
           <List
             bordered
             dataSource={attributions}
-            renderItem={(item) => (
+            renderItem={(item: string) => (
               <List.Item>
                 {item}
               </List.Item>
             )}
           />
-        </Row>
+        </Row> */}
         <Divider />
         <Row>
           <Form
@@ -86,7 +122,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
             style={{ maxWidth: 600 }}
             autoComplete="off"
           >
-            <Form.List name="users">
+            <Form.List name="attributions">
               {(fields, {
                 add, remove
               }) => (
@@ -94,35 +130,48 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
                   {fields.map(({
                     key, name, ...restField
                   }) => (
-                    <Space key={key}
-                      style={{
-                        display: 'flex',
-                        marginBottom: 8
-                      }}
-                      align="baseline"
-                    >
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'first']}
-                        rules={[{
-                          required: true,
-                          message: 'Missing Key'
-                        }]}
+                    // <Space key={key}
+                    //   style={{
+                    //     display: 'flex',
+                    //     marginBottom: 8
+                    //   }}
+                    //   align="baseline"
+                    // >
+
+                    <>
+                      {/* {selectedFeature && selectedFeature.getProperties().map(() => {
+                        debugger
+                        return ( */}
+                      <div
+                        key={key}
+                        className='attribute-row'
                       >
-                        <Input placeholder="Key" />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'last']}
-                        rules={[{
-                          required: true,
-                          message: 'Missing Value'
-                        }]}
-                      >
-                        <Input placeholder="Value" />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'first']}
+                          rules={[{
+                            required: true,
+                            message: 'Missing Key'
+                          }]}
+                        >
+                          <Input placeholder="Key" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'last']}
+                          rules={[{
+                            required: true,
+                            message: 'Missing Value'
+                          }]}
+                        >
+                          <Input placeholder="Value" />
+                        </Form.Item>
+                        <MinusCircleOutlined onClick={() => remove(name)} />
+                      </div>
+                      {/* )
+                      })} */}
+                    </>
+                    // </Space>
                   ))}
                   <Form.Item>
                     <Button
