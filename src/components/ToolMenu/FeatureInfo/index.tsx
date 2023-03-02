@@ -31,6 +31,7 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
+  isWmsLayer,
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
@@ -111,8 +112,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       let pluginRendererAvailable = false;
 
       const mapLayer = map.getAllLayers().find(l => {
-        if (l instanceof OlLayerImage || l instanceof OlLayerTile) {
-          const unqualifiedMapLayerName = getUnqualifiedLayerName(l.getSource().getParams().LAYERS);
+        if (isWmsLayer(l)) {
+          const source = (l as WmsLayer).getSource();
+          const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
           const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
 
           return unqualifiedLayerName === unqualifiedMapLayerName;
