@@ -93,8 +93,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const plugins = usePlugins();
 
-  const client = useSHOGunAPIClient();
-
   const dispatch = useAppDispatch();
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
@@ -271,7 +269,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             <PrintForm
               active={activeKeys.includes('print')}
               map={map}
-              client={client}
               layerBlackList={[
                 'react-geo_measure',
                 'hoverVectorLayer'
