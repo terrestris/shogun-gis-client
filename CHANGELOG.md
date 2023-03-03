@@ -1,3 +1,33 @@
+## [5.0.0](https://github.com/terrestris/shogun-gis-client/compare/v4.13.0...v5.0.0) (2023-03-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* don't pass client as prop, get it from hook instead
+
+### Bugfixes
+
+* don't query wmts layers ([bd200d5](https://github.com/terrestris/shogun-gis-client/commit/bd200d57e5d19b6266e3e08fbeb7a78415f649fc))
+* filter invisible layers ([6c3c1c4](https://github.com/terrestris/shogun-gis-client/commit/6c3c1c40ba10ed67d1ee9c80065c1f735de6e647))
+
+
+### Breaking changes
+
+* remove client prop, get client from hook instead ([a8718b8](https://github.com/terrestris/shogun-gis-client/commit/a8718b8d04f53127406e0a284e53dbc52cd027f6))
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.31.0 to 1.31.1 ([84648ca](https://github.com/terrestris/shogun-gis-client/commit/84648ca5c0dcf49b38b64657037a65eae8ff0308))
+* **deps-dev:** bump @playwright/test from 1.31.1 to 1.31.2 ([f90f08d](https://github.com/terrestris/shogun-gis-client/commit/f90f08d9db2b45a2627a55ff02b7369d74d2ce4c))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([ec358fa](https://github.com/terrestris/shogun-gis-client/commit/ec358faea95d8344b4722f18f2b4846ef52ed550))
+* **deps-dev:** bump @typescript-eslint/parser from 5.53.0 to 5.54.0 ([9a51ffe](https://github.com/terrestris/shogun-gis-client/commit/9a51ffe822178274d8e04eba28747ef6bcea2707))
+* **deps-dev:** bump eslint from 8.34.0 to 8.35.0 ([a3da2bd](https://github.com/terrestris/shogun-gis-client/commit/a3da2bd1bdffe98e6b4bd89882c59716e7670f12))
+* **deps-dev:** bump semantic-release from 20.1.0 to 20.1.1 ([ea3d16b](https://github.com/terrestris/shogun-gis-client/commit/ea3d16b194eb111b2d59ab770396e9ee93602b52))
+* **deps:** bump keycloak-js from 20.0.5 to 21.0.0 ([23081b8](https://github.com/terrestris/shogun-gis-client/commit/23081b81d5974ab93c61e143980a25be5f81e2be))
+* **deps:** bump keycloak-js from 21.0.0 to 21.0.1 ([6b52a90](https://github.com/terrestris/shogun-gis-client/commit/6b52a90b34ea7fabb48bfc40d61a63207087a0a0))
+* **deps:** bump react-i18next from 12.1.5 to 12.2.0 ([21cbfc8](https://github.com/terrestris/shogun-gis-client/commit/21cbfc8cffa46b2efc18f56c2b798910c64cbbcf))
+
 ## [4.13.0](https://github.com/terrestris/shogun-gis-client/compare/v4.12.2...v4.13.0) (2023-02-22)
 
 
