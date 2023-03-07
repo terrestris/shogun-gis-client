@@ -21,6 +21,9 @@ module.exports = {
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'
   ],
+  testPathIgnorePatterns: [
+    '<rootDir>/src/e2e-tests/'
+  ],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/jest/fileMock.js',

@@ -84,7 +84,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   map,
   active,
   customPrintScales = [],
-  outputFormats=['pdf', 'png'],
+  outputFormats = ['pdf', 'png'],
   ...restProps
 }): JSX.Element => {
 
@@ -230,7 +230,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   };
 
   return (
-    <div className="print">
+    <div
+      className="print"
+      aria-label='print-form'
+    >
       {
         errorMsg &&
         <Alert

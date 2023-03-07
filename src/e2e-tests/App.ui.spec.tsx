@@ -7,7 +7,7 @@ test.describe('Basic application tests', () => {
   test.beforeEach(async ({
     page
   }) => {
-    await page.goto('/');
+    await page.goto(`${process.env.HOST}/client/?applicationId=${process.env.ID}`);
   });
 
   test('it has set the correct title', async ({
