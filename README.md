@@ -57,6 +57,26 @@ npm run start
 
 to have the application available at [https://localhost:8080](https://localhost:8080) you usually want to start the full SHOGun stack for development. Please refer to the [shogun-docker](https://github.com/terrestris/shogun-docker) repository for further details.
 
+## End-to-End testing using Playwright
+
+Ensure using the latest version of the E2E-Test package:
+
+```
+npm update *test-package*
+```
+
+Set your Domain including potential paths as the ´process.env.HOST´-variable in the global-setup.js. For example:
+
+```
+shogun.terrestris.de
+```
+
+To run the E2E-tests locally just use the following command in the commandline:
+
+```
+npx playwright test
+```
+
 ## Road to production 🏭
 
 The build artifact of the client can either be built via

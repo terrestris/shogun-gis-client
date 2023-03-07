@@ -3,24 +3,20 @@ import {
 } from '@playwright/test';
 
 export default defineConfig({
-  // @ts-ignore
-  globalSetup: require.resolve('./global-setup.ts'),
-  testDir: './e2e-tests',
+  globalSetup: require.resolve('./global-setup.js'),
+  testDir: './src/e2e-tests',
   timeout: 30 * 1000,
   expect: {
     timeout: 5000
   },
   fullyParallel: true,
-  // @ts-ignore
   forbidOnly: !!process.env.CI,
   retries: 4,
-  // @ts-ignore
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', {
     open: 'never'
   }]],
   use: {
-    // @ts-ignore
     baseURL: process.env.HOST,
     actionTimeout: 0,
     trace: 'on-first-retry',
@@ -35,7 +31,10 @@ export default defineConfig({
   },
 
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/
+    },
     {
       name: 'chromium',
       use: {
@@ -65,5 +64,5 @@ export default defineConfig({
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: './e2e-tests/test-results/'
+  outputDir: './src/e2e-tests/test-results/'
 });
