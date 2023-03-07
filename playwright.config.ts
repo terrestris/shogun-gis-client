@@ -1,43 +1,69 @@
 import {
-  PlaywrightTestConfig,
-  devices
+  defineConfig
 } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
-  testMatch: /.*\.ui\.spec/,
-  webServer: {
-    command: 'npm run start',
-    url: 'https://localhost:3000',
-    timeout: 240 * 1000,
-    reuseExistingServer: !process.env.CI,
-    ignoreHTTPSErrors: true
+export default defineConfig({
+  // @ts-ignore
+  globalSetup: require.resolve('./global-setup.ts'),
+  testDir: './e2e-tests',
+  timeout: 30 * 1000,
+  expect: {
+    timeout: 5000
   },
+  fullyParallel: true,
+  // @ts-ignore
+  forbidOnly: !!process.env.CI,
+  retries: 4,
+  // @ts-ignore
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [['html', {
+    open: 'never'
+  }]],
   use: {
-    baseURL: 'https://localhost:3000',
-    headless: true,
-    viewport: {
-      width: 1280,
-      height: 720
-    },
-    ignoreHTTPSErrors: true,
-    screenshot: 'only-on-failure'
-  },
-  projects: [{
-    name: 'chromium',
-    use: {
-      ...devices['Desktop Chrome']
-    }
-  }, {
-    name: 'firefox',
-    use: {
-      ...devices['Desktop Firefox']
-    }
-  }, {
-    name: 'webkit',
-    use: {
-      ...devices['Desktop Safari']
-    }
-  }]
-};
+    // @ts-ignore
+    baseURL: process.env.HOST,
+    actionTimeout: 0,
+    trace: 'on-first-retry',
+    permissions: ['geolocation'],
 
-export default config;
+    ignoreHTTPSErrors: true,
+
+    viewport: {
+      width: 800,
+      height: 600
+    }
+  },
+
+  projects: [
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    {
+      name: 'chromium',
+      use: {
+        browserName: 'chromium',
+        locale: 'de-DE'
+      },
+      dependencies: ['setup']
+    },
+
+    {
+      name: 'firefox',
+      use: {
+        browserName: 'firefox',
+        locale: 'de-DE'
+      },
+      dependencies: ['setup']
+    },
+
+    {
+      name: 'webkit',
+      use: {
+        browserName: 'webkit',
+        locale: 'de-DE'
+      },
+      dependencies: ['setup']
+    }
+  ],
+
+  /* Folder for test artifacts such as screenshots, videos, traces, etc. */
+  outputDir: './e2e-tests/test-results/'
+});
