@@ -66,15 +66,16 @@ jobs:
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
 
-      - name: Build docker image (latest) 🏗️
+      - name: Build docker image e2e-tests (latest) 🏗️
         uses: docker/build-push-action@v2
         with:
+          file: Dockerfile.e2e
           context: .
           tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
           load: true
 
-      - name: Build docker image (version) 🏗️
+      - name: Build docker image e2e-tests (version) 🏗️
         if: steps.semantic.outputs.new_release_published == 'true'
         uses: docker/build-push-action@v2
         with:
