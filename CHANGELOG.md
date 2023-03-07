@@ -1,3 +1,10 @@
+## [5.1.1](https://github.com/terrestris/shogun-gis-client/compare/v5.1.0...v5.1.1) (2023-03-07)
+
+
+### Bugfixes
+
+* fixing playwright workflow ([5608d0d](https://github.com/terrestris/shogun-gis-client/commit/5608d0d615e62c0be2811684b97b0865b0da4017))
+
 ## [5.1.0](https://github.com/terrestris/shogun-gis-client/compare/v5.0.0...v5.1.0) (2023-03-07)
 
 
