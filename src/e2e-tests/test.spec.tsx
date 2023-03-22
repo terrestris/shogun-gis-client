@@ -2,7 +2,8 @@ import {
   test
 } from '@playwright/test';
 
-import myTest from 'shogun-e2e-tests/src/shogun-gis-client/toolbox/print';
+// import tests as module as follow:
+// import myTest from 'shogun-e2e-tests/src/shogun-gis-client/toolbox/print';
 
 test.use({
   storageState: 'playwright/.auth/admin.json'
@@ -17,6 +18,7 @@ test('test', async ({
 
   await page.getByRole('button', {name: 'Export'}).click();
 
-  await myTest(page);
+  // use tests as follow:
+  // await myTest(page);
 });
 
