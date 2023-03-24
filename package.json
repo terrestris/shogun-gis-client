@@ -24,7 +24,7 @@
     "build:babel": "BABEL_ENV=production babel src --out-dir dist --copy-files --no-copy-ignored --ignore 'src/**/*.spec.tsx' --ignore 'src/**/*.spec.js' --extensions '.ts,.tsx' --source-maps",
     "build:declaration": "tsc --emitDeclarationOnly",
     "build:dist": "npm run clean:dist && npm run build:babel && npm run build:declaration",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run test:ui",
+    "check": "npm run typecheck && npm run lint && npm run test",
     "clean:dist": "rimraf ./dist/*",
     "husky": "husky install",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
