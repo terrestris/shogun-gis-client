@@ -1,3 +1,26 @@
+## [5.1.2](https://github.com/terrestris/shogun-gis-client/compare/v5.1.1...v5.1.2) (2023-03-27)
+
+
+### Dependencies
+
+* **deps-dev:** bump @types/jest from 29.4.0 to 29.5.0 ([eaba31f](https://github.com/terrestris/shogun-gis-client/commit/eaba31fb4013930a683edc1a627678620189ae7c))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([ce69000](https://github.com/terrestris/shogun-gis-client/commit/ce690008e6c3b26487004a1f2249d7e252ac86c7))
+* **deps-dev:** bump @typescript-eslint/parser from 5.54.1 to 5.56.0 ([fa02f22](https://github.com/terrestris/shogun-gis-client/commit/fa02f22a273388d50bd5260f2dd05c6d65c52d44))
+* **deps-dev:** bump eslint from 8.35.0 to 8.36.0 ([df9120e](https://github.com/terrestris/shogun-gis-client/commit/df9120e4174f66eb1d95c34a1212fe841709dce3))
+* **deps-dev:** bump mini-css-extract-plugin from 2.7.2 to 2.7.5 ([dcb27bf](https://github.com/terrestris/shogun-gis-client/commit/dcb27bfce5fb9770e8b3d5011f0d7d17f83cf35f))
+* **deps-dev:** bump style-loader from 3.3.1 to 3.3.2 ([0fd782b](https://github.com/terrestris/shogun-gis-client/commit/0fd782b11b9ff00bf86b82cf49c6658a2a9807c0))
+* **deps-dev:** bump terser-webpack-plugin from 5.3.6 to 5.3.7 ([00def3a](https://github.com/terrestris/shogun-gis-client/commit/00def3aa9210e081c5176c980572d27903cf9cf7))
+* **deps-dev:** bump webpack from 5.75.0 to 5.76.3 ([4c6d77a](https://github.com/terrestris/shogun-gis-client/commit/4c6d77a1a2d756a0f320283be68b503300c04278))
+* **deps:** bump @terrestris/ol-util from 10.2.3 to 10.2.4 ([eae5dff](https://github.com/terrestris/shogun-gis-client/commit/eae5dff09996f5ed24728373fb500988ba613a19))
+* **deps:** bump @terrestris/react-geo from 22.3.2 to 22.4.0 ([f8267c1](https://github.com/terrestris/shogun-gis-client/commit/f8267c1875e1d9c40e2955e04779d5d2d1c8f1db))
+
+
+### Bugfixes
+
+* fixing playwright workflow ([90bae59](https://github.com/terrestris/shogun-gis-client/commit/90bae596c0a3befd34b1df0616749072497eb996))
+* remove e2e-tests from check script ([ea650b2](https://github.com/terrestris/shogun-gis-client/commit/ea650b2e0265de74d310fab73f048f826da5c411))
+* remove unnecessary visibility check ([bc75d6c](https://github.com/terrestris/shogun-gis-client/commit/bc75d6cfa823ebbf74602b01a6f361a176b476e0))
+
 ## [5.1.1](https://github.com/terrestris/shogun-gis-client/compare/v5.1.0...v5.1.1) (2023-03-07)
 
 
