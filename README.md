@@ -6,7 +6,7 @@ The client was initialized with [create-react-geo-app](https://github.com/terres
 
 ## Installation 💾
 
-We recommended to install the client via the prebuilt Docker image `docker-public.terrestris.de/terrestris/shogun-gis-client`.
+We recommend to install the client via the prebuilt Docker image `docker-public.terrestris.de/terrestris/shogun-gis-client`.
 
 ## Usage 🖱️
 
