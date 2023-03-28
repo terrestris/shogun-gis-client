@@ -1,3 +1,22 @@
+## [5.1.3](https://github.com/terrestris/shogun-gis-client/compare/v5.1.2...v5.1.3) (2023-03-28)
+
+
+### Bugfixes
+
+* use more robust check for layer visibility change ([129f0e9](https://github.com/terrestris/shogun-gis-client/commit/129f0e9601f0a12c144ef594c4a7631b6e368457))
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.21.0 to 7.21.3 ([ec8eec9](https://github.com/terrestris/shogun-gis-client/commit/ec8eec954ccefa893c3cafc9e49af5a388bc09a3))
+* **deps-dev:** bump @commitlint/cli from 17.4.4 to 17.5.0 ([cc16e7d](https://github.com/terrestris/shogun-gis-client/commit/cc16e7d8887ca2a1e9081cf983ba9cacb139255a))
+* **deps-dev:** bump @semantic-release/changelog from 6.0.2 to 6.0.3 ([0b2835f](https://github.com/terrestris/shogun-gis-client/commit/0b2835f6209226aca8a8930759dafbdd9ddffc62))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([000a6fb](https://github.com/terrestris/shogun-gis-client/commit/000a6fbcf5a67116c10db063da2d2e8831bbcb85))
+* **deps-dev:** bump @typescript-eslint/parser from 5.56.0 to 5.57.0 ([e7f3322](https://github.com/terrestris/shogun-gis-client/commit/e7f33223460d20a293aa7c425e103c318216849f))
+* **deps-dev:** bump fs-extra from 11.1.0 to 11.1.1 ([fb34fd7](https://github.com/terrestris/shogun-gis-client/commit/fb34fd798004fe357abf04e3e37c06e37219f193))
+* **deps-dev:** bump semantic-release from 20.1.1 to 21.0.0 ([cd1aa74](https://github.com/terrestris/shogun-gis-client/commit/cd1aa7424cb80bb035fd05957dd9de8a4a257bc0))
+* **deps:** bump i18next from 22.4.11 to 22.4.13 ([26aefab](https://github.com/terrestris/shogun-gis-client/commit/26aefab932237a6f55c8b7e4afec3a21613e02db))
+
 ## [5.1.2](https://github.com/terrestris/shogun-gis-client/compare/v5.1.1...v5.1.2) (2023-03-27)
 
 
