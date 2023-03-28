@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from 'react';
 
 import {
   Tabs
@@ -8,6 +12,7 @@ import {
   getUid
 } from 'ol';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
+import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
@@ -73,26 +78,51 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const plugins = usePlugins();
   const dispatch = useAppDispatch();
 
+  const [queryLayers, setQueryLayers] = useState<WmsLayer[]>([]);
+
+  const layerFilter = (layer: OlLayerBase) => {
+    if (!layer.get('hoverable')) {
+      return false;
+    }
+    if (layer instanceof OlLayerImage && layer.getSource() instanceof OlSourceImageWMS) {
+      return true;
+    }
+    if (layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS) {
+      return true;
+    }
+    return false;
+  };
+
+  const updateQueryLayers = useCallback(() => {
+
+    if (!map) {
+      return;
+    }
+
+    const layerCandidates = MapUtil.getAllLayers(map, layerFilter) as WmsLayer[];
+    setQueryLayers(layerCandidates.filter(l => l.getVisible()));
+  }, [map]);
+
+  useEffect(() => {
+
+    if (!map) {
+      return;
+    }
+
+    updateQueryLayers();
+
+    const mapLayers = MapUtil.getAllLayers(map, layerFilter) as WmsLayer[];
+    mapLayers.forEach(l => l.on('change:visible', updateQueryLayers));
+
+    return () => {
+      mapLayers.forEach(l => l.un('change:visible', updateQueryLayers));
+    };
+
+  }, [map, updateQueryLayers]);
+
   if (!map) {
     return <></>;
   }
-
-  const queryLayers = MapUtil.getAllLayers(map)
-    .filter((layer) => {
-      if (!layer.get('hoverable')) {
-        return false;
-      }
-
-      if (layer instanceof OlLayerImage && layer.getSource() instanceof OlSourceImageWMS) {
-        return true;
-      }
-
-      if (layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS) {
-        return true;
-      }
-
-      return false;
-    }) as WmsLayer[];
 
   const resultRenderer = (coordinateInfoState: CoordinateInfoState) => {
     const features = coordinateInfoState.features;
@@ -125,7 +155,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       plugins.forEach(plugin => {
         if (isFeatureInfoIntegration(plugin.integration) &&
           ((Array.isArray(plugin.integration.layers) && plugin.integration.layers.includes(layerName)) ||
-          !plugin.integration.layers)) {
+            !plugin.integration.layers)) {
           const {
             key,
             wrappedComponent: WrappedPluginComponent
