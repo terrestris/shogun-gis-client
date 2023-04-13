@@ -63,8 +63,6 @@ import ScaleSelect from './ScaleSelect';
 
 import '../PrintForm/Shared/Shared';
 
-import './index.less';
-
 export interface Layout {
   name: string;
   attributes: any[];
@@ -220,15 +218,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     setErrorMsg(null);
   };
 
-  const layout = {
-    labelCol: {
-      span: 8
-    },
-    wrapperCol: {
-      span: 16
-    }
-  };
-
   return (
     <div className="print">
       {
@@ -248,8 +237,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
             <Form
               form={form}
               className="print-form"
-              layout="horizontal"
-              {...layout}
+              labelAlign="left"
+              labelCol={{
+                flex: '90px'
+              }}
               {...restProps}
             >
               <Form.Item

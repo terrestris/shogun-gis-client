@@ -149,7 +149,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   };
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
-
     if ((layer as OlLayerGroup).getLayers) {
       return !layer.get('hideInLayerTree');
     }
