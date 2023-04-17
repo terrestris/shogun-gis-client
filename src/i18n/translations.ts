@@ -74,6 +74,7 @@ export default {
         draw: 'Zeichnen',
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
+        uploadData: 'Daten hochladen',
         print: 'Export',
         layertree: 'Karten',
         languageSelect: 'Sprachauswahl'
@@ -123,6 +124,19 @@ export default {
       WmsTimeSlider: {
         title: 'Zeitlicher Bezug',
         default: 'Keine Daten gefunden'
+      },
+      UploadDataModal: {
+        title: 'Daten hochladen',
+        uploadedDataFolder: 'Hochgeladene Daten',
+        description: 'Klicken oder ziehen Sie die Datei zum Hochladen in diesen Bereich',
+        hint: 'Unterstützte Dateiformate sind Shapefile (gebündelt als *.zip) und GeoTIFF',
+        success: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt',
+        error: {
+          general: 'Fehler beim Hochladen der Datei {{fileName}}',
+          maxSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
+          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+          zipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
+        }
       }
     }
   },
@@ -201,6 +215,7 @@ export default {
         draw: 'Draw',
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
+        uploadData: 'Upload data',
         print: 'Export',
         layertree: 'Maps',
         languageSelect: 'Language selector'
@@ -249,6 +264,19 @@ export default {
       WmsTimeSlider: {
         title: 'Time reference',
         default: 'No data found'
+      },
+      UploadDataModal: {
+        title: 'Upload data',
+        uploadedDataFolder: 'Uploaded data',
+        description: 'Click or drag file to this area to upload',
+        hint: 'Supported file formats are Shapefile (bundled as *.zip) and GeoTIFF',
+        success: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}',
+        error: {
+          general: 'Error while uploading file {{fileName}}',
+          maxSize: 'The file exceeds the upload limit of {{maxSize}} MB',
+          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
+          zipContent: 'Multiple geodatasets within one archive are not supported'
+        }
       }
     }
   }
