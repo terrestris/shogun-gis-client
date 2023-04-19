@@ -128,7 +128,7 @@ export default {
       UploadDataModal: {
         title: 'Daten hochladen',
         uploadedDataFolder: 'Hochgeladene Daten',
-        description: 'Klicken oder ziehen Sie die Datei zum Hochladen in diesen Bereich',
+        description: 'Klicken Sie oder ziehen Sie die Datei zum Hochladen in diesen Bereich',
         hint: 'Unterstützte Dateiformate sind Shapefile (gebündelt als *.zip) und GeoTIFF',
         success: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt',
         error: {
