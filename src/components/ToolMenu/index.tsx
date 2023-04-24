@@ -16,8 +16,9 @@ import {
   faMousePointer,
   faPlus,
   faRuler,
+  faStream,
   faShareNodes,
-  faStream
+  faFile
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -31,8 +32,6 @@ import {
   Tooltip
 } from 'antd';
 
-import _toArray from 'lodash/toArray';
-
 const { Panel } = Collapse;
 
 import {
@@ -42,6 +41,10 @@ import {
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
+
+import {
+  DefaultApplicationToolConfig
+} from '@terrestris/shogun-util/dist/model/Application';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -56,6 +59,9 @@ import {
   show as showAdd
 } from '../../store/addLayerModal';
 import {
+  ClientTools
+} from '../../store/toolConfig';
+import {
   setActiveKeys
 } from '../../store/toolMenu';
 
@@ -63,12 +69,15 @@ import LanguageSelect from '../LanguageSelector';
 import Permalink from '../Permalink';
 import PrintForm from '../PrintForm';
 
+import AppContext from './AppContext';
 import Draw from './Draw';
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
 import Measure from './Measure';
 
 import './index.less';
+
+import '../PrintForm/Shared/Shared';
 
 export interface TitleEventEntity {
   key: string;
@@ -86,19 +95,20 @@ export type ToolMenuProps = {} & Partial<CollapsePanelProps>;
 export const ToolMenu: React.FC<ToolMenuProps> = ({
   ...restProps
 }): JSX.Element => {
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+
+  const toolConfig = useAppSelector(state => state.toolConfig.filter(config => config.config?.visible));
+  const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
+
   const {
     t
   } = useTranslation();
+
   const map = useMap();
 
   const plugins = usePlugins();
 
   const dispatch = useAppDispatch();
-  const availableTools = useAppSelector(state => state.toolMenu.availableTools);
-  const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
-
-  const [collapsed, setCollapsed] = useState<boolean>(false);
-  const [menuTools, setMenuTools] = useState<string[]>([]);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
@@ -113,64 +123,48 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   }, []);
 
   useEffect(() => {
-    if (menuTools.length < 1) {
-      if (availableTools.includes('default')) {
-        setMenuTools([
-          'measure_tools',
-          'draw_tools',
-          'feature_info',
-          'print',
-          'tree',
-          'permalink',
-          'language_selector'
-        ]);
-      } else {
-        setMenuTools(availableTools);
-      }
-    }
-  }, [menuTools, availableTools]);
-
-  useEffect(() => {
     if (
-      activeKeys.includes('print') &&
-      activeKeys.includes('measure_tools')
+      activeKeys.includes(ClientTools.PRINT) &&
+      activeKeys.includes(ClientTools.MEASURE_TOOLS)
     ) {
-      if (activeKeys.indexOf('print') < activeKeys.indexOf('measure_tools')) {
-        dispatch(setActiveKeys(activeKeys.filter(keys => keys !== 'print')));
+      if (activeKeys.indexOf(ClientTools.PRINT) < activeKeys.indexOf(ClientTools.MEASURE_TOOLS)) {
+        dispatch(setActiveKeys(activeKeys.filter(keys => keys !== ClientTools.PRINT)));
       } else {
         dispatch(
-          setActiveKeys(activeKeys.filter(keys => keys !== 'measure_tools'))
+          setActiveKeys(activeKeys.filter(keys => keys !== ClientTools.MEASURE_TOOLS))
         );
       }
     }
   }, [activeKeys, dispatch]);
 
-  const getToolPanels = (): JSX.Element[] => {
-
+  const getToolPanels = () => {
     const panels: JSX.Element[] = [];
 
-    menuTools.forEach((tool: string) => {
-      const toolPanelConfig: ToolPanelConfig | undefined = getToolPanelConfig(tool);
+    toolConfig.forEach(config => {
+      const toolPanelConfig = getToolPanelConfig(config);
 
       if (!toolPanelConfig) {
         return;
       }
+
       const {
         icon,
         title,
-        wrappedComponent
+        wrappedComponent,
+        forceRender
       } = toolPanelConfig;
 
       const panel = (
         <Panel
-          className={tool}
+          forceRender={forceRender}
+          className={config.name}
           header={
             <>
               {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
               <span>{title}</span>
             </>
           }
-          key={tool}
+          key={config.name}
         >
           {wrappedComponent}
         </Panel>
@@ -210,64 +204,63 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         }
       });
     }
+
     return panels;
   };
 
-  const getToolPanelConfig = (tool: string): ToolPanelConfig | undefined => {
-    switch (tool) {
-      case 'measure_tools':
+  const getToolPanelConfig = (config: DefaultApplicationToolConfig) => {
+    switch (config.name) {
+      case ClientTools.MEASURE_TOOLS:
         return {
           icon: faRuler,
           title: t('ToolMenu.measure'),
           wrappedComponent: (
             <Measure
-              showMeasureDistance={
-                availableTools.includes('default') || availableTools.includes('measure_tools_distance')
-              }
-              showMeasureArea={availableTools.includes('default') || availableTools.includes('measure_tools_area')}
+              showMeasureDistance={config.config.showMeasureDistance}
+              showMeasureArea={config.config.showMeasureArea}
             />
           )
         };
-      case 'draw_tools':
+      case ClientTools.DRAW_TOOLS:
         return {
           icon: faDrawPolygon,
           title: t('ToolMenu.draw'),
+          // We want to render the draw toolbar immediately to restore
+          // any features from the store if set.
+          forceRender: true,
           wrappedComponent: (
             <Draw
-              showDrawPoint={availableTools.includes('default') || availableTools.includes('draw_tools_point')}
-              showDrawLine={availableTools.includes('default') || availableTools.includes('draw_tools_line')}
-              showDrawPolygon={availableTools.includes('default') || availableTools.includes('draw_tools_polygon')}
-              showDrawCircle={availableTools.includes('default') || availableTools.includes('draw_tools_circle')}
-              showDrawRectangle={availableTools.includes('default') || availableTools.includes('draw_tools_rectangle')}
-              showDrawAnnotation={
-                availableTools.includes('default') || availableTools.includes('draw_tools_annotation')
-              }
-              showModifyFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_modify')}
-              showUploadFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_upload')}
-              showDownloadFeatures={
-                availableTools.includes('default') || availableTools.includes('draw_tools_download')
-              }
-              showDeleteFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_delete')}
+              showDrawPoint={config.config.showDrawPoint}
+              showDrawLine={config.config.showDrawLine}
+              showDrawPolygon={config.config.showDrawPolygon}
+              showDrawCircle={config.config.showDrawCircle}
+              showDrawRectangle={config.config.showDrawRectangle}
+              showDrawAnnotation={config.config.showDrawAnnotation}
+              showModifyFeatures={config.config.showModifyFeatures}
+              showUploadFeatures={config.config.showUploadFeatures}
+              showDownloadFeatures={config.config.showDownloadFeatures}
+              showDeleteFeatures={config.config.showDeleteFeatures}
+              showStyleEditor={config.config.showStyleEditor}
             />
           )
         };
-      case 'feature_info':
+      case ClientTools.FEATURE_INFO:
         return {
           icon: faMousePointer,
           title: t('ToolMenu.featureInfo'),
           wrappedComponent: (
             <FeatureInfo
-              enabled={activeKeys.includes('feature_info')}
+              enabled={activeKeys.includes(ClientTools.FEATURE_INFO)}
             />
           )
         };
-      case 'print':
+      case ClientTools.PRINT:
         return {
           icon: faFileDownload,
           title: t('ToolMenu.print'),
           wrappedComponent: map ? (
             <PrintForm
-              active={activeKeys.includes('print')}
+              active={activeKeys.includes(ClientTools.PRINT)}
               map={map}
               layerBlackList={[
                 'react-geo_measure',
@@ -276,7 +269,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             />
           ) : <></>
         };
-      case 'tree':
+      case ClientTools.TREE:
         return {
           icon: faStream,
           title: t('ToolMenu.layertree'),
@@ -293,13 +286,19 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             </div>
           )
         };
-      case 'permalink':
+      case ClientTools.PERMALINK:
         return {
           icon: faShareNodes,
           title: t('Permalink.title'),
           wrappedComponent: <Permalink />
         };
-      case 'language_selector':
+      case ClientTools.APP_CONTEXT:
+        return {
+          icon: faFile,
+          title: t('ToolMenu.saveLoad'),
+          wrappedComponent: <AppContext />
+        };
+      case ClientTools.LANGUAGE_SELECTOR:
         return {
           icon: faLanguage,
           title: t('ToolMenu.languageSelect'),
@@ -311,36 +310,47 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   };
 
   return (
-    <div className={`tool-menu ${collapsed ? 'collapsed' : ''}`}>
+    <div
+      className={`tool-menu ${collapsed ? 'collapsed' : ''}`}
+    >
       <Collapse
         expandIconPosition='end'
         activeKey={activeKeys}
         destroyInactivePanel={true}
-        onChange={(keys: string[] | string) => {
+        onChange={(key: string[] | string) => {
           setCollapsed(false);
-          dispatch(setActiveKeys(_toArray(keys)));
+
+          if (Array.isArray(key)) {
+            dispatch(setActiveKeys(key.map(k => k as ClientTools)));
+          } else {
+            dispatch(setActiveKeys([key as ClientTools]));
+          }
         }}
         {...restProps}
       >
         {getToolPanels()}
       </Collapse>
-      <Tooltip
-        placement={'right'}
-        title={collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse')}
-      >
-        <Button
-          className="collapse-btn"
-          icon={
-            collapsed ?
-              <FontAwesomeIcon icon={faChevronRight} /> :
-              <FontAwesomeIcon icon={faChevronLeft} />
-          }
-          onClick={() => {
-            dispatch(setActiveKeys([]));
-            setCollapsed(!collapsed);
-          }}
-        />
-      </Tooltip>
+      {
+        getToolPanels().length > 0 && (
+          <Tooltip
+            placement={'right'}
+            title={collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse')}
+          >
+            <Button
+              className="collapse-btn"
+              icon={
+                collapsed ?
+                  <FontAwesomeIcon icon={faChevronRight} /> :
+                  <FontAwesomeIcon icon={faChevronLeft} />
+              }
+              onClick={() => {
+                dispatch(setActiveKeys([]));
+                setCollapsed(!collapsed);
+              }}
+            />
+          </Tooltip>
+        )
+      }
     </div>
   );
 };

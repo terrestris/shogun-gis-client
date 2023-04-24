@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type {
   IconDefinition
 } from '@fortawesome/fontawesome-common-types';
@@ -6,10 +8,24 @@ import type {
   Reducer
 } from '@reduxjs/toolkit';
 
-import { CollapsePanelProps } from 'antd';
+import type {
+  CollapsePanelProps
+} from 'antd';
+
+import ClientConfiguration from 'clientConfig';
+
 import type OlMap from 'ol/Map';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+
 import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+
+import i18n from '../i18n';
+
+import {
+  createReducer,
+  store
+} from '../store/store';
 
 export type ClientPluginLocale = {
   [Property in keyof {
@@ -125,3 +141,118 @@ export function isFeatureInfoIntegration(pluginIntegration: ClientPluginIntegrat
 export function isMapIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationMap {
   return pluginIntegration && pluginIntegration.placement === 'map';
 }
+
+export const loadPlugins = async (client: SHOGunAPIClient, map: OlMap) => {
+  if (!ClientConfiguration.plugins || ClientConfiguration.plugins.length === 0) {
+    Logger.info('No plugins found');
+    return [];
+  }
+
+  Logger.info('Loading plugins');
+
+  const clientPlugins: ClientPluginInternal[] = [];
+
+  for (const plugin of ClientConfiguration.plugins) {
+    const name = plugin.name;
+    const resourcePath = plugin.resourcePath;
+    const exposedPaths = plugin.exposedPaths;
+
+    if (!name) {
+      Logger.error('Required plugin configuration \'name\' is not set');
+      return clientPlugins;
+    }
+
+    if (!resourcePath) {
+      Logger.error('Required plugin configuration \'resourcePath\' is not set');
+      return clientPlugins;
+    }
+
+    if (!exposedPaths) {
+      Logger.error('Required plugin configuration \'exposedPaths\' is not set');
+      return clientPlugins;
+    }
+
+    Logger.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
+
+    // TODO Check any
+    let clientPluginModules: any[];
+    try {
+      clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
+      Logger.info(`Successfully loaded plugin ${name}`);
+    } catch (error) {
+      Logger.error(`Could not load plugin ${name}:`, error);
+      return clientPlugins;
+    }
+
+    clientPluginModules.forEach(module => {
+      const clientPluginDefault: ClientPluginInternal = module.default;
+      const PluginComponent = clientPluginDefault.component;
+
+      const WrappedPluginComponent = () => (
+        <PluginComponent
+          map={map}
+          client={client}
+        />
+      );
+
+      clientPluginDefault.wrappedComponent = WrappedPluginComponent;
+
+      if (clientPluginDefault.i18n) {
+        Object.entries(clientPluginDefault.i18n).forEach(locale => {
+          const lng = locale[0];
+          const resources = locale[1].translation;
+          i18n.addResourceBundle(lng, 'translation', resources, true, true);
+        });
+      }
+
+      if (clientPluginDefault.reducers) {
+        const reducers = createReducer(clientPluginDefault.reducers);
+        store.replaceReducer(reducers);
+      }
+
+      clientPlugins.push(clientPluginDefault);
+    });
+  }
+
+  return clientPlugins;
+};
+
+// ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
+const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
+  await __webpack_init_sharing__('default');
+
+  await new Promise<void>((resolve, reject) => {
+    const element = document.createElement('script');
+
+    element.src = moduleUrl;
+    element.type = 'text/javascript';
+    element.async = true;
+
+    element.onload = () => {
+      element.parentElement?.removeChild(element);
+      resolve();
+    };
+
+    element.onerror = (err) => {
+      element.parentElement?.removeChild(element);
+      reject(err);
+    };
+
+    document.head.appendChild(element);
+  });
+
+  // @ts-ignore
+  const container = window[moduleName];
+
+  // eslint-disable-next-line camelcase
+  await container.init(__webpack_share_scopes__.default);
+
+  const modules = [];
+  for (const remoteName of remoteNames) {
+    const factory = await container.get(remoteName);
+    const module = factory();
+    modules.push(module);
+  }
+
+  return modules;
+};

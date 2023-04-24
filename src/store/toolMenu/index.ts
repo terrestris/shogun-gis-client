@@ -3,33 +3,30 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
+import {
+  ClientTools
+} from '../toolConfig';
+
 export interface ToolMenuState {
-  activeKeys: string[];
-  availableTools: string[];
+  activeKeys: ClientTools[];
 }
 
 const initialState: ToolMenuState = {
-  // This is the default state. If no config is given, then load all tools
-  activeKeys: [],
-  availableTools: ['default']
+  activeKeys: []
 };
 
 export const slice = createSlice({
   name: 'toolMenu',
   initialState,
   reducers: {
-    setActiveKeys(state, action: PayloadAction<string[]>) {
+    setActiveKeys(state, action: PayloadAction<ClientTools[]>) {
       state.activeKeys = [...action.payload];
-    },
-    setAvailableTools(state, action: PayloadAction<string[]>) {
-      state.availableTools = [...action.payload];
     }
   }
 });
 
 export const {
-  setActiveKeys,
-  setAvailableTools
+  setActiveKeys
 } = slice.actions;
 
 export default slice.reducer;

@@ -3,20 +3,20 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: string = 'Default SHOGun client';
+const initialState: boolean = false;
 
 export const slice = createSlice({
-  name: 'description',
+  name: 'stateOnly',
   initialState,
   reducers: {
-    setDescription: (state, action: PayloadAction<string>) => {
+    setStateOnly: (state, action: PayloadAction<boolean>) => {
       return action.payload;
     }
   }
 });
 
 export const {
-  setDescription
+  setStateOnly
 } = slice.actions;
 
 export default slice.reducer;

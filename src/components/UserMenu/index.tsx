@@ -12,10 +12,6 @@ import {
 } from '@fortawesome/react-fontawesome';
 
 import {
-  Menu
-} from 'antd';
-
-import {
   ItemType
 } from 'antd/lib/menu/hooks/useItems';
 
@@ -171,6 +167,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
   };
 
   return (
+    // TODO Reuse UserAvatar
     <UserChip
       size={'small'}
       imageSrc={getGravatarUrl({
