@@ -7,9 +7,9 @@ declare const KEYCLOAK_CLIENT_ID: string;
 
 declare module 'clientConfig' {
   type PluginConfiguration = {
-    name: string;
-    resourcePath: string;
-    exposedPaths: string[];
+    name?: string;
+    resourcePath?: string;
+    exposedPaths?: string[];
   };
   type ClientConfiguration = {
     shogunBase?: string;
@@ -23,7 +23,15 @@ declare module 'clientConfig' {
     print?: {
       url?: string;
     };
-    plugins: PluginConfiguration[];
+    plugins?: PluginConfiguration[];
+    geoserver?: {
+      base?: string;
+      upload?: {
+        workspace?: string;
+        limit?: number;
+        authorizedRoles?: string[];
+      };
+    };
   };
   const config: ClientConfiguration;
 

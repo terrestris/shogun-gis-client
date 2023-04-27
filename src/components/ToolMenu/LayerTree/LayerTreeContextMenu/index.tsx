@@ -175,9 +175,14 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     removeLayer(layer);
 
     const externalLayerGroup = MapUtil.getLayerByName(map, t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
+    const uploadedLayerGroup = MapUtil.getLayerByName(map, t('UploadDataModal.uploadedDataFolder')) as OlLayerGroup;
 
     if (externalLayerGroup && externalLayerGroup.getLayers().getLength() === 0) {
       removeLayer(externalLayerGroup);
+    }
+
+    if (uploadedLayerGroup && uploadedLayerGroup.getLayers().getLength() === 0) {
+      removeLayer(uploadedLayerGroup);
     }
   };
 
@@ -225,7 +230,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  if (layer.get('isExternalLayer')) {
+  if (layer.get('isExternalLayer') || layer.get('isUploadedLayer')) {
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'

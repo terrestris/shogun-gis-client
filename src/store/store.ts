@@ -12,6 +12,7 @@ import logoPath from './logoPath';
 import selectedFeatures from './selectedFeatures';
 import title from './title';
 import toolMenu from './toolMenu';
+import uploadDataModal from './uploadDataModal';
 import user from './user';
 
 type AsyncReducer = {
@@ -29,6 +30,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     addLayerModal,
     user,
     selectedFeatures,
+    uploadDataModal,
     ...asyncReducers
   });
 };
