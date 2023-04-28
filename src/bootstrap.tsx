@@ -13,6 +13,8 @@ import ClientConfiguration from 'clientConfig';
 
 import Color from 'color';
 
+import LanguageDetector from 'i18next-browser-languagedetector';
+
 import Keycloak from 'keycloak-js';
 
 import {
@@ -61,7 +63,9 @@ import {
   SHOGunAPIClientProvider
 } from './context/SHOGunAPIClientContext';
 
-import i18n from './i18n';
+import i18n, {
+  initOpts
+} from './i18n';
 
 import {
   ClientPluginInternal
@@ -522,9 +526,14 @@ const renderApp = async () => {
     const appConfig = await getApplicationConfiguration();
 
     const defaultLanguage = appConfig?.clientConfig?.defaultLanguage;
-    const storedLanguage = localStorage.getItem('i18nextLng');
-    // Only apply default language if no stored language is found.
-    if (!storedLanguage && defaultLanguage) {
+
+    if (!defaultLanguage) {
+      i18n.use(LanguageDetector);
+    }
+
+    await i18n.init(initOpts);
+
+    if (defaultLanguage) {
       i18n.changeLanguage(defaultLanguage);
     }
 
