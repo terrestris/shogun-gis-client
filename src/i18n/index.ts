@@ -14,7 +14,6 @@ export const initOpts: InitOptions = {
   interpolation: {
     escapeValue: false
   },
-  // supportedLngs: ['de', 'en'],
   returnNull: false
 };
 
