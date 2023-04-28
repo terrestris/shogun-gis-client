@@ -12,10 +12,6 @@ import {
 } from '@fortawesome/react-fontawesome';
 
 import {
-  Menu
-} from 'antd';
-
-import {
   ItemType
 } from 'antd/lib/menu/hooks/useItems';
 

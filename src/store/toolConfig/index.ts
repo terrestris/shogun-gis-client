@@ -15,7 +15,7 @@ export enum ClientTools {
   PRINT = 'print',
   TREE = 'tree',
   PERMALINK = 'permalink',
-  APP_CONTEXT = 'app_context',
+  APP_STATE = 'app_state',
   LANGUAGE_SELECTOR = 'language_selector'
 };
 
@@ -74,7 +74,7 @@ export type PermalinkToolConfig = BaseToolConfig<
 >;
 
 export type AppContextToolConfig = BaseToolConfig<
-  ClientTools.APP_CONTEXT
+  ClientTools.APP_STATE
 >;
 
 export type ApplicationToolConfig = Array<
@@ -191,7 +191,7 @@ const initialState: ApplicationToolConfig = [{
     visible: true
   }
 }, {
-  name: ClientTools.APP_CONTEXT,
+  name: ClientTools.APP_STATE,
   config: {
     visible: true
   }

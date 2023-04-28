@@ -180,8 +180,9 @@ export const Permalink: React.FC<PermalinkProps> = () => {
         </Tooltip>
       </div>
       <div className="link">
-        <Input value={permalink}
-          readOnly
+        <Input
+          value={permalink}
+          readOnly={true}
         />
         <Tooltip title={t('Permalink.copyTooltip')}>
           <CopyOutlined onClick={onCopyClick} />

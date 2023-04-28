@@ -69,7 +69,7 @@ import LanguageSelect from '../LanguageSelector';
 import Permalink from '../Permalink';
 import PrintForm from '../PrintForm';
 
-import AppContext from './AppContext';
+import AppState from './AppState';
 import Draw from './Draw';
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
@@ -292,11 +292,11 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           title: t('Permalink.title'),
           wrappedComponent: <Permalink />
         };
-      case ClientTools.APP_CONTEXT:
+      case ClientTools.APP_STATE:
         return {
           icon: faFile,
           title: t('ToolMenu.saveLoad'),
-          wrappedComponent: <AppContext />
+          wrappedComponent: <AppState />
         };
       case ClientTools.LANGUAGE_SELECTOR:
         return {

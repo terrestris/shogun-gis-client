@@ -1,11 +1,38 @@
 export default {
   de: {
     translation: {
-      AppContextDownload: {
-        tooltip: 'Applikationskonfiguration herunterladen',
-        title: 'Speichern'
+      AppStateManagement: {
+        // TODO translate
+        buttonTitle: 'Save',
+        buttonTooltip: 'Download application configuration',
+        modalTitle: 'Projekt speichern',
+        createStateButtonTitle: 'Projekt erstellen',
+        createStateButtonTooltip: '',
+        updateStateButtonTitle: 'Projekt aktualisieren',
+        updateStateButtonTooltip: '',
+        permissionModalTitle: 'Berechtigungen setzen',
+        confirmUpdateTitle: 'Fortfahren?',
+        updateStateHint: 'Projekt {{stateName}} ({{stateId}}) überschreiben?',
+        confirmDeleteTitle: 'Fortfahren?',
+        deleteStateHint: 'Projekt {{stateName}} ({{stateId}}) löschen?',
+        confirmCreateTitle: 'Projekt speichern',
+        createStateHint: 'Geben Sie einen Namen für das Projekt an',
+        createStateNamePlaceholder: 'Projektnamen angeben',
+        confirmLoadTitle: 'Fortfahren?',
+        loadStateHint: 'Projekt {{stateName}} laden und aktuellen Stand überschreiben?',
+        copyClipboardNotificationTitle: 'Success',
+        copyClipboardNotificationDescription: 'Link erfolgreich in die Zwischenablage kopiert',
+        deleteButtonTooltip: 'Delete',
+        downloadButtonTooltip: 'Download',
+        shareButtonTooltip: 'Teilen',
+        permissionButtonTooltip: 'Permissions',
+        loadButtonTooltip: 'Load',
+        idColumnTitle: 'ID',
+        createdColumnTitle: 'Created',
+        modifiedColumnTitle: 'Modified',
+        nameColumnTitle: 'Name'
       },
-      AppContextUpload: {
+      AppStateUpload: {
         tooltip: 'Applikationskonfiguration laden',
         title: 'Laden'
       },
@@ -135,16 +162,74 @@ export default {
       WmsTimeSlider: {
         title: 'Zeitlicher Bezug',
         default: 'Keine Daten gefunden'
+      },
+      UserPermissionModal: {
+        loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
+        saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Nutzer mit den IDs: {{userIds}}',
+        openModalButtonTooltipTitle: 'Berechtigung hinzufügen',
+        title: 'Berechtigung hinzufügen',
+        description: 'Wählen Sie einen oder mehrere Nutzer sowie die zugehörige Berechtigung aus.',
+        userSelectLabel: 'Nutzername oder Email Adresse',
+        userSelectExtra: 'Wählen Sie die Nutzer aus der Liste aus oder geben Sie einen ' +
+          'Suchbegriff (Nutzername oder Email Adresse) ein',
+        userSelectPlaceholder: 'Nutzer auswählen…',
+        permissionSelectLabel: 'Berechtigung',
+        permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.'
+      },
+      UserPermissionGrid: {
+        loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
+        updateErrorMsg: 'Fehler beim Aktualisieren der Berechtigung',
+        deleteErrorMsg: 'Fehler beim Löschen der Berechtigung',
+        filterInputPlaceholder: 'Suche…',
+        filterSearchButtonText: 'Suche',
+        filterResetButtonText: 'Zurücksetzen',
+        userColumnTitle: 'Name',
+        permissionColumnTitle: 'Berechtigung',
+        deletePermissionButtonTooltip: 'Berechtigung löschen'
+      },
+      PermissionSelect: {
+        placeholder: 'Berechtigung auswählen…',
+        readLabel: 'Lesen',
+        readUpdateLabel: 'Aktualisieren',
+        readUpdateDeleteLabel: 'Aktualisieren & Löschen',
+        adminLabel: 'Besitzer'
       }
     }
   },
   en: {
     translation: {
-      AppContextDownload: {
-        tooltip: 'Download application configuration',
-        title: 'Save'
+      // TODO translate
+      AppStateManagement: {
+        buttonTitle: 'Save',
+        buttonTooltip: 'Download application configuration',
+        modalTitle: 'Projekt speichern',
+        createStateButtonTitle: 'Projekt erstellen',
+        createStateButtonTooltip: '',
+        updateStateButtonTitle: 'Projekt aktualisieren',
+        updateStateButtonTooltip: '',
+        permissionModalTitle: 'Berechtigungen setzen',
+        confirmUpdateTitle: 'Fortfahren?',
+        updateStateHint: 'Projekt {{stateName}} ({{stateId}}) überschreiben?',
+        confirmDeleteTitle: 'Fortfahren?',
+        deleteStateHint: 'Projekt {{stateName}} ({{stateId}}) löschen?',
+        confirmCreateTitle: 'Projekt speichern',
+        createStateHint: 'Geben Sie einen Namen für das Projekt an',
+        createStateNamePlaceholder: 'Projektnamen angeben',
+        confirmLoadTitle: 'Fortfahren?',
+        loadStateHint: 'Projekt {{stateName}} laden und aktuellen Stand überschreiben?',
+        copyClipboardNotificationTitle: 'Success',
+        copyClipboardNotificationDescription: 'Link erfolgreich in die Zwischenablage kopiert',
+        deleteButtonTooltip: 'Delete',
+        downloadButtonTooltip: 'Download',
+        shareButtonTooltip: 'Teilen',
+        permissionButtonTooltip: 'Permissions',
+        loadButtonTooltip: 'Load',
+        idColumnTitle: 'ID',
+        createdColumnTitle: 'Created',
+        modifiedColumnTitle: 'Modified',
+        nameColumnTitle: 'Name'
       },
-      AppContextUpload: {
+      AppStateUpload: {
         tooltip: 'Load application configuration',
         title: 'Load'
       },
@@ -273,6 +358,36 @@ export default {
       WmsTimeSlider: {
         title: 'Time reference',
         default: 'No data found'
+      },
+      UserPermissionModal: {
+        loadErrorMsg: 'Error while loading the permissions',
+        saveErrorMsg: 'Error while setting the permission for users with IDs: {{userIds}}',
+        openModalButtonTooltipTitle: 'Add permission',
+        title: 'Add permission',
+        description: 'Select one or more users and the respective permission.',
+        userSelectLabel: 'Username or email address',
+        userSelectExtra: 'Select users from the list or search via username or email address.',
+        userSelectPlaceholder: 'Select user(s)…',
+        permissionSelectLabel: 'Permission',
+        permissionSelectExtra: 'Select the permission the users should be granted.'
+      },
+      UserPermissionGrid: {
+        loadErrorMsg: 'Error while loading the permissions',
+        updateErrorMsg: 'Error while updating the permission',
+        deleteErrorMsg: 'Error while deleting the permission',
+        filterInputPlaceholder: 'Search…',
+        filterSearchButtonText: 'Search',
+        filterResetButtonText: 'Reset',
+        userColumnTitle: 'Name',
+        permissionColumnTitle: 'Permission',
+        deletePermissionButtonTooltip: 'Delete permission'
+      },
+      PermissionSelect: {
+        placeholder: 'Select a permission…',
+        readLabel: 'Read',
+        readUpdateLabel: 'Update',
+        readUpdateDeleteLabel: 'Update & Delete',
+        adminLabel: 'Owner'
       }
     }
   }

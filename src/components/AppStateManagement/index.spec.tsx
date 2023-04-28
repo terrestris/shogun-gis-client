@@ -6,14 +6,14 @@ import {
 
 import { createReduxWrapper } from '../../utils/testUtils';
 
-import AppContextUpload from './index';
+import AppStateManagement from './index';
 
-describe('<AppContextUpload />', () => {
+describe('<AppStateManagement />', () => {
 
   it('can be rendered', () => {
     const {
       container
-    } = render(<AppContextUpload />, {
+    } = render(<AppStateManagement />, {
       wrapper: createReduxWrapper()
     });
 

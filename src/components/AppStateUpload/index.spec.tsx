@@ -4,16 +4,16 @@ import {
   render
 } from '@testing-library/react';
 
-import { createReduxWrapper } from '../../../utils/testUtils';
+import { createReduxWrapper } from '../../utils/testUtils';
 
-import AppContext from './index';
+import AppStateUpload from './index';
 
-describe('<AppContext />', () => {
+describe('<AppStateUpload />', () => {
 
   it('can be rendered', () => {
     const {
       container
-    } = render(<AppContext />, {
+    } = render(<AppStateUpload />, {
       wrapper: createReduxWrapper()
     });
 

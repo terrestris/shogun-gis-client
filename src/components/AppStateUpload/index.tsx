@@ -29,9 +29,9 @@ import useReadAppContext from '../../hooks/useReadAppContext';
 
 import './index.less';
 
-export type AppContextUploadProps = {} & Partial<UploadButtonProps>;
+export type AppStateUploadProps = {} & Partial<UploadButtonProps>;
 
-export const AppContextUpload: React.FC<AppContextUploadProps> = ({
+export const AppStateUpload: React.FC<AppStateUploadProps> = ({
   ...restProps
 }): JSX.Element => {
 
@@ -72,7 +72,7 @@ export const AppContextUpload: React.FC<AppContextUploadProps> = ({
   return (
     <>
       <UploadButton
-        className="app-context-upload"
+        className="app-state-upload"
         onChange={onChange}
         inputProps={{
           title: ' ',
@@ -88,7 +88,7 @@ export const AppContextUpload: React.FC<AppContextUploadProps> = ({
       >
         <Tooltip
           open={tooltipVisible}
-          title={t('AppContextUpload.tooltip')}
+          title={t('AppStateUpload.tooltip')}
         >
           <Button
             type="link"
@@ -98,7 +98,7 @@ export const AppContextUpload: React.FC<AppContextUploadProps> = ({
               />
             )}
           >
-            {t('AppContextUpload.title')}
+            {t('AppStateUpload.title')}
           </Button>
         </Tooltip>
       </UploadButton>
@@ -106,4 +106,4 @@ export const AppContextUpload: React.FC<AppContextUploadProps> = ({
   );
 };
 
-export default AppContextUpload;
+export default AppStateUpload;

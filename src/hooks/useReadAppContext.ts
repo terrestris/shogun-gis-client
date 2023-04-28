@@ -91,17 +91,21 @@ export const useReadAppContext = () => {
     dispatch(setStateOnly(true));
   };
 
-  const clearUrl = () => {
+  const updateUrl = (application: Application) => {
+    if (!application.id) {
+      return;
+    }
+
     const url = new URL(window.location.href);
     const params = url.searchParams;
 
-    params.delete('applicationId');
+    params.set('applicationId', application.id.toString());
 
     window.history.replaceState(null, '', url);
   };
 
   const readAppContext = async (application: Application) => {
-    clearUrl();
+    updateUrl(application);
 
     await restoreMap(application);
 
