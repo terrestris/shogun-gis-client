@@ -12,10 +12,7 @@ import type OlMap from 'ol/Map';
 import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type ClientPluginLocale = {
-  [Property in keyof {
-    de: string;
-    en: string;
-  }]: {
+  [locale: string]: {
     translation: {
       [key: string]: any;
     };
