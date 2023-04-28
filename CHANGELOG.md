@@ -1,3 +1,12 @@
+## [5.2.1](https://github.com/terrestris/shogun-gis-client/compare/v5.2.0...v5.2.1) (2023-04-28)
+
+
+### Bugfixes
+
+* adapt clientPlugin type ([28a18a3](https://github.com/terrestris/shogun-gis-client/commit/28a18a394e810dd2ce1da1f74e10e69f24706a2a))
+* correct i18n init ([7ecbfbe](https://github.com/terrestris/shogun-gis-client/commit/7ecbfbee274345712d436512332e634e775c8aa5))
+* remove unsupported languages ([c5b28b1](https://github.com/terrestris/shogun-gis-client/commit/c5b28b11c70fa23b9f51e31465f1944a6d122757))
+
 ## [5.2.0](https://github.com/terrestris/shogun-gis-client/compare/v5.1.3...v5.2.0) (2023-04-28)
 
 
