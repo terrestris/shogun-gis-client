@@ -1,0 +1,1 @@
+var clientConfig={shogunBase:"/",keycloak:{enabled:!1,host:null,realm:null,clientId:null,onLoadAction:"check-sso"},print:{url:"/print"},plugins:[],geoserver:{base:"/geoserver",upload:{workspace:"SHOGUN-UPLOADS",limit:2e8,authorizedRoles:["admin"]}}};
