@@ -521,6 +521,13 @@ const renderApp = async () => {
 
     const appConfig = await getApplicationConfiguration();
 
+    const defaultLanguage = appConfig?.clientConfig?.defaultLanguage;
+    const storedLanguage = localStorage.getItem('i18nextLng');
+    // Only apply default language if no stored language is found.
+    if (!storedLanguage && defaultLanguage) {
+      i18n.changeLanguage(defaultLanguage);
+    }
+
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
     ConfigProvider.config({
