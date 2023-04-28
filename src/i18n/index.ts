@@ -1,26 +1,24 @@
-import i18n, {
-  InitOptions
-} from 'i18next';
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import {
   initReactI18next
 } from 'react-i18next';
 
 import resources from './translations';
 
-export const initOpts: InitOptions = {
-  resources,
-  fallbackLng: 'en',
-  debug: false,
-  interpolation: {
-    escapeValue: false
-  },
-  returnNull: false
-};
-
 // eslint-disable-next-line import/no-named-as-default-member
 i18n
-  .use(initReactI18next);
-
-i18n.options = initOpts;
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: 'en',
+    debug: false,
+    interpolation: {
+      escapeValue: false
+    },
+    supportedLngs: ['de', 'en'],
+    returnNull: false
+  });
 
 export default i18n;
