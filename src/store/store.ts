@@ -9,6 +9,7 @@ import appInfo from './appInfo';
 import description from './description';
 import legal from './legal';
 import logoPath from './logoPath';
+import print from './print';
 import selectedFeatures from './selectedFeatures';
 import title from './title';
 import toolMenu from './toolMenu';
@@ -21,16 +22,17 @@ type AsyncReducer = {
 
 export const createReducer = (asyncReducers?: AsyncReducer) => {
   return combineReducers({
+    addLayerModal,
     appInfo,
-    title,
     description,
     legal,
     logoPath,
-    toolMenu,
-    addLayerModal,
-    user,
+    print,
     selectedFeatures,
+    title,
+    toolMenu,
     uploadDataModal,
+    user,
     ...asyncReducers
   });
 };
