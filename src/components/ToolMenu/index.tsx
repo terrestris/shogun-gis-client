@@ -277,7 +277,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           wrappedComponent: map ? (
             <PrintForm
               active={activeKeys.includes('print')}
-              map={map}
               layerBlackList={[
                 'react-geo_measure',
                 'hoverVectorLayer'
