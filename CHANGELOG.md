@@ -1,3 +1,36 @@
+## [6.0.0](https://github.com/terrestris/shogun-gis-client/compare/v5.2.1...v6.0.0) (2023-05-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Print form does not require map anymore
+
+### Features
+
+* make custom (map) parameters configurable in print state ([fcaeb97](https://github.com/terrestris/shogun-gis-client/commit/fcaeb97cfe2a428d22607a8885cec8e221f5aa36))
+
+
+### Dependencies
+
+* bump mapfishprintmanager to v9 ([691584d](https://github.com/terrestris/shogun-gis-client/commit/691584d5c4038c56d7674e49dac3391e23d63307))
+* code cleanup :lipstick: ([6b41a0a](https://github.com/terrestris/shogun-gis-client/commit/6b41a0a9cb124a104e3762219756d4f61ab53c04))
+* **deps-dev:** bump @babel/cli from 7.21.0 to 7.21.5 ([f803e18](https://github.com/terrestris/shogun-gis-client/commit/f803e18b7623185d3e17e60e43c53530d55b33b2))
+* **deps-dev:** bump @babel/core from 7.21.4 to 7.21.5 ([75b0384](https://github.com/terrestris/shogun-gis-client/commit/75b0384f43e26c34ecce17c499ce691948de836a))
+* **deps-dev:** bump @babel/core from 7.21.5 to 7.21.8 ([a2eab22](https://github.com/terrestris/shogun-gis-client/commit/a2eab22732d482a3fc77a23cdf2e4b276fa6868a))
+* **deps-dev:** bump @babel/preset-env from 7.21.4 to 7.21.5 ([6347852](https://github.com/terrestris/shogun-gis-client/commit/6347852a93246b1b9e2bb9521caa59b22f6395e9))
+* **deps-dev:** bump @babel/preset-typescript from 7.21.4 to 7.21.5 ([953836c](https://github.com/terrestris/shogun-gis-client/commit/953836c4a44c01e00e332f68aaaa0faf1d118deb))
+* **deps-dev:** bump @babel/runtime from 7.21.0 to 7.21.5 ([e83397c](https://github.com/terrestris/shogun-gis-client/commit/e83397c58ed199b3a6df6fc2706f6a12d24f3cb0))
+* **deps-dev:** bump @semantic-release/release-notes-generator ([cb7a45c](https://github.com/terrestris/shogun-gis-client/commit/cb7a45c16649d31bbecdb0d7fa9f719a45fbf7cb))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([ecfdd77](https://github.com/terrestris/shogun-gis-client/commit/ecfdd7712012de297a920a92616e56306d38604a))
+* **deps-dev:** bump @typescript-eslint/parser from 5.59.1 to 5.59.2 ([1cd95e6](https://github.com/terrestris/shogun-gis-client/commit/1cd95e69b67cc3de4273ba7e13e86b500584f2a3))
+* **deps-dev:** bump semantic-release from 21.0.1 to 21.0.2 ([10c2745](https://github.com/terrestris/shogun-gis-client/commit/10c27452abf7eaeb3f3839f8a2a12793f33cd8ef))
+* ignore IntelliJ iml files ([e070e1d](https://github.com/terrestris/shogun-gis-client/commit/e070e1d3c446e9b30611140612c538f4d4bb4362))
+
+
+### Bugfixes
+
+* use redux wrapper in test ([3058743](https://github.com/terrestris/shogun-gis-client/commit/3058743568dc95737c05cb6ddf7a61730b9d7a84))
+
 ## [5.2.1](https://github.com/terrestris/shogun-gis-client/compare/v5.2.0...v5.2.1) (2023-04-28)
 
 
