@@ -177,7 +177,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [customParams, customMapParams, client, layerFilter, legendFilter, map, t, customPrintScales]);
+  }, [customParams, customMapParams, client, layerFilter, legendFilter, map, t, customPrintScales, currentLanguageCode]);
 
   useEffect(() => {
     if (active) {
