@@ -165,7 +165,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       const apps = await pManager.getPrintApps();
 
       if (apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
-        pManager.setPrintApp(currentLanguageCode);
+        await pManager.setPrintApp(currentLanguageCode);
       }
 
       pManager.setOutputFormat(pManager.getOutputFormats()[0]);
