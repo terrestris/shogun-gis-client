@@ -87,10 +87,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     if (layer instanceof OlLayerImage && layer.getSource() instanceof OlSourceImageWMS) {
       return true;
     }
-    if (layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS) {
-      return true;
-    }
-    return false;
+    return layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS;
   };
 
   const updateQueryLayers = useCallback(() => {

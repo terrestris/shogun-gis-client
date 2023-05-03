@@ -216,11 +216,11 @@ const setApplicationToStore = async (application?: Application) => {
       .map((tool: DefaultApplicationToolConfig) => {
         if (tool.config.visible) {
           availableTools.push(tool.name);
-        };
+        }
       });
 
     store.dispatch(setAvailableTools(availableTools));
-  };
+  }
 };
 
 const setAppInfoToStore = async (appInfo?: AppInfo) => {
