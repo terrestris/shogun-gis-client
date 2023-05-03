@@ -13,6 +13,9 @@ We recommend to install the client via the prebuilt Docker image `docker-public.
 Even if the client can be used without any backend providing a context configuration, it is designed to run on top of a [SHOGun backend](https://github.com/terrestris/shogun) while reading the configuration from the [`/applications`](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/terrestris/shogun/gh-pages/api/swagger.json#/application-controller)  REST interface. To specify a configuration the query parameter `applicationId` must be set (e.g. `https://localhost/client/?applicationId=18` to get the configuration for the application with the ID 18).
 If no ID is given (e.g. because no backend is available) or the requested application is not accessible, the client will load a fallback configuration.
 
+### Print
+To use print apps for different languages just name them after the language code (`ISO_639-1`). The print app that has the name of the currently selected language will be used.
+
 ## Configuration 🎨
 
 Several global settings for the client can be configured via the [`gis-client-config.js`](https://github.com/terrestris/shogun-gis-client/blob/main/resources/config/gis-client-config.js) file:
