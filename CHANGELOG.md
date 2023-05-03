@@ -1,3 +1,17 @@
+## [6.1.0](https://github.com/terrestris/shogun-gis-client/compare/v6.0.0...v6.1.0) (2023-05-03)
+
+
+### Features
+
+* readme ([628ec2f](https://github.com/terrestris/shogun-gis-client/commit/628ec2f5de906d3552258f2766d7d33754e77957))
+* use print app of current language code ([d8926d7](https://github.com/terrestris/shogun-gis-client/commit/d8926d7a9801254083925a5bb26383a5fe722bc5))
+
+
+### Bugfixes
+
+* await setPrintApp ([0f6c0ca](https://github.com/terrestris/shogun-gis-client/commit/0f6c0ca45c4e4ea75084a6f8903e8b223378f497))
+* rebase ([b9893ce](https://github.com/terrestris/shogun-gis-client/commit/b9893ce96139c3f0c741f5053866d0a41d83c8be))
+
 ## [6.0.0](https://github.com/terrestris/shogun-gis-client/compare/v5.2.1...v6.0.0) (2023-05-03)
 
 
