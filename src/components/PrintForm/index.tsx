@@ -68,10 +68,13 @@ export const PrintForm: React.FC<PrintFormProps> = ({
 
   const [form] = Form.useForm();
   const {
-    t
+    t,
+    i18n
   } = useTranslation();
 
   const map = useMap();
+
+  const currentLanguageCode = i18n.language;
 
   const client = useSHOGunAPIClient();
 
@@ -156,6 +159,14 @@ export const PrintForm: React.FC<PrintFormProps> = ({
 
     try {
       await pManager.init();
+
+      // Use locale print app if available.
+      // Implies that a print app with the language code exists.
+      const apps = await pManager.getPrintApps();
+
+      if (apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
+        pManager.setPrintApp(currentLanguageCode);
+      }
 
       pManager.setOutputFormat(pManager.getOutputFormats()[0]);
       pManager.setDpi(pManager.getDpis()[0]);
