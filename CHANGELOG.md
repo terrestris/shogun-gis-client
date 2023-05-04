@@ -1,3 +1,18 @@
+## [6.1.1](https://github.com/terrestris/shogun-gis-client/compare/v6.1.0...v6.1.1) (2023-05-04)
+
+
+### Bugfixes
+
+* remove unneeded await for getprintapps ([f286134](https://github.com/terrestris/shogun-gis-client/commit/f286134bdd2d6af1663dcccc24a71bb8013b31f9))
+
+
+### Dependencies
+
+* **deps-dev:** bump webpack from 5.81.0 to 5.82.0 ([4c818b5](https://github.com/terrestris/shogun-gis-client/commit/4c818b59c4f081a6bd8b64a0ad98383f661e2b77))
+* **deps:** bump @terrestris/shogun-util from 5.3.0 to 5.3.1 ([6dd3090](https://github.com/terrestris/shogun-gis-client/commit/6dd30908835fa627680acf9f9affd41a19a4e9ce))
+* **deps:** bump antd from 4.24.9 to 4.24.10 ([9295906](https://github.com/terrestris/shogun-gis-client/commit/9295906c15bf2207213adf06e80af1d5b6624c5d))
+* update mapfish print manager ([cffd6cc](https://github.com/terrestris/shogun-gis-client/commit/cffd6cc72d06d174c22afd67cd2a481a4107879f))
+
 ## [6.1.0](https://github.com/terrestris/shogun-gis-client/compare/v6.0.0...v6.1.0) (2023-05-03)
 
 
