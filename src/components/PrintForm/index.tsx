@@ -162,7 +162,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
 
       // Use locale print app if available.
       // Implies that a print app with the language code exists.
-      const apps = await pManager.getPrintApps();
+      const apps = pManager.getPrintApps();
 
       if (apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
         await pManager.setPrintApp(currentLanguageCode);
