@@ -12,12 +12,10 @@ import {
 } from '@fortawesome/react-fontawesome';
 
 import {
-  Menu
-} from 'antd';
-
-import {
   ItemType
 } from 'antd/lib/menu/hooks/useItems';
+
+import ClientConfiguration from 'clientConfig';
 
 import _isEmpty from 'lodash/isEmpty';
 
@@ -150,19 +148,33 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       label: t('UserMenu.logoutMenuTitle')
     };
 
-    const items: ItemType[] = _isEmpty(user) ?
-      [
-        login,
-        info
-      ] :
-      [
+    const items: ItemType[] = [];
+
+    if (_isEmpty(user)) {
+      if (ClientConfiguration.keycloak?.enabled) {
+        items.push(login);
+      }
+      items.push(info);
+    } else {
+      const accountRoles = keycloak?.tokenParsed?.resource_access?.account?.roles;
+      const hasUserManagementAccess = Array.isArray(accountRoles) && accountRoles.indexOf('manage-account') > -1;
+      const itemsForLoggedInUser = hasUserManagementAccess ? [
         username,
         divider,
         settings,
         info,
         divider,
         logout
+      ] : [
+        username,
+        divider,
+        info,
+        divider,
+        logout
       ];
+
+      items.push(...itemsForLoggedInUser);
+    }
 
     return {
       items,
