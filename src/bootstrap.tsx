@@ -277,7 +277,8 @@ const initKeycloak = async () => {
   };
 
   await keycloak.init({
-    onLoad: keycloakOnLoad
+    onLoad: keycloakOnLoad,
+    checkLoginIframe: false
   });
 
   return keycloak;
