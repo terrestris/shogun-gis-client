@@ -107,6 +107,11 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         }
         setVisibleLegendsIds(newLegendIds);
         break;
+      case 'editLayer':
+        // set redux state
+        // enable drawer
+        console.log('Layer editieren');
+        break;
       default:
         break;
     }
@@ -247,6 +252,13 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       };
     });
     dropdownMenuItems.push(...downloadItems);
+  }
+
+  if (layer.get('editable')) {
+    dropdownMenuItems.push({
+      label: 'Edit',
+      key: 'editLayer'
+    });
   }
 
   return (
