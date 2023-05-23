@@ -59,7 +59,12 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
+
+import {
+  show as showEditFeatureDrawer
+} from '../../../../store/editFeatureDrawerOpen';
 
 export type LayerTreeContextMenuProps = {
   layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
@@ -82,6 +87,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const {
     t
   } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
 
@@ -108,9 +114,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         setVisibleLegendsIds(newLegendIds);
         break;
       case 'editLayer':
-        // set redux state
-        // enable drawer
-        console.log('Layer editieren');
+        dispatch(showEditFeatureDrawer());
         break;
       default:
         break;
@@ -256,6 +260,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
 
   if (layer.get('editable')) {
     dropdownMenuItems.push({
+      // TODO i18n
       label: 'Edit',
       key: 'editLayer'
     });
