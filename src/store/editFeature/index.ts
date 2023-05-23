@@ -17,11 +17,11 @@ const editFeatureSlice = createSlice({
   name: 'editFeature',
   initialState,
   reducers: {
-    setLayerId(state, action: PayloadAction<EditFeatureState>) {
-      state.layerId = action.payload.layerId;
+    setLayerId(state, action: PayloadAction<string | null>) {
+      state.layerId = action.payload;
     },
-    setFeatureId(state, action: PayloadAction<EditFeatureState>) {
-      state.featureId = action.payload.featureId;
+    setFeatureId(state, action: PayloadAction<string | null>) {
+      state.featureId = action.payload;
     },
     reset(state) {
       state.layerId = null;
