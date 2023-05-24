@@ -1,3 +1,34 @@
+## [6.3.0](https://github.com/terrestris/shogun-gis-client/compare/v6.2.0...v6.3.0) (2023-05-24)
+
+
+### Features
+
+* introduce multi search component ([4140d57](https://github.com/terrestris/shogun-gis-client/commit/4140d57a7e1911c77facf65a6f40d21e40fe2342))
+
+
+### Bugfixes
+
+* disable checking login status in iframe ([b860361](https://github.com/terrestris/shogun-gis-client/commit/b860361e04bcbea1e4f2631688848683a9eb5503))
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.33.0 to 1.34.0 ([d3f9db0](https://github.com/terrestris/shogun-gis-client/commit/d3f9db0aa7724447bc5d00d182f640fc66fcc78c))
+* **deps-dev:** bump @playwright/test from 1.34.0 to 1.34.1 ([501c3df](https://github.com/terrestris/shogun-gis-client/commit/501c3df6d313b84f747439a2aa22865c47c1b309))
+* **deps-dev:** bump @playwright/test from 1.34.1 to 1.34.2 ([3f41280](https://github.com/terrestris/shogun-gis-client/commit/3f41280e3c689fe4465fa31ecd252418986cb30d))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([02b8a7a](https://github.com/terrestris/shogun-gis-client/commit/02b8a7ad06222dd394c65134f3fd2c282aadc22f))
+* **deps-dev:** bump @typescript-eslint/parser from 5.59.6 to 5.59.7 ([7b85526](https://github.com/terrestris/shogun-gis-client/commit/7b855265e367bd94f2b01125a717e72e93cbae05))
+* **deps-dev:** bump css-loader from 6.7.3 to 6.7.4 ([8205777](https://github.com/terrestris/shogun-gis-client/commit/8205777749adfe22912fe364bae00ca4ba7eb36b))
+* **deps-dev:** bump eslint from 8.40.0 to 8.41.0 ([a468320](https://github.com/terrestris/shogun-gis-client/commit/a468320bb1af904c96e2e1650f6246419562b85d))
+* **deps-dev:** bump mini-css-extract-plugin from 2.7.5 to 2.7.6 ([919d2aa](https://github.com/terrestris/shogun-gis-client/commit/919d2aa44837601f8b4a61f2f5a026b8b8c90646))
+* **deps-dev:** bump style-loader from 3.3.2 to 3.3.3 ([e5dbbe4](https://github.com/terrestris/shogun-gis-client/commit/e5dbbe473e89e0950475d4fab1db9975c91a310d))
+* **deps-dev:** bump terser-webpack-plugin from 5.3.8 to 5.3.9 ([84bd42f](https://github.com/terrestris/shogun-gis-client/commit/84bd42fa708612418bb1ecdadbdc62a2ee2eb39a))
+* **deps-dev:** bump webpack from 5.82.1 to 5.83.1 ([92d61e0](https://github.com/terrestris/shogun-gis-client/commit/92d61e02e60d082161868a4f3e4e1c6bde0fe698))
+* **deps:** bump geostyler from 12.0.0 to 12.0.1 ([a66d40b](https://github.com/terrestris/shogun-gis-client/commit/a66d40b416ead3117c4a76ed9e8290b1b7410592))
+* **deps:** bump geostyler-style from 7.2.0 to 7.3.0 ([764a9a9](https://github.com/terrestris/shogun-gis-client/commit/764a9a9df960ce3b9fa93d3bf96b30649822c311))
+* **deps:** bump i18next from 22.4.15 to 22.5.0 ([cdfc2fc](https://github.com/terrestris/shogun-gis-client/commit/cdfc2fc16fe411a3a848ba200b7b55a486fdc97f))
+* **deps:** bump react-i18next from 12.2.2 to 12.3.1 ([dad102b](https://github.com/terrestris/shogun-gis-client/commit/dad102b457ab38d796baedada2f7bba994a3c3be))
+
 ## [6.2.0](https://github.com/terrestris/shogun-gis-client/compare/v6.1.1...v6.2.0) (2023-05-16)
 
 
