@@ -106,27 +106,31 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
         Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
       }
 
-      const isDate = tabConfigs[0].children?.find(cfg => {
-        return cfg.propertyName === key && cfg.component === 'DATE';
-      });
+      if (tabConfigs && tabConfigs[0]) {
+        const isDate = tabConfigs[0].children?.find(cfg => {
+          return cfg.propertyName === key && cfg.component === 'DATE';
+        });
 
-      if (isDate) {
-        properties[key] = moment(value);
-      }
+        if (isDate) {
+          properties[key] = moment(value);
+        }
 
-      const isUpload = tabConfigs[0].children?.find(cfg => {
-        return cfg.propertyName === key && cfg.component === 'UPLOAD';
-      });
+        const isUpload = tabConfigs[0].children?.find(cfg => {
+          return cfg.propertyName === key && cfg.component === 'UPLOAD';
+        });
 
-      if (isUpload) {
-        properties[key] = [{
-          name: value,
-          status: 'done'
-        }];
+        if (isUpload) {
+          properties[key] = [{
+            name: value,
+            status: 'done'
+          }];
+        }
       }
     });
 
     setInitialValues(properties);
+    // TODO Empty fields completely?!
+    form.resetFields();
     form.setFieldsValue(properties);
   }, [map, layerId, form, feature, t]);
 
