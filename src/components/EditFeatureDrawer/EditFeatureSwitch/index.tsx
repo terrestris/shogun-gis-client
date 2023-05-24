@@ -24,3 +24,5 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
     </div>
   );
 };
+
+export default EditFeatureSwitch;
