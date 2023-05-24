@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import {
-  Tabs
-} from 'antd';
+  useForm
+} from 'antd/lib/form/Form';
 
-import { t } from 'i18next';
+import moment from 'moment';
+
 import {
-  Tab
-} from 'rc-tabs/lib/interface';
+  useTranslation
+} from 'react-i18next';
 
-import { Logger } from '@terrestris/base-util';
+import {
+  Logger
+} from '@terrestris/base-util';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -31,41 +37,73 @@ import MapDrawer, {
   MapDrawerProps
 } from '../MapDrawer';
 
-import EditFeatureForm from './EditFeatureForm';
-
-import { EditFeatureSwitch } from './EditFeatureSwitch';
+import EditFeatureSwitch from './EditFeatureSwitch';
+import EditFeatureTabs from './EditFeatureTabs';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
 export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   ...passThroughProps
 }) => {
+  const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
 
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
   const feature = useAppSelector(state => state.editFeature.feature);
 
+  const [form] = useForm();
+
   const map = useMap();
+
+  const {
+    t
+  } = useTranslation();
 
   const dispatch = useAppDispatch();
 
-  if (!map || !layerId) {
-    return <></>;
-  }
+  useEffect(() => {
+    if (!map || !layerId) {
+      return;
+    }
 
-  const layer = MapUtil.getLayerByOlUid(map, layerId);
+    const layer = MapUtil.getLayerByOlUid(map, layerId);
 
-  if (!layer) {
-    Logger.warn(`Could not find layer with id ${layerId}`);
-    return <></>;
-  }
+    if (!layer) {
+      Logger.warn(`Could not find layer with id ${layerId}`);
+      return;
+    }
 
-  const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+    const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
-  if (!editFormConfig) {
-    Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
-    return <></>;
-  }
+    if (!editFormConfig) {
+      Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
+      return;
+    }
+
+    setTabConfig(editFormConfig);
+
+    const properties = {...feature?.properties};
+
+    Object.entries(properties).forEach(([key, value]) => {
+      const tabConfigs = editFormConfig?.filter(tabCfg => {
+        return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
+      });
+
+      if (tabConfigs.length > 1) {
+        Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
+      }
+
+      const isDate = tabConfigs[0].children?.find(cfg => {
+        return cfg.propertyName === key && cfg.component === 'DATE';
+      });
+
+      if (isDate) {
+        properties[key] = moment(value);
+      }
+    });
+
+    form.setFieldsValue(properties);
+  }, [map, layerId, form, feature]);
 
   const onDrawerClose = (evt: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => {
     dispatch(hideEditFeatureDrawer());
@@ -83,19 +121,9 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
         <EditFeatureSwitch />
       }
       {layerId && feature &&
-        <Tabs
-          items={editFormConfig.map((config, idx) => {
-            return {
-              label: config.title,
-              key: `${idx}`,
-              children: (
-                <EditFeatureForm
-                  formConfig={config.children}
-                  feature={feature}
-                />
-              )
-            } as Tab;
-          })}
+        <EditFeatureTabs
+          tabConfig={tabConfig}
+          form={form}
         />
       }
     </MapDrawer>

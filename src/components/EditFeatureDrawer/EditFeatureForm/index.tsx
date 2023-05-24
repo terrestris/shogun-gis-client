@@ -8,26 +8,20 @@ import {
   Switch,
   Checkbox,
   Form,
-  FormItemProps
+  FormItemProps,
+  Upload
 } from 'antd';
 
 import {
-  FormProps,
-  useForm
+  FormInstance,
+  FormProps
 } from 'antd/lib/form/Form';
-
-import {
-  Feature
-} from 'geojson';
-
-import moment from 'moment';
 
 import {
   useTranslation
 } from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
@@ -36,31 +30,18 @@ import './index.less';
 
 export type EditFeatureFormProps = FormProps & {
   formConfig?: PropertyFormItemEditConfig[];
-  feature?: Feature | null;
+  form: FormInstance;
 };
 
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   formConfig,
-  feature,
+  form,
   ...passThroughProps
 }): JSX.Element => {
-  const [form] = useForm();
-  const map = useMap();
+
   const {
     t
   } = useTranslation();
-
-  if (!map) {
-    return <></>;
-  }
-
-  const properties = {...feature?.properties};
-
-  // properties.forEach(prop => {
-
-  // });
-
-  // form.setFieldsValue(properties);
 
   const createFormItem = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
     let field: React.ReactNode;
@@ -87,7 +68,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       required: fieldCfg.required
     }];
 
-    if (fieldCfg.component === 'SWITCH' && !fieldCfg.readOnly) {
+    if ((fieldCfg.component === 'SWITCH' || fieldCfg.component === 'CHECKBOX') && !fieldCfg.readOnly) {
       formItemProps.valuePropName = 'checked';
     }
 
@@ -134,18 +115,12 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   };
 
   const createFieldComponent = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
-
-    const key = fieldCfg.propertyName;
-    const value = properties[fieldCfg.propertyName];
-
-    form.setFieldValue(key, moment(value));
-
     switch (fieldCfg.component) {
       case 'CHECKBOX':
         return (
           <Checkbox
-            checkedChildren="On"
-            unCheckedChildren="Off"
+            // checkedChildren="On"
+            // unCheckedChildren="Off"
             {...fieldCfg?.fieldProps}
           />
         );
@@ -186,24 +161,14 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       case 'SWITCH':
         return (
           <Switch
-            checkedChildren="On"
-            unCheckedChildren="Off"
-            {...fieldCfg?.fieldProps}
-          />
-        );
-      case 'TEXTAREA':
-        return (
-          <Checkbox
-            checkedChildren="On"
-            unCheckedChildren="Off"
+            // checkedChildren="On"
+            // unCheckedChildren="Off"
             {...fieldCfg?.fieldProps}
           />
         );
       case 'UPLOAD':
         return (
-          <Checkbox
-            checkedChildren="On"
-            unCheckedChildren="Off"
+          <Upload
             {...fieldCfg?.fieldProps}
           />
         );
@@ -217,7 +182,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     <Form
       className="edit-feature-form"
       form={form}
-      // initialValues={{}}
       labelCol={{ span: 5 }}
       wrapperCol={{ span: 20 }}
       {...passThroughProps}
