@@ -1,8 +1,21 @@
-import React, {
-  useEffect
-} from 'react';
+import React from 'react';
+
+import {
+  Tabs
+} from 'antd';
+
+import {
+  Tab
+} from 'rc-tabs/lib/interface';
+
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+
+import {
+  PropertyFormItemEditConfig,
+  PropertyFormTabConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -15,18 +28,37 @@ import MapDrawer, {
   MapDrawerProps
 } from '../MapDrawer';
 
+import EditFeatureForm from './EditFeatureForm';
+
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
 export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
-  children,
   ...passThroughProps
 }) => {
 
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
+  const layerId = useAppSelector(state => state.editFeature.layerId);
+  const feature = useAppSelector(state => state.editFeature.feature);
 
   const map = useMap();
 
   const dispatch = useAppDispatch();
+
+  if (!map || !layerId) {
+    return <></>;
+  }
+
+  const layer = MapUtil.getLayerByOlUid(map, layerId);
+
+  if (!layer) {
+    return <></>;
+  }
+
+  const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+
+  if (!editFormConfig) {
+    return <></>;
+  }
 
   const onDrawerClose = (evt: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => {
     dispatch(hideEditFeatureDrawer());
@@ -39,7 +71,20 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       open={isDrawerOpen}
       {...passThroughProps}
     >
-      {children}
+      <Tabs
+        items={editFormConfig.map((config, idx) => {
+          return {
+            label: config.title,
+            key: `${idx}`,
+            children: (
+              <EditFeatureForm
+                formConfig={config.children}
+                feature={feature}
+              />
+            )
+          } as Tab;
+        })}
+      />
     </MapDrawer>
   );
 };

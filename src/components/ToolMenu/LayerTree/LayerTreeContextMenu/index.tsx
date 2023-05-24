@@ -64,7 +64,7 @@ import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 import {
   setLayerId,
-  setFeatureId
+  setFeature
 } from '../../../../store/editFeature';
 import {
   show as showEditFeatureDrawer
@@ -118,7 +118,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         setVisibleLegendsIds(newLegendIds);
         break;
       case 'editLayer':
-        dispatch(setFeatureId(null));
+        dispatch(setFeature(null));
         dispatch(setLayerId(getUid(layer)));
         dispatch(showEditFeatureDrawer());
         break;

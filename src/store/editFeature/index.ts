@@ -3,14 +3,18 @@ import {
   createSlice
 } from '@reduxjs/toolkit';
 
+import {
+  Feature
+} from 'geojson';
+
 export interface EditFeatureState {
   layerId: string | null;
-  featureId: string | null;
+  feature: Feature | null;
 }
 
 const initialState: EditFeatureState = {
   layerId: null,
-  featureId: null
+  feature: null
 };
 
 const editFeatureSlice = createSlice({
@@ -20,19 +24,19 @@ const editFeatureSlice = createSlice({
     setLayerId(state, action: PayloadAction<string | null>) {
       state.layerId = action.payload;
     },
-    setFeatureId(state, action: PayloadAction<string | null>) {
-      state.featureId = action.payload;
+    setFeature(state, action: PayloadAction<Feature | null>) {
+      state.feature = action.payload;
     },
     reset(state) {
       state.layerId = null;
-      state.featureId = null;
+      state.feature = null;
     }
   }
 });
 
 export const {
   setLayerId,
-  setFeatureId,
+  setFeature,
   reset
 } = editFeatureSlice.actions;
 
