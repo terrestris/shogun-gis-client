@@ -3,12 +3,14 @@ import React, {
   useState
 } from 'react';
 
+import { Alert } from 'antd';
 import {
   useForm
 } from 'antd/lib/form/Form';
 
 import moment from 'moment';
 
+import BaseLayer from 'ol/layer/Base';
 import {
   useTranslation
 } from 'react-i18next';
@@ -45,7 +47,13 @@ export type EditFeatureDrawerProps = MapDrawerProps & {};
 export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   ...passThroughProps
 }) => {
+  const {
+    t
+  } = useTranslation();
+
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
+  const [layer, setLayer] = useState<BaseLayer>();
+  const [drawerTitle, setDrawerTitle] = useState<string>(t('EditFeatureDrawer.featureEditor'));
 
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
@@ -55,10 +63,6 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
 
   const map = useMap();
 
-  const {
-    t
-  } = useTranslation();
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -66,23 +70,25 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       return;
     }
 
-    const layer = MapUtil.getLayerByOlUid(map, layerId);
+    const olLayer = MapUtil.getLayerByOlUid(map, layerId);
 
-    if (!layer) {
+    if (!olLayer) {
       Logger.warn(`Could not find layer with id ${layerId}`);
       return;
     }
 
-    const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+    const editFormConfig = olLayer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
     if (!editFormConfig) {
-      Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
+      Logger.warn(`Layer ${olLayer.get('name')} has no 'editFormConfig' set`);
       return;
     }
 
     setTabConfig(editFormConfig);
+    setDrawerTitle(`${t('EditFeatureDrawer.featureEditor')} - ${olLayer.get('name')}`);
+    setLayer(olLayer);
 
-    const properties = {...feature?.properties};
+    const properties = { ...feature?.properties };
 
     Object.entries(properties).forEach(([key, value]) => {
       const tabConfigs = editFormConfig?.filter(tabCfg => {
@@ -103,7 +109,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     });
 
     form.setFieldsValue(properties);
-  }, [map, layerId, form, feature]);
+  }, [map, layerId, form, feature, t]);
 
   const onDrawerClose = (evt: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => {
     dispatch(hideEditFeatureDrawer());
@@ -115,12 +121,22 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       onClose={onDrawerClose}
       open={isDrawerOpen}
       {...passThroughProps}
-      title={t('EditFeatureDrawer.featureEditor')}
+      title={drawerTitle}
     >
-      {layerId && !feature &&
+      {
+        !layer &&
+        <Alert
+          message={t('EditFetureDrawer.noLayerFoundError')}
+          type="error"
+          showIcon
+        />
+      }
+      {
+        layer && layerId && !feature &&
         <EditFeatureSwitch />
       }
-      {layerId && feature &&
+      {
+        layer && layerId && feature &&
         <EditFeatureTabs
           tabConfig={tabConfig}
           form={form}

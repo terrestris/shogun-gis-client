@@ -149,7 +149,8 @@ export default {
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
         selectFeature: 'Objekt bearbeiten',
-        createFeature: 'Objekt erstellen'
+        createFeature: 'Objekt erstellen',
+        noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.'
       }
     }
   },
@@ -302,7 +303,8 @@ export default {
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
         selectFeature: 'Edit feature',
-        createFeature: 'Create feature'
+        createFeature: 'Create feature',
+        noLayerFoundError: 'No layer found - the editing is not possible.'
       }
     }
   }
