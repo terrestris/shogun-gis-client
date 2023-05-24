@@ -4,9 +4,12 @@ import {
   Tabs
 } from 'antd';
 
+import { t } from 'i18next';
 import {
   Tab
 } from 'rc-tabs/lib/interface';
+
+import { Logger } from '@terrestris/base-util';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -29,7 +32,8 @@ import MapDrawer, {
 } from '../MapDrawer';
 
 import EditFeatureForm from './EditFeatureForm';
-import { Logger } from '@terrestris/base-util';
+
+import { EditFeatureSwitch } from './EditFeatureSwitch';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
@@ -73,21 +77,27 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       onClose={onDrawerClose}
       open={isDrawerOpen}
       {...passThroughProps}
+      title={t('EditFeatureDrawer.featureEditor')}
     >
-      <Tabs
-        items={editFormConfig.map((config, idx) => {
-          return {
-            label: config.title,
-            key: `${idx}`,
-            children: (
-              <EditFeatureForm
-                formConfig={config.children}
-                feature={feature}
-              />
-            )
-          } as Tab;
-        })}
-      />
+      {layerId && !feature &&
+        <EditFeatureSwitch />
+      }
+      {layerId && feature &&
+        <Tabs
+          items={editFormConfig.map((config, idx) => {
+            return {
+              label: config.title,
+              key: `${idx}`,
+              children: (
+                <EditFeatureForm
+                  formConfig={config.children}
+                  feature={feature}
+                />
+              )
+            } as Tab;
+          })}
+        />
+      }
     </MapDrawer>
   );
 };

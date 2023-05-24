@@ -65,7 +65,8 @@ export default {
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
-        downloadLayer: 'Layer exportieren ({{formatName}})'
+        downloadLayer: 'Layer exportieren ({{formatName}})',
+        editLayer: 'Layer bearbeiten'
       },
       ToolMenu: {
         expand: 'Menu ausklappen',
@@ -144,6 +145,11 @@ export default {
         searchNominatim: 'Ortssuche (Nominatim)',
         nominatimTitle: 'Ortssuche',
         searchPlaceholder: 'Orts- und Datensuche…'
+      },
+      EditFeatureDrawer: {
+        featureEditor: 'Objekteditor',
+        selectFeature: 'Objekt bearbeiten',
+        createFeature: 'Objekt erstellen'
       }
     }
   },
@@ -213,7 +219,8 @@ export default {
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
-        downloadLayer: 'Export layer as {{formatName}}'
+        downloadLayer: 'Export layer as {{formatName}}',
+        editLayer: 'Edit layer'
       },
       ToolMenu: {
         expand: 'Expand',
@@ -291,6 +298,11 @@ export default {
         searchNominatim: 'Search nominatim',
         nominatimTitle: 'Nominatim',
         searchPlaceholder: 'Address and data search…'
+      },
+      EditFeatureDrawer: {
+        featureEditor: 'Feature editor',
+        selectFeature: 'Edit feature',
+        createFeature: 'Create feature'
       }
     }
   }

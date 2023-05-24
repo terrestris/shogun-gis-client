@@ -266,8 +266,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
 
   if (layer.get('editable')) {
     dropdownMenuItems.push({
-      // TODO i18n
-      label: 'Edit',
+      label: t('LayerTreeContextMenu.editLayer'),
       key: 'editLayer'
     });
   }
