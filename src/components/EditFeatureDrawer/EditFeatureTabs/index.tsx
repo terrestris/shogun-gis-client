@@ -10,10 +10,6 @@ import {
 } from 'antd/lib/form/Form';
 
 import {
-  Feature
-} from 'geojson';
-
-import {
   Tab
 } from 'rc-tabs/lib/interface';
 
@@ -26,14 +22,14 @@ import EditFeatureForm from '../EditFeatureForm';
 
 export type EditFeatureTabsProps = TabsProps & {
   tabConfig?: PropertyFormTabConfig<PropertyFormItemEditConfig>[];
-  feature?: Feature | null;
   form: FormInstance;
+  initialValues?: Record<string, any>;
 };
 
 export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
   tabConfig,
-  feature,
   form,
+  initialValues,
   ...passThroughProps
 }) => {
 
@@ -41,9 +37,12 @@ export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
     return {
       label: config.title,
       key: `${idx}`,
+      forceRender: true,
       children: (
         <EditFeatureForm
+          name={config.title}
           form={form}
+          initialValues={initialValues}
           formConfig={config.children}
         />
       )

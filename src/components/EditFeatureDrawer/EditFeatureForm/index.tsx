@@ -9,7 +9,8 @@ import {
   Checkbox,
   Form,
   FormItemProps,
-  Upload
+  Upload,
+  Button
 } from 'antd';
 
 import {
@@ -25,6 +26,8 @@ import Logger from '@terrestris/base-util/dist/Logger';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
+
+import DisplayField from '../DisplayField';
 
 import './index.less';
 
@@ -63,7 +66,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       rules: []
     };
 
-    // when determining the status
     formItemProps.rules = [{
       required: fieldCfg.required
     }];
@@ -72,15 +74,14 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       formItemProps.valuePropName = 'checked';
     }
 
+    if (fieldCfg.component === 'UPLOAD' && !fieldCfg.readOnly) {
+      formItemProps.valuePropName = 'fileList';
+    }
+
     return (
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
-        // TODO Check if needed
-        // normalize={fieldCfg.component ? getNormalizeFn(dataField) : undefined}
-        // normalize={(val) => {
-        //   console.log(val);
-        // }}
         label={fieldCfg.displayName || fieldCfg.propertyName}
         {...formItemProps}
         {...fieldCfg.fieldProps}
@@ -91,27 +92,11 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   };
 
   const createReadOnlyComponent = (fieldConfig: PropertyFormItemEditConfig): React.ReactNode => {
-    switch (fieldConfig.component) {
-      case 'SWITCH':
-        // return (
-        //   <YesOrNoField
-        //     {...fieldConfig.fieldProps}
-        //   />
-        // );
-      case 'DATE':
-        // return (
-        //   <DisplayField
-        //     format="date"
-        //     {...fieldConfig.fieldProps}
-        //   />
-        // );
-      default:
-        return (
-          <span
-            {...fieldConfig.fieldProps}
-          />
-        );
-    }
+    return (
+      <DisplayField
+        {...fieldConfig.fieldProps}
+      />
+    );
   };
 
   const createFieldComponent = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
@@ -119,8 +104,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       case 'CHECKBOX':
         return (
           <Checkbox
-            // checkedChildren="On"
-            // unCheckedChildren="Off"
             {...fieldCfg?.fieldProps}
           />
         );
@@ -146,12 +129,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             {...fieldCfg?.fieldProps}
           />
         );
-      case 'TEXTAREA':
-        return (
-          <Input.TextArea
-            {...fieldCfg?.fieldProps}
-          />
-        );
       case 'SELECT':
         return (
           <Select
@@ -161,16 +138,23 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       case 'SWITCH':
         return (
           <Switch
-            // checkedChildren="On"
-            // unCheckedChildren="Off"
             {...fieldCfg?.fieldProps}
           />
         );
+      case 'TEXTAREA':
+        return (
+          <Input.TextArea
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      // TODO Still under development, does it make sense anyway?
       case 'UPLOAD':
         return (
           <Upload
             {...fieldCfg?.fieldProps}
-          />
+          >
+            <Button>Upload</Button>
+          </Upload>
         );
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
@@ -182,8 +166,11 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     <Form
       className="edit-feature-form"
       form={form}
-      labelCol={{ span: 5 }}
-      wrapperCol={{ span: 20 }}
+      labelCol={{
+        span: 6
+      }}
+      labelAlign="left"
+      labelWrap
       {...passThroughProps}
     >
       { formConfig?.map(createFormItem) }

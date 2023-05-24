@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -32,6 +33,9 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
 import {
+  reset
+} from '../../store/editFeature';
+import {
   hide as hideEditFeatureDrawer
 } from '../../store/editFeatureDrawerOpen';
 
@@ -41,6 +45,8 @@ import MapDrawer, {
 
 import EditFeatureSwitch from './EditFeatureSwitch';
 import EditFeatureTabs from './EditFeatureTabs';
+import ResetButton from './ResetButton';
+import SaveButton from './SaveButton';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
@@ -54,6 +60,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [layer, setLayer] = useState<BaseLayer>();
   const [drawerTitle, setDrawerTitle] = useState<string>(t('EditFeatureDrawer.featureEditor'));
+  const [initialValues, setInitialValues] = useState<Record<string, any>>();
 
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
@@ -65,7 +72,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  const update = useCallback(() => {
     if (!map || !layerId) {
       return;
     }
@@ -106,13 +113,30 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       if (isDate) {
         properties[key] = moment(value);
       }
+
+      const isUpload = tabConfigs[0].children?.find(cfg => {
+        return cfg.propertyName === key && cfg.component === 'UPLOAD';
+      });
+
+      if (isUpload) {
+        properties[key] = [{
+          name: value,
+          status: 'done'
+        }];
+      }
     });
 
+    setInitialValues(properties);
     form.setFieldsValue(properties);
   }, [map, layerId, form, feature, t]);
 
+  useEffect(() => {
+    update();
+  }, [update]);
+
   const onDrawerClose = (evt: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => {
     dispatch(hideEditFeatureDrawer());
+    dispatch(reset());
   };
 
   return (
@@ -120,8 +144,8 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       className="map-drawer edit-feature-drawer"
       onClose={onDrawerClose}
       open={isDrawerOpen}
-      {...passThroughProps}
       title={drawerTitle}
+      {...passThroughProps}
     >
       {
         !layer &&
@@ -137,10 +161,20 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       }
       {
         layer && layerId && feature &&
-        <EditFeatureTabs
-          tabConfig={tabConfig}
-          form={form}
-        />
+        <>
+          <ResetButton
+            form={form}
+          />
+          <SaveButton
+            form={form}
+            layerId={layerId}
+          />
+          <EditFeatureTabs
+            tabConfig={tabConfig}
+            initialValues={initialValues}
+            form={form}
+          />
+        </>
       }
     </MapDrawer>
   );
