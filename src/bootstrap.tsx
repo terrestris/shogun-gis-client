@@ -84,6 +84,9 @@ import {
   setLogoPath
 } from './store/logoPath';
 import {
+  setSearchEngines
+} from './store/searchEngines';
+import {
   createReducer,
   store
 } from './store/store';
@@ -210,15 +213,20 @@ const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 
+  // nominatim search is active by default
+  store.dispatch(setSearchEngines(['nominatim']));
+
   if (application.toolConfig && application.toolConfig.length > 0) {
     const availableTools: string[] = [];
     application.toolConfig
       .map((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible) {
+        if (tool.config.visible && tool.name !== 'search') {
           availableTools.push(tool.name);
         }
+        if (tool.name === 'search' && tool.config.engines.length > 0) {
+          store.dispatch(setSearchEngines(tool.config.engines));
+        }
       });
-
     store.dispatch(setAvailableTools(availableTools));
   }
 };

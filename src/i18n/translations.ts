@@ -137,6 +137,13 @@ export default {
           supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
           zipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
         }
+      },
+      MultiSearch: {
+        searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
+        searchData: 'Layerdaten durchsuchen',
+        searchNominatim: 'Ortssuche (Nominatim)',
+        nominatimTitle: 'Ortssuche',
+        searchPlaceholder: 'Orts- und Datensuche…'
       }
     }
   },
@@ -277,6 +284,13 @@ export default {
           supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
           zipContent: 'Multiple geodatasets within one archive are not supported'
         }
+      },
+      MultiSearch: {
+        searchInViewBox: 'Search in current extent',
+        searchData: 'Search layer data',
+        searchNominatim: 'Search nominatim',
+        nominatimTitle: 'Nominatim',
+        searchPlaceholder: 'Address and data search…'
       }
     }
   }

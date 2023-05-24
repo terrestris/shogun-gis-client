@@ -10,6 +10,7 @@ import description from './description';
 import legal from './legal';
 import logoPath from './logoPath';
 import print from './print';
+import searchEngines from './searchEngines';
 import selectedFeatures from './selectedFeatures';
 import title from './title';
 import toolMenu from './toolMenu';
@@ -32,6 +33,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     title,
     toolMenu,
     uploadDataModal,
+    searchEngines,
     user,
     ...asyncReducers
   });
