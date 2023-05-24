@@ -29,6 +29,7 @@ import MapDrawer, {
 } from '../MapDrawer';
 
 import EditFeatureForm from './EditFeatureForm';
+import { Logger } from '@terrestris/base-util';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
@@ -51,12 +52,14 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const layer = MapUtil.getLayerByOlUid(map, layerId);
 
   if (!layer) {
+    Logger.warn(`Could not find layer with id ${layerId}`);
     return <></>;
   }
 
   const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
   if (!editFormConfig) {
+    Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
     return <></>;
   }
 
