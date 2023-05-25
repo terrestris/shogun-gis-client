@@ -29,7 +29,7 @@ export type EditFeatureTabsProps = TabsProps & {
 export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
   tabConfig,
   form,
-  // initialValues,
+  initialValues,
   ...passThroughProps
 }) => {
 
@@ -42,7 +42,7 @@ export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
         <EditFeatureForm
           name={config.title}
           form={form}
-          // initialValues={initialValues}
+          initialValues={initialValues}
           formConfig={config.children}
         />
       )

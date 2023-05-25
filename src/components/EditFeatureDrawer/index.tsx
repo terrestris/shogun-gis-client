@@ -129,7 +129,6 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     });
 
     setInitialValues(properties);
-    // TODO Empty fields completely?!
     form.resetFields();
     form.setFieldsValue(properties);
   }, [map, layerId, form, feature, t]);
