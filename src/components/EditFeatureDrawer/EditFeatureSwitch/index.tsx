@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -78,7 +79,7 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
     setLayer(lay);
   }, [map, layerId]);
 
-  const requestFeature = async (evt: MapBrowserEvent<UIEvent>) => {
+  const requestFeature = useCallback(async (evt: MapBrowserEvent<UIEvent>) => {
     if (!map) {
       return;
     }
@@ -95,17 +96,21 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
       { INFO_FORMAT: 'application/json' }
     );
 
+    const defaultHeaders = {
+      'Content-Type': 'application/json'
+    };
+
     if (url) {
       try {
         const response = await fetch(url, {
-          headers: {
+          method: 'GET',
+          headers: layer?.get('useBearerToken') ? {
+            ...defaultHeaders,
             ...getBearerTokenHeader(client?.getKeycloak())
-          }
+          } : defaultHeaders
         });
+
         const json: FeatureCollection = await response.json();
-        // TODO: Feature is always logged by one additional time when function
-        // is disabled/enabled, although `un` is performed...
-        console.log(json);
         if (json.features.length) {
           dispatch(setFeature(json.features[0]));
         }
@@ -113,7 +118,15 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
         Logger.error('Error:', error);
       }
     }
-  };
+  }, [client, dispatch, layer, map]);
+
+  useEffect(() => {
+    map?.on('singleclick', requestFeature);
+
+    return () => {
+      map?.un('singleclick', requestFeature);
+    };
+  }, [map, requestFeature]);
 
   const onSelectClick = async (pressed: boolean) => {
     if (!map) {
@@ -129,8 +142,6 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
     } else {
       setCreateActive(true);
       dispatch(setFeature(null));
-
-      map.un('singleclick', requestFeature);
     }
   };
 
