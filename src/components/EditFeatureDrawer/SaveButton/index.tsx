@@ -16,6 +16,8 @@ import {
   FormInstance
 } from 'antd/lib/form/Form';
 
+import OlSourceVector from 'ol/source/Vector';
+
 import {
   useTranslation
 } from 'react-i18next';
@@ -30,7 +32,8 @@ import {
 
 import {
   useMap
-} from '@terrestris/react-geo';
+} from '@terrestris/react-geo/dist/Hook/useMap';
+import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
 export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
@@ -61,6 +64,13 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
       const layer = MapUtil.getLayerByOlUid(map, layerId);
 
+      const editLayer = DigitizeUtil.getDigitizeLayer(map);
+      if (editLayer) {
+        if ((editLayer.getSource() as OlSourceVector)?.getFeatures()?.length < 1) {
+          console.log('Cannot save feature without geometry!');
+        };
+      }
+
       console.log(`TODO: Save the following values for layer ${layer?.get('name')}`, values);
     } catch (error) {
       Logger.error(error);
@@ -69,6 +79,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
   return (
     <Button
+      type='primary'
       onClick={onClick}
       icon={(
         <FontAwesomeIcon

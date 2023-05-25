@@ -43,10 +43,13 @@ import MapDrawer, {
   MapDrawerProps
 } from '../MapDrawer';
 
+import EditFeatureGeometryToolbar from './EditFeatureGeometryToolbar';
 import EditFeatureSwitch from './EditFeatureSwitch';
 import EditFeatureTabs from './EditFeatureTabs';
 import ResetButton from './ResetButton';
 import SaveButton from './SaveButton';
+
+import './index.less';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
@@ -165,13 +168,19 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       {
         layer && layerId && feature &&
         <>
-          <ResetButton
-            form={form}
+          <EditFeatureGeometryToolbar
+            feature={feature}
           />
-          <SaveButton
-            form={form}
-            layerId={layerId}
-          />
+          <div className='btn-container'>
+            <ResetButton
+              feature={feature}
+              form={form}
+            />
+            <SaveButton
+              form={form}
+              layerId={layerId}
+            />
+          </div>
           <EditFeatureTabs
             tabConfig={tabConfig}
             initialValues={initialValues}

@@ -151,6 +151,19 @@ export default {
         selectFeature: 'Objekt bearbeiten',
         createFeature: 'Objekt erstellen',
         noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.'
+      },
+      EditFeatureGeometryToolbar: {
+        draw: 'Neue Geometrie zeichnen',
+        edit: 'Geometrie editieren',
+        delete: 'Geometrie löschen',
+        undo: 'Rückgängig',
+        redo: 'Wiederherstellen'
+      },
+      ResetButton: {
+        title: 'Änderungen zurücksetzen'
+      },
+      SaveButton: {
+        title: 'Änderungen speichern'
       }
     }
   },
@@ -305,6 +318,19 @@ export default {
         selectFeature: 'Edit feature',
         createFeature: 'Create feature',
         noLayerFoundError: 'No layer found - the editing is not possible.'
+      },
+      EditFeatureGeometryToolbar: {
+        draw: 'Draw new geometry',
+        edit: 'Edit geometry',
+        delete: 'Delete geometry',
+        undo: 'Undo',
+        redo: 'Redo'
+      },
+      ResetButton: {
+        title: 'Reset changes'
+      },
+      SaveButton: {
+        title: 'Save changes'
       }
     }
   }

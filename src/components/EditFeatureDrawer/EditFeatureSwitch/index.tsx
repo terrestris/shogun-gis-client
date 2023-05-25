@@ -238,29 +238,8 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
     }));
   };
 
-  // const onSelectClick = () => {
-  //   dispatch(setFeature({
-  //     type: 'Feature',
-  //     properties: {
-  //       id: 1,
-  //       created: '2022-01-05T10:23:23.000Z',
-  //       modified: '2022-02-05T10:23:23.000Z',
-  //       isPublic: true,
-  //       isEditable: true,
-  //       name: 'Peter',
-  //       desc: 'This is a test',
-  //       type: 'KFZ',
-  //       image: 'https://bvb.de'
-  //     },
-  //     geometry: {
-  //       type: 'Point',
-  //       coordinates: [1, 0]
-  //     }
-  //   }));
-  // };
-
   return (
-    <div className="createOrEditFeature">
+    <div className="btn-container">
       <ToggleButton
         {...passThroughProps}
         onToggle={onSelectClick}
