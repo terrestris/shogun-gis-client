@@ -160,10 +160,14 @@ export default {
         redo: 'Wiederherstellen'
       },
       ResetButton: {
-        title: 'Änderungen zurücksetzen'
+        title: 'Zurücksetzen'
       },
       SaveButton: {
-        title: 'Änderungen speichern'
+        title: 'Speichern'
+      },
+      DeleteButton: {
+        title: 'Objekt löschen',
+        confirm: 'Das Objekt wird vollständig gelöscht. Fortfahren?'
       }
     }
   },
@@ -327,10 +331,14 @@ export default {
         redo: 'Redo'
       },
       ResetButton: {
-        title: 'Reset changes'
+        title: 'Reset'
       },
       SaveButton: {
-        title: 'Save changes'
+        title: 'Save'
+      },
+      DeleteButton: {
+        title: 'Delete object',
+        confirm: 'The object will be completely deleted. Proceed?'
       }
     }
   }

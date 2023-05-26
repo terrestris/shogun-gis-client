@@ -50,6 +50,7 @@ import ResetButton from './ResetButton';
 import SaveButton from './SaveButton';
 
 import './index.less';
+import { DeleteButton } from './DeleteButton';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
@@ -178,6 +179,10 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
             />
             <SaveButton
               form={form}
+              layerId={layerId}
+            />
+            <DeleteButton
+              feature={feature}
               layerId={layerId}
             />
           </div>
