@@ -3,6 +3,10 @@ import React, {
   useState
 } from 'react';
 
+import {
+  Button
+} from 'antd';
+
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
@@ -17,7 +21,6 @@ import {
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer,
@@ -28,12 +31,12 @@ import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getB
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useGetFeatureInfo from '../../../hooks/useGetFeatureInfo';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
 import {
   setFeature
 } from '../../../store/editFeature';
-import EditFeatureButton from '../EditFeatureButton';
 
 import './index.less';
 
@@ -52,6 +55,12 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
   } = useTranslation();
 
   const layerId = useAppSelector(state => state.editFeature.layerId);
+
+  useGetFeatureInfo(layer, (featureCollection) => {
+    if (featureCollection.features.length) {
+      dispatch(setFeature(featureCollection.features[0]));
+    }
+  });
 
   useEffect(() => {
     if (!map || !layerId) {
@@ -78,6 +87,7 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
     try {
       setLoading(true);
 
+      // TODO Move to Hook or similiar
       let url;
       if (layer.getSource() instanceof OlSourceImageWMS) {
         url = (layer.getSource() as OlSourceImageWMS).getUrl();
@@ -164,19 +174,18 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
   };
 
   return (
-    <div className="btn-container">
-      {
-        layerId &&
-        <EditFeatureButton
-          layerId={layerId}
-        />
-      }
-      <SimpleButton
+    <div
+      className="edit-feature-switch"
+    >
+      <div>
+        {t('EditFeatureSwitch.usageHint')}
+      </div>
+      <Button
         loading={loading}
         onClick={onCreateClick}
       >
-        {t('EditFeatureDrawer.createFeature')}
-      </SimpleButton>
+        {t('EditFeatureSwitch.createFeature')}
+      </Button>
     </div>
   );
 };

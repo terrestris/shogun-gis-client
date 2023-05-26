@@ -61,7 +61,6 @@ import {
 import {
   show as showEditFeatureDrawer
 } from '../../store/editFeatureDrawerOpen';
-import EditFeatureButton from '../EditFeatureDrawer/EditFeatureButton';
 
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
@@ -398,12 +397,8 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         title={t('EditFeatureButton.title')}
         placement='bottom'
       >
-        <EditFeatureButton
-          layerId={getUid(layer)}
-          feature={feat}
+        <Button
           onClick={onEditFeatureBtnClick}
-          requestOnMapClick={false}
-          title=""
           icon={<EditOutlined />}
         />
       </Tooltip>

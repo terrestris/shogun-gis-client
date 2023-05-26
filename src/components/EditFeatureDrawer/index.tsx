@@ -151,6 +151,8 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
 
   const onSaveSuccess = () => {
     setErrorMsg(undefined);
+
+    // TODO Reload the feature in state to set is as existing one
   };
 
   const onSaveError = () => {
@@ -203,7 +205,9 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
               />
             )
           }
-          <div className='btn-container'>
+          <div
+            className='btn-container'
+          >
             <ResetButton
               feature={feature}
               form={form}
