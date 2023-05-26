@@ -33,7 +33,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
 import {
-  reset
+  reset, setFeature
 } from '../../store/editFeature';
 import {
   hide as hideEditFeatureDrawer
@@ -43,7 +43,7 @@ import MapDrawer, {
   MapDrawerProps
 } from '../MapDrawer';
 
-import { DeleteButton } from './DeleteButton';
+import DeleteButton from './DeleteButton';
 import EditFeatureGeometryToolbar from './EditFeatureGeometryToolbar';
 import EditFeatureSwitch from './EditFeatureSwitch';
 import EditFeatureTabs from './EditFeatureTabs';
@@ -65,6 +65,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const [layer, setLayer] = useState<BaseLayer>();
   const [drawerTitle, setDrawerTitle] = useState<string>(t('EditFeatureDrawer.featureEditor'));
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
@@ -144,6 +145,25 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const onDrawerClose = (evt: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => {
     dispatch(hideEditFeatureDrawer());
     dispatch(reset());
+
+    setErrorMsg(undefined);
+  };
+
+  const onSaveSuccess = () => {
+    setErrorMsg(undefined);
+  };
+
+  const onSaveError = () => {
+    setErrorMsg(t('EditFeatureDrawer.saveErrorMsg'));
+  };
+
+  const onDeleteSuccess = () => {
+    setErrorMsg(undefined);
+    dispatch(setFeature(null));
+  };
+
+  const onDeleteError = () => {
+    setErrorMsg(t('EditFeatureDrawer.deleteErrorMsg'));
   };
 
   return (
@@ -155,12 +175,13 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       {...passThroughProps}
     >
       {
-        !layer &&
-        <Alert
-          message={t('EditFetureDrawer.noLayerFoundError')}
-          type="error"
-          showIcon
-        />
+        !layer && (
+          <Alert
+            message={t('EditFetureDrawer.noLayerFoundError')}
+            type="error"
+            showIcon
+          />
+        )
       }
       {
         layer && layerId && !feature &&
@@ -172,6 +193,16 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
           <EditFeatureGeometryToolbar
             feature={feature}
           />
+          {
+            errorMsg && (
+              <Alert
+                className="error-alert"
+                message={errorMsg}
+                type="error"
+                showIcon
+              />
+            )
+          }
           <div className='btn-container'>
             <ResetButton
               feature={feature}
@@ -180,10 +211,14 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
             <SaveButton
               form={form}
               layerId={layerId}
+              onSuccess={onSaveSuccess}
+              onError={onSaveError}
             />
             <DeleteButton
               feature={feature}
               layerId={layerId}
+              onSuccess={onDeleteSuccess}
+              onError={onDeleteError}
             />
           </div>
           <EditFeatureTabs

@@ -149,7 +149,9 @@ export default {
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
         createFeature: 'Objekt erstellen',
-        noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.'
+        noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.',
+        saveErrorMsg: 'Das Objekt konnte nicht gespeichert werden',
+        deleteErrorMsg: 'Das Objekt konnte nicht gelöscht werden'
       },
       EditFeatureGeometryToolbar: {
         draw: 'Neue Geometrie zeichnen',
@@ -322,7 +324,9 @@ export default {
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
         createFeature: 'Create feature',
-        noLayerFoundError: 'No layer found - the editing is not possible.'
+        noLayerFoundError: 'No layer found - the editing is not possible.',
+        saveErrorMsg: 'Error while saving the feature',
+        deleteErrorMsg: 'Error while deleting the feature'
       },
       EditFeatureGeometryToolbar: {
         draw: 'Draw new geometry',

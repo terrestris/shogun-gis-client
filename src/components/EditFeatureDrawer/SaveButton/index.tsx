@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useState
+} from 'react';
 
 import {
   faFloppyDisk
@@ -16,8 +18,6 @@ import {
   FormInstance
 } from 'antd/lib/form/Form';
 
-import OlSourceVector from 'ol/source/Vector';
-
 import {
   useTranslation
 } from 'react-i18next';
@@ -33,47 +33,101 @@ import {
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
-import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+import {
+  DigitizeUtil
+} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+import {
+  isWmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
+import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
 
 export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
-  layerId?: string;
+  layerId: string;
+  onError?: (error: unknown) => void;
+  onSuccess?: () => void;
 };
 
 export const SaveButton: React.FC<SaveButtonProps> = ({
   form,
   layerId,
+  onError = () => {},
+  onSuccess = () => {},
   ...passThroughProps
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
 
   const map = useMap();
+
+  const writeWfsTransaction = useWriteWfsTransaction();
+  const executeWfsTransaction = useExecuteWfsTransaction();
 
   const {
     t
   } = useTranslation();
 
+  // TODO Implement Transaction Lock
   const onClick = async () => {
+    if (!map) {
+      return;
+    }
+
+    const layer = MapUtil.getLayerByOlUid(map, layerId);
+
+    if (!layer || !isWmsLayer(layer)) {
+      return;
+    }
+
+    const editLayer = DigitizeUtil.getDigitizeLayer(map);
+
+    if (!editLayer) {
+      Logger.error('Cannot find the digitize layer');
+      return;
+    }
+
+    const features = editLayer.getSource()?.getFeatures();
+
+    if (!features || features.length === 0) {
+      Logger.error('Cannot save feature without geometry');
+      return;
+    };
+
     try {
       await form.validateFields();
+    } catch (error) {
+      Logger.warn('Validation has failed: ', error);
+      return;
+    }
 
-      const values = form.getFieldsValue();
+    try {
+      setLoading(true);
 
-      if (!map || !layerId) {
+      const transaction = writeWfsTransaction({
+        upsertFeatures: features,
+        form: form,
+        layer: layer
+      });
+
+      if (!transaction) {
         return;
       }
 
-      const layer = MapUtil.getLayerByOlUid(map, layerId);
+      await executeWfsTransaction({
+        layer: layer,
+        transaction: transaction
+      });
 
-      const editLayer = DigitizeUtil.getDigitizeLayer(map);
-      if (editLayer) {
-        if ((editLayer.getSource() as OlSourceVector)?.getFeatures()?.length < 1) {
-          console.log('Cannot save feature without geometry!');
-        };
-      }
+      layer.getSource()?.refresh();
 
-      console.log(`TODO: Save the following values for layer ${layer?.get('name')}`, values);
+      onSuccess();
     } catch (error) {
       Logger.error(error);
+
+      onError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,6 +135,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     <Button
       type='primary'
       onClick={onClick}
+      loading={loading}
       icon={(
         <FontAwesomeIcon
           icon={faFloppyDisk}

@@ -132,6 +132,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       case 'SELECT':
         return (
           <Select
+            allowClear={true}
             {...fieldCfg?.fieldProps}
           />
         );
