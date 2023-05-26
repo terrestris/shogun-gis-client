@@ -1,14 +1,8 @@
 import React, {
-  useCallback,
   useEffect,
   useState
 } from 'react';
 
-import {
-  FeatureCollection
-} from 'geojson';
-
-import MapBrowserEvent from 'ol/MapBrowserEvent';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
@@ -17,15 +11,13 @@ import {
 } from 'react-i18next';
 
 import {
-  Logger, ObjectUtil, UrlUtil
+  Logger,
+  UrlUtil
 } from '@terrestris/base-util';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import SimpleButton, {
-  SimpleButtonProps
-} from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import ToggleButton from '@terrestris/react-geo/dist/Button/ToggleButton/ToggleButton';
+import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer,
@@ -41,15 +33,14 @@ import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import {
   setFeature
 } from '../../../store/editFeature';
+import EditFeatureButton from '../EditFeatureButton';
 
 import './index.less';
 
-export type EditFeatureSwitchProps = SimpleButtonProps & {};
+export type EditFeatureSwitchProps = React.HTMLProps<HTMLDivElement> & {};
 
-export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
-  ...passThroughProps
-}) => {
-  const [createActive, setCreateActive] = useState<boolean>(true);
+export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
+
   const [layer, setLayer] = useState<WmsLayer>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -67,83 +58,17 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
       return;
     }
 
-    const lay = MapUtil.getLayerByOlUid(
+    const l = MapUtil.getLayerByOlUid(
       map,
       layerId
     );
 
-    if (!lay || !isWmsLayer(lay)) {
+    if (!l || !isWmsLayer(l)) {
       return;
     }
 
-    setLayer(lay);
+    setLayer(l);
   }, [map, layerId]);
-
-  const requestFeature = useCallback(async (evt: MapBrowserEvent<UIEvent>) => {
-    if (!map) {
-      return;
-    }
-
-    const viewResolution = map.getView().getResolution();
-    if (!viewResolution) {
-      return;
-    }
-    const source = layer?.getSource();
-    const url = source?.getFeatureInfoUrl(
-      evt.coordinate,
-      viewResolution,
-      map.getView().getProjection(),
-      { INFO_FORMAT: 'application/json' }
-    );
-
-    const defaultHeaders = {
-      'Content-Type': 'application/json'
-    };
-
-    if (url) {
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: layer?.get('useBearerToken') ? {
-            ...defaultHeaders,
-            ...getBearerTokenHeader(client?.getKeycloak())
-          } : defaultHeaders
-        });
-
-        const json: FeatureCollection = await response.json();
-        if (json.features.length) {
-          dispatch(setFeature(json.features[0]));
-        }
-      } catch (error) {
-        Logger.error('Error:', error);
-      }
-    }
-  }, [client, dispatch, layer, map]);
-
-  useEffect(() => {
-    map?.on('singleclick', requestFeature);
-
-    return () => {
-      map?.un('singleclick', requestFeature);
-    };
-  }, [map, requestFeature]);
-
-  const onSelectClick = async (pressed: boolean) => {
-    if (!map) {
-      return;
-    }
-
-    if (pressed) {
-      setCreateActive(false);
-
-      if (layerId) {
-        map.on('singleclick', requestFeature);
-      }
-    } else {
-      setCreateActive(true);
-      dispatch(setFeature(null));
-    }
-  };
 
   const getGeometryType = async () => {
     if (!map || !layer) {
@@ -240,16 +165,14 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
 
   return (
     <div className="btn-container">
-      <ToggleButton
-        {...passThroughProps}
-        onToggle={onSelectClick}
-      >
-        {t('EditFeatureDrawer.selectFeature')}
-      </ToggleButton>
+      {
+        layerId &&
+        <EditFeatureButton
+          layerId={layerId}
+        />
+      }
       <SimpleButton
-        {...passThroughProps}
         loading={loading}
-        disabled={!createActive}
         onClick={onCreateClick}
       >
         {t('EditFeatureDrawer.createFeature')}

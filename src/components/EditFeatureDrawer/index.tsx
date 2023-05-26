@@ -43,6 +43,7 @@ import MapDrawer, {
   MapDrawerProps
 } from '../MapDrawer';
 
+import { DeleteButton } from './DeleteButton';
 import EditFeatureGeometryToolbar from './EditFeatureGeometryToolbar';
 import EditFeatureSwitch from './EditFeatureSwitch';
 import EditFeatureTabs from './EditFeatureTabs';
@@ -50,7 +51,6 @@ import ResetButton from './ResetButton';
 import SaveButton from './SaveButton';
 
 import './index.less';
-import { DeleteButton } from './DeleteButton';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 

@@ -148,7 +148,6 @@ export default {
       },
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
-        selectFeature: 'Objekt bearbeiten',
         createFeature: 'Objekt erstellen',
         noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.'
       },
@@ -168,6 +167,9 @@ export default {
       DeleteButton: {
         title: 'Objekt löschen',
         confirm: 'Das Objekt wird vollständig gelöscht. Fortfahren?'
+      },
+      EditFeatureButton: {
+        title: 'Objekt bearbeiten'
       }
     }
   },
@@ -319,7 +321,6 @@ export default {
       },
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
-        selectFeature: 'Edit feature',
         createFeature: 'Create feature',
         noLayerFoundError: 'No layer found - the editing is not possible.'
       },
@@ -339,6 +340,9 @@ export default {
       DeleteButton: {
         title: 'Delete object',
         confirm: 'The object will be completely deleted. Proceed?'
+      },
+      EditFeatureButton: {
+        title: 'Edit feature'
       }
     }
   }
