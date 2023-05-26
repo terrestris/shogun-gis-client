@@ -119,6 +119,7 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
       <Button
         type='primary'
         loading={loading}
+        disabled={!feature.id}
         danger
         icon={(
           <FontAwesomeIcon
