@@ -104,7 +104,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     try {
       setLoading(true);
 
-      const transaction = writeWfsTransaction({
+      const transaction = await writeWfsTransaction({
         upsertFeatures: features,
         form: form,
         layer: layer

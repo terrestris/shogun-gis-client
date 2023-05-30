@@ -14,12 +14,14 @@ import OlFormatWFS, {
   WriteTransactionOptions as OlWriteTransactionOptions
 } from 'ol/format/WFS';
 
-import {
-  useMap
-} from '@terrestris/react-geo';
+import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import useExecuteWfsDescribeFeatureType, {
+  isGeometryType
+} from './useExecuteWfsDescribeFeatureType';
 
 export type WriteWfsTransactionOpts = {
   layer: WmsLayer;
@@ -30,6 +32,7 @@ export type WriteWfsTransactionOpts = {
 
 export const useWriteWfsTransaction = () => {
   const map = useMap();
+  const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
   const cleanFormValues = (form: FormInstance) => {
     const formValues = {...form.getFieldsValue()};
@@ -54,7 +57,7 @@ export const useWriteWfsTransaction = () => {
     return formValues;
   };
 
-  const writeWfsTransaction = (opts: WriteWfsTransactionOpts) => {
+  const writeWfsTransaction = async (opts: WriteWfsTransactionOpts) => {
     if (!map) {
       return;
     }
@@ -62,6 +65,15 @@ export const useWriteWfsTransaction = () => {
     const inserts: OlFeature[] = [];
     const updates: OlFeature[] = [];
     const deletes: OlFeature[] = [];
+
+    const describeFeatureType = await executeWfsDescribeFeatureType(opts.layer);
+
+    if (!describeFeatureType) {
+      return;
+    }
+
+    const geomProperty = describeFeatureType.featureTypes[0]?.properties
+      ?.find(property => isGeometryType(property.type));
 
     if (opts.upsertFeatures) {
       for (const feature of opts.upsertFeatures) {
@@ -75,8 +87,7 @@ export const useWriteWfsTransaction = () => {
           geom: geometry
         });
 
-        // TODO Get geom column name dynamically
-        feat.setGeometryName('geom');
+        feat.setGeometryName(geomProperty?.name || 'geom');
 
         if (opts.form) {
           feat.setProperties(cleanFormValues(opts.form));
@@ -101,9 +112,8 @@ export const useWriteWfsTransaction = () => {
     }
 
     const transactionOpts: OlWriteTransactionOptions = {
-      // TODO Get NS dynamically
-      featureNS: 'http://localhost/SHOGUN',
-      featurePrefix: opts.layer.getSource()?.getParams().LAYERS.split(':')[0],
+      featureNS: describeFeatureType.targetNamespace,
+      featurePrefix: describeFeatureType.targetPrefix,
       featureType: opts.layer.getSource()?.getParams().LAYERS,
       srsName: map.getView().getProjection().getCode(),
       version: '1.0.0',

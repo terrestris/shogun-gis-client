@@ -84,7 +84,7 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
 
       const olFeature = new OlFormatGeoJSON().readFeature(feature);
 
-      const transaction = writeWfsTransaction({
+      const transaction = await writeWfsTransaction({
         deleteFeatures: [olFeature],
         layer: layer
       });

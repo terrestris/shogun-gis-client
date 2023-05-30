@@ -7,17 +7,11 @@ import {
   Button
 } from 'antd';
 
-import OlSourceImageWMS from 'ol/source/ImageWMS';
-import OlSourceTileWMS from 'ol/source/TileWMS';
-
 import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger,
-  UrlUtil
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -27,12 +21,12 @@ import {
   isWmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
-import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useExecuteWfsDescribeFeatureType, {
+  isGeometryType
+} from '../../../hooks/useExecuteWfsDescribeFeatureType';
 import useGetFeatureInfo from '../../../hooks/useGetFeatureInfo';
-import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
 import {
   setFeature
@@ -47,9 +41,9 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
   const [layer, setLayer] = useState<WmsLayer>();
   const [loading, setLoading] = useState<boolean>(false);
 
+  const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
   const dispatch = useAppDispatch();
   const map = useMap();
-  const client = useSHOGunAPIClient();
   const {
     t
   } = useTranslation();
@@ -87,53 +81,17 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
     try {
       setLoading(true);
 
-      // TODO Move to Hook or similiar
-      let url;
-      if (layer.getSource() instanceof OlSourceImageWMS) {
-        url = (layer.getSource() as OlSourceImageWMS).getUrl();
-      }
-      if (layer.getSource() instanceof OlSourceTileWMS) {
-        const urls = (layer.getSource() as OlSourceTileWMS).getUrls();
-        url = urls ? urls[0] : undefined;
-      }
+      const describeFeatureType = await executeWfsDescribeFeatureType(layer);
 
-      if (!url) {
+      if (!describeFeatureType) {
         return;
       }
 
-      if (url.endsWith('?')) {
-        url = url.slice(0, -1);
-      }
+      // We expect a single featureType here.
+      const geomProperty = describeFeatureType.featureTypes[0]?.properties
+        ?.find(property => isGeometryType(property.type));
 
-      const params = {
-        SERVICE: 'WFS',
-        REQUEST: 'DescribeFeatureType',
-        VERSION: '2.0.0',
-        OUTPUTFORMAT: 'application/json',
-        TYPENAMES: layer.getSource()?.getParams().LAYERS
-      };
-
-      const defaultHeaders = {
-        'Content-Type': 'application/json'
-      };
-
-      const response = await fetch(`${url}?${UrlUtil.objectToRequestString(params)}`, {
-        method: 'GET',
-        headers: layer.get('useBearerToken') ? {
-          ...defaultHeaders,
-          ...getBearerTokenHeader(client?.getKeycloak())
-        } : defaultHeaders
-      });
-
-      if (!response.ok) {
-        throw new Error('No successful response');
-      }
-
-      const responseJson = await response.json();
-
-      const g = responseJson.featureTypes[0]?.properties?.find((property: any) => property.name === 'geom');
-
-      switch (g.type) {
+      switch (geomProperty?.type) {
         case 'gml:MultiPoint':
           return 'MultiPoint';
         case 'gml:Point':
