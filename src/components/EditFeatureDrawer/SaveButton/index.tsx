@@ -47,7 +47,7 @@ export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
   layerId: string;
   onError?: (error: unknown) => void;
-  onSuccess?: () => void;
+  onSuccess?: (response?: string) => void;
 };
 
 export const SaveButton: React.FC<SaveButtonProps> = ({
@@ -114,14 +114,14 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
         return;
       }
 
-      await executeWfsTransaction({
+      const result = await executeWfsTransaction({
         layer: layer,
         transaction: transaction
       });
 
       layer.getSource()?.refresh();
 
-      onSuccess();
+      onSuccess(result);
     } catch (error) {
       Logger.error(error);
 

@@ -24,6 +24,7 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
+import { isWmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
 import {
   PropertyFormItemEditConfig,
   PropertyFormTabConfig
@@ -31,6 +32,7 @@ import {
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import useGetFeature from '../../hooks/useGetFeature';
 
 import {
   reset, setFeature
@@ -60,6 +62,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const {
     t
   } = useTranslation();
+  const getFeature = useGetFeature();
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [layer, setLayer] = useState<BaseLayer>();
@@ -76,6 +79,21 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const map = useMap();
 
   const dispatch = useAppDispatch();
+
+  const reloadFeature = useCallback(async (id: string) => {
+    if (!layer || !isWmsLayer(layer)) {
+      return;
+    }
+
+    const updatedFeatures = await getFeature({
+      layer: layer,
+      featureId: id
+    });
+    if (updatedFeatures?.features[0]) {
+      dispatch(setFeature(updatedFeatures?.features[0]));
+    }
+    return;
+  }, [dispatch, getFeature, layer]);
 
   const update = useCallback(() => {
     if (!map || !layerId) {
@@ -149,10 +167,21 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     setErrorMsg(undefined);
   };
 
-  const onSaveSuccess = () => {
+  const onSaveSuccess = (responseText?: string) => {
+    if (!responseText) {
+      return;
+    }
     setErrorMsg(undefined);
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(responseText, 'text/xml');
 
-    // TODO Reload the feature in state to set is as existing one
+    // get feature id from response
+    const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
+    const idString = featureId.item(0)?.getAttribute('fid');
+    const id = idString?.split('.')[1];
+    if (id) {
+      reloadFeature(id);
+    }
   };
 
   const onSaveError = () => {
