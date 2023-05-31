@@ -15,17 +15,41 @@ import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';
+import { usePlugins } from '../../hooks/usePlugins';
+
+import {
+  FooterPlacementOrientation,
+  isFooterIntegration
+} from '../../plugin';
 import { Legal } from '../../store/legal';
 
-export interface FooterProps extends React.ComponentProps<'div'> {}
+export interface FooterProps extends React.ComponentProps<'div'> { }
 
 export const Footer: React.FC<FooterProps> = ({
   ...restProps
 }): JSX.Element => {
+  const plugins = usePlugins();
   const { t } = useTranslation();
 
   const legalInformation: Legal = useAppSelector(state => state.legal);
   const map = useMap();
+
+  const insertPlugins = (itemPosition: FooterPlacementOrientation, items: JSX.Element[]) => {
+    plugins.forEach(plugin => {
+      if (isFooterIntegration(plugin.integration) && plugin.integration?.placementOrientation === itemPosition) {
+        const {
+          key,
+          wrappedComponent: WrappedPluginComponent
+        } = plugin;
+
+        items.splice(plugin.integration?.insertionIndex || 0, 0,
+          <WrappedPluginComponent
+            key={key}
+          />
+        );
+      }
+    });
+  };
 
   useEffect(() => {
     if (!map) {
@@ -71,30 +95,19 @@ export const Footer: React.FC<FooterProps> = ({
     );
   }, [map]);
 
-  const openContactModal = (): void => {
-    window.open(legalInformation.contact, '_blank');
-  };
-
-  const openImprintModal = (): void => {
-    window.open(legalInformation.imprint, '_blank');
-  };
-
-  const openPrivacyModal = (): void => {
-    window.open(legalInformation.privacy, '_blank');
-  };
-
   if (!map) {
     return <></>;
   }
 
-  return (
-    <div
-      className="footer"
-      {...restProps}
-    >
-      <div className="item-container left-items">
-        <div id="scale-line-container" />
-        <Divider type="vertical" />
+  const getLeftItems = () => {
+    const items = [(
+      <>
+        <div
+          id="scale-line-container"
+        />
+        <Divider
+          type="vertical"
+        />
         <div className="scale-combo">
           {t('Footer.scale')}:&nbsp;
           <ScaleCombo map={map} />
@@ -111,8 +124,20 @@ export const Footer: React.FC<FooterProps> = ({
             className="mouse-position"
           />
         </div>
-      </div>
-      <div className="item-container right-items">
+      </>
+    )];
+
+    insertPlugins('left', items);
+
+    return items;
+  };
+
+  const getRightItems = () => {
+
+    const items = [
+      <div
+        key="item-container right-items"
+      >
         <Button
           onClick={openContactModal}
           type="link"
@@ -131,6 +156,43 @@ export const Footer: React.FC<FooterProps> = ({
         >
           {t('Footer.privacypolicy')}
         </Button>
+      </div>
+    ];
+    if (plugins.length > 0) {
+
+      insertPlugins('right', items);
+
+    }
+
+    return items;
+  };
+
+  const openContactModal = (): void => {
+    window.open(legalInformation.contact, '_blank');
+  };
+
+  const openImprintModal = (): void => {
+    window.open(legalInformation.imprint, '_blank');
+  };
+
+  const openPrivacyModal = (): void => {
+    window.open(legalInformation.privacy, '_blank');
+  };
+
+  return (
+    <div
+      className="footer"
+      {...restProps}
+    >
+      <div className="item-container left-items">
+        {
+          getLeftItems()
+        }
+      </div>
+      <div className="item-container right-items">
+        {
+          getRightItems()
+        }
       </div>
     </div>
   );
