@@ -60,6 +60,7 @@ import {
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 import {
@@ -94,6 +95,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const dispatch = useAppDispatch();
 
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
@@ -264,7 +268,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     dropdownMenuItems.push(...downloadItems);
   }
 
-  if (layer.get('editable')) {
+  if (layer.get('editable') && allowedEditMode !== 'NONE') {
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.editLayer'),
       key: 'editLayer'

@@ -46,6 +46,7 @@ import {
 } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
 import './index.less';
+import useAppSelector from '../../../hooks/useAppSelector';
 
 export type EditFeatureGeometryToolbarProps = ToolbarProps & {
   feature: Feature;
@@ -74,6 +75,10 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   const [, setRevision] = useState<number>(0);
 
   const gjFormat = useMemo(() => new OlFormatGeoJson(), []);
+
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   useEffect(() => {
 
@@ -195,20 +200,24 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
       alignment="vertical"
     >
       <ToggleGroup>
-        <DrawButton
-          icon={
-            <FontAwesomeIcon icon={faPencil} />
-          }
-          pressedIcon={
-            <FontAwesomeIcon icon={faPencil} />
-          }
-          name="draw"
-          digitizeLayer={editLayer}
-          tooltip={t('EditFeatureGeometryToolbar.draw')}
-          drawType={feature.geometry.type as DrawType}
-          onDrawEnd={onDrawEnd}
-          {...btnTooltipProps}
-        />
+        {
+          allowedEditMode === 'FULL' ?
+            <DrawButton
+              icon={
+                <FontAwesomeIcon icon={faPencil} />
+              }
+              pressedIcon={
+                <FontAwesomeIcon icon={faPencil} />
+              }
+              name="draw"
+              digitizeLayer={editLayer}
+              tooltip={t('EditFeatureGeometryToolbar.draw')}
+              drawType={feature.geometry.type as DrawType}
+              onDrawEnd={onDrawEnd}
+              {...btnTooltipProps}
+            />
+            : <></>
+        }
         <ModifyButton
           icon={
             <FontAwesomeIcon icon={faDrawPolygon} />
@@ -224,19 +233,23 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           onTranslateEnd={updateRevision}
           {...btnTooltipProps}
         />
-        <DeleteButton
-          icon={
-            <FontAwesomeIcon icon={faTrash} />
-          }
-          pressedIcon={
-            <FontAwesomeIcon icon={faTrash} />
-          }
-          name="delete"
-          digitizeLayer={editLayer}
-          tooltip={t('EditFeatureGeometryToolbar.delete')}
-          onFeatureRemove={updateRevision}
-          {...btnTooltipProps}
-        />
+        {
+          allowedEditMode === 'FULL' ?
+            <DeleteButton
+              icon={
+                <FontAwesomeIcon icon={faTrash} />
+              }
+              pressedIcon={
+                <FontAwesomeIcon icon={faTrash} />
+              }
+              name="delete"
+              digitizeLayer={editLayer}
+              tooltip={t('EditFeatureGeometryToolbar.delete')}
+              onFeatureRemove={updateRevision}
+              {...btnTooltipProps}
+            />
+            : <></>
+        }
       </ToggleGroup>
       <SimpleButton
         icon={

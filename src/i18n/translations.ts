@@ -154,6 +154,7 @@ export default {
       },
       EditFeatureSwitch: {
         usageHint: 'Objekt zum Editieren auf der Karte auswählen oder…',
+        limitedUsageHint: 'Zum Editieren bitte eine Objekt auf der Karte auswählen',
         createFeature: 'Neues Objekt erstellen'
       },
       EditFeatureGeometryToolbar: {
@@ -332,6 +333,7 @@ export default {
       },
       EditFeatureSwitch: {
         usageHint: 'Select an existing feature for editing on the map or…',
+        limitedUsageHint: 'To edit please select an object on the map',
         createFeature: 'Create new feature'
       },
       EditFeatureGeometryToolbar: {

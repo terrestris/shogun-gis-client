@@ -9,7 +9,7 @@ import {
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
-import ClientConfiguration from 'clientConfig';
+import ClientConfiguration, { FeatureEditConfiguration } from 'clientConfig';
 
 import Color from 'color';
 
@@ -77,6 +77,10 @@ import {
 import {
   setDescription
 } from './store/description';
+import {
+  setUserEditMode,
+  EditLevel
+} from './store/editFeature';
 import {
   setLegal
 } from './store/legal';
@@ -524,6 +528,39 @@ const loadPlugins = async (map: OlMap) => {
   return clientPlugins;
 };
 
+const checkRoles = (
+  list: string[],
+  featureEditRoles: FeatureEditConfiguration
+): EditLevel => {
+  const {
+    fullEditRoles, limitedEditRoles
+  } = featureEditRoles;
+
+  for (const element of list) {
+    if (fullEditRoles) {
+      for (const role of fullEditRoles) {
+        if (typeof role === 'string' && element === role) {
+          return 'FULL';
+        } else if (role instanceof RegExp && role.test(element)) {
+          return 'FULL';
+        }
+      }
+    }
+
+    if (limitedEditRoles) {
+      for (const role of limitedEditRoles) {
+        if (typeof role === 'string' && element === role) {
+          return 'LIMITED';
+        } else if (role instanceof RegExp && role.test(element)) {
+          return 'LIMITED';
+        }
+      }
+    }
+  }
+
+  return 'NONE';
+};
+
 const renderApp = async () => {
   try {
     const keycloak = await initKeycloak();
@@ -571,6 +608,20 @@ const renderApp = async () => {
     const user = await getUser(appInfo?.userId);
 
     setUserToStore(user);
+
+    const userRoles: string[] | undefined =
+      client?.getKeycloak()?.tokenParsed?.realm_access?.roles;
+
+    let allowedEditMode: EditLevel = 'NONE';
+
+    if (userRoles && ClientConfiguration.featureEditRoles) {
+      allowedEditMode = checkRoles(
+        userRoles,
+        ClientConfiguration.featureEditRoles
+      );
+    }
+
+    store.dispatch(setUserEditMode(allowedEditMode));
 
     const map = await setupMap(appConfig);
 

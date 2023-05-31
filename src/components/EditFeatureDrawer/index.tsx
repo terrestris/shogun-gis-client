@@ -73,6 +73,9 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
   const feature = useAppSelector(state => state.editFeature.feature);
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   const [form] = useForm();
 
@@ -247,12 +250,15 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
               onSuccess={onSaveSuccess}
               onError={onSaveError}
             />
-            <DeleteButton
-              feature={feature}
-              layerId={layerId}
-              onSuccess={onDeleteSuccess}
-              onError={onDeleteError}
-            />
+            {
+              allowedEditMode === 'FULL' &&
+              <DeleteButton
+                feature={feature}
+                layerId={layerId}
+                onSuccess={onDeleteSuccess}
+                onError={onDeleteError}
+              />
+            }
           </div>
           <EditFeatureTabs
             tabConfig={tabConfig}

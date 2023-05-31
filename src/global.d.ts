@@ -11,6 +11,10 @@ declare module 'clientConfig' {
     resourcePath?: string;
     exposedPaths?: string[];
   };
+  export type FeatureEditConfiguration = {
+    fullEditRoles?: (string | RegExp)[];
+    limitedEditRoles?: (string | RegExp)[];
+  };
   type ClientConfiguration = {
     shogunBase?: string;
     keycloak?: {
@@ -32,6 +36,7 @@ declare module 'clientConfig' {
         authorizedRoles?: string[];
       };
     };
+    featureEditRoles?: FeatureEditConfiguration;
   };
   const config: ClientConfiguration;
 

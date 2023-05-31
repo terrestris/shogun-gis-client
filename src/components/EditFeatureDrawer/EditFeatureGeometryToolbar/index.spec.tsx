@@ -2,6 +2,10 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
+import { Provider } from 'react-redux';
+
+import { store } from '../../../store/store';
+
 import EditFeatureGeometryToolbar from './';
 
 describe('EditFeatureGeometryToolbar', () => {
@@ -11,16 +15,18 @@ describe('EditFeatureGeometryToolbar', () => {
 
   it('can be rendered', () => {
     const { container } = render(
-      <EditFeatureGeometryToolbar
-        feature={{
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Point',
-            coordinates: [0, 0]
-          }
-        }}
-      />
+      <Provider store={store}>
+        <EditFeatureGeometryToolbar
+          feature={{
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Point',
+              coordinates: [0, 0]
+            }
+          }}
+        />
+      </Provider>
     );
     expect(container).toBeVisible();
   });

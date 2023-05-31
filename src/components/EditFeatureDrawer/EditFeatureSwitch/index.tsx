@@ -49,6 +49,9 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
   } = useTranslation();
 
   const layerId = useAppSelector(state => state.editFeature.layerId);
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   useGetFeatureInfo(layer, (featureCollection) => {
     if (featureCollection.features.length) {
@@ -132,18 +135,21 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
   };
 
   return (
-    <div
-      className="edit-feature-switch"
-    >
-      <div>
-        {t('EditFeatureSwitch.usageHint')}
-      </div>
-      <Button
-        loading={loading}
-        onClick={onCreateClick}
-      >
-        {t('EditFeatureSwitch.createFeature')}
-      </Button>
+    <div className="edit-feature-switch">
+      {allowedEditMode === 'FULL' && (
+        <>
+          <div>{t('EditFeatureSwitch.usageHint')}</div>
+          <Button
+            loading={loading}
+            onClick={onCreateClick}
+          >
+            {t('EditFeatureSwitch.createFeature')}
+          </Button>
+        </>
+      )}
+      {allowedEditMode === 'LIMITED' && (
+        <div>{t('EditFeatureSwitch.limitedUsageHint')}</div>
+      )}
     </div>
   );
 };
