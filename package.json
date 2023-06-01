@@ -48,7 +48,7 @@
     "@terrestris/ol-util": "^10.1.3",
     "@terrestris/react-geo": "^22.1.0",
     "@terrestris/react-util": "^2.1.1",
-    "@terrestris/shogun-util": "^5.3.0",
+    "@terrestris/shogun-util": "^5.4.0",
     "antd": "^4.24.4",
     "color": "^4.2.3",
     "geostyler": "^12.0.0",
