@@ -531,34 +531,37 @@ const loadPlugins = async (map: OlMap) => {
 const checkRoles = (
   list: string[],
   featureEditRoles: FeatureEditConfiguration
-): EditLevel => {
+): EditLevel[] => {
   const {
-    fullEditRoles, limitedEditRoles
+    authorizedRolesForCreate,
+    authorizedRolesForUpdate,
+    authorizedRolesForDelete
   } = featureEditRoles;
 
-  for (const element of list) {
-    if (fullEditRoles) {
-      for (const role of fullEditRoles) {
-        if (typeof role === 'string' && element === role) {
-          return 'FULL';
-        } else if (role instanceof RegExp && role.test(element)) {
-          return 'FULL';
-        }
-      }
-    }
+  const result: EditLevel[] = [];
 
-    if (limitedEditRoles) {
-      for (const role of limitedEditRoles) {
-        if (typeof role === 'string' && element === role) {
-          return 'LIMITED';
-        } else if (role instanceof RegExp && role.test(element)) {
-          return 'LIMITED';
-        }
-      }
+  for (const element of list) {
+    if (authorizedRolesForCreate?.some(role => matchRole(role, element))) {
+      result.push('CREATE');
+    }
+    if (authorizedRolesForUpdate?.some(role => matchRole(role, element))) {
+      result.push('UPDATE');
+    }
+    if (authorizedRolesForDelete?.some(role => matchRole(role, element))) {
+      result.push('DELETE');
     }
   }
+  return result;
+};
 
-  return 'NONE';
+const matchRole = (role: string | RegExp, element: string): boolean => {
+  if (typeof role === 'string') {
+    return element === role;
+  }
+  if (role instanceof RegExp) {
+    return role.test(element);
+  }
+  return false;
 };
 
 const renderApp = async () => {
@@ -612,9 +615,11 @@ const renderApp = async () => {
     const userRoles: string[] | undefined =
       client?.getKeycloak()?.tokenParsed?.realm_access?.roles;
 
-    let allowedEditMode: EditLevel = 'NONE';
+    let allowedEditMode: EditLevel[] = ['NONE'];
 
     if (userRoles && ClientConfiguration.featureEditRoles) {
+      console.log(userRoles);
+      console.log(ClientConfiguration.featureEditRoles);
       allowedEditMode = checkRoles(
         userRoles,
         ClientConfiguration.featureEditRoles

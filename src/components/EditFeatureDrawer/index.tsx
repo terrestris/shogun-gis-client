@@ -92,11 +92,17 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       layer: layer,
       featureId: id
     });
-    if (updatedFeatures?.features[0]) {
+    if (
+      updatedFeatures?.features[0] &&
+      (allowedEditMode.includes('UPDATE') ||
+        allowedEditMode.includes('DELETE'))
+    ) {
       dispatch(setFeature(updatedFeatures?.features[0]));
     }
     return;
-  }, [dispatch, getFeature, layer]);
+  },
+  [allowedEditMode, dispatch, getFeature, layer]
+  );
 
   const update = useCallback(() => {
     if (!map || !layerId) {
@@ -240,18 +246,24 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
           <div
             className='btn-container'
           >
-            <ResetButton
-              feature={feature}
-              form={form}
-            />
-            <SaveButton
-              form={form}
-              layerId={layerId}
-              onSuccess={onSaveSuccess}
-              onError={onSaveError}
-            />
             {
-              allowedEditMode === 'FULL' &&
+              allowedEditMode.includes('CREATE') ||
+              allowedEditMode.includes('UPDATE') ?
+                <>
+                  <ResetButton
+                    feature={feature}
+                    form={form}
+                  />
+                  <SaveButton
+                    form={form}
+                    layerId={layerId}
+                    onSuccess={onSaveSuccess}
+                    onError={onSaveError}
+                  />
+                </>: <></>
+            }
+            {
+              allowedEditMode.includes('DELETE') &&
               <DeleteButton
                 feature={feature}
                 layerId={layerId}

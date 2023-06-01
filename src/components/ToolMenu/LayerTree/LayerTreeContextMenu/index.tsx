@@ -268,7 +268,12 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     dropdownMenuItems.push(...downloadItems);
   }
 
-  if (layer.get('editable') && allowedEditMode !== 'NONE') {
+  if (
+    layer.get('editable') &&
+    (allowedEditMode.includes('CREATE') ||
+      allowedEditMode.includes('UPDATE') ||
+      allowedEditMode.includes('DELETE'))
+  ) {
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.editLayer'),
       key: 'editLayer'

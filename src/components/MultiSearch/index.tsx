@@ -54,6 +54,8 @@ import SearchResultsPanel, {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import './index.less';
 
+import useAppSelector from '../../hooks/useAppSelector';
+
 import {
   setLayerId
 } from '../../store/editFeature';
@@ -61,6 +63,7 @@ import {
 import {
   show as showEditFeatureDrawer
 } from '../../store/editFeatureDrawerOpen';
+
 
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
@@ -98,6 +101,10 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [dataSearchResults, setDataSearchResults] = useState<DataSearchResult[]>([]);
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
+
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   useEffect(() => {
     window.addEventListener('mousedown', handleClickAway);
@@ -391,18 +398,27 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       setResultsVisible(false);
     };
 
-    return [
-      <Tooltip
-        key='edit'
-        title={t('EditFeatureButton.title')}
-        placement='bottom'
-      >
-        <Button
-          onClick={onEditFeatureBtnClick}
-          icon={<EditOutlined />}
-        />
-      </Tooltip>
-    ];
+    if (
+      allowedEditMode.includes('CREATE') ||
+      allowedEditMode.includes('DELETE') ||
+      allowedEditMode.includes('UPDATE')
+    ) {
+      return [
+        <Tooltip
+          key="edit"
+          title={t('EditFeatureButton.title')}
+          placement="bottom"
+        >
+          <Button
+            onClick={onEditFeatureBtnClick}
+            icon={<EditOutlined />}
+          />
+        </Tooltip>
+      ];
+    } else {
+      return [<></>];
+    }
+
   };
 
   const resultRenderer = () => {

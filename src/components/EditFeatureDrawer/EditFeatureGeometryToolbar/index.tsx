@@ -201,7 +201,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
     >
       <ToggleGroup>
         {
-          allowedEditMode === 'FULL' ?
+          allowedEditMode.includes('CREATE') ?
             <DrawButton
               icon={
                 <FontAwesomeIcon icon={faPencil} />
@@ -218,23 +218,27 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
             />
             : <></>
         }
-        <ModifyButton
-          icon={
-            <FontAwesomeIcon icon={faDrawPolygon} />
-          }
-          pressedIcon={
-            <FontAwesomeIcon icon={faDrawPolygon} />
-          }
-          name="edit"
-          digitizeLayer={editLayer}
-          tooltip={t('EditFeatureGeometryToolbar.edit')}
-          onModifyStart={updateRevision}
-          onModifyEnd={updateRevision}
-          onTranslateEnd={updateRevision}
-          {...btnTooltipProps}
-        />
         {
-          allowedEditMode === 'FULL' ?
+          allowedEditMode.includes('UPDATE') ?
+            <ModifyButton
+              icon={
+                <FontAwesomeIcon icon={faDrawPolygon} />
+              }
+              pressedIcon={
+                <FontAwesomeIcon icon={faDrawPolygon} />
+              }
+              name="edit"
+              digitizeLayer={editLayer}
+              tooltip={t('EditFeatureGeometryToolbar.edit')}
+              onModifyStart={updateRevision}
+              onModifyEnd={updateRevision}
+              onTranslateEnd={updateRevision}
+              {...btnTooltipProps}
+            />
+            : <></>
+        }
+        {
+          allowedEditMode.includes('DELETE') ?
             <DeleteButton
               icon={
                 <FontAwesomeIcon icon={faTrash} />

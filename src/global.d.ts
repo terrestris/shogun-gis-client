@@ -12,8 +12,9 @@ declare module 'clientConfig' {
     exposedPaths?: string[];
   };
   export type FeatureEditConfiguration = {
-    fullEditRoles?: (string | RegExp)[];
-    limitedEditRoles?: (string | RegExp)[];
+    authorizedRolesForCreate?: (string | RegExp)[];
+    authorizedRolesForUpdate?: (string | RegExp)[];
+    authorizedRolesForDelete?: (string | RegExp)[];
   };
   type ClientConfiguration = {
     shogunBase?: string;

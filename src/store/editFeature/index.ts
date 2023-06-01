@@ -7,17 +7,17 @@ import {
   Feature
 } from 'geojson';
 
-export type EditLevel = 'NONE' | 'FULL' | 'LIMITED';
+export type EditLevel = 'CREATE' | 'UPDATE' | 'DELETE' | 'NONE';
 export interface EditFeatureState {
   layerId: string | null;
   feature: Feature | null;
-  userEditMode: EditLevel;
+  userEditMode: EditLevel[];
 }
 
 const initialState: EditFeatureState = {
   layerId: null,
   feature: null,
-  userEditMode: 'NONE'
+  userEditMode: ['NONE']
 };
 
 const editFeatureSlice = createSlice({
@@ -34,7 +34,7 @@ const editFeatureSlice = createSlice({
       state.layerId = null;
       state.feature = null;
     },
-    setUserEditMode(state, action: PayloadAction<EditLevel>) {
+    setUserEditMode(state, action: PayloadAction<EditLevel[]>) {
       state.userEditMode = action.payload;
     }
   }
