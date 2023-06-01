@@ -93,7 +93,7 @@ export const useExecuteWfsDescribeFeatureType = () => {
       } : defaultHeaders
     });
 
-    if (!response) {
+    if (!response.ok) {
       throw new Error('No successful response while executing a WFS-Transaction');
     }
 

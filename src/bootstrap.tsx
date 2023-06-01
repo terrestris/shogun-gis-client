@@ -618,8 +618,6 @@ const renderApp = async () => {
     let allowedEditMode: EditLevel[] = ['NONE'];
 
     if (userRoles && ClientConfiguration.featureEditRoles) {
-      console.log(userRoles);
-      console.log(ClientConfiguration.featureEditRoles);
       allowedEditMode = checkRoles(
         userRoles,
         ClientConfiguration.featureEditRoles

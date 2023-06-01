@@ -149,13 +149,18 @@ export default {
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
         noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.',
-        saveErrorMsg: 'Das Objekt konnte nicht gespeichert werden',
-        deleteErrorMsg: 'Das Objekt konnte nicht gelöscht werden'
+        isFeatureLockedErrorMsg: 'Das ausgewählte Objekt wird bereits in einer anderen Sitzung bearbeitet.',
+        closeDrawerWarnTitle: 'Wollen Sie wirklich fortfahren?',
+        closeDrawerWarnContent: 'Dadurch werden alle nicht gespeicherten Änderungen an dem Object verworfen.'
       },
       EditFeatureSwitch: {
         usageHint: 'Objekt zum Editieren auf der Karte auswählen oder…',
         limitedUsageHint: 'Zum Editieren bitte eine Objekt auf der Karte auswählen',
         createFeature: 'Neues Objekt erstellen'
+      },
+      EditFeatureFullForm: {
+        saveErrorMsg: 'Das Objekt konnte nicht gespeichert werden',
+        deleteErrorMsg: 'Das Objekt konnte nicht gelöscht werden'
       },
       EditFeatureGeometryToolbar: {
         draw: 'Neue Geometrie zeichnen',
@@ -328,13 +333,18 @@ export default {
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
         noLayerFoundError: 'No layer found - the editing is not possible.',
-        saveErrorMsg: 'Error while saving the feature',
-        deleteErrorMsg: 'Error while deleting the feature'
+        isFeatureLockedErrorMsg: 'The selected feature is already being edited in another session.',
+        closeDrawerWarnTitle: 'Do you really want to quit?',
+        closeDrawerWarnContent: 'This will discard any unsaved changes to the feature.'
       },
       EditFeatureSwitch: {
         usageHint: 'Select an existing feature for editing on the map or…',
         limitedUsageHint: 'To edit please select an object on the map',
         createFeature: 'Create new feature'
+      },
+      EditFeatureFullForm: {
+        saveErrorMsg: 'Error while saving the feature',
+        deleteErrorMsg: 'Error while deleting the feature'
       },
       EditFeatureGeometryToolbar: {
         draw: 'Draw new geometry',

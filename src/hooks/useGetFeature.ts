@@ -88,7 +88,7 @@ export const useGetFeature = () => {
       body: new XMLSerializer().serializeToString(featureRequest)
     });
 
-    if (!response) {
+    if (!response.ok) {
       throw new Error('No successful reponse');
     }
 

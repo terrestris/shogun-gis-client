@@ -26,6 +26,7 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import useExecuteWfsDescribeFeatureType, {
   isGeometryType
 } from '../../../hooks/useExecuteWfsDescribeFeatureType';
+import useExecuteWfsLockFeature from '../../../hooks/useExecuteWfsTransactionLock';
 import useGetFeatureInfo from '../../../hooks/useGetFeatureInfo';
 
 import {
@@ -34,14 +35,22 @@ import {
 
 import './index.less';
 
-export type EditFeatureSwitchProps = React.HTMLProps<HTMLDivElement> & {};
+export type EditFeatureSwitchProps = {
+  onLockSuccess?: (responseText: string) => void;
+  onLockError?: (error: unknown) => void;
+  onCreate?: () => void;
+};
 
-export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
-
+export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
+  onLockSuccess = () => {},
+  onLockError = () => {},
+  onCreate = () => {}
+}) => {
   const [layer, setLayer] = useState<WmsLayer>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
+  const executeWfsLockFeature = useExecuteWfsLockFeature();
   const dispatch = useAppDispatch();
   const map = useMap();
   const {
@@ -53,12 +62,31 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
     state => state.editFeature.userEditMode
   );
 
-  useGetFeatureInfo(layer, featureCollection => {
+  useGetFeatureInfo(layer, async (featureCollection) => {
     if (
       featureCollection.features.length &&
       (allowedEditMode.includes('UPDATE') || allowedEditMode.includes('DELETE'))
     ) {
-      dispatch(setFeature(featureCollection.features[0]));
+
+      const feature = featureCollection.features[0];
+
+      if (!layer || !feature) {
+        return;
+      }
+
+      try {
+        const response = await executeWfsLockFeature(layer, feature);
+
+        if (!response) {
+          return;
+        }
+
+        dispatch(setFeature(feature));
+
+        onLockSuccess(response);
+      } catch (error) {
+        onLockError(error);
+      }
     }
   });
 
@@ -135,6 +163,8 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = () => {
         coordinates: []
       }
     }));
+
+    onCreate();
   };
 
   return (

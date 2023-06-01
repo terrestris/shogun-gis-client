@@ -64,7 +64,6 @@ import {
   show as showEditFeatureDrawer
 } from '../../store/editFeatureDrawerOpen';
 
-
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
   delay?: number;

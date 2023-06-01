@@ -77,17 +77,14 @@ export const useWriteWfsTransaction = () => {
 
     if (opts.upsertFeatures) {
       for (const feature of opts.upsertFeatures) {
+        const feat = new OlFeature();
+
         const geometry = feature.getGeometry();
 
-        if (!geometry || isEmpty(geometry.getExtent())) {
-          continue;
+        if (geometry && !isEmpty(geometry.getExtent())) {
+          feat.setGeometry(geometry);
+          feat.setGeometryName(geomProperty?.name || 'geom');
         }
-
-        const feat = new OlFeature({
-          geom: geometry
-        });
-
-        feat.setGeometryName(geomProperty?.name || 'geom');
 
         if (opts.form) {
           feat.setProperties(cleanFormValues(opts.form));
@@ -116,13 +113,23 @@ export const useWriteWfsTransaction = () => {
       featurePrefix: describeFeatureType.targetPrefix,
       featureType: opts.layer.getSource()?.getParams().LAYERS,
       srsName: map.getView().getProjection().getCode(),
-      version: '1.0.0',
+      version: '1.1.0',
       nativeElements: []
     };
 
     const format = new OlFormatWFS();
 
-    return format.writeTransaction(inserts, updates, deletes, transactionOpts);
+    const transaction = format.writeTransaction(inserts, updates, deletes, transactionOpts);
+
+    const rootNode = transaction.getRootNode() as Element;
+    const lockId = document.createElementNS('http://www.opengis.net/wfs', 'LockId');
+    const lockIdValue = document.createTextNode('GeoServer');
+
+    lockId.appendChild(lockIdValue);
+
+    rootNode.appendChild(lockId);
+
+    return transaction;
   };
 
   return writeWfsTransaction;

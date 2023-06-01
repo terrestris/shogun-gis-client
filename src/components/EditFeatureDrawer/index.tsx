@@ -1,17 +1,14 @@
 import React, {
-  useCallback,
   useEffect,
   useState
 } from 'react';
 
-import { Alert } from 'antd';
 import {
-  useForm
-} from 'antd/lib/form/Form';
+  Alert, Modal
+} from 'antd';
 
-import moment from 'moment';
+import OlFeature from 'ol/Feature';
 
-import BaseLayer from 'ol/layer/Base';
 import {
   useTranslation
 } from 'react-i18next';
@@ -24,18 +21,18 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
-import { isWmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
 import {
-  PropertyFormItemEditConfig,
-  PropertyFormTabConfig
-} from '@terrestris/shogun-util/dist/model/Layer';
+  WmsLayer,
+  isWmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import useGetFeature from '../../hooks/useGetFeature';
+import useExecuteWfsTransaction from '../../hooks/useExecuteWfsTransaction';
+import useWriteWfsTransaction from '../../hooks/useWriteWfsTransaction';
 
 import {
-  reset, setFeature
+  reset
 } from '../../store/editFeature';
 import {
   hide as hideEditFeatureDrawer
@@ -45,12 +42,8 @@ import MapDrawer, {
   MapDrawerProps
 } from '../MapDrawer';
 
-import DeleteButton from './DeleteButton';
-import EditFeatureGeometryToolbar from './EditFeatureGeometryToolbar';
+import EditFeatureFullForm from './EditFeatureFullForm';
 import EditFeatureSwitch from './EditFeatureSwitch';
-import EditFeatureTabs from './EditFeatureTabs';
-import ResetButton from './ResetButton';
-import SaveButton from './SaveButton';
 
 import './index.less';
 
@@ -62,148 +55,96 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const {
     t
   } = useTranslation();
-  const getFeature = useGetFeature();
 
-  const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
-  const [layer, setLayer] = useState<BaseLayer>();
+  const [layer, setLayer] = useState<WmsLayer>();
+  const [isFeatureLocked, setIsFeatureLocked] = useState<boolean>(false);
   const [drawerTitle, setDrawerTitle] = useState<string>(t('EditFeatureDrawer.featureEditor'));
-  const [initialValues, setInitialValues] = useState<Record<string, any>>();
-  const [errorMsg, setErrorMsg] = useState<string>();
 
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
   const feature = useAppSelector(state => state.editFeature.feature);
-  const allowedEditMode = useAppSelector(
-    state => state.editFeature.userEditMode
-  );
-
-  const [form] = useForm();
 
   const map = useMap();
-
   const dispatch = useAppDispatch();
+  const writeWfsTransaction = useWriteWfsTransaction();
+  const executeWfsTransaction = useExecuteWfsTransaction();
 
-  const reloadFeature = useCallback(async (id: string) => {
-    if (!layer || !isWmsLayer(layer)) {
-      return;
-    }
-
-    const updatedFeatures = await getFeature({
-      layer: layer,
-      featureId: id
-    });
-    if (
-      updatedFeatures?.features[0] &&
-      (allowedEditMode.includes('UPDATE') ||
-        allowedEditMode.includes('DELETE'))
-    ) {
-      dispatch(setFeature(updatedFeatures?.features[0]));
-    }
-    return;
-  },
-  [allowedEditMode, dispatch, getFeature, layer]
-  );
-
-  const update = useCallback(() => {
+  useEffect(() => {
     if (!map || !layerId) {
       return;
     }
 
     const olLayer = MapUtil.getLayerByOlUid(map, layerId);
 
-    if (!olLayer) {
+    if (!olLayer || !isWmsLayer(olLayer)) {
       Logger.warn(`Could not find layer with id ${layerId}`);
       return;
     }
 
-    const editFormConfig = olLayer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
-
-    if (!editFormConfig) {
-      Logger.warn(`Layer ${olLayer.get('name')} has no 'editFormConfig' set`);
-      return;
-    }
-
-    setTabConfig(editFormConfig);
     setDrawerTitle(`${t('EditFeatureDrawer.featureEditor')} - ${olLayer.get('name')}`);
     setLayer(olLayer);
+  }, [map, layerId, t]);
 
-    const properties = { ...feature?.properties };
-
-    Object.entries(properties).forEach(([key, value]) => {
-      const tabConfigs = editFormConfig?.filter(tabCfg => {
-        return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
-      });
-
-      if (tabConfigs.length > 1) {
-        Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
-      }
-
-      if (tabConfigs && tabConfigs[0]) {
-        const isDate = tabConfigs[0].children?.find(cfg => {
-          return cfg.propertyName === key && cfg.component === 'DATE';
-        });
-
-        if (isDate) {
-          properties[key] = moment(value);
-        }
-
-        const isUpload = tabConfigs[0].children?.find(cfg => {
-          return cfg.propertyName === key && cfg.component === 'UPLOAD';
-        });
-
-        if (isUpload) {
-          properties[key] = [{
-            name: value,
-            status: 'done'
-          }];
-        }
-      }
-    });
-
-    setInitialValues(properties);
-    form.resetFields();
-    form.setFieldsValue(properties);
-  }, [map, layerId, form, feature, t]);
-
-  useEffect(() => {
-    update();
-  }, [update]);
-
-  const onDrawerClose = (evt: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => {
-    dispatch(hideEditFeatureDrawer());
-    dispatch(reset());
-
-    setErrorMsg(undefined);
-  };
-
-  const onSaveSuccess = (responseText?: string) => {
-    if (!responseText) {
+  const releaseLock = async () => {
+    if (!layer || !feature || !feature.id) {
       return;
     }
-    setErrorMsg(undefined);
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(responseText, 'text/xml');
 
-    // get feature id from response
-    const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
-    const idString = featureId.item(0)?.getAttribute('fid');
-    const id = idString?.split('.')[1];
-    if (id) {
-      reloadFeature(id);
+    try {
+      const feat = new OlFeature();
+      feat.setId(feature.id);
+
+      const transaction = await writeWfsTransaction({
+        layer: layer,
+        deleteFeatures: [],
+        upsertFeatures: [feat]
+      });
+
+      if (!transaction) {
+        return;
+      }
+
+      await executeWfsTransaction({
+        layer: layer,
+        transaction: transaction
+      });
+    } catch (error) {
+      Logger.error('Error while releasing the lock on the feature');
     }
   };
 
-  const onSaveError = () => {
-    setErrorMsg(t('EditFeatureDrawer.saveErrorMsg'));
+  const closeDrawer = async () => {
+    await releaseLock();
+
+    dispatch(hideEditFeatureDrawer());
+    dispatch(reset());
+    setIsFeatureLocked(false);
   };
 
-  const onDeleteSuccess = () => {
-    setErrorMsg(undefined);
-    dispatch(setFeature(null));
+  const onDrawerClose = () => {
+    if (layer && feature) {
+      Modal.confirm({
+        maskClosable: false,
+        title: t('EditFeatureDrawer.closeDrawerWarnTitle'),
+        content: t('EditFeatureDrawer.closeDrawerWarnContent'),
+        okType: 'danger',
+        onOk: closeDrawer
+      });
+    } else {
+      closeDrawer();
+    }
   };
 
-  const onDeleteError = () => {
-    setErrorMsg(t('EditFeatureDrawer.deleteErrorMsg'));
+  const onLockSuccess = () => {
+    setIsFeatureLocked(false);
+  };
+
+  const onLockError = () => {
+    setIsFeatureLocked(true);
+  };
+
+  const onCreate = () => {
+    setIsFeatureLocked(false);
   };
 
   return (
@@ -217,7 +158,16 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       {
         !layer && (
           <Alert
-            message={t('EditFetureDrawer.noLayerFoundError')}
+            message={t('EditFeatureDrawer.noLayerFoundError')}
+            type="error"
+            showIcon
+          />
+        )
+      }
+      {
+        isFeatureLocked && (
+          <Alert
+            message={t('EditFeatureDrawer.isFeatureLockedErrorMsg')}
             type="error"
             showIcon
           />
@@ -225,59 +175,18 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       }
       {
         layer && layerId && !feature &&
-        <EditFeatureSwitch />
+        <EditFeatureSwitch
+          onLockSuccess={onLockSuccess}
+          onLockError={onLockError}
+          onCreate={onCreate}
+        />
       }
       {
         layer && layerId && feature &&
-        <>
-          <EditFeatureGeometryToolbar
-            feature={feature}
-          />
-          {
-            errorMsg && (
-              <Alert
-                className="error-alert"
-                message={errorMsg}
-                type="error"
-                showIcon
-              />
-            )
-          }
-          <div
-            className='btn-container'
-          >
-            {
-              allowedEditMode.includes('CREATE') ||
-              allowedEditMode.includes('UPDATE') ?
-                <>
-                  <ResetButton
-                    feature={feature}
-                    form={form}
-                  />
-                  <SaveButton
-                    form={form}
-                    layerId={layerId}
-                    onSuccess={onSaveSuccess}
-                    onError={onSaveError}
-                  />
-                </>: <></>
-            }
-            {
-              allowedEditMode.includes('DELETE') &&
-              <DeleteButton
-                feature={feature}
-                layerId={layerId}
-                onSuccess={onDeleteSuccess}
-                onError={onDeleteError}
-              />
-            }
-          </div>
-          <EditFeatureTabs
-            tabConfig={tabConfig}
-            initialValues={initialValues}
-            form={form}
-          />
-        </>
+        <EditFeatureFullForm
+          feature={feature}
+          layerId={layerId}
+        />
       }
     </MapDrawer>
   );

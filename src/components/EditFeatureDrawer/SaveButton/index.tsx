@@ -68,7 +68,6 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     t
   } = useTranslation();
 
-  // TODO Implement Transaction Lock
   const onClick = async () => {
     if (!map) {
       return;
