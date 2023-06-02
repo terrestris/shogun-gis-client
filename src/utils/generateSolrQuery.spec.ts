@@ -1,21 +1,16 @@
 import OlLayerTile from 'ol/layer/Tile';
 import OlMap from 'ol/Map';
 import OlSourceTileWMS from 'ol/source/TileWMS';
-import OlView from 'ol/View';
 
 import generateSolrQuery from './generateSolrQuery';
 
 describe('<generateSolrQuery />', () => {
-  const center = [829729, 6708850];
   let map: OlMap;
 
   beforeEach(() => {
     const layer1 = new OlLayerTile({
-      opacity: 0.5,
-      visible: true,
       source: new OlSourceTileWMS({
         url: 'https://example.com/wms1',
-        projection: 'EPSG:3857',
         params: {
           LAYERS: 'SHOGUN:foo'
         }
@@ -29,11 +24,8 @@ describe('<generateSolrQuery />', () => {
     });
 
     const layer2 = new OlLayerTile({
-      opacity: 0.5,
-      visible: true,
       source: new OlSourceTileWMS({
         url: 'https://example.com/wms2',
-        projection: 'EPSG:3857',
         params: {
           LAYERS: 'SHOGUN:bar'
         }
@@ -47,10 +39,6 @@ describe('<generateSolrQuery />', () => {
     });
 
     map = new OlMap({
-      view: new OlView({
-        center,
-        zoom: 10
-      }),
       controls: [],
       layers: [layer1, layer2]
     });
@@ -62,11 +50,8 @@ describe('<generateSolrQuery />', () => {
 
   it('returns the correct solr query (single term, no attributes specified)', () => {
     const layerWithoutAttributeConfig = new OlLayerTile({
-      opacity: 0.5,
-      visible: true,
       source: new OlSourceTileWMS({
         url: 'https://example.com/wms2',
-        projection: 'EPSG:3857',
         params: {
           LAYERS: 'SHOGUN:bar'
         }
