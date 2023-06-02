@@ -64,6 +64,8 @@ import {
   show as showEditFeatureDrawer
 } from '../../store/editFeatureDrawerOpen';
 
+import generateSolrQuery from '../../utils/generateSolrQuery';
+
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
   delay?: number;
@@ -190,18 +192,13 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       }
     }
 
-    if (searchData) {
+    if (searchData && map) {
       try {
-        let parts = searchValue.trim()
-          .replaceAll(/[()\\\-_./\/]/g, ' ').split(' ')
-          .filter(s => s.trim() !== '');
-
-        const partsQuery = parts.map(
-          (part: string) => `(search:${part.trim()}*^3 OR search:*${part.trim()}*^2 OR search:${part.trim()}~1)`
-        );
+        const query = generateSolrQuery({
+          searchValue,
+          map
+        });
         const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
-
-        const query = `search:\"${searchValue.trim()}\" OR (${partsQuery.join(' AND ')})`;
 
         if (useViewBox && viewBox) {
           const bboxFilter = `geometry:[${viewBox[1]},${viewBox[0]} TO ${viewBox[3]},${viewBox[2]}]`;
@@ -244,7 +241,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         setLoading(false);
       }
     }
-  }, [searchValue, minChars, useViewBox, searchData, searchNominatim, map, solrSearchBasePath]);
+  }, [searchValue, minChars, searchData, searchNominatim, useViewBox, map, solrSearchBasePath]);
 
   const getFeatureTitle = useCallback((dsResult: DataSearchResult): string => {
 
