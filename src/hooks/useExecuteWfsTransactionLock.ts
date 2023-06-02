@@ -1,4 +1,8 @@
 import {
+  useCallback
+} from 'react';
+
+import {
   Feature
 } from 'geojson';
 
@@ -17,12 +21,17 @@ import {
 
 import useSHOGunAPIClient from './useSHOGunAPIClient';
 
+export type ExecuteWfsLockOpts = {
+  layer: WmsLayer;
+  feature: Feature;
+};
+
 export const useExecuteWfsLockFeature = () => {
   const client = useSHOGunAPIClient();
 
-  const writeWfsLockFeature = (layer: WmsLayer, feature: Feature) => {
-    const featureId = feature.id;
-    const featureProperties = feature.properties;
+  const writeWfsLockFeature = (opts: ExecuteWfsLockOpts) => {
+    const featureId = opts.feature.id;
+    const featureProperties = opts.feature.properties;
 
     if (!featureId || !featureProperties) {
       Logger.warn('Either the id of the feature or its properties (or even both) aren\'t available');
@@ -45,7 +54,7 @@ export const useExecuteWfsLockFeature = () => {
 
     const idProperty = match[0];
 
-    const typeName = layer.getSource()?.getParams().LAYERS;
+    const typeName = opts.layer.getSource()?.getParams().LAYERS;
 
     const lockFeatureDoc = document.createElementNS('http://www.opengis.net/wfs/2.0', 'LockFeature');
 
@@ -81,10 +90,10 @@ export const useExecuteWfsLockFeature = () => {
     return lockFeatureDoc;
   };
 
-  const executeWfsLockFeature = async (layer: WmsLayer, feature: Feature) => {
+  const executeWfsLockFeature = useCallback(async (opts: ExecuteWfsLockOpts) => {
     let url;
 
-    const source = layer.getSource();
+    const source = opts.layer.getSource();
     if (source instanceof OlSourceImageWMS) {
       url = (source as OlSourceImageWMS).getUrl();
     }
@@ -101,7 +110,10 @@ export const useExecuteWfsLockFeature = () => {
       url = url.slice(0, -1);
     }
 
-    const lockFeatureDoc = writeWfsLockFeature(layer, feature);
+    const lockFeatureDoc = writeWfsLockFeature({
+      layer: opts.layer,
+      feature: opts.feature
+    });
 
     if (!lockFeatureDoc) {
       return;
@@ -113,7 +125,7 @@ export const useExecuteWfsLockFeature = () => {
 
     const response = await fetch(url, {
       method: 'POST',
-      headers: layer?.get('useBearerToken') ? {
+      headers: opts.layer?.get('useBearerToken') ? {
         ...defaultHeaders,
         ...getBearerTokenHeader(client?.getKeycloak())
       } : defaultHeaders,
@@ -137,7 +149,7 @@ export const useExecuteWfsLockFeature = () => {
     }
 
     return responseText;
-  };
+  }, [client]);
 
   return executeWfsLockFeature;
 };

@@ -1,4 +1,8 @@
 import {
+  useCallback
+} from 'react';
+
+import {
   FormInstance
 } from 'antd';
 
@@ -57,7 +61,7 @@ export const useWriteWfsTransaction = () => {
     return formValues;
   };
 
-  const writeWfsTransaction = async (opts: WriteWfsTransactionOpts) => {
+  const writeWfsTransaction = useCallback(async (opts: WriteWfsTransactionOpts) => {
     if (!map) {
       return;
     }
@@ -130,7 +134,7 @@ export const useWriteWfsTransaction = () => {
     rootNode.appendChild(lockId);
 
     return transaction;
-  };
+  }, [executeWfsDescribeFeatureType, map]);
 
   return writeWfsTransaction;
 };

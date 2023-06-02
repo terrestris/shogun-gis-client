@@ -1,3 +1,7 @@
+import {
+  useCallback
+} from 'react';
+
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
@@ -19,7 +23,7 @@ export type ExecuteWfsTransactionOpts = {
 export const useExecuteWfsTransaction = () => {
   const client = useSHOGunAPIClient();
 
-  const executeWfsTransaction = async (opts: ExecuteWfsTransactionOpts) => {
+  const executeWfsTransaction = useCallback(async (opts: ExecuteWfsTransactionOpts) => {
     let url;
 
     const source = opts.layer.getSource();
@@ -69,7 +73,7 @@ export const useExecuteWfsTransaction = () => {
     }
 
     return responseText;
-  };
+  }, [client]);
 
   return executeWfsTransaction;
 };

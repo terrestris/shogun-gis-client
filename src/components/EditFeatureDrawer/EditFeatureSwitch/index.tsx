@@ -71,7 +71,10 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
       }
 
       try {
-        const response = await executeWfsLockFeature(layer, feature);
+        const response = await executeWfsLockFeature({
+          layer: layer,
+          feature: feature
+        });
 
         if (!response) {
           return;

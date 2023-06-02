@@ -1,3 +1,7 @@
+import {
+  useCallback
+} from 'react';
+
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
@@ -53,7 +57,7 @@ export const isGeometryType = (propertyType: string): propertyType is GeometryTy
 export const useExecuteWfsDescribeFeatureType = () => {
   const client = useSHOGunAPIClient();
 
-  const executeWfsDescribeFeatureType = async (layer: WmsLayer) => {
+  const executeWfsDescribeFeatureType = useCallback(async (layer: WmsLayer) => {
     let url;
 
     const source = layer.getSource();
@@ -98,7 +102,7 @@ export const useExecuteWfsDescribeFeatureType = () => {
     }
 
     return await response.json() as DescribeFeatureType;
-  };
+  }, [client]);
 
   return executeWfsDescribeFeatureType;
 };
