@@ -71,6 +71,11 @@ import {
   show as showEditFeatureDrawer
 } from '../../../../store/editFeatureDrawerOpen';
 
+import {
+  setLayer as setLayerDetailsLayer,
+  show as showLayerDetailsModal
+} from '../../../../store/layerDetailsModal';
+
 export type LayerTreeContextMenuProps = {
   layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
   visibleLegendsIds: string[];
@@ -87,6 +92,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [extentLoading, setExtentLoading] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
   const client = useSHOGunAPIClient();
   const map = useMap();
   const {
@@ -125,6 +131,10 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         dispatch(setFeature(null));
         dispatch(setLayerId(getUid(layer)));
         dispatch(showEditFeatureDrawer());
+        break;
+      case 'layerDetails':
+        dispatch(setLayerDetailsLayer(getUid(layer)));
+        dispatch(showLayerDetailsModal());
         break;
       default:
         break;
@@ -241,8 +251,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  const legendVisible = visibleLegendsIds.includes(getUid(layer));
   if (isWmsLayer(layer) && layer.getVisible()) {
+    const legendVisible = visibleLegendsIds.includes(getUid(layer));
+
     dropdownMenuItems.push({
       label: legendVisible ? t('LayerTreeContextMenu.hideLegend') : t('LayerTreeContextMenu.showLegend'),
       key: 'toggleLegend'
@@ -279,6 +290,11 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       key: 'editLayer'
     });
   }
+
+  dropdownMenuItems.push({
+    label: t('LayerTreeContextMenu.layerDetails'),
+    key: 'layerDetails'
+  });
 
   return (
     <Dropdown

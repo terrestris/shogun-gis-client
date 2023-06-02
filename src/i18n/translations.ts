@@ -66,7 +66,30 @@ export default {
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
         downloadLayer: 'Layer exportieren ({{formatName}})',
-        editLayer: 'Layer bearbeiten'
+        editLayer: 'Layer bearbeiten',
+        layerDetails: 'Eigenschaften'
+      },
+      LayerDetailsModal: {
+        title: 'Eigenschaften des Layers {{layerName}}',
+        internalConfigurationButtonTooltip: 'Interne Konfiguration anzeigen',
+        internalConfigurationButtonTooltipPressed: 'Interne Konfiguration verbergen'
+      },
+      LayerDetails: {
+        noDataPlaceholder: '-',
+        layerNameLabel: 'Name',
+        layerTitleLabel: 'Titel',
+        serviceAbstractLabel: 'Service Beschreibung',
+        abstractLabel: 'Beschreibung',
+        accessConstraintsLabel: 'Nutzungseinschränkungen',
+        capabilitiesUrlLabel: 'GetCapabilities URL',
+        contactLabel: 'Kontakt',
+        minScaleLabel: 'Min. Maßstab',
+        maxScaleLabel: 'Max. Maßstab',
+        bboxLabel: 'Bounding Box',
+        errorMessage: 'Fehler beim Laden der Layer Capabilities'
+      },
+      LayerConfiguration: {
+        errorMessage: 'Fehler beim Laden der internen Konfiguration'
       },
       ToolMenu: {
         expand: 'Menu ausklappen',
@@ -251,7 +274,30 @@ export default {
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
         downloadLayer: 'Export layer as {{formatName}}',
-        editLayer: 'Edit layer'
+        editLayer: 'Edit layer',
+        layerDetails: 'Properties'
+      },
+      LayerDetailsModal: {
+        title: 'Properties of layer {{layerName}}',
+        internalConfigurationButtonTooltip: 'Show internal configuration',
+        internalConfigurationButtonTooltipPressed: 'Hide internal configuration'
+      },
+      LayerDetails: {
+        noDataPlaceholder: '-',
+        layerNameLabel: 'Name',
+        layerTitleLabel: 'Title',
+        serviceAbstractLabel: 'Service abstract',
+        abstractLabel: 'Abstract',
+        accessConstraintsLabel: 'Access constraints',
+        capabilitiesUrlLabel: 'GetCapabilities URL',
+        contactLabel: 'Contact',
+        minScaleLabel: 'Min. scale',
+        maxScaleLabel: 'Max. scale',
+        bboxLabel: 'Bounding box',
+        errorMessage: 'Error while loading the layer capabilities'
+      },
+      LayerConfiguration: {
+        errorMessage: 'Error while loading the internal configuration'
       },
       ToolMenu: {
         expand: 'Expand',
