@@ -6,6 +6,7 @@ import AddLayerModal from './components/AddLayerModal/index';
 import BasicMapComponent from './components/BasicMapComponent';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import LayerDetailsModal from './components/LayerDetailsModal';
 import ToolMenu from './components/ToolMenu';
 import UploadDataModal from './components/UploadDataModal';
 
@@ -36,6 +37,7 @@ export const App: React.FC<AppProps> = ({
       <Footer />
       <AddLayerModal />
       <UploadDataModal />
+      <LayerDetailsModal />
     </div>
   );
 };
