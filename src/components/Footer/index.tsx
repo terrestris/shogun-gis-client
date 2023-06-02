@@ -160,7 +160,6 @@ export const Footer: React.FC<FooterProps> = ({
 
     if (plugins.length > 0) {
       insertPlugins('right', items);
-
     }
 
     return items;
