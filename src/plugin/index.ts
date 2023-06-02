@@ -33,20 +33,20 @@ export type ClientPluginIntegration = {
 
 export type ClientPluginIntegrationToolMenu = ClientPluginIntegration &
   Omit<CollapsePanelProps, 'key' | 'header'> & {
-    placement: 'tool-menu';
-    /**
-     * The label for the plugin in the tool menu.
-     */
-    label?: string;
-    /**
-     * The insertion index for the plugin in the tool menu, starting from 0 which is on top.
-     */
-    insertionIndex?: number;
-    /**
-     * The icon for the plugin in the tool menu.
-     */
-    icon?: IconDefinition;
-  };
+  placement: 'tool-menu';
+  /**
+   * The label for the plugin in the tool menu.
+   */
+  label?: string;
+  /**
+   * The insertion index for the plugin in the tool menu, starting from 0 which is on top.
+   */
+  insertionIndex?: number;
+  /**
+   * The icon for the plugin in the tool menu.
+   */
+  icon?: IconDefinition;
+};
 
 export type HeaderPlacementOrientation = 'left' | 'center' | 'right';
 
@@ -75,7 +75,7 @@ export type ClientPluginIntegrationMap = ClientPluginIntegration & {
   placement: 'map';
 };
 
-export type FooterPlacementOrientation = 'left' | 'center' | 'right';
+export type FooterPlacementOrientation = 'left' | 'right';
 
 export type ClientPluginIntegrationFooter = ClientPluginIntegration & {
   placement: 'footer';

@@ -133,7 +133,6 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   const getRightItems = () => {
-
     const items = [
       <div
         key="item-container right-items"
@@ -158,8 +157,8 @@ export const Footer: React.FC<FooterProps> = ({
         </Button>
       </div>
     ];
-    if (plugins.length > 0) {
 
+    if (plugins.length > 0) {
       insertPlugins('right', items);
 
     }
