@@ -59,7 +59,7 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
-import useAppDispatch from '../../../../hooks/useApp';
+import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useAppSelector from '../../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
