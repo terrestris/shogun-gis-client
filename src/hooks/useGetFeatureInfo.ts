@@ -74,7 +74,7 @@ export const useGetFeatureInfo = (layer?: WmsLayer, onSuccess?: (featureCollecti
       });
 
       if (!response.ok) {
-        throw new Error('No successful reponse');
+        throw new Error('No successful response');
       }
 
       const featureCollection: FeatureCollection = await response.json();
