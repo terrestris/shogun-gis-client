@@ -8,6 +8,10 @@ import {
   Feature
 } from 'geojson';
 
+import {
+  WmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
+
 import useAppSelector from '../../../hooks/useAppSelector';
 
 import DeleteButton from '../DeleteButton';
@@ -18,7 +22,7 @@ import './index.less';
 
 export type EditFeatureToolbarProps = {
   feature: Feature;
-  layerId: string;
+  layer: WmsLayer;
   form: FormInstance;
   onSaveSuccess?: (responseText?: string) => void;
   onSaveError?: (error: unknown) => void;
@@ -28,7 +32,7 @@ export type EditFeatureToolbarProps = {
 
 export const EditFeatureToolbar: React.FC<EditFeatureToolbarProps> = ({
   feature,
-  layerId,
+  layer,
   form,
   onSaveSuccess = () => {},
   onSaveError = () => {},
@@ -51,7 +55,7 @@ export const EditFeatureToolbar: React.FC<EditFeatureToolbarProps> = ({
             />
             <SaveButton
               form={form}
-              layerId={layerId}
+              layer={layer}
               onSuccess={onSaveSuccess}
               onError={onSaveError}
             />
@@ -61,7 +65,7 @@ export const EditFeatureToolbar: React.FC<EditFeatureToolbarProps> = ({
         allowedEditMode.includes('DELETE') &&
         <DeleteButton
           feature={feature}
-          layerId={layerId}
+          layer={layer}
           onSuccess={onDeleteSuccess}
           onError={onDeleteError}
         />

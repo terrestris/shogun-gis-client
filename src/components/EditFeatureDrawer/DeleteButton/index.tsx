@@ -30,13 +30,10 @@ import {
 } from '@terrestris/base-util';
 
 import {
-  MapUtil
-} from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-
-import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
+  WmsLayer,
   isWmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
@@ -45,14 +42,14 @@ import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
 
 export type DeleteButtonProps = ButtonProps & {
   feature: Feature;
-  layerId: string;
+  layer: WmsLayer;
   onError?: (error: unknown) => void;
   onSuccess?: () => void;
 };
 
 export const DeleteButton: React.FC<DeleteButtonProps> = ({
   feature,
-  layerId,
+  layer,
   onError = () => {},
   onSuccess = () => {},
   ...passThroughProps
@@ -72,8 +69,6 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
     if (!map) {
       return;
     }
-
-    const layer = MapUtil.getLayerByOlUid(map, layerId);
 
     if (!layer || !isWmsLayer(layer)) {
       return;

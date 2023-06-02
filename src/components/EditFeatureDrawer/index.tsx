@@ -176,16 +176,17 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       {
         layer && layerId && !feature &&
         <EditFeatureSwitch
+          layer={layer}
           onLockSuccess={onLockSuccess}
           onLockError={onLockError}
           onCreate={onCreate}
         />
       }
       {
-        layer && layerId && feature &&
+        layer && feature &&
         <EditFeatureFullForm
           feature={feature}
-          layerId={layerId}
+          layer={layer}
         />
       }
     </MapDrawer>

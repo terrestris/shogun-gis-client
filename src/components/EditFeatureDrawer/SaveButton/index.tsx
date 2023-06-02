@@ -27,16 +27,13 @@ import {
 } from '@terrestris/base-util';
 
 import {
-  MapUtil
-} from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-
-import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   DigitizeUtil
 } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 import {
+  WmsLayer,
   isWmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
@@ -45,14 +42,14 @@ import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
 
 export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
-  layerId: string;
+  layer: WmsLayer;
   onError?: (error: unknown) => void;
   onSuccess?: (response?: string) => void;
 };
 
 export const SaveButton: React.FC<SaveButtonProps> = ({
   form,
-  layerId,
+  layer,
   onError = () => {},
   onSuccess = () => {},
   ...passThroughProps
@@ -72,8 +69,6 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     if (!map) {
       return;
     }
-
-    const layer = MapUtil.getLayerByOlUid(map, layerId);
 
     if (!layer || !isWmsLayer(layer)) {
       return;

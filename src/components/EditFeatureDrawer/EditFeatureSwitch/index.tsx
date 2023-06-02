@@ -1,5 +1,4 @@
 import React, {
-  useEffect,
   useState
 } from 'react';
 
@@ -13,12 +12,9 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
-  WmsLayer,
-  isWmsLayer
+  WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -36,17 +32,18 @@ import {
 import './index.less';
 
 export type EditFeatureSwitchProps = {
+  layer: WmsLayer;
   onLockSuccess?: (responseText: string) => void;
   onLockError?: (error: unknown) => void;
   onCreate?: () => void;
 };
 
 export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
+  layer,
   onLockSuccess = () => {},
   onLockError = () => {},
   onCreate = () => {}
 }) => {
-  const [layer, setLayer] = useState<WmsLayer>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
@@ -57,7 +54,6 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
     t
   } = useTranslation();
 
-  const layerId = useAppSelector(state => state.editFeature.layerId);
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
   );
@@ -89,23 +85,6 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
       }
     }
   });
-
-  useEffect(() => {
-    if (!map || !layerId) {
-      return;
-    }
-
-    const l = MapUtil.getLayerByOlUid(
-      map,
-      layerId
-    );
-
-    if (!l || !isWmsLayer(l)) {
-      return;
-    }
-
-    setLayer(l);
-  }, [map, layerId]);
 
   const getGeometryType = async () => {
     if (!map || !layer) {

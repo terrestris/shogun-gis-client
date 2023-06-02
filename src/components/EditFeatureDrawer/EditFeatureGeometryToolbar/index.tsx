@@ -81,7 +81,6 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   );
 
   useEffect(() => {
-
     if (!map) {
       return;
     }

@@ -56,12 +56,12 @@ import EditFeatureToolbar from '../EditFeatureToolbar';
 
 export type EditFeatureFullFormProps = {
   feature: Feature;
-  layerId: string;
+  layer: WmsLayer;
 };
 
 export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   feature,
-  layerId
+  layer
 }) => {
   const {
     t
@@ -69,7 +69,6 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   const executeGetFeature = useExecuteGetFeature();
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
-  const [layer, setLayer] = useState<WmsLayer>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
   const [errorMsg, setErrorMsg] = useState<string>();
 
@@ -78,10 +77,9 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   );
 
   const [form] = useForm();
-
   const map = useMap();
-
   const dispatch = useAppDispatch();
+  const client = useSHOGunAPIClient();
 
   const reloadFeature = useCallback(async (id: string) => {
     if (!layer || !isWmsLayer(layer)) {
@@ -101,28 +99,17 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       dispatch(setFeature(updatedFeatures?.features[0]));
     }
     return;
-  }, [allowedEditMode, dispatch, getFeature, layer]);
+  }, [allowedEditMode, dispatch, executeGetFeature, layer]);
 
   const update = useCallback(async () => {
-    if (!map || !layerId) {
+    if (!map || !client) {
       return;
     }
 
-    const olLayer = MapUtil.getLayerByOlUid(map, layerId);
+    let editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
-    if (!olLayer) {
-      Logger.warn(`Could not find layer with id ${layerId}`);
-      return;
-    }
-
-    if (!isWmsLayer(olLayer)) {
-      return;
-    }
-
-    const editFormConfig = olLayer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
-
-    if (!editFormConfig) {
-      Logger.warn(`Layer ${olLayer.get('name')} has no 'editFormConfig' set`);
+    if (editFormConfig.length === 0) {
+      Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
       return;
     }
 
@@ -163,9 +150,8 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     form.setFieldsValue(properties);
 
     setTabConfig(editFormConfig);
-    setLayer(olLayer);
     setInitialValues(properties);
-  }, [map, layerId, form, feature]);
+  }, [map, client, layer, feature?.properties, form]);
 
   useEffect(() => {
     update();
@@ -218,7 +204,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       }
       <EditFeatureToolbar
         feature={feature}
-        layerId={layerId}
+        layer={layer}
         form={form}
         onSaveSuccess={onSaveSuccess}
         onSaveError={onSaveError}
