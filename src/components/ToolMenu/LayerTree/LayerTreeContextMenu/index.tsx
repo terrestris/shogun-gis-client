@@ -59,7 +59,7 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
-import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppDispatch from '../../../../hooks/useApp';
 import useAppSelector from '../../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
@@ -98,7 +98,6 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const {
     t
   } = useTranslation();
-  const dispatch = useAppDispatch();
 
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
   const allowedEditMode = useAppSelector(
