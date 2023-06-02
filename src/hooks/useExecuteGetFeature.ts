@@ -1,4 +1,8 @@
 import {
+  useCallback
+} from 'react';
+
+import {
   FeatureCollection
 } from 'geojson';
 
@@ -24,15 +28,16 @@ import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export type GetFeatureOpts = {
   layer: WmsLayer;
+  // TODO Pass filter instead of featureId
   featureId: string;
 };
 
-export const useGetFeature = () => {
+export const useExecuteGetFeature = () => {
   const client = useSHOGunAPIClient();
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
-  const getFeature = async (opts: GetFeatureOpts) => {
+  const executeGetFeature = useCallback(async (opts: GetFeatureOpts) => {
     if (!map) {
       return;
     }
@@ -89,13 +94,13 @@ export const useGetFeature = () => {
     });
 
     if (!response.ok) {
-      throw new Error('No successful reponse');
+      throw new Error('No successful response');
     }
 
     return await response.json() as FeatureCollection;
-  };
+  }, [client, executeWfsDescribeFeatureType, map]);
 
-  return getFeature;
+  return executeGetFeature;
 };
 
-export default useGetFeature;
+export default useExecuteGetFeature;

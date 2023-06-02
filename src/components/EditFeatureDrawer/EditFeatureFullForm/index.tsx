@@ -43,7 +43,8 @@ import {
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import useGetFeature from '../../../hooks/useGetFeature';
+import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
+import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
 import {
   setFeature
@@ -65,7 +66,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   const {
     t
   } = useTranslation();
-  const getFeature = useGetFeature();
+  const executeGetFeature = useExecuteGetFeature();
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [layer, setLayer] = useState<WmsLayer>();
@@ -87,7 +88,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
-    const updatedFeatures = await getFeature({
+    const updatedFeatures = await executeGetFeature({
       layer: layer,
       featureId: id
     });
