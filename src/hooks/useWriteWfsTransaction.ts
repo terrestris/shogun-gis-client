@@ -79,6 +79,8 @@ export const useWriteWfsTransaction = () => {
     const geomProperty = describeFeatureType.featureTypes[0]?.properties
       ?.find(property => isGeometryType(property.type));
 
+    let overallUpdateMode = false;
+
     if (opts.upsertFeatures) {
       for (const feature of opts.upsertFeatures) {
         const feat = new OlFeature();
@@ -95,6 +97,10 @@ export const useWriteWfsTransaction = () => {
         }
 
         const updateMode = !!feature.getId();
+
+        if (updateMode && !overallUpdateMode) {
+          overallUpdateMode = true;
+        }
 
         if (updateMode) {
           feat.setId(feature.getId());
@@ -126,12 +132,13 @@ export const useWriteWfsTransaction = () => {
     const transaction = format.writeTransaction(inserts, updates, deletes, transactionOpts);
 
     const rootNode = transaction.getRootNode() as Element;
-    const lockId = document.createElementNS('http://www.opengis.net/wfs', 'LockId');
-    const lockIdValue = document.createTextNode('GeoServer');
 
-    lockId.appendChild(lockIdValue);
-
-    rootNode.appendChild(lockId);
+    if (overallUpdateMode) {
+      const lockId = document.createElementNS('http://www.opengis.net/wfs', 'LockId');
+      const lockIdValue = document.createTextNode('GeoServer');
+      lockId.appendChild(lockIdValue);
+      rootNode.appendChild(lockId);
+    }
 
     return transaction;
   }, [executeWfsDescribeFeatureType, map]);
