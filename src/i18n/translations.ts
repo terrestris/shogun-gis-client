@@ -406,8 +406,8 @@ export default {
         title: 'Save'
       },
       DeleteButton: {
-        title: 'Delete object',
-        confirm: 'The object will be completely deleted. Proceed?'
+        title: 'Delete feature',
+        confirm: 'The feature will be completely deleted. Proceed?'
       },
       EditFeatureButton: {
         title: 'Edit feature'
