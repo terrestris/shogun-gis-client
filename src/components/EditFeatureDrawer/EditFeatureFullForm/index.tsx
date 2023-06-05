@@ -20,14 +20,16 @@ import cloneDeep from 'lodash/cloneDeep';
 import moment from 'moment';
 
 import {
+  equalTo
+} from 'ol/format/filter';
+
+import {
   useTranslation
 } from 'react-i18next';
 
 import {
   Logger
 } from '@terrestris/base-util';
-
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
@@ -88,7 +90,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
     const updatedFeatures = await executeGetFeature({
       layer: layer,
-      featureId: id
+      filter: equalTo('id', id)
     });
 
     if (
@@ -98,7 +100,6 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     ) {
       dispatch(setFeature(updatedFeatures?.features[0]));
     }
-    return;
   }, [allowedEditMode, dispatch, executeGetFeature, layer]);
 
   const update = useCallback(async () => {

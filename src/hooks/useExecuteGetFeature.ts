@@ -6,10 +6,7 @@ import {
   FeatureCollection
 } from 'geojson';
 
-import {
-  equalTo
-} from 'ol/format/filter';
-
+import OlFormatFilter from 'ol/format/filter/Filter';
 import OlFormatWFS from 'ol/format/WFS';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
@@ -28,8 +25,7 @@ import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export type GetFeatureOpts = {
   layer: WmsLayer;
-  // TODO Pass filter instead of featureId
-  featureId: string;
+  filter?: OlFormatFilter;
 };
 
 export const useExecuteGetFeature = () => {
@@ -39,10 +35,6 @@ export const useExecuteGetFeature = () => {
 
   const executeGetFeature = useCallback(async (opts: GetFeatureOpts) => {
     if (!map) {
-      return;
-    }
-
-    if (!opts.featureId) {
       return;
     }
 
@@ -77,7 +69,7 @@ export const useExecuteGetFeature = () => {
       featurePrefix: describeFeatureType.targetPrefix,
       featureTypes: [source?.getParams().LAYERS],
       outputFormat: 'application/json',
-      filter: equalTo('id', opts.featureId)
+      filter: opts.filter
     });
 
     const defaultHeaders = {
