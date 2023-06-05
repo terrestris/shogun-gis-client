@@ -131,9 +131,8 @@ export const useWriteWfsTransaction = () => {
 
     const transaction = format.writeTransaction(inserts, updates, deletes, transactionOpts);
 
-    const rootNode = transaction.getRootNode() as Element;
-
     if (overallUpdateMode) {
+      const rootNode = transaction.getRootNode() as Element;
       const lockId = document.createElementNS('http://www.opengis.net/wfs', 'LockId');
       const lockIdValue = document.createTextNode('GeoServer');
       lockId.appendChild(lockIdValue);
