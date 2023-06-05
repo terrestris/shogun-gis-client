@@ -94,7 +94,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     if (
       updatedFeatures?.features[0] &&
       (allowedEditMode.includes('UPDATE') ||
-        allowedEditMode.includes('DELETE'))
+      allowedEditMode.includes('DELETE'))
     ) {
       dispatch(setFeature(updatedFeatures?.features[0]));
     }
