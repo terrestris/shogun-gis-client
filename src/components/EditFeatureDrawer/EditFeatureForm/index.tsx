@@ -148,15 +148,15 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             {...fieldCfg?.fieldProps}
           />
         );
-      // TODO Still under development, does it make sense anyway?
-      case 'UPLOAD':
-        return (
-          <Upload
-            {...fieldCfg?.fieldProps}
-          >
-            <Button>Upload</Button>
-          </Upload>
-        );
+      // TODO Before we allow uploading we should check all side effects.
+      // case 'UPLOAD':
+      //   return (
+      //     <Upload
+      //       {...fieldCfg?.fieldProps}
+      //     >
+      //       <Button>Upload</Button>
+      //     </Upload>
+      //   );
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;
