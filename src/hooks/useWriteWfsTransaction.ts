@@ -85,10 +85,10 @@ export const useWriteWfsTransaction = () => {
       for (const feature of opts.upsertFeatures) {
         const feat = new OlFeature();
 
-        const geometry = feature.getGeometry();
+        const geometry = feature.getGeometry()?.clone();
 
         if (geometry && !isEmpty(geometry.getExtent())) {
-          feat.setGeometry(geometry);
+          feat.set(geomProperty?.name || 'geom', geometry);
           feat.setGeometryName(geomProperty?.name || 'geom');
         }
 
