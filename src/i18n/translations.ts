@@ -174,7 +174,7 @@ export default {
         noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.',
         isFeatureLockedErrorMsg: 'Das ausgewählte Objekt wird bereits in einer anderen Sitzung bearbeitet.',
         closeDrawerWarnTitle: 'Wollen Sie wirklich fortfahren?',
-        closeDrawerWarnContent: 'Dadurch werden alle nicht gespeicherten Änderungen an dem Object verworfen.'
+        closeDrawerWarnContent: 'Dadurch werden alle nicht gespeicherten Änderungen an dem Objekt verworfen.'
       },
       EditFeatureSwitch: {
         usageHint: 'Objekt zum Editieren auf der Karte auswählen oder…',
