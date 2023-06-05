@@ -99,7 +99,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
 
   useEffect(() => {
 
-    if (editLayer) {
+    if (editLayer && feature?.id) {
       editLayer.getSource()?.clear();
       const olFeat = gjFormat.readFeature(feature);
       const source = editLayer.getSource() as OlSourceVector;
