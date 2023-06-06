@@ -51,10 +51,15 @@ import SearchResultsPanel, {
   Category as ResultCategory
 } from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
 
-import useAppDispatch from '../../hooks/useAppDispatch';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
 import './index.less';
 
+import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
   setLayerId
@@ -63,6 +68,8 @@ import {
 import {
   show as showEditFeatureDrawer
 } from '../../store/editFeatureDrawerOpen';
+
+import generateSolrQuery from '../../utils/generateSolrQuery';
 
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
@@ -82,6 +89,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   solrSearchBasePath = '/search/query'
 }): JSX.Element => {
 
+  const client = useSHOGunAPIClient();
   const map = useMap();
   const {
     t
@@ -190,26 +198,38 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       }
     }
 
-    if (searchData) {
+    if (searchData && map) {
       try {
-        let parts = searchValue.trim()
-          .replaceAll(/[()\\\-_./\/]/g, ' ').split(' ')
-          .filter(s => s.trim() !== '');
-
-        const partsQuery = parts.map(
-          (part: string) => `(search:${part.trim()}*^3 OR search:*${part.trim()}*^2 OR search:${part.trim()}~1)`
-        );
+        const query = generateSolrQuery({
+          searchValue,
+          map
+        });
         const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
 
-        const query = `search:\"${searchValue.trim()}\" OR (${partsQuery.join(' AND ')})`;
+        const data: {
+          query: string;
+          filterQuery?: string;
+        } = {
+          query
+        };
 
         if (useViewBox && viewBox) {
           const bboxFilter = `geometry:[${viewBox[1]},${viewBox[0]} TO ${viewBox[3]},${viewBox[2]}]`;
-          searchUrl.searchParams.set('fq', bboxFilter);
+          data.filterQuery = bboxFilter;
         }
 
-        searchUrl.searchParams.set('q', query);
-        response = await fetch(searchUrl.href);
+        const defaultHeaders = {
+          'Content-Type': 'application/json'
+        };
+
+        response = await fetch(searchUrl.href, {
+          method: 'POST',
+          headers: {
+            ...defaultHeaders,
+            ...getBearerTokenHeader(client?.getKeycloak())
+          },
+          body: JSON.stringify(data)
+        });
 
         const dataJson = await response.json();
         setDataSearchResults(dataJson?.response?.docs);
@@ -244,7 +264,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         setLoading(false);
       }
     }
-  }, [searchValue, minChars, useViewBox, searchData, searchNominatim, map, solrSearchBasePath]);
+  }, [searchValue, minChars, searchData, searchNominatim, useViewBox, map, solrSearchBasePath, client]);
 
   const getFeatureTitle = useCallback((dsResult: DataSearchResult): string => {
 
@@ -307,7 +327,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       updatedResults.push(nResults);
     }
 
-    if (dataSearchResults.length > 0) {
+    if (dataSearchResults?.length > 0) {
 
       const wktFormat = new OlFormatWKT();
       // 1. group by category
@@ -422,7 +442,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
   const resultRenderer = () => {
 
-    if (searchValue.length < 2 || !resultsVisible || loading) {
+    if (searchValue.length < 2 || !resultsVisible || loading || !dataSearchResults) {
       return null;
     }
 
