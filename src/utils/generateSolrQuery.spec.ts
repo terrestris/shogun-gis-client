@@ -69,7 +69,7 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    const expectedSolrQuery = '(layerName:"SHOGUN:bar" AND ((search:"foo") OR ((search:foo*^3 OR search:*foo*^2 OR search:foo~1))))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:bar" AND ((search:"foo") OR ((search:foo*^3 OR search:*foo*^2 OR search:foo~1))))';
 
     expect(generatedQuery).toEqual(expectedSolrQuery);
   });
@@ -81,7 +81,7 @@ describe('<generateSolrQuery />', () => {
     });
 
     // eslint-disable-next-line max-len
-    const expectedSolrQuery = '(layerName:"SHOGUN:foo" AND ((attr1:"lorem" OR attr2:"lorem") OR ((attr1:lorem*^3 OR attr1:*lorem*^2 OR attr1:lorem~1) AND (attr2:lorem*^3 OR attr2:*lorem*^2 OR attr2:lorem~1)))) OR (layerName:"SHOGUN:bar" AND ((attr3:"lorem" OR attr4:"lorem") OR ((attr3:lorem*^3 OR attr3:*lorem*^2 OR attr3:lorem~1) AND (attr4:lorem*^3 OR attr4:*lorem*^2 OR attr4:lorem~1))))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:foo" AND ((attr1:"lorem" OR attr2:"lorem") OR ((attr1:lorem*^3 OR attr1:*lorem*^2 OR attr1:lorem~1) AND (attr2:lorem*^3 OR attr2:*lorem*^2 OR attr2:lorem~1)))) OR (featureType:"SHOGUN:bar" AND ((attr3:"lorem" OR attr4:"lorem") OR ((attr3:lorem*^3 OR attr3:*lorem*^2 OR attr3:lorem~1) AND (attr4:lorem*^3 OR attr4:*lorem*^2 OR attr4:lorem~1))))';
 
     expect(generatedQuery).toEqual(expectedSolrQuery);
   });
@@ -93,7 +93,7 @@ describe('<generateSolrQuery />', () => {
     });
 
     // eslint-disable-next-line max-len
-    const expectedSolrQuery = '(layerName:"SHOGUN:foo" AND ((attr1:"lorem ipsum" OR attr2:"lorem ipsum") OR ((attr1:lorem*^3 OR attr1:*lorem*^2 OR attr1:lorem~1 OR attr1:ipsum*^3 OR attr1:*ipsum*^2 OR attr1:ipsum~1) AND (attr2:lorem*^3 OR attr2:*lorem*^2 OR attr2:lorem~1 OR attr2:ipsum*^3 OR attr2:*ipsum*^2 OR attr2:ipsum~1)))) OR (layerName:"SHOGUN:bar" AND ((attr3:"lorem ipsum" OR attr4:"lorem ipsum") OR ((attr3:lorem*^3 OR attr3:*lorem*^2 OR attr3:lorem~1 OR attr3:ipsum*^3 OR attr3:*ipsum*^2 OR attr3:ipsum~1) AND (attr4:lorem*^3 OR attr4:*lorem*^2 OR attr4:lorem~1 OR attr4:ipsum*^3 OR attr4:*ipsum*^2 OR attr4:ipsum~1))))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:foo" AND ((attr1:"lorem ipsum" OR attr2:"lorem ipsum") OR ((attr1:lorem*^3 OR attr1:*lorem*^2 OR attr1:lorem~1 OR attr1:ipsum*^3 OR attr1:*ipsum*^2 OR attr1:ipsum~1) AND (attr2:lorem*^3 OR attr2:*lorem*^2 OR attr2:lorem~1 OR attr2:ipsum*^3 OR attr2:*ipsum*^2 OR attr2:ipsum~1)))) OR (featureType:"SHOGUN:bar" AND ((attr3:"lorem ipsum" OR attr4:"lorem ipsum") OR ((attr3:lorem*^3 OR attr3:*lorem*^2 OR attr3:lorem~1 OR attr3:ipsum*^3 OR attr3:*ipsum*^2 OR attr3:ipsum~1) AND (attr4:lorem*^3 OR attr4:*lorem*^2 OR attr4:lorem~1 OR attr4:ipsum*^3 OR attr4:*ipsum*^2 OR attr4:ipsum~1))))';
 
     expect(generatedQuery).toEqual(expectedSolrQuery);
   });
