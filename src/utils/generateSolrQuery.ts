@@ -35,10 +35,10 @@ export const generateSolrQuery = ({
       const fullLayerName = layer.getSource()?.getParams().LAYERS;
       if (searchConfig?.attributes) {
         // search only configured attributes
-        subQueriesPerLayer.push(`(layerName:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts, searchConfig.attributes)}))`);
+        subQueriesPerLayer.push(`(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts, searchConfig.attributes)}))`);
       } else {
         // search all attributes of this layer
-        subQueriesPerLayer.push(`(layerName:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts, ['search'])}))`);
+        subQueriesPerLayer.push(`(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts, ['search'])}))`);
       }
     }
   });
