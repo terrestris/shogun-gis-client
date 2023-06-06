@@ -7,6 +7,8 @@ import {
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
 import description from './description';
+import editFeature from './editFeature';
+import editFeatureDrawerOpen from './editFeatureDrawerOpen';
 import layerDetailsModal from './layerDetailsModal';
 import legal from './legal';
 import logoPath from './logoPath';
@@ -27,6 +29,8 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     addLayerModal,
     appInfo,
     description,
+    editFeature,
+    editFeatureDrawerOpen,
     layerDetailsModal,
     legal,
     logoPath,

@@ -60,7 +60,16 @@ import {
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
+
+import {
+  setLayerId,
+  setFeature
+} from '../../../../store/editFeature';
+import {
+  show as showEditFeatureDrawer
+} from '../../../../store/editFeatureDrawerOpen';
 
 import {
   setLayer as setLayerDetailsLayer,
@@ -91,6 +100,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   } = useTranslation();
 
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
@@ -113,6 +125,11 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
           newLegendIds.push(legendId);
         }
         setVisibleLegendsIds(newLegendIds);
+        break;
+      case 'editLayer':
+        dispatch(setFeature(null));
+        dispatch(setLayerId(getUid(layer)));
+        dispatch(showEditFeatureDrawer());
         break;
       case 'layerDetails':
         dispatch(setLayerDetailsLayer(getUid(layer)));
@@ -259,6 +276,18 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       };
     });
     dropdownMenuItems.push(...downloadItems);
+  }
+
+  if (
+    layer.get('editable') &&
+    (allowedEditMode.includes('CREATE') ||
+      allowedEditMode.includes('UPDATE') ||
+      allowedEditMode.includes('DELETE'))
+  ) {
+    dropdownMenuItems.push({
+      label: t('LayerTreeContextMenu.editLayer'),
+      key: 'editLayer'
+    });
   }
 
   dropdownMenuItems.push({

@@ -9,7 +9,7 @@ import {
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
-import ClientConfiguration from 'clientConfig';
+import ClientConfiguration, { FeatureEditConfiguration } from 'clientConfig';
 
 import Color from 'color';
 
@@ -77,6 +77,10 @@ import {
 import {
   setDescription
 } from './store/description';
+import {
+  setUserEditMode,
+  EditLevel
+} from './store/editFeature';
 import {
   setLegal
 } from './store/legal';
@@ -524,6 +528,42 @@ const loadPlugins = async (map: OlMap) => {
   return clientPlugins;
 };
 
+const checkRoles = (
+  list: string[],
+  featureEditRoles: FeatureEditConfiguration
+): EditLevel[] => {
+  const {
+    authorizedRolesForCreate,
+    authorizedRolesForUpdate,
+    authorizedRolesForDelete
+  } = featureEditRoles;
+
+  const result: EditLevel[] = [];
+
+  for (const element of list) {
+    if (authorizedRolesForCreate?.some(role => matchRole(role, element))) {
+      result.push('CREATE');
+    }
+    if (authorizedRolesForUpdate?.some(role => matchRole(role, element))) {
+      result.push('UPDATE');
+    }
+    if (authorizedRolesForDelete?.some(role => matchRole(role, element))) {
+      result.push('DELETE');
+    }
+  }
+  return result;
+};
+
+const matchRole = (role: string | RegExp, element: string): boolean => {
+  if (typeof role === 'string') {
+    return element === role;
+  }
+  if (role instanceof RegExp) {
+    return role.test(element);
+  }
+  return false;
+};
+
 const renderApp = async () => {
   try {
     const keycloak = await initKeycloak();
@@ -571,6 +611,20 @@ const renderApp = async () => {
     const user = await getUser(appInfo?.userId);
 
     setUserToStore(user);
+
+    const userRoles: string[] | undefined =
+      client?.getKeycloak()?.tokenParsed?.realm_access?.roles;
+
+    let allowedEditMode: EditLevel[] = ['NONE'];
+
+    if (userRoles && ClientConfiguration.featureEditRoles) {
+      allowedEditMode = checkRoles(
+        userRoles,
+        ClientConfiguration.featureEditRoles
+      );
+    }
+
+    store.dispatch(setUserEditMode(allowedEditMode));
 
     const map = await setupMap(appConfig);
 

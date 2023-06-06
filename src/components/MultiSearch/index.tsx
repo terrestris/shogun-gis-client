@@ -4,23 +4,27 @@ import React, {
 } from 'react';
 
 import {
+  EditOutlined,
   SearchOutlined,
   SettingOutlined,
   LoadingOutlined
 } from '@ant-design/icons';
 import {
+  Button,
   Checkbox,
   Dropdown,
   Empty,
   Input,
   InputProps,
-  Tag
+  Tag,
+  Tooltip
 } from 'antd';
 
 import _debounce from 'lodash/debounce';
 import _groupBy from 'lodash/groupBy';
 import _isArray from 'lodash/isArray';
 
+import { getUid } from 'ol';
 import {
   Extent as OlExtent
 } from 'ol/extent';
@@ -40,13 +44,25 @@ import {
 
 import logger from '@terrestris/base-util/dist/Logger';
 
+import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import { NominatimPlace } from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import SearchResultsPanel, {
   Category as ResultCategory
 } from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
 
+import useAppDispatch from '../../hooks/useAppDispatch';
 import './index.less';
+
+import useAppSelector from '../../hooks/useAppSelector';
+
+import {
+  setLayerId
+} from '../../store/editFeature';
+
+import {
+  show as showEditFeatureDrawer
+} from '../../store/editFeatureDrawerOpen';
 
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
@@ -70,6 +86,8 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const {
     t
   } = useTranslation();
+  const dispatch = useAppDispatch();
+
   const clickAwayRef = useRef<HTMLDivElement>(null);
 
   const [searchNominatim, setSearchNominatim] = useState<boolean>(useNominatim);
@@ -82,6 +100,10 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [dataSearchResults, setDataSearchResults] = useState<DataSearchResult[]>([]);
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
+
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   useEffect(() => {
     window.addEventListener('mousedown', handleClickAway);
@@ -227,10 +249,11 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const getFeatureTitle = useCallback((dsResult: DataSearchResult): string => {
 
     const blacklistedAttributes = [
+      'category',
       'id',
-      'search',
+      'featureType',
       'geometry',
-      'category'
+      'search'
     ];
 
     let title: string = '';
@@ -304,7 +327,17 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
             geometry
           });
           olFeat.set('title', getFeatureTitle(dsResult));
-          olFeat.set('ftName', id.substring(0, id.lastIndexOf('_')));
+          let ftName;
+          if (dsResult.featureType?.[0]) {
+            const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType[0] as string);
+            if (layer) {
+              olFeat.set('layer', layer);
+              ftName = layer.get('name');
+            }
+          } else {
+            ftName = id.substring(0, id.lastIndexOf('_'));
+          }
+          olFeat.set('ftName', ftName);
           return olFeat;
         }).filter(f => f) as OlFeature<OlGeometry>[];
         const resultCategory: ResultCategory = {
@@ -350,6 +383,43 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     return <Tag>{ftName}</Tag>;
   };
 
+  const actionsCreator = (item: any) => {
+    const feat = item.feature;
+    const layer = feat.get('layer');
+
+    if (!layer?.get('editable')) {
+      return;
+    }
+
+    const onEditFeatureBtnClick = () => {
+      dispatch(setLayerId(getUid(layer)));
+      dispatch(showEditFeatureDrawer());
+      setResultsVisible(false);
+    };
+
+    if (
+      allowedEditMode.includes('CREATE') ||
+      allowedEditMode.includes('DELETE') ||
+      allowedEditMode.includes('UPDATE')
+    ) {
+      return [
+        <Tooltip
+          key="edit"
+          title={t('EditFeatureButton.title')}
+          placement="bottom"
+        >
+          <Button
+            onClick={onEditFeatureBtnClick}
+            icon={<EditOutlined />}
+          />
+        </Tooltip>
+      ];
+    } else {
+      return [<></>];
+    }
+
+  };
+
   const resultRenderer = () => {
 
     if (searchValue.length < 2 || !resultsVisible || loading) {
@@ -377,6 +447,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         accordion
         searchTerms={searchValue.split(' ')}
         listPrefixRenderer={listPrefixRenderer}
+        actionsCreator={actionsCreator}
         layerStyle={
           new OlStyle({
             stroke: new OlStyleStroke({
