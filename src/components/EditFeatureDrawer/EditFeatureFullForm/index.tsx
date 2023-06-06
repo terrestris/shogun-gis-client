@@ -94,13 +94,11 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     });
 
     if (
-      updatedFeatures?.features[0] &&
-      (allowedEditMode.includes('UPDATE') ||
-      allowedEditMode.includes('DELETE'))
+      updatedFeatures?.features[0]
     ) {
       dispatch(setFeature(updatedFeatures?.features[0]));
     }
-  }, [allowedEditMode, dispatch, executeGetFeature, layer]);
+  }, [dispatch, executeGetFeature, layer]);
 
   const update = useCallback(async () => {
     if (!map || !client) {
