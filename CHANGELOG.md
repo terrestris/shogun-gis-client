@@ -1,3 +1,24 @@
+## [6.5.0](https://github.com/terrestris/shogun-gis-client/compare/v6.4.0...v6.5.0) (2023-06-07)
+
+
+### Features
+
+* make WFS LockFeature during editing configurable ([e74a114](https://github.com/terrestris/shogun-gis-client/commit/e74a114c58c928c9f368e8473a2956812e0dedd1))
+
+
+### Dependencies
+
+* **deps:** bump i18next from 22.5.0 to 22.5.1 ([9f652b8](https://github.com/terrestris/shogun-gis-client/commit/9f652b8e73d1837b83ae1a3d7de912074443e73e))
+* update README ([ee06c6a](https://github.com/terrestris/shogun-gis-client/commit/ee06c6a9d47fe6706a86247ff60616183a7d0b6d))
+
+
+### Bugfixes
+
+* add missing defaults ([0e1b1b9](https://github.com/terrestris/shogun-gis-client/commit/0e1b1b9b6e32be007e8234271cea6d7152152b97))
+* error handling if editFormConfig is undefined ([0503fe6](https://github.com/terrestris/shogun-gis-client/commit/0503fe68440ca7e573ae2fbb23ea155326f909bd))
+* fix solr query tests ([5d46d0f](https://github.com/terrestris/shogun-gis-client/commit/5d46d0f5466b50504f52a1c49e303326f4e16c26))
+* use featureType as layer filter ([3883484](https://github.com/terrestris/shogun-gis-client/commit/3883484c5cd988f9eca8fa3edd2e1186a24d7aa5))
+
 ## [6.4.0](https://github.com/terrestris/shogun-gis-client/compare/v6.3.0...v6.4.0) (2023-06-06)
 
 
