@@ -7,6 +7,8 @@ import {
   Alert, Modal
 } from 'antd';
 
+import ClientConfiguration from 'clientConfig';
+
 import OlFeature from 'ol/Feature';
 
 import {
@@ -86,7 +88,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   }, [map, layerId, t]);
 
   const releaseLock = async () => {
-    if (!layer || !feature || !feature.id) {
+    if (!layer || !feature || !feature.id || !ClientConfiguration.wfsLockFeatureEnabled) {
       return;
     }
 

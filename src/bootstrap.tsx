@@ -9,7 +9,9 @@ import {
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
-import ClientConfiguration, { FeatureEditConfiguration } from 'clientConfig';
+import ClientConfiguration, {
+  FeatureEditConfiguration
+} from 'clientConfig';
 
 import Color from 'color';
 

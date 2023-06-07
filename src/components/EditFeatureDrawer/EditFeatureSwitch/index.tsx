@@ -6,6 +6,8 @@ import {
   Button
 } from 'antd';
 
+import ClientConfiguration from 'clientConfig';
+
 import {
   useTranslation
 } from 'react-i18next';
@@ -70,21 +72,25 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
         return;
       }
 
-      try {
-        const response = await executeWfsLockFeature({
-          layer: layer,
-          feature: feature
-        });
+      if (ClientConfiguration.wfsLockFeatureEnabled) {
+        try {
+          const response = await executeWfsLockFeature({
+            layer: layer,
+            feature: feature
+          });
 
-        if (!response) {
-          return;
+          if (!response) {
+            return;
+          }
+
+          dispatch(setFeature(feature));
+
+          onLockSuccess(response);
+        } catch (error) {
+          onLockError(error);
         }
-
+      } else {
         dispatch(setFeature(feature));
-
-        onLockSuccess(response);
-      } catch (error) {
-        onLockError(error);
       }
     }
   });

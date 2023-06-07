@@ -20,5 +20,11 @@ var clientConfig = {
         'admin'
       ]
     }
-  }
+  },
+  featureEditRoles: {
+    authorizedRolesForCreate: [],
+    authorizedRolesForUpdate: [],
+    authorizedRolesForDelete: []
+  },
+  wfsLockFeatureEnabled: false
 };
