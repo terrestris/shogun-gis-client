@@ -37,6 +37,10 @@ Several global settings for the client can be configured via the [`gis-client-co
 | geoserver.upload.workspace | The workspace the uploads should be placed in | 'SHOGUN' |
 | geoserver.upload.limit | The upload size limit in bytes (note: this is the client evaluation only!) | 200000000 (= 200MB) |
 | geoserver.upload.authorizedRoles | The list of role names the upload should be allowed/visible to (note: this is the client evaluation only!) | ['admin'] |
+| featureEditRoles.authorizedRolesForCreate | The list of role names the feature editing tools including the create options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported. | [] |
+| featureEditRoles.authorizedRolesForUpdate | The list of role names the feature editing tools including the update options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported. | [] |
+| featureEditRoles.authorizedRolesForDelete | The list of role names the feature editing tools including the delete options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported. | [] |
+| wfsLockFeatureEnabled | Whether WFS LockFeature is enabled during feature editing or not. | false |
 
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 
