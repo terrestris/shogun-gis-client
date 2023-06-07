@@ -6,6 +6,8 @@ import {
   FormInstance
 } from 'antd';
 
+import ClientConfiguration from 'clientConfig';
+
 import {
   isMoment
 } from 'moment';
@@ -131,7 +133,7 @@ export const useWriteWfsTransaction = () => {
 
     const transaction = format.writeTransaction(inserts, updates, deletes, transactionOpts);
 
-    if (overallUpdateMode) {
+    if (overallUpdateMode && ClientConfiguration.wfsLockFeatureEnabled) {
       const rootNode = transaction.getRootNode() as Element;
       const lockId = document.createElementNS('http://www.opengis.net/wfs', 'LockId');
       const lockIdValue = document.createTextNode('GeoServer');

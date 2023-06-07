@@ -38,6 +38,7 @@ declare module 'clientConfig' {
       };
     };
     featureEditRoles?: FeatureEditConfiguration;
+    wfsLockFeatureEnabled?: boolean;
   };
   const config: ClientConfiguration;
 
