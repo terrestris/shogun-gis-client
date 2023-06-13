@@ -204,6 +204,12 @@ export default {
       },
       EditFeatureButton: {
         title: 'Objekt bearbeiten'
+      },
+      FeaturePropertyGrid: {
+        copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
+        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)',
+        key: 'Name',
+        value: 'Wert'
       }
     }
   },
@@ -411,6 +417,12 @@ export default {
       },
       EditFeatureButton: {
         title: 'Edit feature'
+      },
+      FeaturePropertyGrid: {
+        copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
+        copyAsObject: 'Copy as object (displayed values only)',
+        key: 'Name',
+        value: 'Value'
       }
     }
   }

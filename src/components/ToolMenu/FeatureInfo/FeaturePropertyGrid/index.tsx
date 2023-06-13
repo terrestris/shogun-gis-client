@@ -4,7 +4,8 @@ import React, {
 } from 'react';
 
 import {
-  faCopy
+  faClipboardCheck,
+  faClipboardList
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
@@ -28,6 +29,9 @@ import OlStyleCircle from 'ol/style/Circle';
 import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyle from 'ol/style/Style';
+import {
+  useTranslation
+} from 'react-i18next';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
@@ -50,6 +54,8 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
 
   const map = useMap();
+
+  const { t } = useTranslation();
 
   const vectorLayerName = `selection-layer-${layerName}`;
 
@@ -153,13 +159,15 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     return <></>;
   }
 
+  const blacklistedAttributes = [
+    'geom',
+    'the_geom',
+    'geometry'
+  ];
+
   const attributeFilter = selectedFeature.getKeys()
     .filter((prop: string | number | boolean) => {
-      return ![
-        'geom',
-        'the_geom',
-        'geometry'
-      ].includes((prop as string).toLocaleLowerCase());
+      return !blacklistedAttributes.includes((prop as string).toLocaleLowerCase());
     });
 
   return (
@@ -180,23 +188,39 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
               current={currentPage}
               onChange={onChange}
             />
-            <Tooltip
-              // TODO Move to i18n
-              title="Copy to clipboard"
-            >
-              <Button
-                type="primary"
-                onClick={() => {
-                  copy(new OlFormatGeoJSON().writeFeature(selectedFeature));
-                }}
-                icon={<FontAwesomeIcon icon={faCopy} />}
-              />
-            </Tooltip>
+            <div className='copy'>
+              <Tooltip
+                title={t('FeaturePropertyGrid.copyAsGeoJson')}
+              >
+                <Button
+                  type="primary"
+                  size='small'
+                  onClick={() => {
+                    copy(new OlFormatGeoJSON().writeFeature(selectedFeature));
+                  }}
+                  icon={<FontAwesomeIcon icon={faClipboardCheck} />}
+                />
+              </Tooltip>
+              <Tooltip
+                title={t('FeaturePropertyGrid.copyAsObject')}
+              >
+                <Button
+                  type="primary"
+                  size='small'
+                  onClick={() => {
+                    const props = selectedFeature.getProperties();
+                    blacklistedAttributes.forEach(attr => delete props[attr]);
+                    copy(JSON.stringify(props));
+                  }}
+                  icon={<FontAwesomeIcon icon={faClipboardList} />}
+                />
+              </Tooltip>
+            </div>
           </>
         );
       }}
       columns={[{
-        title: 'Key',
+        title: t('FeaturePropertyGrid.key'),
         dataIndex: 'attributeName',
         key: 'attributeName',
         width: '50%',
@@ -204,7 +228,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
         defaultSortOrder: 'ascend',
         sorter: (a, b) => a.key.localeCompare(b.key)
       }, {
-        title: 'Value',
+        title: t('FeaturePropertyGrid.value'),
         dataIndex: 'attributeValue',
         key: 'attributeValue',
         width: '50%',
