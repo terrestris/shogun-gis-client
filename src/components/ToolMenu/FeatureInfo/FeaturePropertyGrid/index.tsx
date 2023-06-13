@@ -153,10 +153,20 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     return <></>;
   }
 
+  const attributeFilter = selectedFeature.getKeys()
+    .filter((prop: string | number | boolean) => {
+      return ![
+        'geom',
+        'the_geom',
+        'geometry'
+      ].includes((prop as string).toLocaleLowerCase());
+    });
+
   return (
     <PropertyGrid
       className="property-grid"
       feature={selectedFeature}
+      attributeFilter={attributeFilter}
       size="small"
       sticky={true}
       title={() => {
