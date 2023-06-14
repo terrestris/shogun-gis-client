@@ -1,5 +1,4 @@
 import React, {
-  Children,
   useCallback,
   useEffect,
   useState
@@ -8,23 +7,18 @@ import React, {
 import {
   Tabs,
   FormProps,
-  Pagination
+  Spin
 } from 'antd';
-
-import { useForm } from 'antd/lib/form/Form';
 
 import {
   getUid
 } from 'ol';
-import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
-import OlLayerVector from 'ol/layer/Vector';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
-import OlSourceVector from 'ol/source/Vector';
 
 import {
   Tab
@@ -81,16 +75,11 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     t
   } = useTranslation();
 
-  const [form] = useForm();
-
   const map = useMap();
   const client = useSHOGunAPIClient();
   const plugins = usePlugins();
   const dispatch = useAppDispatch();
 
-  const [currentTabKey, setCurentTabKey] = useState<string>('');
-  const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
-  const [currentPage, setCurrentPage] = useState<number>();
   const [queryLayers, setQueryLayers] = useState<WmsLayer[]>([]);
 
   const layerFilter = (layer: OlLayerBase) => {
@@ -104,7 +93,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   };
 
   const updateQueryLayers = useCallback(() => {
-
     if (!map) {
       return;
     }
@@ -114,12 +102,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   }, [map]);
 
   useEffect(() => {
-
     if (!map) {
       return;
     }
-
-    setCurrentPage(1);
 
     updateQueryLayers();
 
@@ -132,12 +117,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
   }, [map, updateQueryLayers]);
 
-  useEffect(() => {
-    if (selectedFeature) {
-      form.setFieldsValue(selectedFeature.getProperties());
-    };
-  }, [form, selectedFeature]);
-
   if (!map) {
     return <></>;
   }
@@ -145,10 +124,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const resultRenderer = (coordinateInfoState: CoordinateInfoState) => {
     const features = coordinateInfoState.features;
     const loading = coordinateInfoState.loading;
-
-    console.log('new features arrived');
-
-    setSelectedFeature(undefined);
 
     if (Object.keys(features).length === 0) {
       return (
@@ -158,44 +133,10 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    // let firstFeature: any = null;
-
-    const tabChanged = (activeKey: string) => {
-      // debugger;
-      // if (firstFeature === null) {
-      //   return;
-      // }
-      console.log('activekey: ', activeKey);
-      setCurentTabKey(activeKey);
-      // setSelectedFeature(firstFeature);
-      if (features[activeKey]?.[0]) {
-        setSelectedFeature(features[activeKey][0]);
-      }
-      setCurrentPage(1);
-    };
-
     const items: Tab[] = [];
 
     Object.keys(features).forEach(layerName => {
       let pluginRendererAvailable = false;
-
-      // if (layerName !== currentTabKey) {
-      //   setCurentTabKey(layerName);
-      // }
-
-      console.log('dieser tab ist ausgewählt', currentTabKey);
-
-      if (!selectedFeature) {
-        setSelectedFeature(features[layerName][0]);
-      };
-
-      console.log('layer ausgewählt: ', layerName);
-
-      const onChange = (page: number) => {
-        setCurrentPage(page);
-        setSelectedFeature(features[layerName][page - 1]); // warum hier richtiger Layer ausgewählt -> innerhalb der Funktion aufgerufen??
-        console.log('layer im onChange: ', layerName);
-      };
 
       const mapLayer = map.getAllLayers().find(l => {
         if (isWmsLayer(l)) {
@@ -263,35 +204,24 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
             <div
               key={layerName}
             >
-              <Pagination
-                simple
-                total={features[layerName].length}
-                size="small"
-                pageSize={1}
-                current={currentPage}
-                onChange={onChange}
-              />
               <FeatureInfoTabs
                 tabConfig={mapLayer?.get('featureInfoFormConfig')}
-                form={form}
-              >
-              </FeatureInfoTabs>
+                features={features[layerName]}
+              />
             </div>
           )
         });
-
-        // debugger;
-        // if (layerName === currentTabKey) {
-        // firstFeature = features[layerName][0];
-        // }
       }
     });
 
     return (
-      <Tabs
-        items={items}
-        onChange={tabChanged}
-      />
+      <Spin
+        spinning={loading}
+      >
+        <Tabs
+          items={items}
+        />
+      </Spin>
     );
   };
 

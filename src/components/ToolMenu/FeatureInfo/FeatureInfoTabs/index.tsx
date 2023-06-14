@@ -1,51 +1,87 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import {
   Tabs,
-  TabsProps
+  TabsProps,
+  Pagination
 } from 'antd';
 
-import {
-  FormInstance
-} from 'antd/lib/form/Form';
+import OlFeature from 'ol/Feature';
 
 import {
   Tab
 } from 'rc-tabs/lib/interface';
 
+import {
+  PropertyFormItemReadConfig,
+  PropertyFormTabConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
+
 import FeatureInfoForm from '../FeatureInfoForm';
 
 export type FeatureInfoTabsProps = TabsProps & {
   tabConfig?: PropertyFormTabConfig<PropertyFormItemReadConfig>[];
-  form: FormInstance;
+  features: OlFeature[];
 };
 
 export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   tabConfig,
-  form,
+  features,
   ...passThroughProps
 }) => {
 
-  const items = tabConfig?.map((config, idx) => {
-    return {
-      label: config.title,
-      key: `${idx}`,
-      forceRender: true,
-      children: (
-        <FeatureInfoForm
-          name={config.title}
-          form={form}
-          formConfig={config.children}
-        />
-      )
-    } as Tab;
-  });
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setSelectedFeature(features[0]);
+  }, [features]);
+
+  const onChange = (page: number) => {
+    setCurrentPage(page);
+    setSelectedFeature(features[page - 1]);
+  };
+
+  if (!tabConfig || !selectedFeature) {
+    return <></>;
+  }
+
+  const items = tabConfig
+    .filter(config => config !== undefined)
+    .map((config, idx) => {
+      return {
+        label: config.title,
+        key: `${idx}`,
+        forceRender: true,
+        children: (
+          <FeatureInfoForm
+            name={config.title}
+            feature={selectedFeature}
+            formConfig={config.children}
+          />
+        )
+      } as Tab;
+    });
 
   return (
-    <Tabs
-      items={items}
-      {...passThroughProps}
-    />
+    <>
+      <Pagination
+        simple
+        total={features.length}
+        size="small"
+        pageSize={1}
+        current={currentPage}
+        onChange={onChange}
+      />
+      <Tabs
+        items={items}
+        {...passThroughProps}
+      />
+    </>
   );
 };
 

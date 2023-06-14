@@ -1,37 +1,40 @@
-import React from 'react';
+import React, {
+  useEffect
+} from 'react';
 
 import {
   Form,
-  FormProps,
-  FormInstance
+  FormProps
 } from 'antd';
 
 import {
-  useTranslation
-} from 'react-i18next';
+  useForm
+} from 'antd/lib/form/Form';
+
+import OlFeature from 'ol/Feature';
 
 import {
-  PropertyFormItemEditConfig
+  PropertyFormItemReadConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import DisplayField from '../DisplayField';
 
-// import './index.less';
-
 export type FeatureInfoFormProps = FormProps & {
-  formConfig?: PropertyFormItemEditConfig[];
-  form: FormInstance;
+  formConfig?: PropertyFormItemReadConfig[];
+  feature: OlFeature;
 };
 
 export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
   formConfig,
-  form,
+  feature,
   ...passThroughProps
 }): JSX.Element => {
 
-  const {
-    t
-  } = useTranslation();
+  const [form] = useForm();
+
+  useEffect(() => {
+    form.setFieldsValue(feature.getProperties());
+  }, [feature, form]);
 
   const createFormItem = (fieldCfg: any) => {
     let field: React.ReactNode;
@@ -51,7 +54,6 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
         label={fieldCfg.displayName || fieldCfg.propertyName}
-        // {...formItemProps}
         {...fieldCfg.fieldProps}
       >
         {field}
