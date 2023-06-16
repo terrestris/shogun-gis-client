@@ -11,6 +11,8 @@ import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
 
+import { createReduxWrapper } from '../../utils/testUtils';
+
 import PrintForm from './index';
 
 describe('<PrintForm />', () => {
@@ -26,7 +28,6 @@ describe('<PrintForm />', () => {
         zoom: 10
       })
     });
-    // @ts-ignore
     printManager = new MapFishPrintV3Manager({
       map
     });
@@ -43,7 +44,10 @@ describe('<PrintForm />', () => {
       <PrintForm
         map={map}
         active={false}
-      />
+      />,
+      {
+        wrapper: createReduxWrapper()
+      }
     );
     expect(container).toBeVisible();
   });

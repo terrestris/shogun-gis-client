@@ -7,11 +7,17 @@ import {
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
 import description from './description';
+import editFeature from './editFeature';
+import editFeatureDrawerOpen from './editFeatureDrawerOpen';
+import layerDetailsModal from './layerDetailsModal';
 import legal from './legal';
 import logoPath from './logoPath';
+import print from './print';
+import searchEngines from './searchEngines';
 import selectedFeatures from './selectedFeatures';
 import title from './title';
 import toolMenu from './toolMenu';
+import uploadDataModal from './uploadDataModal';
 import user from './user';
 
 type AsyncReducer = {
@@ -20,15 +26,21 @@ type AsyncReducer = {
 
 export const createReducer = (asyncReducers?: AsyncReducer) => {
   return combineReducers({
+    addLayerModal,
     appInfo,
-    title,
     description,
+    editFeature,
+    editFeatureDrawerOpen,
+    layerDetailsModal,
     legal,
     logoPath,
-    toolMenu,
-    addLayerModal,
-    user,
+    print,
     selectedFeatures,
+    title,
+    toolMenu,
+    uploadDataModal,
+    searchEngines,
+    user,
     ...asyncReducers
   });
 };

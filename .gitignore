@@ -102,7 +102,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
@@ -130,7 +129,11 @@ dist
 .pnp.*
 
 # Playwright test output
-test-results
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/storageState.json
+\nplaywright/.auth
 
 # SonarQube
 .scannerwork/
@@ -138,3 +141,6 @@ test-report.xml
 
 # webpack output directory
 build
+
+*iml
+.idea

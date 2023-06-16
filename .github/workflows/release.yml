@@ -25,7 +25,7 @@ jobs:
         run: npm run build:dist
 
       - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN }}
@@ -65,3 +65,31 @@ jobs:
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
+
+      - name: Build docker image e2e-tests (latest) 🏗️
+        uses: docker/build-push-action@v2
+        with:
+          file: Dockerfile.e2e
+          context: .
+          tags: |
+            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
+          load: true
+
+      - name: Build docker image e2e-tests (version) 🏗️
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          file: Dockerfile.e2e
+          context: .
+          tags: |
+            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}
+          load: true
+
+      - name: Push docker image to Nexus (latest) 📠
+        run: |
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
+
+      - name: Push docker image to Nexus (version) 📠
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}

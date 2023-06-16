@@ -10,5 +10,21 @@ var clientConfig = {
   print: {
     url: '/print'
   },
-  plugins: []
+  plugins: [],
+  geoserver: {
+    base: '/geoserver',
+    upload: {
+      workspace: 'SHOGUN-UPLOADS',
+      limit: 200000000, // ~200MB
+      authorizedRoles: [
+        'admin'
+      ]
+    }
+  },
+  featureEditRoles: {
+    authorizedRolesForCreate: [],
+    authorizedRolesForUpdate: [],
+    authorizedRolesForDelete: []
+  },
+  wfsLockFeatureEnabled: false
 };

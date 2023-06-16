@@ -59,7 +59,22 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
+
+import {
+  setLayerId,
+  setFeature
+} from '../../../../store/editFeature';
+import {
+  show as showEditFeatureDrawer
+} from '../../../../store/editFeatureDrawerOpen';
+
+import {
+  setLayer as setLayerDetailsLayer,
+  show as showLayerDetailsModal
+} from '../../../../store/layerDetailsModal';
 
 export type LayerTreeContextMenuProps = {
   layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
@@ -77,6 +92,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [extentLoading, setExtentLoading] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
   const client = useSHOGunAPIClient();
   const map = useMap();
   const {
@@ -84,6 +100,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   } = useTranslation();
 
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
@@ -106,6 +125,15 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
           newLegendIds.push(legendId);
         }
         setVisibleLegendsIds(newLegendIds);
+        break;
+      case 'editLayer':
+        dispatch(setFeature(null));
+        dispatch(setLayerId(getUid(layer)));
+        dispatch(showEditFeatureDrawer());
+        break;
+      case 'layerDetails':
+        dispatch(setLayerDetailsLayer(getUid(layer)));
+        dispatch(showLayerDetailsModal());
         break;
       default:
         break;
@@ -175,9 +203,14 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     removeLayer(layer);
 
     const externalLayerGroup = MapUtil.getLayerByName(map, t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
+    const uploadedLayerGroup = MapUtil.getLayerByName(map, t('UploadDataModal.uploadedDataFolder')) as OlLayerGroup;
 
     if (externalLayerGroup && externalLayerGroup.getLayers().getLength() === 0) {
       removeLayer(externalLayerGroup);
+    }
+
+    if (uploadedLayerGroup && uploadedLayerGroup.getLayers().getLength() === 0) {
+      removeLayer(uploadedLayerGroup);
     }
   };
 
@@ -217,15 +250,16 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  const legendVisible = visibleLegendsIds.includes(getUid(layer));
   if (isWmsLayer(layer) && layer.getVisible()) {
+    const legendVisible = visibleLegendsIds.includes(getUid(layer));
+
     dropdownMenuItems.push({
       label: legendVisible ? t('LayerTreeContextMenu.hideLegend') : t('LayerTreeContextMenu.showLegend'),
       key: 'toggleLegend'
     });
   }
 
-  if (layer.get('isExternalLayer')) {
+  if (layer.get('isExternalLayer') || layer.get('isUploadedLayer')) {
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.removeLayer'),
       key: 'removeExternal'
@@ -243,6 +277,23 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
     dropdownMenuItems.push(...downloadItems);
   }
+
+  if (
+    layer.get('editable') &&
+    (allowedEditMode.includes('CREATE') ||
+      allowedEditMode.includes('UPDATE') ||
+      allowedEditMode.includes('DELETE'))
+  ) {
+    dropdownMenuItems.push({
+      label: t('LayerTreeContextMenu.editLayer'),
+      key: 'editLayer'
+    });
+  }
+
+  dropdownMenuItems.push({
+    label: t('LayerTreeContextMenu.layerDetails'),
+    key: 'layerDetails'
+  });
 
   return (
     <Dropdown

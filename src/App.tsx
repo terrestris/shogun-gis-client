@@ -4,9 +4,12 @@ import React, {
 
 import AddLayerModal from './components/AddLayerModal/index';
 import BasicMapComponent from './components/BasicMapComponent';
+import EditFeatureDrawer from './components/EditFeatureDrawer';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import LayerDetailsModal from './components/LayerDetailsModal';
 import ToolMenu from './components/ToolMenu';
+import UploadDataModal from './components/UploadDataModal';
 
 import './App.less';
 
@@ -34,6 +37,9 @@ export const App: React.FC<AppProps> = ({
       <ToolMenu />
       <Footer />
       <AddLayerModal />
+      <UploadDataModal />
+      <EditFeatureDrawer />
+      <LayerDetailsModal />
     </div>
   );
 };

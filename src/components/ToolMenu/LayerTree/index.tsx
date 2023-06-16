@@ -72,6 +72,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (!map) {
       return;
     }
+
     const allLayers = MapUtil.getAllLayers(map);
     allLayers.forEach(layer => {
       if (layer instanceof OlLayer) {
@@ -149,15 +150,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   };
 
   const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
-
     if ((layer as OlLayerGroup).getLayers) {
       return !layer.get('hideInLayerTree');
     }
 
-    if ((layer as OlLayer).getSource && ((layer as OlLayer).getSource() as OlSourceVector)?.forEachFeature) {
-      return false;
-    }
-    return true;
+    return !((layer as OlLayer).getSource && ((layer as OlLayer).getSource() as OlSourceVector)?.forEachFeature);
   };
 
   const treeNodeTitleRenderer = (layer: OlBaseLayer) => {

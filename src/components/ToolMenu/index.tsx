@@ -17,7 +17,8 @@ import {
   faPlus,
   faRuler,
   faShareNodes,
-  faStream
+  faStream,
+  faUpload
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -30,6 +31,8 @@ import {
   CollapsePanelProps,
   Tooltip
 } from 'antd';
+
+import ClientConfiguration from 'clientConfig';
 
 import _toArray from 'lodash/toArray';
 
@@ -58,6 +61,9 @@ import {
 import {
   setActiveKeys
 } from '../../store/toolMenu';
+import {
+  show as showUpload
+} from '../../store/uploadDataModal';
 
 import LanguageSelect from '../LanguageSelector';
 import Permalink from '../Permalink';
@@ -93,11 +99,12 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const plugins = usePlugins();
 
-  const client = useSHOGunAPIClient();
-
   const dispatch = useAppDispatch();
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
+
+  const client = useSHOGunAPIClient();
+  const keycloak = client?.getKeycloak();
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
@@ -270,8 +277,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           wrappedComponent: map ? (
             <PrintForm
               active={activeKeys.includes('print')}
-              map={map}
-              client={client}
               layerBlackList={[
                 'react-geo_measure',
                 'hoverVectorLayer'
@@ -293,6 +298,18 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               >
                 {t('ToolMenu.addWms')}
               </Button>
+              {
+                keycloak && ClientConfiguration.geoserver?.upload?.authorizedRoles?.some(
+                  role => keycloak.hasResourceRole(role, keycloak.clientId)) && (
+                  <Button
+                    className='upload-data-button tool-menu-button'
+                    icon={<FontAwesomeIcon icon={faUpload} />}
+                    onClick={() => dispatch(showUpload())}
+                  >
+                    {t('ToolMenu.uploadData')}
+                  </Button>
+                )
+              }
             </div>
           )
         };

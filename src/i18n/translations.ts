@@ -65,7 +65,31 @@ export default {
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
-        downloadLayer: 'Layer exportieren ({{formatName}})'
+        downloadLayer: 'Layer exportieren ({{formatName}})',
+        editLayer: 'Layer bearbeiten',
+        layerDetails: 'Eigenschaften'
+      },
+      LayerDetailsModal: {
+        title: 'Eigenschaften des Layers {{layerName}}',
+        internalConfigurationButtonTooltip: 'Interne Konfiguration anzeigen',
+        internalConfigurationButtonTooltipPressed: 'Interne Konfiguration verbergen'
+      },
+      LayerDetails: {
+        noDataPlaceholder: '-',
+        layerNameLabel: 'Name',
+        layerTitleLabel: 'Titel',
+        serviceAbstractLabel: 'Service Beschreibung',
+        abstractLabel: 'Beschreibung',
+        accessConstraintsLabel: 'Nutzungseinschränkungen',
+        capabilitiesUrlLabel: 'GetCapabilities URL',
+        contactLabel: 'Kontakt',
+        minScaleLabel: 'Min. Maßstab',
+        maxScaleLabel: 'Max. Maßstab',
+        bboxLabel: 'Bounding Box',
+        errorMessage: 'Fehler beim Laden der Layer Capabilities'
+      },
+      LayerConfiguration: {
+        errorMessage: 'Fehler beim Laden der internen Konfiguration'
       },
       ToolMenu: {
         expand: 'Menu ausklappen',
@@ -74,6 +98,7 @@ export default {
         draw: 'Zeichnen',
         featureInfo: 'Karteninhalte abfragen',
         addWms: 'WMS hinzufügen',
+        uploadData: 'Daten hochladen',
         print: 'Export',
         layertree: 'Karten',
         languageSelect: 'Sprachauswahl'
@@ -87,6 +112,7 @@ export default {
         layout: 'Vorlage',
         dpi: 'Auflösung',
         format: 'Format',
+        scale: 'Maßstab',
         downloadBtnText: 'Ausdruck erzeugen',
         printJobErrorMsg: 'Der Kartenausdruck konnte nicht erzeugt werden',
         initErrorMsg: 'Der Kartendruck Generator konnte nicht initialisiert werden.',
@@ -122,6 +148,62 @@ export default {
       WmsTimeSlider: {
         title: 'Zeitlicher Bezug',
         default: 'Keine Daten gefunden'
+      },
+      UploadDataModal: {
+        title: 'Daten hochladen',
+        uploadedDataFolder: 'Hochgeladene Daten',
+        description: 'Klicken Sie oder ziehen Sie die Datei zum Hochladen in diesen Bereich',
+        hint: 'Unterstützte Dateiformate sind Shapefile (gebündelt als *.zip) und GeoTIFF',
+        success: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt',
+        error: {
+          general: 'Fehler beim Hochladen der Datei {{fileName}}',
+          maxSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
+          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+          zipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
+        }
+      },
+      MultiSearch: {
+        searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
+        searchData: 'Layerdaten durchsuchen',
+        searchNominatim: 'Ortssuche (Nominatim)',
+        nominatimTitle: 'Ortssuche',
+        searchPlaceholder: 'Orts- und Datensuche…'
+      },
+      EditFeatureDrawer: {
+        featureEditor: 'Objekteditor',
+        noLayerFoundError: 'Kein passender Layer gefunden - das Editieren ist nicht möglich.',
+        isFeatureLockedErrorMsg: 'Das ausgewählte Objekt wird bereits in einer anderen Sitzung bearbeitet.',
+        closeDrawerWarnTitle: 'Wollen Sie wirklich fortfahren?',
+        closeDrawerWarnContent: 'Dadurch werden alle nicht gespeicherten Änderungen an dem Objekt verworfen.'
+      },
+      EditFeatureSwitch: {
+        usageHint: 'Objekt zum Editieren auf der Karte auswählen oder…',
+        limitedUsageHint: 'Zum Editieren bitte eine Objekt auf der Karte auswählen',
+        createFeature: 'Neues Objekt erstellen'
+      },
+      EditFeatureFullForm: {
+        saveErrorMsg: 'Das Objekt konnte nicht gespeichert werden',
+        deleteErrorMsg: 'Das Objekt konnte nicht gelöscht werden'
+      },
+      EditFeatureGeometryToolbar: {
+        draw: 'Neue Geometrie zeichnen',
+        edit: 'Geometrie editieren',
+        delete: 'Geometrie löschen',
+        undo: 'Rückgängig',
+        redo: 'Wiederherstellen'
+      },
+      ResetButton: {
+        title: 'Zurücksetzen'
+      },
+      SaveButton: {
+        title: 'Speichern'
+      },
+      DeleteButton: {
+        title: 'Objekt löschen',
+        confirm: 'Das Objekt wird vollständig gelöscht. Fortfahren?'
+      },
+      EditFeatureButton: {
+        title: 'Objekt bearbeiten'
       }
     }
   },
@@ -191,7 +273,31 @@ export default {
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
-        downloadLayer: 'Export layer as {{formatName}}'
+        downloadLayer: 'Export layer as {{formatName}}',
+        editLayer: 'Edit layer',
+        layerDetails: 'Properties'
+      },
+      LayerDetailsModal: {
+        title: 'Properties of layer {{layerName}}',
+        internalConfigurationButtonTooltip: 'Show internal configuration',
+        internalConfigurationButtonTooltipPressed: 'Hide internal configuration'
+      },
+      LayerDetails: {
+        noDataPlaceholder: '-',
+        layerNameLabel: 'Name',
+        layerTitleLabel: 'Title',
+        serviceAbstractLabel: 'Service abstract',
+        abstractLabel: 'Abstract',
+        accessConstraintsLabel: 'Access constraints',
+        capabilitiesUrlLabel: 'GetCapabilities URL',
+        contactLabel: 'Contact',
+        minScaleLabel: 'Min. scale',
+        maxScaleLabel: 'Max. scale',
+        bboxLabel: 'Bounding box',
+        errorMessage: 'Error while loading the layer capabilities'
+      },
+      LayerConfiguration: {
+        errorMessage: 'Error while loading the internal configuration'
       },
       ToolMenu: {
         expand: 'Expand',
@@ -200,6 +306,7 @@ export default {
         draw: 'Draw',
         featureInfo: 'Query map features',
         addWms: 'Add WMS',
+        uploadData: 'Upload data',
         print: 'Export',
         layertree: 'Maps',
         languageSelect: 'Language selector'
@@ -213,6 +320,7 @@ export default {
         layout: 'Layout',
         dpi: 'Resolution',
         format: 'Format',
+        scale: 'Scale',
         downloadBtnText: 'Create print',
         printJobErrorMsg: 'Could not generate PDF output',
         initErrorMsg: 'PDF Generator could not be initialized',
@@ -247,6 +355,62 @@ export default {
       WmsTimeSlider: {
         title: 'Time reference',
         default: 'No data found'
+      },
+      UploadDataModal: {
+        title: 'Upload data',
+        uploadedDataFolder: 'Uploaded data',
+        description: 'Click or drag file to this area to upload',
+        hint: 'Supported file formats are Shapefile (bundled as *.zip) and GeoTIFF',
+        success: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}',
+        error: {
+          general: 'Error while uploading file {{fileName}}',
+          maxSize: 'The file exceeds the upload limit of {{maxSize}} MB',
+          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
+          zipContent: 'Multiple geodatasets within one archive are not supported'
+        }
+      },
+      MultiSearch: {
+        searchInViewBox: 'Search in current extent',
+        searchData: 'Search layer data',
+        searchNominatim: 'Search nominatim',
+        nominatimTitle: 'Nominatim',
+        searchPlaceholder: 'Address and data search…'
+      },
+      EditFeatureDrawer: {
+        featureEditor: 'Feature editor',
+        noLayerFoundError: 'No layer found - the editing is not possible.',
+        isFeatureLockedErrorMsg: 'The selected feature is already being edited in another session.',
+        closeDrawerWarnTitle: 'Do you really want to quit?',
+        closeDrawerWarnContent: 'This will discard any unsaved changes to the feature.'
+      },
+      EditFeatureSwitch: {
+        usageHint: 'Select an existing feature for editing on the map or…',
+        limitedUsageHint: 'To edit please select an object on the map',
+        createFeature: 'Create new feature'
+      },
+      EditFeatureFullForm: {
+        saveErrorMsg: 'Error while saving the feature',
+        deleteErrorMsg: 'Error while deleting the feature'
+      },
+      EditFeatureGeometryToolbar: {
+        draw: 'Draw new geometry',
+        edit: 'Edit geometry',
+        delete: 'Delete geometry',
+        undo: 'Undo',
+        redo: 'Redo'
+      },
+      ResetButton: {
+        title: 'Reset'
+      },
+      SaveButton: {
+        title: 'Save'
+      },
+      DeleteButton: {
+        title: 'Delete feature',
+        confirm: 'The feature will be completely deleted. Proceed?'
+      },
+      EditFeatureButton: {
+        title: 'Edit feature'
       }
     }
   }

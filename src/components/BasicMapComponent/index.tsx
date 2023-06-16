@@ -85,13 +85,25 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
         if (!_isEmpty(cfg?.layerConfig)) {
           const layerConfig: Layer = cfg.layerConfig;
           const olLayer = await parser.parseLayer(layerConfig);
-          olLayer.set('isExternalLayer', cfg.isExternalLayer);
+
+          if (!olLayer) {
+            continue;
+          }
+
+          if (cfg.isExternalLayer) {
+            olLayer.set('isExternalLayer', cfg.isExternalLayer);
+          }
+
+          if (cfg.isUploadedLayer) {
+            olLayer.set('isUploadedLayer', cfg.isUploadedLayer);
+          }
+
           olLayer.set('groupName', cfg.groupName);
           olLayer.set('layerConfig', cfg.layerConfig);
 
           olLayer.setVisible(!!permaLinkLayers?.split(';').some(l => l === layerConfig.name));
 
-          if (!olLayer.get('isExternalLayer')) {
+          if (!(olLayer.get('isExternalLayer') || olLayer.get('isUploadedLayer'))) {
             continue;
           }
 

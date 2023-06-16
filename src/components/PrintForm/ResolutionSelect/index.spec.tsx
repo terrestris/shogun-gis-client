@@ -5,7 +5,6 @@ import {
 } from '@testing-library/react';
 
 import OlMap from 'ol/Map';
-import OlView from 'ol/View';
 
 import {
   MapFishPrintV3Manager
@@ -18,8 +17,9 @@ describe('<ResolutionSelect />', () => {
   let printManager: MapFishPrintV3Manager;
 
   beforeEach(() => {
-    // @ts-ignore
-    printManager = new MapFishPrintV3Manager({});
+    printManager = new MapFishPrintV3Manager({
+      map: new OlMap()
+    });
   });
 
   it('is defined', () => {

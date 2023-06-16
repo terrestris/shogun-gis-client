@@ -1,54 +1,39 @@
 import React, {
-  useCallback,
-  useEffect,
-  useState
+  useCallback, useEffect, useState
 } from 'react';
 
-import {
-  faDownload
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
-  Alert,
-  Button,
-  Form
+  Alert, Button, Form
 } from 'antd';
-
-import {
-  FormProps
-} from 'antd/lib/form/Form';
-
+import { FormProps } from 'antd/lib/form/Form';
 import ClientConfiguration from 'clientConfig';
+import _isNil from 'lodash/isNil';
+
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
-import OlMap from 'ol/Map';
 import OlSource from 'ol/source/Source';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import {
-  MapFishPrintV3Manager
-} from '@terrestris/mapfish-print-manager';
-import MapFishPrintV3GeoJsonSerializer from
-  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
-import MapFishPrintV3OSMSerializer from
-  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
-import MapFishPrintV3WMTSSerializer from
-  '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
+import { MapFishPrintV3Manager } from '@terrestris/mapfish-print-manager';
+import { MapFishPrintV3ManagerOpts } from '@terrestris/mapfish-print-manager/dist/manager/MapFishPrintV3Manager';
+import MapFishPrintV3GeoJsonSerializer
+  from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
+import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
+import MapFishPrintV3WMTSSerializer
+  from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
+import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useAppSelector from '../../hooks/useAppSelector';
+import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
 import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
 
@@ -56,10 +41,9 @@ import CustomFieldInput from './CustomFieldInput';
 import LayoutSelect from './LayoutSelect';
 import OutputFormatSelect from './OutputFormatSelect';
 import ResolutionSelect from './ResolutionSelect';
+import ScaleSelect from './ScaleSelect';
 
 import '../PrintForm/Shared/Shared';
-
-import './index.less';
 
 export interface Layout {
   name: string;
@@ -67,25 +51,35 @@ export interface Layout {
 }
 
 export interface PrintFormProps extends Omit<FormProps, 'form'> {
-  map: OlMap;
-  layerBlackList?: string[];
-  outputFormats?: string[];
-  layouts?: Layout[];
   active: boolean;
-  client?: SHOGunAPIClient | null;
+  customPrintScales?: number[];
+  layerBlackList?: string[];
+  layouts?: Layout[];
+  outputFormats?: string[];
 }
 
 export const PrintForm: React.FC<PrintFormProps> = ({
-  layerBlackList = [],
-  map,
   active,
-  client,
+  customPrintScales = [],
+  layerBlackList = [],
+  outputFormats=['pdf', 'png'],
   ...restProps
 }): JSX.Element => {
+
   const [form] = Form.useForm();
   const {
-    t
+    t,
+    i18n
   } = useTranslation();
+
+  const map = useMap();
+
+  const currentLanguageCode = i18n.language;
+
+  const client = useSHOGunAPIClient();
+
+  const customMapParams = useAppSelector(state => state.print.customMapParams);
+  const customParams = useAppSelector(state => state.print.customParams);
 
   const [printManager, setPrintManager] = useState<MapFishPrintV3Manager | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,6 +98,9 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   }, [map, layerBlackList]);
 
   const legendFilter = useCallback((l: OlLayer<OlSource>) => {
+    if (_isNil(map)) {
+      return false;
+    }
     const layerName = l.get('name');
     const notBlacklisted = !layerBlackList.includes(layerName);
     const notHidden = !l.get('hideLegendInPrint');
@@ -111,7 +108,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     const printableLayer = !(l instanceof OlLayerGroup);
 
     if (notBlacklisted && notHidden && visible && printableLayer) {
-      const res = map.getView().getResolution();
+      const res = map?.getView().getResolution();
       if (res) {
         l.set('customPrintLegendParams', {
           SCALE: MapUtil.getScaleForResolution(res, 'm')
@@ -123,7 +120,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   }, [map, layerBlackList]);
 
   const initializeMapProvider = useCallback(async () => {
-    const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager({
+    if (_isNil(map)) {
+      return;
+    }
+    let pManagerOpts: MapFishPrintV3ManagerOpts = {
       url: ClientConfiguration.print?.url || '/print',
       map,
       timeout: 60000,
@@ -142,13 +142,31 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         new SHOGunMapFishPrintV3TiledWMSSerializer()
       ],
       legendFilter,
-      customParams: {
-        printLegend: false
-      }
-    });
+      customParams,
+      customMapParams
+    };
+
+    if (customPrintScales.length > 0) {
+      pManagerOpts = {
+        ...pManagerOpts,
+        ...{
+          customPrintScales: customPrintScales.reverse()
+        }
+      };
+    }
+
+    const pManager: MapFishPrintV3Manager = new MapFishPrintV3Manager(pManagerOpts);
 
     try {
       await pManager.init();
+
+      // Use locale print app if available.
+      // Implies that a print app with the language code exists.
+      const apps = pManager.getPrintApps();
+
+      if (apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
+        await pManager.setPrintApp(currentLanguageCode);
+      }
 
       pManager.setOutputFormat(pManager.getOutputFormats()[0]);
       pManager.setDpi(pManager.getDpis()[0]);
@@ -159,7 +177,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [client, layerFilter, legendFilter, map, t]);
+  }, [customParams, customMapParams, client, layerFilter, legendFilter, map, t, customPrintScales, currentLanguageCode]);
 
   useEffect(() => {
     if (active) {
@@ -169,8 +187,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     } else {
       printManager?.shutdownManager();
       setPrintManager(null);
-    };
-
+    }
   }, [printManager, active, initializeMapProvider]);
 
   const onDownloadClick = async () => {
@@ -201,15 +218,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     setErrorMsg(null);
   };
 
-  const layout = {
-    labelCol: {
-      span: 8
-    },
-    wrapperCol: {
-      span: 16
-    }
-  };
-
   return (
     <div className="print">
       {
@@ -229,8 +237,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
             <Form
               form={form}
               className="print-form"
-              layout="horizontal"
-              {...layout}
+              labelAlign="left"
+              labelCol={{
+                flex: '90px'
+              }}
               {...restProps}
             >
               <Form.Item
@@ -240,7 +250,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               >
                 <CustomFieldInput
                   maxLength={50}
-                  printManager={printManager}
                   placeholder={t('PrintForm.titlePlaceholder')}
                 />
               </Form.Item>
@@ -250,7 +259,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               >
                 <CustomFieldInput
                   maxLength={200}
-                  printManager={printManager}
                   placeholder={t('PrintForm.commentPlaceholder')}
                 />
               </Form.Item>
@@ -264,9 +272,18 @@ export const PrintForm: React.FC<PrintFormProps> = ({
                 />
               </Form.Item>
               <Form.Item
+                name='scale'
+                label={t('PrintForm.scale')}
+                initialValue={printManager?.getClosestScaleToFitMap()}
+              >
+                <ScaleSelect
+                  printManager={printManager}
+                />
+              </Form.Item>
+              <Form.Item
                 name="dpi"
                 label={t('PrintForm.dpi')}
-                initialValue={72}
+                initialValue={printManager.getDpis()[0]}
               >
                 <ResolutionSelect
                   printManager={printManager}
@@ -280,7 +297,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               >
                 <OutputFormatSelect
                   printManager={printManager}
-                  outputFormats={['pdf', 'png']}
+                  outputFormats={outputFormats}
                   placeholder={t('PrintForm.outputFormatPlaceholder')}
                 />
               </Form.Item>

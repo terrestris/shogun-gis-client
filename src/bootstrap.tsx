@@ -9,9 +9,13 @@ import {
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
-import ClientConfiguration from 'clientConfig';
+import ClientConfiguration, {
+  FeatureEditConfiguration
+} from 'clientConfig';
 
 import Color from 'color';
+
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 import Keycloak from 'keycloak-js';
 
@@ -61,7 +65,9 @@ import {
   SHOGunAPIClientProvider
 } from './context/SHOGunAPIClientContext';
 
-import i18n from './i18n';
+import i18n, {
+  initOpts
+} from './i18n';
 
 import {
   ClientPluginInternal
@@ -74,11 +80,18 @@ import {
   setDescription
 } from './store/description';
 import {
+  setUserEditMode,
+  EditLevel
+} from './store/editFeature';
+import {
   setLegal
 } from './store/legal';
 import {
   setLogoPath
 } from './store/logoPath';
+import {
+  setSearchEngines
+} from './store/searchEngines';
 import {
   createReducer,
   store
@@ -206,17 +219,22 @@ const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 
+  // nominatim search is active by default
+  store.dispatch(setSearchEngines(['nominatim']));
+
   if (application.toolConfig && application.toolConfig.length > 0) {
     const availableTools: string[] = [];
     application.toolConfig
       .map((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible) {
+        if (tool.config.visible && tool.name !== 'search') {
           availableTools.push(tool.name);
-        };
+        }
+        if (tool.name === 'search' && tool.config.engines.length > 0) {
+          store.dispatch(setSearchEngines(tool.config.engines));
+        }
       });
-
     store.dispatch(setAvailableTools(availableTools));
-  };
+  }
 };
 
 const setAppInfoToStore = async (appInfo?: AppInfo) => {
@@ -273,7 +291,8 @@ const initKeycloak = async () => {
   };
 
   await keycloak.init({
-    onLoad: keycloakOnLoad
+    onLoad: keycloakOnLoad,
+    checkLoginIframe: false
   });
 
   return keycloak;
@@ -511,6 +530,42 @@ const loadPlugins = async (map: OlMap) => {
   return clientPlugins;
 };
 
+const checkRoles = (
+  list: string[],
+  featureEditRoles: FeatureEditConfiguration
+): EditLevel[] => {
+  const {
+    authorizedRolesForCreate,
+    authorizedRolesForUpdate,
+    authorizedRolesForDelete
+  } = featureEditRoles;
+
+  const result: EditLevel[] = [];
+
+  for (const element of list) {
+    if (authorizedRolesForCreate?.some(role => matchRole(role, element))) {
+      result.push('CREATE');
+    }
+    if (authorizedRolesForUpdate?.some(role => matchRole(role, element))) {
+      result.push('UPDATE');
+    }
+    if (authorizedRolesForDelete?.some(role => matchRole(role, element))) {
+      result.push('DELETE');
+    }
+  }
+  return result;
+};
+
+const matchRole = (role: string | RegExp, element: string): boolean => {
+  if (typeof role === 'string') {
+    return element === role;
+  }
+  if (role instanceof RegExp) {
+    return role.test(element);
+  }
+  return false;
+};
+
 const renderApp = async () => {
   try {
     const keycloak = await initKeycloak();
@@ -520,6 +575,18 @@ const renderApp = async () => {
     }
 
     const appConfig = await getApplicationConfiguration();
+
+    const defaultLanguage = appConfig?.clientConfig?.defaultLanguage;
+
+    if (!defaultLanguage) {
+      i18n.use(LanguageDetector);
+    }
+
+    await i18n.init(initOpts);
+
+    if (defaultLanguage) {
+      i18n.changeLanguage(defaultLanguage);
+    }
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
@@ -546,6 +613,20 @@ const renderApp = async () => {
     const user = await getUser(appInfo?.userId);
 
     setUserToStore(user);
+
+    const userRoles: string[] | undefined =
+      client?.getKeycloak()?.tokenParsed?.realm_access?.roles;
+
+    let allowedEditMode: EditLevel[] = ['NONE'];
+
+    if (userRoles && ClientConfiguration.featureEditRoles) {
+      allowedEditMode = checkRoles(
+        userRoles,
+        ClientConfiguration.featureEditRoles
+      );
+    }
+
+    store.dispatch(setUserEditMode(allowedEditMode));
 
     const map = await setupMap(appConfig);
 
