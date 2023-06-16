@@ -14,10 +14,22 @@
           .ant-table-title {
             display: flex;
             align-items: center;
+
+            .copy {
+              display: flex;
+              button {
+                margin-left: 5px;
+              }
+            }
           }
 
           .ant-table-body {
             overflow: auto !important;
+
+            td {
+              word-break: break-word;
+              white-space: pre-line;
+            }
           }
 
           .ant-table-container {
