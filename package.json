@@ -54,7 +54,7 @@
     "geostyler": "^12.0.0",
     "geostyler-openlayers-parser": "^4.1.0",
     "geostyler-style": "^7.2.0",
-    "i18next": "^22.0.6",
+    "i18next": "^23.0.2",
     "i18next-browser-languagedetector": "^7.0.1",
     "js-md5": "^0.7.3",
     "keycloak-js": "^21.0.0",
