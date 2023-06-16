@@ -156,9 +156,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         new SHOGunMapFishPrintV3WMSSerializer(),
         new SHOGunMapFishPrintV3TiledWMSSerializer()
       ],
-      legendFilter,
-      customParams,
-      customMapParams
+      legendFilter
     };
 
     if (customPrintScales.length > 0) {
@@ -192,7 +190,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [customParams, customMapParams, client, layerFilter, legendFilter, map, t, customPrintScales, currentLanguageCode]);
+  }, [client, layerFilter, legendFilter, map, t, customPrintScales, currentLanguageCode]);
 
   useEffect(() => {
     if (active) {
@@ -204,6 +202,17 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setPrintManager(null);
     }
   }, [printManager, active, initializeMapProvider]);
+
+  useEffect(() => {
+    if (printManager) {
+      if (customParams) {
+        printManager.setCustomParams(customParams);
+      }
+      if (customMapParams) {
+        printManager.setCustomMapParams(customMapParams);
+      }
+    }
+  }, [printManager, customParams, customMapParams]);
 
   const onDownloadClick = async () => {
     try {

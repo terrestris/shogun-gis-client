@@ -27,7 +27,7 @@ export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
   useEffect(() => {
     if (!_isNil(id)) {
       dispatch(addCustomParam({
-        id: inputText
+        [id]: inputText
       }));
     }
   }, [inputText, id, dispatch]);
