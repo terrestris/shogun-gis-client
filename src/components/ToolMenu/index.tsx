@@ -311,7 +311,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   };
 
   return (
-    <div className={`tool-menu ${collapsed ? 'collapsed' : ''}`}>
+    <div
+      aria-label="tool-menu"
+      className={`tool-menu ${collapsed ? 'collapsed' : ''}`}>
       <Collapse
         expandIconPosition='end'
         activeKey={activeKeys}
@@ -330,6 +332,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       >
         <Button
           className="collapse-btn"
+          aria-label="collapse-button"
           icon={
             collapsed ?
               <FontAwesomeIcon icon={faChevronRight} /> :

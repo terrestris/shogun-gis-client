@@ -167,6 +167,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       width={600}
       footer={[
         <Button
+          aria-label='add-all'
           key="add-all"
           disabled={layers?.length < 1}
           onClick={onAddAll}
@@ -174,6 +175,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
           {t('AddLayerModal.addAllLayers')}
         </Button>,
         <Button
+          aria-label='add-selected'
           key="add-selected"
           disabled={selectedRowKeys?.length < 1}
           onClick={onAddSelected}
@@ -184,6 +186,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       {...restProps}
     >
       <Input.Search
+        aria-label='input-search'
         placeholder={t('AddLayerModal.inputPlaceholder')}
         value={url}
         onChange={(event) => {
@@ -193,6 +196,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         enterButton={true}
         addonBefore={
           <Select
+            aria-label='select-version'
             defaultValue='1.3.0'
             onChange={setVersion}
             options={[
@@ -210,6 +214,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         }
       />
       <Table
+        aria-label='wms-table'
         loading={loading}
         columns={[
           {

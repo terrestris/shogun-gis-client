@@ -245,19 +245,23 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   }
 
   return (
-    <Dropdown
-      menu={{
-        items: dropdownMenuItems,
-        onClick: onContextMenuItemClick
-      }}
-      placement="bottomLeft"
-      onOpenChange={setSettingsVisible}
-      open={settingsVisible}
-      trigger={['click']}
-      {...restProps}
+    <div
+      aria-label='layer-context'
     >
-      <FontAwesomeIcon icon={faEllipsisV} />
-    </Dropdown>
+      <Dropdown
+        menu={{
+          items: dropdownMenuItems,
+          onClick: onContextMenuItemClick
+        }}
+        placement="bottomLeft"
+        onOpenChange={setSettingsVisible}
+        open={settingsVisible}
+        trigger={['click']}
+        {...restProps}
+      >
+        <FontAwesomeIcon icon={faEllipsisV} />
+      </Dropdown>
+    </div>
   );
 };
 

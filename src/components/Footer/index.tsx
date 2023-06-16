@@ -17,7 +17,7 @@ import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';
 import { Legal } from '../../store/legal';
 
-export interface FooterProps extends React.ComponentProps<'div'> {}
+export interface FooterProps extends React.ComponentProps<'div'> { }
 
 export const Footer: React.FC<FooterProps> = ({
   ...restProps
@@ -93,14 +93,26 @@ export const Footer: React.FC<FooterProps> = ({
       {...restProps}
     >
       <div className="item-container left-items">
-        <div id="scale-line-container" />
+        <div
+          id="scale-line-container"
+          aria-label="scale-line"
+        />
         <Divider type="vertical" />
-        <div className="scale-combo">
+        <div
+          className="scale-combo"
+          aria-label="scale-combo"
+        >
           {t('Footer.scale')}:&nbsp;
-          <ScaleCombo map={map} />
+          <ScaleCombo
+            aria-label='scalecombo-dropdown'
+            map={map}
+          />
           <Divider type="vertical" />
         </div>
-        <div className="reference-system">
+        <div
+          className="reference-system"
+          aria-label="reference-system"
+        >
           {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
           <Divider type="vertical" />
         </div>
@@ -109,6 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
           <div
             id="mouse-position"
             className="mouse-position"
+            aria-label="mouse-position"
           />
         </div>
       </div>
