@@ -126,6 +126,21 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     let pManagerOpts: MapFishPrintV3ManagerOpts = {
       url: ClientConfiguration.print?.url || '/print',
       map,
+      customPrintScales: map
+        ?.getView()
+        ?.getResolutions()
+        ?.map((d: number | undefined) => {
+          const units = map?.getView()?.getProjection()?.getUnits();
+          if (typeof d !== 'undefined') {
+            const scale = MapUtil.getScaleForResolution(d, units);
+            if (typeof scale !== 'undefined') {
+              return MapUtil.roundScale(scale);
+            }
+          }
+          return undefined;
+        })
+        .filter((scale: number | undefined) => typeof scale !== 'undefined')
+        ?.reverse() as number[] | undefined,
       timeout: 60000,
       layerFilter,
       headers: {
