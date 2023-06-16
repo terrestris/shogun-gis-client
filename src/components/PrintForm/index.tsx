@@ -130,8 +130,9 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         ?.getView()
         ?.getResolutions()
         ?.map((d: number | undefined) => {
+          const units = map?.getView()?.getProjection()?.getUnits();
           if (typeof d !== 'undefined') {
-            const scale = MapUtil.getScaleForResolution(d, 'm');
+            const scale = MapUtil.getScaleForResolution(d, units);
             if (typeof scale !== 'undefined') {
               return MapUtil.roundScale(scale);
             }
