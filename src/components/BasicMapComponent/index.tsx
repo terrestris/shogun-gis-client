@@ -59,6 +59,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     }
 
     const addLayerGroup = (name: string) => {
+      console.log('adding layer group: ', name);
       const layerGroup = new OlLayerGroup({
         layers: []
       });
@@ -110,21 +111,28 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
           let targetGroup: OlLayerGroup;
 
           if (olLayer.get('groupName')) {
+            const groupByProperty = MapUtil.getLayersByProperty(map, 'isExternalLayer', true);
+
+            console.log('groupByProperty', groupByProperty);
             targetGroup = MapUtil.getLayerByName(map, olLayer.get('groupName')) as OlLayerGroup;
+            console.log('targetGroup', targetGroup);
 
             if (!targetGroup) {
               targetGroup = addLayerGroup(olLayer.get('groupName'));
+              // targetGroup.set('isExternalLayerGroup', true);
             }
           } else {
-            targetGroup = MapUtil.getLayerByName(map,
-              t('AddLayerModal.externalWmsFolder')) as OlLayerGroup;
-
+            targetGroup = MapUtil.getLayersByProperty(map, 'isExternalLayerGroup', true)[0] as OlLayerGroup;
             if (!targetGroup) {
               targetGroup = addLayerGroup(t('AddLayerModal.externalWmsFolder'));
+              targetGroup.set('isExternalLayerGroup', true);
             }
           }
 
-          targetGroup.getLayers().push(olLayer);
+          targetGroup.set('name', t('AddLayerModal.externalWmsFolder'));
+          if (!MapUtil.getLayerByName(map, olLayer.get('name'))) {
+            targetGroup.getLayers().push(olLayer);
+          }
         }
       }
     } catch (error) {
@@ -136,7 +144,9 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     if (map) {
       const identifier = (l: BaseLayer) => l.get('name');
       const filter = (l: BaseLayer) => (l instanceof OlLayerTile || l instanceof OlLayerImage);
+      console.log('applying permalink!');
       const configString = PermalinkUtil.applyLink(map, ';', identifier, filter);
+      console.log('configString', configString);
 
       if (!configString) {
         return;
