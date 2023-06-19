@@ -62,7 +62,7 @@
     "ol": "^7.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-i18next": "^12.0.0",
+    "react-i18next": "^13.0.0",
     "react-redux": "^8.0.5",
     "shapefile.js": "^1.1.3"
   },
