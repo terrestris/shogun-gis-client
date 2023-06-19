@@ -173,30 +173,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       });
 
       if (!pluginRendererAvailable) {
-        mapLayer?.set('featureInfoFormConfig', [
-          {
-            "title": "Tab 1",
-            "children": [
-              {
-                "propertyName": "GEB_name",
-                "displayName": "Erstellt am"
-              }
-            ]
-          },
-          {
-            "title": "Tab 2",
-            "children": [
-              {
-                "propertyName": "GEB_text",
-                "displayName": "Erstellt am",
-                "fieldProps": {
-                  "className": "my-field"
-                }
-              }
-            ]
-          }
-        ]);
-
         items.push({
           label: mapLayer?.get('name') || layerName,
           key: layerName,
