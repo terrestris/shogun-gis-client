@@ -60,6 +60,7 @@ import {
 } from '../../../store/selectedFeatures';
 
 import FeatureInfoTabs from './FeatureInfoTabs';
+import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
 import './index.less';
 
@@ -180,10 +181,18 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
             <div
               key={layerName}
             >
-              <FeatureInfoTabs
-                tabConfig={mapLayer?.get('featureInfoFormConfig')}
-                features={features[layerName]}
-              />
+              {
+                mapLayer?.get('featureInfoFormConfig') ?
+                  <FeatureInfoTabs
+                    tabConfig={mapLayer?.get('featureInfoFormConfig')}
+                    features={features[layerName]}
+                    layerName={layerName}
+                  /> :
+                  <FeatureInfoPropertyGrid
+                    features={features[layerName]}
+                    layerName={layerName}
+                  />
+              }
             </div>
           )
         });
@@ -195,6 +204,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         spinning={loading}
       >
         <Tabs
+          destroyInactiveTabPane={true}
           items={items}
         />
       </Spin>
