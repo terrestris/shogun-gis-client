@@ -25,10 +25,7 @@ import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
-import OlStyleCircle from 'ol/style/Circle';
-import OlStyleFill from 'ol/style/Fill';
-import OlStyleStroke from 'ol/style/Stroke';
-import OlStyle from 'ol/style/Style';
+
 import {
   useTranslation
 } from 'react-i18next';
@@ -37,6 +34,8 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import PropertyGrid from '@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+
+import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
 
 import './index.less';
 
@@ -50,75 +49,20 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
   layerName,
   ...restProps
 }): JSX.Element => {
-  const [currentPage, setCurrenPage] = useState<number>();
+  const [currentPage, setCurrentPage] = useState<number>();
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
 
   const map = useMap();
 
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
 
   const vectorLayerName = `selection-layer-${layerName}`;
 
-  const onChange = (page: number) => {
-    setCurrenPage(page);
-    setSelectedFeature(features[page - 1]);
-  };
-
-  useEffect(() => {
-    if (!map) {
-      return;
-    }
-
-    const initVectorLayer = () => {
-      if (MapUtil.getLayerByName(map, vectorLayerName)) {
-        return;
-      }
-
-      const source = new OlSourceVector({
-        features: features
-      });
-
-      const fill = new OlStyleFill({
-        color: 'rgba(255, 255, 255, 0.15)'
-      });
-      const stroke = new OlStyleStroke({
-        color: 'rgba(209, 70, 47, 1)',
-        width: 2
-      });
-      const featureStyle = new OlStyle({
-        fill,
-        stroke,
-        image: new OlStyleCircle({
-          radius: 5,
-          fill,
-          stroke
-        })
-      });
-
-      const layer = new OlLayerVector({
-        source: source,
-        style: featureStyle
-      });
-
-      layer.set('name', vectorLayerName);
-
-      map.addLayer(layer);
-    };
-
-    const deinitVectorLayer = () => {
-      const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
-
-      if (!vectorLayer) {
-        return;
-      }
-
-      map.removeLayer(vectorLayer);
-    };
-
-    initVectorLayer();
-
-    return () => deinitVectorLayer();
-  }, [features, map, vectorLayerName]);
+  useHighlightVectorLayer({
+    layerName: vectorLayerName
+  });
 
   useEffect(() => {
     if (!map) {
@@ -132,7 +76,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     }
 
     vectorLayer.getSource()?.clear();
-    setCurrenPage(1);
+    setCurrentPage(1);
 
     if (features.length > 0) {
       setSelectedFeature(features[0]);
@@ -151,19 +95,23 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     }
 
     vectorLayer.getSource()?.clear();
-
     vectorLayer.getSource()?.addFeature(selectedFeature);
   }, [selectedFeature, map, vectorLayerName]);
 
-  if (!selectedFeature) {
-    return <></>;
-  }
+  const onChange = (page: number) => {
+    setCurrentPage(page);
+    setSelectedFeature(features[page - 1]);
+  };
 
   const blacklistedAttributes = [
     'geom',
     'the_geom',
     'geometry'
   ];
+
+  if (!selectedFeature) {
+    return <></>;
+  }
 
   const attributeFilter = selectedFeature.getKeys()
     .filter((prop: string | number | boolean) => {
