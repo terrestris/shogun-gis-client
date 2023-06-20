@@ -1,9 +1,9 @@
-// import DisplayField from '.';
+import DisplayField from '.';
 
-// describe('<DisplayField />', () => {
+describe('<DisplayField />', () => {
 
-//   it('is defined', () => {
-//     expect(DisplayField).toBeDefined();
-//   });
+  it('is defined', () => {
+    expect(DisplayField).toBeDefined();
+  });
 
-// });
+});
