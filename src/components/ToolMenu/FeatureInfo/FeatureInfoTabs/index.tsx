@@ -5,8 +5,7 @@ import React, {
 
 import {
   Tabs,
-  TabsProps,
-  Pagination
+  TabsProps
 } from 'antd';
 
 import OlFeature from 'ol/Feature';
@@ -29,6 +28,9 @@ import {
 import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
 
 import FeatureInfoForm from '../FeatureInfoForm';
+import PaginationToolbar from '../PaginationToolbar';
+
+import './index.less';
 
 export type FeatureInfoTabsProps = TabsProps & {
   features: OlFeature[];
@@ -96,6 +98,25 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
     return <></>;
   }
 
+  const exportFilter = (propertyName: string) => {
+    let match = false;
+
+    for (const conf of tabConfig) {
+      if (!conf.children) {
+        continue;
+      }
+
+      for (const child of conf.children) {
+        if (child.propertyName === propertyName) {
+          match = true;
+          break;
+        }
+      }
+    }
+
+    return match;
+  };
+
   const items = tabConfig
     .filter(config => config !== undefined)
     .map((config, idx) => {
@@ -114,20 +135,21 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
     });
 
   return (
-    <>
-      <Pagination
-        simple
-        total={features.length}
-        size="small"
-        pageSize={1}
+    <div
+      className="feature-info-tabs"
+    >
+      <PaginationToolbar
+        features={features}
+        selectedFeature={selectedFeature}
         current={currentPage}
         onChange={onChange}
+        exportFilter={exportFilter}
       />
       <Tabs
         items={items}
         {...passThroughProps}
       />
-    </>
+    </div>
   );
 };
 

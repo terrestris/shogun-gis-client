@@ -38,6 +38,7 @@ import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
 
 import './index.less';
+import PaginationToolbar from '../PaginationToolbar';
 
 export type FeatureInfoPropertyGridProps = {
   features: OlFeature[];
@@ -125,48 +126,14 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
       attributeFilter={attributeFilter}
       size="small"
       sticky={true}
-      title={() => {
-        return (
-          <>
-            <Pagination
-              simple
-              total={features.length}
-              size="small"
-              pageSize={1}
-              current={currentPage}
-              onChange={onChange}
-            />
-            <div className='copy'>
-              <Tooltip
-                title={t('FeaturePropertyGrid.copyAsGeoJson')}
-              >
-                <Button
-                  type="primary"
-                  size='small'
-                  onClick={() => {
-                    copy(new OlFormatGeoJSON().writeFeature(selectedFeature));
-                  }}
-                  icon={<FontAwesomeIcon icon={faClipboardCheck} />}
-                />
-              </Tooltip>
-              <Tooltip
-                title={t('FeaturePropertyGrid.copyAsObject')}
-              >
-                <Button
-                  type="primary"
-                  size='small'
-                  onClick={() => {
-                    const props = selectedFeature.getProperties();
-                    blacklistedAttributes.forEach(attr => delete props[attr]);
-                    copy(JSON.stringify(props));
-                  }}
-                  icon={<FontAwesomeIcon icon={faClipboardList} />}
-                />
-              </Tooltip>
-            </div>
-          </>
-        );
-      }}
+      title={() => (
+        <PaginationToolbar
+          features={features}
+          selectedFeature={selectedFeature}
+          current={currentPage}
+          onChange={onChange}
+        />
+      )}
       columns={[{
         title: t('FeaturePropertyGrid.key'),
         dataIndex: 'attributeName',

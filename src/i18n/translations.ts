@@ -206,10 +206,12 @@ export default {
         title: 'Objekt bearbeiten'
       },
       FeaturePropertyGrid: {
-        copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
-        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)',
         key: 'Name',
         value: 'Wert'
+      },
+      PaginationToolbar: {
+        copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
+        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)'
       }
     }
   },
@@ -419,10 +421,12 @@ export default {
         title: 'Edit feature'
       },
       FeaturePropertyGrid: {
-        copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
-        copyAsObject: 'Copy as object (displayed values only)',
         key: 'Name',
         value: 'Value'
+      },
+      PaginationToolbar: {
+        copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
+        copyAsObject: 'Copy as object (displayed values only)'
       }
     }
   }
