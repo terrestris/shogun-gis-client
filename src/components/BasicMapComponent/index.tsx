@@ -1,24 +1,16 @@
 import React, {
-  useEffect,
-  useCallback
+  useEffect
 } from 'react';
 
 import _isEmpty from 'lodash/isEmpty';
 
-import BaseLayer from 'ol/layer/Base';
-
-import OlLayerGroup from 'ol/layer/Group';
-import OlLayerImage from 'ol/layer/Image';
-import OlLayerTile from 'ol/layer/Tile';
+import { ObjectEvent as OlObjectEvent } from 'ol/Object';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import Logger from '@terrestris/base-util/dist/Logger';
-
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
@@ -26,12 +18,8 @@ import MapComponent, {
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
 
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-
 import usePlugins from '../../hooks/usePlugins';
-import useQueryParams from '../../hooks/useQueryParams';
-import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+
 import {
   isMapIntegration
 } from '../../plugin';
@@ -40,128 +28,31 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   ...restProps
 }): JSX.Element => {
   const map = useMap();
-  const client = useSHOGunAPIClient();
-  const queryParams = useQueryParams();
   const plugins = usePlugins();
 
-  const center = queryParams.get('center');
-  const zoom = queryParams.get('zoom');
-  const layers = queryParams.get('layers');
-  const customLayerAttributes = queryParams.get('customLayerAttributes');
-
   const {
-    t
+    t,
+    i18n
   } = useTranslation();
 
-  const restoreTransientLayers = useCallback(async (configString: string, permaLinkLayers?: string | null) => {
+  /**
+   * Updates external layer group name when language changes.
+   */
+  useEffect(() => {
     if (!map) {
       return;
     }
 
-    const addLayerGroup = (name: string) => {
-      console.log('adding layer group: ', name);
-      const layerGroup = new OlLayerGroup({
-        layers: []
-      });
-      layerGroup.set('name', name);
-      const existingGroups = map.getLayerGroup().getLayers();
-      existingGroups.insertAt(existingGroups?.getLength() || 0, layerGroup);
-
-      return layerGroup;
-    };
-
-    try {
-      const config = JSON.parse(configString);
-
-      if (!client) {
-        throw new Error('Client is not available');
-      }
-
-      const parser = new SHOGunApplicationUtil({
-        client
-      });
-
-      for (let i = 0; i < config.length; i++) {
-        const cfg = config[i];
-        if (!_isEmpty(cfg?.layerConfig)) {
-          const layerConfig: Layer = cfg.layerConfig;
-          const olLayer = await parser.parseLayer(layerConfig);
-
-          if (!olLayer) {
-            continue;
-          }
-
-          if (cfg.isExternalLayer) {
-            olLayer.set('isExternalLayer', cfg.isExternalLayer);
-          }
-
-          if (cfg.isUploadedLayer) {
-            olLayer.set('isUploadedLayer', cfg.isUploadedLayer);
-          }
-
-          olLayer.set('groupName', cfg.groupName);
-          olLayer.set('layerConfig', cfg.layerConfig);
-
-          olLayer.setVisible(!!permaLinkLayers?.split(';').some(l => l === layerConfig.name));
-
-          if (!(olLayer.get('isExternalLayer') || olLayer.get('isUploadedLayer'))) {
-            continue;
-          }
-
-          let targetGroup: OlLayerGroup;
-
-          if (olLayer.get('groupName')) {
-            const groupByProperty = MapUtil.getLayersByProperty(map, 'isExternalLayer', true);
-
-            console.log('groupByProperty', groupByProperty);
-            targetGroup = MapUtil.getLayerByName(map, olLayer.get('groupName')) as OlLayerGroup;
-            console.log('targetGroup', targetGroup);
-
-            if (!targetGroup) {
-              targetGroup = addLayerGroup(olLayer.get('groupName'));
-              // targetGroup.set('isExternalLayerGroup', true);
-            }
-          } else {
-            targetGroup = MapUtil.getLayersByProperty(map, 'isExternalLayerGroup', true)[0] as OlLayerGroup;
-            if (!targetGroup) {
-              targetGroup = addLayerGroup(t('AddLayerModal.externalWmsFolder'));
-              targetGroup.set('isExternalLayerGroup', true);
-            }
-          }
-
-          targetGroup.set('name', t('AddLayerModal.externalWmsFolder'));
-          if (!MapUtil.getLayerByName(map, olLayer.get('name'))) {
-            targetGroup.getLayers().push(olLayer);
-          }
-        }
-      }
-    } catch (error) {
-      Logger.error(error);
+    const targetGroups = MapUtil.getLayersByProperty(map, 'isExternalLayerGroup', true);
+    if (targetGroups?.length !== 1) {
+      return;
     }
-  }, [client, map, t]);
-
-  useEffect(() => {
-    if (map) {
-      const identifier = (l: BaseLayer) => l.get('name');
-      const filter = (l: BaseLayer) => (l instanceof OlLayerTile || l instanceof OlLayerImage);
-      console.log('applying permalink!');
-      const configString = PermalinkUtil.applyLink(map, ';', identifier, filter);
-      console.log('configString', configString);
-
-      if (!configString) {
-        return;
-      }
-
-      restoreTransientLayers(configString, layers);
-    }
-  }, [
-    map,
-    restoreTransientLayers,
-    center,
-    zoom,
-    layers,
-    customLayerAttributes
-  ]);
+    const targetGroup = targetGroups[0];
+    const oldName = targetGroups[0].get('name');
+    targetGroup.set('name', t('AddLayerModal.externalWmsFolder'));
+    const changeEvent = new OlObjectEvent('change:layers', 'name', oldName);
+    targetGroup.dispatchEvent(changeEvent);
+  }, [i18n.language, map, t]);
 
   const pluginComponents: JSX.Element[] = [];
 
