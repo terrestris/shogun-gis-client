@@ -1,3 +1,18 @@
+## [6.6.1](https://github.com/terrestris/shogun-gis-client/compare/v6.6.0...v6.6.1) (2023-06-21)
+
+
+### Bugfixes
+
+* duplication of external layers ([6a30781](https://github.com/terrestris/shogun-gis-client/commit/6a3078158df70b541bb46082bc14e7e3d7899bde))
+* fix layer group creation ([b55294a](https://github.com/terrestris/shogun-gis-client/commit/b55294a289d061106688c161d4b5c4a451854a76))
+
+
+### Dependencies
+
+* **deps:** bump i18next from 23.2.0 to 23.2.1 ([b701727](https://github.com/terrestris/shogun-gis-client/commit/b7017276baec9261471478d0f7a4132518961213))
+* **deps:** bump react-redux from 8.1.0 to 8.1.1 ([fe85dfd](https://github.com/terrestris/shogun-gis-client/commit/fe85dfd8930208781d8231905886ae6c1cc49794))
+* update shogun-util to 5.6.1 ([7f42a72](https://github.com/terrestris/shogun-gis-client/commit/7f42a722202dc45f67a35caf29834fe9951885f4))
+
 ## [6.6.0](https://github.com/terrestris/shogun-gis-client/compare/v6.5.0...v6.6.0) (2023-06-20)
 
 
