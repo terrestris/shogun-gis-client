@@ -55,7 +55,19 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
   } = useTranslation();
 
   useEffect(() => {
-    const timeValues = layer.get('dimension')?.values?.split(',');
+    const dimension = layer.get('dimension');
+
+    if (!dimension) {
+      return;
+    }
+
+    let timeValues;
+    if (dimension.values) {
+      timeValues = dimension.values.split(',');
+    }
+    if (dimension._) {
+      timeValues = dimension._.split(',');
+    }
 
     if (!timeValues || timeValues.length === 0) {
       return;
