@@ -1,3 +1,16 @@
+## [6.6.2](https://github.com/terrestris/shogun-gis-client/compare/v6.6.1...v6.6.2) (2023-06-22)
+
+
+### Dependencies
+
+* **deps-dev:** bump webpack from 5.87.0 to 5.88.0 ([54459e3](https://github.com/terrestris/shogun-gis-client/commit/54459e3286944e4c746d0c60db52b460ec69fdb4))
+* **deps:** bump i18next from 23.2.1 to 23.2.2 ([b7ce89a](https://github.com/terrestris/shogun-gis-client/commit/b7ce89a7a57b978405eeac12535f3a6e4b62f417))
+
+
+### Bugfixes
+
+* adjusting to new wmst properties ([1bdd483](https://github.com/terrestris/shogun-gis-client/commit/1bdd48380d44aada61814acbf42356ab3096187e))
+
 ## [6.6.1](https://github.com/terrestris/shogun-gis-client/compare/v6.6.0...v6.6.1) (2023-06-21)
 
 
