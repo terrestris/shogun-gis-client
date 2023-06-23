@@ -100,32 +100,47 @@ export const Footer: React.FC<FooterProps> = ({
   }
 
   const getLeftItems = () => {
-    const items = [(
-      <>
-        <div
-          id="scale-line-container"
+    const items = [
+      <div
+        key="scale-line-container"
+        id="scale-line-container"
+      />,
+      <Divider
+        key="scale-line-divider"
+        type="vertical"
+      />,
+      <div
+        key="scale-combo-container"
+        className="scale-combo"
+      >
+        {t('Footer.scale')}:&nbsp;
+        <ScaleCombo
+          map={map}
         />
         <Divider
           type="vertical"
         />
-        <div className="scale-combo">
-          {t('Footer.scale')}:&nbsp;
-          <ScaleCombo map={map} />
-          <Divider type="vertical" />
-        </div>
-        <div className="reference-system">
-          {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
-          <Divider type="vertical" />
-        </div>
-        <div className="mouse-position-wrapper">
-          {t('Footer.mousePosition')}:&nbsp;
-          <div
-            id="mouse-position"
-            className="mouse-position"
-          />
-        </div>
-      </>
-    )];
+      </div>,
+      <div
+        key="reference-system-container"
+        className="reference-system"
+      >
+        {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
+        <Divider
+          type="vertical"
+        />
+      </div>,
+      <div
+        key="mouse-position-container"
+        className="mouse-position-wrapper"
+      >
+        {t('Footer.mousePosition')}:&nbsp;
+        <div
+          id="mouse-position"
+          className="mouse-position"
+        />
+      </div>
+    ];
 
     insertPlugins('left', items);
 
@@ -134,28 +149,27 @@ export const Footer: React.FC<FooterProps> = ({
 
   const getRightItems = () => {
     const items = [
-      <div
-        key="item-container right-items"
+      <Button
+        key="open-contact"
+        onClick={openContactModal}
+        type="link"
       >
-        <Button
-          onClick={openContactModal}
-          type="link"
-        >
-          {t('Footer.contact')}
-        </Button>
-        <Button
-          onClick={openImprintModal}
-          type="link"
-        >
-          {t('Footer.imprint')}
-        </Button>
-        <Button
-          onClick={openPrivacyModal}
-          type="link"
-        >
-          {t('Footer.privacypolicy')}
-        </Button>
-      </div>
+        {t('Footer.contact')}
+      </Button>,
+      <Button
+        key="open-imprint"
+        onClick={openImprintModal}
+        type="link"
+      >
+        {t('Footer.imprint')}
+      </Button>,
+      <Button
+        key="open-privacy"
+        onClick={openPrivacyModal}
+        type="link"
+      >
+        {t('Footer.privacypolicy')}
+      </Button>
     ];
 
     if (plugins.length > 0) {
@@ -182,12 +196,16 @@ export const Footer: React.FC<FooterProps> = ({
       className="footer"
       {...restProps}
     >
-      <div className="item-container left-items">
+      <div
+        className="item-container left-items"
+      >
         {
           getLeftItems()
         }
       </div>
-      <div className="item-container right-items">
+      <div
+        className="item-container right-items"
+      >
         {
           getRightItems()
         }
