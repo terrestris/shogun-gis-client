@@ -113,7 +113,9 @@ export const Draw: React.FC<DrawProps> = ({
       (uploadedFiles && uploadedFiles.length === 1) &&
       (
         uploadedFiles[0].type === 'application/geo+json' ||
-        uploadedFiles[0].type === 'application/geojson'
+        uploadedFiles[0].type === 'application/geojson' ||
+        uploadedFiles[0].name.includes('.geojson') ||
+        uploadedFiles[0].name.includes('.json')
       )
     ) {
       onGeoJSONUpload(uploadedFiles[0]);
