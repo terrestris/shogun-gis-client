@@ -66,7 +66,7 @@ const generateFuzzySearchQuery = (
     return `(${innerPartsQuery.join(' OR ')})`;
   });
 
-  const fuzzyPart = allPartsQuery.join(' AND ');
+  const fuzzyPart = allPartsQuery.join(' OR ');
 
   return `(${exactPart}) OR (${fuzzyPart})`;
 
