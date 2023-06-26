@@ -120,7 +120,7 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
             {...passThroughProps}
           /> :
           <span>
-            {t('WmsTimeSlider.warning')}
+            {t('WmsTimeSlider.default')}
           </span>
       }
     </div>
