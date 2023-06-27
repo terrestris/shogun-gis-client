@@ -1,3 +1,26 @@
+## [6.6.3](https://github.com/terrestris/shogun-gis-client/compare/v6.6.2...v6.6.3) (2023-06-27)
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 17.6.5 to 17.6.6 ([64a04d5](https://github.com/terrestris/shogun-gis-client/commit/64a04d58629ef4ae05b4a2d251c77f3189cb52ab))
+* **deps-dev:** bump @commitlint/config-conventional ([f1fb4de](https://github.com/terrestris/shogun-gis-client/commit/f1fb4de6eac8de5e2caccfff4d48d0a7534147be))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([7b281b3](https://github.com/terrestris/shogun-gis-client/commit/7b281b340cf5d260eda15a2748115edce6643e14))
+* **deps-dev:** bump @typescript-eslint/parser from 5.60.0 to 5.60.1 ([2aec453](https://github.com/terrestris/shogun-gis-client/commit/2aec4538398dce87c597a63dfda8d63acf03f7e4))
+* **deps:** bump i18next from 23.2.2 to 23.2.3 ([07342dc](https://github.com/terrestris/shogun-gis-client/commit/07342dcdb7c4921ae5ea03a1b6f81445bf045280))
+* **deps:** bump react-i18next from 13.0.0 to 13.0.1 ([b720738](https://github.com/terrestris/shogun-gis-client/commit/b72073819a87720530503ed28e6364acc6593eaf))
+* update [@terrestris](https://github.com/terrestris) packages ([194b44a](https://github.com/terrestris/shogun-gis-client/commit/194b44a49eed7ad93250c5f604277ab323fada87))
+
+
+### Bugfixes
+
+* also check for the file ending ([0803a59](https://github.com/terrestris/shogun-gis-client/commit/0803a59221574134d61f4803a62b1a810da9f577))
+* apply missing key props ([3ceb133](https://github.com/terrestris/shogun-gis-client/commit/3ceb1337a4f8c61719a1798b4b936084d22de39a))
+* fix translation key ([ff46bf6](https://github.com/terrestris/shogun-gis-client/commit/ff46bf6ca6062b2a7f67e07298b8e6f64666c3c8))
+* remove obsolete prop check ([3a4aff7](https://github.com/terrestris/shogun-gis-client/commit/3a4aff78030aad891e3c19042000545a1e145ddb))
+* searching over multiple attributes ([443b1b3](https://github.com/terrestris/shogun-gis-client/commit/443b1b301d764857453379a909c9d5ea7c8c9e15))
+* show app title on tablets as well ([063f6d8](https://github.com/terrestris/shogun-gis-client/commit/063f6d8fdfcf76808a46cea6c677e9ecd80e8506))
+
 ## [6.6.2](https://github.com/terrestris/shogun-gis-client/compare/v6.6.1...v6.6.2) (2023-06-22)
 
 
