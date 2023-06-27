@@ -1,5 +1,4 @@
 import React, {
-  ReactNode,
   useEffect,
   useState
 } from 'react';
@@ -21,10 +20,6 @@ import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
-
-import type {
-  MarkObj
-} from 'rc-slider/es/Marks';
 
 import {
   useTranslation
@@ -64,9 +59,6 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
     let timeValues;
     if (dimension.values) {
       timeValues = dimension.values.split(',');
-    }
-    if (dimension._) {
-      timeValues = dimension._.split(',');
     }
 
     if (!timeValues || timeValues.length === 0) {
@@ -128,7 +120,7 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
             {...passThroughProps}
           /> :
           <span>
-            {t('WmsTimeSlider.warning')}
+            {t('WmsTimeSlider.default')}
           </span>
       }
     </div>
