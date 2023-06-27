@@ -98,7 +98,6 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   }, [editLayer, map]);
 
   useEffect(() => {
-
     if (editLayer && feature?.id) {
       editLayer.getSource()?.clear();
       const olFeat = gjFormat.readFeature(feature);

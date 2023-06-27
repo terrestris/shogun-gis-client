@@ -8,9 +8,7 @@ import {
   Switch,
   Checkbox,
   Form,
-  FormItemProps,
-  Upload,
-  Button
+  FormItemProps
 } from 'antd';
 
 import {
@@ -18,16 +16,12 @@ import {
   FormProps
 } from 'antd/lib/form/Form';
 
-import {
-  useTranslation
-} from 'react-i18next';
-
 import Logger from '@terrestris/base-util/dist/Logger';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
-import DisplayField from '../DisplayField';
+import DisplayField from '../../DisplayField';
 
 import './index.less';
 
@@ -41,10 +35,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   form,
   ...passThroughProps
 }): JSX.Element => {
-
-  const {
-    t
-  } = useTranslation();
 
   const createFormItem = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
     let field: React.ReactNode;
