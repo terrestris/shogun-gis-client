@@ -19,9 +19,12 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import moment from 'moment';
 
+import OlFeature from 'ol/Feature';
 import {
   equalTo
 } from 'ol/format/filter';
+import OlFormatGeoJSON from 'ol/format/GeoJSON';
+import OlGeometry from 'ol/geom/Geometry';
 
 import {
   useTranslation
@@ -44,7 +47,6 @@ import {
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import useAppSelector from '../../../hooks/useAppSelector';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
@@ -59,53 +61,60 @@ import EditFeatureToolbar from '../EditFeatureToolbar';
 export type EditFeatureFullFormProps = {
   feature: Feature;
   layer: WmsLayer;
+  showEditToolbar?: boolean;
+  additionalAttributes?: string[];
+  onSaveSuccess?: (responseText?: string) => void;
+  onSaveError?: (error: unknown) => void;
+  onDeleteSuccess?: () => void;
+  onDeleteError?: (error: unknown) => void;
 };
 
 export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   feature,
-  layer
+  layer,
+  showEditToolbar = true,
+  additionalAttributes = [],
+  onSaveSuccess = () => {},
+  onSaveError = () => {},
+  onDeleteSuccess = () => {},
+  onDeleteError = () => {}
 }) => {
   const {
     t
   } = useTranslation();
-  const executeGetFeature = useExecuteGetFeature();
+  // const executeGetFeature = useExecuteGetFeature();
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
   const [errorMsg, setErrorMsg] = useState<string>();
-
-  const allowedEditMode = useAppSelector(
-    state => state.editFeature.userEditMode
-  );
+  const [editFeature, setEditFeature] = useState<OlFeature>();
 
   const [form] = useForm();
   const map = useMap();
   const dispatch = useAppDispatch();
   const client = useSHOGunAPIClient();
 
-  const reloadFeature = useCallback(async (id: string) => {
-    if (!layer || !isWmsLayer(layer)) {
-      return;
-    }
+  // const reloadFeature = useCallback(async (id: string) => {
+  //   if (!layer || !isWmsLayer(layer)) {
+  //     return;
+  //   }
 
-    const updatedFeatures = await executeGetFeature({
-      layer: layer,
-      filter: equalTo('id', id)
-    });
+  //   const updatedFeatures = await executeGetFeature({
+  //     layer: layer,
+  //     filter: equalTo('id', id)
+  //   });
 
-    if (
-      updatedFeatures?.features[0]
-    ) {
-      dispatch(setFeature(updatedFeatures?.features[0]));
-    }
-  }, [dispatch, executeGetFeature, layer]);
+  //   if (updatedFeatures?.features[0]) {
+  //     dispatch(setFeature(updatedFeatures?.features[0]));
+  //   }
+  // }, [dispatch, executeGetFeature, layer]);
 
   const update = useCallback(async () => {
     if (!map || !client) {
       return;
     }
 
-    let editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+    const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
     if (editFormConfig?.length === 0) {
       Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
@@ -114,83 +123,127 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
     const properties = cloneDeep(feature?.properties) || {};
 
-    Object.entries(properties).forEach(([key, value]) => {
-      const tabConfigs = editFormConfig?.filter(tabCfg => {
-        return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
-      });
+    Object.entries(properties).forEach(([key]) => {
+      const tabConfigs = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
 
       if (tabConfigs.length > 1) {
         Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
       }
 
-      if (tabConfigs && tabConfigs[0]) {
-        const isDate = tabConfigs[0].children?.find(cfg => {
-          return cfg.propertyName === key && cfg.component === 'DATE';
-        });
+      // TODO for referenced features this assumption is not correct
+      // Filter out properties that aren't configured in the form.
+      const isAvailable = tabConfigs.every(tc => !!tc.children?.find(cfg => cfg.propertyName === key));
+      console.log(!isAvailable && !additionalAttributes.includes(key))
+      if (!isAvailable && !additionalAttributes.includes(key)) {
+        console.log('delete ', key);
 
-        if (isDate) {
-          properties[key] = moment(value);
-        }
-
-        const isUpload = tabConfigs[0].children?.find(cfg => {
-          return cfg.propertyName === key && cfg.component === 'UPLOAD';
-        });
-
-        if (isUpload) {
-          properties[key] = [{
-            name: value,
-            status: 'done'
-          }];
-        }
+        delete properties[key];
       }
     });
 
+    const initFormValues = Object.entries(properties)
+      .map(([key, value]) => {
+        const tabConfigs = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
+
+        if (tabConfigs && tabConfigs.length > 0) {
+          const isDate = tabConfigs.every(tc => !!tc.children?.find(cfg => cfg.propertyName === key && cfg.component === 'DATE'));
+
+          if (isDate && value) {
+            return [key, moment(value)];
+          }
+
+          const isUpload = tabConfigs[0].children?.find(cfg => cfg.propertyName === key && cfg.component === 'UPLOAD');
+
+          if (isUpload && value) {
+            return [key, [{
+              name: value,
+              status: 'done'
+            }]];
+          }
+        }
+
+        return [key, value];
+      });
+
+    const format = new OlFormatGeoJSON({
+      extractGeometryName: true
+    });
+    const editFeat = format.readFeature(feature);
+
+    for (const [key, value] of Object.entries(editFeat.getProperties())) {
+      if (value instanceof OlGeometry) {
+        continue;
+      }
+
+      editFeat.unset(key);
+    }
+
+    editFeat.setProperties(properties);
+
     form.resetFields();
-    form.setFieldsValue(properties);
 
     setTabConfig(editFormConfig);
-    setInitialValues(properties);
-  }, [map, client, layer, feature?.properties, form]);
+    setInitialValues(Object.fromEntries(initFormValues));
+    setEditFeature(editFeat);
+  }, [map, client, layer, feature, form]);
 
   useEffect(() => {
     update();
   }, [update]);
 
-  const onSaveSuccess = (responseText?: string) => {
-    if (!responseText) {
-      return;
-    }
+  const onSaveSuccessInternal = (responseText?: string) => {
     setErrorMsg(undefined);
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(responseText, 'text/xml');
 
-    // get feature id from response
-    const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
-    const idString = featureId.item(0)?.getAttribute('fid');
-    const id = idString?.split('.')[1];
-    if (id) {
-      reloadFeature(id);
-    }
+    // if (!responseText) {
+    //   return;
+    // }
+
+    // // Reload only if the feature is in create mode.
+    // if (!editFeature || !editFeature.getId()) {
+    //   const parser = new DOMParser();
+    //   const xmlDoc = parser.parseFromString(responseText, 'text/xml');
+
+    //   // Get feature id from response
+    //   const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
+    //   const idString = featureId.item(0)?.getAttribute('fid');
+    //   const id = idString?.split('.')[1];
+
+    //   if (id) {
+    //     reloadFeature(id);
+    //   }
+    // }
+
+    onSaveSuccess(responseText);
   };
 
-  const onSaveError = () => {
+  const onSaveErrorInternal = (error: unknown) => {
     setErrorMsg(t('EditFeatureFullForm.saveErrorMsg'));
+
+    onSaveError(error);
   };
 
-  const onDeleteSuccess = () => {
+  const onDeleteSuccessInternal = () => {
     setErrorMsg(undefined);
     dispatch(setFeature(null));
+
+    onDeleteSuccess();
   };
 
-  const onDeleteError = () => {
+  const onDeleteErrorInternal = (error: unknown) => {
     setErrorMsg(t('EditFeatureFullForm.deleteErrorMsg'));
+
+    onDeleteError(error);
   };
 
   return (
     <>
-      <EditFeatureGeometryToolbar
-        feature={feature}
-      />
+      {
+        (showEditToolbar && editFeature) && (
+          <EditFeatureGeometryToolbar
+            editFeature={editFeature}
+          />
+        )
+      }
       {
         errorMsg && (
           <Alert
@@ -201,20 +254,27 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
           />
         )
       }
-      <EditFeatureToolbar
-        feature={feature}
-        layer={layer}
-        form={form}
-        onSaveSuccess={onSaveSuccess}
-        onSaveError={onSaveError}
-        onDeleteSuccess={onDeleteSuccess}
-        onDeleteError={onDeleteError}
-      />
-      <EditFeatureTabs
-        tabConfig={tabConfig}
-        initialValues={initialValues}
-        form={form}
-      />
+      {
+        editFeature && (
+          <>
+            <EditFeatureToolbar
+              editFeature={editFeature}
+              layer={layer}
+              form={form}
+              onSaveSuccess={onSaveSuccessInternal}
+              onSaveError={onSaveErrorInternal}
+              onDeleteSuccess={onDeleteSuccessInternal}
+              onDeleteError={onDeleteErrorInternal}
+            />
+            <EditFeatureTabs
+              tabConfig={tabConfig}
+              initialValues={initialValues}
+              form={form}
+              editFeature={editFeature}
+            />
+          </>
+        )
+      }
     </>
   );
 };

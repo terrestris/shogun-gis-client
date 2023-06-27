@@ -1,3 +1,15 @@
+#map {
+  position: relative;
+  transition: width 0.3s;
+
+  &.bisected {
+    /*
+     * TODO Fix in plugin for drs
+     */
+    width: calc(100vw - 600px) !important;
+  }
+}
+
 .ant-drawer.map-drawer {
   position: absolute;
   top: var(--headerHeight);

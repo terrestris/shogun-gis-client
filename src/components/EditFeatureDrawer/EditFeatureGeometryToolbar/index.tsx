@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -15,42 +16,57 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import { TooltipPlacement } from 'antd/es/tooltip';
 import {
-  FeatureCollection,
-  Feature
+  TooltipPlacement
+} from 'antd/es/tooltip';
+import {
+  FeatureCollection
 } from 'geojson';
-import { t } from 'i18next';
-
 import _isEmpty from 'lodash/isEmpty';
 
-import { isEmpty as isEmptyOlExtent } from 'ol/extent';
+import {
+  isEmpty as isEmptyOlExtent
+} from 'ol/extent';
+import OlFeature from 'ol/Feature';
 import OlFormatGeoJson from 'ol/format/GeoJSON';
 import OlGeometry from 'ol/geom/Geometry';
-import { DrawEvent as OlDrawEvent } from 'ol/interaction/Draw';
+import OlGeomMultiLineString from 'ol/geom/MultiLineString';
+import OlGeomMultiPoint from 'ol/geom/MultiPoint';
+import OlGeomMultiPolygon from 'ol/geom/MultiPolygon';
+import {
+  DrawEvent as OlDrawEvent
+} from 'ol/interaction/Draw';
 import OlLayerVector from 'ol/layer/Vector';
-import OlSourceVector from 'ol/source/Vector';
+import OlSourceVector, {
+  VectorSourceEvent as OlVectorSourceEvent
+} from 'ol/source/Vector';
+
+import {
+  useTranslation
+} from 'react-i18next';
 
 import DeleteButton from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
 import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
-
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
-import Toolbar, { ToolbarProps } from '@terrestris/react-geo/dist/Toolbar/Toolbar';
+import Toolbar, {
+  ToolbarProps
+} from '@terrestris/react-geo/dist/Toolbar/Toolbar';
 
 import {
   DigitizeUtil
 } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
-import './index.less';
 import useAppSelector from '../../../hooks/useAppSelector';
 
+import './index.less';
+
 export type EditFeatureGeometryToolbarProps = ToolbarProps & {
-  feature: Feature;
+  editFeature: OlFeature;
   historyLength?: number;
 };
 
@@ -61,7 +77,7 @@ type EditHistory = {
   future: FeatureCollection[];
 };
 export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProps> = ({
-  feature,
+  editFeature,
   historyLength = 10
 }) => {
 
@@ -72,6 +88,10 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
 
   const map = useMap();
 
+  const {
+    t
+  } = useTranslation();
+
   const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector<OlGeometry>>>();
   const [, setRevision] = useState<number>(0);
 
@@ -81,40 +101,59 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
     state => state.editFeature.userEditMode
   );
 
+  const onAddFeature = useCallback((evt: OlVectorSourceEvent<OlGeometry>) => {
+    const source = evt.target as OlSourceVector;
+
+    if (source.getFeatures().length > 1 && evt.feature) {
+      source.removeFeature(evt.feature);
+    }
+  }, []);
+
   useEffect(() => {
     if (!map) {
       return;
     }
 
     if (!editLayer) {
-      setEditLayer(DigitizeUtil.getDigitizeLayer(map));
+      const layer = DigitizeUtil.getDigitizeLayer(map);
+
+      layer.getSource()?.on('addfeature', onAddFeature);
+      setEditLayer(layer);
     }
 
     return () => {
       if (editLayer) {
+        editLayer.getSource()?.un('addfeature', onAddFeature);
         map?.removeLayer(editLayer);
       }
     };
-  }, [editLayer, map]);
+  }, [editLayer, map, onAddFeature]);
 
   useEffect(() => {
-    if (editLayer && feature?.id) {
-      editLayer.getSource()?.clear();
-      const olFeat = gjFormat.readFeature(feature);
-      const source = editLayer.getSource() as OlSourceVector;
-      source.addFeature(olFeat);
-      setRevision(r => r + 1);
-
-      if (!isEmptyOlExtent(source.getExtent())) {
-        map?.getView().fit(source.getExtent(), {
-          padding: [50, 50, 50, 50]
-        });
-      }
+    if (!editLayer) {
+      return;
     }
-  }, [feature, editLayer, gjFormat, map]);
+
+    const source = editLayer.getSource();
+
+    if (!source) {
+      return;
+    }
+
+    source.clear();
+    source.addFeature(editFeature);
+    setRevision(r => r + 1);
+
+    if (isEmptyOlExtent(source.getExtent())) {
+      return;
+    }
+
+    map?.getView().fit(source.getExtent(), {
+      padding: [50, 50, 50, 50]
+    });
+  }, [editLayer, editFeature, map]);
 
   const undoEdit = () => {
-
     const editSource = editLayer?.getSource();
     const features = editSource?.getFeatures();
 
@@ -136,7 +175,6 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   };
 
   const redoEdit = () => {
-
     const editSource = editLayer?.getSource();
     const features = editSource?.getFeatures();
 
@@ -158,16 +196,34 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
     }
   };
 
-  const onDrawEnd = (e: OlDrawEvent) => {
+  const onDrawEnd = (drawEvt: OlDrawEvent) => {
     updateRevision();
-    if (!feature.geometry.type.toLocaleLowerCase().startsWith('multi')) {
-      // replace the existing geometry by the new one
-      editLayer?.getSource()?.clear();
+
+    const drawGeometry = drawEvt.feature.getGeometry()?.clone();
+    const editGeometry = editFeature.getGeometry();
+
+    if (!drawGeometry) {
+      return;
+    }
+
+    if (editGeometry instanceof OlGeomMultiPolygon) {
+      (drawGeometry as OlGeomMultiPolygon).getPolygons().forEach(geom => {
+        editGeometry.appendPolygon(geom);
+      });
+    } else if (editGeometry instanceof OlGeomMultiLineString) {
+      (drawGeometry as OlGeomMultiLineString).getLineStrings().forEach(geom => {
+        editGeometry.appendLineString(geom);
+      });
+    } else if (editGeometry instanceof OlGeomMultiPoint) {
+      (drawGeometry as OlGeomMultiPoint).getPoints().forEach(geom => {
+        editGeometry.appendPoint(geom);
+      });
+    } else {
+      editFeature.setGeometry(drawGeometry);
     }
   };
 
   const updateRevision = () => {
-
     const features = editLayer?.getSource()?.getFeatures();
 
     if (!features) {
@@ -193,94 +249,94 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
     return <></>;
   }
 
-  if (allowedEditMode.includes('EDIT_GEOMETRY')) {
-    return (
-      <Toolbar
-        className="geometry-edit-tb"
-        alignment="vertical"
-      >
-        <ToggleGroup>
-          {
-            allowedEditMode.includes('CREATE') ?
-              <DrawButton
-                icon={
-                  <FontAwesomeIcon icon={faPencil} />
-                }
-                pressedIcon={
-                  <FontAwesomeIcon icon={faPencil} />
-                }
-                name="draw"
-                digitizeLayer={editLayer}
-                tooltip={t('EditFeatureGeometryToolbar.draw')}
-                drawType={feature.geometry.type as DrawType}
-                onDrawEnd={onDrawEnd}
-                {...btnTooltipProps}
-              />
-              : <></>
-          }
-          {
-            allowedEditMode.includes('UPDATE') ?
-              <ModifyButton
-                icon={
-                  <FontAwesomeIcon icon={faDrawPolygon} />
-                }
-                pressedIcon={
-                  <FontAwesomeIcon icon={faDrawPolygon} />
-                }
-                name="edit"
-                digitizeLayer={editLayer}
-                tooltip={t('EditFeatureGeometryToolbar.edit')}
-                onModifyStart={updateRevision}
-                onModifyEnd={updateRevision}
-                onTranslateEnd={updateRevision}
-                {...btnTooltipProps}
-              />
-              : <></>
-          }
-          {
-            allowedEditMode.includes('DELETE') ?
-              <DeleteButton
-                icon={
-                  <FontAwesomeIcon icon={faTrash} />
-                }
-                pressedIcon={
-                  <FontAwesomeIcon icon={faTrash} />
-                }
-                name="delete"
-                digitizeLayer={editLayer}
-                tooltip={t('EditFeatureGeometryToolbar.delete')}
-                onFeatureRemove={updateRevision}
-                {...btnTooltipProps}
-              />
-              : <></>
-          }
-        </ToggleGroup>
-        <SimpleButton
-          icon={
-            <FontAwesomeIcon icon={faUndo} />
-          }
-          tooltip={t('EditFeatureGeometryToolbar.undo')}
-          onClick={undoEdit}
-          disabled={editHistory.current.past?.length === 0}
-          {...btnTooltipProps}
-        />
-        <SimpleButton
-          icon={
-            <FontAwesomeIcon
-              icon={faUndo}
-              flip="horizontal"
-            />
-          }
-          tooltip={t('EditFeatureGeometryToolbar.redo')}
-          onClick={redoEdit}
-          disabled={editHistory.current.future?.length === 0}
-          {...btnTooltipProps}
-        />
-      </Toolbar>
-    );
-  } else {
+  if (!allowedEditMode.includes('EDIT_GEOMETRY')) {
     return <></>;
   }
+
+  return (
+    <Toolbar
+      className="geometry-edit-tb"
+      alignment="vertical"
+    >
+      <ToggleGroup>
+        {
+          allowedEditMode.includes('CREATE') ?
+            <DrawButton
+              icon={
+                <FontAwesomeIcon icon={faPencil} />
+              }
+              pressedIcon={
+                <FontAwesomeIcon icon={faPencil} />
+              }
+              name="draw"
+              digitizeLayer={editLayer}
+              tooltip={t('EditFeatureGeometryToolbar.draw')}
+              drawType={editFeature.getGeometry()?.getType() as DrawType}
+              onDrawEnd={onDrawEnd}
+              {...btnTooltipProps}
+            />
+            : <></>
+        }
+        {
+          allowedEditMode.includes('UPDATE') ?
+            <ModifyButton
+              icon={
+                <FontAwesomeIcon icon={faDrawPolygon} />
+              }
+              pressedIcon={
+                <FontAwesomeIcon icon={faDrawPolygon} />
+              }
+              name="edit"
+              digitizeLayer={editLayer}
+              tooltip={t('EditFeatureGeometryToolbar.edit')}
+              onModifyStart={updateRevision}
+              onModifyEnd={updateRevision}
+              onTranslateEnd={updateRevision}
+              {...btnTooltipProps}
+            />
+            : <></>
+        }
+        {
+          allowedEditMode.includes('DELETE') ?
+            <DeleteButton
+              icon={
+                <FontAwesomeIcon icon={faTrash} />
+              }
+              pressedIcon={
+                <FontAwesomeIcon icon={faTrash} />
+              }
+              name="delete"
+              digitizeLayer={editLayer}
+              tooltip={t('EditFeatureGeometryToolbar.delete')}
+              onFeatureRemove={updateRevision}
+              {...btnTooltipProps}
+            />
+            : <></>
+        }
+      </ToggleGroup>
+      <SimpleButton
+        icon={
+          <FontAwesomeIcon icon={faUndo} />
+        }
+        tooltip={t('EditFeatureGeometryToolbar.undo')}
+        onClick={undoEdit}
+        disabled={editHistory.current.past?.length === 0}
+        {...btnTooltipProps}
+      />
+      <SimpleButton
+        icon={
+          <FontAwesomeIcon
+            icon={faUndo}
+            flip="horizontal"
+          />
+        }
+        tooltip={t('EditFeatureGeometryToolbar.redo')}
+        onClick={redoEdit}
+        disabled={editHistory.current.future?.length === 0}
+        {...btnTooltipProps}
+      />
+    </Toolbar>
+  );
 };
 
 export default EditFeatureGeometryToolbar;

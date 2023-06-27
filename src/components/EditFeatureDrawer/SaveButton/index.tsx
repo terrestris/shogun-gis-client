@@ -18,20 +18,17 @@ import {
   FormInstance
 } from 'antd/lib/form/Form';
 
+import OlFeature from 'ol/Feature';
+
 import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
-import {
-  DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 import {
   WmsLayer,
   isWmsLayer
@@ -40,17 +37,18 @@ import {
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
-import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
 import {
   setFormDirty
 } from '../../../store/editFeature';
 
-import './index.less';
 import FeedbackIcon from '../../FeedbackIcon';
+
+import './index.less';
 
 export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
   layer: WmsLayer;
+  editFeature: OlFeature;
   onError?: (error: unknown) => void;
   onSuccess?: (response?: string) => void;
 };
@@ -58,6 +56,7 @@ export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
 export const SaveButton: React.FC<SaveButtonProps> = ({
   form,
   layer,
+  editFeature,
   onError = () => {},
   onSuccess = () => {},
   ...passThroughProps
@@ -67,7 +66,6 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
   const map = useMap();
 
-  const writeWfsTransaction = useWriteWfsTransaction();
   const executeWfsTransaction = useExecuteWfsTransaction();
 
   const dispatch = useAppDispatch();
@@ -89,20 +87,6 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
       return;
     }
 
-    const editLayer = DigitizeUtil.getDigitizeLayer(map);
-
-    if (!editLayer) {
-      Logger.error('Cannot find the digitize layer');
-      return;
-    }
-
-    const features = editLayer.getSource()?.getFeatures();
-
-    if (!features || features.length === 0) {
-      Logger.error('Cannot save feature without geometry');
-      return;
-    };
-
     try {
       await form.validateFields();
     } catch (error) {
@@ -113,19 +97,9 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     try {
       setLoading(true);
 
-      const transaction = await writeWfsTransaction({
-        upsertFeatures: features,
-        form: form,
-        layer: layer
-      });
-
-      if (!transaction) {
-        return;
-      }
-
       const result = await executeWfsTransaction({
         layer: layer,
-        transaction: transaction
+        upsertFeatures: [editFeature]
       });
 
       layer.getSource()?.refresh();

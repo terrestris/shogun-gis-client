@@ -15,19 +15,13 @@ import {
   Popconfirm
 } from 'antd';
 
-import {
-  Feature
-} from 'geojson';
-
-import OlFormatGeoJSON from 'ol/format/GeoJSON';
+import OlFeature from 'ol/Feature';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
   useMap
@@ -38,17 +32,16 @@ import {
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
-import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
 
 export type DeleteButtonProps = ButtonProps & {
-  feature: Feature;
+  editFeature: OlFeature;
   layer: WmsLayer;
   onError?: (error: unknown) => void;
   onSuccess?: () => void;
 };
 
 export const DeleteButton: React.FC<DeleteButtonProps> = ({
-  feature,
+  editFeature,
   layer,
   onError = () => {},
   onSuccess = () => {},
@@ -62,7 +55,6 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
 
   const map = useMap();
 
-  const writeWfsTransaction = useWriteWfsTransaction();
   const executeWfsTransaction = useExecuteWfsTransaction();
 
   const onConfirmDelete = async () => {
@@ -77,20 +69,9 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
     try {
       setLoading(true);
 
-      const olFeature = new OlFormatGeoJSON().readFeature(feature);
-
-      const transaction = await writeWfsTransaction({
-        deleteFeatures: [olFeature],
-        layer: layer
-      });
-
-      if (!transaction) {
-        return;
-      }
-
       await executeWfsTransaction({
-        layer: layer,
-        transaction: transaction
+        deleteFeatures: [editFeature],
+        layer: layer
       });
 
       layer.getSource()?.refresh();
@@ -114,7 +95,7 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
       <Button
         type='primary'
         loading={loading}
-        disabled={!feature.id}
+        disabled={!editFeature.getId()}
         danger
         icon={(
           <FontAwesomeIcon

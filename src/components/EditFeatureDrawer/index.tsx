@@ -4,7 +4,8 @@ import React, {
 } from 'react';
 
 import {
-  Alert, Modal
+  Alert,
+  Modal
 } from 'antd';
 
 import ClientConfiguration from 'clientConfig';
@@ -31,10 +32,9 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import useExecuteWfsTransaction from '../../hooks/useExecuteWfsTransaction';
-import useWriteWfsTransaction from '../../hooks/useWriteWfsTransaction';
 
 import {
-  reset
+  reset, setFeature
 } from '../../store/editFeature';
 import {
   hide as hideEditFeatureDrawer
@@ -48,6 +48,8 @@ import EditFeatureFullForm from './EditFeatureFullForm';
 import EditFeatureSwitch from './EditFeatureSwitch';
 
 import './index.less';
+import { equalTo } from 'ol/format/filter';
+import useExecuteGetFeature from '../../hooks/useExecuteGetFeature';
 
 export type EditFeatureDrawerProps = MapDrawerProps & {};
 
@@ -68,8 +70,8 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
 
   const map = useMap();
   const dispatch = useAppDispatch();
-  const writeWfsTransaction = useWriteWfsTransaction();
   const executeWfsTransaction = useExecuteWfsTransaction();
+  const executeGetFeature = useExecuteGetFeature();
 
   useEffect(() => {
     if (!map || !layerId) {
@@ -96,19 +98,9 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       const feat = new OlFeature();
       feat.setId(feature.id);
 
-      const transaction = await writeWfsTransaction({
-        layer: layer,
-        deleteFeatures: [],
-        upsertFeatures: [feat]
-      });
-
-      if (!transaction) {
-        return;
-      }
-
       await executeWfsTransaction({
         layer: layer,
-        transaction: transaction
+        upsertFeatures: [feat]
       });
     } catch (error) {
       Logger.error('Error while releasing the lock on the feature');
@@ -137,6 +129,38 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     }
   };
 
+  const onSaveSuccess = async (responseText?: string) => {
+    if (!responseText) {
+      return;
+    }
+
+    // Reload only if the feature is in create mode.
+    if (!feature || !feature.id) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(responseText, 'text/xml');
+
+      // Get feature id from response
+      const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
+      const idString = featureId.item(0)?.getAttribute('fid');
+      const id = idString?.split('.')[1];
+
+      if (id) {
+        if (!layer || !isWmsLayer(layer)) {
+          return;
+        }
+
+        const updatedFeatures = await executeGetFeature({
+          layer: layer,
+          filter: equalTo('id', id)
+        });
+
+        if (updatedFeatures?.features[0]) {
+          dispatch(setFeature(updatedFeatures?.features[0]));
+        }
+      }
+    }
+  };
+
   const onLockSuccess = () => {
     setIsFeatureLocked(false);
   };
@@ -154,6 +178,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       className="map-drawer edit-feature-drawer"
       onClose={onDrawerClose}
       open={isDrawerOpen}
+      width={600}
       title={drawerTitle}
       {...passThroughProps}
     >
@@ -189,6 +214,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
         <EditFeatureFullForm
           feature={feature}
           layer={layer}
+          onSaveSuccess={onSaveSuccess}
         />
       }
     </MapDrawer>

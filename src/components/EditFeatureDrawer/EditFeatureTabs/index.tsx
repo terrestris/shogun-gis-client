@@ -9,6 +9,8 @@ import {
   FormInstance
 } from 'antd/lib/form/Form';
 
+import OlFeature from 'ol/Feature';
+
 import {
   Tab
 } from 'rc-tabs/lib/interface';
@@ -21,12 +23,14 @@ import {
 import EditFeatureForm from '../EditFeatureForm';
 
 export type EditFeatureTabsProps = TabsProps & {
-  tabConfig?: PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+  editFeature: OlFeature;
   form: FormInstance;
+  tabConfig?: PropertyFormTabConfig<PropertyFormItemEditConfig>[];
   initialValues?: Record<string, any>;
 };
 
 export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
+  editFeature,
   tabConfig,
   form,
   initialValues,
@@ -42,6 +46,7 @@ export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
         <EditFeatureForm
           name={config.title}
           form={form}
+          editFeature={editFeature}
           initialValues={initialValues}
           formConfig={config.children}
         />

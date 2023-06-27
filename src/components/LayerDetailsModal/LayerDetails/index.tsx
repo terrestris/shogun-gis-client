@@ -127,11 +127,16 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
   const getBBox = () => {
     const lay = getCapabilitiesLayer();
 
-    if (!lay) {
+    if (!lay || !lay.EX_GeographicBoundingBox) {
       return;
     }
 
-    return lay.EX_GeographicBoundingBox?.join(', ');
+    return [
+      lay.EX_GeographicBoundingBox.westBoundLongitude,
+      lay.EX_GeographicBoundingBox.southBoundLatitude,
+      lay.EX_GeographicBoundingBox.eastBoundLongitude,
+      lay.EX_GeographicBoundingBox.northBoundLatitude
+    ].join(', ');
   };
 
   const getMinScale = () => {

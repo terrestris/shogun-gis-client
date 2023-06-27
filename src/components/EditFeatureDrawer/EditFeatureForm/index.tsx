@@ -18,9 +18,17 @@ import {
 
 import _debounce from 'lodash/debounce';
 
-import Logger from '@terrestris/base-util/dist/Logger';
 import {
-  PropertyFormItemEditConfig
+  isMoment
+} from 'moment';
+
+import OlFeature from 'ol/Feature';
+
+import Logger from '@terrestris/base-util/dist/Logger';
+
+import {
+  PropertyFormItemEditDefaultConfig,
+  PropertyFormItemEditReferenceTableConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -29,17 +37,22 @@ import {
   setFormDirty
 } from '../../../store/editFeature';
 import DisplayField from '../../DisplayField';
+import ReferenceTable from '../ReferenceTable';
 
 import './index.less';
 
+type FormDataType = Record<string, string | number | boolean>;
+
 export type EditFeatureFormProps = FormProps & {
-  formConfig?: PropertyFormItemEditConfig[];
+  editFeature: OlFeature;
   form: FormInstance;
+  formConfig?: (PropertyFormItemEditDefaultConfig | PropertyFormItemEditReferenceTableConfig)[];
 };
 
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
-  formConfig,
+  editFeature,
   form,
+  formConfig,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -49,9 +62,9 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     state => state.editFeature.formDirty
   );
 
-  const createFormItem = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
+  const createFormItem = (fieldCfg: (PropertyFormItemEditDefaultConfig | PropertyFormItemEditReferenceTableConfig)) => {
     let field: React.ReactNode;
-    if (fieldCfg.readOnly) {
+    if (fieldCfg.readOnly) { // && fieldCfg.component !== 'REFERENCE_TABLE'
       field = createReadOnlyComponent(fieldCfg);
     } else if (fieldCfg.component) {
       field = createFieldComponent(fieldCfg);
@@ -86,15 +99,26 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
         label={fieldCfg.displayName || fieldCfg.propertyName}
+        // normalize={normalize}
         {...formItemProps}
-        {...fieldCfg.fieldProps}
       >
         {field}
       </Form.Item>
     );
   };
 
-  const createReadOnlyComponent = (fieldConfig: PropertyFormItemEditConfig): React.ReactNode => {
+  // StoreValue
+  // const normalize = (value: any) => {
+  //   // if create then already moment
+  //   console.log(value)
+  //   // if () {
+
+  //   // }
+
+  //   return value;
+  // };
+
+  const createReadOnlyComponent = (fieldConfig: (PropertyFormItemEditDefaultConfig | PropertyFormItemEditReferenceTableConfig)) => {
     return (
       <DisplayField
         {...fieldConfig.fieldProps}
@@ -102,7 +126,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     );
   };
 
-  const createFieldComponent = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
+  const createFieldComponent = (fieldCfg: (PropertyFormItemEditDefaultConfig | PropertyFormItemEditReferenceTableConfig)) => {
     switch (fieldCfg.component) {
       case 'CHECKBOX':
         return (
@@ -113,6 +137,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       case 'DATE':
         return (
           <DatePicker
+
             {...fieldCfg?.fieldProps}
           />
         );
@@ -160,6 +185,21 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       //       <Button>Upload</Button>
       //     </Upload>
       //   );
+      case 'REFERENCE_TABLE':
+        const referenceTableConfig = (fieldCfg as PropertyFormItemEditReferenceTableConfig);
+
+        return (
+          <ReferenceTable
+            parentEditFeature={editFeature}
+            layerId={referenceTableConfig.layerId}
+            propertyName={referenceTableConfig.propertyName}
+            referencePropertyName={referenceTableConfig.referencePropertyName}
+            referencedLayerPropertyName={referenceTableConfig.referencedLayerPropertyName}
+            readOnly={referenceTableConfig.readOnly}
+            tablePropertyName={referenceTableConfig.tablePropertyName}
+            {...referenceTableConfig?.fieldProps}
+          />
+        );
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;
@@ -170,10 +210,26 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     if (changedValues && !formDirty) {
       dispatch(setFormDirty(true));
     }
+
+    Object.entries(changedValues).forEach(([key, value]) => {
+      // Transform undefined to null values.
+      if (value === undefined) {
+        editFeature.set(key, null);
+        return;
+      }
+
+      // Transform moments back to iso string.
+      if (isMoment(value)) {
+        editFeature.set(key, value.toISOString());
+        return;
+      }
+
+      editFeature.set(key, value);
+    });
   };
 
   return (
-    <Form
+    <Form<FormDataType>
       className="edit-feature-form"
       form={form}
       labelCol={{

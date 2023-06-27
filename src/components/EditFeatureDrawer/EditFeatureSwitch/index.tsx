@@ -149,7 +149,10 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
       geometry: {
         type: geomType,
         coordinates: []
-      }
+      },
+      // @ts-ignore
+      // eslint-disable-next-line camelcase
+      geometry_name: 'geom'
     }));
 
     onCreate();

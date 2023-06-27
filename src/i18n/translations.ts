@@ -213,6 +213,10 @@ export default {
       PaginationToolbar: {
         copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
         copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)'
+      },
+      ReferenceTable: {
+        addButtonTitle: 'Referenz hinzufügen',
+        editButtonTitle: 'Bearbeiten'
       }
     }
   },
@@ -430,6 +434,10 @@ export default {
       PaginationToolbar: {
         copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
         copyAsObject: 'Copy as object (displayed values only)'
+      },
+      ReferenceTable: {
+        addButtonTitle: 'Add reference',
+        editButtonTitle: 'Edit'
       }
     }
   }

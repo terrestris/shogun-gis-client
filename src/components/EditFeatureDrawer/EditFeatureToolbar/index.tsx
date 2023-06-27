@@ -4,9 +4,7 @@ import {
   FormInstance
 } from 'antd';
 
-import {
-  Feature
-} from 'geojson';
+import OlFeature from 'ol/Feature';
 
 import {
   WmsLayer
@@ -21,8 +19,8 @@ import SaveButton from '../SaveButton';
 import './index.less';
 
 export type EditFeatureToolbarProps = {
-  feature: Feature;
   layer: WmsLayer;
+  editFeature: OlFeature;
   form: FormInstance;
   onSaveSuccess?: (responseText?: string) => void;
   onSaveError?: (error: unknown) => void;
@@ -31,8 +29,8 @@ export type EditFeatureToolbarProps = {
 };
 
 export const EditFeatureToolbar: React.FC<EditFeatureToolbarProps> = ({
-  feature,
   layer,
+  editFeature,
   form,
   onSaveSuccess = () => {},
   onSaveError = () => {},
@@ -50,10 +48,11 @@ export const EditFeatureToolbar: React.FC<EditFeatureToolbarProps> = ({
         allowedEditMode.includes('UPDATE') ?
           <>
             <ResetButton
-              feature={feature}
+              editFeature={editFeature}
               form={form}
             />
             <SaveButton
+              editFeature={editFeature}
               form={form}
               layer={layer}
               onSuccess={onSaveSuccess}
@@ -64,7 +63,7 @@ export const EditFeatureToolbar: React.FC<EditFeatureToolbarProps> = ({
       {
         allowedEditMode.includes('DELETE') &&
         <DeleteButton
-          feature={feature}
+          editFeature={editFeature}
           layer={layer}
           onSuccess={onDeleteSuccess}
           onError={onDeleteError}

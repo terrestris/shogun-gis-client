@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import {
   faRotateLeft
@@ -16,11 +19,9 @@ import {
   FormInstance
 } from 'antd/lib/form/Form';
 
-import {
-  Feature
-} from 'geojson';
+import OlFeature from 'ol/Feature';
+import OlGeometry from 'ol/geom/Geometry';
 
-import OlFormatGeoJson from 'ol/format/GeoJSON';
 import {
   useTranslation
 } from 'react-i18next';
@@ -28,7 +29,9 @@ import {
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
-import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+import {
+  DigitizeUtil
+} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import {
@@ -36,15 +39,16 @@ import {
 } from '../../../store/editFeature';
 
 export type ResetButtonProps = Omit<ButtonProps, 'form'> & {
-  feature: Feature;
+  editFeature: OlFeature;
   form: FormInstance;
 };
 
 export const ResetButton: React.FC<ResetButtonProps> = ({
-  feature,
+  editFeature,
   form,
   ...passThroughProps
 }) => {
+  const [initialFeatureGeom, setInitialFeatureGeom] = useState<OlGeometry>();
 
   const {
     t
@@ -54,19 +58,26 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
 
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    setInitialFeatureGeom(editFeature.getGeometry()?.clone());
+  }, [editFeature]);
+
   const onClick = () => {
     form.resetFields();
+    // TODO This assumption is probably not correct anymore
     dispatch(setFormDirty(false));
 
-    if (map) {
-      const editLayer = DigitizeUtil.getDigitizeLayer(map);
-      if (editLayer) {
-        editLayer.getSource()?.clear();
-        const format = new OlFormatGeoJson();
-        const olFeat = format.readFeature(feature);
-        editLayer.getSource()?.addFeature(olFeat);
-      }
+    if (!map) {
+      return;
     }
+
+    const editLayer = DigitizeUtil.getDigitizeLayer(map);
+
+    if (!editLayer || !initialFeatureGeom) {
+      return;
+    }
+
+    editFeature.set(editFeature.getGeometryName(), initialFeatureGeom.clone());
   };
 
   return (
