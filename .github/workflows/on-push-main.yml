@@ -1,5 +1,8 @@
 name: Update gh-pages (latest)
 
+env:
+  DOCKER_REGISTRY: docker-public.terrestris.de/terrestris
+
 on:
   push:
     branches:
