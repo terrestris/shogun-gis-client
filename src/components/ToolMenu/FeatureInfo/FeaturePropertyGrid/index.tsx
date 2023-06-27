@@ -4,25 +4,12 @@ import React, {
 } from 'react';
 
 import {
-  faClipboardCheck,
-  faClipboardList
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
-import {
-  Button,
-  Pagination,
-  TableProps,
-  Tooltip
+  TableProps
 } from 'antd';
-
-import copy from 'copy-to-clipboard';
 
 import _isFinite from 'lodash/isFinite';
 
 import OlFeature from 'ol/Feature';
-import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -37,8 +24,9 @@ import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
 import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
 
-import './index.less';
 import PaginationToolbar from '../PaginationToolbar';
+
+import './index.less';
 
 export type FeatureInfoPropertyGridProps = {
   features: OlFeature[];
