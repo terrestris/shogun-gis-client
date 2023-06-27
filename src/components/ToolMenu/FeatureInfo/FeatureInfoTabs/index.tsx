@@ -90,6 +90,10 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   }, [selectedFeature, map, vectorLayerName]);
 
   const onChange = (page: number) => {
+    if (page < 1) {
+      return;
+    }
+
     setCurrentPage(page);
     setSelectedFeature(features[page - 1]);
   };
