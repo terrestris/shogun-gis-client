@@ -27,7 +27,7 @@ import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
-import DisplayField from '../DisplayField';
+import DisplayField from '../../DisplayField';
 
 import './index.less';
 
