@@ -10,6 +10,7 @@ import {
 import _isFinite from 'lodash/isFinite';
 
 import OlFeature from 'ol/Feature';
+import OlGeometry from 'ol/geom/Geometry';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -40,6 +41,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
 }): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<number>();
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
+  const [blacklistedAttributes, setBlacklistedAttributes] = useState<string[]>([]);
 
   const map = useMap();
 
@@ -83,6 +85,12 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
       return;
     }
 
+    const geomAttributes = Object.entries(selectedFeature.getProperties())
+      .filter(([, value]) => value instanceof OlGeometry)
+      .map(([key]) => key);
+
+    setBlacklistedAttributes(geomAttributes);
+
     vectorLayer.getSource()?.clear();
     vectorLayer.getSource()?.addFeature(selectedFeature);
   }, [selectedFeature, map, vectorLayerName]);
@@ -91,12 +99,6 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
     setCurrentPage(page);
     setSelectedFeature(features[page - 1]);
   };
-
-  const blacklistedAttributes = [
-    'geom',
-    'the_geom',
-    'geometry'
-  ];
 
   if (!selectedFeature) {
     return <></>;
