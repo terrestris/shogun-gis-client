@@ -13,26 +13,31 @@
   box-shadow: var(--componentShadow);
   font-size: .95em;
 
-  .title {
-    color: var(--complementaryColor);
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-left: 2rem;
-    white-space: pre;
-  }
-
-  .logo {
-    height: 100%;
-    padding: 3px;
-  }
-
   .item-container {
     display: flex;
     align-items: center;
 
     &.left-items {
       justify-content: flex-start;
+
+      .logo {
+        height: 100%;
+        padding: 3px;
+      }
+
+      .title {
+        color: var(--complementaryColor);
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-left: 2rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
     }
 
     &.center-items {
@@ -49,21 +54,14 @@
   // Adjustments for Smartphones
   @media (max-width: 599px) {
     .item-container {
-      .title {
-        display: none;
-      }
-
       &.left-items {
         .logo {
           max-width: 60px;
           height: auto;
         }
-      }
 
-      &.center-items {
-        .react-geo-nominatimsearch.ant-select-auto-complete {
-          width: 90%;
-          max-width: 200px;
+        .title {
+          display: none;
         }
       }
     }
@@ -72,22 +70,14 @@
   // Adjustments for Tablets
   @media (max-width: 1300px) {
     .item-container {
-      .title {
-        display: none;
-      }
-
       &.left-items {
-        width: 100px;
-      }
+        max-width: 400px;
 
-      &.center-items {
-        .react-geo-nominatimsearch.ant-select-auto-complete {
-          width: 90%;
+        .title {
+          font-size: 0.9rem;
+          font-weight: bold;
+          margin-left: 1rem;
         }
-      }
-
-      &.right-items {
-        width: 100px;
       }
     }
   }
