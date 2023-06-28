@@ -392,7 +392,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
           const olFeat = new OlFeature({
             geometry
           });
-          olFeat.set('title', getFeatureTitle(dsResult, highlightingResults[id]));
+          olFeat.set('title', getFeatureTitle(dsResult, highlightingResults?.[id]));
           let ftName;
           if (dsResult.featureType?.[0]) {
             const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType[0] as string);
