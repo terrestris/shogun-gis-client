@@ -380,10 +380,10 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       // 2. build features
       Object.keys(categories).forEach(category => {
         const features = categories[category].map(dsResult => {
-          const id = dsResult.id as string;
           if (!dsResult.geometry?.[0]) {
             return;
           }
+          const id = dsResult.id as string;
 
           const geometry = wktFormat.readGeometry(dsResult.geometry[0], {
             dataProjection: 'EPSG:4326',
