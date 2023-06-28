@@ -395,7 +395,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
           olFeat.set('title', getFeatureTitle(dsResult, highlightingResults?.[id]));
           let ftName;
           if (dsResult.featureType?.[0]) {
-            const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType[0] as string);
+            const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType?.[0] as string);
             if (layer) {
               olFeat.set('layer', layer);
               ftName = layer.get('name');
