@@ -158,7 +158,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       className="edit-feature-form"
       form={form}
       labelCol={{
-        span: 6
+        span: 8
       }}
       labelAlign="left"
       labelWrap
