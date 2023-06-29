@@ -1,0 +1,67 @@
+/**
+ * Based on https://codepen.io/scottloway/pen/zqoLyQ
+ */
+.feedback-icon.hidden {
+  display: none;
+}
+
+.feedback-icon {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  vertical-align: -0.25rem;
+  width: 1rem;
+  height: 1rem;
+
+  .load-complete {
+    -webkit-animation: none;
+    animation: none;
+    border-color: #51b351;
+    transition: border 1000ms ease-out;
+  }
+
+  .checkmark:after {
+    animation-duration: 1500ms;
+    animation-timing-function: ease;
+    animation-name: checkmark;
+    transform: scaleX(-1) rotate(135deg);
+    opacity: 1;
+    height: 1rem;
+    width: 0.5rem;
+    transform-origin: left top;
+    border-right: 3px solid #51b351;
+    border-top: 3px solid #51b351;
+    content: '';
+    left: 0rem;
+    top: 0.5rem;
+    position: absolute;
+  }
+
+  @keyframes checkmark {
+    0% {
+      height: 0;
+      width: 0;
+      opacity: 1;
+    }
+
+    20% {
+      height: 0;
+      width: 0.5rem;
+      opacity: 1;
+    }
+
+    40% {
+      height: 1rem;
+      width: 0.5rem;
+      opacity: 1;
+    }
+
+    100% {
+      height: 1rem;
+      width: 0.5rem;
+      opacity: 1;
+    }
+  }
+}
+
+
