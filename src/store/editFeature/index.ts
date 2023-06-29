@@ -12,12 +12,14 @@ export interface EditFeatureState {
   layerId: string | null;
   feature: Feature | null;
   userEditMode: EditLevel[];
+  formDirty: boolean;
 }
 
 const initialState: EditFeatureState = {
   layerId: null,
   feature: null,
-  userEditMode: ['NONE']
+  userEditMode: ['NONE'],
+  formDirty: false
 };
 
 const editFeatureSlice = createSlice({
@@ -36,6 +38,9 @@ const editFeatureSlice = createSlice({
     },
     setUserEditMode(state, action: PayloadAction<EditLevel[]>) {
       state.userEditMode = action.payload;
+    },
+    setFormDirty(state, action: PayloadAction<boolean>) {
+      state.formDirty = action.payload;
     }
   }
 });
@@ -44,7 +49,8 @@ export const {
   setLayerId,
   setFeature,
   reset,
-  setUserEditMode
+  setUserEditMode,
+  setFormDirty
 } = editFeatureSlice.actions;
 
 export default editFeatureSlice.reducer;

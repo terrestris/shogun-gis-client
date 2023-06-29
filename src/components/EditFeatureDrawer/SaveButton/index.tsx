@@ -37,8 +37,16 @@ import {
   isWmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
 import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
 import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
+import {
+  setFormDirty
+} from '../../../store/editFeature';
+
+import './index.less';
+import FeedbackIcon from '../../FeedbackIcon';
 
 export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
@@ -55,11 +63,18 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
   ...passThroughProps
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [saveCompleted, setSaveCompleted] = useState(false);
 
   const map = useMap();
 
   const writeWfsTransaction = useWriteWfsTransaction();
   const executeWfsTransaction = useExecuteWfsTransaction();
+
+  const dispatch = useAppDispatch();
+
+  const formDirty = useAppSelector(
+    state => state.editFeature.formDirty
+  );
 
   const {
     t
@@ -115,6 +130,11 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
       layer.getSource()?.refresh();
 
+      setSaveCompleted(true);
+      setTimeout(() => {
+        setSaveCompleted(false);
+      }, 3000);
+
       onSuccess(result);
     } catch (error) {
       Logger.error(error);
@@ -122,14 +142,17 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
       onError(error);
     } finally {
       setLoading(false);
+      dispatch(setFormDirty(false));
     }
   };
 
   return (
     <Button
+      className='save-button'
       type='primary'
       onClick={onClick}
       loading={loading}
+      disabled={!formDirty}
       icon={(
         <FontAwesomeIcon
           icon={faFloppyDisk}
@@ -140,6 +163,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
       {
         t('SaveButton.title')
       }
+      <FeedbackIcon loadComplete={saveCompleted} />
     </Button>
   );
 };
