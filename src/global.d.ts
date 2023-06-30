@@ -39,6 +39,7 @@ declare module 'clientConfig' {
     };
     featureEditRoles?: FeatureEditConfiguration;
     wfsLockFeatureEnabled?: boolean;
+    enableFallbackConfig?: boolean;
   };
   const config: ClientConfiguration;
 

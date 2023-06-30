@@ -115,6 +115,12 @@ export interface ThemeProperties extends React.CSSProperties {
   '--complementaryColor'?: string;
 }
 
+// eslint-disable-next-line no-shadow
+enum LoadingErrorCode {
+  APP_ID_NOT_SET = 'APP_ID_NOT_SET',
+  APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND'
+};
+
 const client = new SHOGunAPIClient({
   url: ClientConfiguration.shogunBase || '/'
 });
@@ -134,14 +140,7 @@ const getConfigLang = (lang: string) => {
   }
 };
 
-const getApplicationConfiguration = async () => {
-  const applicationId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
-
-  if (!applicationId) {
-    Logger.info('No application ID given, can\'t load any configuration.');
-    return;
-  }
-
+const getApplicationConfiguration = async (applicationId: number) => {
   try {
     Logger.info(`Loading application with ID ${applicationId}`);
 
@@ -152,14 +151,6 @@ const getApplicationConfiguration = async () => {
     return application;
   } catch (error) {
     Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
-
-    notification.error({
-      message: i18n.t('Index.applicationLoadErrorMessage'),
-      description: i18n.t('Index.applicationLoadErrorDescription', {
-        applicationId: applicationId
-      }),
-      duration: 0
-    });
   }
 };
 
@@ -349,6 +340,7 @@ const setupSHOGunMap = async (application: Application) => {
   });
 };
 
+// TODO Make default/fallback app configurable?
 const setupDefaultMap = () => {
   const osmLayer = new OlLayerTile({
     source: new OlSourceOsm()
@@ -574,7 +566,24 @@ const renderApp = async () => {
       client.setKeycloak(keycloak);
     }
 
-    const appConfig = await getApplicationConfiguration();
+    const applicationId = parseInt(UrlUtil.getQueryParam(window.location.href, 'applicationId'), 10);
+
+    if (!applicationId) {
+      Logger.info('No application ID given, can\'t load any configuration.');
+    }
+
+    if (!applicationId && !ClientConfiguration.enableFallbackConfig) {
+      throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
+    }
+
+    let appConfig;
+    if (applicationId) {
+      appConfig = await getApplicationConfiguration(applicationId);
+    }
+
+    if (!appConfig && !ClientConfiguration.enableFallbackConfig) {
+      throw new Error(LoadingErrorCode.APP_CONFIG_NOT_FOUND);
+    }
 
     const defaultLanguage = appConfig?.clientConfig?.defaultLanguage;
 
@@ -632,6 +641,16 @@ const renderApp = async () => {
 
     const plugins = await loadPlugins(map);
 
+    if (!appConfig) {
+      notification.error({
+        message: i18n.t('Index.applicationLoadErrorMessage'),
+        description: i18n.t('Index.applicationLoadErrorDescription', {
+          applicationId: applicationId
+        }),
+        duration: 0
+      });
+    }
+
     render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
@@ -657,15 +676,32 @@ const renderApp = async () => {
       loadingMask.classList.add('loadmask-hidden');
     }
 
-    Logger.error(error);
+    if (!i18n.isInitialized) {
+      i18n.use(LanguageDetector);
+      await i18n.init(initOpts);
+    }
+
+    let errorDescription = i18n.t('Index.errorDescription');
+
+    if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
+      errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');
+    }
+
+    if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
+      const appId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+
+      errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
+        applicationId: appId
+      });
+    }
 
     render(
       <React.StrictMode>
         <Alert
           className="error-boundary"
           message={i18n.t('Index.errorMessage')}
-          description={i18n.t('Index.errorDescription')}
-          type="error"
+          description={errorDescription}
+          type="warning"
           showIcon
         />
       </React.StrictMode>,
