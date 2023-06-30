@@ -8,7 +8,8 @@ import {
   Alert,
   Button,
   Modal,
-  Table
+  Table,
+  Spin
 } from 'antd';
 
 import {
@@ -46,13 +47,13 @@ import {
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
-// import useAppSelector from '../../../hooks/useAppSelector';
+import useAppSelector from '../../../hooks/useAppSelector';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
-// import {
-//   setFeature as setRootFeature
-// } from '../../../store/editFeature';
+import {
+  setFeature as setEditFeature
+} from '../../../store/editFeature';
 
 import EditFeatureFullForm from '../EditFeatureFullForm';
 
@@ -62,6 +63,7 @@ export type ReferenceDataType = {
 };
 
 export type ReferenceTableProps = TableProps<ReferenceDataType> & {
+  parentEditLayer: WmsLayer;
   parentEditFeature: OlFeature;
   layerId: number;
   propertyName: string;
@@ -71,8 +73,9 @@ export type ReferenceTableProps = TableProps<ReferenceDataType> & {
   tablePropertyName?: string;
 };
 
-// TODO Readd WFS LockFeature
+// TODO Readd WFS LockFeature?
 export const ReferenceTable: React.FC<ReferenceTableProps> = ({
+  parentEditLayer,
   parentEditFeature,
   layerId,
   propertyName,
@@ -85,12 +88,12 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
   const [isFeaturesLoading, setIsFeaturesLoading] = useState<boolean>(false);
   const [features, setFeatures] = useState<Feature[]>();
   const [feature, setFeature] = useState<Feature>();
+  const [mode, setMode]= useState<'create' | 'update'>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [layer, setLayer] = useState<WmsLayer>();
   const [errorMsg, setErrorMsg] = useState<string>();
 
-  // TODO Replace with parent?
-  // const editFeature = useAppSelector(state => state.editFeature.feature);
+  const rootEditFeature = useAppSelector(state => state.editFeature.feature);
   // const editLayerId = useAppSelector(state => state.editFeature.layerId);
 
   const executeGetFeature = useExecuteGetFeature();
@@ -100,6 +103,12 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
   const {
     t
   } = useTranslation();
+
+  useEffect(() => {
+    return () => {
+      console.log('UNMOUNT REFERENCE TABLE');
+    };
+  }, []);
 
   const getData = useCallback(async () => {
     if (!map || !client || !layerId) {
@@ -131,6 +140,8 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
         return;
       }
 
+      console.log('parentEditFeature', parentEditFeature);
+
       // eg in create mode
       if (!parentEditFeature.getProperties()[referencePropertyName]) {
         return;
@@ -155,6 +166,26 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
     getData();
   }, [getData]);
 
+  useEffect(() => {
+    if (!features || !feature) {
+      return;
+    }
+
+    console.log(feature.id)
+    console.log(features)
+
+    const match = features.find(f => f.id === feature.id);
+
+    console.log(match)
+    if (!match) {
+      return;
+    }
+
+    console.log('update feature ', match);
+
+    setFeature(match);
+  }, [features, feature]);
+
   const onAddClick = async () => {
     if (!client || !layer) {
       return;
@@ -172,10 +203,10 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
     };
 
     if (feat.properties) {
-      feat.properties[referencedLayerPropertyName] = parentEditFeature.getProperties()[referencePropertyName];
+      feat.properties[`_${referencedLayerPropertyName}_`] = parentEditFeature.getProperties()[referencePropertyName];
     }
 
-    console.log(feat);
+    console.log('add feature ', feat)
 
     setFeature(feat);
     setIsModalOpen(true);
@@ -188,6 +219,8 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
       return;
     }
 
+    console.log('edit feature ', feat)
+
     setFeature(feat);
     setIsModalOpen(true);
   };
@@ -195,6 +228,9 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
   const onCancel = async () => {
     setErrorMsg(undefined);
     setIsModalOpen(false);
+
+    // TODO Check if something has changed before reloading
+    // await reloadParent();
   };
 
   const getColumns = () => {
@@ -219,37 +255,67 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
     return columns;
   };
 
-  // const reloadParent = async () => {
-  //   if (!map || !editLayerId || !parentEditFeature || !parentEditFeature.getId()) {
-  //     return;
-  //   }
+  const reloadParent = async () => {
+    if (!map || !parentEditLayer || !parentEditFeature || !parentEditFeature.getId()) {
+      return;
+    }
 
-  //   const rootLayer = MapUtil.getLayerByOlUid(map, editLayerId);
+    const updatedFeatures = await executeGetFeature({
+      layer: parentEditLayer,
+      filter: equalTo('id', (parentEditFeature.getId() as string).split('.')[1])
+    });
 
-  //   if (!rootLayer || !isWmsLayer(rootLayer)) {
-  //     return;
-  //   }
+    const f = updatedFeatures?.features[0];
 
-  //   const updatedFeatures = await executeGetFeature({
-  //     layer: rootLayer,
-  //     filter: equalTo('id', (parentEditFeature.getId() as string).split('.')[1])
-  //   });
+    if (f && rootEditFeature && f.id === rootEditFeature.id) {
+      // TODO Create thunk for reloading the feature instead?
+      dispatch(setEditFeature(f));
+    }
+    // TODO What should happen else?
 
-  //   const f = updatedFeatures?.features[0];
+    // TODO Is this needed? It's not supposed the layer is added to the map
+    // parentEditLayer.getSource()?.refresh();
+  };
 
-  //   if (f) {
-  //     dispatch(setRootFeature(f));
-  //   }
+  const onSaveSuccess = async (responseText?: string) => {
+    await reloadParent();
 
-  //   rootLayer.getSource()?.refresh();
-  // };
+    if (!responseText || !layer) {
+      return;
+    }
 
-  const onSaveSuccess = async () => {
-    // await reloadParent();
+    // Reload feature in create mode.
+    if (feature && !feature.id) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(responseText, 'text/xml');
+
+      // Get feature id from response
+      const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
+      const idString = featureId.item(0)?.getAttribute('fid');
+      // const id = idString?.split('.')[1];
+
+      if (idString) {
+        setFeature({
+          ...feature,
+          id: idString
+        });
+
+        // const updatedFeatures = await executeGetFeature({
+        //   layer: layer,
+        //   filter: equalTo('id', id)
+        // });
+
+        // if (updatedFeatures && updatedFeatures.features.length === 1) {
+        //   setFeature(updatedFeatures.features[0]);
+        // }
+      }
+    }
   };
 
   const onDeleteSuccess = async () => {
-    // await reloadParent();
+    await reloadParent();
+
+    setIsModalOpen(false);
   };
 
   const getDataSource = () => {
@@ -291,23 +357,27 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
         maskClosable={false}
         footer={null}
         width={600}
+        destroyOnClose={true}
         // Using the i18n from EditFeatureDrawer is intended here.
         title={`${t('EditFeatureDrawer.featureEditor')} - ${layer?.get('name')}`}
         onCancel={onCancel}
       >
         {
-          // TODO include create button
           (layer && feature) && (
-            <EditFeatureFullForm
-              feature={feature}
-              layer={layer}
-              additionalAttributes={[
-                referencedLayerPropertyName
-              ]}
-              showEditToolbar={false}
-              onSaveSuccess={onSaveSuccess}
-              onDeleteSuccess={onDeleteSuccess}
-            />
+            <Spin
+              spinning={isFeaturesLoading}
+            >
+              <EditFeatureFullForm
+                feature={feature}
+                layer={layer}
+                // additionalAttributes={[
+                //   referencedLayerPropertyName
+                // ]}
+                showEditToolbar={false}
+                onSaveSuccess={onSaveSuccess}
+                onDeleteSuccess={onDeleteSuccess}
+              />
+            </Spin>
           )
         }
       </Modal>

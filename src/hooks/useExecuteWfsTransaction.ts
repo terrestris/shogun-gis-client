@@ -76,15 +76,19 @@ export const useExecuteWfsTransaction = () => {
             continue;
           }
 
-          const tabConfigs = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
+          // const isConfiguredProperty = editFormConfig.every(tabConfig => !!tabConfig.children?.find(cfg => cfg.propertyName === key));
+          const tabConfigsContainingProperty = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
+          const isReadOnly = tabConfigsContainingProperty.every(tabConfig => !!tabConfig.children?.find(cfg => cfg.propertyName === key && cfg.readOnly));
 
-          const isReadOnly = tabConfigs.every(tabConfig => !!tabConfig.children?.find(cfg => cfg.propertyName === key && cfg.readOnly));
-
-          // TODO Here is the problem!
-          console.log(isReadOnly);
+          const isAdditionalProp = key.startsWith('_') && key.endsWith('_');
 
           if (isReadOnly) {
             featureClone.unset(key);
+          }
+
+          if (isAdditionalProp) {
+            featureClone.unset(key);
+            featureClone.set(key.slice(1, -1), value);
           }
         }
 

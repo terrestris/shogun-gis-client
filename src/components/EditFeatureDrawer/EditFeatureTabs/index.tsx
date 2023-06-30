@@ -16,6 +16,10 @@ import {
 } from 'rc-tabs/lib/interface';
 
 import {
+  WmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import {
   PropertyFormItemEditConfig,
   PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
@@ -23,6 +27,7 @@ import {
 import EditFeatureForm from '../EditFeatureForm';
 
 export type EditFeatureTabsProps = TabsProps & {
+  editLayer: WmsLayer;
   editFeature: OlFeature;
   form: FormInstance;
   tabConfig?: PropertyFormTabConfig<PropertyFormItemEditConfig>[];
@@ -30,6 +35,7 @@ export type EditFeatureTabsProps = TabsProps & {
 };
 
 export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
+  editLayer,
   editFeature,
   tabConfig,
   form,
@@ -46,6 +52,7 @@ export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
         <EditFeatureForm
           name={config.title}
           form={form}
+          editLayer={editLayer}
           editFeature={editFeature}
           initialValues={initialValues}
           formConfig={config.children}

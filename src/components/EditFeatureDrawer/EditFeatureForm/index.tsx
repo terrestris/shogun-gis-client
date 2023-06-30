@@ -27,6 +27,10 @@ import OlFeature from 'ol/Feature';
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
+  WmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import {
   PropertyFormItemEditDefaultConfig,
   PropertyFormItemEditReferenceTableConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
@@ -44,12 +48,14 @@ import './index.less';
 type FormDataType = Record<string, string | number | boolean>;
 
 export type EditFeatureFormProps = FormProps & {
+  editLayer: WmsLayer;
   editFeature: OlFeature;
   form: FormInstance;
   formConfig?: (PropertyFormItemEditDefaultConfig | PropertyFormItemEditReferenceTableConfig)[];
 };
 
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
+  editLayer,
   editFeature,
   form,
   formConfig,
@@ -94,15 +100,25 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       formItemProps.valuePropName = 'fileList';
     }
 
+    if (fieldCfg.component === 'REFERENCE_TABLE') {
+      return field;
+    }
+
     return (
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
+        // shouldUpdate={(prevValue, curValue) => {
+        //   if (fieldCfg.component === 'REFERENCE_TABLE') {
+        //     return false;
+        //   }
+        //   return true;
+        // }}
         label={fieldCfg.displayName || fieldCfg.propertyName}
         // normalize={normalize}
         {...formItemProps}
       >
-        {field}
+        { field }
       </Form.Item>
     );
   };
@@ -190,6 +206,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
 
         return (
           <ReferenceTable
+            parentEditLayer={editLayer}
             parentEditFeature={editFeature}
             layerId={referenceTableConfig.layerId}
             propertyName={referenceTableConfig.propertyName}

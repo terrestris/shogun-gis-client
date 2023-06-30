@@ -161,6 +161,10 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     }
   };
 
+  const onDeleteSuccess = () => {
+    dispatch(setFeature(null));
+  };
+
   const onLockSuccess = () => {
     setIsFeatureLocked(false);
   };
@@ -215,6 +219,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
           feature={feature}
           layer={layer}
           onSaveSuccess={onSaveSuccess}
+          onDeleteSuccess={onDeleteSuccess}
         />
       }
     </MapDrawer>

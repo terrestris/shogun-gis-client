@@ -43,6 +43,7 @@ import {
 
 import {
   PropertyFormItemEditConfig,
+  PropertyFormItemEditReferenceTableConfig,
   PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
@@ -62,7 +63,7 @@ export type EditFeatureFullFormProps = {
   feature: Feature;
   layer: WmsLayer;
   showEditToolbar?: boolean;
-  additionalAttributes?: string[];
+  // additionalAttributes?: string[];
   onSaveSuccess?: (responseText?: string) => void;
   onSaveError?: (error: unknown) => void;
   onDeleteSuccess?: () => void;
@@ -73,7 +74,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   feature,
   layer,
   showEditToolbar = true,
-  additionalAttributes = [],
+  // additionalAttributes = [],
   onSaveSuccess = () => {},
   onSaveError = () => {},
   onDeleteSuccess = () => {},
@@ -123,23 +124,84 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
     const properties = cloneDeep(feature?.properties) || {};
 
-    Object.entries(properties).forEach(([key]) => {
-      const tabConfigs = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
+    for (const key of Object.keys(properties)) {
+      const tabConfigsContainingProperty = editFormConfig
+        ?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
 
-      if (tabConfigs.length > 1) {
+      if (tabConfigsContainingProperty.length > 1) {
         Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
       }
 
-      // TODO for referenced features this assumption is not correct
-      // Filter out properties that aren't configured in the form.
-      const isAvailable = tabConfigs.every(tc => !!tc.children?.find(cfg => cfg.propertyName === key));
-      console.log(!isAvailable && !additionalAttributes.includes(key))
-      if (!isAvailable && !additionalAttributes.includes(key)) {
-        console.log('delete ', key);
+      console.log(editFormConfig)
+      // TODO the layer itself doesn't know about the additional prop, it's configured in the parent
+      // const isAdditionalProp = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => {
+      //   return formCfg.component === 'REFERENCE_TABLE';
+      // })); //  && (formCfg as PropertyFormItemEditReferenceTableConfig).referencedLayerPropertyName === key
 
-        delete properties[key];
+      // console.log(tabConfigsIncludingProperty)
+      // console.log('isAdditionalProp ', isAdditionalProp);
+
+      const isAdditionalProp = key.startsWith('_') && key.endsWith('_');
+
+      if (tabConfigsContainingProperty.length > 0 || isAdditionalProp) {
+        continue;
       }
-    });
+
+      console.log('delete property ', key);
+
+      delete properties[key];
+
+      // if (tabConfigsIncludingProperty.length === 0) {
+      //   delete properties[key];
+      // }
+
+      // console.log(tabConfigsIncludingProperty)
+      // // TODO filter out props in save button?
+      // // TODO for referenced features this assumption is not correct
+      // // Filter out properties that aren't configured in the form.
+      // const isAvailable = tabConfigsIncludingProperty.every(tc => !!tc.children?.find(cfg => cfg.propertyName === key));
+      // // const isAdditionalProp = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => {
+      // //   return formCfg.propertyName === key && formCfg.component === 'REFERENCE_TABLE';
+      // // }));
+
+      // console.log(key, isAvailable)
+      // // console.log(additionalAttributes);
+
+      // // console.log(!isAvailable && !additionalAttributes.includes(key))
+      // // if (!isAvailable && !additionalAttributes.includes(key)) {
+      // if (isAvailable || isAdditionalProp) {
+      //   continue;
+      //   // console.log('delete ', key);
+      // }
+
+      // delete properties[key];
+    }
+
+    // Object.entries(properties).forEach(([key]) => {
+    //   const tabConfigs = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => formCfg.propertyName === key));
+
+    //   if (tabConfigs.length > 1) {
+    //     Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
+    //   }
+
+    //   // TODO filter out props in save button?
+    //   // TODO for referenced features this assumption is not correct
+    //   // Filter out properties that aren't configured in the form.
+    //   const isAvailable = tabConfigs.every(tc => !!tc.children?.find(cfg => cfg.propertyName === key));
+    //   const isAdditionalProp = editFormConfig?.filter(tabCfg => tabCfg.children?.find(formCfg => {
+    //     return formCfg.propertyName === key && formCfg.component === 'REFERENCE_TABLE';
+    //   }));
+
+    //   // console.log(additionalAttributes);
+
+    //   // console.log(!isAvailable && !additionalAttributes.includes(key))
+    //   // if (!isAvailable && !additionalAttributes.includes(key)) {
+    //   if (isAvailable) {
+    //     // console.log('delete ', key);
+
+    //     delete properties[key];
+    //   }
+    // });
 
     const initFormValues = Object.entries(properties)
       .map(([key, value]) => {
@@ -181,11 +243,15 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     editFeat.setProperties(properties);
 
     form.resetFields();
+    // TODO This breaks some other stuff, right?
+    form.setFieldsValue(Object.fromEntries(initFormValues));
+
+    console.log(initFormValues);
 
     setTabConfig(editFormConfig);
     setInitialValues(Object.fromEntries(initFormValues));
     setEditFeature(editFeat);
-  }, [map, client, layer, feature, form]);
+  }, [map, client, form, layer, feature]); //additionalAttributes
 
   useEffect(() => {
     update();
@@ -224,7 +290,6 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
   const onDeleteSuccessInternal = () => {
     setErrorMsg(undefined);
-    dispatch(setFeature(null));
 
     onDeleteSuccess();
   };
@@ -271,6 +336,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
               initialValues={initialValues}
               form={form}
               editFeature={editFeature}
+              editLayer={layer}
             />
           </>
         )
