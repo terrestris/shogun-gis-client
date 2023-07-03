@@ -92,6 +92,21 @@ export type HighlightingResults = {
   [key: string]: HighlightingResult;
 };
 
+const isFulfilled = <T, >(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
+
+export type SolrQueryConfig = {
+  q: string;
+  fq?: string;
+  defType?: 'lucene' | 'dismax' | 'edismax';
+  qf?: string;
+  rows?: number;
+  hl?: boolean;
+  'hl.fl'?: string;
+  'hl.tag.pre'?: string;
+  'hl.tag.post'?: string;
+  'hl.requireFieldMatch'?: boolean;
+};
+
 export const MultiSearch: React.FC<MultiSearchProps> = ({
   useNominatim,
   useSolrHighlighting = true,
@@ -212,55 +227,63 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     if (searchData && map) {
       try {
-        const query = generateSolrQuery({
+        const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
+        const queriesPerLayer = generateSolrQuery({
           searchValue,
           map
         });
-        const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
 
-        const solrQueryConfig: {
-          q: string;
-          fq?: string;
-          rows?: number;
-          hl?: boolean;
-          'hl.fl'?: string;
-          'hl.tag.pre'?: string;
-          'hl.tag.post'?: string;
-          'hl.requireFieldMatch'?: boolean;
-        } = {
-          q: query,
-          rows: 100
-        };
+        const promises = queriesPerLayer.map(q => {
+          const solrQueryConfig: SolrQueryConfig = {
+            q: q.query,
+            rows: 100,
+            defType: 'edismax'
+          };
 
-        if (useViewBox && viewBox) {
-          const bboxFilter = `geometry:[${viewBox[1]},${viewBox[0]} TO ${viewBox[3]},${viewBox[2]}]`;
-          solrQueryConfig.fq = bboxFilter;
-        }
+          if (q.fieldList) {
+            solrQueryConfig.qf = q.fieldList;
+          } else {
+            solrQueryConfig.qf = 'search';
+          }
 
-        if (useSolrHighlighting) {
-          solrQueryConfig.hl = true;
-          solrQueryConfig['hl.fl'] = '*';
-          solrQueryConfig['hl.tag.pre'] = '<b>';
-          solrQueryConfig['hl.tag.post'] = '</b>';
-          solrQueryConfig['hl.requireFieldMatch'] = true;
-        }
+          if (useViewBox && viewBox) {
+            const bboxFilter = `geometry:[${viewBox[1]},${viewBox[0]} TO ${viewBox[3]},${viewBox[2]}]`;
+            solrQueryConfig.fq = bboxFilter;
+          }
 
-        const defaultHeaders = {
-          'Content-Type': 'application/json'
-        };
+          if (useSolrHighlighting) {
+            solrQueryConfig.hl = true;
+            solrQueryConfig['hl.fl'] = '*';
+            solrQueryConfig['hl.tag.pre'] = '<b>';
+            solrQueryConfig['hl.tag.post'] = '</b>';
+            solrQueryConfig['hl.requireFieldMatch'] = true;
+          }
 
-        response = await fetch(searchUrl.href, {
-          method: 'POST',
-          headers: {
-            ...defaultHeaders,
-            ...getBearerTokenHeader(client?.getKeycloak())
-          },
-          body: JSON.stringify(solrQueryConfig)
+          const defaultHeaders = {
+            'Content-Type': 'application/json'
+          };
+
+          return fetch(searchUrl.href, {
+            method: 'POST',
+            headers: {
+              ...defaultHeaders,
+              ...getBearerTokenHeader(client?.getKeycloak())
+            },
+            body: JSON.stringify(solrQueryConfig)
+          });
         });
 
-        const dataJson = await response.json();
-        setDataSearchResults(dataJson?.response?.docs);
-        setHighlightingResults(dataJson?.highlighting);
+        const results = await Promise.allSettled(promises.map(async pr => {
+          const res = await pr;
+          return res.json();
+        }));
+
+        const successfulResults = results.filter(isFulfilled);
+        const dataResults = successfulResults.flatMap(sR => sR.value?.response?.docs);
+        const hlResults = Object.assign({}, ...successfulResults.map(sr => sr.value?.highlighting));
+
+        setDataSearchResults(dataResults);
+        setHighlightingResults(hlResults);
       } catch (error) {
         setDataSearchResults([]);
         setHighlightingResults({});
@@ -324,8 +347,10 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     if (highlightResult) {
       const filteredHighlightKeys = Object.keys(highlightResult).filter(key => !blacklistedAttributes.includes(key));
-      const highlightValue = highlightResult[filteredHighlightKeys[0]];
-      return `${highlightValue} [${filteredHighlightKeys[0]}]`;
+      if (filteredHighlightKeys.length > 0) {
+        const highlightValue = highlightResult[filteredHighlightKeys[0]];
+        return `${highlightValue} [${filteredHighlightKeys[0]}]`;
+      }
     }
 
     Object.keys(dsResult)
