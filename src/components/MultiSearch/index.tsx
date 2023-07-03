@@ -347,8 +347,10 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     if (highlightResult) {
       const filteredHighlightKeys = Object.keys(highlightResult).filter(key => !blacklistedAttributes.includes(key));
-      const highlightValue = highlightResult[filteredHighlightKeys[0]];
-      return `${highlightValue} [${filteredHighlightKeys[0]}]`;
+      if (filteredHighlightKeys.length > 0) {
+        const highlightValue = highlightResult[filteredHighlightKeys[0]];
+        return `${highlightValue} [${filteredHighlightKeys[0]}]`;
+      }
     }
 
     Object.keys(dsResult)
