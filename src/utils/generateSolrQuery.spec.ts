@@ -73,6 +73,7 @@ describe('<generateSolrQuery />', () => {
 
     expect(generatedQuery).toHaveLength(1);
     expect(generatedQuery[0].query).toEqual(expectedSolrQuery);
+    expect(generatedQuery[0].fieldList).toBeUndefined();
   });
 
   it('returns the correct solr query (single term, two attributes specified)', () => {
@@ -88,6 +89,8 @@ describe('<generateSolrQuery />', () => {
     expect(generatedQuery).toHaveLength(2);
     expect(generatedQuery[0].query).toEqual(expectedSolrQueryFoo);
     expect(generatedQuery[1].query).toEqual(expectedSolrQueryBar);
+    expect(generatedQuery[0].fieldList).toEqual('attr1 attr2');
+    expect(generatedQuery[1].fieldList).toEqual('attr3 attr4');
   });
 
   it('returns the correct solr query (search phrase, two attributes specified)', () => {
@@ -102,6 +105,8 @@ describe('<generateSolrQuery />', () => {
     expect(generatedQuery).toHaveLength(2);
     expect(generatedQuery[0].query).toEqual(expectedSolrQueryFoo);
     expect(generatedQuery[1].query).toEqual(expectedSolrQueryBar);
+    expect(generatedQuery[0].fieldList).toEqual('attr1 attr2');
+    expect(generatedQuery[1].fieldList).toEqual('attr3 attr4');
   });
 
 });
