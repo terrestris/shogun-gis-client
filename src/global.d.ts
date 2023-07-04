@@ -15,6 +15,7 @@ declare module 'clientConfig' {
     authorizedRolesForCreate?: (string | RegExp)[];
     authorizedRolesForUpdate?: (string | RegExp)[];
     authorizedRolesForDelete?: (string | RegExp)[];
+    authorizedRolesForEditingGeometries?: (string | RegExp)[];
   };
   type ClientConfiguration = {
     shogunBase?: string;

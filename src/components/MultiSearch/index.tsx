@@ -472,26 +472,28 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       setResultsVisible(false);
     };
 
-    if (
-      allowedEditMode.includes('CREATE') ||
-      allowedEditMode.includes('DELETE') ||
-      allowedEditMode.includes('UPDATE')
-    ) {
-      return [
-        <Tooltip
-          key="edit"
-          title={t('EditFeatureButton.title')}
-          placement="bottom"
-        >
-          <Button
-            onClick={onEditFeatureBtnClick}
-            icon={<EditOutlined />}
-          />
-        </Tooltip>
-      ];
-    } else {
-      return [<></>];
-    }
+    // button is temporarily disabled
+    return [<></>];
+    // if (
+    //   allowedEditMode.includes('CREATE') ||
+    //   allowedEditMode.includes('DELETE') ||
+    //   allowedEditMode.includes('UPDATE')
+    // ) {
+    //   return [
+    //     <Tooltip
+    //       key="edit"
+    //       title={t('EditFeatureButton.title')}
+    //       placement="bottom"
+    //     >
+    //       <Button
+    //         onClick={onEditFeatureBtnClick}
+    //         icon={<EditOutlined />}
+    //       />
+    //     </Tooltip>
+    //   ];
+    // } else {
+    //   return [<></>];
+    // }
   };
 
   const layerStyle = useMemo(() => (
