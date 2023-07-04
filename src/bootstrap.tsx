@@ -529,7 +529,8 @@ const checkRoles = (
   const {
     authorizedRolesForCreate,
     authorizedRolesForUpdate,
-    authorizedRolesForDelete
+    authorizedRolesForDelete,
+    authorizedRolesForEditingGeometries
   } = featureEditRoles;
 
   const result: EditLevel[] = [];
@@ -543,6 +544,9 @@ const checkRoles = (
     }
     if (authorizedRolesForDelete?.some(role => matchRole(role, element))) {
       result.push('DELETE');
+    }
+    if (authorizedRolesForEditingGeometries?.some(role => matchRole(role, element))) {
+      result.push('EDIT_GEOMETRY');
     }
   }
   return result;

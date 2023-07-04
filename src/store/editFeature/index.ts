@@ -7,7 +7,12 @@ import {
   Feature
 } from 'geojson';
 
-export type EditLevel = 'CREATE' | 'UPDATE' | 'DELETE' | 'NONE';
+export type EditLevel =
+  | 'CREATE'
+  | 'UPDATE'
+  | 'DELETE'
+  | 'EDIT_GEOMETRY'
+  | 'NONE';
 export interface EditFeatureState {
   layerId: string | null;
   feature: Feature | null;
