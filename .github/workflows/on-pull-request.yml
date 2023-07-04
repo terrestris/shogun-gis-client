@@ -12,6 +12,8 @@ jobs:
           fetch-depth: 0
       - name: Lint commit messages 🔎
         uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: .commitlintrc.json
 
   build:
     runs-on: ubuntu-latest
