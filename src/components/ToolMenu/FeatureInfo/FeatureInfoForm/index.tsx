@@ -19,6 +19,8 @@ import {
 
 import DisplayField from '../../../DisplayField';
 
+import './index.less';
+
 export type FeatureInfoFormProps = FormProps & {
   formConfig?: PropertyFormItemReadConfig[];
   feature: OlFeature;
@@ -66,7 +68,7 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
       className="feature-info-form"
       form={form}
       labelCol={{
-        span: 6
+        span: 8
       }}
       labelAlign="left"
       labelWrap
