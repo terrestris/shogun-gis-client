@@ -26,6 +26,8 @@ import {
 
 import EditFeatureForm from '../EditFeatureForm';
 
+import './index.less';
+
 export type EditFeatureTabsProps = TabsProps & {
   editLayer: WmsLayer;
   editFeature: OlFeature;
@@ -63,6 +65,7 @@ export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
 
   return (
     <Tabs
+      className="feature-edit-tabs"
       items={items}
       {...passThroughProps}
     />

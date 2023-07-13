@@ -100,6 +100,8 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       formItemProps.valuePropName = 'fileList';
     }
 
+    // The ReferenceTable is not a form item strictly speaking, so we don't
+    // wrap it in Form.Item.
     if (fieldCfg.component === 'REFERENCE_TABLE') {
       return field;
     }
@@ -108,31 +110,13 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
-        // shouldUpdate={(prevValue, curValue) => {
-        //   if (fieldCfg.component === 'REFERENCE_TABLE') {
-        //     return false;
-        //   }
-        //   return true;
-        // }}
         label={fieldCfg.displayName || fieldCfg.propertyName}
-        // normalize={normalize}
         {...formItemProps}
       >
         { field }
       </Form.Item>
     );
   };
-
-  // StoreValue
-  // const normalize = (value: any) => {
-  //   // if create then already moment
-  //   console.log(value)
-  //   // if () {
-
-  //   // }
-
-  //   return value;
-  // };
 
   const createReadOnlyComponent = (fieldConfig: (PropertyFormItemEditDefaultConfig | PropertyFormItemEditReferenceTableConfig)) => {
     return (
@@ -205,17 +189,20 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
         const referenceTableConfig = (fieldCfg as PropertyFormItemEditReferenceTableConfig);
 
         return (
-          <ReferenceTable
-            parentEditLayer={editLayer}
-            parentEditFeature={editFeature}
-            layerId={referenceTableConfig.layerId}
-            propertyName={referenceTableConfig.propertyName}
-            referencePropertyName={referenceTableConfig.referencePropertyName}
-            referencedLayerPropertyName={referenceTableConfig.referencedLayerPropertyName}
-            readOnly={referenceTableConfig.readOnly}
-            tablePropertyName={referenceTableConfig.tablePropertyName}
-            {...referenceTableConfig?.fieldProps}
-          />
+          <>
+            <ReferenceTable
+              key={fieldCfg.propertyName}
+              parentEditLayer={editLayer}
+              parentEditFeature={editFeature}
+              layerId={referenceTableConfig.layerId}
+              propertyName={referenceTableConfig.propertyName}
+              referencePropertyName={referenceTableConfig.referencePropertyName}
+              referencedLayerPropertyName={referenceTableConfig.referencedLayerPropertyName}
+              readOnly={referenceTableConfig.readOnly}
+              tablePropertyName={referenceTableConfig.tablePropertyName}
+              {...referenceTableConfig?.fieldProps}
+            />
+          </>
         );
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);

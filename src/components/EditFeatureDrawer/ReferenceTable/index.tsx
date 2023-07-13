@@ -57,6 +57,8 @@ import {
 
 import EditFeatureFullForm from '../EditFeatureFullForm';
 
+import './index.less';
+
 export type ReferenceDataType = {
   featureId: string | number;
   featureDescription: string;
@@ -235,6 +237,7 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
 
   const getColumns = () => {
     const columns: ColumnsType<ReferenceDataType> = [{
+      width: '100%',
       dataIndex: 'featureDescription'
     }];
 
@@ -353,6 +356,7 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
         {...passThroughProps}
       />
       <Modal
+        className="reference-table-modal"
         open={isModalOpen}
         maskClosable={false}
         footer={null}
