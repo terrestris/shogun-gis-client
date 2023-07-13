@@ -57,7 +57,7 @@
     "i18next": "^23.0.2",
     "i18next-browser-languagedetector": "^7.0.1",
     "js-md5": "^0.7.3",
-    "keycloak-js": "^21.0.0",
+    "keycloak-js": "^22.0.0",
     "normalize.css": "^8.0.1",
     "ol": "^7.2.2",
     "react": "^17.0.2",
