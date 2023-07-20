@@ -5,9 +5,9 @@ import React, {
 
 import {
   EditOutlined,
+  LoadingOutlined,
   SearchOutlined,
-  SettingOutlined,
-  LoadingOutlined
+  SettingOutlined
 } from '@ant-design/icons';
 import {
   Button,
@@ -16,13 +16,10 @@ import {
   Empty,
   Input,
   InputProps,
-  Tag,
   Tooltip
 } from 'antd';
 
-import _debounce from 'lodash/debounce';
 import _groupBy from 'lodash/groupBy';
-import _isArray from 'lodash/isArray';
 
 import { getUid } from 'ol';
 import {
@@ -52,6 +49,10 @@ import SearchResultsPanel, {
 } from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
 
 import {
+  SearchConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
+
+import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
@@ -76,14 +77,39 @@ interface MultiSearchProps extends InputProps {
   delay?: number;
   minChars?: number;
   solrSearchBasePath?: string;
+  useSolrHighlighting?: boolean;
 };
 
 export type DataSearchResult = {
   [key: string]: string | string[] | number[];
 };
 
+export type HighlightingResult = {
+  [key: string]: string;
+};
+
+export type HighlightingResults = {
+  [key: string]: HighlightingResult;
+};
+
+const isFulfilled = <T, >(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
+
+export type SolrQueryConfig = {
+  q: string;
+  fq?: string;
+  defType?: 'lucene' | 'dismax' | 'edismax';
+  qf?: string;
+  rows?: number;
+  hl?: boolean;
+  'hl.fl'?: string;
+  'hl.tag.pre'?: string;
+  'hl.tag.post'?: string;
+  'hl.requireFieldMatch'?: boolean;
+};
+
 export const MultiSearch: React.FC<MultiSearchProps> = ({
   useNominatim,
+  useSolrHighlighting = true,
   delay = 1000,
   minChars = 3,
   solrSearchBasePath = '/search/query'
@@ -106,6 +132,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [resultsVisible, setResultsVisible] = useState<boolean>(false);
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [dataSearchResults, setDataSearchResults] = useState<DataSearchResult[]>([]);
+  const [highlightingResults, setHighlightingResults] = useState<HighlightingResults>({});
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
 
@@ -173,7 +200,6 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   }, [searchData, searchNominatim, useViewBox, t]);
 
   const performSearch = useCallback(async () => {
-
     if (searchValue.length < minChars) {
       resetSearch();
       return;
@@ -186,6 +212,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     setLoading(true);
     setNominatimResults([]);
     setDataSearchResults([]);
+    setHighlightingResults({});
 
     let response;
     let viewBox: OlExtent | null = null;
@@ -200,41 +227,66 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     if (searchData && map) {
       try {
-        const query = generateSolrQuery({
+        const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
+        const queriesPerLayer = generateSolrQuery({
           searchValue,
           map
         });
-        const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
 
-        const data: {
-          query: string;
-          filterQuery?: string;
-        } = {
-          query
-        };
+        const promises = queriesPerLayer.map(q => {
+          const solrQueryConfig: SolrQueryConfig = {
+            q: q.query,
+            rows: 100,
+            defType: 'edismax'
+          };
 
-        if (useViewBox && viewBox) {
-          const bboxFilter = `geometry:[${viewBox[1]},${viewBox[0]} TO ${viewBox[3]},${viewBox[2]}]`;
-          data.filterQuery = bboxFilter;
-        }
+          if (q.fieldList) {
+            solrQueryConfig.qf = q.fieldList;
+          } else {
+            solrQueryConfig.qf = 'search';
+          }
 
-        const defaultHeaders = {
-          'Content-Type': 'application/json'
-        };
+          if (useViewBox && viewBox) {
+            const bboxFilter = `geometry:[${viewBox[1]},${viewBox[0]} TO ${viewBox[3]},${viewBox[2]}]`;
+            solrQueryConfig.fq = bboxFilter;
+          }
 
-        response = await fetch(searchUrl.href, {
-          method: 'POST',
-          headers: {
-            ...defaultHeaders,
-            ...getBearerTokenHeader(client?.getKeycloak())
-          },
-          body: JSON.stringify(data)
+          if (useSolrHighlighting) {
+            solrQueryConfig.hl = true;
+            solrQueryConfig['hl.fl'] = '*';
+            solrQueryConfig['hl.tag.pre'] = '<b>';
+            solrQueryConfig['hl.tag.post'] = '</b>';
+            solrQueryConfig['hl.requireFieldMatch'] = true;
+          }
+
+          const defaultHeaders = {
+            'Content-Type': 'application/json'
+          };
+
+          return fetch(searchUrl.href, {
+            method: 'POST',
+            headers: {
+              ...defaultHeaders,
+              ...getBearerTokenHeader(client?.getKeycloak())
+            },
+            body: JSON.stringify(solrQueryConfig)
+          });
         });
 
-        const dataJson = await response.json();
-        setDataSearchResults(dataJson?.response?.docs);
+        const results = await Promise.allSettled(promises.map(async pr => {
+          const res = await pr;
+          return res.json();
+        }));
+
+        const successfulResults = results.filter(isFulfilled);
+        const dataResults = successfulResults.flatMap(sR => sR.value?.response?.docs);
+        const hlResults = Object.assign({}, ...successfulResults.map(sr => sr.value?.highlighting));
+
+        setDataSearchResults(dataResults);
+        setHighlightingResults(hlResults);
       } catch (error) {
         setDataSearchResults([]);
+        setHighlightingResults({});
         logger.error('Error while fetching the layer search results: ', error);
       } finally {
         if (!searchNominatim) {
@@ -264,9 +316,20 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         setLoading(false);
       }
     }
-  }, [searchValue, minChars, searchData, searchNominatim, useViewBox, map, solrSearchBasePath, client]);
+  }, [searchValue, minChars, searchData, searchNominatim, useViewBox, map, solrSearchBasePath, useSolrHighlighting, client]);
 
-  const getFeatureTitle = useCallback((dsResult: DataSearchResult): string => {
+  const replaceTemplates = (template: string, data: DataSearchResult): string => {
+    const pattern = /{\s*(\w+?)\s*}/g; // regex for template string with values in brackets, e.g. {name}
+    return template.replace(pattern, (_, token) => data[token]?.toString() || '');
+  };
+
+  const getFeatureTitle = useCallback((dsResult: DataSearchResult, highlightResult?: HighlightingResult): string => {
+    if (!map) {
+      return '';
+    }
+
+    const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType[0] as string);
+    const searchConfig = layer?.get('searchConfig') as SearchConfig;
 
     const blacklistedAttributes = [
       'category',
@@ -278,9 +341,18 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     let title: string = '';
 
-    // for now, we will use the first attribute that matches the search term.
-    // perspectively we will switch to the search configuration config which will
-    // provide a display template for the feature title among other things
+    if (searchConfig?.displayTemplate) {
+      return replaceTemplates(searchConfig.displayTemplate, dsResult);
+    }
+
+    if (highlightResult) {
+      const filteredHighlightKeys = Object.keys(highlightResult).filter(key => !blacklistedAttributes.includes(key));
+      if (filteredHighlightKeys.length > 0) {
+        const highlightValue = highlightResult[filteredHighlightKeys[0]];
+        return `${highlightValue} [${filteredHighlightKeys[0]}]`;
+      }
+    }
+
     Object.keys(dsResult)
       .filter(key => !blacklistedAttributes.includes(key))
       .forEach(propKey => {
@@ -297,11 +369,9 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     }
 
     return title;
-
-  }, [searchValue]);
+  }, [searchValue, map]);
 
   useEffect(() => {
-
     if (!map) {
       return;
     }
@@ -339,6 +409,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
             return;
           }
           const id = dsResult.id as string;
+
           const geometry = wktFormat.readGeometry(dsResult.geometry[0], {
             dataProjection: 'EPSG:4326',
             featureProjection: map.getView().getProjection()
@@ -346,10 +417,10 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
           const olFeat = new OlFeature({
             geometry
           });
-          olFeat.set('title', getFeatureTitle(dsResult));
+          olFeat.set('title', getFeatureTitle(dsResult, highlightingResults?.[id]));
           let ftName;
           if (dsResult.featureType?.[0]) {
-            const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType[0] as string);
+            const layer = MapUtil.getLayerByNameParam(map, dsResult.featureType?.[0] as string);
             if (layer) {
               olFeat.set('layer', layer);
               ftName = layer.get('name');
@@ -366,16 +437,14 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         };
         updatedResults.push(resultCategory);
       });
-
     }
 
     setResultsVisible(true);
     setSearchResults(updatedResults);
 
-  }, [dataSearchResults, getFeatureTitle, map, nominatimResults, t]);
+  }, [dataSearchResults, highlightingResults, nominatimResults, map, getFeatureTitle, t]);
 
   useEffect(() => {
-
     const timeout = setTimeout(() => {
       performSearch();
     }, delay);
@@ -387,20 +456,6 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const resetSearch = () => {
     setDataSearchResults([]);
     setNominatimResults([]);
-  };
-
-  const listPrefixRenderer = (item: any) => {
-    const {
-      feature
-    } = item;
-
-    const ftName = feature.get('ftName');
-
-    if (!ftName) {
-      return <></>;
-    }
-
-    return <Tag>{ftName}</Tag>;
   };
 
   const actionsCreator = (item: any) => {
@@ -417,31 +472,53 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       setResultsVisible(false);
     };
 
-    if (
-      allowedEditMode.includes('CREATE') ||
-      allowedEditMode.includes('DELETE') ||
-      allowedEditMode.includes('UPDATE')
-    ) {
-      return [
-        <Tooltip
-          key="edit"
-          title={t('EditFeatureButton.title')}
-          placement="bottom"
-        >
-          <Button
-            onClick={onEditFeatureBtnClick}
-            icon={<EditOutlined />}
-          />
-        </Tooltip>
-      ];
-    } else {
-      return [<></>];
-    }
-
+    // button is temporarily disabled
+    return [<></>];
+    // if (
+    //   allowedEditMode.includes('CREATE') ||
+    //   allowedEditMode.includes('DELETE') ||
+    //   allowedEditMode.includes('UPDATE')
+    // ) {
+    //   return [
+    //     <Tooltip
+    //       key="edit"
+    //       title={t('EditFeatureButton.title')}
+    //       placement="bottom"
+    //     >
+    //       <Button
+    //         onClick={onEditFeatureBtnClick}
+    //         icon={<EditOutlined />}
+    //       />
+    //     </Tooltip>
+    //   ];
+    // } else {
+    //   return [<></>];
+    // }
   };
 
-  const resultRenderer = () => {
+  const layerStyle = useMemo(() => (
+    new OlStyle({
+      stroke: new OlStyleStroke({
+        color: 'rgb(255,0,0)',
+        width: 2
+      }),
+      fill: new OlStyleFill({
+        color: 'rgba(255,255,255, 0.5)'
+      }),
+      image: new OlStyleCircle({
+        radius: 10,
+        fill: new OlStyleFill({
+          color: 'rgba(255,255,255, 0.5)'
+        }),
+        stroke: new OlStyleStroke({
+          color: 'rgb(255,0,0)',
+          width: 3
+        })
+      })
+    })
+  ), []);
 
+  const resultRenderer = () => {
     if (searchValue.length < 2 || !resultsVisible || loading || !dataSearchResults) {
       return null;
     }
@@ -466,29 +543,8 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         numTotal={numTotal}
         accordion
         searchTerms={searchValue.split(' ')}
-        listPrefixRenderer={listPrefixRenderer}
         actionsCreator={actionsCreator}
-        layerStyle={
-          new OlStyle({
-            stroke: new OlStyleStroke({
-              color: 'rgb(255,0,0)',
-              width: 2
-            }),
-            fill: new OlStyleFill({
-              color: 'rgba(255,255,255, 0.5)'
-            }),
-            image: new OlStyleCircle({
-              radius: 10,
-              fill: new OlStyleFill({
-                color: 'rgba(255,255,255, 0.5)'
-              }),
-              stroke: new OlStyleStroke({
-                color: 'rgb(255,0,0)',
-                width: 3
-              })
-            })
-          })
-        }
+        layerStyle={layerStyle}
       />
     );
   };

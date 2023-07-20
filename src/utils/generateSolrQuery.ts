@@ -11,6 +11,11 @@ export interface SolrQueryProps {
   map: Map;
 }
 
+type SolrQuery = {
+  query: string;
+  fieldList?: string;
+};
+
 /**
  * Generates a solr search query based on the `searchConfiguration` and `searchable` properties of each layer. This
  * currently considers all layers which are part of the layer tree / map.
@@ -18,7 +23,7 @@ export interface SolrQueryProps {
 export const generateSolrQuery = ({
   searchValue,
   map
-}: SolrQueryProps): string => {
+}: SolrQueryProps): SolrQuery[] => {
   // parse searchValue into an array of search terms,
   // removing special characters and white spaces
   let parts = searchValue.trim()
@@ -27,7 +32,7 @@ export const generateSolrQuery = ({
     .map(s => s.trim())
     .filter(s => s !== '');
 
-  const subQueriesPerLayer: string[] = [];
+  const subQueriesPerLayer: SolrQuery[] = [];
   const layers = map.getAllLayers();
   layers.forEach(layer => {
     if (layer.get('searchable') && isWmsLayer(layer)) {
@@ -35,41 +40,32 @@ export const generateSolrQuery = ({
       const fullLayerName = layer.getSource()?.getParams().LAYERS;
       if (searchConfig?.attributes) {
         // search only configured attributes
-        subQueriesPerLayer.push(`(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts, searchConfig.attributes)}))`);
+        subQueriesPerLayer.push({
+          query: `(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts)}))`,
+          fieldList: searchConfig.attributes.join(' ')
+        });
       } else {
         // search all attributes of this layer
-        subQueriesPerLayer.push(`(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts, ['search'])}))`);
+        subQueriesPerLayer.push({
+          query: `(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts)}))`
+        });
       }
     }
   });
-  return subQueriesPerLayer.join(' OR ');
+  return subQueriesPerLayer;
 };
 
 /**
- * Generates a solr (sub)query for multiple search terms which searches over a list of specified search attributes.
+ * Applies operators for wildcard and fuzzy search to a solr (sub)query for multiple search terms.
  * @param searchParts The search input which may consist of multiple search terms, e.g. ["foo", "bar"]
- * @param searchAttributes The search attributes, e.g. ["name", "street"]
  */
 const generateFuzzySearchQuery = (
-  searchParts: string[],
-  searchAttributes: string[]
+  searchParts: string[]
 ): string => {
-
-  let exactPart = searchAttributes
-    .map(a => `${a}:\"${searchParts.join(' ')}\"`)
-    .join(' OR ');
-
-  const allPartsQuery = searchAttributes.map(a => {
-    const innerPartsQuery = searchParts.map(
-      (part: string) => `${a}:${part.trim()}*^3 OR ${a}:*${part.trim()}*^2 OR ${a}:${part.trim()}~1`
-    );
-    return `(${innerPartsQuery.join(' OR ')})`;
+  const subQueries = searchParts.map(part => {
+    return `(${part.trim()}*^3 OR *${part.trim()}*^2 OR ${part.trim()}~1)`;
   });
-
-  const fuzzyPart = allPartsQuery.join(' AND ');
-
-  return `(${exactPart}) OR (${fuzzyPart})`;
-
+  return subQueries.join(' AND ');
 };
 
 export default generateSolrQuery;

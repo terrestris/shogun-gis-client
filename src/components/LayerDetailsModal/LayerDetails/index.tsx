@@ -64,6 +64,7 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
     try {
       setLoading(true);
       setErrorMessage('');
+      setCapabilities(undefined);
 
       const capa = await CapabilitiesUtil.getWmsCapabilitiesByLayer(
         (layer as OlLayerImage<OlSourceImageWMS> | OlLayerTile<OlSourceTileWMS>), {
@@ -88,33 +89,29 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
   }, [getCapabilities]);
 
   const getLayerName = () => {
-    if (!layer) {
+    if (!layer || !isWmsLayer(layer)) {
       return;
     }
 
-    if (isWmsLayer(layer)) {
-      return layer.getSource()?.getParams().LAYERS;
-    }
+    return layer.getSource()?.getParams().LAYERS;
   };
 
   const getCapabilitiesUrl = () => {
-    if (!layer) {
+    if (!layer || !isWmsLayer(layer)) {
       return;
     }
 
-    if (isWmsLayer(layer)) {
-      let layerUrl;
-      if (layer.getSource() instanceof OlSourceImageWMS) {
-        layerUrl = (layer.getSource() as OlSourceImageWMS).getUrl();
-      }
-      if (layer.getSource() instanceof OlSourceTileWMS) {
-        const urls = (layer.getSource() as OlSourceTileWMS).getUrls();
-        layerUrl = urls ? urls[0] : undefined;
-      }
+    let layerUrl;
+    if (layer.getSource() instanceof OlSourceImageWMS) {
+      layerUrl = (layer.getSource() as OlSourceImageWMS).getUrl();
+    }
+    if (layer.getSource() instanceof OlSourceTileWMS) {
+      const urls = (layer.getSource() as OlSourceTileWMS).getUrls();
+      layerUrl = urls ? urls[0] : undefined;
+    }
 
-      if (layerUrl) {
-        return UrlUtil.createValidGetCapabilitiesRequest(layerUrl, 'WMS', '1.3.0');
-      }
+    if (layerUrl) {
+      return UrlUtil.createValidGetCapabilitiesRequest(layerUrl, 'WMS', '1.3.0');
     }
   };
 
@@ -130,11 +127,16 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
   const getBBox = () => {
     const lay = getCapabilitiesLayer();
 
-    if (!lay) {
+    if (!lay || !lay.EX_GeographicBoundingBox) {
       return;
     }
 
-    return lay.EX_GeographicBoundingBox?.join(', ');
+    return [
+      lay.EX_GeographicBoundingBox.westBoundLongitude,
+      lay.EX_GeographicBoundingBox.southBoundLatitude,
+      lay.EX_GeographicBoundingBox.eastBoundLongitude,
+      lay.EX_GeographicBoundingBox.northBoundLatitude
+    ].join(', ');
   };
 
   const getMinScale = () => {

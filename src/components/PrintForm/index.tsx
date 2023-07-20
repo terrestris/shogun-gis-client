@@ -126,6 +126,21 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     let pManagerOpts: MapFishPrintV3ManagerOpts = {
       url: ClientConfiguration.print?.url || '/print',
       map,
+      customPrintScales: map
+        ?.getView()
+        ?.getResolutions()
+        ?.map((d: number | undefined) => {
+          const units = map?.getView()?.getProjection()?.getUnits();
+          if (typeof d !== 'undefined') {
+            const scale = MapUtil.getScaleForResolution(d, units);
+            if (typeof scale !== 'undefined') {
+              return MapUtil.roundScale(scale);
+            }
+          }
+          return undefined;
+        })
+        .filter((scale: number | undefined) => typeof scale !== 'undefined')
+        ?.reverse() as number[] | undefined,
       timeout: 60000,
       layerFilter,
       headers: {
@@ -141,9 +156,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         new SHOGunMapFishPrintV3WMSSerializer(),
         new SHOGunMapFishPrintV3TiledWMSSerializer()
       ],
-      legendFilter,
-      customParams,
-      customMapParams
+      legendFilter
     };
 
     if (customPrintScales.length > 0) {
@@ -177,7 +190,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [customParams, customMapParams, client, layerFilter, legendFilter, map, t, customPrintScales, currentLanguageCode]);
+  }, [client, layerFilter, legendFilter, map, t, customPrintScales, currentLanguageCode]);
 
   useEffect(() => {
     if (active) {
@@ -189,6 +202,17 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setPrintManager(null);
     }
   }, [printManager, active, initializeMapProvider]);
+
+  useEffect(() => {
+    if (printManager) {
+      if (customParams) {
+        printManager.setCustomParams(customParams);
+      }
+      if (customMapParams) {
+        printManager.setCustomMapParams(customMapParams);
+      }
+    }
+  }, [printManager, customParams, customMapParams]);
 
   const onDownloadClick = async () => {
     try {

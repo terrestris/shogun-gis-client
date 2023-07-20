@@ -8,9 +8,7 @@ import {
   Switch,
   Checkbox,
   Form,
-  FormItemProps,
-  Upload,
-  Button
+  FormItemProps
 } from 'antd';
 
 import {
@@ -18,16 +16,19 @@ import {
   FormProps
 } from 'antd/lib/form/Form';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import _debounce from 'lodash/debounce';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
-import DisplayField from '../DisplayField';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+import {
+  setFormDirty
+} from '../../../store/editFeature';
+import DisplayField from '../../DisplayField';
 
 import './index.less';
 
@@ -42,9 +43,11 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 
-  const {
-    t
-  } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const formDirty = useAppSelector(
+    state => state.editFeature.formDirty
+  );
 
   const createFormItem = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
     let field: React.ReactNode;
@@ -163,15 +166,22 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     }
   };
 
+  const onValuesChange = async (changedValues: any) => {
+    if (changedValues && !formDirty) {
+      dispatch(setFormDirty(true));
+    }
+  };
+
   return (
     <Form
       className="edit-feature-form"
       form={form}
       labelCol={{
-        span: 6
+        span: 8
       }}
       labelAlign="left"
       labelWrap
+      onValuesChange={_debounce(onValuesChange, 250)}
       {...passThroughProps}
     >
       { formConfig?.map(createFormItem) }

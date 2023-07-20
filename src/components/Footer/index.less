@@ -22,6 +22,9 @@
       justify-content: flex-start;
       flex: 1;
       column-gap: .5rem;
+      >div {
+        white-space: nowrap;
+      }
 
       #scale-line-container {
         width: 8rem;
@@ -49,6 +52,9 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        .react-geo-scalecombo {
+          min-width: 110px;
+        }
       }
       @media screen and (max-width: 800px) {
         .scale-combo {

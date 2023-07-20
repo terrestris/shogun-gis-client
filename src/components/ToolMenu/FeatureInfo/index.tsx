@@ -5,7 +5,9 @@ import React, {
 } from 'react';
 
 import {
-  Tabs
+  Tabs,
+  FormProps,
+  Spin
 } from 'antd';
 
 import {
@@ -57,11 +59,12 @@ import {
   setSelectedFeatures
 } from '../../../store/selectedFeatures';
 
+import FeatureInfoTabs from './FeatureInfoTabs';
 import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
 import './index.less';
 
-export type FeatureInfoProps = {
+export type FeatureInfoProps = FormProps & {
   enabled?: boolean;
 } & Partial<CoordinateInfoProps>;
 
@@ -91,7 +94,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   };
 
   const updateQueryLayers = useCallback(() => {
-
     if (!map) {
       return;
     }
@@ -101,7 +103,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   }, [map]);
 
   useEffect(() => {
-
     if (!map) {
       return;
     }
@@ -180,11 +181,18 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
             <div
               key={layerName}
             >
-              <FeatureInfoPropertyGrid
-                features={features[layerName]}
-                layerName={layerName}
-                loading={loading}
-              />
+              {
+                mapLayer?.get('featureInfoFormConfig') ?
+                  <FeatureInfoTabs
+                    tabConfig={mapLayer?.get('featureInfoFormConfig')}
+                    features={features[layerName]}
+                    layerName={layerName}
+                  /> :
+                  <FeatureInfoPropertyGrid
+                    features={features[layerName]}
+                    layerName={layerName}
+                  />
+              }
             </div>
           )
         });
@@ -192,9 +200,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     });
 
     return (
-      <Tabs
-        items={items}
-      />
+      <Spin
+        spinning={loading}
+      >
+        <Tabs
+          destroyInactiveTabPane={true}
+          items={items}
+        />
+      </Spin>
     );
   };
 

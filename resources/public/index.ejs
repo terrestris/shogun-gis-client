@@ -13,7 +13,7 @@
     <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <div id="loadmask" class="loadmask">
-      <img src="./shogun_logo.png" alt="Loading, please wait…">
+      <img src="./shogun_spinner.gif" alt="Loading, please wait…">
     </div>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
@@ -27,8 +27,9 @@
         transform: -ms-translate(-50%, -50%);
         z-index: 999;
 
-        opacity: 0;
-        animation: heartBeat 2s ease-in-out infinite;
+        /* Keeping this for future reference */
+        /* opacity: 0;
+        animation: heartBeat 2s ease-in-out infinite; */
       }
 
       .loadmask-hidden {

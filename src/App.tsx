@@ -11,6 +11,8 @@ import LayerDetailsModal from './components/LayerDetailsModal';
 import ToolMenu from './components/ToolMenu';
 import UploadDataModal from './components/UploadDataModal';
 
+import useRestoreTransientLayers from './hooks/useRestoreTransientLayers';
+
 import './App.less';
 
 export interface AppProps extends React.ComponentProps<'div'> { };
@@ -18,6 +20,8 @@ export interface AppProps extends React.ComponentProps<'div'> { };
 export const App: React.FC<AppProps> = ({
   ...restProps
 }): JSX.Element => {
+
+  useRestoreTransientLayers();
 
   useEffect(() => {
     const loadingMask = document.querySelectorAll('.loadmask')[0];

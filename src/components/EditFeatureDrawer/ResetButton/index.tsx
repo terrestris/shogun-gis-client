@@ -30,6 +30,11 @@ import {
 } from '@terrestris/react-geo/dist/Hook/useMap';
 import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import {
+  setFormDirty
+} from '../../../store/editFeature';
+
 export type ResetButtonProps = Omit<ButtonProps, 'form'> & {
   feature: Feature;
   form: FormInstance;
@@ -47,8 +52,11 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
 
   const map = useMap();
 
+  const dispatch = useAppDispatch();
+
   const onClick = () => {
     form.resetFields();
+    dispatch(setFormDirty(false));
 
     if (map) {
       const editLayer = DigitizeUtil.getDigitizeLayer(map);

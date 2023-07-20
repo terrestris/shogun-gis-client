@@ -98,7 +98,6 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   }, [editLayer, map]);
 
   useEffect(() => {
-
     if (editLayer && feature?.id) {
       editLayer.getSource()?.clear();
       const olFeat = gjFormat.readFeature(feature);
@@ -194,91 +193,94 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
     return <></>;
   }
 
-  return (
-    <Toolbar
-      className="geometry-edit-tb"
-      alignment="vertical"
-    >
-      <ToggleGroup>
-        {
-          allowedEditMode.includes('CREATE') ?
-            <DrawButton
-              icon={
-                <FontAwesomeIcon icon={faPencil} />
-              }
-              pressedIcon={
-                <FontAwesomeIcon icon={faPencil} />
-              }
-              name="draw"
-              digitizeLayer={editLayer}
-              tooltip={t('EditFeatureGeometryToolbar.draw')}
-              drawType={feature.geometry.type as DrawType}
-              onDrawEnd={onDrawEnd}
-              {...btnTooltipProps}
+  if (allowedEditMode.includes('EDIT_GEOMETRY')) {
+    return (
+      <Toolbar
+        className="geometry-edit-tb"
+        alignment="vertical"
+      >
+        <ToggleGroup>
+          {
+            allowedEditMode.includes('CREATE') ?
+              <DrawButton
+                icon={
+                  <FontAwesomeIcon icon={faPencil} />
+                }
+                pressedIcon={
+                  <FontAwesomeIcon icon={faPencil} />
+                }
+                name="draw"
+                digitizeLayer={editLayer}
+                tooltip={t('EditFeatureGeometryToolbar.draw')}
+                drawType={feature.geometry.type as DrawType}
+                onDrawEnd={onDrawEnd}
+                {...btnTooltipProps}
+              />
+              : <></>
+          }
+          {
+            allowedEditMode.includes('UPDATE') ?
+              <ModifyButton
+                icon={
+                  <FontAwesomeIcon icon={faDrawPolygon} />
+                }
+                pressedIcon={
+                  <FontAwesomeIcon icon={faDrawPolygon} />
+                }
+                name="edit"
+                digitizeLayer={editLayer}
+                tooltip={t('EditFeatureGeometryToolbar.edit')}
+                onModifyStart={updateRevision}
+                onModifyEnd={updateRevision}
+                onTranslateEnd={updateRevision}
+                {...btnTooltipProps}
+              />
+              : <></>
+          }
+          {
+            allowedEditMode.includes('DELETE') ?
+              <DeleteButton
+                icon={
+                  <FontAwesomeIcon icon={faTrash} />
+                }
+                pressedIcon={
+                  <FontAwesomeIcon icon={faTrash} />
+                }
+                name="delete"
+                digitizeLayer={editLayer}
+                tooltip={t('EditFeatureGeometryToolbar.delete')}
+                onFeatureRemove={updateRevision}
+                {...btnTooltipProps}
+              />
+              : <></>
+          }
+        </ToggleGroup>
+        <SimpleButton
+          icon={
+            <FontAwesomeIcon icon={faUndo} />
+          }
+          tooltip={t('EditFeatureGeometryToolbar.undo')}
+          onClick={undoEdit}
+          disabled={editHistory.current.past?.length === 0}
+          {...btnTooltipProps}
+        />
+        <SimpleButton
+          icon={
+            <FontAwesomeIcon
+              icon={faUndo}
+              flip="horizontal"
             />
-            : <></>
-        }
-        {
-          allowedEditMode.includes('UPDATE') ?
-            <ModifyButton
-              icon={
-                <FontAwesomeIcon icon={faDrawPolygon} />
-              }
-              pressedIcon={
-                <FontAwesomeIcon icon={faDrawPolygon} />
-              }
-              name="edit"
-              digitizeLayer={editLayer}
-              tooltip={t('EditFeatureGeometryToolbar.edit')}
-              onModifyStart={updateRevision}
-              onModifyEnd={updateRevision}
-              onTranslateEnd={updateRevision}
-              {...btnTooltipProps}
-            />
-            : <></>
-        }
-        {
-          allowedEditMode.includes('DELETE') ?
-            <DeleteButton
-              icon={
-                <FontAwesomeIcon icon={faTrash} />
-              }
-              pressedIcon={
-                <FontAwesomeIcon icon={faTrash} />
-              }
-              name="delete"
-              digitizeLayer={editLayer}
-              tooltip={t('EditFeatureGeometryToolbar.delete')}
-              onFeatureRemove={updateRevision}
-              {...btnTooltipProps}
-            />
-            : <></>
-        }
-      </ToggleGroup>
-      <SimpleButton
-        icon={
-          <FontAwesomeIcon icon={faUndo} />
-        }
-        tooltip={t('EditFeatureGeometryToolbar.undo')}
-        onClick={undoEdit}
-        disabled={editHistory.current.past?.length === 0}
-        {...btnTooltipProps}
-      />
-      <SimpleButton
-        icon={
-          <FontAwesomeIcon
-            icon={faUndo}
-            flip="horizontal"
-          />
-        }
-        tooltip={t('EditFeatureGeometryToolbar.redo')}
-        onClick={redoEdit}
-        disabled={editHistory.current.future?.length === 0}
-        {...btnTooltipProps}
-      />
-    </Toolbar>
-
-  );
+          }
+          tooltip={t('EditFeatureGeometryToolbar.redo')}
+          onClick={redoEdit}
+          disabled={editHistory.current.future?.length === 0}
+          {...btnTooltipProps}
+        />
+      </Toolbar>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default EditFeatureGeometryToolbar;

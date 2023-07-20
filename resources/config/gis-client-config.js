@@ -26,5 +26,6 @@ var clientConfig = {
     authorizedRolesForUpdate: [],
     authorizedRolesForDelete: []
   },
-  wfsLockFeatureEnabled: false
+  wfsLockFeatureEnabled: false,
+  enableFallbackConfig: true
 };

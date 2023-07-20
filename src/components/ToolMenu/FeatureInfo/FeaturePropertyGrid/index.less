@@ -11,13 +11,13 @@
         .ant-table {
           height: 100%;
 
-          .ant-table-title {
-            display: flex;
-            align-items: center;
-          }
-
           .ant-table-body {
             overflow: auto !important;
+
+            td {
+              word-break: break-word;
+              white-space: pre-line;
+            }
           }
 
           .ant-table-container {
