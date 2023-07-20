@@ -4,7 +4,7 @@ import {
 
 export default defineConfig({
   // @ts-ignore
-  globalSetup: require.resolve('./global-setup.ts'),
+  globalSetup: './global-setup',
   testDir: './e2e-tests',
   timeout: 30 * 1000,
   expect: {
@@ -35,7 +35,10 @@ export default defineConfig({
   },
 
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    {
+      name: 'setup',
+      testMatch: /auth.setup\.ts/
+    },
     {
       name: 'chromium',
       use: {
