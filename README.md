@@ -81,7 +81,7 @@ Ensure using the latest version of the E2E-Test package:
 npm update @terrestris/shogun-e2e-tests
 ```
 
-Set your Domain including potential paths as the ´process.env.HOST´-variable in the global-setup.js. For example:
+Set your domain including potential paths as the ´process.env.HOST´ variable in the [global-setup.js](./global-setup.js). For example:
 
 ```
 shogun.terrestris.de

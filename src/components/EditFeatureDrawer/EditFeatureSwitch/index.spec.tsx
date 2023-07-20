@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
-
 import { render } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
+
+import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import { store } from '../../../store/store';
 
