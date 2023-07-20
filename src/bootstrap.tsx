@@ -9,9 +9,13 @@ import {
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
 
-import ClientConfiguration from 'clientConfig';
+import ClientConfiguration, {
+  FeatureEditConfiguration
+} from 'clientConfig';
 
 import Color from 'color';
+
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 import Keycloak from 'keycloak-js';
 
@@ -61,7 +65,9 @@ import {
   SHOGunAPIClientProvider
 } from './context/SHOGunAPIClientContext';
 
-import i18n from './i18n';
+import i18n, {
+  initOpts
+} from './i18n';
 
 import {
   ClientPluginInternal
@@ -74,11 +80,18 @@ import {
   setDescription
 } from './store/description';
 import {
+  setUserEditMode,
+  EditLevel
+} from './store/editFeature';
+import {
   setLegal
 } from './store/legal';
 import {
   setLogoPath
 } from './store/logoPath';
+import {
+  setSearchEngines
+} from './store/searchEngines';
 import {
   createReducer,
   store
@@ -102,6 +115,12 @@ export interface ThemeProperties extends React.CSSProperties {
   '--complementaryColor'?: string;
 }
 
+// eslint-disable-next-line no-shadow
+enum LoadingErrorCode {
+  APP_ID_NOT_SET = 'APP_ID_NOT_SET',
+  APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND'
+};
+
 const client = new SHOGunAPIClient({
   url: ClientConfiguration.shogunBase || '/'
 });
@@ -121,14 +140,7 @@ const getConfigLang = (lang: string) => {
   }
 };
 
-const getApplicationConfiguration = async () => {
-  const applicationId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
-
-  if (!applicationId) {
-    Logger.info('No application ID given, can\'t load any configuration.');
-    return;
-  }
-
+const getApplicationConfiguration = async (applicationId: number) => {
   try {
     Logger.info(`Loading application with ID ${applicationId}`);
 
@@ -139,14 +151,6 @@ const getApplicationConfiguration = async () => {
     return application;
   } catch (error) {
     Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
-
-    notification.error({
-      message: i18n.t('Index.applicationLoadErrorMessage'),
-      description: i18n.t('Index.applicationLoadErrorDescription', {
-        applicationId: applicationId
-      }),
-      duration: 0
-    });
   }
 };
 
@@ -206,17 +210,22 @@ const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 
+  // nominatim search is active by default
+  store.dispatch(setSearchEngines(['nominatim']));
+
   if (application.toolConfig && application.toolConfig.length > 0) {
     const availableTools: string[] = [];
     application.toolConfig
       .map((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible) {
+        if (tool.config.visible && tool.name !== 'search') {
           availableTools.push(tool.name);
-        };
+        }
+        if (tool.name === 'search' && tool.config.engines.length > 0) {
+          store.dispatch(setSearchEngines(tool.config.engines));
+        }
       });
-
     store.dispatch(setAvailableTools(availableTools));
-  };
+  }
 };
 
 const setAppInfoToStore = async (appInfo?: AppInfo) => {
@@ -273,7 +282,8 @@ const initKeycloak = async () => {
   };
 
   await keycloak.init({
-    onLoad: keycloakOnLoad
+    onLoad: keycloakOnLoad,
+    checkLoginIframe: false
   });
 
   return keycloak;
@@ -330,6 +340,7 @@ const setupSHOGunMap = async (application: Application) => {
   });
 };
 
+// TODO Make default/fallback app configurable?
 const setupDefaultMap = () => {
   const osmLayer = new OlLayerTile({
     source: new OlSourceOsm()
@@ -511,6 +522,46 @@ const loadPlugins = async (map: OlMap) => {
   return clientPlugins;
 };
 
+const checkRoles = (
+  list: string[],
+  featureEditRoles: FeatureEditConfiguration
+): EditLevel[] => {
+  const {
+    authorizedRolesForCreate,
+    authorizedRolesForUpdate,
+    authorizedRolesForDelete,
+    authorizedRolesForEditingGeometries
+  } = featureEditRoles;
+
+  const result: EditLevel[] = [];
+
+  for (const element of list) {
+    if (authorizedRolesForCreate?.some(role => matchRole(role, element))) {
+      result.push('CREATE');
+    }
+    if (authorizedRolesForUpdate?.some(role => matchRole(role, element))) {
+      result.push('UPDATE');
+    }
+    if (authorizedRolesForDelete?.some(role => matchRole(role, element))) {
+      result.push('DELETE');
+    }
+    if (authorizedRolesForEditingGeometries?.some(role => matchRole(role, element))) {
+      result.push('EDIT_GEOMETRY');
+    }
+  }
+  return result;
+};
+
+const matchRole = (role: string | RegExp, element: string): boolean => {
+  if (typeof role === 'string') {
+    return element === role;
+  }
+  if (role instanceof RegExp) {
+    return role.test(element);
+  }
+  return false;
+};
+
 const renderApp = async () => {
   try {
     const keycloak = await initKeycloak();
@@ -519,7 +570,36 @@ const renderApp = async () => {
       client.setKeycloak(keycloak);
     }
 
-    const appConfig = await getApplicationConfiguration();
+    const applicationId = parseInt(UrlUtil.getQueryParam(window.location.href, 'applicationId'), 10);
+
+    if (!applicationId) {
+      Logger.info('No application ID given, can\'t load any configuration.');
+    }
+
+    if (!applicationId && !ClientConfiguration.enableFallbackConfig) {
+      throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
+    }
+
+    let appConfig;
+    if (applicationId) {
+      appConfig = await getApplicationConfiguration(applicationId);
+    }
+
+    if (!appConfig && !ClientConfiguration.enableFallbackConfig) {
+      throw new Error(LoadingErrorCode.APP_CONFIG_NOT_FOUND);
+    }
+
+    const defaultLanguage = appConfig?.clientConfig?.defaultLanguage;
+
+    if (!defaultLanguage) {
+      i18n.use(LanguageDetector);
+    }
+
+    await i18n.init(initOpts);
+
+    if (defaultLanguage) {
+      i18n.changeLanguage(defaultLanguage);
+    }
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
@@ -547,9 +627,33 @@ const renderApp = async () => {
 
     setUserToStore(user);
 
+    const userRoles: string[] | undefined =
+      client?.getKeycloak()?.tokenParsed?.realm_access?.roles;
+
+    let allowedEditMode: EditLevel[] = ['NONE'];
+
+    if (userRoles && ClientConfiguration.featureEditRoles) {
+      allowedEditMode = checkRoles(
+        userRoles,
+        ClientConfiguration.featureEditRoles
+      );
+    }
+
+    store.dispatch(setUserEditMode(allowedEditMode));
+
     const map = await setupMap(appConfig);
 
     const plugins = await loadPlugins(map);
+
+    if (!appConfig) {
+      notification.error({
+        message: i18n.t('Index.applicationLoadErrorMessage'),
+        description: i18n.t('Index.applicationLoadErrorDescription', {
+          applicationId: applicationId
+        }),
+        duration: 0
+      });
+    }
 
     render(
       <React.StrictMode>
@@ -576,15 +680,32 @@ const renderApp = async () => {
       loadingMask.classList.add('loadmask-hidden');
     }
 
-    Logger.error(error);
+    if (!i18n.isInitialized) {
+      i18n.use(LanguageDetector);
+      await i18n.init(initOpts);
+    }
+
+    let errorDescription = i18n.t('Index.errorDescription');
+
+    if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
+      errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');
+    }
+
+    if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
+      const appId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+
+      errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
+        applicationId: appId
+      });
+    }
 
     render(
       <React.StrictMode>
         <Alert
           className="error-boundary"
           message={i18n.t('Index.errorMessage')}
-          description={i18n.t('Index.errorDescription')}
-          type="error"
+          description={errorDescription}
+          type="warning"
           showIcon
         />
       </React.StrictMode>,

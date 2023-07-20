@@ -22,7 +22,9 @@
       justify-content: flex-start;
       flex: 1;
       column-gap: .5rem;
-      justify-content: flex-start;
+      >div {
+        white-space: nowrap;
+      }
 
       #scale-line-container {
         width: 8rem;
@@ -50,6 +52,9 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        .react-geo-scalecombo {
+          min-width: 110px;
+        }
       }
       @media screen and (max-width: 800px) {
         .scale-combo {
@@ -85,10 +90,10 @@
     }
 
     &.right-items {
-      width: 25%;
+      width: 50%;
       justify-content: flex-end;
 
-      >button {
+      button {
         padding: 0 10px;
         color: var(--complementaryColor);
 

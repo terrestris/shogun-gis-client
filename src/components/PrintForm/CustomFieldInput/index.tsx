@@ -1,25 +1,18 @@
 import React, {
-  useEffect,
-  useState
+  useEffect, useState
 } from 'react';
 
-import {
-  Input
-} from 'antd';
-import {
-  InputProps
-} from 'antd/lib/input';
+import { Input } from 'antd';
+import { InputProps } from 'antd/lib/input';
 
-import {
-  MapFishPrintV3Manager
-} from '@terrestris/mapfish-print-manager';
+import _isNil from 'lodash/isNil';
 
-interface CustomFieldInputProps extends InputProps {
-  printManager: MapFishPrintV3Manager;
-}
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { addCustomParam } from '../../../store/print';
+
+interface CustomFieldInputProps extends InputProps {}
 
 export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
-  printManager,
   value,
   id,
   placeholder,
@@ -29,11 +22,15 @@ export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
 
   const [inputText, setInputText] = useState<any>(value);
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    if (printManager && id) {
-      printManager.setCustomParam(id, inputText);
+    if (!_isNil(id)) {
+      dispatch(addCustomParam({
+        [id]: inputText
+      }));
     }
-  }, [printManager, inputText, id]);
+  }, [inputText, id, dispatch]);
 
   useEffect(() => {
     setInputText(value);

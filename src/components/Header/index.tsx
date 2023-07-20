@@ -11,8 +11,7 @@ import {
   HeaderPlacementOrientation,
   isHeaderIntegration
 } from '../../plugin';
-
-import BasicNominatimSearch from '../BasicNominatimSearch';
+import SearchField from '../SearchField';
 
 import UserMenu from '../UserMenu';
 
@@ -69,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getCenterItems = () => {
     const items = [
-      <BasicNominatimSearch
+      <SearchField
         key="search"
         aria-label="search-bar"
       />

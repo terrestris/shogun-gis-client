@@ -50,7 +50,10 @@ module.exports = {
       '.tsx',
       '.ts',
       '.js'
-    ]
+    ],
+    fallback: {
+      buffer: require.resolve('buffer/')
+    }
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -86,6 +89,12 @@ module.exports = {
       KEYCLOAK_HOST: JSON.stringify(process.env.KEYCLOAK_HOST),
       KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
       KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.KEYCLOAK_CLIENT_ID)
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: [
+        'buffer',
+        'Buffer'
+      ]
     }),
     new ModuleFederationPlugin({
       name: 'SHOGunGISClient',

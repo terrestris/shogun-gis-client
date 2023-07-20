@@ -12,10 +12,7 @@ import type OlMap from 'ol/Map';
 import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type ClientPluginLocale = {
-  [Property in keyof {
-    de: string;
-    en: string;
-  }]: {
+  [locale: string]: {
     translation: {
       [key: string]: any;
     };
@@ -78,8 +75,22 @@ export type ClientPluginIntegrationMap = ClientPluginIntegration & {
   placement: 'map';
 };
 
+export type FooterPlacementOrientation = 'left' | 'right';
+
+export type ClientPluginIntegrationFooter = ClientPluginIntegration & {
+  placement: 'footer';
+  /**
+  * The placement orientation for the plugin in the footer.
+  */
+  placementOrientation: FooterPlacementOrientation;
+  /**
+  * The insertion index for the plugin in the footer, starting from 0 which is on the left.
+  */
+  insertionIndex?: number;
+};
+
 export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader |
-  ClientPluginIntegrationFeatureInfo | ClientPluginIntegrationMap;
+  ClientPluginIntegrationFeatureInfo | ClientPluginIntegrationMap | ClientPluginIntegrationFooter;
 
 export type ClientPlugin = {
   /**
@@ -124,4 +135,8 @@ export function isFeatureInfoIntegration(pluginIntegration: ClientPluginIntegrat
 
 export function isMapIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationMap {
   return pluginIntegration && pluginIntegration.placement === 'map';
+}
+
+export function isFooterIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationFooter {
+  return pluginIntegration && pluginIntegration.placement === 'footer';
 }

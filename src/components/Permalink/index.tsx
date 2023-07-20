@@ -42,7 +42,12 @@ export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
 
 export const Permalink: React.FC<PermalinkProps> = () => {
   const map = useMap();
-  const layerAttributes = useMemo(() => ['layerConfig', 'isExternalLayer', 'groupName'], []);
+  const layerAttributes = useMemo(() => [
+    'layerConfig',
+    'isExternalLayer',
+    'isUploadedLayer',
+    'groupName'
+  ], []);
   const {
     t
   } = useTranslation();
@@ -78,21 +83,8 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       ));
     };
 
-    const filterFunctionForLayers = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer);
-    const updateLayersInPermalink = () => {
-      setPermalink(
-        PermalinkUtil.getLink(
-          map,
-          ';',
-          identifierFunction,
-          filterFunctionForLayers,
-          layerAttributes
-        )
-      );
-    };
-
     const updateLayerConfig = () => {
-      const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer'));
+      const externalLayers = map.getAllLayers().filter(l => l.get('isExternalLayer') || l.get('isUploadedLayer'));
       externalLayers.forEach(externalLayer => {
         const layerConfig = externalLayer.get('layerConfig') as Layer;
         if (layerConfig) {
