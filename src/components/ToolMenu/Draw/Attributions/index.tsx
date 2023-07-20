@@ -1,29 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect, useState
+} from 'react';
 
 import {
   MinusCircleOutlined, PlusOutlined
 } from '@ant-design/icons';
 import {
-  Button, Drawer, Form, Input, Space, Divider, List, Row, Typography
+  Button, Drawer, Form, Divider, Row
 } from 'antd';
-import OlFeature from 'ol/Feature';
-import Geometry from 'ol/geom/Geometry.js';
-import OlLayerVector from 'ol/layer/Vector';
-
 import _cloneDeep from 'lodash/cloneDeep';
-
-import VectorSource from 'ol/source/Vector';
-
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import OlFeature from 'ol/Feature';
 
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
-import useAppSelector from '../../../../hooks/useAppSelector';
 import AttributionRow from './AttributionRow';
-import { FieldData } from 'rc-field-form/es/interface';
 
 export type AttributionDrawerProps = {
   openAttributeDrawer: boolean;
@@ -34,8 +27,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   openAttributeDrawer,
   onClose
 }) => {
-
-  const [attributions, setAttributions] = useState([]);
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [render, setRender] = useState<boolean>(true);
   const [isFormValid, setIsFormIsValid] = useState(true);
@@ -50,21 +41,21 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   useEffect(() => {
     const properties = selectedFeature?.getProperties();
 
-    console.log('selectedFeature CHNAGE');
-
-    if (!properties) {
-      return;
-    }
+    console.log('selectedFeature CHANGE');
+    console.log(properties);
 
     // TODO filter out geometry
     const fs: any = {};
-    Object.entries(properties).forEach(([key, value]) => {
-      fs[key] = {
-        name: key,
-        value: value
-      };
-    });
+    if (properties) {
+      Object.entries(properties).forEach(([key, value]) => {
+        fs[key] = {
+          name: key,
+          value: value
+        };
+      });
+    }
 
+    form.setFieldValue('fields', {});
     form.setFieldsValue({
       fields: fs
     });
@@ -83,7 +74,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     selectInteraction.on('select', () => {
       setSelectedFeature(selectInteraction.getFeatures().getArray()[0]);
     });
-
   }
 
   const handleClose = () => {
@@ -138,7 +128,12 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     // Get all values of the form
     const fields = form.getFieldsValue(true);
 
+    console.log(fields.fields);
+
+
     if (!fields.fields) {
+      console.log("hallo");
+
       return;
     }
 
