@@ -62,7 +62,7 @@ to have the application available at [https://localhost:8080](https://localhost:
 Ensure using the latest version of the E2E-Test package:
 
 ```
-npm update *test-package*
+npm update @terrestris/shogun-e2e-tests
 ```
 
 Set your Domain including potential paths as the ´process.env.HOST´-variable in the global-setup.js. For example:
