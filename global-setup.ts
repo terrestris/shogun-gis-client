@@ -1,12 +1,14 @@
 import {
-  chromium, FullConfig
+  FullConfig
 } from '@playwright/test';
 
-async function globalSetup(config: FullConfig) {
-  // @ts-ignore
-  process.env.ID = '20';
-  // @ts-ignore
-  process.env.HOST = 'https://shogun2022.intranet.terrestris.de';
+import 'dotenv/config';
+
+async function globalSetup() {
+  process.env.ID
+  process.env.HOST
+  process.env.ADMIN_LOGIN
+  process.env.ADMIN_PASSWORD
 }
 
 export default globalSetup;
