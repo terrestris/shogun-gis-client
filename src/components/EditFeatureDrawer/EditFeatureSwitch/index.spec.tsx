@@ -10,7 +10,7 @@ import { store } from '../../../store/store';
 
 import EditFeatureSwitch from '.';
 
-let layer:WmsLayer
+let layer: WmsLayer;
 
 describe('EditFeatureSwitch', () => {
   it('is defined', () => {
