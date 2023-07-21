@@ -11,7 +11,7 @@ test('test', async ({
   page
 }, workerInfo) => {
 
-  await page.goto(`./client/?applicationId=${process.env.ID}`);
+  await page.goto(`https://${process.env.HOST}/client/?applicationId=${process.env.ID}`);
 
   await annotations(page, workerInfo);
 });
