@@ -171,7 +171,10 @@ export const Permalink: React.FC<PermalinkProps> = () => {
           <MailOutlined onClick={onMailClick} />
         </Tooltip>
       </div>
-      <div className="link">
+      <div
+        className="link"
+        aria-label='permalink-url'
+      >
         <Input value={permalink}
           readOnly
         />

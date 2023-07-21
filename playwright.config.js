@@ -3,7 +3,6 @@ import {
 } from '@playwright/test';
 
 export default defineConfig({
-  // @ts-ignore
   globalSetup: './global-setup',
   testDir: './e2e-tests',
   timeout: 30 * 1000,
@@ -11,16 +10,13 @@ export default defineConfig({
     timeout: 5000
   },
   fullyParallel: true,
-  // @ts-ignore
   forbidOnly: !!process.env.CI,
   retries: 4,
-  // @ts-ignore
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', {
     open: 'never'
   }]],
   use: {
-    // @ts-ignore
     baseURL: process.env.HOST,
     actionTimeout: 0,
     trace: 'on-first-retry',

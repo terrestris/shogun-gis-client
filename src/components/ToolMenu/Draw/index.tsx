@@ -273,6 +273,7 @@ export const Draw: React.FC<DrawProps> = ({
           name="draw-upload"
           onChange={onUploadChange}
           type="link"
+          aria-label='draw-upload'
         >
           <SimpleButton
             type="link"
