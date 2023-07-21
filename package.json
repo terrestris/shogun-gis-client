@@ -138,7 +138,7 @@
     "relativePaths": "true"
   },
   "devEngines": {
-    "node": ">=14",
+    "node": ">=18",
     "npm": ">=7"
   }
 }
