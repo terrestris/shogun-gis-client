@@ -107,7 +107,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const tileLoadStartListener = (evt: MapBrowserEvent<UIEvent>) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
       const uid = parseInt(getUid(evt.target), 10);
-      const update = {...counter};
+      const update = { ...counter };
       // reset when load was finished
       if (update[uid] && update[uid].loaded >= update[uid].loading) {
         update[uid].loading = 1;
@@ -131,7 +131,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const tileLoadEndListener = (evt: MapBrowserEvent<UIEvent>) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
       const uid = parseInt(getUid(evt.target), 10);
-      const update = {...counter};
+      const update = { ...counter };
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
@@ -171,15 +171,21 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
     if (layer instanceof OlLayerGroup) {
       return (
-        <div>
+        <div
+          aria-label='layer-group'
+        >
           {layer.get('name')}
         </div>
       );
     } else {
       return (
         <>
-          <div className="tree-node-header">
+          <div
+            className="tree-node-header"
+            aria-label="tree-node-header"
+          >
             <Progress
+              aria-label='loading-indicator'
               className='loading-indicator'
               type="circle"
               percent={percent}
@@ -187,21 +193,31 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               width={16}
               strokeWidth={20}
             />
-            <span>{layer.get('name')}</span>
+            <span
+              aria-label='layer-name'
+            >{layer.get('name')}
+            </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
-                <LayerTreeContextMenu
-                  layer={layer}
-                  visibleLegendsIds={visibleLegendsIds}
-                  setVisibleLegendsIds={setVisibleLegendsIds}
-                />
+                <div
+                  aria-label='layer-context-menu'
+                >
+                  <LayerTreeContextMenu
+                    layer={layer}
+                    visibleLegendsIds={visibleLegendsIds}
+                    setVisibleLegendsIds={setVisibleLegendsIds}
+                  />
+                </div>
               )
             }
 
           </div>
           {
             layer.get('visible') &&
-            <div className="layer-transparency">
+            <div
+              className="layer-transparency"
+              aria-label='transparency-slider'
+            >
               <LayerTransparencySlider
                 tooltip={{
                   formatter: val => `${t('LayerTree.transparency')}: ${val}%`
@@ -248,6 +264,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
   return (
     <RgLayerTree
+      aria-label="layertree"
       className="layertree"
       map={map}
       nodeTitleRenderer={treeNodeTitleRenderer}

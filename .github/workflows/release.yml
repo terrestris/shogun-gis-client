@@ -85,11 +85,11 @@ jobs:
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}
           load: true
 
-      - name: Push docker image to Nexus (latest) 📠
+      - name: Push docker image to Nexus e2e-tests (latest) 📠
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
 
-      - name: Push docker image to Nexus (version) 📠
+      - name: Push docker image to Nexus e2e-tests (version) 📠
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}
