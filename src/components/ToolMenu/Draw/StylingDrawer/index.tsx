@@ -45,9 +45,7 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
   };
 
   return (
-    <div
-      aria-label='geostyler-drawer'
-    >
+    <>
       <Button
         type="link"
         onClick={showDrawer}
@@ -56,6 +54,7 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
         {t('StylingDrawer.pickColor')}
       </Button>
       <Drawer
+        aria-label='geostyler-drawer'
         title={t('StylingDrawer.title')}
         placement="right"
         onClose={onClose}
@@ -67,7 +66,7 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
       >
         <StylingComponent />
       </Drawer>
-    </div>
+    </>
   );
 };
 
