@@ -227,7 +227,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             </div>
           }
           {
-            (layer.get('visible') && layer.get('type') as LayerType === 'WMSTime') &&
+            (layer.get('visible') && layer.get('type') as LayerType === 'WMSTIME') &&
             <div className="layer-time-slider">
               <WmsTimeSlider
                 layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
