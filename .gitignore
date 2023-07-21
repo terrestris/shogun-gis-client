@@ -133,7 +133,7 @@ dist
 /playwright-report/
 /playwright/.cache/
 /storageState.json
-\nplaywright/.auth
+/playwright/.auth
 
 # SonarQube
 .scannerwork/

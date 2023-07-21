@@ -97,6 +97,13 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
+    "node_modules",
+    "dist",
+    "build",
+    "src/**/*.spec.*",
+    "**.config.js"
+  ],
+  "exclude": [
     "./src"
   ]
 }
