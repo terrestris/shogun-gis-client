@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 import { annotations } from '@terrestris/shogun-e2e-tests/dist/shogun-gis-client/toolbox/annotation';
 // import {header} from './header'

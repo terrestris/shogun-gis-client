@@ -5,6 +5,7 @@ import {
 export default defineConfig({
   globalSetup: './global-setup',
   testDir: './e2e-tests',
+  snapshotPathTemplate: './e2e-tests/additional-files/screenshots/{arg}{ext}',
   timeout: 30 * 1000,
   expect: {
     timeout: 5000
@@ -17,7 +18,8 @@ export default defineConfig({
     open: 'never'
   }]],
   use: {
-    baseURL: process.env.HOST,
+    // das mal ausprobieren:
+    baseURL: `https://${process.env.HOST}`,
     actionTimeout: 0,
     trace: 'on-first-retry',
     permissions: ['geolocation'],
@@ -25,8 +27,8 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
 
     viewport: {
-      width: 800,
-      height: 600
+      width: 1200,
+      height: 800
     }
   },
 
@@ -39,7 +41,7 @@ export default defineConfig({
       name: 'chromium',
       use: {
         browserName: 'chromium',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     },
@@ -48,7 +50,7 @@ export default defineConfig({
       name: 'firefox',
       use: {
         browserName: 'firefox',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     },
@@ -57,7 +59,7 @@ export default defineConfig({
       name: 'webkit',
       use: {
         browserName: 'webkit',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     }

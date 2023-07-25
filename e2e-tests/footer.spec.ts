@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 import { footer } from '@terrestris/shogun-e2e-tests/dist/shogun-gis-client/footer/footer';
 

@@ -13,4 +13,5 @@ test('test', async ({
   await page.goto(`https://${process.env.HOST}/client/?applicationId=${process.env.ID}`);
 
   await header(page);
+
 });
