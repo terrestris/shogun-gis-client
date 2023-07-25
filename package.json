@@ -41,6 +41,7 @@
     "not IE 11"
   ],
   "dependencies": {
+    "@monaco-editor/react": "^4.5.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@terrestris/base-util": "^1.0.1",
     "@terrestris/mapfish-print-manager": "^10.0.0",

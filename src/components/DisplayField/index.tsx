@@ -12,18 +12,22 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import JsonModal from '../JsonModal';
+
 export type ValueType = string | number | boolean | moment.Moment;
 
 export type DisplayFieldProps = {
   format?: string;
   suffix?: string;
   value?: ValueType | ValueType[];
+  label?: string;
 };
 
 export const DisplayField: React.FC<DisplayFieldProps> = ({
   format = 'DD.MM.YYYY',
   suffix,
   value,
+  label,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -51,6 +55,27 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   if (Array.isArray(value)) {
     displayText = value.join(', ');
+  }
+
+  const isJson = (val: ValueType | ValueType[]): val is string => {
+    let v = typeof val !== 'string' ? JSON.stringify(val) : val;
+
+    try {
+      v = JSON.parse(v);
+    } catch (e) {
+      return false;
+    }
+
+    return typeof v === 'object' && v !== null;
+  };
+
+  if (value && isJson(value)) {
+    return (
+      <JsonModal
+        value={value}
+        label={label}
+      />
+    );
   }
 
   return (
