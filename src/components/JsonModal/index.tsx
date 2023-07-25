@@ -28,7 +28,7 @@ export type ValueType = string | number | boolean | moment.Moment;
 export type JsonModalProps = {
   value?: string;
   label?: string;
-} & ModalProps ;
+} & ModalProps;
 
 export const JsonModal: React.FC<JsonModalProps> = ({
   value,
