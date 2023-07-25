@@ -70,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
     const items = [
       <SearchField
         key="search"
-        aria-label='fritz'
+        aria-label='search-input'
         name='search-input'
         className='search-input'
       />
