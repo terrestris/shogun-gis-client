@@ -17,7 +17,7 @@ module.exports = {
     '<rootDir>/jest/matchMediaMock.js',
     '<rootDir>/jest/resizeObserverMock.js'
   ],
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'
   ],

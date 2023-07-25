@@ -82,6 +82,9 @@ module.exports = {
       patterns: [{
         from: path.join(__dirname, 'resources', 'config', 'gis-client-config.js'),
         to: '.'
+      }, {
+        from: './node_modules/monaco-editor/min/vs',
+        to: 'vs'
       }]
     }),
     new webpack.DefinePlugin({
