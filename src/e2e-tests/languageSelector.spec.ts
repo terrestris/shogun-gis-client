@@ -6,7 +6,7 @@ test.use({
   storageState: 'playwright/.auth/admin.json'
 });
 
-test('test', async ({
+test('language-selector', async ({
   page
 }) => {
 
