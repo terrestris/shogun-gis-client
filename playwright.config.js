@@ -18,7 +18,6 @@ export default defineConfig({
     open: 'never'
   }]],
   use: {
-    // das mal ausprobieren:
     baseURL: `https://${process.env.HOST}`,
     actionTimeout: 0,
     trace: 'on-first-retry',
