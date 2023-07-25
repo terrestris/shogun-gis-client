@@ -12,9 +12,7 @@ setup('authenticate as admin', async ({ page }) => {
     + '41cb-9b7e-1d9120956959&response_mode=fragment&response_type'
     + '=code&scope=openid&nonce=72884466-0535-4a24-8c15-9e7f14d88a65');
 
-  // @ts-ignore
   await page.getByLabel('Username or email').fill(`${process.env.ADMIN_LOGIN}`);
-  // @ts-ignore
   await page.getByLabel('Password').fill(`${process.env.ADMIN_PASSWORD}`);
   await page.getByRole('button', {
     name: 'Sign in'
