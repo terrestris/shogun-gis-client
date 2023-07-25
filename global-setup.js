@@ -1,8 +1,14 @@
+import {
+  FullConfig
+} from '@playwright/test';
+
+import 'dotenv/config';
+
 async function globalSetup() {
-  // SHOGun Application-ID e.g.:
-  process.env.ID = '42';
-  // Host of the Application including potential paths e.g.:
-  process.env.HOST = 'my.application.de';
+  process.env.ID;
+  process.env.HOST;
+  process.env.ADMIN_LOGIN;
+  process.env.ADMIN_PASSWORD;
 }
 
 export default globalSetup;

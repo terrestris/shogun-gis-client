@@ -54,7 +54,6 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
         {t('StylingDrawer.pickColor')}
       </Button>
       <Drawer
-        aria-label='geostyler-drawer'
         title={t('StylingDrawer.title')}
         placement="right"
         onClose={onClose}

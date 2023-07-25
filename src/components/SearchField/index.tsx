@@ -25,13 +25,19 @@ export const SearchField: React.FC<SearchFieldProps> = (): JSX.Element => {
   }
 
   return (
-    <div className="search">
+    <div
+      className="search"
+      aria-label='search-field'
+    >
       {
         useSolr ?
           <MultiSearch
+            aria-label='search'
             useNominatim={useNominatim}
           /> :
-          <BasicNominatimSearch />
+          <BasicNominatimSearch
+            aria-label='search'
+          />
       }
     </div>
   );

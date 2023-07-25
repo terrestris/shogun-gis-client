@@ -3,8 +3,9 @@ import {
 } from '@playwright/test';
 
 export default defineConfig({
-  globalSetup: require.resolve('./global-setup.js'),
+  globalSetup: './global-setup',
   testDir: './src/e2e-tests',
+  snapshotPathTemplate: './e2e-tests/additional-files/screenshots/{arg}{ext}',
   timeout: 30 * 1000,
   expect: {
     timeout: 5000
@@ -17,7 +18,8 @@ export default defineConfig({
     open: 'never'
   }]],
   use: {
-    baseURL: process.env.HOST,
+    // das mal ausprobieren:
+    baseURL: `https://${process.env.HOST}`,
     actionTimeout: 0,
     trace: 'on-first-retry',
     permissions: ['geolocation'],
@@ -25,21 +27,21 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
 
     viewport: {
-      width: 800,
-      height: 600
+      width: 1200,
+      height: 800
     }
   },
 
   projects: [
     {
       name: 'setup',
-      testMatch: /.*\.setup\.ts/
+      testMatch: /auth.setup\.ts/
     },
     {
       name: 'chromium',
       use: {
         browserName: 'chromium',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     },
@@ -48,7 +50,7 @@ export default defineConfig({
       name: 'firefox',
       use: {
         browserName: 'firefox',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     },
@@ -57,12 +59,12 @@ export default defineConfig({
       name: 'webkit',
       use: {
         browserName: 'webkit',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     }
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: './src/e2e-tests/test-results/'
+  outputDir: './e2e-tests/test-results/'
 });
