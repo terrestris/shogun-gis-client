@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
 import { drawUpload } from '@terrestris/shogun-e2e-tests/dist/shogun-gis-client/toolbox/drawUpload';
 
