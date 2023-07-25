@@ -1,14 +1,7 @@
-import {
-  FullConfig
-} from '@playwright/test';
-
+// this is needed for playwright to access the .env file
 import 'dotenv/config';
 
 async function globalSetup() {
-  process.env.ID;
-  process.env.HOST;
-  process.env.ADMIN_LOGIN;
-  process.env.ADMIN_PASSWORD;
 }
 
 export default globalSetup;

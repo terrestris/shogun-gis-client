@@ -1,13 +1,12 @@
 import { test } from '@playwright/test';
 
 import { annotations } from '@terrestris/shogun-e2e-tests/dist/shogun-gis-client/toolbox/annotation';
-// import {header} from './header'
 
 test.use({
   storageState: 'playwright/.auth/admin.json'
 });
 
-test('test', async ({
+test('draw-annotation', async ({
   page
 }, workerInfo) => {
 
