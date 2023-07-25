@@ -113,6 +113,7 @@ export const Footer: React.FC<FooterProps> = ({
       <div
         key="scale-combo-container"
         className="scale-combo"
+        aria-label='scale-combo'
       >
         {t('Footer.scale')}:&nbsp;
         <ScaleCombo
