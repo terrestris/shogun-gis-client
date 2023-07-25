@@ -4,7 +4,7 @@ import {
 
 export default defineConfig({
   globalSetup: './global-setup',
-  testDir: './e2e-tests',
+  testDir: './src/e2e-tests',
   snapshotPathTemplate: './e2e-tests/additional-files/screenshots/{arg}{ext}',
   timeout: 30 * 1000,
   expect: {
