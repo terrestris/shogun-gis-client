@@ -102,9 +102,6 @@
     "**.config.js"
   ],
   "include": [
-    "./src",
-    "e2e-tests/annotation.spec.ts",
-    "node_modules/@terrestris/shogun-e2e-tests/e2e-tests/shogun-gis-client/header/header",
-    "e2e-tests/annotation.spec.ts"
+    "./src"
   ],
 }
