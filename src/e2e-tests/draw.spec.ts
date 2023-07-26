@@ -12,5 +12,6 @@ test('draw', async ({
 
   await page.goto(`https://${process.env.HOST}/client/?applicationId=${process.env.ID}`);
 
+  await page.getByRole('button', {name: 'draw'}).click();
   await draw(page);
 });

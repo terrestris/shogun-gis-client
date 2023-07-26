@@ -1,13 +1,15 @@
-
-FROM mcr.microsoft.com/playwright:v1.30.0-focal@sha256:9e6eddb08b8566076ef778007859096bc90f8984236061c086eaede2fb60430b
+FROM mcr.microsoft.com/playwright:v1.36.0-jammy@sha256:3d3619bf5e622d264f519bffd3aa321d061bf420688eda8a5143da7884b36a6b
 
 WORKDIR /app
 
-RUN npm install -D @playwright/test@v1.30.0
-RUN npm ci
+RUN npm install -D @playwright/test@v1.36.1
 RUN npx playwright install --with-deps
 
+# Need to be installed since the package.json is not copied
+RUN npm i @terrestris/shogun-e2e-tests@v1.0.7
+RUN npm i dotenv@v16.3.1
+
 COPY playwright.config.js ./
-COPY global-setup.js ./
+COPY global-setup.ts ./
 COPY ./src/e2e-tests ./e2e-tests
 COPY ./playwright ./playwright

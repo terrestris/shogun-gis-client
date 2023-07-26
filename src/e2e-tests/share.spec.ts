@@ -13,5 +13,7 @@ test('share', async ({
 
   await page.goto(`https://${process.env.HOST}/client/?applicationId=${process.env.ID}`);
 
+  await page.waitForLoadState('networkidle');
+  await page.getByRole('button', { name: 'Share' }).click();
   await share(page, context, workerInfo);
 });

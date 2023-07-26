@@ -12,5 +12,7 @@ test('draw-print', async ({
 
   await page.goto(`https://${process.env.HOST}/client/?applicationId=${process.env.ID}`);
 
+  await page.waitForLoadState('networkidle');
+  await page.getByRole('button', { name: 'Export' }).click();
   await exportPrint(page);
 });
