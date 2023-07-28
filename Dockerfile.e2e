@@ -11,5 +11,5 @@ RUN npm i dotenv@v16.3.1
 
 COPY playwright.config.js ./
 COPY global-setup.ts ./
-COPY ./src/e2e-tests ./e2e-tests
+COPY ./src/e2e-tests ./src/e2e-tests
 COPY ./playwright ./playwright
