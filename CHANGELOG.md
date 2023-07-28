@@ -1,3 +1,21 @@
+## [6.8.1](https://github.com/terrestris/shogun-gis-client/compare/v6.8.0...v6.8.1) (2023-07-28)
+
+
+### Dependencies
+
+* **deps-dev:** bump @types/node from 20.4.4 to 20.4.5 ([619b7c5](https://github.com/terrestris/shogun-gis-client/commit/619b7c5a287a5d7e47ece3002173e23897740b86))
+* **deps-dev:** bump babel-jest from 29.6.1 to 29.6.2 ([7ef83fa](https://github.com/terrestris/shogun-gis-client/commit/7ef83fa71de5411aa6680fce58bf53bd73f672f2))
+* **deps-dev:** bump jest from 29.6.1 to 29.6.2 ([b6226f6](https://github.com/terrestris/shogun-gis-client/commit/b6226f6c92d5fd492a230d2f1b64d87a64da2c29))
+* **deps-dev:** bump jest-environment-jsdom from 29.6.1 to 29.6.2 ([f45b7e9](https://github.com/terrestris/shogun-gis-client/commit/f45b7e91e1e15f2f9b83beb59735df9efc88c1e8))
+* **deps:** bump @terrestris/shogun-e2e-tests from 1.0.6 to 1.0.7 ([1e064d0](https://github.com/terrestris/shogun-gis-client/commit/1e064d0d9ef0f9a2bb8c478b6b143a82870de1f7))
+* **deps:** bump i18next from 23.2.11 to 23.3.0 ([b59a29a](https://github.com/terrestris/shogun-gis-client/commit/b59a29a9d2d46a586ccce246f73f7513c5964993))
+
+
+### Bugfixes
+
+* fix pathing ([#1046](https://github.com/terrestris/shogun-gis-client/issues/1046)) ([dca3437](https://github.com/terrestris/shogun-gis-client/commit/dca343783362801c4f3bb51944b88962a2ded448))
+* rename global.ts to make Dockerfile.e2e work ([#1042](https://github.com/terrestris/shogun-gis-client/issues/1042)) ([af3e963](https://github.com/terrestris/shogun-gis-client/commit/af3e9638f8494c9d9a6e24d6c5d88af720eab8be))
+
 ## [6.8.0](https://github.com/terrestris/shogun-gis-client/compare/v6.7.0...v6.8.0) (2023-07-25)
 
 
