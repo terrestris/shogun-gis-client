@@ -65,5 +65,5 @@ export default defineConfig({
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: '.src/e2e-tests/test-results/'
+  outputDir: './src/e2e-tests/test-results/'
 });
