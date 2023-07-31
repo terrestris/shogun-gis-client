@@ -38,19 +38,7 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
     form.setFieldsValue(feature.getProperties());
   }, [feature, form]);
 
-  const createFormItem = (fieldCfg: any) => {
-    let field: React.ReactNode;
-
-    const createReadOnlyComponent = (fieldConfig: any) => {
-      return (
-        <DisplayField
-          {...fieldConfig.fieldProps}
-        />
-      );
-    };
-
-    field = createReadOnlyComponent(fieldCfg);
-
+  const createFormItem = (fieldCfg: PropertyFormItemReadConfig) => {
     return (
       <Form.Item
         key={fieldCfg.propertyName}
@@ -58,7 +46,10 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
         label={fieldCfg.displayName || fieldCfg.propertyName}
         {...fieldCfg.fieldProps}
       >
-        {field}
+        <DisplayField
+          label={fieldCfg.displayName || fieldCfg.propertyName}
+          {...fieldCfg.fieldProps}
+        />
       </Form.Item>
     );
   };

@@ -290,7 +290,6 @@ export const Draw: React.FC<DrawProps> = ({
               {t('Draw.modify')}
             </span>
           </ModifyButton>
-
         ) : <></>}
 
         {showUploadFeatures ? (
@@ -298,6 +297,7 @@ export const Draw: React.FC<DrawProps> = ({
             name="draw-upload"
             onChange={onUploadChange}
             type="link"
+            aria-label='draw-upload'
           >
             <SimpleButton
               type="link"
@@ -314,7 +314,7 @@ export const Draw: React.FC<DrawProps> = ({
           </UploadButton>
         ) : <></>}
 
-        {showDownloadFeatures ? (
+        {showUploadFeatures ? (
           <SimpleButton
             name="draw-export"
             onClick={onGeoJSONDownload}

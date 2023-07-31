@@ -1,12 +1,7 @@
-import {
-  chromium, FullConfig
-} from '@playwright/test';
+// this is needed for playwright to access the .env file
+import 'dotenv/config';
 
-async function globalSetup(config: FullConfig) {
-  // @ts-ignore
-  process.env.ID = '20';
-  // @ts-ignore
-  process.env.HOST = 'https://shogun2022.intranet.terrestris.de';
+async function globalSetup() {
 }
 
 export default globalSetup;

@@ -61,8 +61,9 @@ export interface PrintFormProps extends Omit<FormProps, 'form'> {
 export const PrintForm: React.FC<PrintFormProps> = ({
   active,
   customPrintScales = [],
+
   layerBlackList = [],
-  outputFormats=['pdf', 'png'],
+  outputFormats= ['pdf', 'png'],
   ...restProps
 }): JSX.Element => {
 
@@ -243,7 +244,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   };
 
   return (
-    <div className="print">
+    <div
+      className="print"
+      aria-label='print-form'
+    >
       {
         errorMsg &&
         <Alert
@@ -268,58 +272,70 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               {...restProps}
             >
               <Form.Item
+                aria-label='print-title'
                 name="title"
                 label={t('PrintForm.title')}
                 initialValue={t('PrintForm.initialTitle')}
               >
                 <CustomFieldInput
+                  aria-label='print-title-input'
                   maxLength={50}
                   placeholder={t('PrintForm.titlePlaceholder')}
                 />
               </Form.Item>
               <Form.Item
+                aria-label='print-comment'
                 name="comment"
                 label={t('PrintForm.comment')}
               >
                 <CustomFieldInput
+                  aria-label='print-comment-input'
                   maxLength={200}
                   placeholder={t('PrintForm.commentPlaceholder')}
                 />
               </Form.Item>
               <Form.Item
+                aria-label='print-layout'
                 name="layout"
                 label={t('PrintForm.layout')}
                 initialValue={printManager?.getLayouts()[0]?.name}
               >
                 <LayoutSelect
+                  aria-label='print-layout-input'
                   printManager={printManager}
                 />
               </Form.Item>
               <Form.Item
+                aria-label='print-scale'
                 name='scale'
                 label={t('PrintForm.scale')}
                 initialValue={printManager?.getClosestScaleToFitMap()}
               >
                 <ScaleSelect
+                  aria-label='print-scale-input'
                   printManager={printManager}
                 />
               </Form.Item>
               <Form.Item
+                aria-label='print-dpi'
                 name="dpi"
                 label={t('PrintForm.dpi')}
                 initialValue={printManager.getDpis()[0]}
               >
                 <ResolutionSelect
+                  aria-label='print-dpi-input'
                   printManager={printManager}
                   placeholder={t('PrintForm.resolutionPlaceholder')}
                 />
               </Form.Item>
               <Form.Item
+                aria-label='print-format'
                 name="format"
                 label={t('PrintForm.format')}
                 initialValue="pdf"
               >
                 <OutputFormatSelect
+                  aria-label='print-format-input'
                   printManager={printManager}
                   outputFormats={outputFormats}
                   placeholder={t('PrintForm.outputFormatPlaceholder')}
@@ -327,6 +343,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
               </Form.Item>
             </Form>
             <Button
+              aria-label='create-print'
               className='print-button tool-menu-button'
               disabled={!printManager?.isInitiated()}
               icon={<FontAwesomeIcon icon={faDownload} />}

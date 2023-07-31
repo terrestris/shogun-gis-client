@@ -11,13 +11,14 @@ module.exports = {
     '^.+\\.tsx?$': '<rootDir>/node_modules/babel-jest'
   },
   testMatch: ['<rootDir>/src/**/?!(*.ui)(spec|test).(j|t)s?(x)'],
+  testPathIgnorePatterns: ['/e2e-tests/'],
   collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
     '<rootDir>/jest/matchMediaMock.js',
     '<rootDir>/jest/resizeObserverMock.js'
   ],
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'
   ],

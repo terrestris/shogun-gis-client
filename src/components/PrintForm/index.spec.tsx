@@ -42,7 +42,6 @@ describe('<PrintForm />', () => {
       container
     } = render(
       <PrintForm
-        map={map}
         active={false}
       />,
       {

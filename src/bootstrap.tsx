@@ -1,6 +1,10 @@
 import React from 'react';
 
 import {
+  loader
+} from '@monaco-editor/react';
+
+import {
   Alert,
   ConfigProvider,
   notification
@@ -564,6 +568,12 @@ const matchRole = (role: string | RegExp, element: string): boolean => {
 
 const renderApp = async () => {
   try {
+    loader.config({
+      paths: {
+        vs: './vs'
+      }
+    });
+
     const keycloak = await initKeycloak();
 
     if (keycloak) {

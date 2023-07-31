@@ -94,6 +94,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       label: (
         <div
           className="user-name"
+          aria-label='user-name'
         >
           <span>
             {
@@ -130,6 +131,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
           opener={
             <span
               className="info-opener"
+              aria-label='info-opener'
             >
               {t('UserMenu.infoMenuTitle')}
             </span>
@@ -145,7 +147,13 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
           icon={faSignOut}
         />
       ),
-      label: t('UserMenu.logoutMenuTitle')
+      label: (
+        <div
+          aria-label='login'
+        >
+          {t('UserMenu.logoutMenuTitle')}
+        </div>
+      )
     };
 
     const items: ItemType[] = [];

@@ -104,6 +104,7 @@ export const Footer: React.FC<FooterProps> = ({
       <div
         key="scale-line-container"
         id="scale-line-container"
+        aria-label="scale-line"
       />,
       <Divider
         key="scale-line-divider"
@@ -112,9 +113,11 @@ export const Footer: React.FC<FooterProps> = ({
       <div
         key="scale-combo-container"
         className="scale-combo"
+        aria-label='scale-combo'
       >
         {t('Footer.scale')}:&nbsp;
         <ScaleCombo
+          aria-label='scalecombo-dropdown'
           map={map}
         />
         <Divider
@@ -124,6 +127,7 @@ export const Footer: React.FC<FooterProps> = ({
       <div
         key="reference-system-container"
         className="reference-system"
+        aria-label="reference-system"
       >
         {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
         <Divider
@@ -138,6 +142,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div
           id="mouse-position"
           className="mouse-position"
+          aria-label="mouse-position"
         />
       </div>
     ];

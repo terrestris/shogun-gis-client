@@ -3,25 +3,22 @@ import {
 } from '@playwright/test';
 
 export default defineConfig({
-  // @ts-ignore
-  globalSetup: require.resolve('./global-setup.ts'),
-  testDir: './e2e-tests',
+  globalSetup: './global-setup',
+  testDir: './src/e2e-tests',
+  snapshotPathTemplate: './e2e-tests/additional-files/screenshots/{arg}{ext}',
   timeout: 30 * 1000,
   expect: {
     timeout: 5000
   },
   fullyParallel: true,
-  // @ts-ignore
   forbidOnly: !!process.env.CI,
   retries: 4,
-  // @ts-ignore
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', {
     open: 'never'
   }]],
   use: {
-    // @ts-ignore
-    baseURL: process.env.HOST,
+    baseURL: `https://${process.env.HOST}`,
     actionTimeout: 0,
     trace: 'on-first-retry',
     permissions: ['geolocation'],
@@ -29,18 +26,21 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
 
     viewport: {
-      width: 800,
-      height: 600
+      width: 1200,
+      height: 800
     }
   },
 
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    {
+      name: 'setup',
+      testMatch: /auth.setup\.ts/
+    },
     {
       name: 'chromium',
       use: {
         browserName: 'chromium',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     },
@@ -49,7 +49,7 @@ export default defineConfig({
       name: 'firefox',
       use: {
         browserName: 'firefox',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     },
@@ -58,7 +58,7 @@ export default defineConfig({
       name: 'webkit',
       use: {
         browserName: 'webkit',
-        locale: 'de-DE'
+        locale: 'en-EN'
       },
       dependencies: ['setup']
     }

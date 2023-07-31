@@ -48,12 +48,14 @@ export const Header: React.FC<HeaderProps> = ({
       <img
         key="logo"
         className="logo"
+        aria-label="logo"
         src={logoPath}
       />
     ), (
       <div
         key="title"
         className="title"
+        aria-label="title"
       >
         {title}
       </div>
@@ -68,6 +70,9 @@ export const Header: React.FC<HeaderProps> = ({
     const items = [
       <SearchField
         key="search"
+        aria-label='search-input'
+        name='search-input'
+        className='search-input'
       />
     ];
 
@@ -78,9 +83,14 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getRightItems = () => {
     const items = [
-      <UserMenu
+      <div
         key="user-menu"
-      />
+        aria-label="user-menu"
+      >
+        <UserMenu
+          key="user-menu"
+        />
+      </div>
     ];
 
     insertPlugins('right', items);
