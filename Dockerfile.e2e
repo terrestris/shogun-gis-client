@@ -5,7 +5,7 @@ WORKDIR /app
 RUN npm install -D @playwright/test@v1.36.1
 
 # Need to be installed since the package.json is not copied
-RUN npm i @terrestris/shogun-e2e-tests@v1.0.7
+RUN npm i @terrestris/shogun-e2e-tests@v1.0.8
 RUN npm i dotenv@v16.3.1
 
 COPY playwright.config.js ./
