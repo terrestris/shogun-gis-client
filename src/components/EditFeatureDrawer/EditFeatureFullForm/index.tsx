@@ -137,16 +137,26 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         });
 
         if (isUpload) {
-          properties[key] = [{
-            name: value,
-            status: 'done'
-          }];
+          console.log('restoring upload value', value);
+          if (value) {
+            try {
+              const fileListObject = JSON.parse(value);
+              properties[key] = fileListObject;
+            } catch (error) {
+              console.log('Error parsing file list', error);
+              properties[key] = [];
+            }
+          } else {
+            properties[key] = [];
+          }
         }
       }
     });
 
     form.resetFields();
     form.setFieldsValue(properties);
+
+    console.log('properties', properties);
 
     setTabConfig(editFormConfig);
     setInitialValues(properties);

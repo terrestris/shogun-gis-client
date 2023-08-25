@@ -1,6 +1,13 @@
 import React from 'react';
 
 import {
+  faBoxOpen
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
   Input,
   InputNumber,
   DatePicker,
@@ -8,23 +15,43 @@ import {
   Switch,
   Checkbox,
   Form,
-  FormItemProps
+  FormItemProps,
+  Upload,
+  Button,
+  Modal
 } from 'antd';
 
 import {
   FormInstance,
   FormProps
 } from 'antd/lib/form/Form';
+import {
+  UploadChangeParam, UploadFile
+} from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
+import _isNil from 'lodash/isNil';
+import _isObject from 'lodash/isObject';
+
+import {
+  useTranslation
+} from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import {
+  getCsrfTokenHeader
+} from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import {
   setFormDirty
 } from '../../../store/editFeature';
@@ -37,17 +64,47 @@ export type EditFeatureFormProps = FormProps & {
   form: FormInstance;
 };
 
+export interface ShogunFile extends BaseEntity {
+  active?: boolean;
+  fileName?: string;
+  fileType?: string;
+  fileUuid?: string;
+}
+
+export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
+  if (_isNil(val)) {
+    return false;
+  }
+
+  return val.uid &&
+    !_isNil(val.name) &&
+    !_isNil(val.type) &&
+    !_isNil(val.uid);
+  // todo?
+  // _isObject(val.response) &&
+  // !_isNil(val.response.id) &&
+  // !_isNil(val.response.fileUuid) &&
+  // !_isNil(val.response.fileName) &&
+  // !_isNil(val.response.fileType);
+};
+
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   formConfig,
   form,
   ...passThroughProps
 }): JSX.Element => {
 
+  const client = useSHOGunAPIClient();
   const dispatch = useAppDispatch();
+  const {
+    t
+  } = useTranslation();
 
   const formDirty = useAppSelector(
     state => state.editFeature.formDirty
   );
+
+  // const [fileList, setFileList] = useState<UploadFile<ShogunFile>[]>([]);
 
   const createFormItem = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
     let field: React.ReactNode;
@@ -79,6 +136,12 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
 
     if (fieldCfg.component === 'UPLOAD' && !fieldCfg.readOnly) {
       formItemProps.valuePropName = 'fileList';
+      formItemProps.getValueFromEvent = (e: UploadFile<ShogunFile>[] | UploadChangeParam<UploadFile<ShogunFile>>) => {
+        if (Array.isArray(e)) {
+          return e;
+        }
+        return e && e.fileList;
+      };
     }
 
     return (
@@ -94,6 +157,23 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     );
   };
 
+  const onRemove = (file: UploadFile<ShogunFile>): Promise<void> => {
+    return Promise.resolve();
+    // todo: remove file from list and file system
+  };
+
+  const confirmRemove = (file: UploadFile<ShogunFile>): Promise<void | boolean> => {
+    return new Promise((resolve) => {
+      Modal.confirm({
+        title: t('DocumentUploadPanel.removeConfirmTitle'),
+        icon: <FontAwesomeIcon icon={faBoxOpen} />,
+        content: t('DocumentUploadPanel.removeConfirmContent'),
+        onOk: () => resolve(onRemove(file)),
+        onCancel: () => resolve(false)
+      });
+    });
+  };
+
   const createReadOnlyComponent = (fieldConfig: PropertyFormItemEditConfig): React.ReactNode => {
     return (
       <DisplayField
@@ -103,6 +183,10 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   };
 
   const createFieldComponent = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
+    if (!client) {
+      return;
+    }
+
     switch (fieldCfg.component) {
       case 'CHECKBOX':
         return (
@@ -151,15 +235,23 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             {...fieldCfg?.fieldProps}
           />
         );
-      // TODO Before we allow uploading we should check all side effects.
-      // case 'UPLOAD':
-      //   return (
-      //     <Upload
-      //       {...fieldCfg?.fieldProps}
-      //     >
-      //       <Button>Upload</Button>
-      //     </Upload>
-      //   );
+      case 'UPLOAD':
+        return (
+          <Upload
+            multiple
+            name='file'
+            action='https://localhost/files/uploadToFileSystem'
+            withCredentials={true}
+            headers={{
+              ...getCsrfTokenHeader(),
+              ...getBearerTokenHeader(client.getKeycloak())
+            }}
+            // onRemove={confirmRemove}
+            {...fieldCfg?.fieldProps}
+          >
+            <Button>Upload</Button>
+          </Upload>
+        );
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;
