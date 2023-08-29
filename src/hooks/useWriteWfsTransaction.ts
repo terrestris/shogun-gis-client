@@ -63,17 +63,23 @@ export const useWriteWfsTransaction = () => {
         formValues[key] = value.toISOString();
       }
 
-      console.log('value', value);
-
       if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
         const fileInfoList = value.map(val => ({
           uid: val.uid,
+          lastModified: val.lastModified,
           name: val.name,
-          type: val.type
+          type: val.type,
+          url: `/files/${val.response.fileUuid}`, // todo: configurable
+          response: {
+            id: val.response?.id,
+            created: val.response?.created,
+            fileName: val.response?.fileName,
+            fileType: val.response?.fileType,
+            fileUuid: val.response?.fileUuid
+          }
         }));
         formValues[key] = JSON.stringify(fileInfoList);
       }
-
     }
 
     return formValues;

@@ -15,7 +15,8 @@ import {
   Feature
 } from 'geojson';
 
-import cloneDeep from 'lodash/cloneDeep';
+import _cloneDeep from 'lodash/cloneDeep';
+import _isNil from 'lodash/isNil';
 
 import moment from 'moment';
 
@@ -42,6 +43,9 @@ import {
   PropertyFormItemEditConfig,
   PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -101,6 +105,30 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   }, [dispatch, executeGetFeature, layer]);
 
   const update = useCallback(async () => {
+    const imageUrlToBase64 = async (url: string): Promise<string> => {
+      if (_isNil(url)) {
+        return Promise.reject();
+      }
+
+      const response = await fetch(url, {
+        credentials: 'include',
+        headers: {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        }
+      });
+
+      const blob = await response.blob();
+      return new Promise<string>((onSuccess, onError) => {
+        try {
+          const reader = new FileReader() ;
+          reader.onload = function () { onSuccess(this.result as string); };
+          reader.readAsDataURL(blob);
+        } catch (e) {
+          onError(e);
+        }
+      });
+    };
+
     if (!map || !client) {
       return;
     }
@@ -112,9 +140,9 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
-    const properties = cloneDeep(feature?.properties) || {};
+    const properties = _cloneDeep(feature?.properties) || {};
 
-    Object.entries(properties).forEach(([key, value]) => {
+    const setPropertiesPromises = Object.entries(properties).map(async ([key, value]) => {
       const tabConfigs = editFormConfig?.filter(tabCfg => {
         return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
       });
@@ -124,7 +152,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       }
 
       if (tabConfigs && tabConfigs[0]) {
-        const isDate = tabConfigs[0].children?.find(cfg => {
+        const isDate = tabConfigs[0].children?.some(cfg => {
           return cfg.propertyName === key && cfg.component === 'DATE';
         });
 
@@ -132,18 +160,33 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
           properties[key] = moment(value);
         }
 
-        const isUpload = tabConfigs[0].children?.find(cfg => {
+        const isUpload = tabConfigs[0].children?.some(cfg => {
           return cfg.propertyName === key && cfg.component === 'UPLOAD';
         });
 
         if (isUpload) {
-          console.log('restoring upload value', value);
           if (value) {
             try {
-              const fileListObject = JSON.parse(value);
-              properties[key] = fileListObject;
+              const fileList = JSON.parse(value);
+              // set initial fileList to avoid error...
+              properties[key] = fileList;
+              // todo: fix promise handling
+              console.log('fileList parsed', fileList);
+              const fileListWithBlob = fileList.map(async (val: any) => {
+                const test = {
+                  ...val,
+                  url: await imageUrlToBase64(`/imagefiles/${val?.response?.fileUuid}`)
+                };
+                console.log('tets', test);
+                return test;
+              });
+
+              const result = await Promise.all(fileListWithBlob);
+              properties[key] = result;
+              form.resetFields();
+              form.setFieldsValue(properties);
+
             } catch (error) {
-              console.log('Error parsing file list', error);
               properties[key] = [];
             }
           } else {
@@ -153,10 +196,11 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       }
     });
 
+    const promiseResult = await Promise.all(setPropertiesPromises);
+    // todo: can we reconstruct properties from the promises?
+
     form.resetFields();
     form.setFieldsValue(properties);
-
-    console.log('properties', properties);
 
     setTabConfig(editFormConfig);
     setInitialValues(properties);

@@ -16,8 +16,6 @@ import {
   Checkbox,
   Form,
   FormItemProps,
-  Upload,
-  Button,
   Modal
 } from 'antd';
 
@@ -42,12 +40,6 @@ import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-import {
-  getCsrfTokenHeader
-} from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -56,6 +48,8 @@ import {
   setFormDirty
 } from '../../../store/editFeature';
 import DisplayField from '../../DisplayField';
+import FileUpload from '../../FileUpload';
+import ImageUpload from '../../ImageUpload';
 
 import './index.less';
 
@@ -79,13 +73,12 @@ export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
   return val.uid &&
     !_isNil(val.name) &&
     !_isNil(val.type) &&
-    !_isNil(val.uid);
-  // todo?
-  // _isObject(val.response) &&
-  // !_isNil(val.response.id) &&
-  // !_isNil(val.response.fileUuid) &&
-  // !_isNil(val.response.fileName) &&
-  // !_isNil(val.response.fileType);
+    !_isNil(val.uid) &&
+    _isObject(val.response) &&
+    !_isNil(val.response.id) &&
+    !_isNil(val.response.fileUuid) &&
+    !_isNil(val.response.fileName) &&
+    !_isNil(val.response.fileType);
 };
 
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
@@ -103,8 +96,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   const formDirty = useAppSelector(
     state => state.editFeature.formDirty
   );
-
-  // const [fileList, setFileList] = useState<UploadFile<ShogunFile>[]>([]);
 
   const createFormItem = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
     let field: React.ReactNode;
@@ -236,22 +227,19 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
           />
         );
       case 'UPLOAD':
-        return (
-          <Upload
-            multiple
-            name='file'
-            action='https://localhost/files/uploadToFileSystem'
-            withCredentials={true}
-            headers={{
-              ...getCsrfTokenHeader(),
-              ...getBearerTokenHeader(client.getKeycloak())
-            }}
-            // onRemove={confirmRemove}
-            {...fieldCfg?.fieldProps}
-          >
-            <Button>Upload</Button>
-          </Upload>
-        );
+        if (fieldCfg?.fieldProps.type === 'IMAGE') {
+          return (
+            <ImageUpload
+              {...fieldCfg?.fieldProps}
+            />
+          );
+        } else {
+          return (
+            <FileUpload
+              {...fieldCfg?.fieldProps}
+            />
+          );
+        }
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;
