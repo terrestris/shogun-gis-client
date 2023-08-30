@@ -1,33 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
-  faBoxOpen
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
-
-import {
-  Input,
-  InputNumber,
-  DatePicker,
-  Select,
-  Switch,
-  Checkbox,
-  Form,
-  FormItemProps,
   Upload,
   Button,
   Modal
 } from 'antd';
-
-import {
-  FormInstance,
-  FormProps
-} from 'antd/lib/form/Form';
-import {
-  UploadChangeParam, UploadFile
-} from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
 import _isNil from 'lodash/isNil';

@@ -106,6 +106,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
   const update = useCallback(async () => {
     const imageUrlToBase64 = async (url: string): Promise<string> => {
+      // todo: move to util
       if (_isNil(url)) {
         return Promise.reject();
       }
@@ -168,16 +169,13 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
           if (value) {
             try {
               const fileList = JSON.parse(value);
-              // set initial fileList to avoid error...
               properties[key] = fileList;
-              // todo: fix promise handling
-              console.log('fileList parsed', fileList);
+              const filePath = fileList[0].response?.type?.startsWith('image/') ? '/imagefiles/' : '/files/';
               const fileListWithBlob = fileList.map(async (val: any) => {
                 const test = {
                   ...val,
-                  url: await imageUrlToBase64(`/imagefiles/${val?.response?.fileUuid}`)
+                  url: await imageUrlToBase64(`${filePath}${val?.response?.fileUuid}`)
                 };
-                console.log('tets', test);
                 return test;
               });
 
@@ -196,8 +194,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       }
     });
 
-    const promiseResult = await Promise.all(setPropertiesPromises);
-    // todo: can we reconstruct properties from the promises?
+    await Promise.all(setPropertiesPromises);
 
     form.resetFields();
     form.setFieldsValue(properties);
