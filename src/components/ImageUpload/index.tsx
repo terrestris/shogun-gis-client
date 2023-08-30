@@ -63,7 +63,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
    */
   const showImagePreview = async (file: UploadFile<ShogunFile>) => {
     const { response } = file;
-    if (_isNil(response?.fileUuid)) {
+    if (_isNil(response) || _isNil(response?.fileUuid)) {
       return;
     }
     const previewImageUrl = `${client?.getBasePath()}imagefiles/${response.fileUuid}`;
