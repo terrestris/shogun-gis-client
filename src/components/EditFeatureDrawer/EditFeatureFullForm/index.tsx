@@ -43,12 +43,10 @@ import {
   PropertyFormItemEditConfig,
   PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
@@ -73,6 +71,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     t
   } = useTranslation();
   const executeGetFeature = useExecuteGetFeature();
+  const imageUrlToBase64 = useConvertImageUrl();
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
@@ -105,31 +104,6 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   }, [dispatch, executeGetFeature, layer]);
 
   const update = useCallback(async () => {
-    const imageUrlToBase64 = async (url: string): Promise<string> => {
-      // todo: move to util
-      if (_isNil(url)) {
-        return Promise.reject();
-      }
-
-      const response = await fetch(url, {
-        credentials: 'include',
-        headers: {
-          ...getBearerTokenHeader(client?.getKeycloak())
-        }
-      });
-
-      const blob = await response.blob();
-      return new Promise<string>((onSuccess, onError) => {
-        try {
-          const reader = new FileReader() ;
-          reader.onload = function () { onSuccess(this.result as string); };
-          reader.readAsDataURL(blob);
-        } catch (e) {
-          onError(e);
-        }
-      });
-    };
-
     if (!map || !client) {
       return;
     }
@@ -170,21 +144,19 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
             try {
               const fileList = JSON.parse(value);
               properties[key] = fileList;
-              const filePath = fileList[0].response?.type?.startsWith('image/') ? '/imagefiles/' : '/files/';
+              const filePath = fileList[0].response?.type?.startsWith('image/') ? 'imagefiles/' : 'files/';
               const fileListWithBlob = fileList.map(async (val: any) => {
                 const test = {
                   ...val,
-                  url: await imageUrlToBase64(`${filePath}${val?.response?.fileUuid}`)
+                  url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)
                 };
                 return test;
               });
 
               const result = await Promise.all(fileListWithBlob);
               properties[key] = result;
-              form.resetFields();
-              form.setFieldsValue(properties);
-
             } catch (error) {
+              Logger.error('Could not parse file list from JSON config.', error);
               properties[key] = [];
             }
           } else {
@@ -201,7 +173,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
     setTabConfig(editFormConfig);
     setInitialValues(properties);
-  }, [map, client, layer, feature?.properties, form]);
+  }, [map, client, layer, feature?.properties, form, imageUrlToBase64]);
 
   useEffect(() => {
     update();

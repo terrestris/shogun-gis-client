@@ -30,6 +30,7 @@ import {
   getCsrfTokenHeader
 } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
 
+import useConvertImageUrl from '../../hooks/useConvertImageUrl';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 export type ImageUploadProps = {
@@ -45,38 +46,14 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 
-  const [imageModalVisible, setImageModalVisible] = useState<boolean>(false);
   const [mediaPreviewVisible, setMediaPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
 
   const client = useSHOGunAPIClient();
+  const imageUrlToBase64 = useConvertImageUrl();
   const {
     t
   } = useTranslation();
-
-  const imageUrlToBase64 = async (url: string): Promise<string> => {
-    if (_isNil(url)) {
-      return Promise.reject();
-    }
-
-    const response = await fetch(url, {
-      credentials: 'include',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak())
-      }
-    });
-
-    const blob = await response.blob();
-    return new Promise<string>((onSuccess, onError) => {
-      try {
-        const reader = new FileReader() ;
-        reader.onload = function () { onSuccess(this.result as string); };
-        reader.readAsDataURL(blob);
-      } catch (e) {
-        onError(e);
-      }
-    });
-  };
 
   /**
    * Shows preview of clicked uploaded image.
@@ -84,7 +61,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
    */
   const showImagePreview = async (file: any) => {
     const { response } = file;
-    const previewImageUrl = `/imagefiles/${response.fileUuid}`;
+    const previewImageUrl = `${client?.getBasePath()}imagefiles/${response.fileUuid}`;
     const img = await imageUrlToBase64(previewImageUrl);
     setPreviewImage(img);
     setMediaPreviewVisible(true);
@@ -99,8 +76,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       <Upload
         accept="image/*"
         multiple
-        name='file'
-        action='/imagefiles/uploadToFileSystem'
+        name="file"
+        action={`${client.getBasePath()}imagefiles/uploadToFileSystem`}
         withCredentials={true}
         listType="picture-card"
         headers={{
