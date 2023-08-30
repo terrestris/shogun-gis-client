@@ -40,15 +40,11 @@ import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import { ShogunFile } from '../EditFeatureDrawer/EditFeatureForm';
 
 export type ImageUploadProps = {
-  format?: string;
-  suffix?: string;
-  label?: string;
   fieldConfig: PropertyFormItemEditConfig;
 };
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
   fieldConfig,
-  label,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -65,8 +61,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
    * Shows preview of clicked uploaded image.
    * @param {Object} file Image file object.
    */
-  const showImagePreview = async (file: any) => {
+  const showImagePreview = async (file: UploadFile<ShogunFile>) => {
     const { response } = file;
+    if (_isNil(response?.fileUuid)) {
+      return;
+    }
     const previewImageUrl = `${client?.getBasePath()}imagefiles/${response.fileUuid}`;
     const img = await imageUrlToBase64(previewImageUrl);
     setPreviewImage(img);

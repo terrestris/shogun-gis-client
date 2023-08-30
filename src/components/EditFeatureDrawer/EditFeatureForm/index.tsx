@@ -1,13 +1,6 @@
 import React from 'react';
 
 import {
-  faBoxOpen
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
-
-import {
   Input,
   InputNumber,
   DatePicker,
@@ -15,8 +8,7 @@ import {
   Switch,
   Checkbox,
   Form,
-  FormItemProps,
-  Modal
+  FormItemProps
 } from 'antd';
 
 import {
@@ -127,6 +119,9 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
 
     if (fieldCfg.component === 'UPLOAD' && !fieldCfg.readOnly) {
       formItemProps.valuePropName = 'fileList';
+      /**
+       * Setting `getValueFromEvent` to provide the proper file list to the antd Upload component.
+       */
       formItemProps.getValueFromEvent = (e: UploadFile<ShogunFile>[] | UploadChangeParam<UploadFile<ShogunFile>>) => {
         if (Array.isArray(e)) {
           return e;

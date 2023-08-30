@@ -32,15 +32,11 @@ import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import { ShogunFile } from '../EditFeatureDrawer/EditFeatureForm';
 
 export type FileUploadProps = {
-  format?: string;
-  suffix?: string;
-  label?: string;
   fieldConfig: PropertyFormItemEditConfig;
 };
 
 export const FileUpload: React.FC<FileUploadProps> = ({
   fieldConfig,
-  label,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -50,18 +46,22 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   } = useTranslation();
 
   /**
-   * Allows to download files that need authentication.
+   * Workaround which allows to download files that need authentication.
    */
-  const showPreview = async (file: any) => {
+  const showPreview = async (file: UploadFile<ShogunFile>) => {
     if (!client) {
       return;
     }
     const { response } = file;
-    const fileName = response.fileName;
+    const fileName = response?.fileName;
+    const fileUrl = `/files/${response?.fileUuid}`;
+
+    if (_isNil(fileName) || _isNil(response?.fileUuid)) {
+      return;
+    }
 
     const anchor = document.createElement('a');
     document.body.appendChild(anchor);
-    const fileUrl = `/files/${response.fileUuid}`;
 
     const opts = {
       headers: { ... getBearerTokenHeader(client.getKeycloak())}
