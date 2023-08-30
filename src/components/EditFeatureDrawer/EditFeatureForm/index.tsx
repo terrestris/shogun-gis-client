@@ -148,23 +148,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
     );
   };
 
-  const onRemove = (file: UploadFile<ShogunFile>): Promise<void> => {
-    return Promise.resolve();
-    // todo: remove file from list and file system
-  };
-
-  const confirmRemove = (file: UploadFile<ShogunFile>): Promise<void | boolean> => {
-    return new Promise((resolve) => {
-      Modal.confirm({
-        title: t('DocumentUploadPanel.removeConfirmTitle'),
-        icon: <FontAwesomeIcon icon={faBoxOpen} />,
-        content: t('DocumentUploadPanel.removeConfirmContent'),
-        onOk: () => resolve(onRemove(file)),
-        onCancel: () => resolve(false)
-      });
-    });
-  };
-
   const createReadOnlyComponent = (fieldConfig: PropertyFormItemEditConfig): React.ReactNode => {
     return (
       <DisplayField
