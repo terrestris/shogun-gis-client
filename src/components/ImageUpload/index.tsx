@@ -12,6 +12,10 @@ import {
   Modal
 } from 'antd';
 
+import {
+  UploadFile
+} from 'antd/lib/upload/interface';
+
 import _debounce from 'lodash/debounce';
 import _isNil from 'lodash/isNil';
 import _isObject from 'lodash/isObject';
@@ -32,6 +36,8 @@ import {
 
 import useConvertImageUrl from '../../hooks/useConvertImageUrl';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+
+import { ShogunFile } from '../EditFeatureDrawer/EditFeatureForm';
 
 export type ImageUploadProps = {
   format?: string;
@@ -67,6 +73,21 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     setMediaPreviewVisible(true);
   };
 
+  const removeFile = async (file: UploadFile<ShogunFile>) => {
+    const uuid = file?.response?.fileUuid;
+    if (uuid) {
+      const url = `${client?.getBasePath()}imagefiles/${uuid}`;
+      return await fetch(url, {
+        method: 'DELETE',
+        credentials: 'same-origin',
+        headers: {
+          ...getCsrfTokenHeader(),
+          ...getBearerTokenHeader(client?.getKeycloak())
+        }
+      });
+    }
+  };
+
   if (!client) {
     return <></>;
   }
@@ -84,7 +105,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           ...getCsrfTokenHeader(),
           ...getBearerTokenHeader(client.getKeycloak())
         }}
-        // onRemove={confirmRemove} // todo: add delete fn
+        onRemove={removeFile}
         onPreview={showImagePreview}
         {...fieldConfig?.fieldProps}
         {...passThroughProps}

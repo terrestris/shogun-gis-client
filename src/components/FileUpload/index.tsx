@@ -2,9 +2,12 @@ import React from 'react';
 
 import {
   Upload,
-  Button,
-  Modal
+  Button
 } from 'antd';
+
+import {
+  UploadFile
+} from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
 import _isNil from 'lodash/isNil';
@@ -25,6 +28,8 @@ import {
 } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
 
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+
+import { ShogunFile } from '../EditFeatureDrawer/EditFeatureForm';
 
 export type FileUploadProps = {
   format?: string;
@@ -72,10 +77,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     window.URL.revokeObjectURL(objectUrl);
   };
 
-  const removeFile = async (file: any) => { // todo: types
-    const uuid = file?.response?.uuid;
+  const removeFile = async (file: UploadFile<ShogunFile>) => {
+    const uuid = file?.response?.fileUuid;
     if (uuid) {
-      const url = `/files/${uuid}`;
+      const url = `${client?.getBasePath()}files/${uuid}`;
       return await fetch(url, {
         method: 'DELETE',
         credentials: 'same-origin',
