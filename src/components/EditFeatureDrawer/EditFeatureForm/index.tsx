@@ -199,7 +199,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
           />
         );
       case 'UPLOAD':
-        if (fieldCfg?.fieldProps.type === 'IMAGE') {
+        if (fieldCfg?.fieldProps?.type === 'IMAGE') {
           return (
             <ImageUpload
               {...fieldCfg?.fieldProps}
