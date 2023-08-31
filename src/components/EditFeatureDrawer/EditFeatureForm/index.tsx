@@ -28,7 +28,8 @@ import {
 } from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
+
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
@@ -49,13 +50,6 @@ export type EditFeatureFormProps = FormProps & {
   formConfig?: PropertyFormItemEditConfig[];
   form: FormInstance;
 };
-
-export interface ShogunFile extends BaseEntity {
-  active?: boolean;
-  fileName?: string;
-  fileType?: string;
-  fileUuid?: string;
-}
 
 export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
   if (_isNil(val)) {

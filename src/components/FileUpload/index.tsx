@@ -17,6 +17,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
@@ -28,8 +29,6 @@ import {
 } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
 
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
-
-import { ShogunFile } from '../EditFeatureDrawer/EditFeatureForm';
 
 export type FileUploadProps = {
   fieldConfig: PropertyFormItemEditConfig;
