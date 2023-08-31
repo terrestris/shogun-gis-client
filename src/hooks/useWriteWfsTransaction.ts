@@ -8,6 +8,8 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
+import _isObject from 'lodash/isObject';
+
 import {
   isMoment
 } from 'moment';
@@ -24,6 +26,8 @@ import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
+
+import { isFileConfig } from '../components/EditFeatureDrawer/EditFeatureForm';
 
 import useExecuteWfsDescribeFeatureType, {
   isGeometryType
@@ -57,6 +61,24 @@ export const useWriteWfsTransaction = () => {
       // Transform moments back to iso string.
       if (isMoment(value)) {
         formValues[key] = value.toISOString();
+      }
+
+      if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
+        const fileInfoList = value.map(val => ({
+          uid: val.uid,
+          lastModified: val.lastModified,
+          name: val.name,
+          type: val.type,
+          url: `/files/${val.response.fileUuid}`, // todo: configurable
+          response: {
+            id: val.response?.id,
+            created: val.response?.created,
+            fileName: val.response?.fileName,
+            fileType: val.response?.fileType,
+            fileUuid: val.response?.fileUuid
+          }
+        }));
+        formValues[key] = JSON.stringify(fileInfoList);
       }
     }
 
