@@ -15,7 +15,6 @@ import {
   Feature
 } from 'geojson';
 
-import _cloneDeep from 'lodash/cloneDeep';
 import _isNil from 'lodash/isNil';
 
 import moment from 'moment';
@@ -115,7 +114,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
-    const properties = _cloneDeep(feature?.properties) || {};
+    const properties = structuredClone(feature?.properties) || {};
 
     const setPropertiesPromises = Object.entries(properties).map(async ([key, value]) => {
       const tabConfigs = editFormConfig?.filter(tabCfg => {
