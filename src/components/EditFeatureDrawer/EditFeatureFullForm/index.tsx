@@ -144,18 +144,15 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
               const fileList = JSON.parse(value);
               properties[key] = fileList;
               const filePath = fileList[0].response?.type?.startsWith('image/') ? 'imagefiles/' : 'files/';
-              const fileListWithBlob = fileList.map(async (val: any) => {
-                const test = {
-                  ...val,
-                  url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)
-                };
-                return test;
-              });
+              const fileListWithBlob = fileList.map(async (val: any) => ({
+                ...val,
+                url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)
+              }));
 
               const result = await Promise.all(fileListWithBlob);
               properties[key] = result;
             } catch (error) {
-              Logger.error('Could not parse file list from JSON config.', error);
+              Logger.error('Could not parse file list from JSON config: ', error);
               properties[key] = [];
             }
           } else {
