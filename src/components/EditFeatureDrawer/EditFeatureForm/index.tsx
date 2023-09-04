@@ -15,20 +15,34 @@ import {
   FormInstance,
   FormProps
 } from 'antd/lib/form/Form';
+import {
+  UploadChangeParam, UploadFile
+} from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
+import _isNil from 'lodash/isNil';
+import _isObject from 'lodash/isObject';
+
+import {
+  useTranslation
+} from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
+
 import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import {
   setFormDirty
 } from '../../../store/editFeature';
 import DisplayField from '../../DisplayField';
+import FileUpload from '../../FileUpload';
+import ImageUpload from '../../ImageUpload';
 
 import './index.less';
 
@@ -37,13 +51,33 @@ export type EditFeatureFormProps = FormProps & {
   form: FormInstance;
 };
 
+export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
+  if (_isNil(val)) {
+    return false;
+  }
+
+  return val.uid &&
+    !_isNil(val.name) &&
+    !_isNil(val.type) &&
+    !_isNil(val.uid) &&
+    _isObject(val.response) &&
+    !_isNil(val.response.id) &&
+    !_isNil(val.response.fileUuid) &&
+    !_isNil(val.response.fileName) &&
+    !_isNil(val.response.fileType);
+};
+
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   formConfig,
   form,
   ...passThroughProps
 }): JSX.Element => {
 
+  const client = useSHOGunAPIClient();
   const dispatch = useAppDispatch();
+  const {
+    t
+  } = useTranslation();
 
   const formDirty = useAppSelector(
     state => state.editFeature.formDirty
@@ -79,6 +113,15 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
 
     if (fieldCfg.component === 'UPLOAD' && !fieldCfg.readOnly) {
       formItemProps.valuePropName = 'fileList';
+      /**
+       * Setting `getValueFromEvent` to provide the proper file list to the antd Upload component.
+       */
+      formItemProps.getValueFromEvent = (e: UploadFile<ShogunFile>[] | UploadChangeParam<UploadFile<ShogunFile>>) => {
+        if (Array.isArray(e)) {
+          return e;
+        }
+        return e && e.fileList;
+      };
     }
 
     return (
@@ -103,6 +146,10 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   };
 
   const createFieldComponent = (fieldCfg: PropertyFormItemEditConfig): React.ReactNode => {
+    if (!client) {
+      return;
+    }
+
     switch (fieldCfg.component) {
       case 'CHECKBOX':
         return (
@@ -151,15 +198,20 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             {...fieldCfg?.fieldProps}
           />
         );
-      // TODO Before we allow uploading we should check all side effects.
-      // case 'UPLOAD':
-      //   return (
-      //     <Upload
-      //       {...fieldCfg?.fieldProps}
-      //     >
-      //       <Button>Upload</Button>
-      //     </Upload>
-      //   );
+      case 'UPLOAD':
+        if (fieldCfg?.fieldProps?.type === 'IMAGE') {
+          return (
+            <ImageUpload
+              {...fieldCfg?.fieldProps}
+            />
+          );
+        } else {
+          return (
+            <FileUpload
+              {...fieldCfg?.fieldProps}
+            />
+          );
+        }
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;

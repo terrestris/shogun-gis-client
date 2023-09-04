@@ -8,6 +8,8 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
+import _isObject from 'lodash/isObject';
+
 import {
   isMoment
 } from 'moment';
@@ -25,9 +27,12 @@ import {
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
+import { isFileConfig } from '../components/EditFeatureDrawer/EditFeatureForm';
+
 import useExecuteWfsDescribeFeatureType, {
   isGeometryType
 } from './useExecuteWfsDescribeFeatureType';
+import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export type WriteWfsTransactionOpts = {
   layer: WmsLayer;
@@ -39,31 +44,49 @@ export type WriteWfsTransactionOpts = {
 export const useWriteWfsTransaction = () => {
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
-
-  const cleanFormValues = (form: FormInstance) => {
-    const formValues = {...form.getFieldsValue()};
-
-    for (const [key, value] of Object.entries(formValues)) {
-      // Transform undefined to null values.
-      if (value === undefined) {
-        formValues[key] = null;
-      }
-
-      // Filter out read-only fields (which don't have any field instance associated).
-      if (!form.getFieldInstance(key)) {
-        delete formValues[key];
-      }
-
-      // Transform moments back to iso string.
-      if (isMoment(value)) {
-        formValues[key] = value.toISOString();
-      }
-    }
-
-    return formValues;
-  };
+  const client = useSHOGunAPIClient();
 
   const writeWfsTransaction = useCallback(async (opts: WriteWfsTransactionOpts) => {
+    const cleanFormValues = (form: FormInstance) => {
+      const formValues = {...form.getFieldsValue()};
+
+      for (const [key, value] of Object.entries(formValues)) {
+        // Transform undefined to null values.
+        if (value === undefined) {
+          formValues[key] = null;
+        }
+
+        // Filter out read-only fields (which don't have any field instance associated).
+        if (!form.getFieldInstance(key)) {
+          delete formValues[key];
+        }
+
+        // Transform moments back to iso string.
+        if (isMoment(value)) {
+          formValues[key] = value.toISOString();
+        }
+
+        if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
+          const fileInfoList = value.map(val => ({
+            uid: val.uid,
+            lastModified: val.lastModified,
+            name: val.name,
+            type: val.type,
+            url: `${client?.getBasePath()}files/${val.response.fileUuid}`,
+            response: {
+              id: val.response?.id,
+              created: val.response?.created,
+              fileName: val.response?.fileName,
+              fileType: val.response?.fileType,
+              fileUuid: val.response?.fileUuid
+            }
+          }));
+          formValues[key] = JSON.stringify(fileInfoList);
+        }
+      }
+      return formValues;
+    };
+
     if (!map) {
       return;
     }
@@ -142,7 +165,7 @@ export const useWriteWfsTransaction = () => {
     }
 
     return transaction;
-  }, [executeWfsDescribeFeatureType, map]);
+  }, [client, executeWfsDescribeFeatureType, map]);
 
   return writeWfsTransaction;
 };

@@ -17,7 +17,6 @@ import {
 
 import copy from 'copy-to-clipboard';
 
-import _cloneDeep from 'lodash/cloneDeep';
 import _isFinite from 'lodash/isFinite';
 
 import OlFeature from 'ol/Feature';
@@ -77,7 +76,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       return;
     }
 
-    let props = Object.entries(_cloneDeep(selectedFeature.getProperties()))
+    let props = Object.entries(structuredClone(selectedFeature.getProperties()))
       .filter(([, value]) => !(value instanceof OlGeometry));
 
     if (exportFilter) {

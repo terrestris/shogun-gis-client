@@ -15,7 +15,7 @@ import {
   Feature
 } from 'geojson';
 
-import cloneDeep from 'lodash/cloneDeep';
+import _isNil from 'lodash/isNil';
 
 import moment from 'moment';
 
@@ -45,6 +45,7 @@ import {
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
@@ -69,6 +70,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     t
   } = useTranslation();
   const executeGetFeature = useExecuteGetFeature();
+  const imageUrlToBase64 = useConvertImageUrl();
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
@@ -112,9 +114,9 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
-    const properties = cloneDeep(feature?.properties) || {};
+    const properties = structuredClone(feature?.properties) || {};
 
-    Object.entries(properties).forEach(([key, value]) => {
+    const setPropertiesPromises = Object.entries(properties).map(async ([key, value]) => {
       const tabConfigs = editFormConfig?.filter(tabCfg => {
         return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
       });
@@ -124,7 +126,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       }
 
       if (tabConfigs && tabConfigs[0]) {
-        const isDate = tabConfigs[0].children?.find(cfg => {
+        const isDate = tabConfigs[0].children?.some(cfg => {
           return cfg.propertyName === key && cfg.component === 'DATE';
         });
 
@@ -132,25 +134,42 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
           properties[key] = moment(value);
         }
 
-        const isUpload = tabConfigs[0].children?.find(cfg => {
+        const isUpload = tabConfigs[0].children?.some(cfg => {
           return cfg.propertyName === key && cfg.component === 'UPLOAD';
         });
 
         if (isUpload) {
-          properties[key] = [{
-            name: value,
-            status: 'done'
-          }];
+          if (value) {
+            try {
+              const fileList = JSON.parse(value);
+              properties[key] = fileList;
+              const filePath = fileList[0].response?.type?.startsWith('image/') ? 'imagefiles/' : 'files/';
+              const fileListWithBlob = fileList.map(async (val: any) => ({
+                ...val,
+                url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)
+              }));
+
+              const result = await Promise.all(fileListWithBlob);
+              properties[key] = result;
+            } catch (error) {
+              Logger.error('Could not parse file list from JSON config: ', error);
+              properties[key] = [];
+            }
+          } else {
+            properties[key] = [];
+          }
         }
       }
     });
+
+    await Promise.all(setPropertiesPromises);
 
     form.resetFields();
     form.setFieldsValue(properties);
 
     setTabConfig(editFormConfig);
     setInitialValues(properties);
-  }, [map, client, layer, feature?.properties, form]);
+  }, [map, client, layer, feature?.properties, form, imageUrlToBase64]);
 
   useEffect(() => {
     update();

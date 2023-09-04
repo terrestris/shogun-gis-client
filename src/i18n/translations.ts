@@ -55,6 +55,12 @@ export default {
       FeatureInfo: {
         usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
       },
+      FileUpload: {
+        upload: 'Dateien hochladen'
+      },
+      ImageUpload: {
+        upload: 'Bilder hochladen'
+      },
       LayerTree: {
         transparency: 'Transparenz',
         noLegendAvailable: 'Keine Legende verfügbar'
@@ -274,6 +280,12 @@ export default {
       },
       FeatureInfo: {
         usageHint: 'Click on the map to get details about the clicked coordinate.'
+      },
+      FileUpload: {
+        upload: 'Upload files'
+      },
+      ImageUpload: {
+        upload: 'Upload images'
       },
       LayerTree: {
         transparency: 'Transparency',
