@@ -30,6 +30,8 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [render, setRender] = useState<boolean>(true);
   const [isFormValid, setIsFormIsValid] = useState(true);
+  const [fields, setFields] = useState<any>({});
+  const [currentProperties, setCurrentProperties] = useState<any>({});
 
   const [form] = Form.useForm();
 
@@ -39,10 +41,13 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const map = useMap();
 
   useEffect(() => {
+    setFields(selectedFeature?.getProperties());
+  }, [selectedFeature]);
+
+  useEffect(() => {
     const properties = selectedFeature?.getProperties();
 
-    console.log('selectedFeature CHANGE');
-    console.log(properties);
+    setCurrentProperties({...properties});
 
     // TODO filter out geometry
     const fs: any = {};
@@ -80,27 +85,20 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     onClose(false);
   };
 
-  const onFinish = (fields: any) => {
+  const onFinish = (input: any) => {
     if (!selectedFeature) {
       return;
     }
 
-    Object.entries(fields.fields).forEach(([key, value]) => {
+    Object.entries(input.fields).forEach(([key, value]) => {
       selectedFeature.set(value.name, value.value);
     });
   };
 
   const onPropertyAdd = () => {
-    const existingFields = _cloneDeep(form.getFieldValue('fields'));
-
-    existingFields[Math.random()] = {
-      name: '',
-      value: ''
-    };
-
-    form.setFieldValue('fields', existingFields);
-
-    setRender(!render);
+    const newProps = {...currentProperties};
+    newProps[''] = '';
+    setCurrentProperties(newProps);
   };
 
   const remove = (keyToRemove: string) => {
@@ -125,19 +123,8 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   };
 
   const getFormItems = () => {
-    // Get all values of the form
-    const fields = form.getFieldsValue(true);
 
-    console.log(fields.fields);
-
-
-    if (!fields.fields) {
-      console.log("hallo");
-
-      return;
-    }
-
-    return Object.entries(fields.fields).map(([key, value]) => {
+    return Object.entries(currentProperties).map(([key, value]) => {
       return (
         <div
           key={key}
@@ -201,6 +188,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
                 type="primary"
                 htmlType="submit"
                 disabled={!isFormValid}
+                // onClick={}
               >
                 Submit
               </Button>
