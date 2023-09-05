@@ -90,10 +90,15 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
       return;
     }
 
-    Object.entries(input.fields).forEach(([key, value]) => {
-      // @ts-ignore
-      selectedFeature.set(value.name, value.value);
-    });
+    if (Object.keys(currentProperties).length > 0) {
+      Object.entries(input.fields).forEach(([key, value]) => {
+        // @ts-ignore
+        selectedFeature.set(value.name, value.value);
+      });
+    } else {
+      selectedFeature.set('', '');
+    }
+
   };
 
   const onPropertyAdd = () => {
@@ -103,13 +108,14 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   };
 
   const remove = (keyToRemove: string) => {
-    const existingFields = form.getFieldValue('fields');
 
-    delete existingFields[keyToRemove];
+    const updatedProperties = currentProperties;
 
-    form.setFieldsValue({
-      fields: existingFields
-    });
+    delete updatedProperties[keyToRemove];
+
+    selectedFeature?.unset(keyToRemove);
+
+    setCurrentProperties(updatedProperties);
 
     setRender(!render);
   };
