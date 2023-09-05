@@ -11,12 +11,15 @@ import {
 import _cloneDeep from 'lodash/cloneDeep';
 import OlFeature from 'ol/Feature';
 
+import { useTranslation } from 'react-i18next';
+
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
 import AttributionRow from './AttributionRow';
+import Geometry from 'ol/geom/Geometry';
 
 export type AttributionDrawerProps = {
   openAttributeDrawer: boolean;
@@ -30,7 +33,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [render, setRender] = useState<boolean>(true);
   const [isFormValid, setIsFormIsValid] = useState(true);
-  const [fields, setFields] = useState<any>({});
   const [currentProperties, setCurrentProperties] = useState<any>({});
 
   const [form] = Form.useForm();
@@ -40,16 +42,15 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
 
   const map = useMap();
 
-  useEffect(() => {
-    setFields(selectedFeature?.getProperties());
-  }, [selectedFeature]);
+  const {
+    t
+  } = useTranslation();
 
   useEffect(() => {
     const properties = selectedFeature?.getProperties();
 
-    setCurrentProperties({...properties});
+    setCurrentProperties({ ...properties });
 
-    // TODO filter out geometry
     const fs: any = {};
     if (properties) {
       Object.entries(properties).forEach(([key, value]) => {
@@ -91,12 +92,13 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     }
 
     Object.entries(input.fields).forEach(([key, value]) => {
+      // @ts-ignore
       selectedFeature.set(value.name, value.value);
     });
   };
 
   const onPropertyAdd = () => {
-    const newProps = {...currentProperties};
+    const newProps = { ...currentProperties };
     newProps[''] = '';
     setCurrentProperties(newProps);
   };
@@ -124,7 +126,13 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
 
   const getFormItems = () => {
 
-    return Object.entries(currentProperties).map(([key, value]) => {
+    const filteredProperties = currentProperties;
+
+    if (filteredProperties.geometry) {
+      delete filteredProperties.geometry;
+    }
+
+    return Object.entries(filteredProperties).map(([key, value]) => {
       return (
         <div
           key={key}
@@ -146,7 +154,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   return (
     <>
       <Drawer
-        title="Basic Drawer"
+        title={t('Attribution.title')}
         className='attribution-drawer'
         placement="right"
         mask={false}
@@ -157,11 +165,10 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
         <>
           {!selectedFeature &&
             <>
-              Please select a feature
+              {t('Attribution.select')}
             </>
           }
         </>
-        <Divider />
         <Row>
           <Form
             name="dynamic_form_nest_item"
@@ -174,23 +181,24 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
               getFormItems()
             }
             <Form.Item>
-              <Button
-                type="dashed"
-                onClick={onPropertyAdd}
-                block
-                icon={<PlusOutlined />}
-              >
-                Add Attribution
-              </Button>
+              {selectedFeature ?
+                <Button
+                  type="dashed"
+                  onClick={onPropertyAdd}
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  {t('Attribution.add')}
+                </Button> :
+                <></>}
             </Form.Item>
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 disabled={!isFormValid}
-                // onClick={}
               >
-                Submit
+                {t('Attribution.submit')}
               </Button>
             </Form.Item>
           </Form>

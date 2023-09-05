@@ -199,6 +199,12 @@ export default {
         undo: 'Rückgängig',
         redo: 'Wiederherstellen'
       },
+      Attribution: {
+        title: 'Attribute',
+        add: 'Attribut hinzufügen',
+        select: 'Wählen Sie zunächst eine Geometrie aus.',
+        submit: 'Speichern'
+      },
       ResetButton: {
         title: 'Zurücksetzen'
       },
@@ -424,6 +430,12 @@ export default {
         delete: 'Delete geometry',
         undo: 'Undo',
         redo: 'Redo'
+      },
+      Attribution: {
+        title: 'Attributes',
+        add: 'Add Attribution',
+        select: 'Please select a geometry first.',
+        submit: 'Submit'
       },
       ResetButton: {
         title: 'Reset'
