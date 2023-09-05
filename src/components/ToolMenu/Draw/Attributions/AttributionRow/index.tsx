@@ -24,7 +24,7 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
           required: true,
           message: 'Missing Key'
         }, ({ getFieldsValue }) => ({
-          validator(_, value) {
+          validator(_, value: string) {
             const fields = getFieldsValue(true);
             // @ts-ignore
             const filtered = Object.entries(fields.fields).filter(([key, val]) => val.name === value);
