@@ -26,6 +26,7 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
         }, ({ getFieldsValue }) => ({
           validator(_, value) {
             const fields = getFieldsValue(true);
+            // @ts-ignore
             const filtered = Object.entries(fields.fields).filter(([key, val]) => val.name === value);
 
             if (filtered.length > 1) {
