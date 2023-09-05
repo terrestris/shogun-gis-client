@@ -19,7 +19,6 @@ import {
 
 import './index.less';
 import AttributionRow from './AttributionRow';
-import Geometry from 'ol/geom/Geometry';
 
 export type AttributionDrawerProps = {
   openAttributeDrawer: boolean;
