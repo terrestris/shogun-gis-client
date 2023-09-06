@@ -437,6 +437,13 @@ export default {
         select: 'Please select a geometry first.',
         submit: 'Submit'
       },
+      AttributionRow: {
+        missingKey: 'Missing Key',
+        missingValue: 'Missing Value',
+        keyPlaceholder: 'Key',
+        valuePlaceholder: 'Value',
+        keyInUse: 'Key already exists!'
+      },
       ResetButton: {
         title: 'Reset'
       },

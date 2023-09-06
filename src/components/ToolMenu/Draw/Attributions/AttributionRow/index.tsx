@@ -5,10 +5,18 @@ import {
 } from 'antd';
 
 import './index.less';
+import { useTranslation } from 'react-i18next';
 
 export type AttributionRowProps = {
   keyName: string;
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type InputFields = {
+  [fields: string]: {
+    name: string;
+    value: any;
+  };
 };
 
 const AttributionRow: React.FC<AttributionRowProps> = ({
@@ -16,21 +24,24 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
   onChange
 }) => {
 
+  const {
+    t
+  } = useTranslation();
+
   return (
     <>
       <Form.Item
         name={['fields', keyName, 'name']}
         rules={[{
           required: true,
-          message: 'Missing Key'
+          message: t('AttributionRow.missingKey')
         }, ({ getFieldsValue }) => ({
           validator(_, value: string) {
-            const fields = getFieldsValue(true);
-            // @ts-ignore
+            const fields: InputFields = getFieldsValue(true);
             const filtered = Object.entries(fields.fields).filter(([key, val]) => val.name === value);
 
             if (filtered.length > 1) {
-              return Promise.reject(new Error('key already exists!'));
+              return Promise.reject(new Error(t('AttributionRow.keyInUse')));
             }
 
             return Promise.resolve();
@@ -38,7 +49,7 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
         })]}
       >
         <Input
-          placeholder="Key"
+          placeholder={t('AttributionRow.keyPlaceholder')}
           onChange={onChange}
         />
       </Form.Item>
@@ -46,11 +57,11 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
         name={['fields', keyName, 'value']}
         rules={[{
           required: true,
-          message: 'Missing Value'
+          message: t('AttributionRow.missingValue')
         }]}
       >
         <Input
-          placeholder="Value"
+          placeholder={t('AttributionRow.valuePlaceholder')}
           onChange={onChange}
         />
       </Form.Item>

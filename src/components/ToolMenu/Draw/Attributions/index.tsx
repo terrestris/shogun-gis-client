@@ -18,7 +18,7 @@ import {
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
-import AttributionRow from './AttributionRow';
+import AttributionRow, { InputFields } from './AttributionRow';
 
 export type AttributionDrawerProps = {
   openAttributeDrawer: boolean;
@@ -32,12 +32,9 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [render, setRender] = useState<boolean>(true);
   const [isFormValid, setIsFormIsValid] = useState(true);
-  const [currentProperties, setCurrentProperties] = useState<any>({});
+  const [currentProperties, setCurrentProperties] = useState<Record<string, any>>({});
 
   const [form] = Form.useForm();
-
-  // ToDo: will be used in future once react-geo library triggeres selected events
-  // const selectedFeatures: OlFeature[] = useAppSelector(state => state.selectedFeatures);
 
   const map = useMap();
 
@@ -66,7 +63,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     });
   }, [selectedFeature, form]);
 
-  // ToDo: will be removed in future once react-geo library triggeres selected events
   const selectInteraction: any = map?.getInteractions().getArray().filter(interaction => {
     if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
       return true;
@@ -85,20 +81,18 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     onClose(false);
   };
 
-  const onFinish = (input: any) => {
+  const onFinish = (input: InputFields) => {
     if (!selectedFeature) {
       return;
     }
 
     if (Object.keys(currentProperties).length > 0) {
       Object.entries(input.fields).forEach(([key, value]) => {
-        // @ts-ignore
         selectedFeature.set(value.name, value.value);
       });
     } else {
       selectedFeature.set('', '');
     }
-
   };
 
   const onPropertyAdd = () => {
@@ -108,7 +102,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   };
 
   const remove = (keyToRemove: string) => {
-
     const updatedProperties = currentProperties;
 
     delete updatedProperties[keyToRemove];
@@ -130,7 +123,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   };
 
   const getFormItems = () => {
-
     const filteredProperties = currentProperties;
 
     if (filteredProperties.geometry) {
