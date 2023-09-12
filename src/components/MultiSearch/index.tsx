@@ -1,25 +1,30 @@
 import React, {
   useCallback,
-  useEffect, useMemo, useRef, useState
+  useEffect,
+  useMemo,
+  useRef,
+  useState
 } from 'react';
 
 import {
-  EditOutlined,
   LoadingOutlined,
   SearchOutlined,
   SettingOutlined
 } from '@ant-design/icons';
 import {
-  Button,
   Checkbox,
   Dropdown,
   Empty,
   Input,
-  InputProps,
-  Tooltip
+  InputProps
 } from 'antd';
 
+import ClientConfiguration, {
+  SolrConfig
+} from 'clientConfig';
+
 import _groupBy from 'lodash/groupBy';
+import _isNil from 'lodash/isNil';
 
 import { getUid } from 'ol';
 import {
@@ -74,10 +79,6 @@ import generateSolrQuery from '../../utils/generateSolrQuery';
 
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
-  delay?: number;
-  minChars?: number;
-  solrSearchBasePath?: string;
-  useSolrHighlighting?: boolean;
 };
 
 export type DataSearchResult = {
@@ -108,11 +109,7 @@ export type SolrQueryConfig = {
 };
 
 export const MultiSearch: React.FC<MultiSearchProps> = ({
-  useNominatim,
-  useSolrHighlighting = true,
-  delay = 1000,
-  minChars = 3,
-  solrSearchBasePath = '/search/query'
+  useNominatim
 }): JSX.Element => {
 
   const client = useSHOGunAPIClient();
@@ -126,7 +123,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
   const [searchNominatim, setSearchNominatim] = useState<boolean>(useNominatim);
   const [searchData, setSearchData] = useState<boolean>(true);
-  const [useViewBox, setUseViewBox] = useState<boolean>(true);
+  const [useViewBox, setUseViewBox] = useState<boolean>(ClientConfiguration.search?.defaultUseViewBox ?? true);
   const [searchValue, setSearchValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [resultsVisible, setResultsVisible] = useState<boolean>(false);
@@ -200,6 +197,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   }, [searchData, searchNominatim, useViewBox, t]);
 
   const performSearch = useCallback(async () => {
+    const minChars = ClientConfiguration.search?.minChars ?? 3;
     if (searchValue.length < minChars) {
       resetSearch();
       return;
@@ -227,7 +225,8 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     if (searchData && map) {
       try {
-        const searchUrl = new URL(`${window.location.origin}${solrSearchBasePath}`);
+        const solrBasePath = ClientConfiguration.search?.solrBasePath ?? '/search/query';
+        const searchUrl = new URL(`${window.location.origin}${solrBasePath}a`);
         const queriesPerLayer = generateSolrQuery({
           searchValue,
           map
@@ -236,14 +235,14 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         const promises = queriesPerLayer.map(q => {
           const solrQueryConfig: SolrQueryConfig = {
             q: q.query,
-            rows: 100,
-            defType: 'edismax'
+            rows: ClientConfiguration.search?.solrQueryConfig?.rowsPerQuery ?? 100,
+            defType: ClientConfiguration.search?.solrQueryConfig?.queryParser ?? 'edismax'
           };
 
           if (q.fieldList) {
             solrQueryConfig.qf = q.fieldList;
           } else {
-            solrQueryConfig.qf = 'search';
+            solrQueryConfig.qf = ClientConfiguration.search?.coreName ?? 'search';
           }
 
           if (useViewBox && viewBox) {
@@ -251,12 +250,12 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
             solrQueryConfig.fq = bboxFilter;
           }
 
-          if (useSolrHighlighting) {
+          if (ClientConfiguration.search?.useSolrHighlighting) {
             solrQueryConfig.hl = true;
             solrQueryConfig['hl.fl'] = '*';
-            solrQueryConfig['hl.tag.pre'] = '<b>';
-            solrQueryConfig['hl.tag.post'] = '</b>';
-            solrQueryConfig['hl.requireFieldMatch'] = true;
+            solrQueryConfig['hl.tag.pre'] = ClientConfiguration.search?.solrQueryConfig?.tagPre ?? '<b>';
+            solrQueryConfig['hl.tag.post'] = ClientConfiguration.search?.solrQueryConfig?.tagPost ?? '</b>';
+            solrQueryConfig['hl.requireFieldMatch'] = ClientConfiguration.search?.solrQueryConfig?.requireFieldMatch ?? true;
           }
 
           const defaultHeaders = {
@@ -316,7 +315,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         setLoading(false);
       }
     }
-  }, [searchValue, minChars, searchData, searchNominatim, useViewBox, map, solrSearchBasePath, useSolrHighlighting, client]);
+  }, [searchValue, searchData, searchNominatim, useViewBox, map, client]);
 
   const replaceTemplates = (template: string, data: DataSearchResult): string => {
     const pattern = /{\s*(\w+?)\s*}/g; // regex for template string with values in brackets, e.g. {name}
@@ -381,7 +380,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     if (nominatimResults.length > 0) {
 
       const geoJsonFormat = new OlFormatGeoJSON();
-      const nFeats = nominatimResults.map(f => {
+      const nFeats = nominatimResults.filter(f => !_isNil(f?.geojson)).map(f => {
         const olFeat = geoJsonFormat.readFeature(f.geojson, {
           dataProjection: 'EPSG:4326',
           featureProjection: map.getView().getProjection()
@@ -401,11 +400,11 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
       const wktFormat = new OlFormatWKT();
       // 1. group by category
-      const categories = _groupBy(dataSearchResults, res => res.category[0]);
+      const categories = _groupBy(dataSearchResults, res => res?.category[0]);
       // 2. build features
       Object.keys(categories).forEach(category => {
         const features = categories[category].map(dsResult => {
-          if (!dsResult.geometry?.[0]) {
+          if (!dsResult?.geometry?.[0]) {
             return;
           }
           const id = dsResult.id as string;
@@ -445,13 +444,14 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   }, [dataSearchResults, highlightingResults, nominatimResults, map, getFeatureTitle, t]);
 
   useEffect(() => {
+    const delay = ClientConfiguration.search?.delay ?? 1000;
     const timeout = setTimeout(() => {
       performSearch();
     }, delay);
 
     return () => clearTimeout(timeout);
 
-  }, [performSearch, delay]);
+  }, [performSearch]);
 
   const resetSearch = () => {
     setDataSearchResults([]);

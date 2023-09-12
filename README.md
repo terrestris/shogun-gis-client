@@ -42,6 +42,18 @@ Several global settings for the client can be configured via the [`gis-client-co
 | featureEditRoles.authorizedRolesForDelete | The list of role names the feature editing tools including the delete options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported. | [] |
 | wfsLockFeatureEnabled | Whether WFS LockFeature is enabled during feature editing or not. | false |
 | enableFallbackConfig | Whether the default application configuration should be loaded without any given application ID or not. | true |
+| search.solrBasePath | Base path to a solr instance. | '/search/query' |
+| search.coreName | Solr core name. | 'search' |
+| search.defaultUseViewBox | Whether the search is restricted to the current view box. | true |
+| search.useNominatim | Whether to use Nominatim. | true |
+| search.useSolrHighlighting | Enable / disable solr search result highlighting. | true |
+| search.delay | Delay in milliseconds before search is triggered (debouncing). | 1000 |
+| search.minChars | Minimum search term length for the search to be triggered. | 3 |
+| search.solrQueryConfig.queryParser | Solr query parser. Must be either 'lucene', 'dismax' or 'edismax' | 'edismax' |
+| search.solrQueryConfig.rowsPerQuery | Number of requested rows per solr query. | 100 |
+| search.solrQueryConfig.tagPre | HTML tag applied before search highlight. | `<b>` |
+| search.solrQueryConfig.tagPost | HTML tag applied after search highlight. | `</b>` |
+| search.solrQueryConfig.requireFieldMatch | Only query terms aligning with the field being highlighted will in turn be highlighted.  | true |
 
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 
