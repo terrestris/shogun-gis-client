@@ -226,7 +226,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     if (searchData && map) {
       try {
         const solrBasePath = ClientConfiguration.search?.solrBasePath ?? '/search/query';
-        const searchUrl = new URL(`${window.location.origin}${solrBasePath}a`);
+        const searchUrl = new URL(`${window.location.origin}${solrBasePath}`);
         const queriesPerLayer = generateSolrQuery({
           searchValue,
           map
