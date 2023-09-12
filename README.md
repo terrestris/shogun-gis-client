@@ -53,7 +53,7 @@ Several global settings for the client can be configured via the [`gis-client-co
 | search.solrQueryConfig.rowsPerQuery | Number of requested rows per solr query. | 100 |
 | search.solrQueryConfig.tagPre | HTML tag applied before search highlight. | `<b>` |
 | search.solrQueryConfig.tagPost | HTML tag applied after search highlight. | `</b>` |
-| search.solrQueryConfig.requireFieldMatch | Only query terms aligning with the field being highlighted will in turn be highlighted.  | true |
+| search.solrQueryConfig.requireFieldMatch | Only query terms aligning with the field being highlighted will in turn be highlighted. | true |
 
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 
