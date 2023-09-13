@@ -24,10 +24,14 @@ import {
 
 import _isFinite from 'lodash/isFinite';
 
+import {
+  getUid
+} from 'ol';
 import { isEmpty as isEmptyOlExtent } from 'ol/extent';
 import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlGeometry from 'ol/geom/Geometry';
+import OlLayer from 'ol/layer/Layer';
 
 import {
   useTranslation
@@ -56,13 +60,13 @@ export type PaginationToolbarProps = {
   features: OlFeature[];
   selectedFeature: OlFeature;
   exportFilter?: (propertyName: string, propertyValue: string) => boolean;
-  layerUuid?: string;
+  layer?: OlLayer;
 } & PaginationProps;
 
 export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   features,
   selectedFeature,
-  layerUuid,
+  layer,
   exportFilter,
   ...passThroughProps
 }): JSX.Element => {
@@ -118,7 +122,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   };
 
   const onEditFeatureBtnClick = () => {
-    if (!layerUuid || !map) {
+    if (!layer || !map) {
       return;
     }
     const selectedFeatureClone = selectedFeature.clone();
@@ -139,13 +143,18 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
           }
         }
       }
-      dispatch(setLayerId(layerUuid));
+      dispatch(setLayerId(getUid(layer)));
       dispatch(setFeature(geojsonFeature));
       dispatch(showEditFeatureDrawer());
     } catch (error) {
       Logger.error('Could not parse GeoJSON: ', error);
     }
   };
+
+  const isEditButtonVisible = allowedEditMode.includes('CREATE') ||
+    allowedEditMode.includes('DELETE') ||
+    allowedEditMode.includes('UPDATE');
+  const isLayerEditable = layer?.get('editable');
 
   return (
     <div
@@ -162,19 +171,17 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
         className="copy-buttons"
       >
         {
-          (allowedEditMode.includes('CREATE') ||
-          allowedEditMode.includes('DELETE') ||
-          allowedEditMode.includes('UPDATE')) && (
+          isEditButtonVisible && (
             <Tooltip
               key="edit"
-              title={t('PaginationToolbar.editFeature')}
-              placement="bottom"
+              title={isLayerEditable ? t('PaginationToolbar.editFeature') : t('PaginationToolbar.editDisabled')}
             >
               <Button
                 type="primary"
                 size="small"
                 onClick={onEditFeatureBtnClick}
                 icon={<FontAwesomeIcon icon={faEdit} />}
+                disabled={!isLayerEditable}
               />
             </Tooltip>
           )

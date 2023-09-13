@@ -187,7 +187,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                     tabConfig={mapLayer?.get('featureInfoFormConfig')}
                     features={features[layerName]}
                     layerName={layerName}
-                    layerUuid={getUid(mapLayer)}
+                    layer={mapLayer}
                   /> :
                   <FeatureInfoPropertyGrid
                     features={features[layerName]}
