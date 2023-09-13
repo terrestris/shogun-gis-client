@@ -21,6 +21,22 @@ var clientConfig = {
       ]
     }
   },
+  search: {
+    solrBasePath: '/search/query',
+    coreName: 'search',
+    defaultUseViewBox: true,
+    useNominatim: true,
+    useSolrHighlighting: true,
+    delay: 1000,
+    minChars: 3,
+    solrQueryConfig: {
+      queryParser: 'edismax',
+      rowsPerQuery: 100,
+      tagPre: '<b>',
+      tagPost: '</b>',
+      requireFieldMatch: true
+    }
+  },
   featureEditRoles: {
     authorizedRolesForCreate: [],
     authorizedRolesForUpdate: [],
