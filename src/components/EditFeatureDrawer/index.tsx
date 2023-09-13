@@ -65,6 +65,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
   const feature = useAppSelector(state => state.editFeature.feature);
+  const formDirty = useAppSelector(state => state.editFeature.formDirty);
 
   const map = useMap();
   const dispatch = useAppDispatch();
@@ -124,7 +125,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   };
 
   const onDrawerClose = () => {
-    if (layer && feature) {
+    if (layer && feature && formDirty) {
       Modal.confirm({
         maskClosable: false,
         title: t('EditFeatureDrawer.closeDrawerWarnTitle'),
