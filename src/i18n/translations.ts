@@ -218,7 +218,8 @@ export default {
       },
       PaginationToolbar: {
         copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
-        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)'
+        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)',
+        editFeature: 'Feature editieren'
       },
       JsonModal: {
         buttonTitle: 'Öffne {{propertyName}}'
@@ -444,7 +445,8 @@ export default {
       },
       PaginationToolbar: {
         copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
-        copyAsObject: 'Copy as object (displayed values only)'
+        copyAsObject: 'Copy as object (displayed values only)',
+        editFeature: 'Edit feature'
       },
       JsonModal: {
         buttonTitle: 'Show {{propertyName}}'

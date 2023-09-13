@@ -36,11 +36,13 @@ export type FeatureInfoTabsProps = TabsProps & {
   features: OlFeature[];
   layerName: string;
   tabConfig?: PropertyFormTabConfig<PropertyFormItemReadConfig>[];
+  layerUuid: string;
 };
 
 export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   features,
   layerName,
+  layerUuid,
   tabConfig,
   ...passThroughProps
 }) => {
@@ -146,6 +148,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
         features={features}
         selectedFeature={selectedFeature}
         current={currentPage}
+        layerUuid={layerUuid}
         onChange={onChange}
         exportFilter={exportFilter}
       />

@@ -2,7 +2,8 @@ import React from 'react';
 
 import {
   faClipboardCheck,
-  faClipboardList
+  faClipboardList,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
@@ -17,8 +18,13 @@ import {
 
 import copy from 'copy-to-clipboard';
 
+import {
+  Feature
+} from 'geojson';
+
 import _isFinite from 'lodash/isFinite';
 
+import { isEmpty as isEmptyOlExtent } from 'ol/extent';
 import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlGeometry from 'ol/geom/Geometry';
@@ -27,17 +33,35 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+
+import {
+  useMap
+} from '@terrestris/react-geo/dist/Hook/useMap';
+import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+
+import useAppDispatch from '../../../../hooks/useAppDispatch';
+import {
+  setLayerId,
+  setFeature
+} from '../../../../store/editFeature';
+import {
+  show as showEditFeatureDrawer
+} from '../../../../store/editFeatureDrawerOpen';
+
 import './index.less';
 
 export type PaginationToolbarProps = {
   features: OlFeature[];
   selectedFeature: OlFeature;
   exportFilter?: (propertyName: string, propertyValue: string) => boolean;
+  layerUuid?: string;
 } & PaginationProps;
 
 export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   features,
   selectedFeature,
+  layerUuid,
   exportFilter,
   ...passThroughProps
 }): JSX.Element => {
@@ -45,6 +69,8 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   const {
     t
   } = useTranslation();
+  const dispatch = useAppDispatch();
+  const map = useMap();
 
   const onCopyAsGeoJSONClick = () => {
     if (!selectedFeature) {
@@ -86,6 +112,36 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
     copy(JSON.stringify(Object.fromEntries(props)));
   };
 
+  const onEditFeatureBtnClick = () => {
+    if (!layerUuid || !map) {
+      return;
+    }
+    const selectedFeatureClone = selectedFeature.clone();
+    const geojsonFeatureString = new OlFormatGeoJSON().writeFeature(selectedFeatureClone);
+
+    try {
+      const geojsonFeature = JSON.parse(geojsonFeatureString) as Feature;
+      const editLayer = DigitizeUtil.getDigitizeLayer(map);
+      if (editLayer) {
+        const source = editLayer.getSource();
+        if (source) {
+          source.clear();
+          source.addFeature(selectedFeature);
+          if (!isEmptyOlExtent(source.getExtent())) {
+            map.getView().fit(source.getExtent(), {
+              padding: [150, 150, 150, 150]
+            });
+          }
+        }
+      }
+      dispatch(setLayerId(layerUuid));
+      dispatch(setFeature(geojsonFeature));
+      dispatch(showEditFeatureDrawer());
+    } catch (error) {
+      Logger.error('Could not parse GeoJSON: ', error);
+    }
+  };
+
   return (
     <div
       className="pagination-toolbar"
@@ -100,6 +156,18 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       <div
         className="copy-buttons"
       >
+        <Tooltip
+          key="edit"
+          title={t('PaginationToolbar.editFeature')}
+          placement="bottom"
+        >
+          <Button
+            type="primary"
+            size="small"
+            onClick={onEditFeatureBtnClick}
+            icon={<FontAwesomeIcon icon={faEdit} />}
+          />
+        </Tooltip>
         <Tooltip
           title={t('PaginationToolbar.copyAsGeoJson')}
         >
