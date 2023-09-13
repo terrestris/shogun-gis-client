@@ -46,8 +46,14 @@ import {
   DigitizeUtil
 } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
-import './index.less';
+import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+
+import {
+  setFormDirty
+} from '../../../store/editFeature';
+
+import './index.less';
 
 export type EditFeatureGeometryToolbarProps = ToolbarProps & {
   feature: Feature;
@@ -71,6 +77,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   });
 
   const map = useMap();
+  const dispatch = useAppDispatch();
 
   const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector<OlGeometry>>>();
   const [, setRevision] = useState<number>(0);
@@ -96,6 +103,11 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
       }
     };
   }, [editLayer, map]);
+
+  useEffect(() => {
+    const isModified = editHistory.current.past.length > 0;
+    dispatch(setFormDirty(isModified));
+  }, [dispatch, editHistory.current.past]);
 
   useEffect(() => {
     if (editLayer && feature?.id) {
