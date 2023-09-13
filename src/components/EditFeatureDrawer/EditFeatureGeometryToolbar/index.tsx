@@ -84,9 +84,8 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
 
   const gjFormat = useMemo(() => new OlFormatGeoJson(), []);
 
-  const allowedEditMode = useAppSelector(
-    state => state.editFeature.userEditMode
-  );
+  const allowedEditMode = useAppSelector(state => state.editFeature.userEditMode);
+  const formDirty = useAppSelector(state => state.editFeature.formDirty);
 
   useEffect(() => {
     if (!map) {
@@ -106,7 +105,11 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
 
   useEffect(() => {
     const isModified = editHistory.current.past.length > 0;
-    dispatch(setFormDirty(isModified));
+    if (isModified && !formDirty) {
+      dispatch(setFormDirty(true));
+    }
+  // we only want to change formDirty state when the editHistory changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, editHistory.current.past]);
 
   useEffect(() => {
