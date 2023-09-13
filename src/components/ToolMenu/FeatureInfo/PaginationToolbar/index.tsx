@@ -41,6 +41,7 @@ import {
 import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
 import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../hooks/useAppSelector';
 import {
   setLayerId,
   setFeature
@@ -71,6 +72,10 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   } = useTranslation();
   const dispatch = useAppDispatch();
   const map = useMap();
+
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   const onCopyAsGeoJSONClick = () => {
     if (!selectedFeature) {
@@ -156,18 +161,24 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       <div
         className="copy-buttons"
       >
-        <Tooltip
-          key="edit"
-          title={t('PaginationToolbar.editFeature')}
-          placement="bottom"
-        >
-          <Button
-            type="primary"
-            size="small"
-            onClick={onEditFeatureBtnClick}
-            icon={<FontAwesomeIcon icon={faEdit} />}
-          />
-        </Tooltip>
+        {
+          (allowedEditMode.includes('CREATE') ||
+          allowedEditMode.includes('DELETE') ||
+          allowedEditMode.includes('UPDATE')) && (
+            <Tooltip
+              key="edit"
+              title={t('PaginationToolbar.editFeature')}
+              placement="bottom"
+            >
+              <Button
+                type="primary"
+                size="small"
+                onClick={onEditFeatureBtnClick}
+                icon={<FontAwesomeIcon icon={faEdit} />}
+              />
+            </Tooltip>
+          )
+        }
         <Tooltip
           title={t('PaginationToolbar.copyAsGeoJson')}
         >
