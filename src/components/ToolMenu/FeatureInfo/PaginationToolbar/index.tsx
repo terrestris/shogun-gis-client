@@ -2,7 +2,8 @@ import React from 'react';
 
 import {
   faClipboardCheck,
-  faClipboardList
+  faClipboardList,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
@@ -17,15 +18,41 @@ import {
 
 import copy from 'copy-to-clipboard';
 
+import {
+  Feature
+} from 'geojson';
+
 import _isFinite from 'lodash/isFinite';
 
+import {
+  getUid
+} from 'ol';
+import { isEmpty as isEmptyOlExtent } from 'ol/extent';
 import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlGeometry from 'ol/geom/Geometry';
+import OlLayer from 'ol/layer/Layer';
 
 import {
   useTranslation
 } from 'react-i18next';
+
+import Logger from '@terrestris/base-util/dist/Logger';
+
+import {
+  useMap
+} from '@terrestris/react-geo/dist/Hook/useMap';
+import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+
+import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../hooks/useAppSelector';
+import {
+  setLayerId,
+  setFeature
+} from '../../../../store/editFeature';
+import {
+  show as showEditFeatureDrawer
+} from '../../../../store/editFeatureDrawerOpen';
 
 import './index.less';
 
@@ -33,11 +60,13 @@ export type PaginationToolbarProps = {
   features: OlFeature[];
   selectedFeature: OlFeature;
   exportFilter?: (propertyName: string, propertyValue: string) => boolean;
+  layer?: OlLayer;
 } & PaginationProps;
 
 export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   features,
   selectedFeature,
+  layer,
   exportFilter,
   ...passThroughProps
 }): JSX.Element => {
@@ -45,6 +74,12 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   const {
     t
   } = useTranslation();
+  const dispatch = useAppDispatch();
+  const map = useMap();
+
+  const allowedEditMode = useAppSelector(
+    state => state.editFeature.userEditMode
+  );
 
   const onCopyAsGeoJSONClick = () => {
     if (!selectedFeature) {
@@ -86,6 +121,51 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
     copy(JSON.stringify(Object.fromEntries(props)));
   };
 
+  const onEditFeatureBtnClick = () => {
+    if (!layer || !map) {
+      return;
+    }
+
+    const selectedFeatureClone = selectedFeature.clone();
+    const geojsonFeatureString = new OlFormatGeoJSON().writeFeature(selectedFeatureClone);
+
+    try {
+      const geojsonFeature = JSON.parse(geojsonFeatureString) as Feature;
+      const editLayer = DigitizeUtil.getDigitizeLayer(map);
+
+      if (!editLayer) {
+        return;
+      }
+
+      const source = editLayer.getSource();
+
+      if (!source) {
+        return;
+      }
+
+      source.clear();
+      source.addFeature(selectedFeature);
+
+      if (isEmptyOlExtent(source.getExtent())) {
+        return;
+      }
+
+      map.getView().fit(source.getExtent(), {
+        padding: [150, 150, 150, 150]
+      });
+      dispatch(setLayerId(getUid(layer)));
+      dispatch(setFeature(geojsonFeature));
+      dispatch(showEditFeatureDrawer());
+    } catch (error) {
+      Logger.error('Could not parse GeoJSON: ', error);
+    }
+  };
+
+  const isEditButtonVisible = allowedEditMode.includes('CREATE') ||
+    allowedEditMode.includes('DELETE') ||
+    allowedEditMode.includes('UPDATE');
+  const isLayerEditable = layer?.get('editable');
+
   return (
     <div
       className="pagination-toolbar"
@@ -100,6 +180,22 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       <div
         className="copy-buttons"
       >
+        {
+          isEditButtonVisible && (
+            <Tooltip
+              key="edit"
+              title={isLayerEditable ? t('PaginationToolbar.editFeature') : t('PaginationToolbar.editDisabled')}
+            >
+              <Button
+                type="primary"
+                size="small"
+                onClick={onEditFeatureBtnClick}
+                icon={<FontAwesomeIcon icon={faEdit} />}
+                disabled={!isLayerEditable}
+              />
+            </Tooltip>
+          )
+        }
         <Tooltip
           title={t('PaginationToolbar.copyAsGeoJson')}
         >

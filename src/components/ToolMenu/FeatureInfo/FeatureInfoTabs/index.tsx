@@ -9,6 +9,7 @@ import {
 } from 'antd';
 
 import OlFeature from 'ol/Feature';
+import OlLayer from 'ol/layer/Layer';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -36,11 +37,13 @@ export type FeatureInfoTabsProps = TabsProps & {
   features: OlFeature[];
   layerName: string;
   tabConfig?: PropertyFormTabConfig<PropertyFormItemReadConfig>[];
+  layer: OlLayer;
 };
 
 export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   features,
   layerName,
+  layer,
   tabConfig,
   ...passThroughProps
 }) => {
@@ -146,6 +149,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
         features={features}
         selectedFeature={selectedFeature}
         current={currentPage}
+        layer={layer}
         onChange={onChange}
         exportFilter={exportFilter}
       />
