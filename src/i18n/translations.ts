@@ -224,6 +224,15 @@ export default {
       },
       JsonModal: {
         buttonTitle: 'Öffne {{propertyName}}'
+      },
+      ReferenceTable: {
+        modalTitle: 'Details zu {{referenceValue}}',
+        defaultModalTitle: 'Details',
+        defaultRowPlaceholder: 'Klicken Sie auf den Button, um die Details anzuzeigen'
+      },
+      EditReferenceTable: {
+        modalTitle: 'Details zu {{referenceValue}}',
+        confirmDeleteTitle: 'Das referenzierte Objekt wird vollständig gelöscht. Fortfahren?'
       }
     }
   },
@@ -435,7 +444,7 @@ export default {
       },
       DeleteButton: {
         title: 'Delete feature',
-        confirm: 'The feature will be completely deleted. Proceed?'
+        confirm: 'The feature will be deleted completely. Proceed?'
       },
       EditFeatureButton: {
         title: 'Edit feature'
@@ -452,6 +461,15 @@ export default {
       },
       JsonModal: {
         buttonTitle: 'Show {{propertyName}}'
+      },
+      ReferenceTable: {
+        modalTitle: 'Details for {{referenceValue}}',
+        defaultModalTitle: 'Details',
+        defaultRowPlaceholder: 'Click the button to show the details'
+      },
+      EditReferenceTable: {
+        modalTitle: 'Details for {{referenceValue}}',
+        confirmDeleteTitle: 'The referenced feature will be deleted completely. Proceed?'
       }
     }
   }

@@ -12,15 +12,25 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import JsonModal from '../JsonModal';
+import {
+  PropertyFormItemReadConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
 
-export type ValueType = string | number | boolean | moment.Moment;
+import ReferenceTable from '../ReferenceTable';
+
+export type ValueType = string | number | boolean | moment.Moment | Record<string, any>;
+
+export type ReferenceConfig = {
+  tablePropertyName?: string;
+  featureInfoFormConfig?: PropertyFormItemReadConfig[];
+};
 
 export type DisplayFieldProps = {
   format?: string;
   suffix?: string;
   value?: ValueType | ValueType[];
   label?: string;
+  referenceConfig?: ReferenceConfig;
 };
 
 export const DisplayField: React.FC<DisplayFieldProps> = ({
@@ -28,6 +38,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   suffix,
   value,
   label,
+  referenceConfig,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -57,7 +68,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     displayText = value.join(', ');
   }
 
-  const isJson = (val: ValueType | ValueType[]): val is string => {
+  const isJson = (val: ValueType | ValueType[]): boolean => {
     let v = typeof val !== 'string' ? JSON.stringify(val) : val;
 
     try {
@@ -71,9 +82,9 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   if (value && isJson(value)) {
     return (
-      <JsonModal
-        value={value}
-        label={label}
+      <ReferenceTable
+        value={typeof value === 'string' ? value : JSON.stringify(value)}
+        referenceConfig={referenceConfig}
       />
     );
   }

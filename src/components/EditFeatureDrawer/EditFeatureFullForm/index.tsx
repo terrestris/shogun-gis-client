@@ -44,7 +44,6 @@ import {
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import useAppSelector from '../../../hooks/useAppSelector';
 import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
@@ -75,10 +74,6 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
   const [errorMsg, setErrorMsg] = useState<string>();
-
-  const allowedEditMode = useAppSelector(
-    state => state.editFeature.userEditMode
-  );
 
   const [form] = useForm();
   const map = useMap();
@@ -131,7 +126,14 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         });
 
         if (isDate) {
-          properties[key] = moment(value);
+          const parsedDate = moment(value);
+
+          if (parsedDate.isValid()) {
+            properties[key] = parsedDate;
+          } else {
+            Logger.warn('Could not parse date');
+            properties[key] = null;
+          }
         }
 
         const isUpload = tabConfigs[0].children?.some(cfg => {
@@ -157,6 +159,17 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
             }
           } else {
             properties[key] = [];
+          }
+        }
+
+        const isReference = tabConfigs[0].children?.some(cfg =>
+          cfg.propertyName === key && cfg.component === 'REFERENCE_TABLE');
+
+        if (isReference) {
+          try {
+            properties[key] = JSON.parse(properties[key]);
+          } catch (error) {
+            Logger.warn('Could not parse the input for the REFERENCE_TABLE', error);
           }
         }
       }

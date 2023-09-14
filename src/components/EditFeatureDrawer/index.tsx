@@ -34,7 +34,8 @@ import useExecuteWfsTransaction from '../../hooks/useExecuteWfsTransaction';
 import useWriteWfsTransaction from '../../hooks/useWriteWfsTransaction';
 
 import {
-  reset
+  reset,
+  setFormDirty
 } from '../../store/editFeature';
 import {
   hide as hideEditFeatureDrawer
@@ -120,6 +121,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     await releaseLock();
 
     dispatch(hideEditFeatureDrawer());
+    dispatch(setFormDirty(false));
     dispatch(reset());
     setIsFeatureLocked(false);
   };
