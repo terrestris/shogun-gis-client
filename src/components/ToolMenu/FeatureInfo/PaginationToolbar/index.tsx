@@ -125,24 +125,34 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
     if (!layer || !map) {
       return;
     }
+
     const selectedFeatureClone = selectedFeature.clone();
     const geojsonFeatureString = new OlFormatGeoJSON().writeFeature(selectedFeatureClone);
 
     try {
       const geojsonFeature = JSON.parse(geojsonFeatureString) as Feature;
       const editLayer = DigitizeUtil.getDigitizeLayer(map);
-      if (editLayer) {
-        const source = editLayer.getSource();
-        if (source) {
-          source.clear();
-          source.addFeature(selectedFeature);
-          if (!isEmptyOlExtent(source.getExtent())) {
-            map.getView().fit(source.getExtent(), {
-              padding: [150, 150, 150, 150]
-            });
-          }
-        }
+
+      if (!editLayer) {
+        return;
       }
+
+      const source = editLayer.getSource();
+
+      if (!source) {
+        return;
+      }
+
+      source.clear();
+      source.addFeature(selectedFeature);
+
+      if (isEmptyOlExtent(source.getExtent())) {
+        return;
+      }
+
+      map.getView().fit(source.getExtent(), {
+        padding: [150, 150, 150, 150]
+      });
       dispatch(setLayerId(getUid(layer)));
       dispatch(setFeature(geojsonFeature));
       dispatch(showEditFeatureDrawer());
