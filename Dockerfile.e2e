@@ -1,12 +1,11 @@
-FROM mcr.microsoft.com/playwright:v1.36.0-jammy@sha256:3d3619bf5e622d264f519bffd3aa321d061bf420688eda8a5143da7884b36a6b
+FROM mcr.microsoft.com/playwright:v1.36.1-jammy
 
 WORKDIR /app
 
 RUN npm install -D @playwright/test@v1.36.1
-RUN npx playwright install --with-deps
 
 # Need to be installed since the package.json is not copied
-RUN npm i @terrestris/shogun-e2e-tests@v1.0.7
+RUN npm i @terrestris/shogun-e2e-tests@v1.0.8
 RUN npm i dotenv@v16.3.1
 
 COPY playwright.config.js ./

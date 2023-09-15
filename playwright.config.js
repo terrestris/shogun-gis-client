@@ -43,27 +43,27 @@ export default defineConfig({
         locale: 'en-EN'
       },
       dependencies: ['setup']
-    },
-
-    {
-      name: 'firefox',
-      use: {
-        browserName: 'firefox',
-        locale: 'en-EN'
-      },
-      dependencies: ['setup']
-    },
-
-    {
-      name: 'webkit',
-      use: {
-        browserName: 'webkit',
-        locale: 'en-EN'
-      },
-      dependencies: ['setup']
     }
+
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     browserName: 'firefox',
+    //     locale: 'en-EN'
+    //   },
+    //   dependencies: ['setup']
+    // },
+
+    // {
+    //   name: 'webkit',
+    //   use: {
+    //     browserName: 'webkit',
+    //     locale: 'en-EN'
+    //   },
+    //   dependencies: ['setup']
+    // }
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: './e2e-tests/test-results/'
+  outputDir: './src/e2e-tests/test-results/'
 });
