@@ -23,6 +23,17 @@ export type ExecuteWfsTransactionOpts = {
 export const useExecuteWfsTransaction = () => {
   const client = useSHOGunAPIClient();
 
+  // TODO Make detection more robust
+  const isFailed = (xmlDoc: Document) => {
+    const errorTagNameCandidates = [
+      'wfs:FAILED',
+      'ows:ExceptionReport'
+    ];
+
+    return errorTagNameCandidates.some(candidate =>
+      xmlDoc.getElementsByTagName(candidate).length > 0);
+  };
+
   const executeWfsTransaction = useCallback(async (opts: ExecuteWfsTransactionOpts) => {
     let url;
 
@@ -65,10 +76,7 @@ export const useExecuteWfsTransaction = () => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(responseText, 'text/xml');
 
-    // TODO Make detection more robust
-    const transactionStatusFailed = xmlDoc.getElementsByTagName('wfs:FAILED');
-
-    if (transactionStatusFailed.length > 0) {
+    if (isFailed(xmlDoc)) {
       throw new Error(`Something failed: ${responseText}`);
     }
 

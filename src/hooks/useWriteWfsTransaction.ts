@@ -8,7 +8,7 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
-import _isObject from 'lodash/isObject';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import {
   isMoment
@@ -27,7 +27,14 @@ import {
   WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
-import { isFileConfig } from '../components/EditFeatureDrawer/EditFeatureForm';
+import {
+  PropertyFormTabConfig,
+  PropertyFormItemEditConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
+
+import {
+  isFileConfig
+} from '../components/EditFeatureDrawer/EditFeatureForm';
 
 import useExecuteWfsDescribeFeatureType, {
   isGeometryType
@@ -46,47 +53,55 @@ export const useWriteWfsTransaction = () => {
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
   const client = useSHOGunAPIClient();
 
-  const writeWfsTransaction = useCallback(async (opts: WriteWfsTransactionOpts) => {
-    const cleanFormValues = (form: FormInstance) => {
-      const formValues = {...form.getFieldsValue()};
-
-      for (const [key, value] of Object.entries(formValues)) {
-        // Transform undefined to null values.
-        if (value === undefined) {
-          formValues[key] = null;
-        }
-
-        // Filter out read-only fields (which don't have any field instance associated).
-        if (!form.getFieldInstance(key)) {
-          delete formValues[key];
-        }
-
-        // Transform moments back to iso string.
-        if (isMoment(value)) {
-          formValues[key] = value.toISOString();
-        }
-
-        if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
-          const fileInfoList = value.map(val => ({
-            uid: val.uid,
-            lastModified: val.lastModified,
-            name: val.name,
-            type: val.type,
-            url: `${client?.getBasePath()}files/${val.response.fileUuid}`,
-            response: {
-              id: val.response?.id,
-              created: val.response?.created,
-              fileName: val.response?.fileName,
-              fileType: val.response?.fileType,
-              fileUuid: val.response?.fileUuid
-            }
-          }));
-          formValues[key] = JSON.stringify(fileInfoList);
-        }
+  const cleanFormValues = useCallback((formValues: Record<string, any>,
+    formConfig: PropertyFormTabConfig<PropertyFormItemEditConfig>[], stringify?: boolean) => {
+    for (const [key, value] of Object.entries(formValues)) {
+      if (Array.isArray(value)) {
+        const cleanedValue = value.map(v => cleanFormValues(v, formConfig));
+        formValues[key] = stringify ? JSON.stringify(cleanedValue) : cleanedValue;
       }
-      return formValues;
-    };
 
+      // Transform undefined to null values.
+      if (value === undefined) {
+        formValues[key] = null;
+      }
+
+      // Filter out read-only fields.
+      const isReadOnly = formConfig.some(cfg => cfg.children
+        ?.some(child => child.propertyName === key && child.readOnly));
+
+      if (isReadOnly) {
+        delete formValues[key];
+      }
+
+      // Transform moments back to iso string.
+      if (isMoment(value)) {
+        formValues[key] = value.toISOString();
+      }
+
+      if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
+        const fileInfoList = value.map(val => ({
+          uid: val.uid,
+          lastModified: val.lastModified,
+          name: val.name,
+          type: val.type,
+          url: `${client?.getBasePath()}files/${val.response.fileUuid}`,
+          response: {
+            id: val.response?.id,
+            created: val.response?.created,
+            fileName: val.response?.fileName,
+            fileType: val.response?.fileType,
+            fileUuid: val.response?.fileUuid
+          }
+        }));
+        formValues[key] = JSON.stringify(fileInfoList);
+      }
+    }
+
+    return formValues;
+  }, [client]);
+
+  const writeWfsTransaction = useCallback(async (opts: WriteWfsTransactionOpts) => {
     if (!map) {
       return;
     }
@@ -100,6 +115,8 @@ export const useWriteWfsTransaction = () => {
     if (!describeFeatureType) {
       return;
     }
+
+    const formConfig = opts.layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
     const geomProperty = describeFeatureType.featureTypes[0]?.properties
       ?.find(property => isGeometryType(property.type));
@@ -118,7 +135,7 @@ export const useWriteWfsTransaction = () => {
         }
 
         if (opts.form) {
-          feat.setProperties(cleanFormValues(opts.form));
+          feat.setProperties(cleanFormValues(_cloneDeep(opts.form?.getFieldsValue()), formConfig, true));
         }
 
         const updateMode = !!feature.getId();
@@ -165,7 +182,7 @@ export const useWriteWfsTransaction = () => {
     }
 
     return transaction;
-  }, [client, executeWfsDescribeFeatureType, map]);
+  }, [executeWfsDescribeFeatureType, map, cleanFormValues]);
 
   return writeWfsTransaction;
 };

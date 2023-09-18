@@ -22,13 +22,13 @@ import DisplayField from '../../../DisplayField';
 import './index.less';
 
 export type FeatureInfoFormProps = FormProps & {
-  formConfig?: PropertyFormItemReadConfig[];
   feature: OlFeature;
+  formConfig?: PropertyFormItemReadConfig[];
 };
 
 export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
-  formConfig,
   feature,
+  formConfig,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -44,7 +44,6 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
         label={fieldCfg.displayName || fieldCfg.propertyName}
-        {...fieldCfg.fieldProps}
       >
         <DisplayField
           label={fieldCfg.displayName || fieldCfg.propertyName}
