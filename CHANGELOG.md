@@ -1,3 +1,19 @@
+## [6.10.0](https://github.com/terrestris/shogun-gis-client/compare/v6.9.0...v6.10.0) (2023-09-18)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.22.19 to 7.22.20 ([1bf73ad](https://github.com/terrestris/shogun-gis-client/commit/1bf73ad98d569befe59a24c70197bbe2a692e2e7))
+* **deps-dev:** bump @babel/preset-env from 7.22.15 to 7.22.20 ([8dd2ef5](https://github.com/terrestris/shogun-gis-client/commit/8dd2ef5865c93338621db876901701e25f5d3ce3))
+* **deps-dev:** bump @testing-library/user-event from 14.5.0 to 14.5.1 ([7ef837d](https://github.com/terrestris/shogun-gis-client/commit/7ef837d693f6b7a0c775d043941fbdab1aa68957))
+* **deps-dev:** bump @types/jest from 29.5.4 to 29.5.5 ([7c30552](https://github.com/terrestris/shogun-gis-client/commit/7c3055258e2b51401aa097a0ab16453c5517cd4f))
+* **deps-dev:** bump @types/node from 20.6.0 to 20.6.2 ([246d1d2](https://github.com/terrestris/shogun-gis-client/commit/246d1d2888367ca21270402101ac1f37ca38af49))
+
+
+### Features
+
+* allow configurable (1:n) JSON fields in FeatureInfo and Edit forms ([db70646](https://github.com/terrestris/shogun-gis-client/commit/db7064624df857308462d512ae5973c60d9b2cc7))
+
 ## [6.9.0](https://github.com/terrestris/shogun-gis-client/compare/v6.8.1...v6.9.0) (2023-09-15)
 
 
