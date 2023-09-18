@@ -36,6 +36,7 @@ import {
   isFileConfig
 } from '../components/EditFeatureDrawer/EditFeatureForm';
 
+import useAppSelector from './useAppSelector';
 import useExecuteWfsDescribeFeatureType, {
   isGeometryType
 } from './useExecuteWfsDescribeFeatureType';
@@ -52,6 +53,7 @@ export const useWriteWfsTransaction = () => {
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
   const client = useSHOGunAPIClient();
+  const allowedEditMode = useAppSelector(state => state.editFeature.userEditMode);
 
   const cleanFormValues = useCallback((formValues: Record<string, any>,
     formConfig: PropertyFormTabConfig<PropertyFormItemEditConfig>[], stringify?: boolean) => {
@@ -129,7 +131,7 @@ export const useWriteWfsTransaction = () => {
 
         const geometry = feature.getGeometry()?.clone();
 
-        if (geometry && !isEmpty(geometry.getExtent())) {
+        if (geometry && !isEmpty(geometry.getExtent()) && allowedEditMode?.includes('EDIT_GEOMETRY')) {
           feat.set(geomProperty?.name || 'geom', geometry);
           feat.setGeometryName(geomProperty?.name || 'geom');
         }
@@ -182,7 +184,7 @@ export const useWriteWfsTransaction = () => {
     }
 
     return transaction;
-  }, [executeWfsDescribeFeatureType, map, cleanFormValues]);
+  }, [map, allowedEditMode, executeWfsDescribeFeatureType, cleanFormValues]);
 
   return writeWfsTransaction;
 };
