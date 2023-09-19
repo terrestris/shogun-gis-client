@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {
+  useState
+} from 'react';
 
 import {
   faPlus
@@ -13,7 +15,8 @@ import {
 } from 'antd';
 
 import {
-  UploadFile
+  UploadFile,
+  UploadProps
 } from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
@@ -23,6 +26,8 @@ import _isObject from 'lodash/isObject';
 import {
   useTranslation
 } from 'react-i18next';
+
+import { useAsyncEffect } from '@terrestris/react-util/dist/hooks/useAsyncEffect/useAsyncEffect';
 
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
@@ -39,22 +44,42 @@ import useConvertImageUrl from '../../hooks/useConvertImageUrl';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 export type ImageUploadProps = {
-  fieldConfig: PropertyFormItemEditConfig;
-};
+  fieldConfig?: PropertyFormItemEditConfig;
+  readOnly?: boolean;
+  initialFileList?: UploadFile<any>[];
+} & Partial<UploadProps>;
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
   fieldConfig,
+  readOnly = false,
+  initialFileList,
   ...passThroughProps
 }): JSX.Element => {
 
   const [mediaPreviewVisible, setMediaPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
+  const [defaultFileListWithBlob, setDefaultFileListWithBlob] = useState<UploadFile<ShogunFile>[]>();
 
   const client = useSHOGunAPIClient();
   const imageUrlToBase64 = useConvertImageUrl();
   const {
     t
   } = useTranslation();
+
+  useAsyncEffect(async () => {
+    if (!initialFileList || initialFileList.length === 0) {
+      return;
+    }
+    const convertDefaultFileList = async (fileList: UploadFile<ShogunFile>[]) => {
+      const fileListPromises = fileList.map(async (val: any) => ({
+        ...val,
+        url: await imageUrlToBase64(`${client?.getBasePath()}imagefiles/${val?.response?.fileUuid}`)
+      }));
+      return await Promise.all(fileListPromises);
+    };
+    const fl = await convertDefaultFileList(initialFileList);
+    setDefaultFileListWithBlob(fl);
+  }, [initialFileList?.length]);
 
   /**
    * Shows preview of clicked uploaded image.
@@ -105,13 +130,18 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         }}
         onRemove={removeFile}
         onPreview={showImagePreview}
+        fileList={readOnly ? defaultFileListWithBlob : undefined}
         {...fieldConfig?.fieldProps}
         {...passThroughProps}
       >
-        <div>
-          <FontAwesomeIcon icon={faPlus} />
-          <div style={{ marginTop: 8 }}>{t('ImageUpload.upload')}</div>
-        </div>
+        {
+          !readOnly && (
+            <div>
+              <FontAwesomeIcon icon={faPlus} />
+              <div style={{ marginTop: 8 }}>{t('ImageUpload.upload')}</div>
+            </div>
+          )
+        }
       </Upload>
       <Modal
         open={mediaPreviewVisible}
