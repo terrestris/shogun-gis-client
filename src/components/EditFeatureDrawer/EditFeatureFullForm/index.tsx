@@ -145,7 +145,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
             try {
               const fileList = JSON.parse(value);
               properties[key] = fileList;
-              const filePath = fileList[0].response?.type?.startsWith('image/') ? 'imagefiles/' : 'files/';
+              const filePath = fileList[0].response?.fileType?.startsWith('image/') ? 'imagefiles/' : 'files/';
               const fileListWithBlob = fileList.map(async (val: any) => ({
                 ...val,
                 url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)

@@ -82,12 +82,13 @@ export const useWriteWfsTransaction = () => {
       }
 
       if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
+        const filePath = value[0].response?.fileType?.startsWith('image/') ? 'imagefiles/' : 'files/';
         const fileInfoList = value.map(val => ({
           uid: val.uid,
           lastModified: val.lastModified,
           name: val.name,
           type: val.type,
-          url: `${client?.getBasePath()}files/${val.response.fileUuid}`,
+          url: `${client?.getBasePath()}${filePath}${val.response.fileUuid}`,
           response: {
             id: val.response?.id,
             created: val.response?.created,
