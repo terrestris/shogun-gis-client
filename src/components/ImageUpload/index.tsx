@@ -73,7 +73,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     const convertDefaultFileList = async (fileList: UploadFile<ShogunFile>[]) => {
       const fileListPromises = fileList.map(async (val: any) => ({
         ...val,
-        url: await imageUrlToBase64(`${client?.getBasePath()}imagefiles/${val?.response?.fileUuid}`)
+        thumbUrl: await imageUrlToBase64(`${client?.getBasePath()}imagefiles/${val?.response?.fileUuid}/thumbnail`),
+        url: undefined
       }));
       return await Promise.all(fileListPromises);
     };
