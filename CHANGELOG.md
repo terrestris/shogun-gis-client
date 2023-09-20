@@ -1,3 +1,34 @@
+## [6.11.0](https://github.com/terrestris/shogun-gis-client/compare/v6.10.0...v6.11.0) (2023-09-20)
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.37.1 to 1.38.0 ([aa1e058](https://github.com/terrestris/shogun-gis-client/commit/aa1e058a2f3f3c23fba71341de15ff2b67a8b542))
+* **deps-dev:** bump @semantic-release/github from 9.0.5 to 9.0.6 ([964e7a0](https://github.com/terrestris/shogun-gis-client/commit/964e7a0e409c8cb4a7c3d52f36809bf82a227b02))
+* **deps-dev:** bump @semantic-release/npm from 10.0.6 to 11.0.0 ([fc872ed](https://github.com/terrestris/shogun-gis-client/commit/fc872ed9248821f5c4f090a75cf23e65ea3aab1e))
+* **deps-dev:** bump @semantic-release/release-notes-generator ([8e64791](https://github.com/terrestris/shogun-gis-client/commit/8e64791ea12567bc4bd333aa58c2a627e8985db2))
+* **deps-dev:** bump @types/node from 20.6.2 to 20.6.3 ([2a0e6af](https://github.com/terrestris/shogun-gis-client/commit/2a0e6af07593196ec283506a7a2545522ad4e6d2))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([d040ae8](https://github.com/terrestris/shogun-gis-client/commit/d040ae8093e0bd1f8c3251518cb84395ef2c6014))
+* **deps-dev:** bump @typescript-eslint/parser from 6.7.0 to 6.7.2 ([744f069](https://github.com/terrestris/shogun-gis-client/commit/744f06976db6fc5a71a2314c06d0eaeaa92e87d9))
+* **deps-dev:** bump semantic-release from 21.1.1 to 22.0.0 ([1d90c7d](https://github.com/terrestris/shogun-gis-client/commit/1d90c7d7192c17be942bab21e8bab18ed3a8f88f))
+* **deps:** bump @terrestris/react-geo from 23.0.0 to 23.0.1 ([3cc9866](https://github.com/terrestris/shogun-gis-client/commit/3cc986699e21b0e17c71a360adcc453f6ee60a91))
+* **deps:** bump @terrestris/react-util from 2.1.1 to 3.0.0 ([e4301b3](https://github.com/terrestris/shogun-gis-client/commit/e4301b3704930b41fc364f50845fc6ef6be14a6f))
+* update react-geo ([805ea5d](https://github.com/terrestris/shogun-gis-client/commit/805ea5dd49618e78d502c303335e093083515c21))
+
+
+### Features
+
+* enable readonly Upload fields for GFI ([f05623f](https://github.com/terrestris/shogun-gis-client/commit/f05623f05a36e29737d062ecab3c8ed36aa084b3))
+* sort GFI tabs by position in the layer tree ([bebabc9](https://github.com/terrestris/shogun-gis-client/commit/bebabc9b9778314022671dc398c341cb9f108821))
+
+
+### Bugfixes
+
+* don't clone the feature to keep the existing id intact ([6ed0e7a](https://github.com/terrestris/shogun-gis-client/commit/6ed0e7a864437185b876486193886161cfda3ce8))
+* fix upload file paths ([144e261](https://github.com/terrestris/shogun-gis-client/commit/144e261ae399f6da1b3e193fbbfbbbcf3bb541a1))
+* omit geom in WFS transaction ([98481c1](https://github.com/terrestris/shogun-gis-client/commit/98481c1ad5d111c6a2d5bee63d5ff3bd01c08db2))
+* use thumbnail if available to save data ([929a9a6](https://github.com/terrestris/shogun-gis-client/commit/929a9a65fd4811802d4887fb1e7d507e46b5e858))
+
 ## [6.10.0](https://github.com/terrestris/shogun-gis-client/compare/v6.9.0...v6.10.0) (2023-09-18)
 
 
