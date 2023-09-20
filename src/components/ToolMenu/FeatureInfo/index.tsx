@@ -134,12 +134,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    const items: Tab[] = [];
+    const items: Array<Tab & { index: number }> = [];
 
     Object.keys(features).forEach(layerName => {
       let pluginRendererAvailable = false;
 
-      const mapLayer = map.getAllLayers().find(l => {
+      const allLayers = map.getAllLayers();
+
+      const mapLayerIndex = allLayers.findIndex(l => {
         if (isWmsLayer(l)) {
           const source = (l as WmsLayer).getSource();
           const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
@@ -149,6 +151,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         }
         return false;
       });
+
+      const mapLayer = allLayers[mapLayerIndex];
 
       plugins.forEach(plugin => {
         if (isFeatureInfoIntegration(plugin.integration) &&
@@ -161,6 +165,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
           items.push({
             label: layerName,
+            index: mapLayerIndex,
             key: layerName,
             children: (
               <WrappedPluginComponent
@@ -176,6 +181,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       if (!pluginRendererAvailable) {
         items.push({
           label: mapLayer?.get('name') || layerName,
+          index: mapLayerIndex,
           key: layerName,
           children: (
             <div
@@ -199,6 +205,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         });
       }
     });
+
+    items.sort((a, b) => b.index - a.index);
 
     return (
       <Spin
