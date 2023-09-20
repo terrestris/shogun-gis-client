@@ -126,8 +126,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       return;
     }
 
-    const selectedFeatureClone = selectedFeature.clone();
-    const geojsonFeatureString = new OlFormatGeoJSON().writeFeature(selectedFeatureClone);
+    const geojsonFeatureString = new OlFormatGeoJSON().writeFeature(selectedFeature);
 
     try {
       const geojsonFeature = JSON.parse(geojsonFeatureString) as Feature;
