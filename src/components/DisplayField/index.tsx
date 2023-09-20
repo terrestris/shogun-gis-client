@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {
-  Typography
+  Typography,
+  UploadFile
 } from 'antd';
 
 import {
@@ -12,10 +13,14 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
   PropertyFormItemReadConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
+import { isFileConfig } from '../EditFeatureDrawer/EditFeatureForm';
+import FileUpload from '../FileUpload';
+import ImageUpload from '../ImageUpload';
 import ReferenceTable from '../ReferenceTable';
 
 export type ValueType = string | number | boolean | moment.Moment | Record<string, any>;
@@ -66,6 +71,46 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   if (Array.isArray(value)) {
     displayText = value.join(', ');
+  }
+
+  const getUpload = (val: ValueType | ValueType[]): UploadFile<ShogunFile>[] | null => {
+    if (!value) {
+      return null;
+    }
+    let v = typeof val !== 'string' ? JSON.stringify(val) : val;
+
+    try {
+      v = JSON.parse(v);
+    } catch (e) {
+      return null;
+    }
+
+    if (typeof v === 'object' && v !== null && isFileConfig(v[0])) {
+      return v as UploadFile<ShogunFile>[];
+    }
+    return null;
+  };
+
+  const uploadValue = value && getUpload(value);
+
+  if (uploadValue) {
+    if (uploadValue[0].response?.fileType?.startsWith('image/')) {
+      return (
+        <ImageUpload
+          initialFileList={uploadValue}
+          disabled
+          readOnly
+        />
+      );
+    } else {
+      return (
+        <FileUpload
+          defaultFileList={uploadValue}
+          disabled
+          readOnly
+        />
+      );
+    }
   }
 
   const isJson = (val: ValueType | ValueType[]): boolean => {

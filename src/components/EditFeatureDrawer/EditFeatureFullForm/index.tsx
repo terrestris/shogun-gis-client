@@ -5,7 +5,8 @@ import React, {
 } from 'react';
 
 import {
-  Alert
+  Alert,
+  UploadFile
 } from 'antd';
 import {
   useForm
@@ -38,6 +39,7 @@ import {
   isWmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
   PropertyFormItemEditConfig,
   PropertyFormTabConfig
@@ -52,6 +54,7 @@ import {
   setFeature
 } from '../../../store/editFeature';
 
+import { isFileConfig } from '../EditFeatureForm';
 import EditFeatureGeometryToolbar from '../EditFeatureGeometryToolbar';
 import EditFeatureTabs from '../EditFeatureTabs';
 import EditFeatureToolbar from '../EditFeatureToolbar';
@@ -143,13 +146,22 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         if (isUpload) {
           if (value) {
             try {
-              const fileList = JSON.parse(value);
+              const parsedJson = JSON.parse(value);
+              if (!isFileConfig(parsedJson[0])) {
+                throw new Error('File config is no valid SHOGun file.');
+              }
+              const fileList = parsedJson as UploadFile<ShogunFile>[];
               properties[key] = fileList;
-              const filePath = fileList[0].response?.type?.startsWith('image/') ? 'imagefiles/' : 'files/';
-              const fileListWithBlob = fileList.map(async (val: any) => ({
-                ...val,
-                url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)
-              }));
+              const fileListWithBlob = fileList.map(async (val: any) => {
+                const isImageFile = fileList[0].response?.fileType?.startsWith('image/');
+                const thumbUrl = isImageFile ?
+                  await imageUrlToBase64(`${client.getBasePath()}imagefiles/${val?.response?.fileUuid}/thumbnail`) : undefined;
+                return {
+                  ...val,
+                  thumbUrl,
+                  url: isImageFile ? undefined : val.url
+                };
+              });
 
               const result = await Promise.all(fileListWithBlob);
               properties[key] = result;
