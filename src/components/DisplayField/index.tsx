@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  Checkbox,
   Typography,
   UploadFile
 } from 'antd';
@@ -57,8 +58,13 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     displayText = value;
   }
 
-  if (typeof value === 'boolean') {
-    displayText = value ? t('DisplayField.yesText') : t('DisplayField.noText');
+  if (typeof value === 'boolean' || value === 'false' || value === 'true') {
+    return (
+      <Checkbox
+        checked={value === true || value === 'true'}
+        disabled
+      />
+    );
   }
 
   if (Number.isFinite(value)) {
