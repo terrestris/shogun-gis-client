@@ -1,3 +1,21 @@
+## [6.12.0](https://github.com/terrestris/shogun-gis-client/compare/v6.11.0...v6.12.0) (2023-09-25)
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.38.0 to 1.38.1 ([5b9c4ac](https://github.com/terrestris/shogun-gis-client/commit/5b9c4acd57ebab38a6aff58b2bcc85be1b742685))
+* **deps-dev:** bump @semantic-release/github from 9.0.6 to 9.0.7 ([1f67370](https://github.com/terrestris/shogun-gis-client/commit/1f6737031815d7832acfbcd0d20f5e4631333d13))
+* **deps-dev:** bump @types/node from 20.6.3 to 20.6.5 ([977bef5](https://github.com/terrestris/shogun-gis-client/commit/977bef593eea7f87fb798f586fa8f1d868624e5a))
+* **deps-dev:** bump eslint from 8.49.0 to 8.50.0 ([1363b0c](https://github.com/terrestris/shogun-gis-client/commit/1363b0c99c0e2e9f240a78a411f75487028eaccc))
+* **deps-dev:** bump semantic-release from 22.0.0 to 22.0.5 ([7d78329](https://github.com/terrestris/shogun-gis-client/commit/7d78329bf3867cc132d87620c26c18a5fc0f343f))
+* **deps:** bump @reduxjs/toolkit from 1.9.5 to 1.9.6 ([cae059a](https://github.com/terrestris/shogun-gis-client/commit/cae059ab6ad21d02e7328791d713cd57b0356c49))
+* **deps:** bump @terrestris/react-geo from 23.0.1 to 23.1.0 ([42bab4b](https://github.com/terrestris/shogun-gis-client/commit/42bab4b31c924f15a912954fe23ad01ab362e4d5))
+
+
+### Features
+
+* add checkbox for boolean values ([04e8ecd](https://github.com/terrestris/shogun-gis-client/commit/04e8ecdf6048622a06004a4ae4d37789ceb69431))
+
 ## [6.11.0](https://github.com/terrestris/shogun-gis-client/compare/v6.10.0...v6.11.0) (2023-09-20)
 
 
