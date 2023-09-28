@@ -68,7 +68,9 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   }
 
   if (Number.isFinite(value)) {
-    displayText = new Intl.NumberFormat().format(Number(value));
+    displayText = new Intl.NumberFormat('de-DE', {
+      useGrouping: false
+    }).format(Number(value));
   }
 
   if (isMoment(value)) {
