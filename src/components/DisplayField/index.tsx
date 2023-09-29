@@ -49,7 +49,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 }): JSX.Element => {
 
   const {
-    t
+    i18n
   } = useTranslation();
 
   let displayText: string = '';
@@ -68,7 +68,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   }
 
   if (Number.isFinite(value)) {
-    displayText = new Intl.NumberFormat('de-DE', {
+    displayText = new Intl.NumberFormat(i18n.language, {
       useGrouping: false
     }).format(Number(value));
   }
