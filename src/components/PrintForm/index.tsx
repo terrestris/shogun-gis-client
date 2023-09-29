@@ -37,6 +37,7 @@ import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
 import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
 
+import AttributionsCheckbox from './AttributionsCheckbox';
 import CustomFieldInput from './CustomFieldInput';
 import LayoutSelect from './LayoutSelect';
 import OutputFormatSelect from './OutputFormatSelect';
@@ -249,15 +250,16 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       aria-label='print-form'
     >
       {
-        errorMsg &&
-        <Alert
-          className="print-alert"
-          message={errorMsg}
-          type="error"
-          closable
-          showIcon
-          onClose={onAlertClose}
-        />
+        errorMsg && (
+          <Alert
+            className="print-alert"
+            message={errorMsg}
+            type="error"
+            closable
+            showIcon
+            onClose={onAlertClose}
+          />
+        )
       }
       {
         printManager?.isInitiated() && (
@@ -339,6 +341,18 @@ export const PrintForm: React.FC<PrintFormProps> = ({
                   printManager={printManager}
                   outputFormats={outputFormats}
                   placeholder={t('PrintForm.outputFormatPlaceholder')}
+                />
+              </Form.Item>
+              <Form.Item
+                aria-label='print-attributions'
+                name="attributions"
+                label={t('PrintForm.attributions')}
+                valuePropName="checked"
+                initialValue={true}
+              >
+                <AttributionsCheckbox
+                  aria-label='print-attributions-input'
+                  printManager={printManager}
                 />
               </Form.Item>
             </Form>
