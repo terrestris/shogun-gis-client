@@ -76,7 +76,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime": "^7.20.6",
     "@casualbot/jest-sonar-reporter": "^2.2.5",
-    "@commitlint/cli": "^17.3.0",
+    "@commitlint/cli": "^18.0.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@playwright/test": "^1.36.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
