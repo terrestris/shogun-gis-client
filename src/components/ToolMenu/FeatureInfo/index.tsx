@@ -68,7 +68,7 @@ export type FeatureInfoProps = FormProps & {
   enabled?: boolean;
 } & Partial<CoordinateInfoProps>;
 
-type MapLayer = {
+type LayerIndex = {
   layerName: string;
   index: number;
 };
@@ -280,12 +280,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
     });
 
-    const layers: MapLayer[] = Object.keys(features).map(layerName => ({
+    const layers: LayerIndex[] = Object.keys(features).map(layerName => ({
       layerName: layerName,
       index: findMapLayerIndex(layerName)
     })).sort((a, b) => b.index - a.index);
 
-    setActiveTabKey(layers[0].layerName);
+    if (layers.length > 0) {
+      setActiveTabKey(layers[0].layerName);
+    }
 
     dispatch(setSelectedFeatures(serializedFeatures));
   };
