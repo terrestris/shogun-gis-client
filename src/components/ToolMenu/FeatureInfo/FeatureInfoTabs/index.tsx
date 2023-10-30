@@ -49,6 +49,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
+  const [activeKey, setActiveKey] = useState<string>('0');
 
   const map = useMap();
 
@@ -73,6 +74,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
     setCurrentPage(1);
 
     if (features.length > 0) {
+      setActiveKey('0');
       setSelectedFeature(features[0]);
     }
   }, [features, map, vectorLayerName]);
@@ -141,6 +143,10 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       } as Tab;
     });
 
+  const changeKey = (key: string) => {
+    setActiveKey(key);
+  };
+
   return (
     <div
       className="feature-info-tabs"
@@ -155,6 +161,9 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       />
       <Tabs
         items={items}
+        activeKey={activeKey}
+        defaultActiveKey='0'
+        onTabClick={changeKey}
         {...passThroughProps}
       />
     </div>
