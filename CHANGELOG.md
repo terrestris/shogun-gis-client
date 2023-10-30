@@ -1,3 +1,11 @@
+## [6.13.2](https://github.com/terrestris/shogun-gis-client/compare/v6.13.1...v6.13.2) (2023-10-30)
+
+
+### Bugfixes
+
+* adds a check if layers is present and adjusts typing name ([67efb48](https://github.com/terrestris/shogun-gis-client/commit/67efb4806861198ae48fbe26518b55594f32f781))
+* uses the first tab on FI ([612f4f5](https://github.com/terrestris/shogun-gis-client/commit/612f4f56bf0cfb9312a1e5d2e6788d785e94919d))
+
 ## [6.13.1](https://github.com/terrestris/shogun-gis-client/compare/v6.13.0...v6.13.1) (2023-10-30)
 
 
