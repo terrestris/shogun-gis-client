@@ -68,6 +68,11 @@ export type FeatureInfoProps = FormProps & {
   enabled?: boolean;
 } & Partial<CoordinateInfoProps>;
 
+type LayerIndex = {
+  layerName: string;
+  index: number;
+};
+
 export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   enabled,
   ...restProps
@@ -82,6 +87,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const dispatch = useAppDispatch();
 
   const [queryLayers, setQueryLayers] = useState<WmsLayer[]>([]);
+  const [activeTabKey, setActiveTabKey] = useState<string | undefined>(undefined);
 
   const layerFilter = (layer: OlLayerBase) => {
     if (!layer.get('hoverable')) {
@@ -122,6 +128,27 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return <></>;
   }
 
+  const changeActiveKey = (key: string) => {
+    setActiveTabKey(key);
+  };
+
+  const findMapLayerIndex = (layerName: string) => {
+    const allLayers = map.getAllLayers();
+
+    const mapLayerIndex = allLayers.findIndex(l => {
+      if (isWmsLayer(l)) {
+        const source = (l as WmsLayer).getSource();
+        const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
+        const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
+
+        return unqualifiedLayerName === unqualifiedMapLayerName;
+      }
+      return false;
+    });
+
+    return mapLayerIndex;
+  };
+
   const resultRenderer = (coordinateInfoState: CoordinateInfoState) => {
     const features = coordinateInfoState.features;
     const loading = coordinateInfoState.loading;
@@ -141,17 +168,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
       const allLayers = map.getAllLayers();
 
-      const mapLayerIndex = allLayers.findIndex(l => {
-        if (isWmsLayer(l)) {
-          const source = (l as WmsLayer).getSource();
-          const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
-          const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
-
-          return unqualifiedLayerName === unqualifiedMapLayerName;
-        }
-        return false;
-      });
-
+      const mapLayerIndex = findMapLayerIndex(layerName);
       const mapLayer = allLayers[mapLayerIndex];
 
       plugins.forEach(plugin => {
@@ -215,6 +232,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         <Tabs
           destroyInactiveTabPane={true}
           items={items}
+          activeKey={activeTabKey}
+          defaultActiveKey={items[0].key}
+          onTabClick={changeActiveKey}
         />
       </Spin>
     );
@@ -259,6 +279,15 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
       serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
     });
+
+    const layers: LayerIndex[] = Object.keys(features).map(layerName => ({
+      layerName: layerName,
+      index: findMapLayerIndex(layerName)
+    })).sort((a, b) => b.index - a.index);
+
+    if (layers.length > 0) {
+      setActiveTabKey(layers[0].layerName);
+    }
 
     dispatch(setSelectedFeatures(serializedFeatures));
   };
