@@ -1,3 +1,18 @@
+## [6.13.3](https://github.com/terrestris/shogun-gis-client/compare/v6.13.2...v6.13.3) (2023-10-31)
+
+
+### Dependencies
+
+* **deps-dev:** bump @types/jest from 29.5.6 to 29.5.7 ([4267161](https://github.com/terrestris/shogun-gis-client/commit/426716182f01f30170f9df46b185a5b664e9b573))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([aae4222](https://github.com/terrestris/shogun-gis-client/commit/aae422205b492da494cfbf3fdb865555e33d3cf6))
+* **deps-dev:** bump @typescript-eslint/parser from 6.9.0 to 6.9.1 ([2b37ee0](https://github.com/terrestris/shogun-gis-client/commit/2b37ee09cf637d1a254fd4f585c02ec17cef93ed))
+* **deps-dev:** bump semantic-release from 22.0.5 to 22.0.6 ([021712e](https://github.com/terrestris/shogun-gis-client/commit/021712e8030f8445faaa9b833c4d2eef2cffad19))
+
+
+### Bugfixes
+
+* fix setting of attribution ([28e4c0a](https://github.com/terrestris/shogun-gis-client/commit/28e4c0a992a19742ad02c874da4ae1db15dfcb82))
+
 ## [6.13.2](https://github.com/terrestris/shogun-gis-client/compare/v6.13.1...v6.13.2) (2023-10-30)
 
 
