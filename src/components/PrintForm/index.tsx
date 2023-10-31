@@ -233,17 +233,20 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       pManager.setOutputFormat(pManager.getOutputFormats()[0]);
       pManager.setDpi(pManager.getDpis()[0]);
       pManager.setLayout(pManager.getLayouts()[0]?.name);
-
-      dispatch(addCustomParam({
-        attributions: getAttributions(pManager)
-      }));
-
       setPrintManager(pManager);
     } catch (error) {
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [map, layerFilter, client, legendFilter, customPrintScales, currentLanguageCode, dispatch, getAttributions, t]);
+  }, [map, layerFilter, client, legendFilter, customPrintScales, currentLanguageCode, t]);
+
+  useEffect(() => {
+    if (printManager) {
+      dispatch(addCustomParam({
+        attributions: getAttributions(printManager)
+      }));
+    }
+  }, [dispatch, getAttributions, printManager]);
 
   useEffect(() => {
     if (active) {
