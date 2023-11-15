@@ -45,6 +45,8 @@ export default {
         text: 'Anmerkung',
         modify: 'Bearbeitung',
         upload: 'Hochladen',
+        uploadSuccess: 'Die Datei wurde erfolgreich importiert',
+        uploadError: 'Nur .geojson Dateien können importiert werden',
         delete: 'Löschen',
         export: 'Exportieren'
       },
@@ -282,6 +284,8 @@ export default {
         text: 'Annotation',
         modify: 'Edit',
         upload: 'Upload',
+        uploadSuccess: 'The file was uploaded successfully',
+        uploadError: 'Only files of the type .geojson are supported',
         delete: 'Delete',
         export: 'Export'
       },

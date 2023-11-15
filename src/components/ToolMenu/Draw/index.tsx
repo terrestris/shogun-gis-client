@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent
+  ChangeEvent, useState
 } from 'react';
 
 import {
@@ -18,6 +18,7 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
+import { message } from 'antd';
 import {
   Feature
 } from 'ol';
@@ -119,6 +120,9 @@ export const Draw: React.FC<DrawProps> = ({
       )
     ) {
       onGeoJSONUpload(uploadedFiles[0]);
+      message.success(t('Draw.uploadSuccess'));
+    } else {
+      message.error(t('Draw.uploadError'));
     }
   };
 
