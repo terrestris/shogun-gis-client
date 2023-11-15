@@ -45,7 +45,7 @@ export const LayoutSelect: React.FC<LayoutSelectProps> = ({
     <Select
       placeholder={placeholder}
       value={layout}
-      onChange={setLayout}
+      onChange={layout}
       {...restProps}
     >
       {
