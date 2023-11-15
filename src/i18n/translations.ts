@@ -22,7 +22,6 @@ export default {
       },
       Permalink: {
         title: 'Teilen',
-        twitterTooltip: 'Link via Twitter teilen',
         whatsAppTooltip: 'Link via WhatsApp teilen',
         mailTooltip: 'Link via Mail teilen',
         copyTooltip: 'Link in die Zwischenablage kopieren',
@@ -259,7 +258,6 @@ export default {
       },
       Permalink: {
         title: 'Share',
-        twitterTooltip: 'Share link via Twitter',
         whatsAppTooltip: 'Share link via WhatsApp',
         mailTooltip: 'Share link via Mail',
         copyTooltip: 'Copy link to Clipboard',
