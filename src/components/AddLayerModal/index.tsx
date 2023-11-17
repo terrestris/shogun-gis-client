@@ -165,6 +165,8 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         };
         layerToAdd.set('layerConfig', layerConfig);
         targetGroup.getLayers().push(layerToAdd);
+
+        map.getLayers().dispatchEvent('change:layers');
       }
     });
 
