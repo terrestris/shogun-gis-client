@@ -59,7 +59,6 @@ import './index.less';
 export type PaginationToolbarProps = {
   exportFilter?: (propertyName: string, propertyValue: string) => boolean;
   features: OlFeature[];
-  isCopyAsGeoJsonEnabled?: boolean;
   layer?: OlLayer;
   selectedFeature: OlFeature;
 } & PaginationProps;
@@ -67,7 +66,6 @@ export type PaginationToolbarProps = {
 export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   exportFilter,
   features,
-  isCopyAsGeoJsonEnabled = true,
   layer,
   selectedFeature,
   ...passThroughProps

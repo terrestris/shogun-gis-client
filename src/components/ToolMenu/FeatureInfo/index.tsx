@@ -54,7 +54,7 @@ export type FeatureInfoConfig = {
   activeCopyTools?: CopyTools[];
 };
 
-export type FeatureInfoProps = FormProps & FeatureInfoConfig & Partial<CoordinateInfoProps>;
+export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
 
 type LayerIndex = {
   layerName: string;
