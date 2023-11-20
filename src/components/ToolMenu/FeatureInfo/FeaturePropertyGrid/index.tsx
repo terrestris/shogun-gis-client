@@ -7,8 +7,6 @@ import {
   TableProps
 } from 'antd';
 
-import _isFinite from 'lodash/isFinite';
-
 import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
 import OlLayerVector from 'ol/layer/Vector';

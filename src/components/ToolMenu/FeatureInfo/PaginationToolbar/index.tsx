@@ -21,8 +21,7 @@ import copy from 'copy-to-clipboard';
 import {
   Feature
 } from 'geojson';
-
-import _isFinite from 'lodash/isFinite';
+import _clone from 'lodash/clone';
 
 import {
   getUid
@@ -53,21 +52,24 @@ import {
 import {
   show as showEditFeatureDrawer
 } from '../../../../store/editFeatureDrawerOpen';
+import { CopyTools } from '../../../../store/featureInfo';
 
 import './index.less';
 
 export type PaginationToolbarProps = {
-  features: OlFeature[];
-  selectedFeature: OlFeature;
   exportFilter?: (propertyName: string, propertyValue: string) => boolean;
+  features: OlFeature[];
+  isCopyAsGeoJsonEnabled?: boolean;
   layer?: OlLayer;
+  selectedFeature: OlFeature;
 } & PaginationProps;
 
 export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
-  features,
-  selectedFeature,
-  layer,
   exportFilter,
+  features,
+  isCopyAsGeoJsonEnabled = true,
+  layer,
+  selectedFeature,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -76,6 +78,8 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   } = useTranslation();
   const dispatch = useAppDispatch();
   const map = useMap();
+
+  const activeCopyTools = useAppSelector(state => state.featureInfo.activeCopyTools);
 
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
@@ -111,7 +115,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       return;
     }
 
-    let props = Object.entries(structuredClone(selectedFeature.getProperties()))
+    let props = Object.entries(_clone(selectedFeature.getProperties()))
       .filter(([, value]) => !(value instanceof OlGeometry));
 
     if (exportFilter) {
@@ -195,26 +199,34 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
             </Tooltip>
           )
         }
-        <Tooltip
-          title={t('PaginationToolbar.copyAsGeoJson')}
-        >
-          <Button
-            type="primary"
-            size="small"
-            onClick={onCopyAsGeoJSONClick}
-            icon={<FontAwesomeIcon icon={faClipboardCheck} />}
-          />
-        </Tooltip>
-        <Tooltip
-          title={t('PaginationToolbar.copyAsObject')}
-        >
-          <Button
-            type="primary"
-            size="small"
-            onClick={onCopyAsObjectClick}
-            icon={<FontAwesomeIcon icon={faClipboardList} />}
-          />
-        </Tooltip>
+        {
+          activeCopyTools?.includes(CopyTools.COPY_AS_GEOJSON) && (
+            <Tooltip
+              title={t('PaginationToolbar.copyAsGeoJson')}
+            >
+              <Button
+                type="primary"
+                size="small"
+                onClick={onCopyAsGeoJSONClick}
+                icon={<FontAwesomeIcon icon={faClipboardCheck} />}
+              />
+            </Tooltip>
+          )
+        }
+        {
+          activeCopyTools?.includes(CopyTools.COPY_AS_OBJECT) && (
+            <Tooltip
+              title={t('PaginationToolbar.copyAsObject')}
+            >
+              <Button
+                type="primary"
+                size="small"
+                onClick={onCopyAsObjectClick}
+                icon={<FontAwesomeIcon icon={faClipboardList} />}
+              />
+            </Tooltip>
+          )
+        }
       </div>
     </div>
   );

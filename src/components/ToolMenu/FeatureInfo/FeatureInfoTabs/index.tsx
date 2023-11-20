@@ -8,6 +8,7 @@ import {
   TabsProps
 } from 'antd';
 
+import _isNil from 'lodash/isNil';
 import OlFeature from 'ol/Feature';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerVector from 'ol/layer/Vector';
@@ -127,7 +128,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   };
 
   const items = tabConfig
-    .filter(config => config !== undefined)
+    .filter(config => !_isNil(config))
     .map((config, idx) => {
       return {
         label: config.title,
@@ -152,12 +153,12 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       className="feature-info-tabs"
     >
       <PaginationToolbar
-        features={features}
-        selectedFeature={selectedFeature}
         current={currentPage}
+        exportFilter={exportFilter}
+        features={features}
         layer={layer}
         onChange={onChange}
-        exportFilter={exportFilter}
+        selectedFeature={selectedFeature}
       />
       <Tabs
         items={items}
