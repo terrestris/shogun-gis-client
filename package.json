@@ -28,6 +28,7 @@
     "clean:dist": "rimraf ./dist/*",
     "husky": "husky install",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx src/",
+    "lint:fix": "eslint -c .eslintrc.js --ext .ts,.tsx src/ --fix",
     "prepare": "npm run husky",
     "semantic-release": "npm run clean; npm run build; npx semantic-release",
     "start": "webpack serve --config webpack.dev.js",
