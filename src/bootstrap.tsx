@@ -87,6 +87,7 @@ import {
   setUserEditMode,
   EditLevel
 } from './store/editFeature';
+import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
 import {
   setLegal
 } from './store/legal';
@@ -226,6 +227,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'search' && tool.config.engines.length > 0) {
           store.dispatch(setSearchEngines(tool.config.engines));
+        }
+        if (tool.name === 'feature_info' && tool.config.activeCopyTools?.length > 0) {
+          store.dispatch(setFeatureInfoActiveCopyTools(tool.config.activeCopyTools));
         }
       });
     store.dispatch(setAvailableTools(availableTools));

@@ -58,6 +58,7 @@ import {
 import {
   show as showAdd
 } from '../../store/addLayerModal';
+import { setFeatureInfoEnabled } from '../../store/featureInfo';
 import {
   setActiveKeys
 } from '../../store/toolMenu';
@@ -72,8 +73,8 @@ import PrintForm from '../PrintForm';
 import Draw from './Draw';
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
-import Measure from './Measure';
 
+import Measure from './Measure';
 import './index.less';
 
 export interface TitleEventEntity {
@@ -152,6 +153,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         );
       }
     }
+
+    dispatch(setFeatureInfoEnabled(activeKeys.includes('feature_info')));
   }, [activeKeys, dispatch]);
 
   const getToolPanels = (): JSX.Element[] => {
@@ -265,9 +268,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           icon: faMousePointer,
           title: t('ToolMenu.featureInfo'),
           wrappedComponent: (
-            <FeatureInfo
-              enabled={activeKeys.includes('feature_info')}
-            />
+            <FeatureInfo />
           )
         };
       case 'print':
