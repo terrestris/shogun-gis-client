@@ -19,7 +19,7 @@ export default {
           'https://ows.terrestris.de/osm/service ein.',
         version: 'Version',
         requestWmsGetCapabilitiesInstruction: 'Bitte geben Sie eine gültige WMS GetCapabilities Adresse ein ' +
-          'und bestätigen Sie die Eingabe mit \'Enter\' oder über den Button rechts vom Eingabefeld.'
+          'und bestätigen Sie die Eingabe mit \'Enter ↲\' oder über den Button rechts vom Eingabefeld.'
 
       },
       BasicMapComponent: {
@@ -260,7 +260,7 @@ export default {
         invalidUrlErrorMsg: 'Invalid URL specified. Please provide an URL like https://ows.terrestris.de/osm/service',
         version: 'Version',
         requestWmsGetCapabilitiesInstruction: 'Please provide a valid GetCapabilities URL and submit ' +
-          'your input with \'Enter\' or click on search button.'
+          'your input by pressing the \'Enter ↲\' key or by clicking on the button right of the field.'
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'

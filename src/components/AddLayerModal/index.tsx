@@ -35,6 +35,7 @@ import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 import CapabilitiesUtil from '@terrestris/ol-util/dist/CapabilitiesUtil/CapabilitiesUtil';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
+import { SimpleButton } from '@terrestris/react-geo';
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
@@ -46,8 +47,6 @@ import {
 } from '../../store/addLayerModal';
 
 import './index.less';
-import { SimpleButton } from '@terrestris/react-geo';
-import { log } from 'console';
 
 export type AddLayerModalProps = {} & Partial<ModalProps>;
 
@@ -171,8 +170,6 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
 
     closeModal();
   };
-
-  console.log(validationStatus)
 
   return (
     <Modal
