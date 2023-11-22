@@ -259,7 +259,7 @@ export default {
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL',
         invalidUrlErrorMsg: 'Invalid URL specified. Please provide an URL like https://ows.terrestris.de/osm/service',
         version: 'Version',
-        requestWmsGetCapabilitiesInstruction: 'Please provide any valid GetCapabilities URL und submit ' +
+        requestWmsGetCapabilitiesInstruction: 'Please provide a valid GetCapabilities URL and submit ' +
           'your input with \'Enter\' or click on search button.'
       },
       BasicMapComponent: {
