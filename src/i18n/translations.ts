@@ -15,7 +15,12 @@ export default {
         columnTitle: 'Name',
         errorMessage: 'Fehler',
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL',
-        version: 'Version'
+        invalidUrlErrorMsg: 'Ungültige URL. Bitte geben Sie eine gültige URL wie z.B. ' +
+          'https://ows.terrestris.de/osm/service ein.',
+        version: 'Version',
+        requestWmsGetCapabilitiesInstruction: 'Bitte geben Sie eine gültige WMS GetCapabilities Adresse ein ' +
+          'und bestätigen Sie die Eingabe mit \'Enter\' oder über den Button rechts vom Eingabefeld.'
+
       },
       BasicMapComponent: {
         processedLayersFolder: 'Prozessierte Layer'
@@ -252,7 +257,10 @@ export default {
         columnTitle: 'Name',
         errorMessage: 'Error',
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL',
-        version: 'Version'
+        invalidUrlErrorMsg: 'Invalid URL specified. Please provide an URL like https://ows.terrestris.de/osm/service',
+        version: 'Version',
+        requestWmsGetCapabilitiesInstruction: 'Please provide any valid GetCapabilities URL und submit ' +
+          'your input with \'Enter\' or click on search button.'
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'

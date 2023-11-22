@@ -10,8 +10,13 @@ import {
   ModalProps,
   notification,
   Select,
-  Table
+  Table,
+  Typography
 } from 'antd';
+
+import {
+  InputStatus
+} from 'antd/lib/_util/statusUtils';
 
 import {
   getUid
@@ -41,6 +46,8 @@ import {
 } from '../../store/addLayerModal';
 
 import './index.less';
+import { SimpleButton } from '@terrestris/react-geo';
+import { log } from 'console';
 
 export type AddLayerModalProps = {} & Partial<ModalProps>;
 
@@ -50,6 +57,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [layers, setLayers] = useState<(ImageLayer<ImageWMSSource> | TileLayer<TileWMSSource>)[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [validationStatus, setValidationStatus] = useState<InputStatus>('');
   const [url, setUrl] = useState(
     'https://sgx.geodatenzentrum.de/wms_topplus_open'
   );
@@ -72,6 +80,12 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     }
     setSanitizedUrl(UrlUtil.createValidGetCapabilitiesRequest(url, 'WMS', version));
   }, [version, isModalVisible, url]);
+
+  const onUrlChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const value = evt.target.value;
+    setValidationStatus(UrlUtil.isValid(value.trim()) ? '' : 'error');
+    setUrl(evt.target.value);
+  };
 
   const getCapabilities = async () => {
     if (!sanitizedUrl) {
@@ -158,6 +172,8 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     closeModal();
   };
 
+  console.log(validationStatus)
+
   return (
     <Modal
       className="add-layer-modal"
@@ -166,33 +182,34 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       onCancel={closeModal}
       width={600}
       footer={[
-        <Button
+        <SimpleButton
           aria-label='add-all'
           key="add-all"
           disabled={layers?.length < 1}
           onClick={onAddAll}
         >
           {t('AddLayerModal.addAllLayers')}
-        </Button>,
-        <Button
+        </SimpleButton>,
+        <SimpleButton
           aria-label='add-selected'
           key="add-selected"
           disabled={selectedRowKeys?.length < 1}
           onClick={onAddSelected}
         >
           {t('AddLayerModal.addSelectedLayers')}
-        </Button>
+        </SimpleButton>
       ]}
       {...restProps}
     >
+      <span>{t('AddLayerModal.requestWmsGetCapabilitiesInstruction')}</span>
       <Input.Search
         aria-label='input-search'
+        className='url-input'
         placeholder={t('AddLayerModal.inputPlaceholder')}
         value={url}
-        onChange={(event) => {
-          setUrl(event.target.value);
-        }}
+        onChange={onUrlChange}
         onSearch={getCapabilities}
+        status={validationStatus}
         enterButton={true}
         addonBefore={
           <Select
@@ -213,6 +230,12 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
           </Select>
         }
       />
+      {
+        validationStatus !== '' &&
+        <Typography className='error'>
+          {t('AddLayerModal.invalidUrlErrorMsg')}
+        </Typography>
+      }
       <Table
         aria-label='wms-table'
         loading={loading}
@@ -224,6 +247,9 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
             }
           }
         ]}
+        scroll={{
+          y: 250
+        }}
         rowKey={(record: any) => getUid(record)}
         rowSelection={{
           selectedRowKeys,
