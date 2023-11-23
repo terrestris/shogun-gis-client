@@ -44,6 +44,8 @@ export const App: React.FC<AppProps> = ({
       <UploadDataModal />
       <EditFeatureDrawer />
       <LayerDetailsModal />
+      {/* // todo: move styling component here and use store value for visibility
+      //todo: properties an componmente: open */}
     </div>
   );
 };

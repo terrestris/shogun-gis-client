@@ -55,11 +55,11 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
       </Button>
       <Drawer
         title={t('StylingDrawer.title')}
+        destroyOnClose={false}
         placement="right"
         onClose={onClose}
         open={open}
         mask={false}
-        width={'45vw'}
         className="color-pick-drawer"
         {...passThroughProps}
       >
