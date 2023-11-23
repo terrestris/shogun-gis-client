@@ -42,7 +42,7 @@ import {
 
 import './index.less';
 
-import StylingDrawer from './StylingDrawer';
+import StylingDrawer, { StylingButton } from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -325,8 +325,7 @@ export const Draw: React.FC<DrawProps> = ({
       ) : <></>}
 
       {showStyleFeatures ? (
-        // use store: dispatch etc.
-        <StylingDrawer />
+        <StylingButton />
       ): <></>}
     </ToggleGroup>
   );
