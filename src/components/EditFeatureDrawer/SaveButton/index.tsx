@@ -106,6 +106,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     try {
       await form.validateFields();
     } catch (error) {
+      onError(error);
       Logger.warn('Validation has failed: ', error);
       return;
     }

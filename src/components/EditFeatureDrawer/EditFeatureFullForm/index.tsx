@@ -1,4 +1,5 @@
 import React, {
+  ReactNode,
   useCallback,
   useEffect,
   useState
@@ -23,6 +24,8 @@ import moment from 'moment';
 import {
   equalTo
 } from 'ol/format/filter';
+
+import { ValidateErrorEntity } from 'rc-field-form/es/interface';
 
 import {
   useTranslation
@@ -76,7 +79,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState<string | ReactNode>();
 
   const [form] = useForm();
   const map = useMap();
@@ -200,6 +203,26 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     update();
   }, [update]);
 
+  const formatErrorMessage = (error: ValidateErrorEntity): React.ReactNode => {
+    const collectedFieldErrors: string[] = [];
+    const errorFields = error.errorFields || [];
+
+    errorFields.forEach((field) => {
+      if (Array.isArray(field.errors)) {
+        collectedFieldErrors.push(...field.errors);
+      }
+    });
+
+    const formattedMessage = collectedFieldErrors.map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        {index !== collectedFieldErrors.length - 1 && <br />}
+      </React.Fragment>
+    ));
+
+    return formattedMessage;
+  };
+
   const onSaveSuccess = (responseText?: string) => {
     if (!responseText) {
       return;
@@ -217,8 +240,15 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     }
   };
 
-  const onSaveError = () => {
-    setErrorMsg(t('EditFeatureFullForm.saveErrorMsg'));
+  const onSaveError = (error: unknown) => {
+    if (typeof error === 'object' && error !== null && 'errorFields' in error) {
+      const formattedErrorMessage = formatErrorMessage(
+        error as ValidateErrorEntity
+      );
+      setErrorMsg(formattedErrorMessage);
+    } else {
+      setErrorMsg(t('EditFeatureFullForm.saveErrorMsg'));
+    }
   };
 
   const onDeleteSuccess = () => {
