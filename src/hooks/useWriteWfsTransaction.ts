@@ -49,6 +49,21 @@ export type WriteWfsTransactionOpts = {
   form?: FormInstance;
 };
 
+export type FileInfoList = {
+  uid: string;
+  lastModified: number;
+  name: string;
+  type: string;
+  url: string;
+  response: {
+    id: number;
+    created: string;
+    fileName: string;
+    fileType: string;
+    fileUuid: string;
+  };
+};
+
 export const useWriteWfsTransaction = () => {
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
@@ -83,7 +98,7 @@ export const useWriteWfsTransaction = () => {
 
       if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
         const filePath = value[0].response?.fileType?.startsWith('image/') ? 'imagefiles/' : 'files/';
-        const fileInfoList = value.map(val => ({
+        const fileInfoList: FileInfoList[] = value.map((val: FileInfoList) => ({
           uid: val.uid,
           lastModified: val.lastModified,
           name: val.name,
