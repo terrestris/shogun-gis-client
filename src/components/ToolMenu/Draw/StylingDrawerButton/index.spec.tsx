@@ -14,7 +14,7 @@ import {
   store
 } from '../../../../store/store';
 
-import StylingDrawer from './index';
+import StylingDrawerButton from './index';
 
 const createWrapper = () => {
   // eslint-disable-next-line react/display-name
@@ -31,23 +31,18 @@ describe('StylingDrawer', () => {
   it('can be rendered', () => {
     const {
       container
-    } = render(<StylingDrawer />, {
+    } = render(<StylingDrawerButton />, {
       wrapper: createWrapper()
     });
 
     expect(container).toBeVisible();
   });
 
-  it('renders the correct drawer title', async () => {
-    render(<StylingDrawer />, {
+  it('renders the correct Button title', async () => {
+    render(<StylingDrawerButton />, {
       wrapper: createWrapper()
     });
 
-    screen.getByText('StylingDrawer.pickColor').click();
-
-    await waitFor(() => screen.getByText('StylingDrawer.title'));
-
-    expect(screen.getByText('StylingDrawer.title')).toBeInTheDocument();
+    expect(screen.getByText('StylingDrawer.pickColor')).toBeInTheDocument();
   });
-
 });

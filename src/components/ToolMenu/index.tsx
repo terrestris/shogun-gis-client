@@ -260,6 +260,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
                 availableTools.includes('default') || availableTools.includes('draw_tools_download')
               }
               showDeleteFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_delete')}
+              showStyleFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_style')}
             />
           )
         };

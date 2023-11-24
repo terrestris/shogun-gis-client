@@ -8,6 +8,7 @@ import EditFeatureDrawer from './components/EditFeatureDrawer';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import LayerDetailsModal from './components/LayerDetailsModal';
+import StylingDrawer from './components/StylingDrawer';
 import ToolMenu from './components/ToolMenu';
 import UploadDataModal from './components/UploadDataModal';
 
@@ -44,6 +45,7 @@ export const App: React.FC<AppProps> = ({
       <UploadDataModal />
       <EditFeatureDrawer />
       <LayerDetailsModal />
+      <StylingDrawer />
     </div>
   );
 };

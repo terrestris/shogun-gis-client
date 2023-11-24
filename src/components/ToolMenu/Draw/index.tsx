@@ -43,7 +43,7 @@ import {
 
 import './index.less';
 
-import StylingDrawer from './StylingDrawer';
+import StylingDrawer, { StylingButton } from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -56,6 +56,7 @@ interface DefaultDrawProps {
   showUploadFeatures?: boolean;
   showDownloadFeatures?: boolean;
   showDeleteFeatures?: boolean;
+  showStyleFeatures?: boolean;
 }
 
 export interface DrawProps extends Partial<DefaultDrawProps> { }
@@ -70,7 +71,8 @@ export const Draw: React.FC<DrawProps> = ({
   showModifyFeatures,
   showUploadFeatures,
   showDownloadFeatures,
-  showDeleteFeatures
+  showDeleteFeatures,
+  showStyleFeatures
 }): JSX.Element => {
   const {
     t
@@ -152,7 +154,6 @@ export const Draw: React.FC<DrawProps> = ({
 
   return (
     <ToggleGroup>
-
       {showDrawPoint ? (
         <DrawButton
           name="draw-point"
@@ -326,7 +327,10 @@ export const Draw: React.FC<DrawProps> = ({
           </span>
         </DeleteButton>
       ) : <></>}
-      <StylingDrawer />
+
+      {showStyleFeatures ? (
+        <StylingButton />
+      ): <></>}
     </ToggleGroup>
   );
 };

@@ -16,6 +16,7 @@ import logoPath from './logoPath';
 import print from './print';
 import searchEngines from './searchEngines';
 import selectedFeatures from './selectedFeatures';
+import stylingDrawerVisibility from './stylingDrawerVisibility';
 import title from './title';
 import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
@@ -43,6 +44,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     uploadDataModal,
     searchEngines,
     user,
+    stylingDrawerVisibility,
     ...asyncReducers
   });
 };
