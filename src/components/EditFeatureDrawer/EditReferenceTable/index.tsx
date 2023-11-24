@@ -28,6 +28,8 @@ import {
   TableProps
 } from 'antd/lib/table';
 
+import { FileInfoList } from 'hooks/useWriteWfsTransaction';
+
 import _cloneDeep from 'lodash/cloneDeep';
 import _isEqual from 'lodash/isEqual';
 
@@ -187,10 +189,15 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
 
         const isUpload = formConfig?.some(cfg => cfg.propertyName === key && cfg.component === 'UPLOAD');
         if (isUpload) {
-          v[key] = [{
-            name: v,
-            status: 'done'
-          }];
+          if (Array.isArray(v[key])) {
+            const vMap = v[key]?.map((upload: FileInfoList) => ({
+              name: upload.name,
+              status: 'done'
+            }));
+            v[key] = vMap;
+          } else {
+            v[key] = [];
+          }
         }
       });
     });
