@@ -12,9 +12,11 @@ import {
 
 import {
   store
-} from '../../../../store/store';
+} from '../../store/store';
 
-import StylingDrawerButton from './index';
+import { setStylingDrawerVisibility } from '../../store/stylingDrawerVisibility';
+
+import StylingDrawerButton, { StylingDrawer } from './index';
 
 const createWrapper = () => {
   // eslint-disable-next-line react/display-name
@@ -31,18 +33,19 @@ describe('StylingDrawer', () => {
   it('can be rendered', () => {
     const {
       container
-    } = render(<StylingDrawerButton />, {
+    } = render(<StylingDrawer />, {
       wrapper: createWrapper()
     });
 
     expect(container).toBeVisible();
   });
 
-  it('renders the correct Button title', async () => {
+  it('renders the correct title', async () => {
     render(<StylingDrawerButton />, {
       wrapper: createWrapper()
     });
 
-    expect(screen.getByText('StylingDrawer.pickColor')).toBeInTheDocument();
+    store.dispatch(setStylingDrawerVisibility(true));
+    expect(screen.getByText('StylingDrawer.title')).toBeInTheDocument();
   });
 });
