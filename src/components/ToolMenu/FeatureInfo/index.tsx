@@ -237,23 +237,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return <></>;
   }
 
-  const getFetchOpts = () => {
-    const opts: {
-      [uid: string]: RequestInit;
-    } = {};
-
-    queryLayers.forEach(layer => {
-      const layerUid = getUid(layer);
-      opts[layerUid] = {
-        headers: {
-          ...layer.get('useBearerToken') ? {
-            ...getBearerTokenHeader(client?.getKeycloak())
-          } : undefined
-        }
-      };
-    });
-
-    return opts;
+  const getFetchOpts = (layer: WmsLayer) => {
+    return {
+      headers: {
+        ...layer.get('useBearerToken') ? {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        } : undefined
+      }
+    };
   };
 
   const onSuccess = (coordinateInfoState: CoordinateInfoState) => {
@@ -286,7 +277,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         map={map}
         queryLayers={queryLayers}
         resultRenderer={resultRenderer}
-        fetchOpts={getFetchOpts()}
+        fetchOpts={getFetchOpts}
         onSuccess={onSuccess}
         {...restProps}
       />
