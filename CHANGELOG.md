@@ -1,3 +1,15 @@
+## [7.1.0](https://github.com/terrestris/shogun-gis-client/compare/v7.0.0...v7.1.0) (2023-11-29)
+
+
+### Dependencies
+
+* update react-geo to version ^23.2.0 ([0b75d57](https://github.com/terrestris/shogun-gis-client/commit/0b75d57efbfdbf6cc86a0a1b33feb0b6f0daf546))
+
+
+### Features
+
+* release a version to include latest rect-geo ([b52c1d9](https://github.com/terrestris/shogun-gis-client/commit/b52c1d90bc5ad1e1f9870c521a3c0884ced94f2c))
+
 ## [7.0.0](https://github.com/terrestris/shogun-gis-client/compare/v6.13.3...v7.0.0) (2023-11-29)
 
 
