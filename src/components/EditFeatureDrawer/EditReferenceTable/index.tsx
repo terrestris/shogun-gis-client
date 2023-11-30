@@ -50,6 +50,9 @@ import {
   PropertyFormItemEditConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
+import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
+import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
+
 import EditFeatureForm from '../../EditFeatureDrawer/EditFeatureForm';
 
 import './index.less';
@@ -86,6 +89,9 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
   const {
     t
   } = useTranslation();
+
+  const imageUrlToBase64 = useConvertImageUrl();
+  const client = useSHOGunAPIClient();
 
   const defaultPropertyName = 'id';
 
@@ -174,7 +180,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
 
     const valueCopy = _cloneDeep(value);
     valueCopy.forEach(v => {
-      Object.entries(v).forEach(([key, val]) => {
+      Object.entries(v).forEach(async ([key, val]) => {
         const isDate = formConfig?.some(cfg => cfg.propertyName === key && cfg.component === 'DATE');
         if (isDate && val) {
           const parsedDate = moment(value);
@@ -190,11 +196,19 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
         const isUpload = formConfig?.some(cfg => cfg.propertyName === key && cfg.component === 'UPLOAD');
         if (isUpload) {
           if (Array.isArray(v[key])) {
-            const vMap = v[key]?.map((upload: FileInfoList) => ({
-              name: upload.name,
-              status: 'done'
+            const vMap = v[key]?.map(async (upload: FileInfoList) => ({
+              ...upload,
+              thumbUrl: upload.type.startsWith('image')
+                ? await imageUrlToBase64(
+                  `${client?.getBasePath()}imagefiles/${
+                    upload?.response?.fileUuid
+                  }/thumbnail`
+                )
+                : undefined,
+              url: upload.type.startsWith('image') ? undefined : upload.url
             }));
-            v[key] = vMap;
+            const result = await Promise.all(vMap);
+            v[key] = result;
           } else {
             v[key] = [];
           }
