@@ -1,3 +1,20 @@
+## [7.1.1](https://github.com/terrestris/shogun-gis-client/compare/v7.1.0...v7.1.1) (2023-12-01)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.23.3 to 7.23.5 ([afc8fc3](https://github.com/terrestris/shogun-gis-client/commit/afc8fc39e8049651a71a53a010d8f77322faae8c))
+* **deps-dev:** bump @babel/preset-env from 7.23.3 to 7.23.5 ([dd6df2e](https://github.com/terrestris/shogun-gis-client/commit/dd6df2e507bac5ddf4a068a513b4cb2c50093959))
+* **deps-dev:** bump @babel/runtime from 7.23.4 to 7.23.5 ([b5accad](https://github.com/terrestris/shogun-gis-client/commit/b5accad5fffb399264d349f4ab313461255cb231))
+* **deps-dev:** bump @semantic-release/github from 9.2.3 to 9.2.4 ([1359825](https://github.com/terrestris/shogun-gis-client/commit/1359825429558cb4349dcb6cf0420f841ce3756c))
+* **deps-dev:** bump @types/node from 20.10.0 to 20.10.1 ([df2525d](https://github.com/terrestris/shogun-gis-client/commit/df2525d499f34156f849be8b429c1125a6946ee3))
+* **deps:** bump keycloak-js from 22.0.5 to 23.0.1 ([3d00fc0](https://github.com/terrestris/shogun-gis-client/commit/3d00fc0a284ee26419793725699576358e5d9968))
+
+
+### Bugfixes
+
+* convert image uploads to base64 and handle URLs ([c6fa18b](https://github.com/terrestris/shogun-gis-client/commit/c6fa18b0a511f2de9c921846954828cc529f147c))
+
 ## [7.1.0](https://github.com/terrestris/shogun-gis-client/compare/v7.0.0...v7.1.0) (2023-11-29)
 
 
