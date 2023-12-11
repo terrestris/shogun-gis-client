@@ -1,13 +1,13 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  useCallback
 } from 'react';
 
-import { Progress } from 'antd';
-
 import {
-  getUid, MapBrowserEvent
+  getUid
 } from 'ol';
+import BaseEvent from 'ol/events/Event';
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayerImage from 'ol/layer/Image';
@@ -45,6 +45,7 @@ import WmsTimeSlider from '../../WmsTimeSlider';
 import LayerTreeContextMenu from './LayerTreeContextMenu';
 
 import './index.less';
+import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = {} & Partial<RgLayerTreeProps>;
 
@@ -68,7 +69,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
 
-  useEffect(() => {
+  const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
+
+  const registerTileLoadHandler = useCallback(() => {
     if (!map) {
       return;
     }
@@ -77,16 +80,45 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     allLayers.forEach(layer => {
       if (layer instanceof OlLayer) {
         const source = layer.getSource();
-        if (!source.hasListener('tileloadstart')) {
-          source.on('tileloadstart', tileLoadStartListener);
+        if (source instanceof OlSourceTileWMS) {
+          if (!source.hasListener('tileloadstart')) {
+            source.on('tileloadstart', tileLoadStartListener);
+          }
+          if (!source.hasListener('tileloadend') && !source.hasListener('tileloaderror')) {
+            source.on(['tileloadend', 'tileloaderror'], tileLoadEndListener);
+          }
         }
-        if (!source.hasListener('tileloadend') && !source.hasListener('tileloaderror')) {
-          source.on(['tileloadend', 'tileloaderror'], tileLoadEndListener);
+        if (source instanceof OlSourceImageWMS) {
+          if (!source.hasListener('imageloadstart')) {
+            source.on('imageloadstart', tileLoadStartListener);
+          }
+          if (!source.hasListener('imageloadend') && !source.hasListener('imageloaderror')) {
+            source.on(['imageloadend', 'imageloaderror'], tileLoadEndListener);
+          }
         }
       }
     });
+  }, [map]);
+
+  const checkListeners = useCallback(() => {
+    const activeLayers = map?.getAllLayers().map(l => getUid(l));
+
+    if (activeLayers?.length !== initialLayersUid?.length) {
+      registerTileLoadHandler();
+    }
+  }, [map, initialLayersUid, registerTileLoadHandler]);
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    registerTileLoadHandler();
+
+    map.getLayers().on('change', checkListeners);
 
     return () => {
+      const allLayers = MapUtil.getAllLayers(map);
       allLayers.forEach(layer => {
         if (layer instanceof OlLayer) {
           const source = layer.getSource();
@@ -101,10 +133,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           }
         }
       });
+      map.getLayers().un('change', checkListeners);
     };
-  }, [map]);
+  }, [map, registerTileLoadHandler, checkListeners]);
 
-  const tileLoadStartListener = (evt: MapBrowserEvent<UIEvent>) => {
+  const tileLoadStartListener = (evt: BaseEvent) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
       const uid = parseInt(getUid(evt.target), 10);
       const update = { ...counter };
@@ -128,7 +161,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     });
   };
 
-  const tileLoadEndListener = (evt: MapBrowserEvent<UIEvent>) => {
+  const tileLoadEndListener = (evt: BaseEvent | Event) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
       const uid = parseInt(getUid(evt.target), 10);
       const update = { ...counter };
@@ -184,18 +217,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             className="tree-node-header"
             aria-label="tree-node-header"
           >
-            <Progress
-              aria-label='loading-indicator'
-              className='loading-indicator'
-              type="circle"
-              percent={percent}
-              format={() => ''}
-              width={16}
-              strokeWidth={20}
-            />
             <span
               aria-label='layer-name'
-            >{layer.get('name')}
+            >
+              {layer.get('name')}
+              {percent < 100 && <LoadingIndicator /> }
             </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
