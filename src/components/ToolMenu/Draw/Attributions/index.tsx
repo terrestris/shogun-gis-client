@@ -6,10 +6,11 @@ import {
   MinusCircleOutlined, PlusOutlined
 } from '@ant-design/icons';
 import {
-  Button, Drawer, Form, Divider, Row
+  Button, Drawer, DrawerProps, Form, Row
 } from 'antd';
 import _cloneDeep from 'lodash/cloneDeep';
 import OlFeature from 'ol/Feature';
+import Select from 'ol/interaction/Select';
 
 import { useTranslation } from 'react-i18next';
 
@@ -20,14 +21,14 @@ import {
 import './index.less';
 import AttributionRow, { InputFields } from './AttributionRow';
 
-export type AttributionDrawerProps = {
-  openAttributeDrawer: boolean;
-  onClose: (open: boolean) => void;
-};
+export interface AttributionDrawerProps extends DrawerProps {
+  onCustomClose: (open: boolean) => void;
+}
 
 const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
-  openAttributeDrawer,
-  onClose
+  onCustomClose,
+  onClose,
+  ...passThroughProps
 }) => {
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [render, setRender] = useState<boolean>(true);
@@ -63,13 +64,13 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     });
   }, [selectedFeature, form]);
 
-  const selectInteraction: any = map?.getInteractions().getArray().filter(interaction => {
+  const selectInteraction = map?.getInteractions().getArray().filter(interaction => {
     if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
       return true;
     } else {
       return false;
     }
-  })[0];
+  })[0] as Select;
 
   if (selectInteraction) {
     selectInteraction.on('select', () => {
@@ -78,7 +79,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   }
 
   const handleClose = () => {
-    onClose(false);
+    onCustomClose(false);
   };
 
   const onFinish = (input: InputFields) => {
@@ -157,7 +158,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
         mask={false}
         maskClosable={false}
         onClose={handleClose}
-        open={openAttributeDrawer}
+        {...passThroughProps}
       >
         <>
           {!selectedFeature &&

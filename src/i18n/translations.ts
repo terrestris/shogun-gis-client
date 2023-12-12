@@ -432,8 +432,8 @@ export default {
         redo: 'Redo'
       },
       Attribution: {
-        title: 'Attributes',
-        add: 'Add Attribution',
+        title: 'Properties',
+        add: 'Add Properties',
         select: 'Please select a geometry first.',
         submit: 'Submit'
       },

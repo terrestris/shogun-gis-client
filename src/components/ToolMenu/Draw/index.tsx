@@ -74,7 +74,7 @@ export const Draw: React.FC<DrawProps> = ({
   showDownloadFeatures,
   showDeleteFeatures
 }): JSX.Element => {
-  const [openAttributeDrawer, setopenAttributeDrawer] = useState(false);
+  const [openAttributeDrawer, setOpenAttributeDrawer] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string>();
 
   const {
@@ -158,10 +158,10 @@ export const Draw: React.FC<DrawProps> = ({
 
   const attributeDrawer = (active: any) => {
     if (openAttributeDrawer === false && active === true) {
-      setopenAttributeDrawer(true);
+      setOpenAttributeDrawer(true);
     }
     if (openAttributeDrawer === true && active === false && selectedButton === 'draw-modify') {
-      setopenAttributeDrawer(false);
+      setOpenAttributeDrawer(false);
     }
   };
 
@@ -349,8 +349,8 @@ export const Draw: React.FC<DrawProps> = ({
         <StylingDrawer />
       </ToggleGroup>
       <AttributionDrawer
-        openAttributeDrawer={openAttributeDrawer}
-        onClose={() => setopenAttributeDrawer(false)}
+        open={openAttributeDrawer}
+        onCustomClose={() => setOpenAttributeDrawer(false)}
       />
     </>
   );
