@@ -6,6 +6,7 @@ import {
 
 import {
   Alert,
+  AlertProps,
   ConfigProvider,
   notification
 } from 'antd';
@@ -703,7 +704,7 @@ const renderApp = async () => {
       await i18n.init(initOpts);
     }
 
-    let type: any = 'warning';
+    let type: AlertProps['type'] = 'warning';
     let errorDescription = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
