@@ -123,8 +123,9 @@ export interface ThemeProperties extends React.CSSProperties {
 // eslint-disable-next-line no-shadow
 enum LoadingErrorCode {
   APP_ID_NOT_SET = 'APP_ID_NOT_SET',
-  APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND'
-};
+  APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND',
+  APP_UNAUTHORIZED = 'APP_UNAUTHORIZED'
+}
 
 const client = new SHOGunAPIClient({
   url: ClientConfiguration.shogunBase || '/'
@@ -155,6 +156,9 @@ const getApplicationConfiguration = async (applicationId: number) => {
 
     return application;
   } catch (error) {
+    if ((error as Error).message.indexOf('401') > -1) {
+      throw new Error(LoadingErrorCode.APP_UNAUTHORIZED);
+    }
     Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
   }
 };
@@ -699,10 +703,16 @@ const renderApp = async () => {
       await i18n.init(initOpts);
     }
 
+    let type: any = 'warning';
     let errorDescription = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
       errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');
+    }
+
+    if ((error as Error)?.message === LoadingErrorCode.APP_UNAUTHORIZED) {
+      errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
+      type = 'error';
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
@@ -719,7 +729,7 @@ const renderApp = async () => {
           className="error-boundary"
           message={i18n.t('Index.errorMessage')}
           description={errorDescription}
-          type="warning"
+          type={type}
           showIcon
         />
       </React.StrictMode>,

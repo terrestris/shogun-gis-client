@@ -147,7 +147,8 @@ export default {
         errorMessage: 'Fehler beim Laden der Applikation',
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
-        errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.'
+        errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Application. Anmeldung erforderlich.'
       },
       Nominatim: {
         placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
@@ -386,9 +387,10 @@ export default {
         applicationLoadErrorDescription: 'The application with ID {{applicationId}} could not be loaded correctly. ' +
           'You\'re seeing the default application configuration.',
         errorMessage: 'Error while loading the application',
-        errorDescription: 'An unexpected error occured while loading the application.',
+        errorDescription: 'An unexpected error occurred while loading the application.',
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
-        errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.'
+        errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
+        permissionDeniedUnauthorized: 'This application is not public. Authentication required.'
       },
       Nominatim: {
         placeholder: 'Place name, street name, district name, POI, etc.'
