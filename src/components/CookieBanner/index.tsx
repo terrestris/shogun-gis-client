@@ -30,21 +30,19 @@ export const CookieBanner = () => {
   };
 
   return (
-    <div className="CookieBanner">
-      <CookieConsent
-        disableStyles={true}
-        key="default-cookie-consent"
-        location="bottom"
-        buttonText={t('CookieBanner.button')}
-        cookieName="SHOGun-Session-Cookie"
-        buttonClasses="cookie-button"
-        containerClasses="cookie-container"
-        contentClasses="cookie-content"
-        expires={150}
-      >
-        {getPlugin() ? getPlugin() : t('CookieBanner.info')}
-      </CookieConsent>
-    </div>
+    <CookieConsent
+      disableStyles={true}
+      key="default-cookie-consent"
+      location="bottom"
+      buttonText={t('CookieBanner.button')}
+      cookieName="SHOGun-Session-Cookie"
+      buttonClasses="cookie-button"
+      containerClasses="cookie-container"
+      contentClasses="cookie-content"
+      expires={150}
+    >
+      {getPlugin() ? getPlugin() : t('CookieBanner.info')}
+    </CookieConsent>
   );
 };
 
