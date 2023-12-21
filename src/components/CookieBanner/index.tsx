@@ -44,7 +44,6 @@ export const CookieBanner = () => {
       >
         {getPlugin() ? getPlugin() : t('CookieBanner.info')}
       </CookieConsent>
-      ;
     </div>
   );
 };
