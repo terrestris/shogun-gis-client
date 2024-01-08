@@ -298,6 +298,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     setErrorMsg(null);
   };
 
+  const handleLayoutChange = () => {
+    form.setFieldValue('dpi', printManager?.getDpis()[0]);
+  };
+
   return (
     <div
       className="print"
@@ -359,6 +363,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
                 <LayoutSelect
                   aria-label='print-layout-input'
                   printManager={printManager}
+                  onValueChange={handleLayoutChange}
                 />
               </Form.Item>
               <Form.Item

@@ -1,5 +1,6 @@
 import React, {
   useEffect,
+  useRef,
   useState
 } from 'react';
 
@@ -20,22 +21,32 @@ import {
 
 export interface LayoutSelectProps extends SelectProps<string> {
   printManager: MapFishPrintV3Manager;
+  onValueChange: Function;
 }
 
 export const LayoutSelect: React.FC<LayoutSelectProps> = ({
   printManager,
+  onValueChange,
   placeholder = 'Bitte wählen Sie eine Vorlage aus',
   value,
   ...restProps
 }): JSX.Element => {
 
   const [layout, setLayout] = useState<any>(value);
+  const prevLayoutRef = useRef<string | null | undefined>(layout);
+
+  useEffect(() => {
+    prevLayoutRef.current = value;
+  }, [value]);
 
   useEffect(() => {
     if (printManager) {
       printManager.setLayout(layout);
+      if (prevLayoutRef.current !== layout) {
+        onValueChange();
+      }
     }
-  }, [printManager, layout]);
+  }, [printManager, layout, onValueChange, value]);
 
   useEffect(() => {
     setLayout(value);
