@@ -133,6 +133,8 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
 
+  const collapsed = useAppSelector(state => state.toolMenu.collapsed);
+
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
   );
@@ -545,6 +547,34 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         searchTerms={searchValue.split(' ')}
         actionsCreator={actionsCreator}
         layerStyle={layerStyle}
+        onClick={(item: any) => {
+          const extent = item.feature.getGeometry().getExtent();
+          let extentShift = 0;
+
+          if (!collapsed) {
+            extentShift =
+              ClientConfiguration?.search?.featureResultZoomOffset ?? 0;
+          }
+
+          const mapSize = map?.getSize();
+
+          let domWidth = 0;
+          if (mapSize && mapSize.length > 1) {
+            domWidth = mapSize[0];
+          }
+          const extentWidth = extent[2] - extent[0];
+          const pixelsPerCoordinate = extentWidth / domWidth;
+          const shiftInCoordinates = pixelsPerCoordinate * extentShift;
+          const adjustedExtent = [
+            extent[0] - shiftInCoordinates,
+            extent[1],
+            extent[2],
+            extent[3]
+          ];
+          map?.getView().fit(adjustedExtent, {
+            size: map.getSize()
+          });
+        }}
       />
     );
   };

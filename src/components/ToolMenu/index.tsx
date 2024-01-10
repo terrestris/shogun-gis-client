@@ -60,7 +60,8 @@ import {
 } from '../../store/addLayerModal';
 import { setFeatureInfoEnabled } from '../../store/featureInfo';
 import {
-  setActiveKeys
+  setActiveKeys,
+  setCollapsed
 } from '../../store/toolMenu';
 import {
   show as showUpload
@@ -103,11 +104,11 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const dispatch = useAppDispatch();
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
+  const collapsed = useAppSelector(state => state.toolMenu.collapsed);
 
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
 
-  const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
 
   useEffect(() => {
@@ -118,9 +119,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     const isMobile = mobileQuery.matches || mobileNavigatorRegEx.test(window.navigator.userAgent);
 
     if (isMobile) {
-      setCollapsed(true);
+      dispatch(setCollapsed(true));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (menuTools.length < 1) {
@@ -342,7 +343,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         activeKey={activeKeys}
         destroyInactivePanel={true}
         onChange={(keys: string[] | string) => {
-          setCollapsed(false);
+          dispatch(setCollapsed(false));
           dispatch(setActiveKeys(_toArray(keys)));
         }}
         {...restProps}
@@ -363,7 +364,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           }
           onClick={() => {
             dispatch(setActiveKeys([]));
-            setCollapsed(!collapsed);
+            dispatch(setCollapsed(!collapsed));
           }}
         />
       </Tooltip>
