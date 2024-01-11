@@ -33,7 +33,7 @@ declare module 'clientConfig' {
     minChars?: number;
     coreName?: string;
     solrQueryConfig?: SolrQueryConfig;
-    featureResultZoomOffset?: number;
+    featureResultViewPadding?: number[];
   };
   type ClientConfiguration = {
     shogunBase?: string;
