@@ -1,3 +1,33 @@
+## [7.3.0](https://github.com/terrestris/shogun-gis-client/compare/v7.2.0...v7.3.0) (2024-01-11)
+
+
+### Dependencies
+
+* adjust import order for CookieBanner and EditFeatureDrawer ([b8d21db](https://github.com/terrestris/shogun-gis-client/commit/b8d21db1e988d2984b8f5986820853dd2efbf3a1))
+* **deps-dev:** bump @semantic-release/github from 9.2.5 to 9.2.6 ([791b3b6](https://github.com/terrestris/shogun-gis-client/commit/791b3b600e6707ed81c6744e81fa3a21d2608363))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([bd01c3e](https://github.com/terrestris/shogun-gis-client/commit/bd01c3ea7c231109c35928b9cb6d74acb891ecb8))
+* **deps:** bump react-i18next from 13.5.0 to 14.0.0 ([31d4b91](https://github.com/terrestris/shogun-gis-client/commit/31d4b91c79b6482837c70696d0163f86838a17ac))
+* removes unnecessary div ([b16c9af](https://github.com/terrestris/shogun-gis-client/commit/b16c9af2a38bdf1508639e69c739d4e9ed4a03dc))
+* removes unnecessary semicolon ([92811fc](https://github.com/terrestris/shogun-gis-client/commit/92811fcdd28e86cb5e3d90186c12173241655f5e))
+* update @terrestris/react-geo to v23.3.0 ([02279ba](https://github.com/terrestris/shogun-gis-client/commit/02279ba1ca40ff7c3776df017e7577f051fe2194))
+* update react-cookie-consent to ^v9.0.0 ([e65963d](https://github.com/terrestris/shogun-gis-client/commit/e65963d73240dc283f63108d7d65a1906dc98f78))
+
+
+### Features
+
+* adds cookie consent banner ([10317c1](https://github.com/terrestris/shogun-gis-client/commit/10317c1b92321d9261a114a8dee26a8dd111289f))
+* adds search result zoom offset ([fd8b088](https://github.com/terrestris/shogun-gis-client/commit/fd8b0882a73f607e84e3b28a38e9865f052ddca7))
+
+
+### Bugfixes
+
+* code style ([7931aa4](https://github.com/terrestris/shogun-gis-client/commit/7931aa4dcffdb440e576b6a4ec4bb868e694d0aa))
+* fixes a typecheck error ([49a05ba](https://github.com/terrestris/shogun-gis-client/commit/49a05badc1bb63cdb70b60030f611a8619ec996e))
+* resets the dpi field when changing the layout ([096cbbc](https://github.com/terrestris/shogun-gis-client/commit/096cbbc0150d4231260fa3007e7f586308ca52cd))
+* styling of cookie banner and consent text ([c1df9e5](https://github.com/terrestris/shogun-gis-client/commit/c1df9e55e4932c3d8d9b80c21e337d4e7985e93a))
+* updates nominatim search to match current component requirements ([ad95590](https://github.com/terrestris/shogun-gis-client/commit/ad955904a76642178adda9071e8a8da7095d20ca))
+* use ol fit padding to shift center view ([cc91a3a](https://github.com/terrestris/shogun-gis-client/commit/cc91a3adffff93534ee34e16263b29463d166afe))
+
 ## [7.2.0](https://github.com/terrestris/shogun-gis-client/compare/v7.1.1...v7.2.0) (2023-12-20)
 
 
