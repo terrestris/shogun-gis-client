@@ -120,7 +120,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     if (isMobile) {
       setCollapsed(true);
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (menuTools.length < 1) {
@@ -334,7 +334,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   return (
     <div
-      id="tool-menu"
       aria-label="tool-menu"
       className={`tool-menu ${collapsed ? 'collapsed' : ''}`}
     >
