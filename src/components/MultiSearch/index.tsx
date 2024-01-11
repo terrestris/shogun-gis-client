@@ -108,6 +108,10 @@ export type SolrQueryConfig = {
   'hl.requireFieldMatch'?: boolean;
 };
 
+export type Item = {
+  feature: OlFeature;
+};
+
 export const MultiSearch: React.FC<MultiSearchProps> = ({
   useNominatim
 }): JSX.Element => {
@@ -132,8 +136,6 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [highlightingResults, setHighlightingResults] = useState<HighlightingResults>({});
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
-
-  const collapsed = useAppSelector(state => state.toolMenu.collapsed);
 
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
@@ -547,20 +549,18 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         searchTerms={searchValue.split(' ')}
         actionsCreator={actionsCreator}
         layerStyle={layerStyle}
-        onClick={(item: any) => {
-          const extent = item.feature.getGeometry().getExtent();
-          let padding = [0, 0, 0, 0];
+        onClick={(item: Item) => {
+          const extent = item?.feature?.getGeometry()?.getExtent();
+          const toolMenuElement = document.getElementById('tool-menu');
+          const toolMenuWidth = toolMenuElement?.clientWidth ?? 0;
+          let padding = [0, 0, 0, toolMenuWidth];
 
-          if (!collapsed) {
-            padding = ClientConfiguration?.search?.featureResultViewPadding ?? [
-              0, 0, 0, 0
-            ];
+          if (extent) {
+            map?.getView().fit(extent, {
+              size: map.getSize(),
+              padding
+            });
           }
-
-          map?.getView().fit(extent, {
-            size: map.getSize(),
-            padding
-          });
         }}
       />
     );

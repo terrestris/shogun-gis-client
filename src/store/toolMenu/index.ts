@@ -6,14 +6,12 @@ import {
 export interface ToolMenuState {
   activeKeys: string[];
   availableTools: string[];
-  collapsed: boolean;
 }
 
 const initialState: ToolMenuState = {
   // This is the default state. If no config is given, then load all tools
   activeKeys: [],
-  availableTools: ['default'],
-  collapsed: false
+  availableTools: ['default']
 };
 
 export const slice = createSlice({
@@ -25,17 +23,13 @@ export const slice = createSlice({
     },
     setAvailableTools(state, action: PayloadAction<string[]>) {
       state.availableTools = [...action.payload];
-    },
-    setCollapsed(state, action: PayloadAction<boolean>) {
-      state.collapsed = action.payload;
     }
   }
 });
 
 export const {
   setActiveKeys,
-  setAvailableTools,
-  setCollapsed
+  setAvailableTools
 } = slice.actions;
 
 export default slice.reducer;
