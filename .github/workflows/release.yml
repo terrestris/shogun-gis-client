@@ -28,7 +28,6 @@ jobs:
         uses: cycjimmy/semantic-release-action@v4
         id: semantic
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           semantic_version: 19
