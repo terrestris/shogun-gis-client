@@ -131,6 +131,10 @@ export const Draw: React.FC<DrawProps> = ({
     const uploadedFiles = e.target.files;
     if (checkValidityOfUploadFile(e)){
       onGeoJSONUpload(uploadedFiles![0]);
+    } else {
+
+      message.error(t('Draw.uploadError'));
+
     }
   };
 
