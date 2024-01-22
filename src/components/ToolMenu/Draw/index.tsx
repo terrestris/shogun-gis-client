@@ -130,7 +130,7 @@ export const Draw: React.FC<DrawProps> = ({
   const onUploadChange = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFiles = e.target.files;
     if (checkValidityOfUploadFile(e)){
-      onGeoJSONUpload(uploadedFiles[0]);
+      onGeoJSONUpload(uploadedFiles![0]);
     }
   };
 
