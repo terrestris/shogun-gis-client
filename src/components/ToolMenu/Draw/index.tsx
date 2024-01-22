@@ -44,7 +44,6 @@ import {
 import './index.less';
 
 import StylingDrawer, { StylingButton } from './StylingDrawerButton';
-import { error } from 'console';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
