@@ -44,6 +44,7 @@ import {
 import './index.less';
 
 import StylingDrawer, { StylingButton } from './StylingDrawerButton';
+import { error } from 'console';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -110,8 +111,9 @@ export const Draw: React.FC<DrawProps> = ({
     }
   };
 
-  const onUploadChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const checkValidityOfUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFiles = e.target.files;
+    let validitiy = false;
     if (
       (uploadedFiles && uploadedFiles.length === 1) &&
       (
@@ -120,11 +122,16 @@ export const Draw: React.FC<DrawProps> = ({
         uploadedFiles[0].name.includes('.geojson') ||
         uploadedFiles[0].name.includes('.json')
       )
-    ) {
+    ){
+      validitiy = true;
+    }
+    return validitiy;
+  };
+
+  const onUploadChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadedFiles = e.target.files;
+    if (checkValidityOfUploadFile(e)){
       onGeoJSONUpload(uploadedFiles[0]);
-      message.success(t('Draw.uploadSuccess'));
-    } else {
-      message.error(t('Draw.uploadError'));
     }
   };
 
@@ -132,16 +139,24 @@ export const Draw: React.FC<DrawProps> = ({
     const fileReader = new FileReader();
 
     fileReader.onload = () => {
-      const geoJSONFeatures = new GeoJSON().readFeatures(fileReader.result);
+      try {
 
-      if (map) {
-        const mapProjection = map.getView().getProjection().getCode();
-        geoJSONFeatures.forEach(feat => {
-          feat.getGeometry()?.transform('EPSG:4326', mapProjection);
-        });
-        const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
-        const digitizeLayerSource = digitizeLayer.getSource();
-        digitizeLayerSource?.addFeatures(geoJSONFeatures);
+        const geoJSONFeatures = new GeoJSON().readFeatures(fileReader.result);
+
+        if (map) {
+          const mapProjection = map.getView().getProjection().getCode();
+          geoJSONFeatures.forEach(feat => {
+            feat.getGeometry()?.transform('EPSG:4326', mapProjection);
+          });
+          const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
+          const digitizeLayerSource = digitizeLayer.getSource();
+          digitizeLayerSource?.addFeatures(geoJSONFeatures);
+        }
+        message.success(t('Draw.uploadSuccess'));
+      } catch (err) {
+
+        message.error(t('Draw.uploadError'));
+
       }
     };
 
