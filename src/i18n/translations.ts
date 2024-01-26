@@ -223,11 +223,11 @@ export default {
         submit: 'Speichern'
       },
       AttributionRow: {
-        missingKey: 'Fehlender Schlüssel',
+        missingKey: 'Fehlender Name',
         missingValue: 'Fehlender Wert',
-        keyPlaceholder: 'Schlüssel',
+        keyPlaceholder: 'Name',
         valuePlaceholder: 'Wert',
-        keyInUse: 'Dieser Schlüssel exisitiert bereits!'
+        keyInUse: 'Dieser Name existiert bereits!'
       },
       ResetButton: {
         title: 'Zurücksetzen'

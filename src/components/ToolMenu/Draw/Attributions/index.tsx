@@ -65,7 +65,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   }, [selectedFeature, form]);
 
   const selectInteraction = map?.getInteractions().getArray().filter(interaction => {
-    if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
+    if (interaction.get('active') === true && interaction.get('name') === 'edit-selection') {
       return true;
     } else {
       return false;
