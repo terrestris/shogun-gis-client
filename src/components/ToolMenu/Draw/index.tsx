@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  useEffect,
   useState
 } from 'react';
 
@@ -156,16 +157,6 @@ export const Draw: React.FC<DrawProps> = ({
   }
 
   const onToggleChange = (childProps: any) => {
-
-    const myInteraction = map?.getInteractions().getArray().filter(interaction => {
-      if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
-        return interaction;
-      }
-    })[0];
-
-    if (myInteraction) {
-      myInteraction.set('name', 'edit-selection');
-    }
 
     if (childProps) {
       setSelectedButton(childProps.name);
