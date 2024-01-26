@@ -481,9 +481,9 @@ export default {
       },
       Attribution: {
         title: 'Properties',
-        add: 'Add Properties',
+        add: 'Add Property',
         select: 'Please select a geometry first.',
-        submit: 'Submit'
+        submit: 'Apply'
       },
       AttributionRow: {
         missingKey: 'Missing Key',
