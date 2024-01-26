@@ -1,7 +1,9 @@
 import React from 'react';
 
 import {
-  Typography
+  Checkbox,
+  Typography,
+  UploadFile
 } from 'antd';
 
 import {
@@ -12,15 +14,29 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import JsonModal from '../JsonModal';
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
+import {
+  PropertyFormItemReadConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
 
-export type ValueType = string | number | boolean | moment.Moment;
+import { isFileConfig } from '../EditFeatureDrawer/EditFeatureForm';
+import FileUpload from '../FileUpload';
+import ImageUpload from '../ImageUpload';
+import ReferenceTable from '../ReferenceTable';
+
+export type ValueType = string | number | boolean | moment.Moment | Record<string, any>;
+
+export type ReferenceConfig = {
+  tablePropertyName?: string;
+  featureInfoFormConfig?: PropertyFormItemReadConfig[];
+};
 
 export type DisplayFieldProps = {
   format?: string;
   suffix?: string;
   value?: ValueType | ValueType[];
   label?: string;
+  referenceConfig?: ReferenceConfig;
 };
 
 export const DisplayField: React.FC<DisplayFieldProps> = ({
@@ -28,11 +44,12 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   suffix,
   value,
   label,
+  referenceConfig,
   ...passThroughProps
 }): JSX.Element => {
 
   const {
-    t
+    i18n
   } = useTranslation();
 
   let displayText: string = '';
@@ -41,12 +58,19 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     displayText = value;
   }
 
-  if (typeof value === 'boolean') {
-    displayText = value ? t('DisplayField.yesText') : t('DisplayField.noText');
+  if (typeof value === 'boolean' || value === 'false' || value === 'true') {
+    return (
+      <Checkbox
+        checked={value === true || value === 'true'}
+        disabled
+      />
+    );
   }
 
   if (Number.isFinite(value)) {
-    displayText = new Intl.NumberFormat().format(Number(value));
+    displayText = new Intl.NumberFormat(i18n.language, {
+      useGrouping: false
+    }).format(Number(value));
   }
 
   if (isMoment(value)) {
@@ -57,7 +81,47 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     displayText = value.join(', ');
   }
 
-  const isJson = (val: ValueType | ValueType[]): val is string => {
+  const getUpload = (val: ValueType | ValueType[]): UploadFile<ShogunFile>[] | null => {
+    if (!value) {
+      return null;
+    }
+    let v = typeof val !== 'string' ? JSON.stringify(val) : val;
+
+    try {
+      v = JSON.parse(v);
+    } catch (e) {
+      return null;
+    }
+
+    if (typeof v === 'object' && v !== null && isFileConfig(v[0])) {
+      return v as UploadFile<ShogunFile>[];
+    }
+    return null;
+  };
+
+  const uploadValue = value && getUpload(value);
+
+  if (uploadValue) {
+    if (uploadValue[0].response?.fileType?.startsWith('image/')) {
+      return (
+        <ImageUpload
+          initialFileList={uploadValue}
+          disabled
+          readOnly
+        />
+      );
+    } else {
+      return (
+        <FileUpload
+          defaultFileList={uploadValue}
+          disabled
+          readOnly
+        />
+      );
+    }
+  }
+
+  const isJson = (val: ValueType | ValueType[]): boolean => {
     let v = typeof val !== 'string' ? JSON.stringify(val) : val;
 
     try {
@@ -71,9 +135,9 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   if (value && isJson(value)) {
     return (
-      <JsonModal
-        value={value}
-        label={label}
+      <ReferenceTable
+        value={typeof value === 'string' ? value : JSON.stringify(value)}
+        referenceConfig={referenceConfig}
       />
     );
   }

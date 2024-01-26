@@ -58,6 +58,7 @@ import {
 import {
   show as showAdd
 } from '../../store/addLayerModal';
+import { setFeatureInfoEnabled } from '../../store/featureInfo';
 import {
   setActiveKeys
 } from '../../store/toolMenu';
@@ -72,8 +73,8 @@ import PrintForm from '../PrintForm';
 import Draw from './Draw';
 import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
-import Measure from './Measure';
 
+import Measure from './Measure';
 import './index.less';
 
 export interface TitleEventEntity {
@@ -140,18 +141,31 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   }, [menuTools, availableTools]);
 
   useEffect(() => {
-    if (
-      activeKeys.includes('print') &&
-      activeKeys.includes('measure_tools')
-    ) {
-      if (activeKeys.indexOf('print') < activeKeys.indexOf('measure_tools')) {
-        dispatch(setActiveKeys(activeKeys.filter(keys => keys !== 'print')));
-      } else {
+    const exclusiveTools = [
+      'print',
+      'measure_tools',
+      'draw_tools',
+      'feature_info'
+    ];
+
+    const activeExclusiveTools = exclusiveTools.filter(tool =>
+      activeKeys.includes(tool)
+    );
+
+    if (activeExclusiveTools.length > 1) {
+      const lastExclusiveTool = activeKeys
+        .slice(0, activeKeys.length - 1)
+        .reverse()
+        .find(tool => exclusiveTools.includes(tool));
+
+      if (lastExclusiveTool) {
         dispatch(
-          setActiveKeys(activeKeys.filter(keys => keys !== 'measure_tools'))
+          setActiveKeys(activeKeys.filter(keys => keys !== lastExclusiveTool))
         );
       }
     }
+
+    dispatch(setFeatureInfoEnabled(activeKeys.includes('feature_info')));
   }, [activeKeys, dispatch]);
 
   const getToolPanels = (): JSX.Element[] => {
@@ -257,6 +271,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
                 availableTools.includes('default') || availableTools.includes('draw_tools_download')
               }
               showDeleteFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_delete')}
+              showStyleFeatures={availableTools.includes('default') || availableTools.includes('draw_tools_style')}
             />
           )
         };
@@ -265,9 +280,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           icon: faMousePointer,
           title: t('ToolMenu.featureInfo'),
           wrappedComponent: (
-            <FeatureInfo
-              enabled={activeKeys.includes('feature_info')}
-            />
+            <FeatureInfo />
           )
         };
       case 'print':

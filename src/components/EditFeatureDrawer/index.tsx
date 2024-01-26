@@ -34,7 +34,8 @@ import useExecuteWfsTransaction from '../../hooks/useExecuteWfsTransaction';
 import useWriteWfsTransaction from '../../hooks/useWriteWfsTransaction';
 
 import {
-  reset
+  reset,
+  setFormDirty
 } from '../../store/editFeature';
 import {
   hide as hideEditFeatureDrawer
@@ -65,6 +66,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const isDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
   const layerId = useAppSelector(state => state.editFeature.layerId);
   const feature = useAppSelector(state => state.editFeature.feature);
+  const formDirty = useAppSelector(state => state.editFeature.formDirty);
 
   const map = useMap();
   const dispatch = useAppDispatch();
@@ -119,12 +121,13 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
     await releaseLock();
 
     dispatch(hideEditFeatureDrawer());
+    dispatch(setFormDirty(false));
     dispatch(reset());
     setIsFeatureLocked(false);
   };
 
   const onDrawerClose = () => {
-    if (layer && feature) {
+    if (layer && feature && formDirty) {
       Modal.confirm({
         maskClosable: false,
         title: t('EditFeatureDrawer.closeDrawerWarnTitle'),

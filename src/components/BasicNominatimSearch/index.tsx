@@ -41,7 +41,6 @@ export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = ({
 
   return (
     <NominatimSearch
-      map={map}
       countryCodes={''}
       allowClear={true}
       nominatimBaseUrl={'https://nominatim.terrestris.de/search.php?'}

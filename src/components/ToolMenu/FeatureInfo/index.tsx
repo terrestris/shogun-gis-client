@@ -1,18 +1,12 @@
 import React, {
-  useCallback,
-  useEffect,
-  useState
+  useCallback, useEffect, useState
 } from 'react';
 
 import {
-  Tabs,
-  FormProps,
-  Spin
+  FormProps, Spin, Tabs
 } from 'antd';
 
-import {
-  getUid
-} from 'ol';
+import { getUid } from 'ol';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
@@ -20,58 +14,57 @@ import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import {
-  Tab
-} from 'rc-tabs/lib/interface';
+import { Tab } from 'rc-tabs/lib/interface';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import CoordinateInfo, {
-  CoordinateInfoState,
-  CoordinateInfoProps
+  CoordinateInfoProps,
+  CoordinateInfoState
 } from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
+import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
-  useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-import {
-  isWmsLayer,
-  WmsLayer
+  isWmsLayer, WmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
 import usePlugins from '../../../hooks/usePlugins';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
-import {
-  isFeatureInfoIntegration
-} from '../../../plugin';
+import { isFeatureInfoIntegration } from '../../../plugin';
 
+import { CopyTools } from '../../../store/featureInfo';
 import {
-  SelectedFeatures,
-  setSelectedFeatures
+  SelectedFeatures, setSelectedFeatures
 } from '../../../store/selectedFeatures';
 
 import FeatureInfoTabs from './FeatureInfoTabs';
+
 import FeatureInfoPropertyGrid from './FeaturePropertyGrid';
 
 import './index.less';
 
-export type FeatureInfoProps = FormProps & {
+export type FeatureInfoConfig = {
   enabled?: boolean;
-} & Partial<CoordinateInfoProps>;
+  activeCopyTools?: CopyTools[];
+};
+
+export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
+
+type LayerIndex = {
+  layerName: string;
+  index: number;
+};
 
 export const FeatureInfo: React.FC<FeatureInfoProps> = ({
-  enabled,
   ...restProps
 }): JSX.Element => {
+
   const {
     t
   } = useTranslation();
@@ -82,6 +75,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const dispatch = useAppDispatch();
 
   const [queryLayers, setQueryLayers] = useState<WmsLayer[]>([]);
+  const [activeTabKey, setActiveTabKey] = useState<string | undefined>(undefined);
+  const featureInfoEnabled = useAppSelector(state => state.featureInfo.enabled);
 
   const layerFilter = (layer: OlLayerBase) => {
     if (!layer.get('hoverable')) {
@@ -122,6 +117,25 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return <></>;
   }
 
+  const changeActiveKey = (key: string) => {
+    setActiveTabKey(key);
+  };
+
+  const findMapLayerIndex = (layerName: string) => {
+    const allLayers = map.getAllLayers();
+
+    return allLayers.findIndex(l => {
+      if (isWmsLayer(l)) {
+        const source = (l as WmsLayer).getSource();
+        const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
+        const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
+
+        return unqualifiedLayerName === unqualifiedMapLayerName;
+      }
+      return false;
+    });
+  };
+
   const resultRenderer = (coordinateInfoState: CoordinateInfoState) => {
     const features = coordinateInfoState.features;
     const loading = coordinateInfoState.loading;
@@ -134,21 +148,15 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    const items: Tab[] = [];
+    const items: Array<Tab & { index: number }> = [];
 
     Object.keys(features).forEach(layerName => {
       let pluginRendererAvailable = false;
 
-      const mapLayer = map.getAllLayers().find(l => {
-        if (isWmsLayer(l)) {
-          const source = (l as WmsLayer).getSource();
-          const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
-          const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
+      const allLayers = map.getAllLayers();
 
-          return unqualifiedLayerName === unqualifiedMapLayerName;
-        }
-        return false;
-      });
+      const mapLayerIndex = findMapLayerIndex(layerName);
+      const mapLayer = allLayers[mapLayerIndex];
 
       plugins.forEach(plugin => {
         if (isFeatureInfoIntegration(plugin.integration) &&
@@ -161,6 +169,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
           items.push({
             label: layerName,
+            index: mapLayerIndex,
             key: layerName,
             children: (
               <WrappedPluginComponent
@@ -176,6 +185,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       if (!pluginRendererAvailable) {
         items.push({
           label: mapLayer?.get('name') || layerName,
+          index: mapLayerIndex,
           key: layerName,
           children: (
             <div
@@ -187,6 +197,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                     tabConfig={mapLayer?.get('featureInfoFormConfig')}
                     features={features[layerName]}
                     layerName={layerName}
+                    layer={mapLayer}
                   /> :
                   <FeatureInfoPropertyGrid
                     features={features[layerName]}
@@ -199,6 +210,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       }
     });
 
+    items.sort((a, b) => b.index - a.index);
+
     return (
       <Spin
         spinning={loading}
@@ -206,6 +219,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         <Tabs
           destroyInactiveTabPane={true}
           items={items}
+          activeKey={activeTabKey}
+          defaultActiveKey={items[0].key}
+          onTabClick={changeActiveKey}
         />
       </Spin>
     );
@@ -217,27 +233,18 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       layerName.split(':')[0];
   };
 
-  if (!enabled) {
+  if (!featureInfoEnabled) {
     return <></>;
   }
 
-  const getFetchOpts = () => {
-    const opts: {
-      [uid: string]: RequestInit;
-    } = {};
-
-    queryLayers.forEach(layer => {
-      const layerUid = getUid(layer);
-      opts[layerUid] = {
-        headers: {
-          ...layer.get('useBearerToken') ? {
-            ...getBearerTokenHeader(client?.getKeycloak())
-          } : undefined
-        }
-      };
-    });
-
-    return opts;
+  const getFetchOpts = (layer: WmsLayer) => {
+    return {
+      headers: {
+        ...layer.get('useBearerToken') ? {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        } : undefined
+      }
+    };
   };
 
   const onSuccess = (coordinateInfoState: CoordinateInfoState) => {
@@ -251,6 +258,15 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
     });
 
+    const layers: LayerIndex[] = Object.keys(features).map(layerName => ({
+      layerName: layerName,
+      index: findMapLayerIndex(layerName)
+    })).sort((a, b) => b.index - a.index);
+
+    if (layers.length > 0) {
+      setActiveTabKey(layers[0].layerName);
+    }
+
     dispatch(setSelectedFeatures(serializedFeatures));
   };
 
@@ -261,7 +277,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         map={map}
         queryLayers={queryLayers}
         resultRenderer={resultRenderer}
-        fetchOpts={getFetchOpts()}
+        fetchOpts={getFetchOpts}
         onSuccess={onSuccess}
         {...restProps}
       />

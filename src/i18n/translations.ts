@@ -15,14 +15,25 @@ export default {
         columnTitle: 'Name',
         errorMessage: 'Fehler',
         errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte prüfen Sie die URL',
-        version: 'Version'
+        invalidUrlErrorMsg: 'Ungültige URL. Bitte geben Sie eine gültige URL wie z.B. ' +
+          'https://ows.terrestris.de/osm/service ein.',
+        version: 'Version',
+        requestWmsGetCapabilitiesInstruction: 'Bitte geben Sie eine gültige WMS GetCapabilities Adresse ein ' +
+          'und bestätigen Sie die Eingabe mit \'Enter ↲\' oder über den Button rechts vom Eingabefeld.'
+
       },
       BasicMapComponent: {
         processedLayersFolder: 'Prozessierte Layer'
       },
+      CookieBanner: {
+        info:
+          'Wir verwenden technisch notwendige Erstanbieter-Cookies, um Ihnen die bestmögliche Nutzung unserer ' +
+          'Website zu ermöglichen. Wenn Sie diese Website weiterhin nutzen, gehen wir davon aus, ' +
+          'dass Sie damit zufrieden sind.',
+        button: 'Akzeptieren'
+      },
       Permalink: {
         title: 'Teilen',
-        twitterTooltip: 'Link via Twitter teilen',
         whatsAppTooltip: 'Link via WhatsApp teilen',
         mailTooltip: 'Link via Mail teilen',
         copyTooltip: 'Link in die Zwischenablage kopieren',
@@ -45,6 +56,8 @@ export default {
         text: 'Anmerkung',
         modify: 'Bearbeitung',
         upload: 'Hochladen',
+        uploadSuccess: 'Die Datei wurde erfolgreich importiert',
+        uploadError: 'Der Import ist fehlgeschlagen. Bitte beachten Sie, dass nur .geojson-Dateien unterstützt werden.',
         delete: 'Löschen',
         export: 'Exportieren'
       },
@@ -53,7 +66,8 @@ export default {
         title: 'Farbschema bearbeiten'
       },
       FeatureInfo: {
-        usageHint: 'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
+        usageHint:
+          'Klicken Sie in die Karte, um Detailinformationen zu erhalten.'
       },
       FileUpload: {
         upload: 'Dateien hochladen'
@@ -121,7 +135,8 @@ export default {
         scale: 'Maßstab',
         downloadBtnText: 'Ausdruck erzeugen',
         printJobErrorMsg: 'Der Kartenausdruck konnte nicht erzeugt werden',
-        initErrorMsg: 'Der Kartendruck Generator konnte nicht initialisiert werden.',
+        initErrorMsg:
+          'Der Kartendruck Generator konnte nicht initialisiert werden.',
         outputFormatPlaceholder: 'Bitte wählen Sie ein Ausgabeformat aus',
         resolutionPlaceholder: 'Bitte wählen Sie eine Ausgabequalität aus',
         managerErrorMessage: 'Fehler bei der Initialisierung der Export-Engine'
@@ -136,12 +151,14 @@ export default {
       },
       Index: {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
-        applicationLoadErrorDescription: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
+        applicationLoadErrorDescription:
+          'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
           'Die Standardkonfiguration wird stattdessen geladen.',
         errorMessage: 'Fehler beim Laden der Applikation',
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
-        errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.'
+        errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.'
       },
       Nominatim: {
         placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
@@ -224,10 +241,21 @@ export default {
       },
       PaginationToolbar: {
         copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
-        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)'
+        copyAsObject: 'Als Objekt kopieren (nur angezeigte Werte)',
+        editDisabled: 'Layer ist nicht editierbar',
+        editFeature: 'Feature editieren'
       },
       JsonModal: {
         buttonTitle: 'Öffne {{propertyName}}'
+      },
+      ReferenceTable: {
+        modalTitle: 'Details zu {{referenceValue}}',
+        defaultModalTitle: 'Details',
+        defaultRowPlaceholder: 'Klicken Sie auf den Button, um die Details anzuzeigen'
+      },
+      EditReferenceTable: {
+        modalTitle: 'Details zu {{referenceValue}}',
+        confirmDeleteTitle: 'Das referenzierte Objekt wird vollständig gelöscht. Fortfahren?'
       }
     }
   },
@@ -247,14 +275,22 @@ export default {
         columnTitle: 'Name',
         errorMessage: 'Error',
         errorDescription: 'Could not load the provided Capabilities document, please check the validity of the URL',
-        version: 'Version'
+        invalidUrlErrorMsg: 'Invalid URL specified. Please provide an URL like https://ows.terrestris.de/osm/service',
+        version: 'Version',
+        requestWmsGetCapabilitiesInstruction: 'Please provide a valid GetCapabilities URL and submit ' +
+          'your input by pressing the \'Enter ↲\' key or by clicking on the button right of the field.'
       },
       BasicMapComponent: {
         processedLayersFolder: 'Processed layers'
       },
+      CookieBanner: {
+        info:
+          'We use technically necessary first-party cookies to ensure that we give you the best experience ' +
+          'on our website. If you continue to use this site we will assume that you are happy with it.',
+        button: 'Accept'
+      },
       Permalink: {
         title: 'Share',
-        twitterTooltip: 'Share link via Twitter',
         whatsAppTooltip: 'Share link via WhatsApp',
         mailTooltip: 'Share link via Mail',
         copyTooltip: 'Copy link to Clipboard',
@@ -277,6 +313,8 @@ export default {
         text: 'Annotation',
         modify: 'Edit',
         upload: 'Upload',
+        uploadSuccess: 'The file was uploaded successfully',
+        uploadError: 'The import failed, please note that only .geojson files are supported',
         delete: 'Delete',
         export: 'Export'
       },
@@ -285,7 +323,8 @@ export default {
         title: 'Modify color scheme'
       },
       FeatureInfo: {
-        usageHint: 'Click on the map to get details about the clicked coordinate.'
+        usageHint:
+          'Click on the map to get details about the clicked coordinate.'
       },
       FileUpload: {
         upload: 'Upload files'
@@ -368,12 +407,14 @@ export default {
       },
       Index: {
         applicationLoadErrorMessage: 'Error while loading the application',
-        applicationLoadErrorDescription: 'The application with ID {{applicationId}} could not be loaded correctly. ' +
+        applicationLoadErrorDescription:
+          'The application with ID {{applicationId}} could not be loaded correctly. ' +
           'You\'re seeing the default application configuration.',
         errorMessage: 'Error while loading the application',
-        errorDescription: 'An unexpected error occured while loading the application.',
+        errorDescription: 'An unexpected error occurred while loading the application.',
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
-        errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.'
+        errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
+        permissionDeniedUnauthorized: 'This application is not public. Authentication required.'
       },
       Nominatim: {
         placeholder: 'Place name, street name, district name, POI, etc.'
@@ -452,7 +493,7 @@ export default {
       },
       DeleteButton: {
         title: 'Delete feature',
-        confirm: 'The feature will be completely deleted. Proceed?'
+        confirm: 'The feature will be deleted completely. Proceed?'
       },
       EditFeatureButton: {
         title: 'Edit feature'
@@ -463,10 +504,21 @@ export default {
       },
       PaginationToolbar: {
         copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
-        copyAsObject: 'Copy as object (displayed values only)'
+        copyAsObject: 'Copy as object (displayed values only)',
+        editDisabled: 'This layer is not editable',
+        editFeature: 'Edit feature'
       },
       JsonModal: {
         buttonTitle: 'Show {{propertyName}}'
+      },
+      ReferenceTable: {
+        modalTitle: 'Details for {{referenceValue}}',
+        defaultModalTitle: 'Details',
+        defaultRowPlaceholder: 'Click the button to show the details'
+      },
+      EditReferenceTable: {
+        modalTitle: 'Details for {{referenceValue}}',
+        confirmDeleteTitle: 'The referenced feature will be deleted completely. Proceed?'
       }
     }
   }

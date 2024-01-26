@@ -20,6 +20,7 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
+import { message } from 'antd';
 import {
   Feature
 } from 'ol';
@@ -45,7 +46,8 @@ import {
 import './index.less';
 
 import AttributionDrawer from './Attributions';
-import StylingDrawer from './StylingDrawer';
+import StylingDrawer, { StylingButton } from './StylingDrawerButton';
+
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -58,6 +60,7 @@ interface DefaultDrawProps {
   showUploadFeatures?: boolean;
   showDownloadFeatures?: boolean;
   showDeleteFeatures?: boolean;
+  showStyleFeatures?: boolean;
 }
 
 export interface DrawProps extends Partial<DefaultDrawProps> { }
@@ -72,7 +75,8 @@ export const Draw: React.FC<DrawProps> = ({
   showModifyFeatures,
   showUploadFeatures,
   showDownloadFeatures,
-  showDeleteFeatures
+  showDeleteFeatures,
+  showStyleFeatures
 }): JSX.Element => {
   const [openAttributeDrawer, setOpenAttributeDrawer] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string>();
@@ -125,6 +129,9 @@ export const Draw: React.FC<DrawProps> = ({
       )
     ) {
       onGeoJSONUpload(uploadedFiles[0]);
+      message.success(t('Draw.uploadSuccess'));
+    } else {
+      message.error(t('Draw.uploadError'));
     }
   };
 

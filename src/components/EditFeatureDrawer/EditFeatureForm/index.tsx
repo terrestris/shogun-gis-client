@@ -16,22 +16,20 @@ import {
   FormProps
 } from 'antd/lib/form/Form';
 import {
-  UploadChangeParam, UploadFile
+  UploadChangeParam,
+  UploadFile
 } from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
 import _isNil from 'lodash/isNil';
 import _isObject from 'lodash/isObject';
 
-import {
-  useTranslation
-} from 'react-i18next';
-
 import Logger from '@terrestris/base-util/dist/Logger';
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 
 import {
-  PropertyFormItemEditConfig
+  PropertyFormItemEditConfig,
+  PropertyFormItemEditReferenceTableConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -43,12 +41,14 @@ import {
 import DisplayField from '../../DisplayField';
 import FileUpload from '../../FileUpload';
 import ImageUpload from '../../ImageUpload';
+import EditReferenceTable from '../EditReferenceTable';
 
 import './index.less';
 
 export type EditFeatureFormProps = FormProps & {
-  formConfig?: PropertyFormItemEditConfig[];
   form: FormInstance;
+  formConfig?: PropertyFormItemEditConfig[];
+  applyFormDirty?: boolean;
 };
 
 export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
@@ -68,16 +68,14 @@ export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
 };
 
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
-  formConfig,
   form,
+  formConfig,
+  applyFormDirty = true,
   ...passThroughProps
 }): JSX.Element => {
 
   const client = useSHOGunAPIClient();
   const dispatch = useAppDispatch();
-  const {
-    t
-  } = useTranslation();
 
   const formDirty = useAppSelector(
     state => state.editFeature.formDirty
@@ -130,7 +128,6 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
         name={fieldCfg.propertyName}
         label={fieldCfg.displayName || fieldCfg.propertyName}
         {...formItemProps}
-        {...fieldCfg.fieldProps}
       >
         {field}
       </Form.Item>
@@ -212,6 +209,19 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             />
           );
         }
+      case 'REFERENCE_TABLE':
+        const referenceTableConfig = (fieldCfg as PropertyFormItemEditReferenceTableConfig);
+
+        return (
+          <EditReferenceTable
+            key={referenceTableConfig.propertyName}
+            tablePropertyName={referenceTableConfig.tablePropertyName}
+            propertyName={referenceTableConfig.propertyName}
+            formConfig={referenceTableConfig.editFormConfig}
+            parentForm={form}
+            {...referenceTableConfig.fieldProps}
+          />
+        );
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;
@@ -219,7 +229,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   };
 
   const onValuesChange = async (changedValues: any) => {
-    if (changedValues && !formDirty) {
+    if (applyFormDirty && changedValues && !formDirty) {
       dispatch(setFormDirty(true));
     }
   };

@@ -5,7 +5,6 @@ import React, {
 import {
   CopyOutlined,
   MailOutlined,
-  TwitterOutlined,
   WhatsAppOutlined
 } from '@ant-design/icons';
 import {
@@ -161,9 +160,6 @@ export const Permalink: React.FC<PermalinkProps> = () => {
   return (
     <div className="permalink-wrapper">
       <div className="icons">
-        <Tooltip title={t('Permalink.twitterTooltip')}>
-          <TwitterOutlined onClick={onTwitterClick} />
-        </Tooltip>
         <Tooltip title={t('Permalink.whatsAppTooltip')}>
           <WhatsAppOutlined onClick={onWhatsAppClick} />
         </Tooltip>

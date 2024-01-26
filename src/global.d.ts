@@ -17,6 +17,23 @@ declare module 'clientConfig' {
     authorizedRolesForDelete?: (string | RegExp)[];
     authorizedRolesForEditingGeometries?: (string | RegExp)[];
   };
+  export type SolrConfig = {
+    queryParser?: 'lucene' | 'dismax' | 'edismax';
+    rowsPerQuery?: number;
+    tagPre?: string;
+    tagPost?: string;
+    requireFieldMatch?: boolean;
+  };
+  type SearchConfiguration = {
+    solrBasePath?: string;
+    useNominatim?: boolean;
+    useSolrHighlighting?: boolean;
+    defaultUseViewBox?: boolean;
+    delay?: number;
+    minChars?: number;
+    coreName?: string;
+    solrQueryConfig?: SolrQueryConfig;
+  };
   type ClientConfiguration = {
     shogunBase?: string;
     keycloak?: {
@@ -38,6 +55,7 @@ declare module 'clientConfig' {
         authorizedRoles?: string[];
       };
     };
+    search?: SearchConfiguration;
     featureEditRoles?: FeatureEditConfiguration;
     wfsLockFeatureEnabled?: boolean;
     enableFallbackConfig?: boolean;

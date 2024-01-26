@@ -46,8 +46,14 @@ import {
   DigitizeUtil
 } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 
-import './index.less';
+import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+
+import {
+  setFormDirty
+} from '../../../store/editFeature';
+
+import './index.less';
 
 export type EditFeatureGeometryToolbarProps = ToolbarProps & {
   feature: Feature;
@@ -71,15 +77,15 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   });
 
   const map = useMap();
+  const dispatch = useAppDispatch();
 
   const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector<OlGeometry>>>();
   const [, setRevision] = useState<number>(0);
 
   const gjFormat = useMemo(() => new OlFormatGeoJson(), []);
 
-  const allowedEditMode = useAppSelector(
-    state => state.editFeature.userEditMode
-  );
+  const allowedEditMode = useAppSelector(state => state.editFeature.userEditMode);
+  const formDirty = useAppSelector(state => state.editFeature.formDirty);
 
   useEffect(() => {
     if (!map) {
@@ -96,6 +102,15 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
       }
     };
   }, [editLayer, map]);
+
+  useEffect(() => {
+    const isModified = editHistory.current.past.length > 0;
+    if (isModified && !formDirty) {
+      dispatch(setFormDirty(true));
+    }
+  // we only want to change formDirty state when the editHistory changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, editHistory.current.past]);
 
   useEffect(() => {
     if (editLayer && feature?.id) {

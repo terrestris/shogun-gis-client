@@ -106,6 +106,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     try {
       await form.validateFields();
     } catch (error) {
+      onError(error);
       Logger.warn('Validation has failed: ', error);
       return;
     }
@@ -135,6 +136,8 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
         setSaveCompleted(false);
       }, 3000);
 
+      dispatch(setFormDirty(false));
+
       onSuccess(result);
     } catch (error) {
       Logger.error(error);
@@ -142,7 +145,6 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
       onError(error);
     } finally {
       setLoading(false);
-      dispatch(setFormDirty(false));
     }
   };
 

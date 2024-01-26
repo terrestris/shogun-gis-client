@@ -8,7 +8,9 @@ import {
   TabsProps
 } from 'antd';
 
+import _isNil from 'lodash/isNil';
 import OlFeature from 'ol/Feature';
+import OlLayer from 'ol/layer/Layer';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -36,16 +38,19 @@ export type FeatureInfoTabsProps = TabsProps & {
   features: OlFeature[];
   layerName: string;
   tabConfig?: PropertyFormTabConfig<PropertyFormItemReadConfig>[];
+  layer: OlLayer;
 };
 
 export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   features,
   layerName,
+  layer,
   tabConfig,
   ...passThroughProps
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
+  const [activeKey, setActiveKey] = useState<string>('0');
 
   const map = useMap();
 
@@ -70,6 +75,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
     setCurrentPage(1);
 
     if (features.length > 0) {
+      setActiveKey('0');
       setSelectedFeature(features[0]);
     }
   }, [features, map, vectorLayerName]);
@@ -122,7 +128,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   };
 
   const items = tabConfig
-    .filter(config => config !== undefined)
+    .filter(config => !_isNil(config))
     .map((config, idx) => {
       return {
         label: config.title,
@@ -138,19 +144,27 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       } as Tab;
     });
 
+  const changeKey = (key: string) => {
+    setActiveKey(key);
+  };
+
   return (
     <div
       className="feature-info-tabs"
     >
       <PaginationToolbar
-        features={features}
-        selectedFeature={selectedFeature}
         current={currentPage}
-        onChange={onChange}
         exportFilter={exportFilter}
+        features={features}
+        layer={layer}
+        onChange={onChange}
+        selectedFeature={selectedFeature}
       />
       <Tabs
         items={items}
+        activeKey={activeKey}
+        defaultActiveKey='0'
+        onTabClick={changeKey}
         {...passThroughProps}
       />
     </div>

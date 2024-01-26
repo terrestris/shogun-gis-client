@@ -6,7 +6,8 @@ import {
 } from 'antd';
 
 import {
-  UploadFile
+  UploadFile,
+  UploadProps
 } from 'antd/lib/upload/interface';
 
 import _debounce from 'lodash/debounce';
@@ -31,10 +32,12 @@ import {
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 export type FileUploadProps = {
-  fieldConfig: PropertyFormItemEditConfig;
-};
+  fieldConfig?: PropertyFormItemEditConfig;
+  readOnly?: boolean;
+} & Partial<UploadProps>;
 
 export const FileUpload: React.FC<FileUploadProps> = ({
+  readOnly = false,
   fieldConfig,
   ...passThroughProps
 }): JSX.Element => {
@@ -110,7 +113,11 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       {...fieldConfig?.fieldProps}
       {...passThroughProps}
     >
-      <Button>{t('FileUpload.upload')}</Button>
+      {
+        !readOnly && (
+          <Button>{t('FileUpload.upload')}</Button>
+        )
+      }
     </Upload>
   );
 };

@@ -1,10 +1,6 @@
-import type {
-  IconDefinition
-} from '@fortawesome/fontawesome-common-types';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
-import type {
-  Reducer
-} from '@reduxjs/toolkit';
+import type { Reducer } from '@reduxjs/toolkit';
 
 import { CollapsePanelProps } from 'antd';
 import type OlMap from 'ol/Map';
@@ -33,20 +29,20 @@ export type ClientPluginIntegration = {
 
 export type ClientPluginIntegrationToolMenu = ClientPluginIntegration &
   Omit<CollapsePanelProps, 'key' | 'header'> & {
-  placement: 'tool-menu';
-  /**
-   * The label for the plugin in the tool menu.
-   */
-  label?: string;
-  /**
-   * The insertion index for the plugin in the tool menu, starting from 0 which is on top.
-   */
-  insertionIndex?: number;
-  /**
-   * The icon for the plugin in the tool menu.
-   */
-  icon?: IconDefinition;
-};
+    placement: 'tool-menu';
+    /**
+     * The label for the plugin in the tool menu.
+     */
+    label?: string;
+    /**
+     * The insertion index for the plugin in the tool menu, starting from 0 which is on top.
+     */
+    insertionIndex?: number;
+    /**
+     * The icon for the plugin in the tool menu.
+     */
+    icon?: IconDefinition;
+  };
 
 export type HeaderPlacementOrientation = 'left' | 'center' | 'right';
 
@@ -89,8 +85,17 @@ export type ClientPluginIntegrationFooter = ClientPluginIntegration & {
   insertionIndex?: number;
 };
 
-export type ClientPluginIntegrations = ClientPluginIntegrationToolMenu | ClientPluginIntegrationHeader |
-  ClientPluginIntegrationFeatureInfo | ClientPluginIntegrationMap | ClientPluginIntegrationFooter;
+export type ClientPluginIntegrationCookieConsent = ClientPluginIntegration & {
+  placement: 'cookie-banner';
+};
+
+export type ClientPluginIntegrations =
+  | ClientPluginIntegrationToolMenu
+  | ClientPluginIntegrationHeader
+  | ClientPluginIntegrationFeatureInfo
+  | ClientPluginIntegrationMap
+  | ClientPluginIntegrationFooter
+  | ClientPluginIntegrationCookieConsent;
 
 export type ClientPlugin = {
   /**
@@ -121,22 +126,36 @@ export type ClientPluginInternal = ClientPlugin & {
   wrappedComponent: React.FunctionComponent<ClientPluginComponentProps>;
 };
 
-export function isToolMenuIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationToolMenu {
+export function isToolMenuIntegration(
+  pluginIntegration: ClientPluginIntegrations
+): pluginIntegration is ClientPluginIntegrationToolMenu {
   return pluginIntegration && pluginIntegration.placement === 'tool-menu';
 }
 
-export function isHeaderIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationHeader {
+export function isHeaderIntegration(
+  pluginIntegration: ClientPluginIntegrations
+): pluginIntegration is ClientPluginIntegrationHeader {
   return pluginIntegration && pluginIntegration.placement === 'header';
 }
 
-export function isFeatureInfoIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationFeatureInfo {
+export function isFeatureInfoIntegration(
+  pluginIntegration: ClientPluginIntegrations
+): pluginIntegration is ClientPluginIntegrationFeatureInfo {
   return pluginIntegration && pluginIntegration.placement === 'feature-info';
 }
 
-export function isMapIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationMap {
+export function isMapIntegration(
+  pluginIntegration: ClientPluginIntegrations
+): pluginIntegration is ClientPluginIntegrationMap {
   return pluginIntegration && pluginIntegration.placement === 'map';
 }
 
 export function isFooterIntegration(pluginIntegration: ClientPluginIntegrations): pluginIntegration is ClientPluginIntegrationFooter {
   return pluginIntegration && pluginIntegration.placement === 'footer';
+}
+
+export function isCookieConsentIntegration(
+  pluginIntegration: ClientPluginIntegrations
+): pluginIntegration is ClientPluginIntegrationCookieConsent {
+  return pluginIntegration && pluginIntegration.placement === 'cookie-banner';
 }

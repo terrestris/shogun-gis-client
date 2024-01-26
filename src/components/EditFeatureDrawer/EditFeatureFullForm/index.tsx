@@ -1,11 +1,13 @@
 import React, {
+  ReactNode,
   useCallback,
   useEffect,
   useState
 } from 'react';
 
 import {
-  Alert
+  Alert,
+  UploadFile
 } from 'antd';
 import {
   useForm
@@ -23,6 +25,8 @@ import {
   equalTo
 } from 'ol/format/filter';
 
+import { ValidateErrorEntity } from 'rc-field-form/es/interface';
+
 import {
   useTranslation
 } from 'react-i18next';
@@ -38,13 +42,13 @@ import {
   isWmsLayer
 } from '@terrestris/react-geo/dist/Util/typeUtils';
 
+import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
   PropertyFormItemEditConfig,
   PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import useAppSelector from '../../../hooks/useAppSelector';
 import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
@@ -53,6 +57,7 @@ import {
   setFeature
 } from '../../../store/editFeature';
 
+import { isFileConfig } from '../EditFeatureForm';
 import EditFeatureGeometryToolbar from '../EditFeatureGeometryToolbar';
 import EditFeatureTabs from '../EditFeatureTabs';
 import EditFeatureToolbar from '../EditFeatureToolbar';
@@ -74,11 +79,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
   const [tabConfig, setTabConfig] = useState<PropertyFormTabConfig<PropertyFormItemEditConfig>[]>();
   const [initialValues, setInitialValues] = useState<Record<string, any>>();
-  const [errorMsg, setErrorMsg] = useState<string>();
-
-  const allowedEditMode = useAppSelector(
-    state => state.editFeature.userEditMode
-  );
+  const [errorMsg, setErrorMsg] = useState<string | ReactNode>();
 
   const [form] = useForm();
   const map = useMap();
@@ -131,7 +132,14 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         });
 
         if (isDate) {
-          properties[key] = moment(value);
+          const parsedDate = moment(value);
+
+          if (parsedDate.isValid()) {
+            properties[key] = parsedDate;
+          } else {
+            Logger.warn('Could not parse date');
+            properties[key] = null;
+          }
         }
 
         const isUpload = tabConfigs[0].children?.some(cfg => {
@@ -141,13 +149,22 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         if (isUpload) {
           if (value) {
             try {
-              const fileList = JSON.parse(value);
+              const parsedJson = JSON.parse(value);
+              if (!isFileConfig(parsedJson[0])) {
+                throw new Error('File config is no valid SHOGun file.');
+              }
+              const fileList = parsedJson as UploadFile<ShogunFile>[];
               properties[key] = fileList;
-              const filePath = fileList[0].response?.type?.startsWith('image/') ? 'imagefiles/' : 'files/';
-              const fileListWithBlob = fileList.map(async (val: any) => ({
-                ...val,
-                url: await imageUrlToBase64(`${client.getBasePath()}${filePath}${val?.response?.fileUuid}`)
-              }));
+              const fileListWithBlob = fileList.map(async (val: any) => {
+                const isImageFile = fileList[0].response?.fileType?.startsWith('image/');
+                const thumbUrl = isImageFile ?
+                  await imageUrlToBase64(`${client.getBasePath()}imagefiles/${val?.response?.fileUuid}/thumbnail`) : undefined;
+                return {
+                  ...val,
+                  thumbUrl,
+                  url: isImageFile ? undefined : val.url
+                };
+              });
 
               const result = await Promise.all(fileListWithBlob);
               properties[key] = result;
@@ -157,6 +174,17 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
             }
           } else {
             properties[key] = [];
+          }
+        }
+
+        const isReference = tabConfigs[0].children?.some(cfg =>
+          cfg.propertyName === key && cfg.component === 'REFERENCE_TABLE');
+
+        if (isReference) {
+          try {
+            properties[key] = JSON.parse(properties[key]);
+          } catch (error) {
+            Logger.warn('Could not parse the input for the REFERENCE_TABLE', error);
           }
         }
       }
@@ -175,6 +203,26 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     update();
   }, [update]);
 
+  const formatErrorMessage = (error: ValidateErrorEntity): React.ReactNode => {
+    const collectedFieldErrors: string[] = [];
+    const errorFields = error.errorFields || [];
+
+    errorFields.forEach((field) => {
+      if (Array.isArray(field.errors)) {
+        collectedFieldErrors.push(...field.errors);
+      }
+    });
+
+    const formattedMessage = collectedFieldErrors.map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        {index !== collectedFieldErrors.length - 1 && <br />}
+      </React.Fragment>
+    ));
+
+    return formattedMessage;
+  };
+
   const onSaveSuccess = (responseText?: string) => {
     if (!responseText) {
       return;
@@ -192,8 +240,15 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     }
   };
 
-  const onSaveError = () => {
-    setErrorMsg(t('EditFeatureFullForm.saveErrorMsg'));
+  const onSaveError = (error: unknown) => {
+    if (typeof error === 'object' && error !== null && 'errorFields' in error) {
+      const formattedErrorMessage = formatErrorMessage(
+        error as ValidateErrorEntity
+      );
+      setErrorMsg(formattedErrorMessage);
+    } else {
+      setErrorMsg(t('EditFeatureFullForm.saveErrorMsg'));
+    }
   };
 
   const onDeleteSuccess = () => {
