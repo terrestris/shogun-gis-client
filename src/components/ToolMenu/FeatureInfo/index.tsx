@@ -6,7 +6,6 @@ import {
   FormProps, Spin, Tabs
 } from 'antd';
 
-import { getUid } from 'ol';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
