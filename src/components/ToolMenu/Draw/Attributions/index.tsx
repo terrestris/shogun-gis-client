@@ -31,7 +31,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   ...passThroughProps
 }) => {
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
-  const [render, setRender] = useState<boolean>(true);
   const [isFormValid, setIsFormIsValid] = useState(true);
   const [currentProperties, setCurrentProperties] = useState<Record<string, any>>({});
 
@@ -100,21 +99,19 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   };
 
   const onPropertyAdd = () => {
-    const newProps = { ...currentProperties };
+    const newProps = {...currentProperties};
     newProps[''] = '';
     setCurrentProperties(newProps);
   };
 
   const remove = (keyToRemove: string) => {
-    const updatedProperties = currentProperties;
+    const updatedProperties = {...currentProperties};
 
     delete updatedProperties[keyToRemove];
 
     selectedFeature?.unset(keyToRemove);
 
     setCurrentProperties(updatedProperties);
-
-    setRender(!render);
   };
 
   const onKeyChange = async () => {

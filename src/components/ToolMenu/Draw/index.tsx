@@ -163,7 +163,7 @@ export const Draw: React.FC<DrawProps> = ({
     }
   };
 
-  const attributeDrawer = (active: boolean) => {
+  const onModifyButtonToggle = (active: boolean) => {
     if (openAttributeDrawer === false && active === true) {
       setOpenAttributeDrawer(true);
     }
@@ -286,7 +286,7 @@ export const Draw: React.FC<DrawProps> = ({
           <ModifyButton
             name="draw-modify"
             type="link"
-            onToggle={(evt) => attributeDrawer(evt)}
+            onToggle={onModifyButtonToggle}
           >
             <FontAwesomeIcon
               icon={faPenToSquare}
