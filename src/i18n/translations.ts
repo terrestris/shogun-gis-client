@@ -216,6 +216,19 @@ export default {
         undo: 'Rückgängig',
         redo: 'Wiederherstellen'
       },
+      Attribution: {
+        title: 'Attribute',
+        add: 'Attribut hinzufügen',
+        select: 'Wählen Sie zunächst eine Geometrie aus.',
+        submit: 'Speichern'
+      },
+      AttributionRow: {
+        missingKey: 'Fehlender Name',
+        missingValue: 'Fehlender Wert',
+        keyPlaceholder: 'Name',
+        valuePlaceholder: 'Wert',
+        keyInUse: 'Dieser Name existiert bereits!'
+      },
       ResetButton: {
         title: 'Zurücksetzen'
       },
@@ -465,6 +478,19 @@ export default {
         delete: 'Delete geometry',
         undo: 'Undo',
         redo: 'Redo'
+      },
+      Attribution: {
+        title: 'Properties',
+        add: 'Add Property',
+        select: 'Please select a geometry first.',
+        submit: 'Apply'
+      },
+      AttributionRow: {
+        missingKey: 'Missing Key',
+        missingValue: 'Missing Value',
+        keyPlaceholder: 'Key',
+        valuePlaceholder: 'Value',
+        keyInUse: 'Key already exists!'
       },
       ResetButton: {
         title: 'Reset'
