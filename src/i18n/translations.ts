@@ -222,6 +222,13 @@ export default {
         select: 'Wählen Sie zunächst eine Geometrie aus.',
         submit: 'Speichern'
       },
+      AttributionRow: {
+        missingKey: 'Fehlender Schlüssel',
+        missingValue: 'Fehlender Wert',
+        keyPlaceholder: 'Schlüssel',
+        valuePlaceholder: 'Wert',
+        keyInUse: 'Dieser Schlüssel exisitiert bereits!'
+      },
       ResetButton: {
         title: 'Zurücksetzen'
       },

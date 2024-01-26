@@ -22,7 +22,7 @@ import './index.less';
 import AttributionRow, { InputFields } from './AttributionRow';
 
 export interface AttributionDrawerProps extends DrawerProps {
-  onCustomClose: (open: boolean) => void;
+  onCustomClose?: (open: boolean) => void;
 }
 
 const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
@@ -79,7 +79,9 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   }
 
   const handleClose = () => {
-    onCustomClose(false);
+    if (onCustomClose) {
+      onCustomClose(false);
+    }
   };
 
   const onFinish = (input: InputFields) => {

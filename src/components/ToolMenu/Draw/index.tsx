@@ -1,6 +1,7 @@
 import React, {
   ChangeEvent,
-  useEffect,
+  ReactElement,
+  ReactNode,
   useState
 } from 'react';
 
@@ -46,8 +47,7 @@ import {
 import './index.less';
 
 import AttributionDrawer from './Attributions';
-import StylingDrawer, { StylingButton } from './StylingDrawerButton';
-
+import StylingDrawer from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -74,9 +74,7 @@ export const Draw: React.FC<DrawProps> = ({
   showDrawAnnotation,
   showModifyFeatures,
   showUploadFeatures,
-  showDownloadFeatures,
-  showDeleteFeatures,
-  showStyleFeatures
+  showDeleteFeatures
 }): JSX.Element => {
   const [openAttributeDrawer, setOpenAttributeDrawer] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string>();
@@ -160,10 +158,12 @@ export const Draw: React.FC<DrawProps> = ({
   }
 
   const onToggleChange = (childProps: any) => {
-    setSelectedButton(childProps.name);
+    if (childProps) {
+      setSelectedButton(childProps.name);
+    }
   };
 
-  const attributeDrawer = (active: any) => {
+  const attributeDrawer = (active: boolean) => {
     if (openAttributeDrawer === false && active === true) {
       setOpenAttributeDrawer(true);
     }
