@@ -13,6 +13,7 @@ import {
   faPenToSquare,
   faUpload,
   faTrash,
+  faEraser,
   faDownload
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -46,7 +47,8 @@ import {
 import './index.less';
 
 import AttributionDrawer from './Attributions';
-import StylingDrawer from './StylingDrawerButton';
+import DeleteAllButton from './DeleteAllButton';
+import { StylingButton } from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -116,7 +118,7 @@ export const Draw: React.FC<DrawProps> = ({
 
   const checkValidityOfUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFiles = e.target.files;
-    let validitiy = false;
+    let validity = false;
     if (
       (uploadedFiles && uploadedFiles.length === 1) &&
       (
@@ -126,9 +128,9 @@ export const Draw: React.FC<DrawProps> = ({
         uploadedFiles[0].name.includes('.json')
       )
     ){
-      validitiy = true;
+      validity = true;
     }
-    return validitiy;
+    return validity;
   };
 
   const onUploadChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -355,14 +357,13 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </SimpleButton>
         ) : <></>}
-
         {showDeleteFeatures ? (
           <DeleteButton
             name="draw-delete"
             type="link"
           >
             <FontAwesomeIcon
-              icon={faTrash}
+              icon={faEraser}
             />
             <span
               className="draw-delete"
@@ -371,7 +372,22 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </DeleteButton>
         ) : <></>}
-        <StylingDrawer />
+        {showDeleteFeatures ? (
+          <DeleteAllButton
+            name="draw-delete-all"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faTrash}
+            />
+            <span
+              className="draw-delete-all"
+            >
+              {t('DeleteAllButton.deleteAll')}
+            </span>
+          </DeleteAllButton>
+        ):<></>}
+        <StylingButton />
       </ToggleGroup>
       <AttributionDrawer
         open={openAttributeDrawer}

@@ -61,6 +61,10 @@ export default {
         delete: 'Löschen',
         export: 'Exportieren'
       },
+      DeleteAllButton:{
+        deleteAll: 'Alles Löschen',
+        confirmMessage: 'Bitte bestätigen Sie, dass Sie alle Zeichnungen löschen möchten.'
+      },
       StylingDrawer: {
         pickColor: 'Farbschema bearbeiten',
         title: 'Farbschema bearbeiten'
@@ -324,6 +328,10 @@ export default {
         uploadError: 'The import failed, please note that only .geojson files are supported',
         delete: 'Delete',
         export: 'Export'
+      },
+      DeleteAllButton:{
+        deleteAll: 'Delete all',
+        confirmMessage: 'Please confirm, that you wish to delete all drawings.'
       },
       StylingDrawer: {
         pickColor: 'Modify color scheme',
