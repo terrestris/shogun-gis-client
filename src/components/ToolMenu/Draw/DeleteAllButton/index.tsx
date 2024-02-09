@@ -13,7 +13,9 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import {SimpleButton, useMap} from '@terrestris/react-geo';
+import {
+  SimpleButton, useMap
+} from '@terrestris/react-geo';
 import { SimpleButtonProps } from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
@@ -79,11 +81,13 @@ export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
     ? `${defaultClassName} ${className}`
     : defaultClassName;
 
-  return <SimpleButton
-    onClick={onClick}
-    className={finalClassName}
-    {...passThroughProps}
-  />;
+  return (
+    <SimpleButton
+      onClick={onClick}
+      className={finalClassName}
+      {...passThroughProps}
+    />
+  );
 };
 
 export default DeleteAllButton;
