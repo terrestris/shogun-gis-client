@@ -46,10 +46,9 @@ import {
 
 import './index.less';
 
-
+import AttributionDrawer from './Attributions';
 import DeleteAllButton from './DeleteAllButton';
 import { StylingButton } from './StylingDrawerButton';
-
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -357,60 +356,44 @@ export const Draw: React.FC<DrawProps> = ({
               {t('Draw.export')}
             </span>
           </SimpleButton>
-        </UploadButton>
-      ) : <></>}
-
-      {showDownloadFeatures ? (
-        <SimpleButton
-          name="draw-export"
-          onClick={onGeoJSONDownload}
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faDownload}
-          />
-          <span
-            className="draw-export"
+        ) : <></>}
+        {showDeleteFeatures ? (
+          <DeleteButton
+            name="draw-delete"
+            type="link"
           >
-            {t('Draw.export')}
-          </span>
-        </SimpleButton>
-      ) : <></>}
-      {showDeleteFeatures ? (
-        <DeleteButton
-          name="draw-delete"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faEraser}
-          />
-          <span
-            className="draw-delete"
+            <FontAwesomeIcon
+              icon={faEraser}
+            />
+            <span
+              className="draw-delete"
+            >
+              {t('Draw.delete')}
+            </span>
+          </DeleteButton>
+        ) : <></>}
+        {showDeleteFeatures ? (
+          <DeleteAllButton
+            name="draw-delete-all"
+            type="link"
           >
-            {t('Draw.delete')}
-          </span>
-        </DeleteButton>
-      ) : <></>}
-      {showDeleteFeatures ? (
-        <DeleteAllButton
-          name="draw-delete-all"
-          type="link"
-        >
-          <FontAwesomeIcon
-            icon={faTrash}
-          />
-          <span
-            className="draw-delete-all"
-          >
-            {t(('DeleteAllButton.deleteAll'))}
-          </span>
-        </DeleteAllButton>
-      ):<></>}
-      {showDeleteFeatures ? (
-        <StylingButton />):
-        <></>}
-    </ToggleGroup>
-
+            <FontAwesomeIcon
+              icon={faTrash}
+            />
+            <span
+              className="draw-delete-all"
+            >
+              {t('DeleteAllButton.deleteAll')}
+            </span>
+          </DeleteAllButton>
+        ):<></>}
+        <StylingButton />
+      </ToggleGroup>
+      <AttributionDrawer
+        open={openAttributeDrawer}
+        onCustomClose={() => setOpenAttributeDrawer(false)}
+      />
+    </>
   );
 };
 
