@@ -357,7 +357,7 @@ export const Draw: React.FC<DrawProps> = ({
           <span
             className="draw-delete-all"
           >
-            {t('Draw.deleteAll')}
+            {t('DeleteAllButton.deleteAll')}
           </span>
         </DeleteAllButton>
       ):<></>}

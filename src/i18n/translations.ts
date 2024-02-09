@@ -59,9 +59,11 @@ export default {
         uploadSuccess: 'Die Datei wurde erfolgreich importiert',
         uploadError: 'Der Import ist fehlgeschlagen. Bitte beachten Sie, dass nur .geojson-Dateien unterstützt werden.',
         delete: 'Löschen',
-        deleteAll: 'Alles Löschen',
-        confirmMessage: 'Bitte bestätigen Sie, dass Sie alle Zeichnungen löschen möchten.',
         export: 'Exportieren'
+      },
+      DeleteAllButton:{
+        deleteAll: 'Alles Löschen',
+        confirmMessage: 'Bitte bestätigen Sie, dass Sie alle Zeichnungen löschen möchten.'
       },
       StylingDrawer: {
         pickColor: 'Farbschema bearbeiten',
@@ -312,9 +314,11 @@ export default {
         uploadSuccess: 'The file was uploaded successfully',
         uploadError: 'The import failed, please note that only .geojson files are supported',
         delete: 'Delete',
-        deleteAll: 'Delete all',
-        confirmMessage: 'Please confirm, that you wish to delete all drawings.',
         export: 'Export'
+      },
+      DeleteAllButton:{
+        deleteAll: 'Delete all',
+        confirmMessage: 'Please confirm, that you wish to delete all drawings.'
       },
       StylingDrawer: {
         pickColor: 'Modify color scheme',

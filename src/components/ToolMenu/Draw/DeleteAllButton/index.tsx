@@ -66,8 +66,8 @@ export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
   const onClick = () => {
 
     confirm({
-      title: (t('Draw.deleteAll')),
-      content: (t('Draw.confirmMessage')),
+      title: (t('DeleteAllButton.deleteAll')),
+      content: (t('DeleteAllButton.confirmMessage')),
       icon: <ExclamationCircleOutlined />,
       onOk(){
         layers[0].getSource()?.clear();
