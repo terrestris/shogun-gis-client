@@ -6,7 +6,6 @@ import {
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import OlGeometry from 'ol/geom/Geometry';
-import { SelectEvent as OlSelectEvent } from 'ol/interaction/Select';
 import OlVectorLayer from 'ol/layer/Vector';
 import OlVectorSource from 'ol/source/Vector';
 
@@ -26,13 +25,6 @@ interface OwnProps {
    * The standard digitizeLayer can be retrieved via `DigitizeUtil.getDigitizeLayer(map)`.
    */
   digitizeLayer?: OlVectorLayer<OlVectorSource<OlGeometry>>;
-  /**
-   * Listener function for the 'select' event of the ol.interaction.Select
-   * if in `Delete` mode.
-   * See https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-SelectEvent.html
-   * for more information.
-   */
-  onFeatureRemove?: (event: OlSelectEvent) => void;
 }
 
 export type DeleteAllButtonProps = OwnProps & SimpleButtonProps;
@@ -45,7 +37,6 @@ const defaultClassName = 'deleteallbutton';
 export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
   className,
   digitizeLayer,
-  onFeatureRemove,
   ...passThroughProps
 }) => {
   const [layers, setLayers] = useState<[OlVectorLayer<OlVectorSource<OlGeometry>>]|null>(null);
