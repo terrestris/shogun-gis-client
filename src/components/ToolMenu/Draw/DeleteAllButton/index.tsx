@@ -70,13 +70,9 @@ export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
       content: (t('Draw.confirmMessage')),
       icon: <ExclamationCircleOutlined />,
       onOk(){
-
         layers[0].getSource()?.clear();
-
       }
-
     });
-
   };
 
   const finalClassName = className

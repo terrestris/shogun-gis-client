@@ -45,7 +45,7 @@ import {
 import './index.less';
 
 import DeleteAllButton from './DeleteAllButton';
-import StylingDrawer from './StylingDrawerButton';
+import { StylingButton } from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -348,7 +348,7 @@ export const Draw: React.FC<DrawProps> = ({
       ) : <></>}
       {showDeleteFeatures ? (
         <DeleteAllButton
-          name = "draw-delte-all"
+          name="draw-delete-all"
           type="link"
         >
           <FontAwesomeIcon
@@ -361,7 +361,7 @@ export const Draw: React.FC<DrawProps> = ({
           </span>
         </DeleteAllButton>
       ):<></>}
-      <StylingDrawer />
+      <StylingButton />
     </ToggleGroup>
   );
 
