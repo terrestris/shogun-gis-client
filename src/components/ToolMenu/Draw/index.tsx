@@ -402,15 +402,16 @@ export const Draw: React.FC<DrawProps> = ({
           <span
             className="draw-delete-all"
           >
-            {t('DeleteAllButton.deleteAll')}
+            {t(('DeleteAllButton.deleteAll'))}
           </span>
         </DeleteAllButton>
       ):<></>}
-      <StylingButton />
+      {showDeleteFeatures ? (
+        <StylingButton />):
+        <></>}
     </ToggleGroup>
 
   );
-
 };
 
 export default Draw;
