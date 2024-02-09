@@ -45,6 +45,7 @@ import {
 import './index.less';
 
 import DeleteAllButton from './DeleteAllButton';
+import StylingDrawer from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -360,7 +361,7 @@ export const Draw: React.FC<DrawProps> = ({
           </span>
         </DeleteAllButton>
       ):<></>}
-
+      <StylingDrawer />
     </ToggleGroup>
   );
 
