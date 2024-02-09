@@ -48,7 +48,7 @@ import './index.less';
 
 import AttributionDrawer from './Attributions';
 import DeleteAllButton from './DeleteAllButton';
-import { StylingButton } from './StylingDrawerButton';
+import StylingButton from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
