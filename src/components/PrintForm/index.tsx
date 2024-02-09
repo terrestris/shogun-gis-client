@@ -251,13 +251,14 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   useEffect(() => {
     if (active) {
       if (!printManager) {
+        form.resetFields();
         initializeMapProvider();
       }
     } else {
       printManager?.shutdownManager();
       setPrintManager(null);
     }
-  }, [printManager, active, initializeMapProvider]);
+  }, [printManager, active, initializeMapProvider, form]);
 
   useEffect(() => {
     if (printManager) {
