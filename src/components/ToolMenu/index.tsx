@@ -10,7 +10,7 @@ import type {
 import {
   faChevronLeft,
   faChevronRight,
-  faDrawPolygon,
+  faPalette,
   faFileDownload,
   faLanguage,
   faMousePointer,
@@ -253,7 +253,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         };
       case 'draw_tools':
         return {
-          icon: faDrawPolygon,
+          icon: faPalette,
           title: t('ToolMenu.draw'),
           wrappedComponent: (
             <Draw
