@@ -35,6 +35,7 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
   const [form] = useForm();
 
   useEffect(() => {
+    form.resetFields();
     form.setFieldsValue(feature.getProperties());
   }, [feature, form]);
 
