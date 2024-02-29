@@ -122,7 +122,7 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
     if (Array.isArray(layers)) {
       lay = layers?.find(l => l?.Name === layerName);
     } else {
-      lay = capabilities?.Capability?.Layer?.Layer;
+      return layers;
     }
     return lay;
   };
