@@ -118,9 +118,12 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
   const getCapabilitiesLayer = () => {
     const layers: any[] = capabilities?.Capability?.Layer?.Layer;
     const layerName = getLayerName();
-
-    const lay = layers?.find(l => l.Name === layerName);
-
+    let lay;
+    if (Array.isArray(layers)) {
+      lay = layers?.find(l => l?.Name === layerName);
+    } else {
+      return layers;
+    }
     return lay;
   };
 
