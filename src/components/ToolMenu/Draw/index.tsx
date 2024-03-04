@@ -5,11 +5,12 @@ import React, {
 } from 'react';
 
 import {
-  faDrawPolygon,
   faGripLines,
   faCircle,
-  faFont,
   faSquare,
+  faFont,
+  faCircleNotch,
+  faShapes,
   faPenToSquare,
   faUpload,
   faTrash,
@@ -48,7 +49,7 @@ import './index.less';
 
 import AttributionDrawer from './Attributions';
 import DeleteAllButton from './DeleteAllButton';
-import { StylingButton } from './StylingDrawerButton';
+import StylingButton from './StylingDrawerButton';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -198,7 +199,6 @@ export const Draw: React.FC<DrawProps> = ({
         selectedName={selectedButton}
         onChange={onToggleChange}
       >
-
         {showDrawPoint ? (
           <DrawButton
             name="draw-point"
@@ -241,7 +241,7 @@ export const Draw: React.FC<DrawProps> = ({
             type="link"
           >
             <FontAwesomeIcon
-              icon={faDrawPolygon}
+              icon={faShapes}
             />
             <span
               className="draw-polygon"
@@ -258,7 +258,7 @@ export const Draw: React.FC<DrawProps> = ({
             type="link"
           >
             <FontAwesomeIcon
-              icon={faCircle}
+              icon={faCircleNotch}
             />
             <span
               className="draw-circle"
@@ -284,7 +284,6 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </DrawButton>
         ) : <></>}
-
         {showDrawAnnotation ? (
           <DrawButton
             name="draw-text"
@@ -301,7 +300,7 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </DrawButton>
         ) : <></>}
-
+        <StylingButton />
         {showModifyFeatures ? (
           <ModifyButton
             name="draw-modify"
@@ -318,6 +317,36 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </ModifyButton>
         ) : <></>}
+        {showDeleteFeatures ? (
+          <DeleteButton
+            name="draw-delete"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faEraser}
+            />
+            <span
+              className="draw-delete"
+            >
+              {t('Draw.delete')}
+            </span>
+          </DeleteButton>
+        ) : <></>}
+        {showDeleteFeatures ? (
+          <DeleteAllButton
+            name="draw-delete-all"
+            type="link"
+          >
+            <FontAwesomeIcon
+              icon={faTrash}
+            />
+            <span
+              className="draw-delete-all"
+            >
+              {t('DeleteAllButton.deleteAll')}
+            </span>
+          </DeleteAllButton>
+        ):<></>}
 
         {showUploadFeatures ? (
           <UploadButton
@@ -357,37 +386,6 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </SimpleButton>
         ) : <></>}
-        {showDeleteFeatures ? (
-          <DeleteButton
-            name="draw-delete"
-            type="link"
-          >
-            <FontAwesomeIcon
-              icon={faEraser}
-            />
-            <span
-              className="draw-delete"
-            >
-              {t('Draw.delete')}
-            </span>
-          </DeleteButton>
-        ) : <></>}
-        {showDeleteFeatures ? (
-          <DeleteAllButton
-            name="draw-delete-all"
-            type="link"
-          >
-            <FontAwesomeIcon
-              icon={faTrash}
-            />
-            <span
-              className="draw-delete-all"
-            >
-              {t('DeleteAllButton.deleteAll')}
-            </span>
-          </DeleteAllButton>
-        ):<></>}
-        <StylingButton />
       </ToggleGroup>
       <AttributionDrawer
         open={openAttributeDrawer}
