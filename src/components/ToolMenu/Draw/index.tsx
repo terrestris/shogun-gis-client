@@ -1,6 +1,5 @@
 import React, {
   ChangeEvent,
-  useEffect,
   useState
 } from 'react';
 
@@ -78,7 +77,7 @@ export const Draw: React.FC<DrawProps> = ({
   showUploadFeatures,
   showDeleteFeatures
 }): JSX.Element => {
-  const [openAttributeDrawer, setOpenAttributeDrawer] = useState(false);
+  const [isAttributeDrawerOpen, setIsAttributeDrawerOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string>();
 
   const {
@@ -185,12 +184,7 @@ export const Draw: React.FC<DrawProps> = ({
   };
 
   const onModifyButtonToggle = (active: boolean) => {
-    if (openAttributeDrawer === false && active === true) {
-      setOpenAttributeDrawer(true);
-    }
-    if (openAttributeDrawer === true && active === false && selectedButton === 'draw-modify') {
-      setOpenAttributeDrawer(false);
-    }
+    setIsAttributeDrawerOpen(active);
   };
 
   return (
@@ -388,8 +382,8 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
       </ToggleGroup>
       <AttributionDrawer
-        open={openAttributeDrawer}
-        onCustomClose={() => setOpenAttributeDrawer(false)}
+        open={isAttributeDrawerOpen}
+        onCustomClose={() => setIsAttributeDrawerOpen(false)}
       />
     </>
   );
