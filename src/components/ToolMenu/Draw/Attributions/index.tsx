@@ -36,6 +36,11 @@ import {
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import {
+  DigitizeUtil
+} from '@terrestris/react-util/dist/Util/DigitizeUtil';
+
+import AttributionRow from './AttributionRow';
 
 import {
   DigitizeUtil
