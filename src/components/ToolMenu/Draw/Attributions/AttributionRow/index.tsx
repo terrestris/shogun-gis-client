@@ -1,27 +1,29 @@
 import React from 'react';
 
 import {
-  Form, Input
+  AutoComplete,
+  Form,
+  Input
 } from 'antd';
 
-import './index.less';
-import { useTranslation } from 'react-i18next';
+import {
+  useTranslation
+} from 'react-i18next';
+
+import type {
+  FormData
+} from '..';
 
 export type AttributionRowProps = {
-  keyName: string;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-export type InputFields = {
-  [fields: string]: {
-    name: string;
-    value: any;
-  };
+  keyName: string | number;
+  onChange?: (value: string) => void;
+  options?: string[];
 };
 
 const AttributionRow: React.FC<AttributionRowProps> = ({
   keyName,
-  onChange
+  onChange = () => {},
+  options
 }) => {
 
   const {
@@ -31,30 +33,36 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
   return (
     <>
       <Form.Item
-        name={['fields', keyName, 'name']}
+        name={[keyName, 'name']}
         rules={[{
           required: true,
           message: t('AttributionRow.missingKey')
         }, ({ getFieldsValue }) => ({
           validator(_, value: string) {
-            const fields: InputFields = getFieldsValue(true);
-            const filtered = Object.entries(fields.fields).filter(([key, val]) => val.name === value);
+            const fields: FormData = getFieldsValue(true);
 
-            if (filtered.length > 1) {
-              return Promise.reject(new Error(t('AttributionRow.keyInUse')));
+            if (fields.fields) {
+              const filtered = Object.entries(fields.fields).filter(([, val]) => val?.name === value);
+
+              if (filtered.length > 1) {
+                return Promise.reject(new Error(t('AttributionRow.keyInUse')));
+              }
             }
 
             return Promise.resolve();
           }
         })]}
       >
-        <Input
+        <AutoComplete
           placeholder={t('AttributionRow.keyPlaceholder')}
-          onChange={onChange}
+          onChange={(value) => {
+            onChange(value);
+          }}
+          options={options?.map(o => ({ value: o }))}
         />
       </Form.Item>
       <Form.Item
-        name={['fields', keyName, 'value']}
+        name={[keyName, 'value']}
         rules={[{
           required: true,
           message: t('AttributionRow.missingValue')
@@ -62,7 +70,9 @@ const AttributionRow: React.FC<AttributionRowProps> = ({
       >
         <Input
           placeholder={t('AttributionRow.valuePlaceholder')}
-          onChange={onChange}
+          onChange={evt => {
+            onChange(evt.target.value);
+          }}
         />
       </Form.Item>
     </>
