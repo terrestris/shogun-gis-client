@@ -25,7 +25,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import { useAsyncEffect } from '@terrestris/react-util/dist/hooks/useAsyncEffect/useAsyncEffect';
+import { useAsyncEffect } from '@terrestris/react-util/dist/Hooks/useAsyncEffect/useAsyncEffect';
 
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
