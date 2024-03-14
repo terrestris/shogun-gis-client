@@ -37,14 +37,14 @@ import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyB
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 
-import {
-  useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
 import Toolbar, { ToolbarProps } from '@terrestris/react-geo/dist/Toolbar/Toolbar';
 
 import {
+  useMap
+} from '@terrestris/react-util';
+import {
   DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+} from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
