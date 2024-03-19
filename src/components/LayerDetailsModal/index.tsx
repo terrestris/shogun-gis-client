@@ -101,8 +101,8 @@ export const LayerDetailsModal: React.FC<LayerDetailsModalProps> = ({
             layer?.get('shogunId') && (
               <Tooltip
                 title={configurationVisible ?
-                  t('LayerDetailsModal.internalConfigurationButtonTooltip') :
-                  t('LayerDetailsModal.internalConfigurationButtonTooltipPressed')
+                  t('LayerDetailsModal.internalConfigurationButtonTooltipPressed') :
+                  t('LayerDetailsModal.internalConfigurationButtonTooltip')
                 }
               >
                 <Button
