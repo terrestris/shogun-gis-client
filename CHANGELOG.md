@@ -1,3 +1,10 @@
+## [7.5.1](https://github.com/terrestris/shogun-gis-client/compare/v7.5.0...v7.5.1) (2024-03-19)
+
+
+### Bugfixes
+
+* switch tooltip text for internal configuration ([4ae0e28](https://github.com/terrestris/shogun-gis-client/commit/4ae0e28042da291df8edade0c6aa5efbcc391c73))
+
 ## [7.5.0](https://github.com/terrestris/shogun-gis-client/compare/v7.4.0...v7.5.0) (2024-03-19)
 
 
