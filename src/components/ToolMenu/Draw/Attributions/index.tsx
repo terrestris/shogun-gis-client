@@ -44,7 +44,6 @@ import {
 import AttributionRow from './AttributionRow';
 
 import './index.less';
-import { log } from 'console';
 
 export type FormData = {
   fields?: [{
