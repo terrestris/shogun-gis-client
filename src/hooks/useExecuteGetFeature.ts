@@ -11,10 +11,10 @@ import OlFormatWFS from 'ol/format/WFS';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   getBearerTokenHeader

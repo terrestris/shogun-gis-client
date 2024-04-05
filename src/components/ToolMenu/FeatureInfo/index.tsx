@@ -23,10 +23,10 @@ import CoordinateInfo, {
   CoordinateInfoProps,
   CoordinateInfoState
 } from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   isWmsLayer, WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 

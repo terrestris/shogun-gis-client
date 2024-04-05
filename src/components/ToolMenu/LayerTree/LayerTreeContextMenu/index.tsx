@@ -47,10 +47,10 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   DownloadConfig

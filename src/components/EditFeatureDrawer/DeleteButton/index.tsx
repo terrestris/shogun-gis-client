@@ -31,11 +31,11 @@ import {
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
 import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';

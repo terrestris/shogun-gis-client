@@ -12,7 +12,7 @@ import OlStyle from 'ol/style/Style';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 export type HighlightVectorLayerOpts = {
   layerName: string;

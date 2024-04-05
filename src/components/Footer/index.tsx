@@ -11,7 +11,7 @@ import { createStringXY } from 'ol/coordinate';
 import { useTranslation } from 'react-i18next';
 
 import ScaleCombo from '@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';

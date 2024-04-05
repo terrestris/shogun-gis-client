@@ -17,7 +17,7 @@ import MeasureButton from '@terrestris/react-geo/dist/Button/MeasureButton/Measu
 import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
 

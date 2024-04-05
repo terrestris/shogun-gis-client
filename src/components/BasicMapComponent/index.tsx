@@ -10,11 +10,11 @@ import {
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
-
-import MapComponent, {
+import {
+  MapComponent,
   MapComponentProps
-} from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
+} from '@terrestris/react-util/dist/Components/MapComponent/MapComponent';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import usePlugins from '../../hooks/usePlugins';
 
