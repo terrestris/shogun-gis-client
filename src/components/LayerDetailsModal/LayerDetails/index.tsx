@@ -28,7 +28,7 @@ import CapabilitiesUtil from '@terrestris/ol-util/dist/CapabilitiesUtil/Capabili
 
 import {
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   getBearerTokenHeader

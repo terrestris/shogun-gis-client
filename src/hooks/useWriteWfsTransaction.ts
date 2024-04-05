@@ -22,10 +22,10 @@ import OlFormatWFS, {
   WriteTransactionOptions as OlWriteTransactionOptions
 } from 'ol/format/WFS';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   PropertyFormTabConfig,

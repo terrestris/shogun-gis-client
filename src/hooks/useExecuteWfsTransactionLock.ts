@@ -13,7 +13,7 @@ import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   getBearerTokenHeader

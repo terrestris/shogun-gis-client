@@ -29,7 +29,7 @@ import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil'
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 

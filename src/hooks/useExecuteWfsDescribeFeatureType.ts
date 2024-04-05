@@ -9,7 +9,7 @@ import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   getBearerTokenHeader

@@ -5,7 +5,8 @@ import {
   useState
 } from 'react';
 
-import CardStyle, {
+import {
+  CardStyle,
   CardStyleProps
 } from 'geostyler/dist/Component/CardStyle/CardStyle';
 
@@ -30,7 +31,7 @@ import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 export type StylingComponentProps = CardStyleProps;
 

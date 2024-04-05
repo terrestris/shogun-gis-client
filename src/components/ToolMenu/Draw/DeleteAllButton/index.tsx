@@ -13,10 +13,10 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import SimpleButton, { SimpleButtonProps } from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import {
-  SimpleButton, useMap
-} from '@terrestris/react-geo';
-import { SimpleButtonProps } from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 const { confirm } = Modal;

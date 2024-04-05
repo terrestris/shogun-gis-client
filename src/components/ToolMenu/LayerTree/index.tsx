@@ -24,14 +24,14 @@ import {
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import {
-  useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
 import RgLayerTree, {
   LayerTreeProps as RgLayerTreeProps
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
 import Legend from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
 import {

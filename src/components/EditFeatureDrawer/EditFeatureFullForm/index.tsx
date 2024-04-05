@@ -33,12 +33,12 @@ import {
   Logger
 } from '@terrestris/base-util';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
