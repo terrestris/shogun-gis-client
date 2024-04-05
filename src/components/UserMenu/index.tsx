@@ -29,8 +29,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
-
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import {
@@ -38,6 +36,7 @@ import {
 } from '../../utils/getGravatarUrl';
 
 import ApplicationInfo from '../ApplicationInfo';
+import UserChip from '../UserChip';
 
 import './index.less';
 

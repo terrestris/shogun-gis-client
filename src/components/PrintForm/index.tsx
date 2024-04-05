@@ -35,7 +35,7 @@ import MapFishPrintV3WMTSSerializer
 
 import { LayerUtil } from '@terrestris/ol-util';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../hooks/useAppDispatch';

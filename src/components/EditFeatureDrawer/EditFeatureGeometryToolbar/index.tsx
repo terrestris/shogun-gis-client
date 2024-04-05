@@ -37,8 +37,6 @@ import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyB
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 
-import Toolbar, { ToolbarProps } from '@terrestris/react-geo/dist/Toolbar/Toolbar';
-
 import {
   useMap
 } from '@terrestris/react-util';
@@ -52,6 +50,7 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import {
   setFormDirty
 } from '../../../store/editFeature';
+import Toolbar, { ToolbarProps } from '../../Toolbar';
 
 import './index.less';
 

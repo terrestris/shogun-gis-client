@@ -14,7 +14,7 @@ import {
   MapFishPrintV3Manager
 } from '@terrestris/mapfish-print-manager';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 export interface ScaleSelectProps extends SelectProps<number> {
   printManager: MapFishPrintV3Manager;

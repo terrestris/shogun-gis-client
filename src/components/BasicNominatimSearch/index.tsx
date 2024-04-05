@@ -15,7 +15,7 @@ import {
 import NominatimSearch, {
   NominatimSearchProps
 } from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = ({
   ...restProps
