@@ -51,12 +51,12 @@ describe('<UploadDataModal />', () => {
 
     const modal = screen.getByRole('dialog');
 
-    expect(modal).toBeVisible();
+    expect(modal).not.toHaveStyle('display: none');
 
     const closeButton = screen.getByLabelText('Close');
 
     fireEvent.click(closeButton);
 
-    expect(modal).not.toBeVisible();
+    expect(modal).toHaveStyle('display: none');
   });
 });
