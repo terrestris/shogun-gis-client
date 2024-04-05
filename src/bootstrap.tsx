@@ -39,9 +39,7 @@ import OlSourceOsm from 'ol/source/OSM';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlView from 'ol/View';
 
-import {
-  render
-} from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import {
   Provider
@@ -50,7 +48,7 @@ import {
 import Logger from '@terrestris/base-util/dist/Logger';
 import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
-import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
+import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 
 import {
   AppInfo
@@ -659,6 +657,9 @@ const matchRole = (role: string | RegExp, element: string): boolean => {
 };
 
 const renderApp = async () => {
+  const container = document.getElementById('app');
+  const root = createRoot(container!);
+
   try {
     loader.config({
       paths: {
@@ -715,9 +716,11 @@ const renderApp = async () => {
 
     ConfigProvider.config({
       theme: {
-        primaryColor: Color(style['--primaryColor']).isLight() ?
-          Color(style['--primaryColor']).darken(0.5).hexa() :
-          style['--primaryColor']
+        token: {
+          colorPrimary: Color(style['--primaryColor']).isLight() ?
+            Color(style['--primaryColor']).darken(0.5).hex() :
+            style['--primaryColor']
+        }
       }
     });
 
@@ -773,7 +776,7 @@ const renderApp = async () => {
       });
     }
 
-    render(
+    root.render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
           <SHOGunAPIClientProvider client={client}>
@@ -788,8 +791,7 @@ const renderApp = async () => {
             </PluginProvider>
           </SHOGunAPIClientProvider>
         </React.Suspense>
-      </React.StrictMode>,
-      document.getElementById('app')
+      </React.StrictMode>
     );
   } catch (error) {
     Logger.error(error);
@@ -829,7 +831,7 @@ const renderApp = async () => {
       errorDescription = i18n.t('Index.errorDescriptionAppConfigStaticNotFound');
     }
 
-    render(
+    root.render(
       <React.StrictMode>
         <Alert
           className="error-boundary"
@@ -838,8 +840,7 @@ const renderApp = async () => {
           type={type}
           showIcon
         />
-      </React.StrictMode>,
-      document.getElementById('app')
+      </React.StrictMode>
     );
   }
 };
