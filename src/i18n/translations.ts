@@ -233,8 +233,21 @@ export default {
         valuePlaceholder: 'Wert',
         keyInUse: 'Dieser Name existiert bereits!'
       },
+      AttributionPopConfirm:{
+        title: 'Attribut löschen?',
+        okText: 'Löschen',
+        cancelText: 'Abbrechen'
+      },
       ResetButton: {
         title: 'Zurücksetzen'
+      },
+      notificationDeleteText:{
+        title: 'Drücke "Speichern" um die Änderung zu bestätigen.',
+        info: 'Wenn auf „Übernehmen“ nicht geklick wird, werden alle an dieser Zeichnung vorgenommenen Änderungen verworfen.'
+      },
+      notificationApplyText:{
+        title: 'Änderungen wurden erfolgreich gespeichert!',
+        notSelected: 'Bitte eine Geometrie auswählen.'
       },
       SaveButton: {
         title: 'Speichern'
@@ -500,8 +513,21 @@ export default {
         valuePlaceholder: 'Value',
         keyInUse: 'Key already exists!'
       },
+      AttributionPopConfirm:{
+        title: 'Delete property?',
+        okText: 'Delete',
+        cancelText: 'Cancel'
+      },
       ResetButton: {
         title: 'Reset'
+      },
+      notificationDeleteText:{
+        title: 'Press "Apply" to confirm changes.',
+        info: 'Not pressing "Apply" will reverse all changes made to this drawing.'
+      },
+      notificationApplyText:{
+        title: 'Changes were applied successfully!',
+        notSelected: 'Please select a geometry.'
       },
       SaveButton: {
         title: 'Save'

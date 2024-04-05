@@ -20,6 +20,8 @@ import {
   DrawerProps,
   Form,
   FormListFieldData,
+  Popconfirm,
+  notification,
   Row
 } from 'antd';
 
@@ -42,6 +44,7 @@ import {
 import AttributionRow from './AttributionRow';
 
 import './index.less';
+import { log } from 'console';
 
 export type FormData = {
   fields?: [{
@@ -63,7 +66,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const [isFormValid, setIsFormIsValid] = useState(true);
   const [availableFeatureCollectionAttributes, setAvailableFeatureCollectionAttributes] = useState<string[]>([]);
   const [availableFeatureAttributes, setAvailableFeatureAttributes] = useState<string[]>([]);
-
+  const [api, contextHolder] = notification.useNotification();
   const [form] = Form.useForm<FormData>();
 
   const map = useMap();
@@ -146,8 +149,20 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
 
   const onFinish = (input: FormData) => {
     if (!selectedFeature) {
+      notification.destroy();
+      notification.error({
+        message: (t('notificationApplyText.notSelected')),
+        placement: 'top',
+        duration: 3.0
+      });
       return;
     }
+    notification.destroy();
+    notification.success({
+      message: (t('notificationApplyText.title')),
+      placement: 'top',
+      duration: 3.5
+    });
 
     for (const property in selectedFeature.getProperties()) {
       if (!(selectedFeature.get(property) instanceof OlGeometry)) {
@@ -160,7 +175,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
         if (!field?.name) {
           return;
         }
-
         selectedFeature.set(field.name, field.value);
       });
     }
@@ -185,6 +199,16 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
 
   const getFormItems = (fields: FormListFieldData[], rmFn: any) => {
     return fields.map((field) => {
+      const removeAndMessage = () => {
+        notification.destroy();
+        notification.info({
+          message: (t('notificationDeleteText.title')),
+          description: (t('notificationDeleteText.info')),
+          placement: 'top',
+          duration: 6
+        });
+        remove(rmFn, field.name);
+      };
       return (
         <div
           key={field.key}
@@ -196,17 +220,26 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
             onChange={onChange}
             options={availableFeatureAttributes}
           />
-          <Button
-            className="remove-attribute-button"
-            onClick={() => remove(rmFn, field.name)}
-            type='primary'
-            danger={true}
-            icon={
-              <FontAwesomeIcon
-                icon={faMinusSquare}
-              />
-            }
-          />
+          <Popconfirm
+            title={t('AttributionPopConfirm.title')}
+            okText={t('AttributionPopConfirm.okText')}
+            cancelText={t('AttributionPopConfirm.cancelText')}
+            placement='topRight'
+            onConfirm={removeAndMessage}
+          >
+            {contextHolder}
+            <Button
+              className="remove-attribute-button"
+              // onClick={console.log('hi')}
+              type='primary'
+              danger={true}
+              icon={
+                <FontAwesomeIcon
+                  icon={faMinusSquare}
+                />
+              }
+            />
+          </Popconfirm>
         </div>
       );
     });
