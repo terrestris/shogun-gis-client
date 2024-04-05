@@ -19,7 +19,7 @@ module.exports = {
   ],
   testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'
+    '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris|color-*[a-z]*|@camptocamp|d3-*[a-z]*))'
   ],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
