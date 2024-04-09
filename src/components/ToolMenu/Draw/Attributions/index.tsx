@@ -58,6 +58,7 @@ export interface AttributionDrawerProps extends DrawerProps {
 
 const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   onCustomClose,
+  open,
   onClose,
   ...passThroughProps
 }) => {
@@ -125,6 +126,10 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     // updateAvailableFeatureAttributes(form.getFieldsValue());
   }, [selectedFeature, form, map]);
 
+  useEffect(() => {
+    setSelectedFeature(undefined);
+  }, [open]);
+
   // todo revisit react-geo to make name of the slect-interaction configurable
   const selectInteraction = map?.getInteractions().getArray().filter(interaction => {
     if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
@@ -139,12 +144,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
       setSelectedFeature(selectInteraction.getFeatures().getArray()[0]);
     });
   }
-
-  const handleClose = () => {
-    if (onCustomClose) {
-      onCustomClose(false);
-    }
-  };
 
   const onFinish = (input: FormData) => {
     if (!selectedFeature) {
@@ -252,7 +251,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
       mask={false}
       maskClosable={false}
       closable={false}
-      onClose={handleClose}
+      open={open}
       {...passThroughProps}
     >
       {!selectedFeature &&
