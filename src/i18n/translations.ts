@@ -243,7 +243,7 @@ export default {
       },
       notificationDeleteText:{
         title: 'Drücke "Speichern" um die Änderung zu bestätigen.',
-        info: 'Wenn auf „Übernehmen“ nicht geklick wird, werden alle an dieser Zeichnung vorgenommenen Änderungen verworfen.'
+        info: 'Wenn "Übernehmen" nicht geklickt wird, werden alle an dieser Zeichnung vorgenommenen Änderungen verworfen.'
       },
       notificationApplyText:{
         title: 'Änderungen wurden erfolgreich gespeichert!'
