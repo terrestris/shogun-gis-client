@@ -246,7 +246,7 @@ export default {
         info: 'Wenn auf „Übernehmen“ nicht geklick wird, werden alle an dieser Zeichnung vorgenommenen Änderungen verworfen.'
       },
       notificationApplyText:{
-        title: 'Änderungen wurden erfolgreich gespeichert!',
+        title: 'Änderungen wurden erfolgreich gespeichert!'
       },
       SaveButton: {
         title: 'Speichern'
@@ -525,7 +525,7 @@ export default {
         info: 'Not pressing "Apply" will reverse all changes made to this drawing.'
       },
       notificationApplyText:{
-        title: 'Changes were applied successfully!',
+        title: 'Changes were applied successfully!'
       },
       SaveButton: {
         title: 'Save'
