@@ -120,10 +120,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
         }
       });
     });
-
     setAvailableFeatureCollectionAttributes(Array.from(featureCollectionAttributes));
-
-    // updateAvailableFeatureAttributes(form.getFieldsValue());
   }, [selectedFeature, form, map]);
 
   useEffect(() => {
@@ -222,7 +219,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
             {contextHolder}
             <Button
               className="remove-attribute-button"
-              // onClick={console.log('hi')}
               type='primary'
               danger={true}
               icon={
@@ -240,7 +236,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   return (
     <Drawer
       title={t('Attribution.title')}
-      className='attribution-drawer'
+      className="attribution-drawer"
       placement="right"
       mask={false}
       maskClosable={false}
