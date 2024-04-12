@@ -1,3 +1,10 @@
+## [7.5.2](https://github.com/terrestris/shogun-gis-client/compare/v7.5.1...v7.5.2) (2024-04-12)
+
+
+### Bugfixes
+
+* support Polish and Czech as default language ([b87e2ca](https://github.com/terrestris/shogun-gis-client/commit/b87e2cafad9210cb008db3f4fdc64431cc899b23))
+
 ## [7.5.1](https://github.com/terrestris/shogun-gis-client/compare/v7.5.0...v7.5.1) (2024-03-19)
 
 
