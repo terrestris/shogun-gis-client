@@ -11,8 +11,10 @@ import {
   notification
 } from 'antd';
 
+import csCZ from 'antd/lib/locale/cs_CZ';
 import deDE from 'antd/lib/locale/de_DE';
 import enGB from 'antd/lib/locale/en_GB';
+import plPl from 'antd/lib/locale/pl_PL';
 
 import ClientConfiguration, {
   FeatureEditConfiguration
@@ -142,6 +144,10 @@ const getConfigLang = (lang: string) => {
       return enGB;
     case 'de':
       return deDE;
+    case 'pl':
+      return plPl;
+    case 'cz':
+      return csCZ;
     default:
       return enGB;
   }
