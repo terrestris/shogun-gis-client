@@ -247,7 +247,6 @@ export default {
       },
       notificationApplyText:{
         title: 'Änderungen wurden erfolgreich gespeichert!',
-        notSelected: 'Bitte eine Geometrie auswählen.'
       },
       SaveButton: {
         title: 'Speichern'
@@ -527,7 +526,6 @@ export default {
       },
       notificationApplyText:{
         title: 'Changes were applied successfully!',
-        notSelected: 'Please select a geometry.'
       },
       SaveButton: {
         title: 'Save'

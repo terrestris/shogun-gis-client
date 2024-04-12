@@ -147,12 +147,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
 
   const onFinish = (input: FormData) => {
     if (!selectedFeature) {
-      notification.destroy();
-      notification.error({
-        message: (t('notificationApplyText.notSelected')),
-        placement: 'top',
-        duration: 3.0
-      });
       return;
     }
     notification.destroy();
@@ -306,6 +300,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
               type="primary"
               htmlType="submit"
               disabled={!isFormValid}
+              hidden={selectedFeature ? false: true}
             >
               {t('Attribution.submit')}
             </Button>
