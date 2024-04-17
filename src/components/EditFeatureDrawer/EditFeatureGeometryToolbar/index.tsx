@@ -174,11 +174,17 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   };
 
   const onDrawEnd = (e: OlDrawEvent) => {
-    updateRevision();
+    // overwrite existing geometry of feature
     if (!feature.geometry.type.toLocaleLowerCase().startsWith('multi')) {
-      // replace the existing geometry by the new one
-      editLayer?.getSource()?.clear();
+      const source = editLayer?.getSource();
+      const existingFeature = source?.getFeatures()[0];
+      if (existingFeature) {
+        // drawbutton automatically adds the feature to the source so we need to remove it again
+        source?.once('addfeature', (e2) => source.removeFeature(e2.feature!));
+        existingFeature.setGeometry(e.feature.getGeometry());
+      }
     }
+    updateRevision();
   };
 
   const updateRevision = () => {
