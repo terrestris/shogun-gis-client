@@ -127,7 +127,8 @@ export interface ThemeProperties extends React.CSSProperties {
 enum LoadingErrorCode {
   APP_ID_NOT_SET = 'APP_ID_NOT_SET',
   APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND',
-  APP_UNAUTHORIZED = 'APP_UNAUTHORIZED'
+  APP_UNAUTHORIZED = 'APP_UNAUTHORIZED',
+  APP_CONFIG_STATIC_NOT_FOUND = 'APP_CONFIG_STATIC_NOT_FOUND'
 }
 
 const client = new SHOGunAPIClient({
@@ -169,6 +170,29 @@ const getApplicationConfiguration = async (applicationId: number) => {
     Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
   }
 };
+
+const getStaticApplicationConfiguration = async (staticAppContextUrl: string) => {
+  try {
+    Logger.info(`Loading static application`);
+
+    const response = await fetch(staticAppContextUrl);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error status: ${response.status}`);
+    }
+
+    const application = await response.json();
+
+    Logger.info(`Successfully loaded static application`);
+
+    return application;
+  } catch (error) {
+    if ((error as Error).message.indexOf('401') > -1) {
+      throw new Error(LoadingErrorCode.APP_UNAUTHORIZED);
+    }
+    Logger.error(`Error while loading static application: ${error}`);
+  }
+}
 
 const getApplicationInfo = async () => {
   try {
@@ -348,7 +372,17 @@ const setupSHOGunMap = async (application: Application) => {
 
   view.setConstrainResolution(true);
 
-  const layers = await parser.parseLayerTree(application, projection);
+  let layers;
+
+  console.log('test')
+
+  if (!ClientConfiguration.layerConfigUrl) {
+    layers = await parser.parseLayerTree(application, projection);
+  } else {
+    const response = await fetch(ClientConfiguration.layerConfigUrl);
+    const layersConfig = await response.json();
+    layers = await parser.parseLayerTreeNodes(application, layersConfig, projection);
+  }
 
   return new OlMap({
     view,
@@ -595,19 +629,22 @@ const renderApp = async () => {
       client.setKeycloak(keycloak);
     }
 
-    const applicationId = parseInt(UrlUtil.getQueryParam(window.location.href, 'applicationId'), 10);
+    const applicationIdString = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+    const applicationId = applicationIdString ? parseInt(applicationIdString, 10) : undefined;
 
-    if (!applicationId) {
-      Logger.info('No application ID given, can\'t load any configuration.');
-    }
-
-    if (!applicationId && !ClientConfiguration.enableFallbackConfig) {
+    if (!applicationId && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
       throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
     }
 
     let appConfig;
     if (applicationId) {
       appConfig = await getApplicationConfiguration(applicationId);
+    } else if (ClientConfiguration.staticAppConfigUrl) {
+      appConfig = await getStaticApplicationConfiguration(ClientConfiguration.staticAppConfigUrl);
+
+      if (!appConfig) {
+        throw new Error(LoadingErrorCode.APP_CONFIG_STATIC_NOT_FOUND);
+      }
     }
 
     if (!appConfig && !ClientConfiguration.enableFallbackConfig) {
@@ -640,17 +677,19 @@ const renderApp = async () => {
       document.body.style.setProperty(key, style[key as keyof ThemeProperties] as string);
     });
 
-    setApplicationTitle();
-
     setApplicationToStore(appConfig);
 
-    const appInfo = await getApplicationInfo();
+    setApplicationTitle();
 
-    setAppInfoToStore(appInfo);
+    if (ClientConfiguration.shogunBase) {
+      const appInfo = await getApplicationInfo();
 
-    const user = await getUser(appInfo?.userId);
+      setAppInfoToStore(appInfo);
 
-    setUserToStore(user);
+      const user = await getUser(appInfo?.userId);
+
+      setUserToStore(user);
+    }
 
     const userRoles: string[] | undefined =
       client?.getKeycloak()?.tokenParsed?.realm_access?.roles;
@@ -699,6 +738,8 @@ const renderApp = async () => {
       document.getElementById('app')
     );
   } catch (error) {
+    Logger.error(error);
+
     const loadingMask = document.querySelectorAll('.loadmask')[0];
 
     if (loadingMask) {
@@ -728,6 +769,10 @@ const renderApp = async () => {
       errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
         applicationId: appId
       });
+    }
+
+    if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_STATIC_NOT_FOUND) {
+      errorDescription = i18n.t('Index.errorDescriptionAppConfigStaticNotFound');
     }
 
     render(

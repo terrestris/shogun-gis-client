@@ -50,7 +50,7 @@
     "@terrestris/react-geo": "^23.3.0",
     "@terrestris/react-util": "^3.0.0",
     "@terrestris/shogun-e2e-tests": "^1.0.4",
-    "@terrestris/shogun-util": "^7.2.0",
+    "@terrestris/shogun-util": "^7.3.2",
     "antd": "^4.24.4",
     "color": "^4.2.3",
     "dotenv": "^16.3.1",

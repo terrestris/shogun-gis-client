@@ -59,11 +59,13 @@ declare module 'clientConfig' {
     featureEditRoles?: FeatureEditConfiguration;
     wfsLockFeatureEnabled?: boolean;
     enableFallbackConfig?: boolean;
+    staticAppConfigUrl?: string;
+    layerConfigUrl?: string;
   };
   const config: ClientConfiguration;
 
   export default config;
-};
+}
 
 // todo: remove when react-geo test util types are exported properly
 declare module '@terrestris/react-geo/dist/Util/rtlTestUtils';
