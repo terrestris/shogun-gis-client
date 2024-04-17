@@ -1,3 +1,17 @@
+## [7.5.3](https://github.com/terrestris/shogun-gis-client/compare/v7.5.2...v7.5.3) (2024-04-17)
+
+
+### Dependencies
+
+* update commitlint ([1b1f939](https://github.com/terrestris/shogun-gis-client/commit/1b1f939e9b5aa0f66ddf19acd079124666b61aaf))
+* update commitlint config ([854d623](https://github.com/terrestris/shogun-gis-client/commit/854d6232bc1b69db989190a1051c5d975ec5fc1a))
+* update package-lock ([65b1a1d](https://github.com/terrestris/shogun-gis-client/commit/65b1a1d681626986adbeebd1a0822a72b10d6150))
+
+
+### Bugfixes
+
+* update onDrawEnd to really replace the geometry ([8c031a7](https://github.com/terrestris/shogun-gis-client/commit/8c031a75fa059b3040258e78b631a1aea6c9d3f8))
+
 ## [7.5.2](https://github.com/terrestris/shogun-gis-client/compare/v7.5.1...v7.5.2) (2024-04-12)
 
 
