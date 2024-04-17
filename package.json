@@ -79,7 +79,7 @@
     "@babel/runtime": "^7.20.6",
     "@casualbot/jest-sonar-reporter": "^2.2.5",
     "@commitlint/cli": "^19.2.2",
-    "@commitlint/config-conventional": "^19.0.3",
+    "@commitlint/config-conventional": "^19.2.2",
     "@playwright/test": "^1.36.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@semantic-release/changelog": "^6.0.2",
