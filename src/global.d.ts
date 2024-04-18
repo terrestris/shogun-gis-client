@@ -35,7 +35,7 @@ declare module 'clientConfig' {
     solrQueryConfig?: SolrQueryConfig;
   };
   type ClientConfiguration = {
-    shogunBase?: string;
+    shogunBase?: string | false;
     keycloak?: {
       enabled?: boolean;
       host?: string;

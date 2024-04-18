@@ -131,9 +131,9 @@ enum LoadingErrorCode {
   APP_CONFIG_STATIC_NOT_FOUND = 'APP_CONFIG_STATIC_NOT_FOUND'
 }
 
-const client = new SHOGunAPIClient({
+const client = ClientConfiguration.shogunBase !== false ? new SHOGunAPIClient({
   url: ClientConfiguration.shogunBase || '/'
-});
+}) : undefined;
 
 const parser = new SHOGunApplicationUtil({
   client
@@ -154,11 +154,11 @@ const getConfigLang = (lang: string) => {
   }
 };
 
-const getApplicationConfiguration = async (applicationId: number) => {
+const getApplicationConfiguration = async (shogunClient: SHOGunAPIClient, applicationId: number) => {
   try {
     Logger.info(`Loading application with ID ${applicationId}`);
 
-    const application = await client.application().findOne(applicationId);
+    const application = await shogunClient.application().findOne(applicationId);
 
     Logger.info(`Successfully loaded application with ID ${applicationId}`);
 
@@ -194,11 +194,11 @@ const getStaticApplicationConfiguration = async (staticAppContextUrl: string) =>
   }
 };
 
-const getApplicationInfo = async () => {
+const getApplicationInfo = async (shogunClient: SHOGunAPIClient) => {
   try {
     Logger.info('Loading application info');
 
-    const appInfo = await client.info().getAppInfo();
+    const appInfo = await shogunClient.info().getAppInfo();
 
     Logger.info('Successfully loaded application info');
 
@@ -208,7 +208,7 @@ const getApplicationInfo = async () => {
   }
 };
 
-const getUser = async (userId?: number) => {
+const getUser = async (shogunClient: SHOGunAPIClient, userId?: number) => {
   if (!userId) {
     Logger.info('No user ID given, can\'t load it\'s details.');
     return;
@@ -217,7 +217,7 @@ const getUser = async (userId?: number) => {
   try {
     Logger.info(`Loading user with ID ${userId}`);
 
-    const user = await client.user().findOne(userId);
+    const user = await shogunClient.user().findOne(userId);
 
     Logger.info(`Successfully loaded user with ID ${userId}`);
 
@@ -622,7 +622,7 @@ const renderApp = async () => {
 
     const keycloak = await initKeycloak();
 
-    if (keycloak) {
+    if (keycloak && client) {
       client.setKeycloak(keycloak);
     }
 
@@ -634,8 +634,8 @@ const renderApp = async () => {
     }
 
     let appConfig;
-    if (applicationId) {
-      appConfig = await getApplicationConfiguration(applicationId);
+    if (applicationId && client) {
+      appConfig = await getApplicationConfiguration(client, applicationId);
     } else if (ClientConfiguration.staticAppConfigUrl) {
       appConfig = await getStaticApplicationConfiguration(ClientConfiguration.staticAppConfigUrl);
 
@@ -678,12 +678,12 @@ const renderApp = async () => {
 
     setApplicationTitle();
 
-    if (ClientConfiguration.shogunBase) {
-      const appInfo = await getApplicationInfo();
+    if (client) {
+      const appInfo = await getApplicationInfo(client);
 
       setAppInfoToStore(appInfo);
 
-      const user = await getUser(appInfo?.userId);
+      const user = await getUser(client, appInfo?.userId);
 
       setUserToStore(user);
     }
