@@ -373,9 +373,6 @@ const setupSHOGunMap = async (application: Application) => {
   view.setConstrainResolution(true);
 
   let layers;
-
-  console.log('test')
-
   if (!ClientConfiguration.layerConfigUrl) {
     layers = await parser.parseLayerTree(application, projection);
   } else {
