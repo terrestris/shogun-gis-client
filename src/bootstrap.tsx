@@ -173,7 +173,7 @@ const getApplicationConfiguration = async (applicationId: number) => {
 
 const getStaticApplicationConfiguration = async (staticAppContextUrl: string) => {
   try {
-    Logger.info(`Loading static application`);
+    Logger.info('Loading static application');
 
     const response = await fetch(staticAppContextUrl);
 
@@ -183,7 +183,7 @@ const getStaticApplicationConfiguration = async (staticAppContextUrl: string) =>
 
     const application = await response.json();
 
-    Logger.info(`Successfully loaded static application`);
+    Logger.info('Successfully loaded static application');
 
     return application;
   } catch (error) {
@@ -192,7 +192,7 @@ const getStaticApplicationConfiguration = async (staticAppContextUrl: string) =>
     }
     Logger.error(`Error while loading static application: ${error}`);
   }
-}
+};
 
 const getApplicationInfo = async () => {
   try {
