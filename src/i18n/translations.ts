@@ -162,6 +162,7 @@ export default {
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        errorDescriptionAppConfigStaticNotFound: 'Die Konfiguration der Applikation konnte nicht geladen werden.',
         permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.'
       },
       Nominatim: {
@@ -429,6 +430,7 @@ export default {
         errorDescription: 'An unexpected error occurred while loading the application.',
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
+        errorDescriptionAppConfigStaticNotFound: 'The configuration of the application could not be loaded correctly.',
         permissionDeniedUnauthorized: 'This application is not public. Authentication required.'
       },
       Nominatim: {

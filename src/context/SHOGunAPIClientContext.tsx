@@ -3,7 +3,7 @@ import React from 'react';
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type SHOGunAPIClientProviderProps = {
-  client: SHOGunAPIClient;
+  client?: SHOGunAPIClient;
   children: JSX.Element;
 };
 
@@ -15,7 +15,7 @@ export const SHOGunAPIClientProvider: React.FC<SHOGunAPIClientProviderProps> = (
 }): JSX.Element => {
   return (
     <SHOGunAPIClientContext.Provider
-      value={client}
+      value={client ?? null}
     >
       {children}
     </SHOGunAPIClientContext.Provider>
