@@ -32,6 +32,7 @@ import MapFishPrintV3GeoJsonSerializer
 import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
 import MapFishPrintV3WMTSSerializer
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
+import MapFishPrintV3XYZSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3XYZSerializer';
 
 import { LayerUtil } from '@terrestris/ol-util';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
@@ -203,6 +204,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         new MapFishPrintV3OSMSerializer(),
         new MapFishPrintV3WMTSSerializer(),
         new SHOGunMapFishPrintV3WMSSerializer(),
+        new MapFishPrintV3XYZSerializer(),
         new SHOGunMapFishPrintV3TiledWMSSerializer()
       ],
       legendFilter
