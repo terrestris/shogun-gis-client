@@ -101,7 +101,7 @@ import {
   setSearchEngines
 } from './store/searchEngines';
 import {
-  createReducer,
+  createReducer, dynamicMiddleware,
   store
 } from './store/store';
 import {
@@ -563,6 +563,10 @@ const loadPlugins = async (map: OlMap) => {
       if (clientPluginDefault.reducers) {
         const reducers = createReducer(clientPluginDefault.reducers);
         store.replaceReducer(reducers);
+      }
+
+      if (Array.isArray(clientPluginDefault.middlewares)) {
+        clientPluginDefault.middlewares?.forEach(mw => dynamicMiddleware.addMiddleware(mw));
       }
 
       clientPlugins.push(clientPluginDefault);

@@ -2,8 +2,6 @@ import React, {
   useEffect
 } from 'react';
 
-import _isEmpty from 'lodash/isEmpty';
-
 import { ObjectEvent as OlObjectEvent } from 'ol/Object';
 
 import {
