@@ -1,3 +1,27 @@
+## [8.0.0](https://github.com/terrestris/shogun-gis-client/compare/v7.5.3...v8.0.0) (2024-04-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* required @reduxjs/toolkit is now v2.2.3
+
+### Dependencies
+
+* bump @reduxjs/toolkit to v 2.2.3 ([6c4773f](https://github.com/terrestris/shogun-gis-client/commit/6c4773fbf5eff63b2374d46f8ac70f194f9a68ca))
+* code style ([6d98add](https://github.com/terrestris/shogun-gis-client/commit/6d98addd60f61f936ca326dac8470eef27fbb092))
+
+
+### Features
+
+* allow addition of middlewares in plugin definition ([ec3654d](https://github.com/terrestris/shogun-gis-client/commit/ec3654d8d1df36e3a12a15a27f56dc96ee6a887d))
+* allow static configurations without calling shogun ([889f489](https://github.com/terrestris/shogun-gis-client/commit/889f4890c56b621ae9d919b931a685d0b96f29f3))
+
+
+### Bugfixes
+
+* document configuration parameters ([3a85e5c](https://github.com/terrestris/shogun-gis-client/commit/3a85e5cc5e9ecb7b030660c2c502746f8f214ae8))
+* remove debug message and use correct version of shogun-util ([9ba524a](https://github.com/terrestris/shogun-gis-client/commit/9ba524a5a71623c8c2660a633068bd6429075e9b))
+
 ## [7.5.3](https://github.com/terrestris/shogun-gis-client/compare/v7.5.2...v7.5.3) (2024-04-17)
 
 
