@@ -1,6 +1,9 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
-import type { Middleware, Reducer } from '@reduxjs/toolkit';
+import type {
+  Middleware,
+  Reducer
+} from '@reduxjs/toolkit';
 
 import { CollapsePanelProps } from 'antd';
 import type OlMap from 'ol/Map';
