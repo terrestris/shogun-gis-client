@@ -1,6 +1,9 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
-import type { Reducer } from '@reduxjs/toolkit';
+import type {
+  Middleware,
+  Reducer
+} from '@reduxjs/toolkit';
 
 import { CollapsePanelProps } from 'antd';
 import type OlMap from 'ol/Map';
@@ -120,6 +123,11 @@ export type ClientPlugin = {
   reducers?: {
     [key: string]: Reducer;
   };
+  /**
+   * A set of middlewares that should be added to the store
+   * especially useful for usage of redux-rtk
+   */
+  middlewares?: Middleware[];
 };
 
 export type ClientPluginInternal = ClientPlugin & {
