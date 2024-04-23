@@ -65,6 +65,7 @@ module.exports = {
       title: 'SHOGun Client',
       template: path.join(__dirname, 'resources', 'public', 'index.ejs'),
       hash: true,
+      appPrefix: process.env.HTML_BASE_URL ?? '',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
