@@ -127,11 +127,6 @@ module.exports = {
           singleton: true,
           eager: true,
           requiredVersion: deps['react-i18next']
-        },
-        'ol/': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps.ol
         }
       }
     })
