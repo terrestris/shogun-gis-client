@@ -6,6 +6,8 @@ import {
   FormProps, Spin, Tabs
 } from 'antd';
 
+import { Coordinate as OlCoordinate } from 'ol/coordinate';
+import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
@@ -20,8 +22,7 @@ import { useTranslation } from 'react-i18next';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import CoordinateInfo, {
-  CoordinateInfoProps,
-  CoordinateInfoState
+  CoordinateInfoProps
 } from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
@@ -54,6 +55,14 @@ export type FeatureInfoConfig = {
 };
 
 export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
+
+export interface CoordinateInfoState {
+  clickCoordinate: OlCoordinate | null;
+  features: {
+    [layerName: string]: OlFeature[];
+  };
+  loading: boolean;
+}
 
 type LayerIndex = {
   layerName: string;
@@ -273,7 +282,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     <div className='feature-info-panel'>
       <CoordinateInfo
         featureCount={10}
-        map={map}
         queryLayers={queryLayers}
         resultRenderer={resultRenderer}
         fetchOpts={getFetchOpts}

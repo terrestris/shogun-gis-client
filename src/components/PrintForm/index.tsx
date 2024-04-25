@@ -12,6 +12,7 @@ import { FormProps } from 'antd/lib/form/Form';
 import ClientConfiguration from 'clientConfig';
 import _isNil from 'lodash/isNil';
 
+import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
@@ -66,7 +67,7 @@ export interface PrintFormProps extends Omit<FormProps, 'form'> {
   outputFormats?: string[];
 }
 
-export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlSourceVector<OlGeometry>>>>;
+export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlSourceVector<OlFeature<OlGeometry>>>>>;
 
 export const PrintForm: React.FC<PrintFormProps> = ({
   active,
