@@ -109,14 +109,15 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
         {t('WmsTimeSlider.title')}
       </Divider>
       {
-        marks ?
+        marks && min && max ?
           <TimeSlider
+            formatString={''}
+            defaultValue={''}
             min={min}
             max={max}
             marks={marks}
             value={value}
             onChange={onChange}
-            step={null}
             {...passThroughProps}
           /> :
           <span>

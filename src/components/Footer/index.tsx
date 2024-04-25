@@ -118,7 +118,6 @@ export const Footer: React.FC<FooterProps> = ({
         {t('Footer.scale')}:&nbsp;
         <ScaleCombo
           aria-label='scalecombo-dropdown'
-          map={map}
         />
         <Divider
           type="vertical"
