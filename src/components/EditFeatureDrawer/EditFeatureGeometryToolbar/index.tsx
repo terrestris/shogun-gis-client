@@ -25,6 +25,7 @@ import { t } from 'i18next';
 import _isEmpty from 'lodash/isEmpty';
 
 import { isEmpty as isEmptyOlExtent } from 'ol/extent';
+import OlFeature from 'ol/Feature';
 import OlFormatGeoJson from 'ol/format/GeoJSON';
 import OlGeometry from 'ol/geom/Geometry';
 import { DrawEvent as OlDrawEvent } from 'ol/interaction/Draw';
@@ -78,7 +79,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   const map = useMap();
   const dispatch = useAppDispatch();
 
-  const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector<OlGeometry>>>();
+  const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector<OlFeature<OlGeometry>>>>();
   const [, setRevision] = useState<number>(0);
 
   const gjFormat = useMemo(() => new OlFormatGeoJson(), []);
@@ -260,6 +261,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           {
             allowedEditMode.includes('DELETE') ?
               <DeleteButton
+                active={true}
                 icon={
                   <FontAwesomeIcon icon={faTrash} />
                 }

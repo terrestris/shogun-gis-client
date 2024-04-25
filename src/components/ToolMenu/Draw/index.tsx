@@ -190,7 +190,7 @@ export const Draw: React.FC<DrawProps> = ({
   return (
     <>
       <ToggleGroup
-        selectedName={selectedButton}
+        selected={selectedButton}
         onChange={onToggleChange}
       >
         {showDrawPoint ? (
@@ -299,7 +299,7 @@ export const Draw: React.FC<DrawProps> = ({
           <ModifyButton
             name="draw-modify"
             type="link"
-            onToggle={onModifyButtonToggle}
+            onClick={() => onModifyButtonToggle}
           >
             <FontAwesomeIcon
               icon={faPenToSquare}
@@ -315,6 +315,7 @@ export const Draw: React.FC<DrawProps> = ({
           <DeleteButton
             name="draw-delete"
             type="link"
+            active={true}
           >
             <FontAwesomeIcon
               icon={faEraser}

@@ -5,6 +5,7 @@ import {
 
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
+import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
 import OlVectorLayer from 'ol/layer/Vector';
 import OlVectorSource from 'ol/source/Vector';
@@ -26,7 +27,7 @@ interface OwnProps {
    * The vector layer which will be used for digitize features.
    * The standard digitizeLayer can be retrieved via `DigitizeUtil.getDigitizeLayer(map)`.
    */
-  digitizeLayer?: OlVectorLayer<OlVectorSource<OlGeometry>>;
+  digitizeLayer?: OlVectorLayer<OlVectorSource<OlFeature<OlGeometry>>>;
 }
 
 export type DeleteAllButtonProps = OwnProps & SimpleButtonProps;
@@ -41,7 +42,7 @@ export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
   digitizeLayer,
   ...passThroughProps
 }) => {
-  const [layers, setLayers] = useState<[OlVectorLayer<OlVectorSource<OlGeometry>>]|null>(null);
+  const [layers, setLayers] = useState<[OlVectorLayer<OlVectorSource<OlFeature<OlGeometry>>>]|null>(null);
 
   const map = useMap();
 

@@ -48,7 +48,6 @@ export const Measure: React.FC<MeasureProps> = ({
         <MeasureButton
           geodesic
           name="line"
-          map={map}
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
@@ -62,7 +61,6 @@ export const Measure: React.FC<MeasureProps> = ({
         <MeasureButton
           geodesic
           name="poly"
-          map={map}
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}
