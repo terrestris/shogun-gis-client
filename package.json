@@ -47,11 +47,20 @@
     "@terrestris/mapfish-print-manager": "^12.0.0",
     "@terrestris/ol-util": "^17.0.0",
     "@terrestris/react-geo": "file:terrestris-react-geo-23.3.0.tgz",
+<<<<<<< HEAD
     "@terrestris/react-util": "file:terrestris-react-util-4.0.0-beta.4.tgz",
     "@terrestris/shogun-e2e-tests": "^1.0.8",
     "@terrestris/shogun-util": "^8.1.0",
     "antd": "^5.16.4",
     "dotenv": "^16.4.5",
+=======
+    "@terrestris/react-util": "^4.0.0-beta.4",
+    "@terrestris/shogun-e2e-tests": "^1.0.4",
+    "@terrestris/shogun-util": "^8.1.0",
+    "antd": "^5.16.0",
+    "color": "^4.2.3",
+    "dotenv": "^16.3.1",
+>>>>>>> 7bcff083 (refactor: fix typechecks)
     "geostyler": "^14.1.2",
     "i18next": "^23.11.0",
     "i18next-browser-languagedetector": "^8.0.0",
