@@ -54,7 +54,11 @@ export const Measure: React.FC<MeasureProps> = ({
       {showMeasureDistance ? (
         <MeasureButton
           geodesic
+<<<<<<< HEAD
           value="line"
+=======
+          name="line"
+>>>>>>> 7bcff083 (refactor: fix typechecks)
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
@@ -70,7 +74,11 @@ export const Measure: React.FC<MeasureProps> = ({
       {showMeasureArea ? (
         <MeasureButton
           geodesic
+<<<<<<< HEAD
           value="poly"
+=======
+          name="poly"
+>>>>>>> 7bcff083 (refactor: fix typechecks)
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}

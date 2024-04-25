@@ -98,7 +98,7 @@ export const JsonModal: React.FC<JsonModalProps> = ({
             showFoldingControls: 'always',
             selectionHighlight: false,
             renderLineHighlight: 'none',
-            occurrencesHighlight: 'off'
+            occurrencesHighlight: false
           }}
         />
       </Modal>

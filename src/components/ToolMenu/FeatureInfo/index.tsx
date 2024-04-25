@@ -6,6 +6,8 @@ import {
   FormProps, Spin, Tabs
 } from 'antd';
 
+import { Coordinate as OlCoordinate } from 'ol/coordinate';
+import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
@@ -54,6 +56,14 @@ export type FeatureInfoConfig = {
 };
 
 export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
+
+export interface CoordinateInfoState {
+  clickCoordinate: OlCoordinate | null;
+  features: {
+    [layerName: string]: OlFeature[];
+  };
+  loading: boolean;
+}
 
 type LayerIndex = {
   layerName: string;
