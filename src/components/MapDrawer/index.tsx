@@ -34,7 +34,7 @@ export const MapDrawer: React.FC<MapDrawerProps> = ({
 
   return (
     <Drawer
-      className="map-drawer"
+      rootClassName="map-drawer"
       mask={false}
       open={open}
       placement="right"
