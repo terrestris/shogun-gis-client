@@ -714,16 +714,6 @@ const renderApp = async () => {
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
-    ConfigProvider.config({
-      theme: {
-        token: {
-          colorPrimary: Color(style['--primaryColor']).isLight() ?
-            Color(style['--primaryColor']).darken(0.5).hex() :
-            style['--primaryColor']
-        }
-      }
-    });
-
     if (Color(style['--secondaryColor'])?.isLight() && Color(style['--primaryColor'])?.isLight()) {
       style['--complementaryColor'] = (Color(style['--complementaryColor']).darken(0.5).hexa());
     } else if (Color(style['--secondaryColor'])?.isDark() && Color(style['--primaryColor'])?.isDark()) {
@@ -781,7 +771,18 @@ const renderApp = async () => {
         <React.Suspense fallback={<span></span>}>
           <SHOGunAPIClientProvider client={client}>
             <PluginProvider plugins={plugins}>
-              <ConfigProvider locale={getConfigLang(i18n.language)}>
+              <ConfigProvider
+                locale={getConfigLang(i18n.language)}
+                theme={{
+                  token: {
+                    colorPrimary: Color(style['--primaryColor']).isLight() ?
+                      Color(style['--primaryColor']).darken(0.5).hex() :
+                      style['--primaryColor'],
+                    colorLink: style['--complementaryColor'],
+                    colorLinkHover: style['--secondaryColor']
+                  }
+                }}
+              >
                 <Provider store={store}>
                   <MapContext.Provider value={map}>
                     <App />
