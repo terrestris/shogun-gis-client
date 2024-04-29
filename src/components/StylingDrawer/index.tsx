@@ -39,7 +39,7 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
       placement="right"
       onClose={onClose}
       open={isStylingDrawerVisible}
-      className="color-pick-drawer"
+      rootClassName="color-pick-drawer"
       maskClosable={false}
       mask={false}
       {...passThroughProps}
