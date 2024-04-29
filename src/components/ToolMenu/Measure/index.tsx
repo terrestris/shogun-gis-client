@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   faDrawPolygon,
@@ -38,38 +38,50 @@ export const Measure: React.FC<MeasureProps> = ({
 
   const map = useMap();
 
+  const [selected, setSelected] = useState<string>();
+
   if (!map) {
     return <></>;
   }
 
   return (
-    <ToggleGroup>
+    <ToggleGroup
+      selected={selected}
+      onChange={(evt, value) => {
+        setSelected(value);
+      }}
+    >
       {showMeasureDistance ? (
         <MeasureButton
           geodesic
-          name="line"
+          value="line"
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
+          buttonTransparent={true}
         >
           <FontAwesomeIcon icon={faPenRuler} />
           <span className="measure-text">{t('Measure.line')}</span>
         </MeasureButton>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
 
       {showMeasureArea ? (
         <MeasureButton
           geodesic
-          name="poly"
+          value="poly"
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}
+          buttonTransparent={true}
         >
           <FontAwesomeIcon icon={faDrawPolygon} />
           <span className="measure-text">{t('Measure.area')}</span>
         </MeasureButton>
-      ) : <></>}
-
+      ) : (
+        <></>
+      )}
     </ToggleGroup>
   );
 };
