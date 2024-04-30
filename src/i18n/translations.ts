@@ -234,8 +234,20 @@ export default {
         valuePlaceholder: 'Wert',
         keyInUse: 'Dieser Name existiert bereits!'
       },
+      AttributionPopConfirm:{
+        title: 'Attribut löschen?',
+        okText: 'Löschen',
+        cancelText: 'Abbrechen'
+      },
       ResetButton: {
         title: 'Zurücksetzen'
+      },
+      notificationDeleteText:{
+        title: 'Drücke "Speichern" um die Änderung zu bestätigen.',
+        info: 'Wenn "Übernehmen" nicht geklickt wird, werden alle an dieser Zeichnung vorgenommenen Änderungen verworfen.'
+      },
+      notificationApplyText:{
+        title: 'Änderungen wurden erfolgreich gespeichert!'
       },
       SaveButton: {
         title: 'Speichern'
@@ -502,8 +514,20 @@ export default {
         valuePlaceholder: 'Value',
         keyInUse: 'Key already exists!'
       },
+      AttributionPopConfirm:{
+        title: 'Delete property?',
+        okText: 'Delete',
+        cancelText: 'Cancel'
+      },
       ResetButton: {
         title: 'Reset'
+      },
+      notificationDeleteText:{
+        title: 'Press "Apply" to confirm changes.',
+        info: 'Not pressing "Apply" will reverse all changes made to this drawing.'
+      },
+      notificationApplyText:{
+        title: 'Changes were applied successfully!'
       },
       SaveButton: {
         title: 'Save'

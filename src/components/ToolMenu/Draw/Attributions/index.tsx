@@ -1,25 +1,56 @@
 import React, {
-  useEffect, useState
+  useCallback,
+  useEffect,
+  useState
 } from 'react';
 
 import {
-  MinusCircleOutlined, PlusOutlined
-} from '@ant-design/icons';
+  faMinusSquare
+} from '@fortawesome/free-regular-svg-icons';
 import {
-  Button, Drawer, DrawerProps, Form, Row
+  faPlus
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
+  Button,
+  Drawer,
+  DrawerProps,
+  Form,
+  FormListFieldData,
+  Popconfirm,
+  notification,
+  Row
 } from 'antd';
-import _cloneDeep from 'lodash/cloneDeep';
+
 import OlFeature from 'ol/Feature';
+import OlGeometry from 'ol/geom/Geometry';
 import Select from 'ol/interaction/Select';
 
-import { useTranslation } from 'react-i18next';
+import {
+  useTranslation
+} from 'react-i18next';
 
 import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
+import {
+  DigitizeUtil
+} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+
+import AttributionRow from './AttributionRow';
+
 import './index.less';
-import AttributionRow, { InputFields } from './AttributionRow';
+
+export type FormData = {
+  fields?: [{
+    name?: string;
+    value?: string;
+  }];
+};
 
 export interface AttributionDrawerProps extends DrawerProps {
   onCustomClose?: (open: boolean) => void;
@@ -27,14 +58,16 @@ export interface AttributionDrawerProps extends DrawerProps {
 
 const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   onCustomClose,
+  open,
   onClose,
   ...passThroughProps
 }) => {
   const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [isFormValid, setIsFormIsValid] = useState(true);
-  const [currentProperties, setCurrentProperties] = useState<Record<string, any>>({});
-
-  const [form] = Form.useForm();
+  const [availableFeatureCollectionAttributes, setAvailableFeatureCollectionAttributes] = useState<string[]>([]);
+  const [availableFeatureAttributes, setAvailableFeatureAttributes] = useState<string[]>([]);
+  const [api, contextHolder] = notification.useNotification();
+  const [form] = Form.useForm<FormData>();
 
   const map = useMap();
 
@@ -42,26 +75,57 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     t
   } = useTranslation();
 
+  const updateAvailableFeatureAttributes = useCallback((fields: FormData) => {
+    const currentKeys = fields.fields
+      ?.map(field => field?.name?.toLowerCase())
+      .filter(key => key !== undefined);
+
+    setAvailableFeatureAttributes(availableFeatureCollectionAttributes.filter(o => !(currentKeys?.includes(o.toLowerCase()))));
+  }, [availableFeatureCollectionAttributes]);
+
   useEffect(() => {
-    const properties = selectedFeature?.getProperties();
-
-    setCurrentProperties({ ...properties });
-
-    const fs: any = {};
-    if (properties) {
-      Object.entries(properties).forEach(([key, value]) => {
-        fs[key] = {
-          name: key,
-          value: value
-        };
-      });
+    if (!map) {
+      return;
     }
 
-    form.setFieldValue('fields', {});
-    form.setFieldsValue({
-      fields: fs
+    const properties = selectedFeature?.getProperties();
+
+    form.setFieldValue('fields', []);
+
+    if (properties) {
+      const filteredPropertyEntries = Object.entries(properties)
+        .filter(([, value]) => !(value instanceof OlGeometry))
+        .map(([key, value]) => [key, value]);
+      const filteredProperties = Object.fromEntries(filteredPropertyEntries);
+
+      const formProperties = Object.entries(filteredProperties)
+        .map(([key, value]) => {
+          return {
+            name: key,
+            value: value
+          };
+        });
+
+      form.setFieldValue('fields', formProperties);
+    }
+
+    const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
+    const digitizedFeatures = digitizeLayer.getSource()?.getFeatures();
+
+    const featureCollectionAttributes: Set<string> = new Set();
+    digitizedFeatures?.forEach(feat => {
+      Object.keys(feat.getProperties()).forEach(prop => {
+        if (!(feat.get(prop) instanceof OlGeometry)) {
+          featureCollectionAttributes.add(prop);
+        }
+      });
     });
-  }, [selectedFeature, form]);
+    setAvailableFeatureCollectionAttributes(Array.from(featureCollectionAttributes));
+  }, [selectedFeature, form, map]);
+
+  useEffect(() => {
+    setSelectedFeature(undefined);
+  }, [open]);
 
   // todo revisit react-geo to make name of the slect-interaction configurable
   const selectInteraction = map?.getInteractions().getArray().filter(interaction => {
@@ -78,43 +142,38 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     });
   }
 
-  const handleClose = () => {
-    if (onCustomClose) {
-      onCustomClose(false);
-    }
-  };
-
-  const onFinish = (input: InputFields) => {
+  const onFinish = (input: FormData) => {
     if (!selectedFeature) {
       return;
     }
+    notification.destroy();
+    notification.success({
+      message: (t('notificationApplyText.title')),
+      placement: 'top',
+      duration: 3.5
+    });
 
-    if (Object.keys(currentProperties).length > 0) {
-      Object.entries(input.fields).forEach(([key, value]) => {
-        selectedFeature.set(value.name, value.value);
+    for (const property in selectedFeature.getProperties()) {
+      if (!(selectedFeature.get(property) instanceof OlGeometry)) {
+        selectedFeature.unset(property);
+      }
+    }
+
+    if (input.fields) {
+      Object.values(input.fields).forEach(field => {
+        if (!field?.name) {
+          return;
+        }
+        selectedFeature.set(field.name, field.value);
       });
-    } else {
-      selectedFeature.set('', '');
     }
   };
 
-  const onPropertyAdd = () => {
-    const newProps = {...currentProperties};
-    newProps[''] = '';
-    setCurrentProperties(newProps);
+  const remove = (rmFn: any, name: number) => {
+    rmFn(name);
   };
 
-  const remove = (keyToRemove: string) => {
-    const updatedProperties = {...currentProperties};
-
-    delete updatedProperties[keyToRemove];
-
-    selectedFeature?.unset(keyToRemove);
-
-    setCurrentProperties(updatedProperties);
-  };
-
-  const onKeyChange = async () => {
+  const onChange = async () => {
     try {
       await form.validateFields();
       setIsFormIsValid(true);
@@ -123,86 +182,128 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     }
   };
 
-  const getFormItems = () => {
-    const filteredProperties = currentProperties;
+  const onValuesChange = (changedFields: FormData, fields: FormData) => {
+    updateAvailableFeatureAttributes(fields);
+  };
 
-    if (filteredProperties.geometry) {
-      delete filteredProperties.geometry;
-    }
-
-    return Object.entries(filteredProperties).map(([key, value]) => {
+  const getFormItems = (fields: FormListFieldData[], rmFn: any) => {
+    return fields.map((field) => {
+      const removeAndMessage = () => {
+        notification.destroy();
+        notification.info({
+          message: (t('notificationDeleteText.title')),
+          description: (t('notificationDeleteText.info')),
+          placement: 'top',
+          duration: 6
+        });
+        remove(rmFn, field.name);
+      };
       return (
         <div
-          key={key}
+          key={field.key}
           className='attribute-row'
         >
           <AttributionRow
-            keyName={key}
-            key={key}
-            onChange={onKeyChange}
+            keyName={field.name}
+            key={field.key}
+            onChange={onChange}
+            options={availableFeatureAttributes}
           />
-          <MinusCircleOutlined
-            onClick={() => remove(key)}
-          />
+          <Popconfirm
+            title={t('AttributionPopConfirm.title')}
+            okText={t('AttributionPopConfirm.okText')}
+            cancelText={t('AttributionPopConfirm.cancelText')}
+            placement='topRight'
+            onConfirm={removeAndMessage}
+          >
+            {contextHolder}
+            <Button
+              className="remove-attribute-button"
+              type='primary'
+              danger={true}
+              icon={
+                <FontAwesomeIcon
+                  icon={faMinusSquare}
+                />
+              }
+            />
+          </Popconfirm>
         </div>
       );
     });
   };
 
   return (
-    <>
-      <Drawer
-        title={t('Attribution.title')}
-        className='attribution-drawer'
-        placement="right"
-        mask={false}
-        maskClosable={false}
-        onClose={handleClose}
-        {...passThroughProps}
-      >
+    <Drawer
+      title={t('Attribution.title')}
+      className="attribution-drawer"
+      placement="right"
+      mask={false}
+      maskClosable={false}
+      closable={false}
+      open={open}
+      {...passThroughProps}
+    >
+      {!selectedFeature &&
         <>
-          {!selectedFeature &&
-            <>
-              {t('Attribution.select')}
-            </>
-          }
+          {t('Attribution.select')}
         </>
-        <Row>
-          <Form
-            name="dynamic_form_nest_item"
-            onFinish={onFinish}
-            style={{ maxWidth: 600 }}
-            autoComplete="off"
-            form={form}
+      }
+      <Row>
+        <Form
+          onFinish={onFinish}
+          autoComplete="off"
+          form={form}
+          onValuesChange={onValuesChange}
+        >
+          <Form.List
+            name="fields"
           >
-            {
-              getFormItems()
-            }
-            <Form.Item>
-              {selectedFeature ?
-                <Button
-                  type="dashed"
-                  onClick={onPropertyAdd}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  {t('Attribution.add')}
-                </Button> :
-                <></>}
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={!isFormValid}
-              >
-                {t('Attribution.submit')}
-              </Button>
-            </Form.Item>
-          </Form>
-        </Row>
-      </Drawer>
-    </>
+            {(fields, {
+              add,
+              remove: rmFn
+            }) => (
+              <>
+                {
+                  getFormItems(fields, rmFn)
+                }
+                <Form.Item>
+                  {
+                    selectedFeature ?
+                      <Button
+                        type="dashed"
+                        onClick={() => {
+                          add();
+                        }}
+                        className="add-attribute-button"
+                        icon={
+                          <FontAwesomeIcon
+                            icon={faPlus}
+                          />
+                        }
+                      >
+                        {t('Attribution.add')}
+                      </Button> :
+                      <></>
+                  }
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+          <Form.Item>
+            <Button
+              className="submit-attributes-button"
+              type="primary"
+              htmlType="submit"
+              disabled={!isFormValid}
+              hidden={selectedFeature ? false: true}
+            >
+              {t('Attribution.submit')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Row>
+    </Drawer>
   );
 };
 

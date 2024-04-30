@@ -4,9 +4,28 @@
   bottom: var(--footerHeight);
   z-index: 499;
 
-  .anticon.anticon-minus-circle {
-    padding-bottom: 25px;
-    padding-left: 5px;
+  form {
+    width: 100%;
+
+    .attribute-row {
+      display: flex;
+
+      .ant-form-item {
+        flex: 1;
+      }
+    }
+
+    .add-attribute-button {
+      width: 100%;
+
+      span {
+        padding-left: 5px;
+      }
+    }
+
+    .submit-attributes-button {
+      width: 100%;
+    }
   }
 }
 
