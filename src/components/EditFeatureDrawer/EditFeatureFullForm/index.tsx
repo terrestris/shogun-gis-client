@@ -93,7 +93,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
     const updatedFeatures = await executeGetFeature({
       layer: layer,
-      filter: equalTo('id', id)
+      filter: equalTo('ogc_fid', id)
     });
 
     if (
