@@ -112,7 +112,7 @@ jobs:
           echo "VERSION=$(node -pe "require('./package.json').version")" >> $GITHUB_ENV
 
       - name: SonarQube Scan 🔬
-        uses: kitabisa/sonarqube-action@v1.2.0
+        uses: kitabisa/sonarqube-action@v1.2.1
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
