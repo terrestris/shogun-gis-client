@@ -116,4 +116,4 @@ jobs:
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
-          projectVersion: ${{ VERSION }}
+          projectVersion: ${{ env.VERSION }}
