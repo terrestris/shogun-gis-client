@@ -88,7 +88,7 @@ export type ToolPanelConfig = {
   wrappedComponent: JSX.Element;
 };
 
-export type ToolMenuProps = {} & Partial<CollapsePanelProps>;
+export type ToolMenuProps = Partial<CollapsePanelProps>;
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
   ...restProps

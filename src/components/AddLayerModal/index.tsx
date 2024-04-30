@@ -48,7 +48,7 @@ import {
 
 import './index.less';
 
-export type AddLayerModalProps = {} & Partial<ModalProps>;
+export type AddLayerModalProps = Partial<ModalProps>;
 
 export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   ...restProps
