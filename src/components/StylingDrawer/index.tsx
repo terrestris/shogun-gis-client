@@ -16,7 +16,7 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { setStylingDrawerVisibility } from '../../store/stylingDrawerVisibility';
 import StylingComponent from '../ToolMenu/Draw/StylingDrawerButton/StylingComponent';
 
-export type StylingDrawerProps = DrawerProps & {};
+export type StylingDrawerProps = DrawerProps;
 
 export const StylingDrawer: React.FC<StylingDrawerProps> = ({
   ...passThroughProps

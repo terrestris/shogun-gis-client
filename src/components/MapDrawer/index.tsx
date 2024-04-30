@@ -14,7 +14,7 @@ import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 
 import './index.less';
 
-export type MapDrawerProps = DrawerProps & {};
+export type MapDrawerProps = DrawerProps;
 
 export const MapDrawer: React.FC<MapDrawerProps> = ({
   open,

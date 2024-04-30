@@ -32,7 +32,7 @@ import {
   useMap
 } from '@terrestris/react-geo/dist/Hook/useMap';
 
-export type StylingComponentProps = CardStyleProps & {};
+export type StylingComponentProps = CardStyleProps;
 
 export const StylingComponent: React.FC<StylingComponentProps> = ({
   ...passThroughProps

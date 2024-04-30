@@ -50,7 +50,7 @@ import EditFeatureSwitch from './EditFeatureSwitch';
 
 import './index.less';
 
-export type EditFeatureDrawerProps = MapDrawerProps & {};
+export type EditFeatureDrawerProps = MapDrawerProps;
 
 export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   ...passThroughProps

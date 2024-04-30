@@ -47,7 +47,7 @@ import LayerTreeContextMenu from './LayerTreeContextMenu';
 import './index.less';
 import LoadingIndicator from './LoadingIndicator';
 
-export type LayerTreeProps = {} & Partial<RgLayerTreeProps>;
+export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
 export type LayerTileLoadCounter = {
   [key: string]: {

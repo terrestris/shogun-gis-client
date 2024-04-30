@@ -93,7 +93,7 @@ export type LayerUploadResponse = {
   baseUrl: string;
 };
 
-export type UploadDataModalProps = {} & Partial<ModalProps>;
+export type UploadDataModalProps = Partial<ModalProps>;
 
 export const UploadDataModal: React.FC<UploadDataModalProps> = ({
   ...restProps

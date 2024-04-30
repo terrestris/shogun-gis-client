@@ -256,7 +256,7 @@ const setApplicationToStore = async (application?: Application) => {
   if (application.toolConfig && application.toolConfig.length > 0) {
     const availableTools: string[] = [];
     application.toolConfig
-      .map((tool: DefaultApplicationToolConfig) => {
+      .forEach((tool: DefaultApplicationToolConfig) => {
         if (tool.config.visible && tool.name !== 'search') {
           availableTools.push(tool.name);
         }

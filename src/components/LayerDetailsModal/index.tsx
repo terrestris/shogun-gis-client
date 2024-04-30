@@ -39,7 +39,7 @@ import LayerDetails from './LayerDetails';
 
 import './index.less';
 
-export type LayerDetailsModalProps = {} & Partial<ModalProps>;
+export type LayerDetailsModalProps = Partial<ModalProps>;
 
 export const LayerDetailsModal: React.FC<LayerDetailsModalProps> = ({
   ...restProps
