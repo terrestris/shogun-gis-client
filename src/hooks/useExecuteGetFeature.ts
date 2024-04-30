@@ -48,10 +48,10 @@ export const useExecuteGetFeature = () => {
 
     const source = opts.layer.getSource();
     if (source instanceof OlSourceImageWMS) {
-      url = (source as OlSourceImageWMS).getUrl();
+      url = source.getUrl();
     }
     if (source instanceof OlSourceTileWMS) {
-      const urls = (source as OlSourceTileWMS).getUrls();
+      const urls = source.getUrls();
       url = urls ? urls[0] : undefined;
     }
 

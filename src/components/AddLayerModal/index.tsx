@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 
 import {
-  Button,
   Input,
   Modal,
   ModalProps,

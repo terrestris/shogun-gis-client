@@ -19,9 +19,7 @@ import {
   InputProps
 } from 'antd';
 
-import ClientConfiguration, {
-  SolrConfig
-} from 'clientConfig';
+import ClientConfiguration from 'clientConfig';
 
 import _groupBy from 'lodash/groupBy';
 import _isNil from 'lodash/isNil';
@@ -79,7 +77,7 @@ import generateSolrQuery from '../../utils/generateSolrQuery';
 
 interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
-};
+}
 
 export type DataSearchResult = {
   [key: string]: string | string[] | number[];
@@ -137,7 +135,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
 
-  const allowedEditMode = useAppSelector(
+  useAppSelector(
     state => state.editFeature.userEditMode
   );
 
@@ -150,10 +148,8 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   }, []);
 
   const handleClickAway = (e: Event) => {
-    const parents = [];
     let target = e.target;
     while (target) {
-      parents.unshift(target);
       target = (target as Node).parentNode;
     }
 
@@ -470,14 +466,13 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       return;
     }
 
-    const onEditFeatureBtnClick = () => {
-      dispatch(setLayerId(getUid(layer)));
-      dispatch(showEditFeatureDrawer());
-      setResultsVisible(false);
-    };
-
     // button is temporarily disabled
     return [<></>];
+    // const onEditFeatureBtnClick = () => {
+    //   dispatch(setLayerId(getUid(layer)));
+    //   dispatch(showEditFeatureDrawer());
+    //   setResultsVisible(false);
+    // };
     // if (
     //   allowedEditMode.includes('CREATE') ||
     //   allowedEditMode.includes('DELETE') ||

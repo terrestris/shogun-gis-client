@@ -209,10 +209,11 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     };
 
     if (customPrintScales.length > 0) {
+      const reversedCustomPrintScales = [...customPrintScales].reverse();
       pManagerOpts = {
         ...pManagerOpts,
         ...{
-          customPrintScales: customPrintScales.reverse()
+          customPrintScales: reversedCustomPrintScales
         }
       };
     }

@@ -125,7 +125,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
 
     return allLayers.findIndex(l => {
       if (isWmsLayer(l)) {
-        const source = (l as WmsLayer).getSource();
+        const source = l.getSource();
         const unqualifiedMapLayerName = getUnqualifiedLayerName(source?.getParams().LAYERS);
         const unqualifiedLayerName = getUnqualifiedLayerName(layerName);
 

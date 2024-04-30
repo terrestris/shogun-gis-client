@@ -12,7 +12,7 @@ import MultiSearch from '../MultiSearch';
 
 import './index.less';
 
-interface SearchFieldProps extends InputProps { };
+interface SearchFieldProps extends InputProps { }
 
 export const SearchField: React.FC<SearchFieldProps> = (): JSX.Element => {
 

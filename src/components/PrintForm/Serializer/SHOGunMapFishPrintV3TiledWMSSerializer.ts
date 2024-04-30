@@ -1,5 +1,3 @@
-import defaultsDeep from 'lodash/defaultsDeep';
-
 import OlLayer from 'ol/layer/Layer';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
