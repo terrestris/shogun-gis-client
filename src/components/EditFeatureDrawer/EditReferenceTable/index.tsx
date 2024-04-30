@@ -31,7 +31,6 @@ import {
 import { FileInfoList } from 'hooks/useWriteWfsTransaction';
 
 import _cloneDeep from 'lodash/cloneDeep';
-import _isEqual from 'lodash/isEqual';
 
 import moment from 'moment';
 

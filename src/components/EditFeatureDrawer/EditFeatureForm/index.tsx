@@ -65,7 +65,7 @@ export function isFileConfig(val: any): val is UploadFile<ShogunFile> {
     !_isNil(val.response.fileUuid) &&
     !_isNil(val.response.fileName) &&
     !_isNil(val.response.fileType);
-};
+}
 
 export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
   form,

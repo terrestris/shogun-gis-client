@@ -1,5 +1,5 @@
 import {
-  test as setup, chromium
+  test as setup
 } from '@playwright/test';
 
 const adminFile = 'playwright/.auth/admin.json';

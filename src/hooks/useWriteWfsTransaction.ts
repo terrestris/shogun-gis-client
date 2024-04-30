@@ -171,7 +171,7 @@ export const useWriteWfsTransaction = () => {
         } else {
           inserts.push(feat);
         }
-      };
+      }
     }
 
     if (opts.deleteFeatures) {

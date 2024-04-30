@@ -17,8 +17,6 @@ import {
   Feature
 } from 'geojson';
 
-import _isNil from 'lodash/isNil';
-
 import moment from 'moment';
 
 import {

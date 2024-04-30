@@ -19,9 +19,7 @@ import {
   UploadProps
 } from 'antd/lib/upload/interface';
 
-import _debounce from 'lodash/debounce';
 import _isNil from 'lodash/isNil';
-import _isObject from 'lodash/isObject';
 
 import {
   useTranslation

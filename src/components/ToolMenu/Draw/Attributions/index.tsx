@@ -66,7 +66,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const [isFormValid, setIsFormIsValid] = useState(true);
   const [availableFeatureCollectionAttributes, setAvailableFeatureCollectionAttributes] = useState<string[]>([]);
   const [availableFeatureAttributes, setAvailableFeatureAttributes] = useState<string[]>([]);
-  const [api, contextHolder] = notification.useNotification();
+  const [, contextHolder] = notification.useNotification();
   const [form] = Form.useForm<FormData>();
 
   const map = useMap();

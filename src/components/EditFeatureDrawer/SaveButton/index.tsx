@@ -101,7 +101,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     if (!features || features.length === 0) {
       Logger.error('Cannot save feature without geometry');
       return;
-    };
+    }
 
     try {
       await form.validateFields();
