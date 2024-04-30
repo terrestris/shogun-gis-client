@@ -135,10 +135,6 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [nominatimResults, setNominatimResults] = useState<NominatimPlace[]>([]);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
 
-  useAppSelector(
-    state => state.editFeature.userEditMode
-  );
-
   useEffect(() => {
     window.addEventListener('mousedown', handleClickAway);
 
@@ -468,31 +464,6 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     // button is temporarily disabled
     return [<></>];
-    // const onEditFeatureBtnClick = () => {
-    //   dispatch(setLayerId(getUid(layer)));
-    //   dispatch(showEditFeatureDrawer());
-    //   setResultsVisible(false);
-    // };
-    // if (
-    //   allowedEditMode.includes('CREATE') ||
-    //   allowedEditMode.includes('DELETE') ||
-    //   allowedEditMode.includes('UPDATE')
-    // ) {
-    //   return [
-    //     <Tooltip
-    //       key="edit"
-    //       title={t('EditFeatureButton.title')}
-    //       placement="bottom"
-    //     >
-    //       <Button
-    //         onClick={onEditFeatureBtnClick}
-    //         icon={<EditOutlined />}
-    //       />
-    //     </Tooltip>
-    //   ];
-    // } else {
-    //   return [<></>];
-    // }
   };
 
   const layerStyle = useMemo(() => (
