@@ -13,7 +13,7 @@
     <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <div id="loadmask" class="loadmask">
-      <img src="./shogun_spinner.gif" alt="Loading, please wait…">
+      <img id="loadmaskImage" alt="Loading, please wait…">
     </div>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
@@ -77,6 +77,18 @@
       if (!window.clientConfig) {
         console.warn('No config found, client defaults will be used.');
         window.clientConfig = {};
+      }
+    </script>
+    <script>
+      const regex = /\?applicationId=(\d+)/;
+      const appId = location.search.match(regex)[1]
+      let logoPath = './shogun_spinner.gif';
+      if (appId) {
+        logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
+      }
+      const loadingImageElement = document.getElementById('loadmaskImage');
+      if (logoPath && loadingImageElement) {
+        loadingImageElement.src = logoPath;
       }
     </script>
     <div id="app" class="app"></div>
