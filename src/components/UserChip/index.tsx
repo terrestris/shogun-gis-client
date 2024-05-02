@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import { Avatar, Dropdown, MenuProps } from 'antd';
+import {
+  Avatar,
+  Dropdown,
+  MenuProps
+} from 'antd';
 import { AvatarProps } from 'antd/lib/avatar';
 
 import './index.less';
