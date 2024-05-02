@@ -36,6 +36,7 @@ import {
 import ClientConfiguration from 'clientConfig';
 
 import _toArray from 'lodash/toArray';
+import { ItemType } from 'rc-collapse/lib/interface';
 
 const { Panel } = Collapse;
 
@@ -186,37 +187,32 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   }, [activeKeys, dispatch]);
 
-  const getToolPanels = (): JSX.Element[] => {
-
-    const panels: JSX.Element[] = [];
+  const getToolPanels = (): ItemType[] => {
+    const panels: ItemType[] = [];
 
     menuTools.forEach((tool: string) => {
-      const toolPanelConfig: ToolPanelConfig | undefined = getToolPanelConfig(tool);
+      const toolPanelConfig = getToolPanelConfig(tool);
 
       if (!toolPanelConfig) {
         return;
       }
+
       const {
         icon,
         title,
         wrappedComponent
       } = toolPanelConfig;
 
-      const panel = (
-        <Panel
-          className={tool}
-          header={
-            <>
-              {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
-              <span>{title}</span>
-            </>
-          }
-          key={tool}
-        >
-          {wrappedComponent}
-        </Panel>
-      );
-      panels.push(panel);
+      panels.push({
+        key: tool,
+        label: (
+          <>
+            {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+            <span>{title}</span>
+          </>
+        ),
+        children: wrappedComponent
+      });
     });
 
     if (plugins) {
@@ -234,20 +230,19 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             }
           } = plugin;
 
-          panels.splice(insertionIndex || 0, 0, (
-            <Panel
-              header={
-                <>
-                  {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
-                  <span>{t(label)}</span>
-                </>
-              }
-              key={key}
-              {...passThroughProps}
-            >
-              <WrappedPluginComponent />
-            </Panel>
-          ));
+          const newItem: ItemType = {
+            key,
+            label: (
+              <>
+                {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+                <span>{t(label)}</span>
+              </>
+            ),
+            ...passThroughProps,
+            children: <WrappedPluginComponent />
+          };
+
+          panels.splice(insertionIndex || 0, 0, newItem);
         }
       });
     }
@@ -412,10 +407,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             setWidth(noCollapseWidth);
           }
         }}
+        items={getToolPanels()}
         {...restProps}
-      >
-        {getToolPanels()}
-      </Collapse>
+      />
       <Tooltip
         placement={'right'}
         title={collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse')}
