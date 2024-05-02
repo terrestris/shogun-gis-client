@@ -288,7 +288,7 @@ const setUserToStore = async (user?: User) => {
 };
 
 const setLoadingImage = (path = './shogun_spinner.gif', id: number) => {
-  const loadingImageElement = document.getElementById('loadmaskImage') as HTMLImageElement;
+  const loadingImageElement = document.getElementById('loadmask-image') as HTMLImageElement;
   if (!loadingImageElement) {
     return;
   }

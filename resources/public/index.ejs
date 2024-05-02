@@ -13,7 +13,7 @@
     <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <div id="loadmask" class="loadmask">
-      <img id="loadmaskImage" alt="Loading, please wait…">
+      <img id="loadmask-image" alt="Loading, please wait…">
     </div>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
@@ -86,7 +86,7 @@
       if (appId) {
         logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
       }
-      const loadingImageElement = document.getElementById('loadmaskImage');
+      const loadingImageElement = document.getElementById('loadmask-image');
       if (logoPath && loadingImageElement) {
         loadingImageElement.src = logoPath;
       }
