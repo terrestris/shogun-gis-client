@@ -34,11 +34,11 @@ jobs:
 
     - name: Run tests
       run: |
-        npx jest --coverage --coverageReporters json-summary --coverageDirectory ./coverage/all --collectCoverageFrom ['**/*.{ts,tsx,js,jsx,json}']
+        npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary --coverageDirectory ./coverage/all 
 
     - name: Run tests related to current changes
       run: |
-        npx jest --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed --collectCoverageFrom ['**/*.{ts,tsx,js,jsx,json}']
+        npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
 
     - name: Jest Coverage Comment
       uses: MishaKav/jest-coverage-comment@main
