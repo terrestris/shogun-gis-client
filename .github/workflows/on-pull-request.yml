@@ -45,3 +45,17 @@ jobs:
         hide-comment: false
         create-new-comment: false
         hide-summary: false
+
+    - name: Run tests related to current changes
+      run: |
+        npx jest --coverage --coverageReporters json-summary --changedFilesWithAncestor
+
+    - name: Jest Coverage Comment 
+      uses: MishaKav/jest-coverage-comment@main
+      with:
+        coverage-summary-path: ./coverage/coverage-summary.json
+        title: Test Summary
+        badge-title: Coverage
+        hide-comment: false
+        create-new-comment: true
+        hide-summary: false
