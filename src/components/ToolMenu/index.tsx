@@ -109,6 +109,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
+  const [isResizing, setIsResizing] = useState(false);
+  const [width, setWidth] = useState(320);
+  const [noCollapseWidth, setNoCollapseWidth] = useState(width);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
@@ -343,10 +346,41 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
   };
 
+  const onMouseDown = () => {
+    setIsResizing(true);
+  };
+
+  const onMouseUp = () => {
+    setIsResizing(false);
+  };
+
+  const onMouseMove = (e: MouseEvent) => {
+    if (isResizing && !collapsed) {
+      let offsetLeft = (e.clientX - document.body.offsetLeft);
+      const minWidth = 240;
+      const maxWidth = 600;
+      if (offsetLeft > minWidth && offsetLeft < maxWidth) {
+        setWidth(offsetLeft);
+        setNoCollapseWidth(offsetLeft);
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+  });
+
   return (
     <div
       aria-label="tool-menu"
       className={`tool-menu ${collapsed ? 'collapsed' : ''}`}
+      style={{width: width} as React.CSSProperties}
     >
       <Collapse
         expandIconPosition='end'
@@ -375,9 +409,28 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           onClick={() => {
             dispatch(setActiveKeys([]));
             setCollapsed(!collapsed);
+            if (collapsed){
+              setWidth(noCollapseWidth);
+            } else {
+              setWidth(40);
+            }
           }}
         />
       </Tooltip>
+      {!collapsed ? (
+        <div
+          style={{
+            position: 'absolute',
+            width: '10px',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 100,
+            cursor:'ew-resize'
+          }}
+          onMouseDown={onMouseDown}
+        />
+      ) : <></>}
     </div>
   );
 };
