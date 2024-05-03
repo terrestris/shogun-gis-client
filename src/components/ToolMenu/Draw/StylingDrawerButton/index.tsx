@@ -39,7 +39,6 @@ export const StylingButton: React.FC = (): JSX.Element => {
       icon={<FontAwesomeIcon icon={faPaintBrush} />}
     >
       {drawerVisibilty ? t('StylingDrawer.closeColorPalette') : t('StylingDrawer.openColorPalette')}
-
     </Button>
   );
 };
