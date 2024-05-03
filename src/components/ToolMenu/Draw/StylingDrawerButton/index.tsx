@@ -17,8 +17,11 @@ import {
 import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useAppSelector from '../../../../hooks/useAppSelector';
 import { setStylingDrawerVisibility } from '../../../../store/stylingDrawerVisibility';
+
 export const StylingButton: React.FC = (): JSX.Element => {
+
   const dispatch = useAppDispatch();
+
   const {
     t
   } = useTranslation();
