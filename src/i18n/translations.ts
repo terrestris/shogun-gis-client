@@ -67,7 +67,7 @@ export default {
       },
       StylingDrawer: {
         openColorPalette: 'Farbpalette öffnen',
-        closeColorPalette: 'Farpalette schließen',
+        closeColorPalette: 'Farbpalette schließen',
         title: 'Farbschema bearbeiten'
       },
       FeatureInfo: {
@@ -348,8 +348,8 @@ export default {
         confirmMessage: 'Please confirm, that you wish to delete all drawings.'
       },
       StylingDrawer: {
-        openColorPalette: 'open color palette',
-        closeColorPalette: 'close color palette',
+        openColorPalette: 'Open color palette',
+        closeColorPalette: 'Close color palette',
         title: 'Modify color scheme'
       },
       FeatureInfo: {

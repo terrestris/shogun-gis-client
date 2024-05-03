@@ -26,14 +26,10 @@ export const StylingButton: React.FC = (): JSX.Element => {
     t
   } = useTranslation();
 
-  const drawerVisibility = useAppSelector(state => state.stylingDrawerVisibility);
+  const toggleDrawer = useAppSelector(state => state.stylingDrawerVisibility);
 
   const onClick = () => {
-    if (!drawerVisibility) {
-      dispatch(setStylingDrawerVisibility(true));
-    } else {
-      dispatch(setStylingDrawerVisibility(false));
-    }
+    dispatch(setStylingDrawerVisibility(!toggleDrawer));
   };
 
   return (
@@ -42,8 +38,7 @@ export const StylingButton: React.FC = (): JSX.Element => {
       onClick={onClick}
       icon={<FontAwesomeIcon icon={faPaintBrush} />}
     >
-      {!drawerVisibility ? t('StylingDrawer.openColorPalette') :
-        t('StylingDrawer.closeColorPalette')}
+      {!toggleDrawer ? t('StylingDrawer.openColorPalette') : t('StylingDrawer.closeColorPalette')}
 
     </Button>
   );
