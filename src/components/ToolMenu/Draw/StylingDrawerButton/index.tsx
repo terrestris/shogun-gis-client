@@ -15,18 +15,21 @@ import {
 } from 'react-i18next';
 
 import useAppDispatch from '../../../../hooks/useAppDispatch';
+import useAppSelector from '../../../../hooks/useAppSelector';
 import { setStylingDrawerVisibility } from '../../../../store/stylingDrawerVisibility';
-
 export const StylingButton: React.FC = (): JSX.Element => {
-
   const dispatch = useAppDispatch();
-
   const {
     t
   } = useTranslation();
+  const drawerVisibility = useAppSelector(state => state.stylingDrawerVisibility);
 
   const showDrawer = () => {
-    dispatch(setStylingDrawerVisibility(true));
+    if (!drawerVisibility){
+      dispatch(setStylingDrawerVisibility(true));
+    } else {
+      dispatch(setStylingDrawerVisibility(false));
+    }
   };
 
   return (
@@ -35,7 +38,7 @@ export const StylingButton: React.FC = (): JSX.Element => {
       onClick={showDrawer}
       icon={<FontAwesomeIcon icon={faPaintBrush} />}
     >
-      {t('StylingDrawer.pickColor')}
+      {!drawerVisibility?t('StylingDrawer.openColorPalette'):t('StylingDrawer.closeColorPalette')}
     </Button>
   );
 };

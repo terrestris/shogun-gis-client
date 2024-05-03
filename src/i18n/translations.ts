@@ -66,7 +66,8 @@ export default {
         confirmMessage: 'Bitte bestätigen Sie, dass Sie alle Zeichnungen löschen möchten.'
       },
       StylingDrawer: {
-        pickColor: 'Farbschema bearbeiten',
+        openColorPalette: 'Farbpalette öffnen',
+        closeColorPalette: 'Farpalette schließen',
         title: 'Farbschema bearbeiten'
       },
       FeatureInfo: {
@@ -347,7 +348,8 @@ export default {
         confirmMessage: 'Please confirm, that you wish to delete all drawings.'
       },
       StylingDrawer: {
-        pickColor: 'Modify color scheme',
+        openColorPalette: 'open color palette',
+        closeColorPalette: 'close color palette',
         title: 'Modify color scheme'
       },
       FeatureInfo: {
