@@ -32,7 +32,7 @@
     "prepare": "npm run husky",
     "semantic-release": "npm run clean; npm run build; npx semantic-release",
     "start": "webpack serve --config webpack.dev.js",
-    "test": "jest --coverage",
+    "test": "jest --collectCoverageFrom='['**/*.{ts,tsx,js,jsx}']' --coverage --coverageReporters json-summary --coverageDirectory ./coverage/all",
     "tsc": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "watch:buildto": "node watchBuild.js"

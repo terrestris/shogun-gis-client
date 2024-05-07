@@ -13,8 +13,7 @@ jobs:
           fetch-depth: 0 
     
       - name: Run tests
-        run: |
-          npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary
+        run: npm run test
 
       - name: Jest Coverage Comment
         if: github.ref == 'refs/heads/main'
