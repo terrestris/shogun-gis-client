@@ -287,6 +287,15 @@ const setUserToStore = async (user?: User) => {
   store.dispatch(setUser(user));
 };
 
+const setLoadingImage = (id: number, path = './shogun_spinner.gif') => {
+  const loadingImageElement = document.getElementById('loadmask-image') as HTMLImageElement;
+  if (!loadingImageElement) {
+    return;
+  }
+  loadingImageElement.src = path;
+  localStorage.setItem(`SHOGun_Logo_Path_${id}`, path);
+};
+
 const initKeycloak = async () => {
   const keycloakEnabled = ClientConfiguration.keycloak?.enabled;
   const keycloakOnLoad = ClientConfiguration.keycloak?.onLoadAction;
@@ -650,10 +659,10 @@ const renderApp = async () => {
     if (!applicationId && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
       throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
     }
-
     let appConfig;
     if (applicationId && client) {
       appConfig = await getApplicationConfiguration(client, applicationId);
+      setLoadingImage(applicationId, appConfig?.clientConfig?.theme?.logoPath);
     } else if (ClientConfiguration.staticAppConfigUrl) {
       appConfig = await getStaticApplicationConfiguration(ClientConfiguration.staticAppConfigUrl);
 
