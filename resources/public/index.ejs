@@ -80,8 +80,8 @@
       }
     </script>
     <script>
-      const regex = /\?applicationId=(\d+)/;
-      const appId = location.search.match(regex)[1]
+      const regex = /\applicationId=(\d+)/;
+      const appId = location.search.match(regex)[1];
       let logoPath = './shogun_spinner.gif';
       if (appId) {
         logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
