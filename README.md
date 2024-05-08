@@ -8,8 +8,7 @@
 ![on-release]
 (https://github.com/terrestris/shogun-gis-client/actions/workflows/on-release.yml/badge.svg)
 
-![release]
-(https://github.com/terrestris/shogun-gis-client/actions/workflows/release.yml/badge.svg)
+![release](https://github.com/terrestris/shogun-gis-client/actions/workflows/release.yml/badge.svg)
 
 # SHOGun GIS client
 
