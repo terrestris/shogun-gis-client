@@ -3,7 +3,7 @@ import React from 'react';
 import {
   render,
   screen,
-  waitFor
+  fireEvent
 } from '@testing-library/react';
 
 import {
@@ -43,6 +43,12 @@ describe('StylingDrawer', () => {
       wrapper: createWrapper()
     });
 
-    expect(screen.getByText('StylingDrawer.pickColor')).toBeInTheDocument();
+    const button = screen.getByText('StylingDrawer.openColorPalette');
+
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+
+    expect(screen.getByText('StylingDrawer.closeColorPalette')).toBeInTheDocument();
   });
 });
