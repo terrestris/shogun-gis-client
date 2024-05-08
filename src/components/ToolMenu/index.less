@@ -5,7 +5,6 @@
   margin-top: var(--headerHeight);
   max-height: calc(100% - var(--headerHeight) - var(--footerHeight));
   overflow: hidden;
-  width: 350px;
   box-shadow: var(--componentShadow);
   overflow-x: hidden;
 
@@ -46,7 +45,6 @@
 
   &.collapsed {
     min-width: unset;
-    width: 40px;
 
     >.ant-collapse .ant-collapse-item {
       overflow: hidden;
@@ -130,4 +128,14 @@
     font-size: 1.2em;
     text-shadow: 0.5px 0.5px 0.5px color-mix(in srgb, var(--secondaryColor), black 20%);
   }
+}
+
+.dynamicWidth {
+  position: absolute;
+  width: 10px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  cursor:ew-resize
 }

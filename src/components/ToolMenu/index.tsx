@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -88,9 +89,14 @@ export type ToolPanelConfig = {
   wrappedComponent: JSX.Element;
 };
 
-export type ToolMenuProps = Partial<CollapsePanelProps>;
+export type ToolMenuProps = Partial<CollapsePanelProps> & { 
+  minWidth?: number;
+  maxWidth?: number;
+};
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
+  minWidth = 240,
+  maxWidth = 600,
   ...restProps
 }): JSX.Element => {
   const {
@@ -109,6 +115,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
+  const [isResizing, setIsResizing] = useState(false);
+  const [width, setWidth] = useState(320);
+  const [noCollapseWidth, setNoCollapseWidth] = useState(width);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
@@ -343,10 +352,39 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
   };
 
+  const onMouseDown = useCallback(() => {
+    setIsResizing(true);
+  }, []);
+
+  const onMouseUp = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const onMouseMove = useCallback((e: MouseEvent) => {
+    if (isResizing && !collapsed) {
+      let offsetLeft = (e.clientX - document.body.offsetLeft);
+      if (offsetLeft > minWidth && offsetLeft < maxWidth) {
+        setWidth(offsetLeft);
+        setNoCollapseWidth(offsetLeft);
+      }
+    }
+  }, [isResizing, collapsed, minWidth, maxWidth]);
+
+  useEffect(() => {
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [onMouseMove, onMouseUp]);
+
   return (
     <div
       aria-label="tool-menu"
       className={`tool-menu ${collapsed ? 'collapsed' : ''}`}
+      style={{width: width} as React.CSSProperties}
     >
       <Collapse
         expandIconPosition='end'
@@ -375,9 +413,20 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           onClick={() => {
             dispatch(setActiveKeys([]));
             setCollapsed(!collapsed);
+            if (collapsed){
+              setWidth(noCollapseWidth);
+            } else {
+              setWidth(40);
+            }
           }}
         />
       </Tooltip>
+      {!collapsed ? (
+        <div
+          className ="dynamicWidth"
+          onMouseDown={onMouseDown}
+        />
+      ) : <></>}
     </div>
   );
 };
