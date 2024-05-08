@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -88,9 +89,14 @@ export type ToolPanelConfig = {
   wrappedComponent: JSX.Element;
 };
 
-export type ToolMenuProps = Partial<CollapsePanelProps>;
+export type ToolMenuProps = Partial<CollapsePanelProps> & { 
+  minWidth?: number;
+  maxWidth?: number;
+};
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
+  minWidth = 240,
+  maxWidth = 600,
   ...restProps
 }): JSX.Element => {
   const {
@@ -346,25 +352,23 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
   };
 
-  const onMouseDown = () => {
+  const onMouseDown = useCallback(() => {
     setIsResizing(true);
-  };
+  }, []);
 
-  const onMouseUp = () => {
+  const onMouseUp = useCallback(() => {
     setIsResizing(false);
-  };
+  }, []);
 
-  const onMouseMove = (e: MouseEvent) => {
+  const onMouseMove = useCallback((e: MouseEvent) => {
     if (isResizing && !collapsed) {
       let offsetLeft = (e.clientX - document.body.offsetLeft);
-      const minWidth = 240;
-      const maxWidth = 600;
       if (offsetLeft > minWidth && offsetLeft < maxWidth) {
         setWidth(offsetLeft);
         setNoCollapseWidth(offsetLeft);
       }
     }
-  };
+  }, [isResizing, collapsed, minWidth, maxWidth]);
 
   useEffect(() => {
     document.addEventListener('mousemove', onMouseMove);
@@ -374,7 +378,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
-  });
+  }, [onMouseMove, onMouseUp]);
 
   return (
     <div
@@ -419,15 +423,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       </Tooltip>
       {!collapsed ? (
         <div
-          style={{
-            position: 'absolute',
-            width: '10px',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 100,
-            cursor:'ew-resize'
-          }}
+          className ="dynamicWidth"
           onMouseDown={onMouseDown}
         />
       ) : <></>}
