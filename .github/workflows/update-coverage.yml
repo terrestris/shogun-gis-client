@@ -21,7 +21,7 @@ jobs:
         uses: MishaKav/jest-coverage-comment@main
         with:
           hide-summary: true
-          coverage-summary-path: ./coverage/coverage-summary.json
+          coverage-summary-path: ./coverage/all/coverage-summary.json
 
       - name: Update README with Coverage HTML
         if: github.ref == 'refs/heads/main'
