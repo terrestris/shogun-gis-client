@@ -1,3 +1,16 @@
+
+![on-pull-request]
+(https://github.com/terrestris/shogun-gis-client/actions/workflows/on-pull-request.yml/badge.svg)
+
+![on-push-main]
+(https://github.com/terrestris/shogun-gis-client/actions/workflows/on-push-main.yml/badge.svg?event=push)
+
+![on-release]
+(https://github.com/terrestris/shogun-gis-client/actions/workflows/on-release.yml/badge.svg)
+
+![release]
+(https://github.com/terrestris/shogun-gis-client/actions/workflows/release.yml/badge.svg)
+
 # SHOGun GIS client
 
 This repository contains the default WebGIS client used within the [SHOGun project](https://github.com/terrestris/shogun-docker).
