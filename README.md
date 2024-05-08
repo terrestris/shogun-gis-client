@@ -2,8 +2,7 @@
 ![on-pull-request]
 (https://github.com/terrestris/shogun-gis-client/actions/workflows/on-pull-request.yml/badge.svg)
 
-![on-push-main]
-(https://github.com/terrestris/shogun-gis-client/actions/workflows/on-push-main.yml/badge.svg?event=push)
+![on-push-main](https://github.com/terrestris/shogun-gis-client/actions/workflows/on-push-main.yml/badge.svg?event=push)
 
 ![on-release]
 (https://github.com/terrestris/shogun-gis-client/actions/workflows/on-release.yml/badge.svg)
