@@ -12,10 +12,10 @@ jobs:
           persist-credentials: false 
           fetch-depth: 0 
     
-      - name: Run tests
+      - name: Run tests ✅
         run: npm run test
 
-      - name: Jest Coverage Comment
+      - name: Jest Coverage Comment 💬
         if: github.ref == 'refs/heads/main'
         id: coverageComment
         uses: MishaKav/jest-coverage-comment@main
@@ -23,12 +23,12 @@ jobs:
           hide-summary: true
           coverage-summary-path: ./coverage/all/coverage-summary.json
 
-      - name: Update README with Coverage HTML
+      - name: Update README with Coverage HTML 📄
         if: github.ref == 'refs/heads/main'
         run: |
           sed -i '/<!-- Jest Coverage Comment:Begin -->/,/<!-- Jest Coverage Comment:End -->/c\<!-- Jest Coverage Comment:Begin -->\n\${{ steps.coverageComment.outputs.summaryHtml }}\n<!-- Jest Coverage Comment:End -->' ./README.md
 
-      - name: Commit & Push changes in README
+      - name: Commit & Push changes in README 🚩
         if: github.ref == 'refs/heads/main'
         uses: actions-js/push@master
         with:
