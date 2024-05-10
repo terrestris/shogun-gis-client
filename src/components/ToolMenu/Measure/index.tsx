@@ -54,15 +54,7 @@ export const Measure: React.FC<MeasureProps> = ({
       {showMeasureDistance ? (
         <MeasureButton
           geodesic
-<<<<<<< HEAD
-<<<<<<< HEAD
           value="line"
-=======
-          name="line"
->>>>>>> 7bcff083 (refactor: fix typechecks)
-=======
-          value="line"
->>>>>>> 55f47cc4 (fix: uses the currently valid ToggleGroup implementation and the buttonTransparent property)
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
@@ -78,15 +70,7 @@ export const Measure: React.FC<MeasureProps> = ({
       {showMeasureArea ? (
         <MeasureButton
           geodesic
-<<<<<<< HEAD
-<<<<<<< HEAD
           value="poly"
-=======
-          name="poly"
->>>>>>> 7bcff083 (refactor: fix typechecks)
-=======
-          value="poly"
->>>>>>> 55f47cc4 (fix: uses the currently valid ToggleGroup implementation and the buttonTransparent property)
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}

@@ -261,7 +261,6 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           {
             allowedEditMode.includes('DELETE') ?
               <DeleteButton
-                active={true}
                 icon={
                   <FontAwesomeIcon icon={faTrash} />
                 }

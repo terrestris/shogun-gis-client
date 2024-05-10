@@ -101,7 +101,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         >
           <span>
             {
-              user.providerDetails?.email
+              user.providerDetails?.username
             }
           </span>
         </div>
