@@ -111,21 +111,6 @@ jobs:
         run: |
           echo "VERSION=$(node -pe "require('./package.json').version")" >> $GITHUB_ENV
 
-      - name: Check Project Directory
-        run: ls /home/runner/work/
-
-      - name: Check Project Directory
-        run: ls /home/runner/work/shogun-gis-client
-
-      - name: Check Project Directory
-        run: ls /home/runner/work/shogun-gis-client/shogun-gis-client
-
-      - name: Check Project Directory
-        run: ls /home/runner/work/shogun-demo-client
-
-      - name: Check Project Directory
-        run: ls /home/runner/work/shogun-demo-client/shogun-demo-client
-
       - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.1
         with:
