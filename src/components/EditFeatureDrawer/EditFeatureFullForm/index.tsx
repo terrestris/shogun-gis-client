@@ -238,12 +238,14 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     }
   };
 
-  const onSaveError = (error: unknown) => {
+  const onSaveError = (error?: unknown) => {
     if (typeof error === 'object' && error !== null && 'errorFields' in error) {
       const formattedErrorMessage = formatErrorMessage(
         error as ValidateErrorEntity
       );
       setErrorMsg(formattedErrorMessage);
+    } else if (typeof error === 'string') {
+      setErrorMsg(error);
     } else {
       setErrorMsg(t('EditFeatureFullForm.saveErrorMsg'));
     }

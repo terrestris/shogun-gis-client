@@ -51,7 +51,7 @@ import FeedbackIcon from '../../FeedbackIcon';
 export type SaveButtonProps = Omit<ButtonProps, 'form'> & {
   form: FormInstance;
   layer: WmsLayer;
-  onError?: (error: unknown) => void;
+  onError?: (error?: unknown) => void;
   onSuccess?: (response?: string) => void;
 };
 
@@ -93,6 +93,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
     if (!editLayer) {
       Logger.error('Cannot find the digitize layer');
+      onError();
       return;
     }
 
@@ -100,6 +101,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
     if (!features || features.length === 0) {
       Logger.error('Cannot save feature without geometry');
+      onError(t('SaveButton.errorNoGeometry'));
       return;
     }
 

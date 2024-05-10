@@ -251,7 +251,8 @@ export default {
         title: 'Änderungen wurden erfolgreich gespeichert!'
       },
       SaveButton: {
-        title: 'Speichern'
+        title: 'Speichern',
+        errorNoGeometry: 'Objekt kann ohne Geometrie nicht gespeichert werden.'
       },
       DeleteButton: {
         title: 'Objekt löschen',
@@ -532,7 +533,8 @@ export default {
         title: 'Changes were applied successfully!'
       },
       SaveButton: {
-        title: 'Save'
+        title: 'Save',
+        errorNoGeometry: 'Cannot save feature without geometry.'
       },
       DeleteButton: {
         title: 'Delete feature',
