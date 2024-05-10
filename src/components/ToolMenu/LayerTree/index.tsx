@@ -288,6 +288,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       );
     }
   };
+
   if (!map) {
     return <></>;
   }
