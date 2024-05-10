@@ -14,7 +14,6 @@ import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
-import OlSource from 'ol/source/Source';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -74,6 +73,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+  const [updateLayers, setUpdatedLayers] = useState<boolean>(false);
 
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
@@ -81,6 +81,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (!map) {
       return;
     }
+
+    const layerAddedHandler = () => {
+      setUpdatedLayers(!updateLayers);
+    };
+    document.addEventListener('layerAdded', layerAddedHandler);
 
     const allLayers = MapUtil.getAllLayers(map);
     allLayers.forEach(layer => {
@@ -104,7 +109,12 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         }
       }
     });
-  }, [map]);
+
+    return () => {
+      document.removeEventListener('layerAdded', layerAddedHandler);
+    };
+
+  }, [map, updateLayers]);
 
   const checkListeners = useCallback(() => {
     const activeLayers = map?.getAllLayers().map(l => getUid(l));
@@ -188,7 +198,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     });
   };
 
-  const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
+  const treeFilterFunction = (layer: OlBaseLayer | OlLayerGroup) => {
     if ((layer as OlLayerGroup).getLayers) {
       return !layer.get('hideInLayerTree');
     }
@@ -303,7 +313,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     <RgLayerTree
       aria-label="layertree"
       className="layertree"
-      map={map}
       nodeTitleRenderer={treeNodeTitleRenderer}
       filterFunction={treeFilterFunction}
       draggable
