@@ -34,17 +34,19 @@
       align-items: center;
       width: 100%;
       justify-content: flex-start;
+      color: var(--primaryColor);
+      border-color: transparent;
 
       svg {
         padding-top: 4px;
         width: 25px;
         margin-right: 10px;
       }
+    }
 
-      span {
-        flex-grow: 1;
-        text-align: left;
-      }
+    button:hover {
+      border-color: transparent;
+      color: var(--secondaryColor);
     }
   }
 
@@ -76,9 +78,11 @@
     border: none;
     max-height: calc(100vh - var(--headerHeight) - var(--footerHeight) - 32px);
     overflow-y: auto;
+    border-radius: 0px;
 
     .ant-collapse-item {
       .ant-collapse-header {
+        border-radius: 0px;
         background-color: #fff;
         padding: 6px 40px 6px 16px;
 
@@ -122,14 +126,18 @@
           color: var(--complementaryColor);
         }
       }
+
+      &.ant-collapse-item {
+        border-radius: 0px;
+      }
     }
   }
 
   button.collapse-btn {
     width: 100%;
     border: none;
-    border-radius: 0;
-  }
+    border-radius: 0 0 8px 8px;
+    }
 
   button:hover {
     color: var(--secondaryColor);
