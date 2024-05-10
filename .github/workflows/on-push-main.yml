@@ -111,8 +111,8 @@ jobs:
         run: |
           echo "VERSION=$(node -pe "require('./package.json').version")" >> $GITHUB_ENV
 
-      - name: path
-        run: ls /home/runner/work/shogun-gis-client/shogun-gis-client
+      - name: speicher
+        run: df -h
 
       - name: path
         run: ls /home/runner/work/shogun-gis-client/shogun-gis-client/src
