@@ -111,10 +111,12 @@ jobs:
         run: |
           echo "VERSION=$(node -pe "require('./package.json').version")" >> $GITHUB_ENV
 
+      - name: path
+        run: ls /home/runner/work/shogun-gis-client/shogun-gis-client
+
       - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.1
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
           projectVersion: ${{ env.VERSION }}
-        run: ls /home/runner/work/shogun-gis-client/shogun-gis-client
