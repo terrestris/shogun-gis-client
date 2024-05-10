@@ -253,9 +253,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           }
 
           {
-            <div className='loadingIndicator'>
-              {/* {percent < 100 && <LoadingIndicator />} */}
-              <LoadingIndicator />
+            <div className='loading-indicator'>
+              {percent < 100 && <LoadingIndicator />}
             </div>
           }
           {
