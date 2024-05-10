@@ -1,3 +1,15 @@
+## [8.2.0](https://github.com/terrestris/shogun-gis-client/compare/v8.1.0...v8.2.0) (2024-05-10)
+
+
+### Features
+
+* show error message for missing geometry ([8651d63](https://github.com/terrestris/shogun-gis-client/commit/8651d63b3429332d065e88ce8b14d487a2e6ccf3))
+
+
+### Bugfixes
+
+* move setting of initial values ([95f02fb](https://github.com/terrestris/shogun-gis-client/commit/95f02fb9e60d3be56096b4ec5e448f545280c9b7))
+
 ## [8.1.0](https://github.com/terrestris/shogun-gis-client/compare/v8.0.0...v8.1.0) (2024-05-08)
 
 
