@@ -190,11 +190,11 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
 
     await Promise.all(setPropertiesPromises);
 
+    setInitialValues(properties);
     form.resetFields();
     form.setFieldsValue(properties);
 
     setTabConfig(editFormConfig);
-    setInitialValues(properties);
   }, [map, client, layer, feature?.properties, form, imageUrlToBase64]);
 
   useEffect(() => {
