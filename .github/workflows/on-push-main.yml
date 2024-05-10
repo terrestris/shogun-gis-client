@@ -117,3 +117,4 @@ jobs:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
           projectVersion: ${{ env.VERSION }}
+        run: ls /home/runner/work/shogun-gis-client/shogun-gis-client
