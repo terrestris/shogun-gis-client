@@ -114,6 +114,9 @@ jobs:
       - name: path
         run: ls /home/runner/work/shogun-gis-client/shogun-gis-client
 
+      - name: path
+        run: ls /home/runner/work/shogun-gis-client/shogun-gis-client/src
+
       - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.1
         with:
