@@ -317,7 +317,6 @@ export const Draw: React.FC<DrawProps> = ({
           <DeleteButton
             value="draw-delete"
             type="link"
-            active={true}
             buttonTransparent={true}
           >
             <FontAwesomeIcon
