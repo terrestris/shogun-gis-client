@@ -89,7 +89,7 @@ export type ToolPanelConfig = {
   wrappedComponent: JSX.Element;
 };
 
-export type ToolMenuProps = Partial<CollapsePanelProps> & { 
+export type ToolMenuProps = Partial<CollapsePanelProps> & {
   minWidth?: number;
   maxWidth?: number;
 };
@@ -393,6 +393,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         onChange={(keys: string[] | string) => {
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));
+          if (collapsed) {
+            setWidth(noCollapseWidth);
+          }
         }}
         {...restProps}
       >
