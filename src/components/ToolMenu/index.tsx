@@ -393,7 +393,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         onChange={(keys: string[] | string) => {
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));
-          if (collapsed){
+          if (collapsed) {
             setWidth(noCollapseWidth);
           }
         }}
