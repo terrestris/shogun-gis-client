@@ -12,11 +12,11 @@ export type PrintState = {
 };
 
 const initialState: PrintState = {
-  printApp: "default",
+  printApp: 'default',
   customMapParams: {},
   customParams: {
     printLegend: false
-  },
+  }
 };
 
 export const printSlice = createSlice({

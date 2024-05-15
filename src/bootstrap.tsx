@@ -97,6 +97,7 @@ import {
 import {
   setLogoPath
 } from './store/logoPath';
+import { setPrintApp } from './store/print';
 import {
   setSearchEngines
 } from './store/searchEngines';
@@ -115,7 +116,6 @@ import {
 } from './store/user';
 
 import './index.less';
-import { setPrintApp } from './store/print';
 
 // TODO: extend antd properties too
 export interface ThemeProperties extends React.CSSProperties {
