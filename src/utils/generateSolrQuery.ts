@@ -64,7 +64,7 @@ const generateSearchQuery = (
   searchParts: string[]
 ): string => {
   const subQueries = searchParts.map(part => {
-    return `((${part.trim()}*^3 OR *${part.trim()}*^2 OR ${part.trim()}~1) OR (${part.trim()}))`;
+    return `(${part.trim()}*^3 OR *${part.trim()}*^2 OR ${part.trim()}~1 OR ${part.trim()})`;
   });
   return subQueries.join(' AND ');
 };
