@@ -1,3 +1,29 @@
+## [8.2.1](https://github.com/terrestris/shogun-gis-client/compare/v8.2.0...v8.2.1) (2024-05-15)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/cli from 7.23.9 to 7.24.5 ([26f7d13](https://github.com/terrestris/shogun-gis-client/commit/26f7d13823f53a3aa3d24800c3b8e6b7cfd10b0d))
+* **deps-dev:** bump @babel/preset-env from 7.24.4 to 7.24.5 ([2e14522](https://github.com/terrestris/shogun-gis-client/commit/2e145220f2fb634d49546544c1fb199ff0234faf))
+* **deps-dev:** bump @types/node from 20.12.7 to 20.12.11 ([9aff2ff](https://github.com/terrestris/shogun-gis-client/commit/9aff2ff3cf833ad8c10a851f65a300543ebf1f26))
+* **deps-dev:** bump webpack-bundle-analyzer from 4.10.1 to 4.10.2 ([e2c9d25](https://github.com/terrestris/shogun-gis-client/commit/e2c9d25ce47ebd77936bc71044c287bb281828ae))
+* **deps:** bump @reduxjs/toolkit from 2.2.3 to 2.2.4 ([c64e344](https://github.com/terrestris/shogun-gis-client/commit/c64e34475230e8fab61cf0a68ed8b5ee97aeb4fb))
+* **deps:** bump @terrestris/base-util from 1.1.0 to 1.1.1 ([78c3b48](https://github.com/terrestris/shogun-gis-client/commit/78c3b48d481b1551f5e2f7b970c86fdb49a97dda))
+* **deps:** update react-geo to latest version ([7629750](https://github.com/terrestris/shogun-gis-client/commit/7629750baa58431591ae69e6665e07345d4737a9))
+
+
+### Bugfixes
+
+* allow to search for numeric values ([9435b9f](https://github.com/terrestris/shogun-gis-client/commit/9435b9f3dec104fd443eab3725ba862a8b0aa127))
+* fix e2e authentication ([a5bae5b](https://github.com/terrestris/shogun-gis-client/commit/a5bae5b2d51b23c8451d32f0b5c9b16945f0e22f))
+* fix tests and optimize query ([62e0660](https://github.com/terrestris/shogun-gis-client/commit/62e06600615baad9c4e471cb1141c79eea23a093))
+* fixes of dynamic width of toolbar ([e363437](https://github.com/terrestris/shogun-gis-client/commit/e36343753dcfcb66cd18c39813824b1c41a26f5d))
+
+
+### Changes in layout
+
+* reduce paddings to gain some space in FeatureInfo ([177cbf0](https://github.com/terrestris/shogun-gis-client/commit/177cbf03166f93174a5c3f74d18ca410a3133ea0))
+
 ## [8.2.0](https://github.com/terrestris/shogun-gis-client/compare/v8.1.0...v8.2.0) (2024-05-10)
 
 
