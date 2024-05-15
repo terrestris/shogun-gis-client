@@ -32,8 +32,6 @@ import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
 import FeatureInfoForm from '../FeatureInfoForm';
 import PaginationToolbar from '../PaginationToolbar';
 
-import './index.less';
-
 export type FeatureInfoTabsProps = TabsProps & {
   features: OlFeature[];
   layerName: string;
