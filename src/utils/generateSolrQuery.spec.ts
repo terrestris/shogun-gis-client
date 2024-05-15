@@ -69,7 +69,7 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    const expectedSolrQuery = '(featureType:"SHOGUN:bar" AND ((foo*^3 OR *foo*^2 OR foo~1)))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:bar" AND ((foo*^3 OR *foo*^2 OR foo~1 OR foo)))';
 
     expect(generatedQuery).toHaveLength(1);
     expect(generatedQuery[0].query).toEqual(expectedSolrQuery);
@@ -83,8 +83,8 @@ describe('<generateSolrQuery />', () => {
     });
 
     // eslint-disable-next-line max-len
-    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo" AND ((lorem*^3 OR *lorem*^2 OR lorem~1)))';
-    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar" AND ((lorem*^3 OR *lorem*^2 OR lorem~1)))';
+    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem)))';
+    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem)))';
 
     expect(generatedQuery).toHaveLength(2);
     expect(generatedQuery[0].query).toEqual(expectedSolrQueryFoo);
@@ -99,8 +99,8 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo" AND ((lorem*^3 OR *lorem*^2 OR lorem~1) AND (ipsum*^3 OR *ipsum*^2 OR ipsum~1)))';
-    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar" AND ((lorem*^3 OR *lorem*^2 OR lorem~1) AND (ipsum*^3 OR *ipsum*^2 OR ipsum~1)))';
+    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem) AND (ipsum*^3 OR *ipsum*^2 OR ipsum~1 OR ipsum)))';
+    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem) AND (ipsum*^3 OR *ipsum*^2 OR ipsum~1 OR ipsum)))';
 
     expect(generatedQuery).toHaveLength(2);
     expect(generatedQuery[0].query).toEqual(expectedSolrQueryFoo);

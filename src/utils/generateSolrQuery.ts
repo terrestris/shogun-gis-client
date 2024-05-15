@@ -41,13 +41,13 @@ export const generateSolrQuery = ({
       if (searchConfig?.attributes) {
         // search only configured attributes
         subQueriesPerLayer.push({
-          query: `(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts)}))`,
+          query: `(featureType:"${fullLayerName}" AND (${generateSearchQuery(parts)}))`,
           fieldList: searchConfig.attributes.join(' ')
         });
       } else {
         // search all attributes of this layer
         subQueriesPerLayer.push({
-          query: `(featureType:"${fullLayerName}" AND (${generateFuzzySearchQuery(parts)}))`
+          query: `(featureType:"${fullLayerName}" AND (${generateSearchQuery(parts)}))`
         });
       }
     }
@@ -57,13 +57,14 @@ export const generateSolrQuery = ({
 
 /**
  * Applies operators for wildcard and fuzzy search to a solr (sub)query for multiple search terms.
+ * Also includes exact matches to allow searching for numeric values.
  * @param searchParts The search input which may consist of multiple search terms, e.g. ["foo", "bar"]
  */
-const generateFuzzySearchQuery = (
+const generateSearchQuery = (
   searchParts: string[]
 ): string => {
   const subQueries = searchParts.map(part => {
-    return `(${part.trim()}*^3 OR *${part.trim()}*^2 OR ${part.trim()}~1)`;
+    return `(${part.trim()}*^3 OR *${part.trim()}*^2 OR ${part.trim()}~1 OR ${part.trim()})`;
   });
   return subQueries.join(' AND ');
 };
