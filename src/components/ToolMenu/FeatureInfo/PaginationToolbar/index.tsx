@@ -188,7 +188,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
               title={isLayerEditable ? t('PaginationToolbar.editFeature') : t('PaginationToolbar.editDisabled')}
             >
               <Button
-                type="primary"
+                type="text"
                 size="small"
                 onClick={onEditFeatureBtnClick}
                 icon={<FontAwesomeIcon icon={faEdit} />}
@@ -203,7 +203,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
               title={t('PaginationToolbar.copyAsGeoJson')}
             >
               <Button
-                type="primary"
+                type="text"
                 size="small"
                 onClick={onCopyAsGeoJSONClick}
                 icon={<FontAwesomeIcon icon={faClipboardCheck} />}
@@ -217,7 +217,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
               title={t('PaginationToolbar.copyAsObject')}
             >
               <Button
-                type="primary"
+                type="text"
                 size="small"
                 onClick={onCopyAsObjectClick}
                 icon={<FontAwesomeIcon icon={faClipboardList} />}
