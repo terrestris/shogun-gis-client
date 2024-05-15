@@ -61,18 +61,7 @@ import {
 
 import './index.less';
 
-import useAppDispatch from '../../hooks/useAppDispatch';
-import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
-
-import {
-  setLayerId
-} from '../../store/editFeature';
-
-import {
-  show as showEditFeatureDrawer
-} from '../../store/editFeatureDrawerOpen';
-
 import generateSolrQuery from '../../utils/generateSolrQuery';
 
 interface MultiSearchProps extends InputProps {
@@ -119,8 +108,6 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const {
     t
   } = useTranslation();
-  const dispatch = useAppDispatch();
-
   const clickAwayRef = useRef<HTMLDivElement>(null);
 
   const [searchNominatim, setSearchNominatim] = useState<boolean>(useNominatim);
@@ -274,7 +261,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         }));
 
         const successfulResults = results.filter(isFulfilled);
-        const dataResults = successfulResults.flatMap(sR => sR.value?.response?.docs);
+        const dataResults = successfulResults.flatMap(sR => sR.value?.response?.docs).filter(r => r);
         const hlResults = Object.assign({}, ...successfulResults.map(sr => sr.value?.highlighting));
 
         setDataSearchResults(dataResults);
