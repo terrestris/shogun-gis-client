@@ -8,13 +8,15 @@ import { V3CustomMapParams } from '@terrestris/mapfish-print-manager/dist/manage
 export type PrintState = {
   customMapParams?: V3CustomMapParams;
   customParams?: any;
+  printApp?: string;
 };
 
 const initialState: PrintState = {
+  printApp: "default",
   customMapParams: {},
   customParams: {
     printLegend: false
-  }
+  },
 };
 
 export const printSlice = createSlice({
@@ -26,6 +28,9 @@ export const printSlice = createSlice({
     },
     setCustomParams: (state, action: PayloadAction<any>) => {
       state.customParams = action.payload;
+    },
+    setPrintApp: (state, action: PayloadAction<string>) => {
+      state.printApp = action.payload;
     },
     addCustomMapParam: (state, action: PayloadAction<Partial<V3CustomMapParams>>) => {
       state.customMapParams = {
@@ -46,7 +51,8 @@ export const {
   setCustomMapParams,
   setCustomParams,
   addCustomMapParam,
-  addCustomParam
+  addCustomParam,
+  setPrintApp
 } = printSlice.actions;
 
 export default printSlice.reducer;

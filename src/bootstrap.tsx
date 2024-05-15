@@ -115,6 +115,7 @@ import {
 } from './store/user';
 
 import './index.less';
+import { setPrintApp } from './store/print';
 
 // TODO: extend antd properties too
 export interface ThemeProperties extends React.CSSProperties {
@@ -686,6 +687,10 @@ const renderApp = async () => {
     if (defaultLanguage) {
       i18n.changeLanguage(defaultLanguage);
     }
+
+    const printApp = appConfig?.clientConfig?.printApp;
+
+    store.dispatch(setPrintApp(printApp));
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
