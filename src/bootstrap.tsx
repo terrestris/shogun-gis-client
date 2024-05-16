@@ -689,7 +689,7 @@ const renderApp = async () => {
     }
 
     const printAppTemplates
-     = appConfig?.clientConfig?.printApp;
+      = appConfig?.clientConfig?.printApp;
 
     store.dispatch(setPrintApp(printAppTemplates));
 

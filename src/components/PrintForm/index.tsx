@@ -73,7 +73,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   customPrintScales = [],
 
   layerBlackList = [],
-  outputFormats= ['pdf', 'png'],
+  outputFormats = ['pdf', 'png'],
   ...restProps
 }): JSX.Element => {
 
@@ -226,10 +226,10 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       // Use locale print app if available.
       // Implies that a print app with the language code exists.
       const apps = pManager.getPrintApps();
-      if(printAppTemplates){
+      if (printAppTemplates) {
         await pManager.setPrintApp(printAppTemplates);
       }
-      if(apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
+      if (apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
         await pManager.setPrintApp(currentLanguageCode);
       }
 
