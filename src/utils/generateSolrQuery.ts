@@ -1,6 +1,10 @@
+import _groupBy from 'lodash/groupBy';
 import Map from 'ol/Map';
 
-import { isWmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
+import {
+  WmsLayer,
+  isWmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import {
   SearchConfig
@@ -32,27 +36,24 @@ export const generateSolrQuery = ({
     .map(s => s.trim())
     .filter(s => s !== '');
 
-  const subQueriesPerLayer: SolrQuery[] = [];
-  const layers = map.getAllLayers();
-  layers.forEach(layer => {
-    if (layer.get('searchable') && isWmsLayer(layer)) {
-      const searchConfig = layer.get('searchConfig') as SearchConfig;
-      const fullLayerName = layer.getSource()?.getParams().LAYERS;
-      if (searchConfig?.attributes) {
-        // search only configured attributes
-        subQueriesPerLayer.push({
-          query: `(featureType:"${fullLayerName}" AND (${generateSearchQuery(parts)}))`,
-          fieldList: searchConfig.attributes.join(' ')
-        });
-      } else {
-        // search all attributes of this layer
-        subQueriesPerLayer.push({
-          query: `(featureType:"${fullLayerName}" AND (${generateSearchQuery(parts)}))`
-        });
-      }
-    }
+  const searchQueries: SolrQuery[] = [];
+  const layers = map.getAllLayers().filter(l => l.get('searchable'));
+  const groupedLayers = _groupBy(layers, (l) => (l.get('searchConfig') as SearchConfig)?.attributes);
+
+  Object.entries(groupedLayers).forEach(([key, layerList]) => {
+    const layerNames = layerList
+      .filter(l => isWmsLayer(l))
+      .map(l => (l as WmsLayer).getSource()?.getParams()?.LAYERS);
+
+    const queriesPerQueryFields = layerNames.map(layerName => `(featureType:"${layerName}" AND (${generateSearchQuery(parts)}))`);
+    const query = queriesPerQueryFields.join(' OR ');
+    searchQueries.push({
+      query: query,
+      fieldList: key !== 'undefined' ? key.split(',').join(' ') : undefined
+    });
   });
-  return subQueriesPerLayer;
+
+  return searchQueries;
 };
 
 /**
