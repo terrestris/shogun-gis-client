@@ -33,6 +33,7 @@ import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/
 import MapFishPrintV3StamenSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3StamenSerializer';
 import MapFishPrintV3WMTSSerializer
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
+import MapFishPrintV3XYZSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3XYZSerializer';
 import { LayerUtil } from '@terrestris/ol-util';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
@@ -199,11 +200,14 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         rotate: false
       },
       serializers: [
+        /*currently commented out due to version conflicts.  as soon as shogun is
+        updated to ol9 Stamen serializer can be implemented
+        new MapFishPrintV3StamenSerializer(),*/
         new MapFishPrintV3GeoJsonSerializer(),
         new MapFishPrintV3OSMSerializer(),
         new MapFishPrintV3WMTSSerializer(),
-        new MapFishPrintV3StamenSerializer(),
         new SHOGunMapFishPrintV3WMSSerializer(),
+        new MapFishPrintV3XYZSerializer(),
         new SHOGunMapFishPrintV3TiledWMSSerializer()
       ],
       legendFilter
