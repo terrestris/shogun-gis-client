@@ -42,7 +42,7 @@ const editFeatureSlice = createSlice({
       state.feature = null;
     },
     setUserEditMode(state, action: PayloadAction<EditLevel[]>) {
-      state.userEditMode = action.payload;
+      state. = action.payload;
     },
     setFormDirty(state, action: PayloadAction<boolean>) {
       state.formDirty = action.payload;

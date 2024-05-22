@@ -5,17 +5,18 @@ import {
   render
 } from '@testing-library/react';
 
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  Feature
+} from 'geojson';
 
 import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
-
-import useAppSelector from '../../../hooks/useAppSelector';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
 import EditFeatureFullForm from '.';
 
 let layer: WmsLayer;
+let feature: Feature;
 
 describe('<EditFeatureFullForm />', () => {
 
@@ -28,16 +29,6 @@ describe('<EditFeatureFullForm />', () => {
   });
 
   it('can be rendered', () => {
-    const { result } = renderHook(() => useAppSelector(state => state.editFeature.feature),
-      {
-        wrapper: createReduxWrapper()
-      });
-
-    let feature = result.current;
-
-    if (!feature) {
-      return;
-    };
 
     const {
       container
