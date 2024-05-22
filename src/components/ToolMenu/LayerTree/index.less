@@ -20,6 +20,10 @@
       .tree-node-header {
         display: flex;
 
+        .layer-name{
+          position: 'fixed'
+        }
+
         .loading-indicator {
           flex: 1;
           opacity: 0.75;
@@ -29,6 +33,10 @@
         .loading-indicator.ant-progress-status-success {
           opacity: 0;
           transition: opacity 2s;
+        }
+
+        .layer-context-menu {
+          padding-left: '10px'
         }
 
         span {

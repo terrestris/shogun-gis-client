@@ -218,6 +218,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             aria-label="tree-node-header"
           >
             <span
+              className='layer-name'
               aria-label='layer-name'
             >
               {layer.get('name')}
@@ -232,10 +233,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
                 <div
+                  className='layer-context-menu'
                   aria-label='layer-context-menu'
-                  style={{
-                    paddingLeft: '10px'
-                  }}
                 >
                   <LayerTreeContextMenu
                     layer={layer}
