@@ -21,7 +21,11 @@
         display: flex;
 
         .layer-name{
-          position: 'fixed'
+          margin-right: 8px;
+        }
+
+        .loading-dots{
+          position: fixed;
         }
 
         .loading-indicator {
@@ -33,10 +37,6 @@
         .loading-indicator.ant-progress-status-success {
           opacity: 0;
           transition: opacity 2s;
-        }
-
-        .layer-context-menu {
-          padding-left: '10px'
         }
 
         span {
@@ -53,12 +53,10 @@
           margin-right: 0px; // 5px - 5px
         }
       }
-
       .ant-slider {
         flex: 1;
         margin-left: 27px;
       }
-
       .layer-transparency {
         padding-right: 30px;
         display: flex;

@@ -218,14 +218,12 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             aria-label="tree-node-header"
           >
             <span
-              className='layer-name'
               aria-label='layer-name'
+              className='layer-name'
             >
               {layer.get('name')}
               <span
-                style={{
-                  position: 'fixed'
-                }}
+                className='loading-dots'
               >
                 {percent < 100 && <LoadingIndicator />}
               </span>
@@ -233,7 +231,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
                 <div
-                  className='layer-context-menu'
                   aria-label='layer-context-menu'
                 >
                   <LayerTreeContextMenu
