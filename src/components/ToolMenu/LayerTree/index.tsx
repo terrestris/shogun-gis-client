@@ -221,12 +221,21 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               aria-label='layer-name'
             >
               {layer.get('name')}
-              {percent < 100 && <LoadingIndicator /> }
+              <span
+                style={{
+                  position: 'fixed'
+                }}
+              >
+                {percent < 100 && <LoadingIndicator />}
+              </span>
             </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
                 <div
                   aria-label='layer-context-menu'
+                  style={{
+                    paddingLeft: '10px'
+                  }}
                 >
                   <LayerTreeContextMenu
                     layer={layer}
