@@ -42,12 +42,6 @@ import {
 
 import AttributionRow from './AttributionRow';
 
-import {
-  DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
-
-import AttributionRow from './AttributionRow';
-
 import './index.less';
 
 export type FormData = {
