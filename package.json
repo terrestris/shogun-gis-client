@@ -32,7 +32,7 @@
     "prepare": "npm run husky",
     "semantic-release": "npm run clean; npm run build; npx semantic-release",
     "start": "webpack serve --config webpack.dev.js",
-    "test": "jest --coverage --maxWorkers=50%",
+    "test": "jest --maxWorkers=50% --coverage",
     "tsc": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
@@ -46,7 +46,7 @@
     "@terrestris/base-util": "^2.0.0",
     "@terrestris/mapfish-print-manager": "^13.0.1",
     "@terrestris/ol-util": "^19.0.0",
-    "@terrestris/react-geo": "24.0.0-next.6",
+    "@terrestris/react-geo": "24.0.0-main.3",
     "@terrestris/react-util": "^6.0.2",
     "@terrestris/shogun-e2e-tests": "^1.0.8",
     "antd": "^5.17.4",
