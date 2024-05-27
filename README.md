@@ -91,6 +91,14 @@ npm run start
 
 to have the application available at [https://localhost:8080](https://localhost:8080) you usually want to start the full SHOGun stack for development. Please refer to the [shogun-docker](https://github.com/terrestris/shogun-docker) repository for further details.
 
+### Development if shogun-gis-client is a dependency of your project
+
+Injects the local version of shogun-gis-client into another project. This can be useful when developing https://github.com/terrestris/shogun-gis-client-plugins
+
+```sh
+npx watch-build-copy ./src "npm run build:dist" ./dist/ ../shogun-gis-client-plugins/node_modules/@terrestris/shogun-gis-client/dist
+```
+
 ## End-to-End testing using Playwright
 
 Ensure using the latest version of the E2E-Test package:
