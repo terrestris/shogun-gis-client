@@ -30,12 +30,12 @@ import {
 } from '@terrestris/base-util';
 
 import {
-  useMap
-} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
-import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
 import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';

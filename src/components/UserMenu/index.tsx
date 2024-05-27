@@ -15,7 +15,7 @@ import {
 import { Button } from 'antd';
 import {
   ItemType
-} from 'antd/lib/menu/hooks/useItems';
+} from 'antd/lib/menu/interface';
 
 import ClientConfiguration from 'clientConfig';
 

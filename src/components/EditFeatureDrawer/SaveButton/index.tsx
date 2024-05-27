@@ -27,15 +27,16 @@ import {
 } from '@terrestris/base-util';
 
 import {
+  WmsLayer,
+  isWmsLayer
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   DigitizeUtil
 } from '@terrestris/react-util/dist/Util/DigitizeUtil';
-import {
-  WmsLayer,
-  isWmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';

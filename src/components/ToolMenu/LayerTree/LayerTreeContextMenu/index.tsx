@@ -17,7 +17,7 @@ import {
 } from 'antd';
 import {
   ItemType
-} from 'antd/lib/menu/hooks/useItems';
+} from 'antd/lib/menu/interface';
 
 import {
   getUid
@@ -46,11 +46,12 @@ import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
+  isWmsLayer
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
-import {
-  isWmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import {
   DownloadConfig

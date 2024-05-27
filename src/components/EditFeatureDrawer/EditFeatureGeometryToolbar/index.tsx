@@ -79,7 +79,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
   const map = useMap();
   const dispatch = useAppDispatch();
 
-  const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector<OlFeature<OlGeometry>>>>();
+  const [editLayer, setEditLayer] = useState<OlLayerVector<OlFeature>>();
   const [, setRevision] = useState<number>(0);
 
   const gjFormat = useMemo(() => new OlFormatGeoJson(), []);
