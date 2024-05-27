@@ -63,7 +63,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
 
     if (!vectorLayer) {
       return;
@@ -83,7 +83,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
 
     if (!vectorLayer) {
       return;
