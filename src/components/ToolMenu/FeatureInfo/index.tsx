@@ -1,9 +1,13 @@
 import React, {
-  useCallback, useEffect, useState
+  useCallback,
+  useEffect,
+  useState
 } from 'react';
 
 import {
-  FormProps, Spin, Tabs
+  FormProps,
+  Spin,
+  Tabs
 } from 'antd';
 
 import { Coordinate as OlCoordinate } from 'ol/coordinate';
@@ -21,14 +25,17 @@ import { useTranslation } from 'react-i18next';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
+import {
+  isWmsLayer,
+  WmsLayer
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
 import CoordinateInfo, {
   CoordinateInfoProps
 } from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
+
 import { CoordinateInfoResult } from '@terrestris/react-util/dist/Hooks/useCoordinateInfo/useCoordinateInfo';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
-import {
-  isWmsLayer, WmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
 
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 

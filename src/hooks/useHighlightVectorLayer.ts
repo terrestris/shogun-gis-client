@@ -3,6 +3,7 @@ import {
   useEffect
 } from 'react';
 
+import OlFeature from 'ol/Feature';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 import OlStyleCircle from 'ol/style/Circle';
@@ -64,7 +65,7 @@ export const useHighlightVectorLayer = (opts: HighlightVectorLayerOpts) => {
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, opts.layerName) as OlLayerVector<OlSourceVector>;
+    const vectorLayer = MapUtil.getLayerByName(map, opts.layerName) as OlLayerVector<OlFeature>;
 
     if (!vectorLayer) {
       return;

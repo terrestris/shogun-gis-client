@@ -5,11 +5,11 @@ import {
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import {
   WmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   getBearerTokenHeader

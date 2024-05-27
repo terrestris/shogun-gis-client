@@ -14,10 +14,13 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';

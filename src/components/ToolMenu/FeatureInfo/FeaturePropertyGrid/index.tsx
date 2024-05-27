@@ -58,7 +58,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
 
     if (!vectorLayer) {
       return;
@@ -77,7 +77,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
 
     if (!vectorLayer) {
       return;

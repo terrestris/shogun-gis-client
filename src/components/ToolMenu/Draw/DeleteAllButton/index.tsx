@@ -27,7 +27,7 @@ interface OwnProps {
    * The vector layer which will be used for digitize features.
    * The standard digitizeLayer can be retrieved via `DigitizeUtil.getDigitizeLayer(map)`.
    */
-  digitizeLayer?: OlVectorLayer<OlVectorSource<OlFeature<OlGeometry>>>;
+  digitizeLayer?: OlVectorLayer<OlFeature>;
 }
 
 export type DeleteAllButtonProps = OwnProps & SimpleButtonProps;
@@ -42,7 +42,7 @@ export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
   digitizeLayer,
   ...passThroughProps
 }) => {
-  const [layers, setLayers] = useState<[OlVectorLayer<OlVectorSource<OlFeature<OlGeometry>>>]|null>(null);
+  const [layers, setLayers] = useState<[OlVectorLayer<OlFeature>] | null>(null);
 
   const map = useMap();
 

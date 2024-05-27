@@ -46,7 +46,7 @@ import {
 } from 'react-redux';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 

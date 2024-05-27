@@ -4,7 +4,7 @@ import Map from 'ol/Map';
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-util/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   SearchConfig

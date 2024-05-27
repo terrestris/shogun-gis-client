@@ -13,14 +13,12 @@ import ClientConfiguration from 'clientConfig';
 import _isNil from 'lodash/isNil';
 
 import OlFeature from 'ol/Feature';
-import OlGeometry from 'ol/geom/Geometry';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 
 import OlLayerVector from 'ol/layer/Vector';
 import OlLayerRenderer from 'ol/renderer/Layer';
 import OlSource from 'ol/source/Source';
-import OlSourceVector from 'ol/source/Vector';
 
 import { useTranslation } from 'react-i18next';
 
@@ -67,7 +65,7 @@ export interface PrintFormProps extends Omit<FormProps, 'form'> {
   outputFormats?: string[];
 }
 
-export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlSourceVector<OlFeature<OlGeometry>>>>>;
+export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlFeature>>>;
 
 export const PrintForm: React.FC<PrintFormProps> = ({
   active,
