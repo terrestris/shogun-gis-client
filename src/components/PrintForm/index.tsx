@@ -26,14 +26,14 @@ import Logger from '@terrestris/base-util/dist/Logger';
 
 import { MapFishPrintV3Manager } from '@terrestris/mapfish-print-manager';
 import { MapFishPrintV3ManagerOpts } from '@terrestris/mapfish-print-manager/dist/manager/MapFishPrintV3Manager';
-import MapFishPrintV3GeoJsonSerializer
+import { MapFishPrintV3GeoJsonSerializer }
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
-import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
-import MapFishPrintV3WMTSSerializer
+import { MapFishPrintV3OSMSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
+import { MapFishPrintV3WMTSSerializer }
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
 
-import { LayerUtil } from '@terrestris/ol-util';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 

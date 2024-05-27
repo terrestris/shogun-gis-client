@@ -20,8 +20,6 @@ import ClientConfiguration, {
   FeatureEditConfiguration
 } from 'clientConfig';
 
-import Color from 'color';
-
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import Keycloak from 'keycloak-js';

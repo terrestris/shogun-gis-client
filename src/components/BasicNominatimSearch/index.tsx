@@ -12,7 +12,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import NominatimSearch, {
+import {
+  NominatimSearch,
   NominatimSearchProps
 } from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';

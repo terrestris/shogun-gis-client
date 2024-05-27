@@ -8,7 +8,9 @@ import {
   WhatsAppOutlined
 } from '@ant-design/icons';
 import {
-  Input, Tooltip, message
+  Input,
+  Tooltip,
+  message
 } from 'antd';
 import copy from 'copy-to-clipboard';
 import {
@@ -25,7 +27,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+import { PermalinkUtil } from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
   useMap

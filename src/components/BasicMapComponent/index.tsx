@@ -8,7 +8,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   MapComponent,

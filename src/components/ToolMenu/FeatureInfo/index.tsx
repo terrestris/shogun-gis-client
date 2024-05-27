@@ -23,14 +23,15 @@ import { Tab } from 'rc-tabs/lib/interface';
 
 import { useTranslation } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   isWmsLayer,
   WmsLayer
 } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
-import CoordinateInfo, {
+import {
+  CoordinateInfo,
   CoordinateInfoProps
 } from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
 

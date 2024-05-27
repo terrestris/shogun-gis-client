@@ -31,11 +31,11 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import DeleteButton from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
+import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
-import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
+import { ModifyButton } from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import UploadButton from '@terrestris/react-geo/dist/Button/UploadButton/UploadButton';
 import {
   useMap

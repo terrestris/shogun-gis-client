@@ -15,11 +15,9 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   WmsLayer,

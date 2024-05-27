@@ -43,7 +43,7 @@ import {
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   isWmsLayer

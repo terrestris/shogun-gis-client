@@ -21,12 +21,12 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import RgLayerTree, {
   LayerTreeProps as RgLayerTreeProps
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
-import Legend from '@terrestris/react-geo/dist/Legend/Legend';
+import { Legend } from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
 import {
   useMap
