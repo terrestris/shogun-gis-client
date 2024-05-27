@@ -4,7 +4,7 @@ import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSource from 'ol/source/Source';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import Shared from '@terrestris/mapfish-print-manager/dist/util/Shared';
+import { Shared } from '@terrestris/mapfish-print-manager/dist/util/Shared';
 
 Shared.getLegendGraphicUrl = (layer: OlLayer<OlSource, OlRendererLayer<any>>): string => {
   if (layer.get('legendUrl')) {

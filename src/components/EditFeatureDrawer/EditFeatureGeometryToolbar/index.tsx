@@ -27,20 +27,17 @@ import _isEmpty from 'lodash/isEmpty';
 import { isEmpty as isEmptyOlExtent } from 'ol/extent';
 import OlFeature from 'ol/Feature';
 import OlFormatGeoJson from 'ol/format/GeoJSON';
-import OlGeometry from 'ol/geom/Geometry';
 import { DrawEvent as OlDrawEvent } from 'ol/interaction/Draw';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
-import DeleteButton from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
+import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
-import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
+import { ModifyButton } from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 
-import {
-  useMap
-} from '@terrestris/react-util';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   DigitizeUtil
 } from '@terrestris/react-util/dist/Util/DigitizeUtil';

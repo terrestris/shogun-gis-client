@@ -38,8 +38,6 @@ import ClientConfiguration from 'clientConfig';
 import _toArray from 'lodash/toArray';
 import { ItemType } from 'rc-collapse/lib/interface';
 
-const { Panel } = Collapse;
-
 import {
   useTranslation
 } from 'react-i18next';

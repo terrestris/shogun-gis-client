@@ -10,13 +10,12 @@ import {
 import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
 import OlLayerVector from 'ol/layer/Vector';
-import OlSourceVector from 'ol/source/Vector';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import PropertyGrid from '@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
