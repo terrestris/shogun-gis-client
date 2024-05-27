@@ -13,8 +13,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MeasureButton from '@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import { MeasureButton } from '@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton';
+import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';

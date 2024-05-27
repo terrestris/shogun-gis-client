@@ -9,9 +9,7 @@ import {
 
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 
-import {
-  Logger
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
   WmsLayer

@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {
-  useEffect, useState
+  useEffect,
+  useState
 } from 'react';
 
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import OlFeature from 'ol/Feature';
-import OlGeometry from 'ol/geom/Geometry';
 import OlVectorLayer from 'ol/layer/Vector';
-import OlVectorSource from 'ol/source/Vector';
 
 import {
   useTranslation
