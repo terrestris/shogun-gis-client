@@ -14,6 +14,12 @@ module.exports = {
   },
   module: {
     rules: [{
+      test: /\.m?js$/,
+      include: /node_modules\/@terrestris/,
+      resolve: {
+        fullySpecified: false
+      }
+    }, {
       test: /\.tsx?$/,
       exclude: /node_modules|\.d\.ts$/,
       use: [{

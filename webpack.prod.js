@@ -40,7 +40,8 @@ module.exports = merge(common, {
       ]
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css'
+      filename: '[name].[contenthash].css',
+      ignoreOrder: true
     })
   ].filter(Boolean),
   output: {
