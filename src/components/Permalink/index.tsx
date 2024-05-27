@@ -131,12 +131,6 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     };
   }, [layerAttributes, map, t]);
 
-  function onTwitterClick() {
-    const twitterUrl = new URL('https://twitter.com/intent/tweet');
-    twitterUrl.searchParams.set('url', mailBody);
-    window.open(twitterUrl);
-  }
-
   function onWhatsAppClick() {
     const whatsAppUrl = new URL('https://wa.me');
     whatsAppUrl.searchParams.set('text', mailBody);
