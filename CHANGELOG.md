@@ -1,3 +1,26 @@
+## [8.3.0](https://github.com/terrestris/shogun-gis-client/compare/v8.2.1...v8.3.0) (2024-05-21)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/runtime from 7.24.0 to 7.24.5 ([13ec802](https://github.com/terrestris/shogun-gis-client/commit/13ec8029cc3254c82d20bb3d904c9d0c68a48a73))
+* **deps-dev:** bump @semantic-release/github from 9.2.6 to 10.0.4 ([7a91022](https://github.com/terrestris/shogun-gis-client/commit/7a91022ca1a6414d328f2d2cfc9c3a4c6c6f4415))
+* **deps-dev:** bump @semantic-release/release-notes-generator ([a923669](https://github.com/terrestris/shogun-gis-client/commit/a9236696cebba1be06069704117eba6a23eb1d6b))
+* **deps-dev:** bump eslint-plugin-react from 7.34.0 to 7.34.1 ([3e78e6f](https://github.com/terrestris/shogun-gis-client/commit/3e78e6f5bcac9311281b8fd077f51e038a3f88ab))
+* **deps-dev:** bump react-refresh from 0.14.0 to 0.14.2 ([53e8153](https://github.com/terrestris/shogun-gis-client/commit/53e81532c3d40d88baf3d6949db214900b55ca58))
+* **deps-dev:** bump semantic-release from 23.0.2 to 23.1.1 ([9be13fa](https://github.com/terrestris/shogun-gis-client/commit/9be13fa462bd54e6fad7c234506b79460ad091e2))
+* **deps-dev:** bump style-loader from 3.3.4 to 4.0.0 ([ddaea8b](https://github.com/terrestris/shogun-gis-client/commit/ddaea8b7a45a8934e9900cf2927fbfd2b0e2fe25))
+* **deps-dev:** bump typescript from 5.3.3 to 5.4.5 ([cbb4af7](https://github.com/terrestris/shogun-gis-client/commit/cbb4af7d4ca458316a65436f2f31ecf8711da844))
+* **deps:** bump @reduxjs/toolkit from 2.2.4 to 2.2.5 ([943c20c](https://github.com/terrestris/shogun-gis-client/commit/943c20cc406d7e6a67599e32eac6bf36f6517564))
+* **deps:** bump i18next-browser-languagedetector from 7.2.0 to 8.0.0 ([91422ad](https://github.com/terrestris/shogun-gis-client/commit/91422adcb2b0ebc2d2a7e97518530a0cb7848337))
+* **deps:** bump JamesIves/github-pages-deploy-action ([84fbade](https://github.com/terrestris/shogun-gis-client/commit/84fbade9edcb8099722f23331be88988a40345eb))
+* **deps:** bump react-i18next from 14.0.5 to 14.1.1 ([d4f9448](https://github.com/terrestris/shogun-gis-client/commit/d4f9448ccc8ba79bcd241f9dbd4be53883bc6979))
+
+
+### Features
+
+* group solr queries by query fields ([65ef63e](https://github.com/terrestris/shogun-gis-client/commit/65ef63ec1a1eda627ec6ac991e694a31bcf61fdb))
+
 ## [8.2.1](https://github.com/terrestris/shogun-gis-client/compare/v8.2.0...v8.2.1) (2024-05-15)
 
 

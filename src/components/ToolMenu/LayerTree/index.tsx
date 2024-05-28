@@ -219,9 +219,14 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           >
             <span
               aria-label='layer-name'
+              className='layer-name'
             >
               {layer.get('name')}
-              {percent < 100 && <LoadingIndicator /> }
+              <span
+                className='loading-dots'
+              >
+                {percent < 100 && <LoadingIndicator />}
+              </span>
             </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
