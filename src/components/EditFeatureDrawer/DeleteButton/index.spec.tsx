@@ -13,12 +13,6 @@ import {
   Feature
 } from 'geojson';
 
-import {
-  enableFetchMocks,
-  disableFetchMocks,
-  FetchMock
-} from 'jest-fetch-mock';
-
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerTile from 'ol/layer/Tile';
 import OlMap from 'ol/Map';
@@ -36,21 +30,8 @@ let mockFeature: Feature;
 let map: OlMap;
 
 describe('<DeleteButton />', () => {
-  beforeAll(() => {
-    enableFetchMocks();
-    (window.URL.createObjectURL as jest.Mock) = jest.fn().mockReturnValue(mockLayer);
-    (window.URL.revokeObjectURL as jest.Mock) = jest.fn();
-  });
-
-  afterAll(() => {
-    disableFetchMocks();
-    (window.URL.createObjectURL as jest.Mock).mockRestore();
-    (window.URL.revokeObjectURL as jest.Mock).mockRestore();
-  });
 
   beforeEach(() => {
-    jest.spyOn(console, 'log');
-
     document.body.innerHTML = '<div id="map"></div>';
 
     mockLayer = new OlLayerTile({
@@ -87,7 +68,6 @@ describe('<DeleteButton />', () => {
 
   afterEach(() => {
     cleanup();
-    (fetch as FetchMock).mockReset();
   });
 
   it('is defined', () => {
