@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   act,
-  cleanup,
   fireEvent,
   render,
   screen,
@@ -16,9 +15,7 @@ import UserMenu from './index';
 describe('<UserMenu />', () => {
   let menuElem: HTMLElement | null;
 
-  afterEach(cleanup);
-
-  beforeEach(async () => {
+  it('can be rendered', async () => {
     const {
       container
     } = render(
@@ -27,24 +24,30 @@ describe('<UserMenu />', () => {
         wrapper: createReduxWrapper()
       });
     expect(container).toBeVisible();
-
-    menuElem = container.querySelector('.react-geo-userchip');
   });
 
   it('is defined', () => {
     expect(UserMenu).not.toBeUndefined();
   });
 
-  it('can be rendered', () => {
-    expect(menuElem).toBeVisible();
-  });
+  it('avatar is visible', async () => {
+    render(
+      <UserMenu />,
+      {
+        wrapper: createReduxWrapper()
+      });
 
-  it('avatar is visible', () => {
     const avatarElem = document.querySelector('.ant-avatar');
     expect(avatarElem).toBeVisible();
   });
 
   it('menu opens', async () => {
+    render(
+      <UserMenu />,
+      {
+        wrapper: createReduxWrapper()
+      });
+
     const triggerElem = document.querySelector('.ant-dropdown-trigger');
     expect(triggerElem).toBeVisible();
 
@@ -62,6 +65,12 @@ describe('<UserMenu />', () => {
   });
 
   it('menu closes', async () => {
+    render(
+      <UserMenu />,
+      {
+        wrapper: createReduxWrapper()
+      });
+
     const triggerElem = document.querySelector('.ant-dropdown-trigger');
     expect(triggerElem).toBeVisible();
 
