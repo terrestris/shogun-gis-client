@@ -190,6 +190,10 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
     };
   };
 
+  if (_isEmpty(user)) {
+    return <></>;
+  }
+
   return (
     <UserChip
       size={'small'}
