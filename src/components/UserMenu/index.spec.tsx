@@ -4,7 +4,6 @@ import {
   act,
   cleanup,
   fireEvent,
-  prettyDOM,
   render,
   screen,
   waitFor
