@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   act,
+  cleanup,
   fireEvent,
   render,
   screen,
@@ -13,7 +14,10 @@ import { createReduxWrapper } from '../../utils/testUtils';
 import UserMenu from './index';
 
 describe('<UserMenu />', () => {
-  let menuElem: HTMLElement | null;
+
+  afterEach(() => {
+    cleanup();
+  });
 
   it('can be rendered', async () => {
     const {
@@ -31,13 +35,15 @@ describe('<UserMenu />', () => {
   });
 
   it('avatar is visible', async () => {
-    render(
+    const {
+      container
+    } = render(
       <UserMenu />,
       {
         wrapper: createReduxWrapper()
       });
 
-    const avatarElem = document.querySelector('.ant-avatar');
+    const avatarElem: HTMLElement | null = container.querySelector('.userimage');
     expect(avatarElem).toBeVisible();
   });
 
@@ -48,19 +54,17 @@ describe('<UserMenu />', () => {
         wrapper: createReduxWrapper()
       });
 
-    const triggerElem = document.querySelector('.ant-dropdown-trigger');
-    expect(triggerElem).toBeVisible();
+    const triggerElem: HTMLElement | null = document.querySelector('.react-geo-userchip');
 
     act(() => {
       fireEvent.click(triggerElem!);
     });
-
     await waitFor(() => expect(triggerElem).toHaveClass('ant-dropdown-open'));
 
-    const dropdownElem = await waitFor(() => screen.getByRole('menu'));
+    const dropdownElem: HTMLElement | null = await waitFor(() => screen.getByRole('menu'));
     expect(dropdownElem).not.toBeUndefined();
 
-    const menuItemElem = await waitFor(() => screen.getByRole('menuitem'));
+    const menuItemElem: HTMLElement | null = await waitFor(() => screen.getByRole('menuitem'));
     expect(menuItemElem).not.toBeUndefined();
   });
 
@@ -71,8 +75,7 @@ describe('<UserMenu />', () => {
         wrapper: createReduxWrapper()
       });
 
-    const triggerElem = document.querySelector('.ant-dropdown-trigger');
-    expect(triggerElem).toBeVisible();
+    const triggerElem: HTMLElement | null = document.querySelector('.react-geo-userchip');
 
     act(() => {
       fireEvent.doubleClick(triggerElem!);
