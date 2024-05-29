@@ -29,6 +29,7 @@ describe('<UserMenu />', () => {
         wrapper: createReduxWrapper()
       });
     expect(container).toBeVisible();
+    console.log(prettyDOM(document));
   });
 
   it('is defined', () => {
@@ -59,8 +60,6 @@ describe('<UserMenu />', () => {
     act(() => {
       fireEvent.click(triggerElem!);
     });
-
-    console.log(prettyDOM(document));
 
     await waitFor(() => expect(triggerElem).toHaveClass('ant-dropdown-open'));
 
