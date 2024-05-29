@@ -4,6 +4,7 @@ import {
   act,
   cleanup,
   fireEvent,
+  prettyDOM,
   render,
   screen,
   waitFor
@@ -55,10 +56,12 @@ describe('<UserMenu />', () => {
       });
 
     const triggerElem: HTMLElement | null = document.querySelector('.react-geo-userchip');
-
     act(() => {
       fireEvent.click(triggerElem!);
     });
+
+    console.log(prettyDOM(document));
+
     await waitFor(() => expect(triggerElem).toHaveClass('ant-dropdown-open'));
 
     const dropdownElem: HTMLElement | null = await waitFor(() => screen.getByRole('menu'));
