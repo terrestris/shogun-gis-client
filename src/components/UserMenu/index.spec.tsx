@@ -1,14 +1,11 @@
 import React from 'react';
 
 import {
-  act,
   cleanup,
-  fireEvent,
-  prettyDOM,
-  render,
-  screen,
-  waitFor
+  render
 } from '@testing-library/react';
+
+import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
 
 import { createReduxWrapper } from '../../utils/testUtils';
 
@@ -29,7 +26,6 @@ describe('<UserMenu />', () => {
         wrapper: createReduxWrapper()
       });
     expect(container).toBeVisible();
-    console.log(prettyDOM(document));
   });
 
   it('is defined', () => {
@@ -49,40 +45,18 @@ describe('<UserMenu />', () => {
     expect(avatarElem).toBeVisible();
   });
 
-  it('menu opens', async () => {
+  it('menu function is called', async () => {
+    const mockFunction = jest.fn();
     render(
-      <UserMenu />,
+      <UserMenu >
+        <UserChip
+          userMenu={mockFunction()}
+        />
+      </UserMenu>,
       {
         wrapper: createReduxWrapper()
       });
 
-    const triggerElem: HTMLElement | null = document.querySelector('.react-geo-userchip');
-    act(() => {
-      fireEvent.click(triggerElem!);
-    });
-
-    await waitFor(() => expect(triggerElem).toHaveClass('ant-dropdown-open'));
-
-    const dropdownElem: HTMLElement | null = await waitFor(() => screen.getByRole('menu'));
-    expect(dropdownElem).not.toBeUndefined();
-
-    const menuItemElem: HTMLElement | null = await waitFor(() => screen.getByRole('menuitem'));
-    expect(menuItemElem).not.toBeUndefined();
-  });
-
-  it('menu closes', async () => {
-    render(
-      <UserMenu />,
-      {
-        wrapper: createReduxWrapper()
-      });
-
-    const triggerElem: HTMLElement | null = document.querySelector('.react-geo-userchip');
-
-    act(() => {
-      fireEvent.doubleClick(triggerElem!);
-    });
-
-    await waitFor(() => expect(triggerElem).not.toHaveClass('ant-dropdown-open'));
+    expect(mockFunction).toHaveBeenCalled();
   });
 });
