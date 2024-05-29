@@ -10,9 +10,9 @@ import ClientConfiguration from 'clientConfig';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
-import {
-  isMoment
-} from 'moment';
+// import {
+//   isMoment
+// } from 'moment';
 
 import {
   isEmpty
@@ -95,9 +95,9 @@ export const useWriteWfsTransaction = () => {
       }
 
       // Transform moments back to iso string.
-      if (isMoment(value)) {
-        formValues[key] = value.toISOString();
-      }
+      // if (isMoment(value)) {
+      //   formValues[key] = value.toISOString();
+      // }
 
       if (Array.isArray(value) && value.length > 0 && isFileConfig(value[0])) {
         const filePath = value[0].response?.fileType?.startsWith('image/') ? 'imagefiles/' : 'files/';

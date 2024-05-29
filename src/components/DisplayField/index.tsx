@@ -7,6 +7,7 @@ import {
 } from 'antd';
 
 import isString from 'lodash/isString';
+
 import {
   isMoment
 } from 'moment';

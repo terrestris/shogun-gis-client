@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IHK WebGIS</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <script src="./gis-client-config.js"></script>
+    <script>
+      if (!window.clientConfig) {
+        console.warn('No config found, client defaults will be used.');
+        window.clientConfig = {};
+      }
+    </script>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
