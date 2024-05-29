@@ -58,6 +58,7 @@ import Application, {
 import User from '@terrestris/shogun-util/dist/model/User';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import Feature from 'ol/Feature';
 
 const App = React.lazy(() => import('./App'));
 
@@ -111,6 +112,8 @@ import {
 import {
   setUser
 } from './store/user';
+
+import Footer from 'ExamplePlugin/FooterLinks';
 
 import './index.less';
 
@@ -484,42 +487,43 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
 
 // ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
 const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
-  await __webpack_init_sharing__('default');
+  // await __webpack_init_sharing__('default');
 
-  await new Promise<void>((resolve, reject) => {
-    const element = document.createElement('script');
+  // await new Promise<void>((resolve, reject) => {
+  //   const element = document.createElement('script');
 
-    element.src = moduleUrl;
-    element.type = 'text/javascript';
-    element.async = true;
+  //   element.src = moduleUrl;
+  //   element.type = 'text/javascript';
+  //   element.async = true;
 
-    element.onload = () => {
-      element.parentElement?.removeChild(element);
-      resolve();
-    };
+  //   element.onload = () => {
+  //     element.parentElement?.removeChild(element);
+  //     resolve();
+  //   };
 
-    element.onerror = (err) => {
-      element.parentElement?.removeChild(element);
-      reject(err);
-    };
+  //   element.onerror = (err) => {
+  //     element.parentElement?.removeChild(element);
+  //     reject(err);
+  //   };
 
-    document.head.appendChild(element);
-  });
+  //   document.head.appendChild(element);
+  // });
 
-  // @ts-ignore
-  const container = window[moduleName];
+  // // @ts-ignore
+  // const container = window[moduleName];
 
-  // eslint-disable-next-line camelcase
-  await container.init(__webpack_share_scopes__.default);
+  // // eslint-disable-next-line camelcase
+  // await container.init(__webpack_share_scopes__.default);
 
-  const modules = [];
-  for (const remoteName of remoteNames) {
-    const factory = await container.get(remoteName);
-    const module = factory();
-    modules.push(module);
-  }
+  // const modules = [];
+  // for (const remoteName of remoteNames) {
+  //   const factory = await container.get(remoteName);
+  //   const module = factory();
+  //   modules.push(module);
+  // }
 
-  return modules;
+  // return modules;
+  return [];
 };
 
 const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig[]) => {
@@ -778,6 +782,7 @@ const renderApp = async () => {
                 <Provider store={store}>
                   <MapContext.Provider value={map}>
                     <App />
+                    <Footer feature={new Feature()} />
                   </MapContext.Provider>
                 </Provider>
               </ConfigProvider>

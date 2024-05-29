@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import federation from "@originjs/vite-plugin-federation";
 import topLevelAwait from "vite-plugin-top-level-await";
@@ -20,61 +19,34 @@ export default defineConfig({
     viteExternalsPlugin({
       clientConfig: 'clientConfig',
     }),
-
     federation({
       name: 'SHOGunGISClient',
+      remotes: {
+        ExamplePlugin: 'http://localhost:8888/assets/index.js'
+      },
       shared: {
         react: {
-          // singleton: true,
-          // eager: true,
           requiredVersion: deps.react
         },
         'react-dom': {
-          // singleton: true,
-          // eager: true,
           requiredVersion: deps['react-dom']
         },
         'react-redux': {
-          // singleton: true,
-          // eager: true,
           requiredVersion: deps['react-redux']
         },
         '@terrestris/react-geo': {
-          // singleton: true,
-          // eager: true,
           requiredVersion: deps['@terrestris/react-geo']
         },
         'react-i18next': {
-          // singleton: true,
-          // eager: true,
           requiredVersion: deps['react-i18next']
         },
         'ol': {
-          // singleton: true,
-          // eager: true,
           requiredVersion: deps.ol
         }
       }
     }
-    // {
-    //   name: 'remote-app',
-    //   filename: 'remoteEntry.js',
-    //   // Modules to expose
-    //   exposes: {
-    //       './Button': './src/Button.vue',
-    //   },
-    //   shared: ['vue']
-    // }
   )
   ],
-  // resolve: {
-  //   alias: [
-  //     {
-  //       find: 'clientConfig',
-  //       replacement: 'gis-client-config.js'
-  //     }
-  //   ]
-  // },
   server: {
     host: '0.0.0.0',
     port: 8080,
