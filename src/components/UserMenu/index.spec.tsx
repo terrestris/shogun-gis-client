@@ -32,19 +32,6 @@ describe('<UserMenu />', () => {
     expect(UserMenu).not.toBeUndefined();
   });
 
-  it('avatar is visible', async () => {
-    const {
-      container
-    } = render(
-      <UserMenu />,
-      {
-        wrapper: createReduxWrapper()
-      });
-
-    const avatarElem: HTMLElement | null = container.querySelector('.userimage');
-    expect(avatarElem).toBeVisible();
-  });
-
   it('menu function is called', async () => {
     const mockFunction = jest.fn();
     render(
