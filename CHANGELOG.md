@@ -1,3 +1,35 @@
+## [8.4.0](https://github.com/terrestris/shogun-gis-client/compare/v8.3.0...v8.4.0) (2024-05-31)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.24.0 to 7.24.5 ([bbf7ebc](https://github.com/terrestris/shogun-gis-client/commit/bbf7ebc2de4862408394e6d59a99a8bdb5ae02bc))
+* **deps-dev:** bump @playwright/test from 1.42.1 to 1.44.1 ([9718ae5](https://github.com/terrestris/shogun-gis-client/commit/9718ae5265b8c4bd58d00443439d64f58699649d))
+* **deps-dev:** bump @semantic-release/github from 10.0.4 to 10.0.5 ([cc003dc](https://github.com/terrestris/shogun-gis-client/commit/cc003dcacf5e0e4fa5ea1e90caf8507148582012))
+* **deps-dev:** bump @semantic-release/npm from 11.0.2 to 12.0.1 ([0f9e413](https://github.com/terrestris/shogun-gis-client/commit/0f9e41385dd1f76047068109f0f2b1c296f80673))
+* **deps-dev:** bump @types/node from 20.12.11 to 20.12.12 ([61fddcf](https://github.com/terrestris/shogun-gis-client/commit/61fddcf00a4c43ae4d79b362dfd3373cb89a9c0b))
+* **deps-dev:** bump css-loader from 6.10.0 to 7.1.2 ([71d6a25](https://github.com/terrestris/shogun-gis-client/commit/71d6a25886f3380c153fadc928202eb56f37d569))
+* **deps:** bump react-i18next from 14.1.1 to 14.1.2 ([36991e9](https://github.com/terrestris/shogun-gis-client/commit/36991e9f8163011f7599d48d49556a9793ed2c84))
+* moves styling to .less file ([196f53e](https://github.com/terrestris/shogun-gis-client/commit/196f53e1670dc6cec370d43da68baeebdd88033d))
+
+
+### Features
+
+* create <a /> for links in DisplayField ([ead68e7](https://github.com/terrestris/shogun-gis-client/commit/ead68e7b981076a528504d14752664d2e2a83d0f))
+
+
+### Bugfixes
+
+* extracts further elements to .less and makes a slight styling change ([77406cf](https://github.com/terrestris/shogun-gis-client/commit/77406cf448706f7bdbbf0c6af3995ae1bc81cc82))
+* fixes loading indicator and adjusts spacing ([0523e6f](https://github.com/terrestris/shogun-gis-client/commit/0523e6f5864738fe0e792f473fa0db521008b720))
+* hide user chip in public applications ([813d9d2](https://github.com/terrestris/shogun-gis-client/commit/813d9d247d0a116f04f9fafd2d725ef8064a8f38))
+* update check for UNC path ([959d914](https://github.com/terrestris/shogun-gis-client/commit/959d9147c4af174032c51c77ee7fac0e42182112))
+
+
+### Changes in layout
+
+* fix tree overflow ([711e527](https://github.com/terrestris/shogun-gis-client/commit/711e52771940b3865d9adb40199d2b3dec0985f7))
+
 ## [8.3.0](https://github.com/terrestris/shogun-gis-client/compare/v8.2.1...v8.3.0) (2024-05-21)
 
 
