@@ -88,10 +88,11 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     if (protocols.some(protocol => lowerCandidate.startsWith(protocol))) {
       return true;
     }
-    // windows (network) paths
-    if (candidate.startsWith('\\\\')) {
+    // UNC path
+    if (candidate.startsWith('\\')) {
       return true;
     }
+    // windows drive letter
     if (candidate.match(/^[a-zA-Z]:\\/)) {
       return true;
     }
