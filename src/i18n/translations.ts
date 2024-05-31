@@ -172,6 +172,7 @@ export default {
       UserMenu: {
         settingsMenuTitle: 'Profil bearbeiten',
         infoMenuTitle: 'Über',
+        helpMenuTitle: 'Dokumentation',
         logoutMenuTitle: 'Ausloggen',
         loginMenuTitle: 'Anmelden'
       },
@@ -454,6 +455,7 @@ export default {
       UserMenu: {
         settingsMenuTitle: 'Edit profile',
         infoMenuTitle: 'About',
+        helpMenuTitle: 'Documentation',
         logoutMenuTitle: 'Logout',
         loginMenuTitle: 'Login'
       },
