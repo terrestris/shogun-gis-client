@@ -6,6 +6,7 @@ import {
   UploadFile
 } from 'antd';
 
+import isString from 'lodash/isString';
 import {
   isMoment
 } from 'moment';
@@ -52,10 +53,10 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     i18n
   } = useTranslation();
 
-  let displayText: string = '';
+  let displayValue: React.ReactNode = '';
 
   if (typeof value === 'string') {
-    displayText = value;
+    displayValue = value;
   }
 
   if (typeof value === 'boolean' || value === 'false' || value === 'true') {
@@ -68,17 +69,45 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   }
 
   if (Number.isFinite(value)) {
-    displayText = new Intl.NumberFormat(i18n.language, {
+    displayValue = new Intl.NumberFormat(i18n.language, {
       useGrouping: false
     }).format(Number(value));
   }
 
   if (isMoment(value)) {
-    displayText = value.format(format);
+    displayValue = value.format(format);
   }
 
   if (Array.isArray(value)) {
-    displayText = value.join(', ');
+    displayValue = value.join(', ');
+  }
+
+  const isUrl = (candidate: string) => {
+    const lowerCandidate = candidate.toLowerCase();
+    const protocols = ['http://', 'https://', 'ftp://', 'file://', 'mailto:'];
+    if (protocols.some(protocol => lowerCandidate.startsWith(protocol))) {
+      return true;
+    }
+    // windows (network) paths
+    if (candidate.startsWith('\\\\')) {
+      return true;
+    }
+    if (candidate.match(/^[a-zA-Z]:\\/)) {
+      return true;
+    }
+    return false;
+  };
+
+  if (isString(value) && isUrl(value)) {
+    displayValue = (
+      <a
+        href={value}
+        target="_blank"
+        rel='noreferrer'
+      >
+        {value}
+      </a>
+    );
   }
 
   const getUpload = (val: ValueType | ValueType[]): UploadFile<ShogunFile>[] | null => {
@@ -142,12 +171,16 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     );
   }
 
+  if (suffix) {
+    displayValue = <>{displayValue} {suffix}</>;
+  }
+
   return (
     <Typography.Text
       className="displayfield"
       {...passThroughProps}
     >
-      {displayText}{displayText && suffix ? ` ${suffix}` : ''}
+      {displayValue}
     </Typography.Text>
   );
 };
