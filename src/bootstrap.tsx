@@ -688,10 +688,10 @@ const renderApp = async () => {
       i18n.changeLanguage(defaultLanguage);
     }
 
-    const printAppTemplates
-      = appConfig?.clientConfig?.printApp;
-
-    store.dispatch(setPrintApp(printAppTemplates));
+    const printAppConf = appConfig?.clientConfig?.printApp;
+    if (printAppConf) {
+      store.dispatch(setPrintApp(printAppConf));
+    }
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
 

@@ -93,7 +93,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
 
   const customMapParams = useAppSelector(state => state.print.customMapParams);
   const customParams = useAppSelector(state => state.print.customParams);
-  const printAppTemplates = useAppSelector(state => state.print.printApp);
+  const printAppConf = useAppSelector(state => state.print.printApp);
 
   const [printManager, setPrintManager] = useState<MapFishPrintV3Manager | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -226,8 +226,8 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       // Use locale print app if available.
       // Implies that a print app with the language code exists.
       const apps = pManager.getPrintApps();
-      if (printAppTemplates) {
-        await pManager.setPrintApp(printAppTemplates);
+      if (printAppConf) {
+        await pManager.setPrintApp(printAppConf);
       }
       if (apps && currentLanguageCode && apps.includes(currentLanguageCode)) {
         await pManager.setPrintApp(currentLanguageCode);
@@ -241,7 +241,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
     }
-  }, [map, layerFilter, client, legendFilter, customPrintScales, printAppTemplates, currentLanguageCode, t]);
+  }, [map, layerFilter, client, legendFilter, customPrintScales, printAppConf, currentLanguageCode, t]);
 
   useEffect(() => {
     if (printManager) {
