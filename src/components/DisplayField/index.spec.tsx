@@ -94,6 +94,7 @@ describe('<DisplayField />', () => {
     const tableElem = screen.queryAllByText('ReferenceTable.defaultRowPlaceholder');
     expect(tableElem).toHaveLength(2);
     expect(tableElem[0]).toBeVisible();
+  });
 
   it('renders urls as links', () => {
     const linkValues = [
@@ -114,7 +115,7 @@ describe('<DisplayField />', () => {
       expect(link).toHaveAttribute('href', linkValue);
     }
 
-    const noneLinkValues = [ 'Peter', 123 ];
+    const noneLinkValues = ['Peter', 123];
 
     for (const noneLinkValue of noneLinkValues) {
       render(<DisplayField value={noneLinkValue} />);
