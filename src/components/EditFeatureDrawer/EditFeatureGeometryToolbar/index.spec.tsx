@@ -27,6 +27,5 @@ describe('EditFeatureGeometryToolbar', () => {
         wrapper: createReduxWrapper()
       });
     expect(container).toBeVisible();
-    console.log(prettyDOM(container));
   });
 });
