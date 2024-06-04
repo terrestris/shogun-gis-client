@@ -51,5 +51,4 @@ describe('<BasicMapComponent />', () => {
     const mapElem = container.querySelector('.map');
     expect(mapElem).toBeVisible();
   });
-
 });
