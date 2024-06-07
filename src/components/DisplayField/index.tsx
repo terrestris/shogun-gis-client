@@ -84,19 +84,8 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   const isUrl = (candidate: string) => {
     const lowerCandidate = candidate.toLowerCase();
-    const protocols = ['http://', 'https://', 'ftp://', 'file://', 'mailto:'];
-    if (protocols.some(protocol => lowerCandidate.startsWith(protocol))) {
-      return true;
-    }
-    // UNC path
-    if (candidate.startsWith('\\')) {
-      return true;
-    }
-    // windows drive letter
-    if (candidate.match(/^[a-zA-Z]:\\/)) {
-      return true;
-    }
-    return false;
+    const protocols = ['http://', 'https://', 'ftp://', 'mailto:'];
+    return protocols.some(protocol => lowerCandidate.startsWith(protocol));
   };
 
   if (isString(value) && isUrl(value)) {
