@@ -33,7 +33,7 @@ import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/
 import MapFishPrintV3StamenSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3StamenSerializer';
 import MapFishPrintV3WMTSSerializer
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
-import MapFishPrintV3XYZSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3XYZSerializer';
+import { MapFishPrintV3XYZSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3XYZSerializer';
 import { LayerUtil } from '@terrestris/ol-util';
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
