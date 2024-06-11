@@ -102,8 +102,6 @@ describe('<DisplayField />', () => {
       'https://example.com',
       'http://localhost:8080',
       'ftp://example.com',
-      'H:\\special\\windäws\\with spaces\\and, tons of, commas and .dots\\file.txt',
-      'file://///server/share/path/to/file.txt',
       'mailto:silke@shogun.pl'
     ];
 
@@ -115,7 +113,13 @@ describe('<DisplayField />', () => {
       expect(link).toHaveAttribute('href', linkValue);
     }
 
-    const noneLinkValues = ['Peter', 123];
+    const noneLinkValues = [
+      'H:\\special\\windäws\\with spaces\\and, tons of, commas and .dots\\file.txt',
+      'file://///server/share/path/to/file.txt',
+      'Peter',
+      123
+    ];
+
 
     for (const noneLinkValue of noneLinkValues) {
       render(<DisplayField value={noneLinkValue} />);
