@@ -15,6 +15,7 @@
 
     &:hover {
       color: var(--secondaryColor);
+      font-weight: bold;
     }
 
     svg {
@@ -107,8 +108,14 @@
       }
 
       &.ant-collapse-item-active {
-        .ant-collapse-header-text span {
+        .ant-collapse-header {
+          background-color: var(--secondaryColor);
+        }
+
+        .ant-collapse-header-text> ,
+        .ant-collapse-expand-icon {
           font-weight: bolder;
+          color: var(--complementaryColor);
         }
       }
     }
