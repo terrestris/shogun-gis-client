@@ -120,7 +120,6 @@ describe('<DisplayField />', () => {
       123
     ];
 
-
     for (const noneLinkValue of noneLinkValues) {
       render(<DisplayField value={noneLinkValue} />);
       const noneLink = screen.queryByText(noneLinkValue);

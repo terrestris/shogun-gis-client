@@ -23,9 +23,10 @@ describe('<ReferenceTable />', () => {
     } = render(
       <ReferenceTable
         value={''}
-      />, {
+      />,
+      {
         wrapper: createReduxWrapper()
-     });
+      });
 
     modalElem = container;
     tableElem = container.querySelector('.ant-table-wrapper');
