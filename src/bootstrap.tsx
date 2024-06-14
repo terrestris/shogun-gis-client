@@ -697,6 +697,12 @@ const renderApp = async () => {
       }
     });
 
+    if (Color(style['--secondaryColor'])?.isLight() && Color(style['--primaryColor'])?.isLight()) {
+      style['--complementaryColor'] = (Color(style['--complementaryColor']).darken(0.5).hexa());
+    } else if (Color(style['--secondaryColor'])?.isDark() && Color(style['--primaryColor'])?.isDark()) {
+      style['--complementaryColor'] = (Color(style['--complementaryColor']).lighten(0.5).hexa());
+    }
+
     Object.keys(style).forEach((key: any) => {
       document.body.style.setProperty(key, style[key as keyof ThemeProperties] as string);
     });
