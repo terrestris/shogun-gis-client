@@ -73,7 +73,3 @@ declare module '@terrestris/react-geo/dist/Util/antdTestQueries';
 
 type Scope = unknown;
 type Factory = () => any;
-// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
-declare const __webpack_init_sharing__: (shareScope: string) => Promise<void>;
-// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
-declare const __webpack_share_scopes__: { default: Scope };
