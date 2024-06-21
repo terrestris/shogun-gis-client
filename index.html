@@ -1,9 +1,64 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IHK WebGIS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" href="./resources/public/favicon.ico">
+    <div id="loadmask" class="loadmask">
+      <img id="loadmask-image" alt="Loading, please wait…">
+    </div>
+    <title>SHOGun GIS Client</title>
+    <style>
+      .loadmask {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform: -webkit-translate(-50%, -50%);
+        transform: -moz-translate(-50%, -50%);
+        transform: -ms-translate(-50%, -50%);
+        z-index: 999;
+
+        /* Keeping this for future reference */
+        /* opacity: 0;
+        animation: heartBeat 2s ease-in-out infinite; */
+      }
+
+      .loadmask-hidden {
+        animation: fadeOut 1.5s forwards;
+      }
+
+      .loadmask > img {
+        min-width: 50%;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          z-index: -1;
+          opacity: 0;
+          top: 0;
+          left: 0;
+          transform: scale(0.5);
+        }
+      }
+
+      @keyframes heartBeat {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+    </style>
   </head>
   <body>
     <noscript>
@@ -15,6 +70,19 @@
       if (!window.clientConfig) {
         console.warn('No config found, client defaults will be used.');
         window.clientConfig = {};
+      }
+    </script>
+    <script>
+      const regex = /applicationId=(\d+)/;
+      const match = location.search.match(regex);
+      const appId = match && match.length === 1 ? match[1] : null;
+      let logoPath = './resources/public/shogun_spinner.gif';
+      if (appId) {
+        logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
+      }
+      const loadingImageElement = document.getElementById('loadmask-image');
+      if (logoPath && loadingImageElement) {
+        loadingImageElement.src = logoPath;
       }
     </script>
     <script type="module" src="/src/index.tsx"></script>
