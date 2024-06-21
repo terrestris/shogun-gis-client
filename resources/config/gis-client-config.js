@@ -15,7 +15,7 @@ var clientConfig = {
     exposedPaths: [
       './FooterLinks'
     ],
-    resourcePath: 'http://localhost:8888/client-plugins/index.js'
+    resourcePath: 'http://localhost:9090/assets/index.js'
   }],
   geoserver: {
     base: '/geoserver',
