@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
-import federation from "@originjs/vite-plugin-federation";
-import topLevelAwait from "vite-plugin-top-level-await";
+import federation from '@originjs/vite-plugin-federation';
+import topLevelAwait from 'vite-plugin-top-level-await';
 import config from './package.json';
 const deps = config.dependencies;
 
@@ -22,7 +22,11 @@ export default defineConfig({
     federation({
       name: 'SHOGunGISClient',
       remotes: {
-        ExamplePlugin: 'http://localhost:8888/assets/index.js'
+        // The module federation is handled dynamically, see loadPlugins() in src/index.tsx
+        // for the implementation.
+        // Since vite requires at least a single entry in the remotes to not throw an error,
+        // this is just a placholder entry.
+        ignore: 'me.js'
       },
       shared: {
         react: {
@@ -44,8 +48,7 @@ export default defineConfig({
           requiredVersion: deps.ol
         }
       }
-    }
-  )
+    })
   ],
   server: {
     host: '0.0.0.0',
