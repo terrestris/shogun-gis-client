@@ -97,6 +97,7 @@ import {
 import {
   setLogoPath
 } from './store/logoPath';
+import { setPrintApp } from './store/print';
 import {
   setSearchEngines
 } from './store/searchEngines';
@@ -685,6 +686,11 @@ const renderApp = async () => {
 
     if (defaultLanguage) {
       i18n.changeLanguage(defaultLanguage);
+    }
+
+    const printApp = appConfig?.clientConfig?.printApp;
+    if (printApp) {
+      store.dispatch(setPrintApp(printApp));
     }
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
