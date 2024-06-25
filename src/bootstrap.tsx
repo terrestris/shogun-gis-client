@@ -522,7 +522,7 @@ const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNa
   return modules;
 };
 
-const loadPlugins = async (map: OlMap, toolConfig?: any[]) => {
+const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig[]) => {
   if (!ClientConfiguration.plugins || ClientConfiguration.plugins.length === 0) {
     Logger.info('No plugins found');
     return [];
