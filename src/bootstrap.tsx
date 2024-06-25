@@ -522,7 +522,7 @@ const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNa
   return modules;
 };
 
-const loadPlugins = async (map: OlMap) => {
+const loadPlugins = async (map: OlMap, toolConfig?: any[]) => {
   if (!ClientConfiguration.plugins || ClientConfiguration.plugins.length === 0) {
     Logger.info('No plugins found');
     return [];
@@ -563,9 +563,17 @@ const loadPlugins = async (map: OlMap) => {
       return clientPlugins;
     }
 
-    clientPluginModules.forEach(module => {
+    for (let module of clientPluginModules) {
       const clientPluginDefault: ClientPluginInternal = module.default;
       const PluginComponent = clientPluginDefault.component;
+
+      if (toolConfig) {
+        const pluginApplicationConfig = toolConfig.find((tc) => tc.name === clientPluginDefault.key);
+        if (pluginApplicationConfig?.config?.disabled) {
+          Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
+          continue;
+        }
+      }
 
       const WrappedPluginComponent = () => (
         <PluginComponent
@@ -594,7 +602,7 @@ const loadPlugins = async (map: OlMap) => {
       }
 
       clientPlugins.push(clientPluginDefault);
-    });
+    }
   }
 
   return clientPlugins;
@@ -743,7 +751,7 @@ const renderApp = async () => {
 
     const map = await setupMap(appConfig);
 
-    const plugins = await loadPlugins(map);
+    const plugins = await loadPlugins(map, appConfig?.toolConfig);
 
     if (!appConfig) {
       notification.error({
