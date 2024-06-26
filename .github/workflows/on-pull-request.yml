@@ -34,8 +34,17 @@ jobs:
 
     - name: Run tests related to current changes ✅
       run: |
-        git fetch origin
-        npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
+        git fetch origin main
+        npx jest --config=jest.config.js --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
+
+    - name: Check for test results 
+      id: check-results
+      run: |
+        if [ ! -s ./coverage/changed/coverage-summary.json ]; then
+          echo "no_tests_found=true" >> $GITHUB_ENV
+        else
+          echo "no_tests_found=false" >> $GITHUB_ENV
+        fi
 
     - name: Jest Coverage Comment 💬
       uses: MishaKav/jest-coverage-comment@main
@@ -46,3 +55,16 @@ jobs:
         multiple-files: |
           All, ./coverage/all/coverage-summary.json
           only changed, ./coverage/changed/coverage-summary.json
+
+    - name: Post No Tests Found Comment 💬
+      if: env.no_tests_found == 'true'
+      run: |
+        COMMENT="No tests were found related to the files changed since the last commit."
+        PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        curl -s -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "{\"body\": \"$COMMENT\"}" \
+          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
