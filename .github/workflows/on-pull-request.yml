@@ -43,7 +43,7 @@ jobs:
       run: |
         if [ -f ./coverage/changed/coverage-summary.json ]; then
           COVERAGE_CONTENT=$(cat ./coverage/changed/coverage-summary.json)
-          if echo "$COVERAGE_CONTENT" | jq '.total.lines.pct' | grep -q '0'; then
+          if echo "$COVERAGE_CONTENT" | jq '.total.lines.pct' | grep -q 'Unknown'; then
             echo "no_tests_found=true" >> $GITHUB_ENV
           else
             echo "no_tests_found=false" >> $GITHUB_ENV
