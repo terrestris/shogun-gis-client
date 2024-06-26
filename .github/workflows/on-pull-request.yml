@@ -34,16 +34,22 @@ jobs:
 
     - name: Run tests related to current changes ✅
       run: |
-        git fetch origin main
+        echo "BASE_BRANCH=main" >> $GITHUB_ENV
+        git fetch origin ${{ env.BASE_BRANCH }}
         npx jest --config=jest.config.js --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
 
     - name: Check for test results 
       id: check-results
       run: |
-        if [ ! -s ./coverage/changed/coverage-summary.json ]; then
-          echo "no_tests_found=true" >> $GITHUB_ENV
+        if [ -f ./coverage/changed/coverage-summary.json ]; then
+          COVERAGE_CONTENT=$(cat ./coverage/changed/coverage-summary.json)
+          if echo "$COVERAGE_CONTENT" | jq '.total.lines.pct' | grep -q '0'; then
+            echo "no_tests_found=true" >> $GITHUB_ENV
+          else
+            echo "no_tests_found=false" >> $GITHUB_ENV
+          fi
         else
-          echo "no_tests_found=false" >> $GITHUB_ENV
+          echo "no_tests_found=true" >> $GITHUB_ENV
         fi
 
     - name: Jest Coverage Comment 💬
@@ -56,7 +62,7 @@ jobs:
           All, ./coverage/all/coverage-summary.json
           only changed, ./coverage/changed/coverage-summary.json
 
-    - name: Post No Tests Found Comment 💬
+    - name: Post No Tests Found Comment 
       if: env.no_tests_found == 'true'
       run: |
         COMMENT="No tests were found related to the files changed since the last commit."
