@@ -65,7 +65,7 @@ jobs:
     - name: Post No Tests Found Comment ⚠️
       if: env.no_tests_found == 'true'
       run: |
-        COMMENT="⚠️ No tests were found related to the files changed since the last commit."
+        COMMENT="⚠️ No tests were found related to the files changed."
         PR_NUMBER=${{ github.event.pull_request.number }}
         COMMENTS_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments")
@@ -91,7 +91,7 @@ jobs:
           curl -s -X PATCH \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"body\": \"$UPDATED_COMMENT\"}" \
+            -d "$(jq -nc --arg body "${UPDATED_COMMENT}" '{body: $body}')" \
             "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}"
         fi
       env:
