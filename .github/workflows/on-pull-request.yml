@@ -66,7 +66,7 @@ jobs:
       if: env.no_tests_found == 'true'
       run: |
         COMMENT="⚠️ No tests were found related to the files changed since the last commit."
-        PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        PR_NUMBER=${{ github.event.pull_request.number }}
         COVERAGE_COMMENT_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" | \
           jq -r '.[] | select(.user.login == "github-actions[bot]") | .id')
