@@ -38,7 +38,7 @@ jobs:
         git diff --name-only origin/main
         npx jest --config=jest.config.js --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
 
-    - name: Check for test results 
+    - name: Check for test results ❓
       id: check-results
       run: |
         if [ -f ./coverage/changed/coverage-summary.json ]; then
@@ -62,15 +62,34 @@ jobs:
           All, ./coverage/all/coverage-summary.json
           only changed, ./coverage/changed/coverage-summary.json
 
-    - name: Post No Tests Found Comment 
+    - name: Post No Tests Found Comment ⚠️
       if: env.no_tests_found == 'true'
       run: |
-        COMMENT="No tests were found related to the files changed since the last commit."
+        COMMENT="⚠️ No tests were found related to the files changed since the last commit."
         PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        curl -s -X POST \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: application/json" \
-          -d "{\"body\": \"$COMMENT\"}" \
-          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+        COVERAGE_COMMENT_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" | \
+          jq -r '.[] | select(.user.login == "github-actions[bot]") | .id')
+
+        if [ -z "$COVERAGE_COMMENT_ID" ]; then
+          echo "No existing coverage comment found, creating a new comment."
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"body\": \"$COMMENT\"}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+        else
+          echo "Existing coverage comment found, updating the comment."
+          EXISTING_COMMENT=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/$COVERAGE_COMMENT_ID" | \
+            jq -r '.body')
+
+          UPDATED_COMMENT="$EXISTING_COMMENT\n\n$COMMENT"
+          curl -s -X PATCH \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"body\": \"$UPDATED_COMMENT\"}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/$COVERAGE_COMMENT_ID"
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
