@@ -36,6 +36,7 @@ jobs:
       run: |
         echo "BASE_BRANCH=main" >> $GITHUB_ENV
         git fetch origin ${{ env.BASE_BRANCH }}
+        git diff --name-only origin/${{ env.BASE_BRANCH }}
         npx jest --config=jest.config.js --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
 
     - name: Check for test results 
@@ -44,7 +45,7 @@ jobs:
         if [ -f ./coverage/changed/coverage-summary.json ]; then
           COVERAGE_CONTENT=$(cat ./coverage/changed/coverage-summary.json)
           if echo "$COVERAGE_CONTENT" | jq '.total.lines.pct' | grep -q '0'; then
-            echo "no_tests_found=true" >> $GITHUB_ENV
+            echo "no_tests_found=true" 
           else
             echo "no_tests_found=false" >> $GITHUB_ENV
           fi
