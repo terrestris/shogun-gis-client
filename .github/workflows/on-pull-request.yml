@@ -86,12 +86,12 @@ jobs:
             jq -r '.body')
           echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
 
-          UPDATED_COMMENT="${EXISTING_COMMENT}\n\n${COMMENT}"
+          ESCAPED_UPDATED_COMMENT=$(jq -Rs '.' <<<"${UPDATED_COMMENT}")
           echo "UPDATED_COMMENT: ${UPDATED_COMMENT}"
           curl -s -X PATCH \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "$(jq -nc --arg body "${UPDATED_COMMENT}" '{body: $body}')" \
+            -d "{\"body\": ${ESCAPED_UPDATED_COMMENT}}"
             "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}"
         fi
       env:
