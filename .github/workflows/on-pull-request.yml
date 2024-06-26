@@ -34,8 +34,8 @@ jobs:
 
     - name: Run tests related to current changes ✅
       run: |
-        echo "BASE_BRANCH=main" >> $GITHUB_ENV
-        git fetch origin ${{ env.BASE_BRANCH }}
+        git fetch origin main
+        git diff --name-only origin/main
         npx jest --config=jest.config.js --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
 
     - name: Check for test results 
