@@ -86,7 +86,8 @@ jobs:
             jq -r '.body')
           echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
 
-          UPDATED_COMMENT="${EXISTING_COMMENT}\n\n$COMMENT"
+          UPDATED_COMMENT="${EXISTING_COMMENT}\n\n${COMMENT}"
+          echo "UPDATED_COMMENT: ${UPDATED_COMMENT}"
           curl -s -X PATCH \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
