@@ -34,6 +34,7 @@ jobs:
 
     - name: Run tests related to current changes ✅
       run: |
+        git fetch origin
         npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
 
     - name: Jest Coverage Comment 💬
