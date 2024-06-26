@@ -70,7 +70,7 @@ jobs:
         COVERAGE_COMMENT_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" | \
           jq -r '.[] | select(.user.login == "github-actions[bot]") | .id')
-        echo "COVERAGE_COMMENT: ${COVERAGE_COMMENT}"
+        echo "COVERAGE_COMMENT_ID: ${COVERAGE_COMMENT_ID}"
 
         if [ -z "$COVERAGE_COMMENT_ID" ]; then
           echo "No existing coverage comment found, creating a new comment."
