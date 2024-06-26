@@ -93,7 +93,7 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{\"body\": ${ESCAPED_UPDATED_COMMENT}}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}")
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}"
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
