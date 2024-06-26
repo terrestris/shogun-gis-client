@@ -70,6 +70,7 @@ jobs:
         COVERAGE_COMMENT_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" | \
           jq -r '.[] | select(.user.login == "github-actions[bot]") | .id')
+        echo "COVERAGE_COMMENT: ${COVERAGE_COMMENT}"
 
         if [ -z "$COVERAGE_COMMENT_ID" ]; then
           echo "No existing coverage comment found, creating a new comment."
@@ -81,16 +82,16 @@ jobs:
         else
           echo "Existing coverage comment found, updating the comment."
           EXISTING_COMMENT=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/comments/$COVERAGE_COMMENT_ID" | \
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}" | \
             jq -r '.body')
-          echo "EXISTING_COMMENT: $EXISTING_COMMENT"
+          echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
 
-          UPDATED_COMMENT="$EXISTING_COMMENT\n\n$COMMENT"
+          UPDATED_COMMENT="${EXISTING_COMMENT}\n\n$COMMENT"
           curl -s -X PATCH \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{\"body\": \"$UPDATED_COMMENT\"}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/comments/$COVERAGE_COMMENT_ID"
+            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}"
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
