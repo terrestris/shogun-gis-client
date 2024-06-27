@@ -61,42 +61,23 @@ jobs:
         multiple-files: |
           All, ./coverage/all/coverage-summary.json
           only changed, ./coverage/changed/coverage-summary.json
-
-    - name: Post No Tests Found Comment ⚠️
+      
+    - name: Get coverage comment id
       if: env.no_tests_found == 'true'
+      id: get-comment-id
       run: |
-        COMMENT="⚠️ No tests were found related to the files changed."
         PR_NUMBER=${{ github.event.pull_request.number }}
         COMMENTS_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments")
         COVERAGE_COMMENT_ID=$(echo "${COMMENTS_JSON}" | jq -r 'map(select(.user.login == "github-actions[bot]")) | sort_by(.created_at) | .[0].id')
-        echo "COVERAGE_COMMENT_ID: ${COVERAGE_COMMENT_ID}"
-
-        if [ -z "$COVERAGE_COMMENT_ID" ]; then
-          echo "No existing coverage comment found, creating a new comment."
-          curl -s -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{\"body\": \"$COMMENT\"}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
-        else
-          echo "Existing coverage comment found, updating the comment."
-          EXISTING_COMMENT=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}" | \
-            jq -r '.body')
-          echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
-
-          UPDATED_COMMENT="${EXISTING_COMMENT}n\n${COMMENT}"
-          echo "UPDATED_COMMENT: ${UPDATED_COMMENT}""
-
-          PAYLOAD=$(jq -nc --arg body "$UPDATED_COMMENT" '{body: $body}')
-          echo "PAYLOAD: ${PAYLOAD}"
-
-          curl -s -X PATCH \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "${PAYLOAD}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}"
-        fi
+        echo "COVERAGE_COMMENT_ID=${COVERAGE_COMMENT_ID}" >> $GITHUB_ENV
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Post No Tests Found Comment ⚠️
+      if: env.no_tests_found == 'true'
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        comment-id: ${{ env.COVERAGE_COMMENT_ID }}
+        body: |
+          No tests were found related to the files changed
