@@ -86,9 +86,12 @@ jobs:
             jq -r '.body')
           echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
 
-          ESCAPED_UPDATED_COMMENT=$(jq -Rs '.' <<<"${UPDATED_COMMENT}")
-
+          UPDATED_COMMENT="${EXISTING_COMMENT}\n\n${COMMENT}"
           echo "UPDATED_COMMENT: ${UPDATED_COMMENT}"
+
+          ESCAPED_UPDATED_COMMENT=$(jq -Rs '.' <<<"${UPDATED_COMMENT}")
+          echo "ESCAPED_UPDATED_COMMENT: ${ESCAPED_UPDATED_COMMENT}"
+
           curl -s -X PATCH \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
