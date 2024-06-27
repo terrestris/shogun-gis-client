@@ -52,15 +52,22 @@ jobs:
           echo "no_tests_found=true" >> $GITHUB_ENV
         fi
 
+    - name: Construct jest coverage comment input 💬
+      id: construct-input
+      run: |
+        if [ "${{ env.no_tests_found }}" == "true" ]; then
+          echo "MULTIPLE_FILES='All, ./coverage/all/coverage-summary.json'" >> $GITHUB_ENV
+        else
+          echo "MULTIPLE_FILES='All, ./coverage/all/coverage-summary.json\nonly changed, ./coverage/changed/coverage-summary.json'" >> $GITHUB_ENV
+        fi
+
     - name: Jest Coverage Comment 💬
       uses: MishaKav/jest-coverage-comment@main
       with:
         hide-comment: false
         create-new-comment: false
         hide-summary: false
-        multiple-files: |
-          All, ./coverage/all/coverage-summary.json
-          only changed, ./coverage/changed/coverage-summary.json
+        multiple-files: ${{ env.MULTIPLE_FILES }}
       
     - name: Get Coverage Comment Id ➡️
       if: env.no_tests_found == 'true'
