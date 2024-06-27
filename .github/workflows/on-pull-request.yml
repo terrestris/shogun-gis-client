@@ -62,7 +62,7 @@ jobs:
           All, ./coverage/all/coverage-summary.json
           only changed, ./coverage/changed/coverage-summary.json
       
-    - name: Get coverage comment id
+    - name: Get Coverage Comment Id ➡️
       if: env.no_tests_found == 'true'
       id: get-comment-id
       run: |
@@ -74,10 +74,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Post No Tests Found Comment ⚠️
+    - name: Post To No Tests Found Comment ⚠️
       if: env.no_tests_found == 'true'
       uses: peter-evans/create-or-update-comment@v4
       with:
         comment-id: ${{ env.COVERAGE_COMMENT_ID }}
         body: |
-          No tests were found related to the files changed
+          ❌ No tests were found related to the files changed
