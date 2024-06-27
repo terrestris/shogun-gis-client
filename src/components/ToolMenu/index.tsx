@@ -90,11 +90,13 @@ export type ToolPanelConfig = {
 };
 
 export type ToolMenuProps = Partial<CollapsePanelProps> & {
+  collapseWidth?: number;
   minWidth?: number;
   maxWidth?: number;
 };
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
+  collapseWidth = 40,
   minWidth = 240,
   maxWidth = 600,
   ...restProps
@@ -128,8 +130,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
     if (isMobile) {
       setCollapsed(true);
+      setWidth(collapseWidth);
     }
-  }, []);
+  }, [collapseWidth]);
 
   useEffect(() => {
     if (menuTools.length < 1) {
@@ -419,7 +422,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             if (collapsed){
               setWidth(noCollapseWidth);
             } else {
-              setWidth(40);
+              setWidth(collapseWidth);
             }
           }}
         />
