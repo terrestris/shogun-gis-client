@@ -86,7 +86,7 @@ jobs:
             jq -r '.body')
           echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
 
-          UPDATED_COMMENT="${EXISTING_COMMENT}\n\n${COMMENT}"
+          UPDATED_COMMENT="${EXISTING_COMMENT}n\n${COMMENT}"
           echo "UPDATED_COMMENT: ${UPDATED_COMMENT}""
 
           PAYLOAD=$(jq -nc --arg body "$UPDATED_COMMENT" '{body: $body}')
