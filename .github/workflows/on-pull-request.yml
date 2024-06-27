@@ -87,15 +87,15 @@ jobs:
           echo "EXISTING_COMMENT: ${EXISTING_COMMENT}"
 
           UPDATED_COMMENT="${EXISTING_COMMENT}\n\n${COMMENT}"
-          echo "UPDATED_COMMENT: ${UPDATED_COMMENT}"
+          echo "UPDATED_COMMENT: ${UPDATED_COMMENT}""
 
-          ESCAPED_UPDATED_COMMENT=$(jq -Rs '.' <<<"${UPDATED_COMMENT}")
+          ESCAPED_UPDATED_COMMENT=$(printf '%s' "${UPDATED_COMMENT}" | jq -Rsa .)
           echo "ESCAPED_UPDATED_COMMENT: ${ESCAPED_UPDATED_COMMENT}"
 
           curl -s -X PATCH \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"body\": ${ESCAPED_UPDATED_COMMENT}}" \
+            -d "{\"body\": \"${ESCAPED_UPDATED_COMMENT}\"}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/comments/${COVERAGE_COMMENT_ID}"
         fi
       env:
