@@ -76,6 +76,7 @@ jobs:
         docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:main
 
   sonarqube:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
