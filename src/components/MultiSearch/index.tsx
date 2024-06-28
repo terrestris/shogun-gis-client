@@ -386,6 +386,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
       const wktFormat = new OlFormatWKT();
 
+      // 1. group by category or layer title
       let categories;
       if (ClientConfiguration.search?.groupByCategory) {
         categories = _groupBy(dataSearchResults, res => res?.category[0]);
