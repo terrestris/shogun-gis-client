@@ -8,9 +8,7 @@ import {
 
 import isString from 'lodash/isString';
 
-import {
-  isMoment
-} from 'moment';
+import Moment from 'moment';
 
 import {
   useTranslation
@@ -75,7 +73,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     }).format(Number(value));
   }
 
-  if (isMoment(value)) {
+  if (Moment.isMoment(value)) {
     displayValue = value.format(format);
   }
 

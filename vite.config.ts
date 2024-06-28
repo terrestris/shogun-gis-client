@@ -1,9 +1,11 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
 import federation from '@originjs/vite-plugin-federation';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import { viteExternalsPlugin } from 'vite-plugin-externals';
 import topLevelAwait from 'vite-plugin-top-level-await';
+
 import config from './package.json';
+
 const deps = config.dependencies;
 
 // https://vitejs.dev/config/
@@ -12,12 +14,12 @@ export default defineConfig({
     react(),
     topLevelAwait({
       // The export name of top-level await promise for each chunk module
-      promiseExportName: "__tla",
+      promiseExportName: '__tla',
       // The function to generate import names of top-level await promise in each chunk module
       promiseImportName: i => `__tla_${i}`
     }),
     viteExternalsPlugin({
-      clientConfig: 'clientConfig',
+      clientConfig: 'clientConfig'
     }),
     federation({
       name: 'SHOGunGISClient',
@@ -44,7 +46,7 @@ export default defineConfig({
         'react-i18next': {
           requiredVersion: deps['react-i18next']
         },
-        'ol': {
+        ol: {
           requiredVersion: deps.ol
         }
       }
