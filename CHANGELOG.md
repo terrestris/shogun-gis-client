@@ -1,3 +1,62 @@
+## [8.6.0](https://github.com/terrestris/shogun-gis-client/compare/v8.5.0...v8.6.0) (2024-06-28)
+
+
+### Dependencies
+
+* add comments ([a7404db](https://github.com/terrestris/shogun-gis-client/commit/a7404db2bade748abab740f1f69b2a0cdb6111e6))
+* **deps-dev:** bump @playwright/test from 1.44.1 to 1.45.0 ([57988bc](https://github.com/terrestris/shogun-gis-client/commit/57988bce1ab9de439926cdaf620b1323efb4f172))
+* **deps-dev:** bump @semantic-release/release-notes-generator ([8d514c1](https://github.com/terrestris/shogun-gis-client/commit/8d514c1b41f6ef85599840f026ba43262b144c54))
+* **deps-dev:** bump @types/node from 20.14.2 to 20.14.9 ([551a786](https://github.com/terrestris/shogun-gis-client/commit/551a7867933726acc0a57c8802b66b9379955929))
+* **deps-dev:** bump eslint-plugin-react from 7.34.1 to 7.34.3 ([c822e9c](https://github.com/terrestris/shogun-gis-client/commit/c822e9c99e801ebe6b5ca8ee6d8d11e6feb68d69))
+* **deps-dev:** bump typescript from 5.4.5 to 5.5.2 ([93cf21b](https://github.com/terrestris/shogun-gis-client/commit/93cf21b0d8dc51590123cbc90fdf3afb51d73789))
+* **deps-dev:** bump webpack from 5.91.0 to 5.92.1 ([94b845f](https://github.com/terrestris/shogun-gis-client/commit/94b845f41a6e5e0bfaf00c7707d25fb2d790a7f0))
+* **deps:** bump docker/build-push-action from 5 to 6 ([bd8bbc3](https://github.com/terrestris/shogun-gis-client/commit/bd8bbc3041ae295c5407dc637f4284cc54d1ace7))
+* **deps:** bump keycloak-js from 24.0.3 to 25.0.1 ([d58655d](https://github.com/terrestris/shogun-gis-client/commit/d58655d65c92c351fc735110afff7744b6e18392))
+* remove watch-build script ([540b500](https://github.com/terrestris/shogun-gis-client/commit/540b500cca4e94a77e3121bb9c71ffcd4eda5caf))
+
+
+### Changes in configuration
+
+* add comment if no tests were found ([4a7782f](https://github.com/terrestris/shogun-gis-client/commit/4a7782fc4a03c5bde8650a5799949a4e506f1e53))
+* add icons ([d0915b2](https://github.com/terrestris/shogun-gis-client/commit/d0915b258a11778e831cf714742b2f5b5f087c35))
+* add update comment action ([9a39976](https://github.com/terrestris/shogun-gis-client/commit/9a39976150c1715484ef8f2071c9bb51efe786a5))
+* echo coverage comment id ([a4380ff](https://github.com/terrestris/shogun-gis-client/commit/a4380ff482f63d69d7de2464b549b5ae9999292b))
+* echo coverage comment id ([1303984](https://github.com/terrestris/shogun-gis-client/commit/1303984b0e2399ea414aa7b3f595f55526d56e15))
+* echo existing comment ([ac5337b](https://github.com/terrestris/shogun-gis-client/commit/ac5337b68db7ab9e0dc008708b6e6779e1a4581a))
+* echo updated comment ([2b58d40](https://github.com/terrestris/shogun-gis-client/commit/2b58d4011d97fd2df49c50f72d6dabc8bbbef3d9))
+* fix check for tests ([70c8c6a](https://github.com/terrestris/shogun-gis-client/commit/70c8c6af1dca6f4634472bd379f65c46910e1559))
+* fix check for tests ([64e3fa5](https://github.com/terrestris/shogun-gis-client/commit/64e3fa535ada77b3254ed35f52f1bb9042cffaa0))
+* fix check for tests ([b60ead3](https://github.com/terrestris/shogun-gis-client/commit/b60ead3d83e132b793f76803a9948147e9ce59a3))
+* fix check for tests ([4bb57a5](https://github.com/terrestris/shogun-gis-client/commit/4bb57a591c1ddc1838e666264af4b6cba0e3cf1a))
+* fix check for tests ([9228ea7](https://github.com/terrestris/shogun-gis-client/commit/9228ea77667c0054affb96e39979e544efbf1cb2))
+* fiX coverage-comment for changed files ([301cb9b](https://github.com/terrestris/shogun-gis-client/commit/301cb9b76e4313c02d5168793ea8ef07d2a9142f))
+* fix get pr-number ([375c467](https://github.com/terrestris/shogun-gis-client/commit/375c467bdcec8cff7fce24a74a2fcf7c62c8e7bf))
+* fix parsing JSON error ([ce9fa22](https://github.com/terrestris/shogun-gis-client/commit/ce9fa22d176de32f46f2068f10eaaaf02a1bf196))
+* fix typo ([98171ed](https://github.com/terrestris/shogun-gis-client/commit/98171edaf0213b46cbae7a5729ff0631f2ab698e))
+* fix typo ([0eed855](https://github.com/terrestris/shogun-gis-client/commit/0eed855dcff65ef27144f076d792427cb79a483a))
+* fix updated comment ([01aa47d](https://github.com/terrestris/shogun-gis-client/commit/01aa47d3e9915d4a15ef73642abb0ce879dd624c))
+* make sure to get first comment ([df5b76b](https://github.com/terrestris/shogun-gis-client/commit/df5b76b108b9b5afaeaa5bb79769af15b41d7c36))
+* minor fix ([166ad2c](https://github.com/terrestris/shogun-gis-client/commit/166ad2cda4c8c3787af02815d330db94e8d552d0))
+* minor fix ([8558d1f](https://github.com/terrestris/shogun-gis-client/commit/8558d1f4c67b1cd663fa82a68d06c6e649cae6b3))
+* minor fix ([e38264f](https://github.com/terrestris/shogun-gis-client/commit/e38264f840661a4fb30af50f69bf82b8972647b6))
+* minor fix in string ([9189880](https://github.com/terrestris/shogun-gis-client/commit/91898804c4db7deea3689f23d615cb8eab85b887))
+* remove line from comment when no tests are found ([945ff12](https://github.com/terrestris/shogun-gis-client/commit/945ff12cfc07f0d863cb47e3fd6dbb4398f2e1b7))
+* remove unused backslash ([fb8ab01](https://github.com/terrestris/shogun-gis-client/commit/fb8ab014e168b708233b424020918036795351df))
+* update existing comment instead of creating a new one ([0ef8731](https://github.com/terrestris/shogun-gis-client/commit/0ef873164f98646de64bd0dec37cf86eb59bcd58))
+
+
+### Features
+
+* allow to group search results by category or layer title ([f27d928](https://github.com/terrestris/shogun-gis-client/commit/f27d928c4348c5596054761ae808719835704bd0))
+
+
+### Bugfixes
+
+* adjust width in mobile version ([7de1d41](https://github.com/terrestris/shogun-gis-client/commit/7de1d41c6d9ac952471d29b3ccba5a3c52ee8eac))
+* check if tests for changed files were run and comment if not ([77a4c54](https://github.com/terrestris/shogun-gis-client/commit/77a4c54415ac39f17eb4be3bb5e6edd2d5d25e14))
+* install dependencies before testing ([87135f0](https://github.com/terrestris/shogun-gis-client/commit/87135f081a8b129502f496d97c9cd4307d5d5761))
+* make upload options configurable ([8b4528c](https://github.com/terrestris/shogun-gis-client/commit/8b4528c8d9a2170678b2d62d1bf73a8abec14971))
+
 ## [8.5.0](https://github.com/terrestris/shogun-gis-client/compare/v8.4.0...v8.5.0) (2024-06-25)
 
 
