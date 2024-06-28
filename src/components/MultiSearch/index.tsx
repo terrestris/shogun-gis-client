@@ -24,7 +24,6 @@ import ClientConfiguration from 'clientConfig';
 import _groupBy from 'lodash/groupBy';
 import _isNil from 'lodash/isNil';
 
-import { getUid } from 'ol';
 import {
   Extent as OlExtent
 } from 'ol/extent';
@@ -50,6 +49,10 @@ import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import SearchResultsPanel, {
   Category as ResultCategory
 } from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
+import {
+  WmsLayer,
+  isWmsLayer
+} from '@terrestris/react-geo/dist/Util/typeUtils';
 
 import {
   SearchConfig
@@ -382,8 +385,26 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     if (dataSearchResults?.length > 0) {
 
       const wktFormat = new OlFormatWKT();
-      // 1. group by category
-      const categories = _groupBy(dataSearchResults, res => res?.category[0]);
+
+      // 1. group by category or layer title
+      let categories;
+      if (ClientConfiguration.search?.groupByCategory) {
+        categories = _groupBy(dataSearchResults, res => res?.category[0]);
+      } else {
+        const layers = map.getAllLayers().filter(l => l.get('searchable'));
+        const resultsWithLayerName = dataSearchResults.map(result => {
+          const layerTitle = layers.filter(l => isWmsLayer(l))
+            .find((l) => (l as WmsLayer).getSource()?.getParams()?.LAYERS === result.featureType[0])
+            ?.get('name');
+
+          return {
+            layerTitle,
+            ...result
+          } as DataSearchResult;
+        });
+        categories = _groupBy(resultsWithLayerName, res => res?.layerTitle);
+      }
+
       // 2. build features
       Object.keys(categories).forEach(category => {
         const features = categories[category].map(dsResult => {

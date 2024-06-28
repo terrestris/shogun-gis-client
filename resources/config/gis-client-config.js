@@ -26,6 +26,7 @@ var clientConfig = {
     coreName: 'search',
     defaultUseViewBox: true,
     useNominatim: true,
+    groupByCategory: true,
     useSolrHighlighting: true,
     delay: 1000,
     minChars: 3,
