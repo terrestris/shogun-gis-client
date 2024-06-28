@@ -91,12 +91,14 @@ import {
   EditLevel
 } from './store/editFeature';
 import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
+import { setLayerTreeActiveUploadTools } from './store/layerTree';
 import {
   setLegal
 } from './store/legal';
 import {
   setLogoPath
 } from './store/logoPath';
+import { setPrintApp } from './store/print';
 import {
   setSearchEngines
 } from './store/searchEngines';
@@ -265,6 +267,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'feature_info' && Array.isArray(tool.config.activeCopyTools)) {
           store.dispatch(setFeatureInfoActiveCopyTools(tool.config.activeCopyTools));
+        }
+        if (tool.name === 'tree' && Array.isArray(tool.config.uploadTools)) {
+          store.dispatch(setLayerTreeActiveUploadTools(tool.config.uploadTools));
         }
       });
     store.dispatch(setAvailableTools(availableTools));
@@ -521,7 +526,7 @@ const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNa
   return modules;
 };
 
-const loadPlugins = async (map: OlMap) => {
+const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig[]) => {
   if (!ClientConfiguration.plugins || ClientConfiguration.plugins.length === 0) {
     Logger.info('No plugins found');
     return [];
@@ -562,9 +567,17 @@ const loadPlugins = async (map: OlMap) => {
       return clientPlugins;
     }
 
-    clientPluginModules.forEach(module => {
+    for (let module of clientPluginModules) {
       const clientPluginDefault: ClientPluginInternal = module.default;
       const PluginComponent = clientPluginDefault.component;
+
+      if (toolConfig) {
+        const pluginApplicationConfig = toolConfig.find((tc) => tc.name === clientPluginDefault.key);
+        if (pluginApplicationConfig?.config?.disabled) {
+          Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
+          continue;
+        }
+      }
 
       const WrappedPluginComponent = () => (
         <PluginComponent
@@ -593,7 +606,7 @@ const loadPlugins = async (map: OlMap) => {
       }
 
       clientPlugins.push(clientPluginDefault);
-    });
+    }
   }
 
   return clientPlugins;
@@ -687,6 +700,11 @@ const renderApp = async () => {
       i18n.changeLanguage(defaultLanguage);
     }
 
+    const printApp = appConfig?.clientConfig?.printApp;
+    if (printApp) {
+      store.dispatch(setPrintApp(printApp));
+    }
+
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
     ConfigProvider.config({
@@ -696,6 +714,12 @@ const renderApp = async () => {
           style['--primaryColor']
       }
     });
+
+    if (Color(style['--secondaryColor'])?.isLight() && Color(style['--primaryColor'])?.isLight()) {
+      style['--complementaryColor'] = (Color(style['--complementaryColor']).darken(0.5).hexa());
+    } else if (Color(style['--secondaryColor'])?.isDark() && Color(style['--primaryColor'])?.isDark()) {
+      style['--complementaryColor'] = (Color(style['--complementaryColor']).lighten(0.5).hexa());
+    }
 
     Object.keys(style).forEach((key: any) => {
       document.body.style.setProperty(key, style[key as keyof ThemeProperties] as string);
@@ -731,7 +755,7 @@ const renderApp = async () => {
 
     const map = await setupMap(appConfig);
 
-    const plugins = await loadPlugins(map);
+    const plugins = await loadPlugins(map, appConfig?.toolConfig);
 
     if (!appConfig) {
       notification.error({

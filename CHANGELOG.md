@@ -1,3 +1,74 @@
+## [8.5.0](https://github.com/terrestris/shogun-gis-client/compare/v8.4.0...v8.5.0) (2024-06-25)
+
+
+### Dependencies
+
+* **deps-dev:** bump @types/node from 20.12.12 to 20.14.2 ([e9edf5f](https://github.com/terrestris/shogun-gis-client/commit/e9edf5f95a37fae82e48a6163b2847b09ea61568))
+
+
+### Changes in configuration
+
+* fix sonarqube pipeline & add project version ([0ec85ee](https://github.com/terrestris/shogun-gis-client/commit/0ec85ee1374c4f391acbf72bc0ee386cc4bb4e26))
+* update-coverage pipeline ([4953206](https://github.com/terrestris/shogun-gis-client/commit/49532069928fed515214824fba7bb320522ee312))
+
+
+### Features
+
+* adds documentation button ([18cac84](https://github.com/terrestris/shogun-gis-client/commit/18cac8498c3cea13080cdcdb9de3fa921fa7ed70))
+* allow disabling plugins via appConfig ([e55e0fe](https://github.com/terrestris/shogun-gis-client/commit/e55e0fe94848d8d8b52e915ad8a4fb0ee56a8fa1))
+* creates ability to select app specific MapFish print templates ([e73a71b](https://github.com/terrestris/shogun-gis-client/commit/e73a71b4273c6cfdc16c7ca0ffb9abafcefd43fd))
+* rename print app and wrap in if condition ([000de3b](https://github.com/terrestris/shogun-gis-client/commit/000de3b35bb5e5b37d81f8c75be74e806c24cd42))
+* rename print app variable ([2221ce2](https://github.com/terrestris/shogun-gis-client/commit/2221ce22c2bf2e0665efcc657eaf2b3912148da9))
+* this change colors and  adds auto-adjustability of complementary color contrast in ToolMenu ([a6edc8a](https://github.com/terrestris/shogun-gis-client/commit/a6edc8ae27a19a8c59550e58e75c32721c290ef5))
+
+
+### Bugfixes
+
+* code styles and dependency array ([fb5e846](https://github.com/terrestris/shogun-gis-client/commit/fb5e846c3f914a6b9227317deab249cae55eb3e2))
+* fixes the condition for the printApp ([178e29b](https://github.com/terrestris/shogun-gis-client/commit/178e29b6e88a5c70ba82bdb394796b17f082f3eb))
+* indentation ([087fb07](https://github.com/terrestris/shogun-gis-client/commit/087fb072335a83a504f3d81497507431b265d6ee))
+* make use of complementary color ([11a6423](https://github.com/terrestris/shogun-gis-client/commit/11a6423e92f62b8876303df9eeff2a452134c91b))
+* potential override of the custom printApp ([12427ad](https://github.com/terrestris/shogun-gis-client/commit/12427ad77823e3c8149f0886478b01ca32559e9b))
+* redirect to login after logout ([f9acf60](https://github.com/terrestris/shogun-gis-client/commit/f9acf605fa41f3767154eb9ba53b843c64d3d53f))
+* remane variable and remove white spaces ([dc92c2f](https://github.com/terrestris/shogun-gis-client/commit/dc92c2fc4d2ccdb59b8f8e859a7fb874f6daca55))
+* remove commented code ([b574f5f](https://github.com/terrestris/shogun-gis-client/commit/b574f5f6598e848d57d4e89e54af1d9a22efda6b))
+* removes link creation to urls with local target ([8852ab7](https://github.com/terrestris/shogun-gis-client/commit/8852ab7c783404c1f311c26540edc8e7cb6fed9f))
+* white spaces ([5c5c41e](https://github.com/terrestris/shogun-gis-client/commit/5c5c41e8f427adeca67f391038f51809a215543a))
+* white spaces ([74dcfcc](https://github.com/terrestris/shogun-gis-client/commit/74dcfcc28c2af22c70c6f04b1a89d14a8d1ea4ed))
+* white spaces ([b96720e](https://github.com/terrestris/shogun-gis-client/commit/b96720e20a88c856ed65617d41115f19992de3fe))
+
+## [8.4.0](https://github.com/terrestris/shogun-gis-client/compare/v8.3.0...v8.4.0) (2024-05-31)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.24.0 to 7.24.5 ([bbf7ebc](https://github.com/terrestris/shogun-gis-client/commit/bbf7ebc2de4862408394e6d59a99a8bdb5ae02bc))
+* **deps-dev:** bump @playwright/test from 1.42.1 to 1.44.1 ([9718ae5](https://github.com/terrestris/shogun-gis-client/commit/9718ae5265b8c4bd58d00443439d64f58699649d))
+* **deps-dev:** bump @semantic-release/github from 10.0.4 to 10.0.5 ([cc003dc](https://github.com/terrestris/shogun-gis-client/commit/cc003dcacf5e0e4fa5ea1e90caf8507148582012))
+* **deps-dev:** bump @semantic-release/npm from 11.0.2 to 12.0.1 ([0f9e413](https://github.com/terrestris/shogun-gis-client/commit/0f9e41385dd1f76047068109f0f2b1c296f80673))
+* **deps-dev:** bump @types/node from 20.12.11 to 20.12.12 ([61fddcf](https://github.com/terrestris/shogun-gis-client/commit/61fddcf00a4c43ae4d79b362dfd3373cb89a9c0b))
+* **deps-dev:** bump css-loader from 6.10.0 to 7.1.2 ([71d6a25](https://github.com/terrestris/shogun-gis-client/commit/71d6a25886f3380c153fadc928202eb56f37d569))
+* **deps:** bump react-i18next from 14.1.1 to 14.1.2 ([36991e9](https://github.com/terrestris/shogun-gis-client/commit/36991e9f8163011f7599d48d49556a9793ed2c84))
+* moves styling to .less file ([196f53e](https://github.com/terrestris/shogun-gis-client/commit/196f53e1670dc6cec370d43da68baeebdd88033d))
+
+
+### Features
+
+* create <a /> for links in DisplayField ([ead68e7](https://github.com/terrestris/shogun-gis-client/commit/ead68e7b981076a528504d14752664d2e2a83d0f))
+
+
+### Bugfixes
+
+* extracts further elements to .less and makes a slight styling change ([77406cf](https://github.com/terrestris/shogun-gis-client/commit/77406cf448706f7bdbbf0c6af3995ae1bc81cc82))
+* fixes loading indicator and adjusts spacing ([0523e6f](https://github.com/terrestris/shogun-gis-client/commit/0523e6f5864738fe0e792f473fa0db521008b720))
+* hide user chip in public applications ([813d9d2](https://github.com/terrestris/shogun-gis-client/commit/813d9d247d0a116f04f9fafd2d725ef8064a8f38))
+* update check for UNC path ([959d914](https://github.com/terrestris/shogun-gis-client/commit/959d9147c4af174032c51c77ee7fac0e42182112))
+
+
+### Changes in layout
+
+* fix tree overflow ([711e527](https://github.com/terrestris/shogun-gis-client/commit/711e52771940b3865d9adb40199d2b3dec0985f7))
+
 ## [8.3.0](https://github.com/terrestris/shogun-gis-client/compare/v8.2.1...v8.3.0) (2024-05-21)
 
 

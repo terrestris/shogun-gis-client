@@ -14,6 +14,7 @@ import editFeature from './editFeature';
 import editFeatureDrawerOpen from './editFeatureDrawerOpen';
 import featureInfo from './featureInfo';
 import layerDetailsModal from './layerDetailsModal';
+import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
 import print from './print';
@@ -40,6 +41,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     editFeatureDrawerOpen,
     featureInfo,
     layerDetailsModal,
+    layerTree,
     legal,
     logoPath,
     print,

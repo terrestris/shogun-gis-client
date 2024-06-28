@@ -39,6 +39,7 @@ import {
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
+import { UploadTools } from '../../../store/layerTree';
 
 import WmsTimeSlider from '../../WmsTimeSlider';
 
@@ -55,6 +56,11 @@ export type LayerTileLoadCounter = {
     loaded: number;
     percent: number;
   };
+};
+
+export type LayerTreeConfig = {
+  enabled?: boolean;
+  activeUploadTools?: UploadTools[];
 };
 
 export const LayerTree: React.FC<LayerTreeProps> = ({

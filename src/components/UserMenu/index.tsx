@@ -5,12 +5,14 @@ import {
   faUserCog,
   faSignOut,
   faSignIn,
-  faAngleDown
+  faAngleDown,
+  faCircleQuestion
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
+import { Button } from 'antd';
 import {
   ItemType
 } from 'antd/lib/menu/hooks/useItems';
@@ -70,7 +72,9 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         break;
       case 'logout':
         if (keycloak) {
-          keycloak.logout();
+          keycloak.logout({
+            redirectUri: keycloak.createLoginUrl()
+          });
         }
         break;
       default:
@@ -140,6 +144,25 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       )
     };
 
+    const docs: ItemType = {
+      key: 'docs',
+      icon: (
+        <FontAwesomeIcon
+          icon={faCircleQuestion}
+        />
+      ),
+      label: (
+        <Button
+          type='text'
+          className="user-documentation"
+          aria-label='user-documentation'
+          onClick={() => window.open('/gis-docs', '_blank')}
+        >
+          {t('UserMenu.helpMenuTitle')}
+        </Button>
+      )
+    };
+
     const logout: ItemType = {
       key: 'logout',
       icon: (
@@ -171,12 +194,14 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         divider,
         settings,
         info,
+        docs,
         divider,
         logout
       ] : [
         username,
         divider,
         info,
+        docs,
         divider,
         logout
       ];
@@ -189,6 +214,10 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       onClick: onMenuClick
     };
   };
+
+  if (_isEmpty(user)) {
+    return <></>;
+  }
 
   return (
     <UserChip
