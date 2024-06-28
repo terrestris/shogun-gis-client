@@ -15,10 +15,10 @@
   },
   "license": "BSD-2-Clause",
   "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
+  "type": "module",
   "files": [
     "dist"
   ],
-  "type": "module",
   "scripts": {
     "build": "vite build",
     "build:analyze": "BUNDLE_ANALYZE=true npm run build",
@@ -126,12 +126,6 @@
     "vitest": "^1.6.0",
     "watch": "1.0.2"
   },
-  "overrides": {
-    "@camptocamp/inkmap": {
-      "ol": "$ol",
-      "geostyler-openlayers-parser": "$geostyler-openlayers-parser"
-    }
-  },
   "publishConfig": {
     "access": "public"
   },
@@ -149,5 +143,11 @@
   "devEngines": {
     "node": ">=20",
     "npm": ">=7"
+  },
+  "overrides": {
+    "@camptocamp/inkmap": {
+      "ol": "$ol",
+      "geostyler-openlayers-parser": "$geostyler-openlayers-parser"
+    }
   }
 }
