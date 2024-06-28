@@ -27,6 +27,7 @@ declare module 'clientConfig' {
   type SearchConfiguration = {
     solrBasePath?: string;
     useNominatim?: boolean;
+    groupByCategory?: boolean;
     useSolrHighlighting?: boolean;
     defaultUseViewBox?: boolean;
     delay?: number;
