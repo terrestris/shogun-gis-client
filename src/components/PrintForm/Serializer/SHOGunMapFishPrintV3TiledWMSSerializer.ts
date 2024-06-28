@@ -1,7 +1,7 @@
 import OlLayer from 'ol/layer/Layer';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import MapFishPrintV3TiledWMSSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3TiledWMSSerializer';
+import { MapFishPrintV3TiledWMSSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3TiledWMSSerializer';
 
 import SHOGunMapFishPrintV3WMSSerializer from './SHOGunMapFishPrintV3WMSSerializer';
 

@@ -10,9 +10,7 @@ import ClientConfiguration from 'clientConfig';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
-import {
-  isMoment
-} from 'moment';
+import Moment from 'moment';
 
 import {
   isEmpty
@@ -22,10 +20,13 @@ import OlFormatWFS, {
   WriteTransactionOptions as OlWriteTransactionOptions
 } from 'ol/format/WFS';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   PropertyFormTabConfig,
@@ -92,7 +93,7 @@ export const useWriteWfsTransaction = () => {
       }
 
       // Transform moments back to iso string.
-      if (isMoment(value)) {
+      if (Moment.isMoment(value)) {
         formValues[key] = value.toISOString();
       }
 

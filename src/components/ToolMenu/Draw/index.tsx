@@ -31,18 +31,18 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import DeleteButton from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
+import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
-import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
+import { ModifyButton } from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import UploadButton from '@terrestris/react-geo/dist/Button/UploadButton/UploadButton';
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+} from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import './index.less';
 
@@ -176,13 +176,6 @@ export const Draw: React.FC<DrawProps> = ({
     return <></>;
   }
 
-  const onToggleChange = (childProps: any) => {
-
-    if (childProps) {
-      setSelectedButton(childProps.name);
-    }
-  };
-
   const onModifyButtonToggle = (active: boolean) => {
     setIsAttributeDrawerOpen(active);
   };
@@ -190,15 +183,18 @@ export const Draw: React.FC<DrawProps> = ({
   return (
     <>
       <ToggleGroup
-        selectedName={selectedButton}
-        onChange={onToggleChange}
+        selected={selectedButton}
+        onChange={(evt, value) => {
+          setSelectedButton(value);
+        }}
       >
         {showDrawPoint ? (
           <DrawButton
-            name="draw-point"
+            value="draw-point"
             drawType="Point"
             type="link"
             pressed={false}
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faCircle}
@@ -213,9 +209,10 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawLine ? (
           <DrawButton
-            name="draw-line"
+            value="draw-line"
             drawType="LineString"
             type="link"
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faGripLines}
@@ -230,9 +227,10 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawPolygon ? (
           <DrawButton
-            name="draw-polygon"
+            value="draw-polygon"
             drawType="Polygon"
             type="link"
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faShapes}
@@ -247,9 +245,10 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawCircle ? (
           <DrawButton
-            name="draw-circle"
+            value="draw-circle"
             drawType="Circle"
             type="link"
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faCircleNotch}
@@ -264,9 +263,10 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawRectangle ? (
           <DrawButton
-            name="draw-rectangle"
+            value="draw-rectangle"
             drawType="Rectangle"
             type="link"
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faSquare}
@@ -280,9 +280,10 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
         {showDrawAnnotation ? (
           <DrawButton
-            name="draw-text"
+            value="draw-text"
             drawType="Text"
             type="link"
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faFont}
@@ -297,9 +298,10 @@ export const Draw: React.FC<DrawProps> = ({
         <StylingButton />
         {showModifyFeatures ? (
           <ModifyButton
-            name="draw-modify"
+            value="draw-modify"
             type="link"
-            onToggle={onModifyButtonToggle}
+            buttonTransparent={true}
+            onClick={() => onModifyButtonToggle}
           >
             <FontAwesomeIcon
               icon={faPenToSquare}
@@ -313,8 +315,9 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
         {showDeleteFeatures ? (
           <DeleteButton
-            name="draw-delete"
+            value="draw-delete"
             type="link"
+            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faEraser}
@@ -328,7 +331,7 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
         {showDeleteFeatures ? (
           <DeleteAllButton
-            name="draw-delete-all"
+            value="draw-delete-all"
             type="link"
           >
             <FontAwesomeIcon
@@ -344,7 +347,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showUploadFeatures ? (
           <UploadButton
-            name="draw-upload"
+            value="draw-upload"
             onChange={onUploadChange}
             type="link"
             aria-label='draw-upload'
@@ -366,7 +369,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showUploadFeatures ? (
           <SimpleButton
-            name="draw-export"
+            value="draw-export"
             onClick={onGeoJSONDownload}
             type="link"
           >

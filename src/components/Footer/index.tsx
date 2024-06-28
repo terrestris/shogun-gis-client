@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect
+} from 'react';
 
 import {
-  Button, Divider
+  Button,
+  Divider
 } from 'antd';
 
 import OlControlMousePosition from 'ol/control/MousePosition';
@@ -11,9 +14,8 @@ import { createStringXY } from 'ol/coordinate';
 import { useTranslation } from 'react-i18next';
 
 import ScaleCombo from '@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';
 import { usePlugins } from '../../hooks/usePlugins';
 
@@ -21,7 +23,10 @@ import {
   FooterPlacementOrientation,
   isFooterIntegration
 } from '../../plugin';
+
 import { Legal } from '../../store/legal';
+
+import './index.less';
 
 export interface FooterProps extends React.ComponentProps<'div'> { }
 
@@ -118,7 +123,6 @@ export const Footer: React.FC<FooterProps> = ({
         {t('Footer.scale')}:&nbsp;
         <ScaleCombo
           aria-label='scalecombo-dropdown'
-          map={map}
         />
         <Divider
           type="vertical"

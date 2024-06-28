@@ -46,6 +46,8 @@ describe('StylingDrawer', () => {
     });
 
     store.dispatch(setStylingDrawerVisibility(true));
-    expect(screen.getByText('StylingDrawer.title')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('StylingDrawer.title')).toBeInTheDocument();
+    });
   });
 });

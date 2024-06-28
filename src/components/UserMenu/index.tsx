@@ -15,7 +15,7 @@ import {
 import { Button } from 'antd';
 import {
   ItemType
-} from 'antd/lib/menu/hooks/useItems';
+} from 'antd/lib/menu/interface';
 
 import ClientConfiguration from 'clientConfig';
 
@@ -29,8 +29,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
-
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import {
@@ -38,6 +36,7 @@ import {
 } from '../../utils/getGravatarUrl';
 
 import ApplicationInfo from '../ApplicationInfo';
+import UserChip from '../UserChip';
 
 import './index.less';
 
@@ -102,7 +101,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         >
           <span>
             {
-              user.providerDetails?.email
+              user.providerDetails?.username
             }
           </span>
         </div>

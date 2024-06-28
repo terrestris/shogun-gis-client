@@ -10,7 +10,7 @@ import {
 
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import useAppSelector from '../../../hooks/useAppSelector';
 

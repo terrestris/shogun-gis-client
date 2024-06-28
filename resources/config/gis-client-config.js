@@ -10,7 +10,13 @@ var clientConfig = {
   print: {
     url: '/print'
   },
-  plugins: [],
+  plugins: [{
+    name: 'ExamplePlugin',
+    exposedPaths: [
+      './FooterLinks'
+    ],
+    resourcePath: 'http://localhost:9090/assets/index.js'
+  }],
   geoserver: {
     base: '/geoserver',
     upload: {
