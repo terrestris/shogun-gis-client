@@ -28,6 +28,7 @@ declare module 'clientConfig' {
     solrBasePath?: string;
     useNominatim?: boolean;
     groupByCategory?: boolean;
+    boostDisplayedFields?: boolean;
     useSolrHighlighting?: boolean;
     defaultUseViewBox?: boolean;
     delay?: number;

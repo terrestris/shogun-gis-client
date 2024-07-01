@@ -1,4 +1,5 @@
 import _groupBy from 'lodash/groupBy';
+import _isNil from 'lodash/isNil';
 import Map from 'ol/Map';
 
 import {
@@ -18,6 +19,7 @@ export interface SolrQueryProps {
 type SolrQuery = {
   query: string;
   fieldList?: string;
+  displayTemplates?: string[];
 };
 
 /**
@@ -45,11 +47,16 @@ export const generateSolrQuery = ({
       .filter(l => isWmsLayer(l))
       .map(l => (l as WmsLayer).getSource()?.getParams()?.LAYERS);
 
+    const displayTemplates = layerList
+      .map(l => (l.get('searchConfig') as SearchConfig)?.displayTemplate)
+      .filter(d => d) as string[];
+
     const queriesPerQueryFields = layerNames.map(layerName => `(featureType:"${layerName}" AND (${generateSearchQuery(parts)}))`);
     const query = queriesPerQueryFields.join(' OR ');
     searchQueries.push({
       query: query,
-      fieldList: key !== 'undefined' ? key.split(',').join(' ') : undefined
+      fieldList: key !== 'undefined' ? key.split(',').join(' ') : undefined,
+      displayTemplates: displayTemplates
     });
   });
 
