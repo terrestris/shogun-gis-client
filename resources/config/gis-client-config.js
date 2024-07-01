@@ -27,6 +27,7 @@ var clientConfig = {
     defaultUseViewBox: true,
     useNominatim: true,
     groupByCategory: true,
+    boostDisplayedFields: false,
     useSolrHighlighting: true,
     delay: 1000,
     minChars: 3,

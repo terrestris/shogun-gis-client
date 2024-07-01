@@ -226,7 +226,16 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
           };
 
           if (q.fieldList) {
-            solrQueryConfig.qf = q.fieldList;
+            let qf = q.fieldList;
+            if (q.displayTemplates && ClientConfiguration.search?.boostDisplayedFields) {
+              // boost all fields which are part of the display template
+              qf = q.fieldList
+                .split(' ')
+                // todo: do we want do require a match for all displayTempaltes (every) or for any (some)
+                .map(field => q.displayTemplates?.some(dt => dt.indexOf(field) >= 0) ? `${field}^3` : field)
+                .join(' ');
+            }
+            solrQueryConfig.qf = qf;
           } else {
             solrQueryConfig.qf = ClientConfiguration.search?.coreName ?? 'search';
           }
