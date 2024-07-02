@@ -3,7 +3,6 @@ import React from 'react';
 import {
   cleanup,
   fireEvent,
-  prettyDOM,
   render,
   waitFor,
   screen
