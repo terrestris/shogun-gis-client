@@ -27,15 +27,6 @@ describe('<Header />', () => {
     expect(container).toBeVisible();
   });
 
-  it('can be rendered', () => {
-    const {
-      container
-    } = render(<Header />, {
-      wrapper: createReduxWrapper()
-    });
-    expect(container).toBeVisible();
-  });
-
   it('logo is rendered', () => {
     store.dispatch(setLogoPath('test-path'));
 
