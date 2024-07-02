@@ -2,9 +2,7 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import { Provider } from 'react-redux';
-
-import { store } from '../../../store/store';
+import { createReduxWrapper } from '../../../utils/testUtils';
 
 import EditFeatureGeometryToolbar from './';
 
@@ -15,19 +13,19 @@ describe('EditFeatureGeometryToolbar', () => {
 
   it('can be rendered', () => {
     const { container } = render(
-      <Provider store={store}>
-        <EditFeatureGeometryToolbar
-          feature={{
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'Point',
-              coordinates: [0, 0]
-            }
-          }}
-        />
-      </Provider>
-    );
+      <EditFeatureGeometryToolbar
+        feature={{
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [0, 0]
+          }
+        }}
+      />,
+      {
+        wrapper: createReduxWrapper()
+      });
     expect(container).toBeVisible();
   });
 });
