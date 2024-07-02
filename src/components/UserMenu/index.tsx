@@ -72,7 +72,9 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         break;
       case 'logout':
         if (keycloak) {
-          keycloak.logout();
+          keycloak.logout({
+            redirectUri: keycloak.createLoginUrl()
+          });
         }
         break;
       default:

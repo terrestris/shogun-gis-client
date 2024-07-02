@@ -61,6 +61,9 @@ import {
 } from '../../store/addLayerModal';
 import { setFeatureInfoEnabled } from '../../store/featureInfo';
 import {
+  UploadTools, setLayerTreeEnabled
+} from '../../store/layerTree';
+import {
   setActiveKeys
 } from '../../store/toolMenu';
 import {
@@ -90,11 +93,13 @@ export type ToolPanelConfig = {
 };
 
 export type ToolMenuProps = Partial<CollapsePanelProps> & {
+  collapseWidth?: number;
   minWidth?: number;
   maxWidth?: number;
 };
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
+  collapseWidth = 40,
   minWidth = 240,
   maxWidth = 600,
   ...restProps
@@ -128,8 +133,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
     if (isMobile) {
       setCollapsed(true);
+      setWidth(collapseWidth);
     }
-  }, []);
+  }, [collapseWidth]);
 
   useEffect(() => {
     if (menuTools.length < 1) {
@@ -154,7 +160,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       'print',
       'measure_tools',
       'draw_tools',
-      'feature_info'
+      'feature_info',
+      'tree'
     ];
 
     const activeExclusiveTools = exclusiveTools.filter(tool =>
@@ -175,6 +182,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
 
     dispatch(setFeatureInfoEnabled(activeKeys.includes('feature_info')));
+    dispatch(setLayerTreeEnabled(activeKeys.includes('tree')));
+
   }, [activeKeys, dispatch]);
 
   const getToolPanels = (): JSX.Element[] => {
@@ -245,6 +254,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     return panels;
   };
 
+  const activeUploadTools = useAppSelector(state => state.layerTree.activeUploadTools);
+
   const getToolPanelConfig = (tool: string): ToolPanelConfig | undefined => {
     switch (tool) {
       case 'measure_tools':
@@ -313,16 +324,20 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           wrappedComponent: (
             <div className='tree-wrapper'>
               <LayerTree />
-              <Button
-                className='add-wms-button tool-menu-button'
-                icon={<FontAwesomeIcon icon={faPlus} />}
-                onClick={() => dispatch(showAdd())}
-              >
-                {t('ToolMenu.addWms')}
-              </Button>
+              {activeUploadTools?.includes(UploadTools.addWMS) && (
+                <Button
+                  className='add-wms-button tool-menu-button'
+                  icon={<FontAwesomeIcon icon={faPlus} />}
+                  onClick={() => dispatch(showAdd())}
+                >
+                  {t('ToolMenu.addWms')}
+                </Button>
+              )
+              }
               {
                 keycloak && ClientConfiguration.geoserver?.upload?.authorizedRoles?.some(
-                  role => keycloak.hasResourceRole(role, keycloak.clientId)) && (
+                  role => keycloak.hasResourceRole(role, keycloak.clientId)) &&
+                  activeUploadTools?.includes(UploadTools.dataUpload) && (
                   <Button
                     className='upload-data-button tool-menu-button'
                     icon={<FontAwesomeIcon icon={faUpload} />}
@@ -419,7 +434,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             if (collapsed){
               setWidth(noCollapseWidth);
             } else {
-              setWidth(40);
+              setWidth(collapseWidth);
             }
           }}
         />

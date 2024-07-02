@@ -52,6 +52,7 @@ Several global settings for the client can be configured via the [`gis-client-co
 | search.coreName | Solr core name.                                                                                                                                                                                          | 'search'            |
 | search.defaultUseViewBox | Whether the search is restricted to the current view box.                                                                                                                                                | true                |
 | search.useNominatim | Whether to use Nominatim.                                                                                                                                                                                | true                |
+| search.groupByCategory | Groups search results by 'category' text field. If disabled, the layer title will be used instead.                                                                                                       | true                |
 | search.useSolrHighlighting | Enable / disable solr search result highlighting.                                                                                                                                                        | true                |
 | search.delay | Delay in milliseconds before search is triggered (debouncing).                                                                                                                                           | 1000                |
 | search.minChars | Minimum search term length for the search to be triggered.                                                                                                                                               | 3                   |
@@ -90,6 +91,14 @@ npm run start
 ```
 
 to have the application available at [https://localhost:8080](https://localhost:8080) you usually want to start the full SHOGun stack for development. Please refer to the [shogun-docker](https://github.com/terrestris/shogun-docker) repository for further details.
+
+### Development if shogun-gis-client is a dependency of your project
+
+Injects the local version of shogun-gis-client into another project. This can be useful when developing https://github.com/terrestris/shogun-gis-client-plugins
+
+```sh
+npx watch-build-copy ./src "npm run build:dist" ./dist/ ../shogun-gis-client-plugins/node_modules/@terrestris/shogun-gis-client/dist
+```
 
 ## End-to-End testing using Playwright
 
