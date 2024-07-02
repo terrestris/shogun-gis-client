@@ -1,4 +1,3 @@
-
 import { test } from '@playwright/test';
 
 import { scan } from '@terrestris/shogun-e2e-tests/dist/accessibility/client';
