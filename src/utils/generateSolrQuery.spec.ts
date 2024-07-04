@@ -71,7 +71,7 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    const expectedSolrQuery = '(featureType:"SHOGUN:bar" AND ((foo*^3 OR *foo*^2 OR foo~1 OR foo)))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:bar") AND ((foo^4 OR *foo*^2 OR foo~1))';
 
     expect(generatedQueries).toHaveLength(1);
     expect(generatedQueries[0].query).toEqual(expectedSolrQuery);
@@ -93,8 +93,7 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    // eslint-disable-next-line max-len
-    const expectedSolrQuery = '(featureType:"SHOGUN:foo" AND ((foo*^3 OR *foo*^2 OR foo~1 OR foo))) OR (featureType:"SHOGUN:bar" AND ((foo*^3 OR *foo*^2 OR foo~1 OR foo)))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:foo" OR featureType:"SHOGUN:bar") AND ((foo^4 OR *foo*^2 OR foo~1))';
 
     expect(generatedQueries).toHaveLength(1);
     expect(generatedQueries[0].query).toEqual(expectedSolrQuery);
@@ -120,8 +119,7 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    // eslint-disable-next-line max-len
-    const expectedSolrQuery = '(featureType:"SHOGUN:foo" AND ((dummy*^3 OR *dummy*^2 OR dummy~1 OR dummy))) OR (featureType:"SHOGUN:bar" AND ((dummy*^3 OR *dummy*^2 OR dummy~1 OR dummy)))';
+    const expectedSolrQuery = '(featureType:"SHOGUN:foo" OR featureType:"SHOGUN:bar") AND ((dummy^4 OR *dummy*^2 OR dummy~1))';
 
     expect(generatedQueries).toHaveLength(1);
     expect(generatedQueries[0].query).toEqual(expectedSolrQuery);
@@ -135,8 +133,8 @@ describe('<generateSolrQuery />', () => {
     });
 
     // eslint-disable-next-line max-len
-    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem)))';
-    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem)))';
+    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo") AND ((lorem^4 OR *lorem*^2 OR lorem~1))';
+    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar") AND ((lorem^4 OR *lorem*^2 OR lorem~1))';
 
     expect(generatedQueries).toHaveLength(2);
     expect(generatedQueries[0].query).toEqual(expectedSolrQueryFoo);
@@ -151,8 +149,8 @@ describe('<generateSolrQuery />', () => {
       map
     });
 
-    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem) AND (ipsum*^3 OR *ipsum*^2 OR ipsum~1 OR ipsum)))';
-    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar" AND ((lorem*^3 OR *lorem*^2 OR lorem~1 OR lorem) AND (ipsum*^3 OR *ipsum*^2 OR ipsum~1 OR ipsum)))';
+    const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo") AND ((lorem^4 OR *lorem*^2 OR lorem~1) AND (ipsum^4 OR *ipsum*^2 OR ipsum~1))';
+    const expectedSolrQueryBar = '(featureType:"SHOGUN:bar") AND ((lorem^4 OR *lorem*^2 OR lorem~1) AND (ipsum^4 OR *ipsum*^2 OR ipsum~1))';
 
     expect(generatedQueries).toHaveLength(2);
     expect(generatedQueries[0].query).toEqual(expectedSolrQueryFoo);
