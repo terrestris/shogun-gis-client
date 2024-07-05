@@ -1,3 +1,17 @@
+## [8.6.1](https://github.com/terrestris/shogun-gis-client/compare/v8.6.0...v8.6.1) (2024-07-05)
+
+
+### Changes in configuration
+
+* ajust paths for sonarqube scan ([9136b88](https://github.com/terrestris/shogun-gis-client/commit/9136b88e18dbf67098dadbf53988b8c3aef391fd))
+* remove empty lines ([e89f493](https://github.com/terrestris/shogun-gis-client/commit/e89f4935fe12c6773d4b9bee8208d0e76f082e97))
+* sonarqube-scan does not run when merging from dependabot ([fec465c](https://github.com/terrestris/shogun-gis-client/commit/fec465cddaeb6d612a8a188ce18b93ab6afdf416))
+
+
+### Bugfixes
+
+* simplify query for multiple feature types ([25b1625](https://github.com/terrestris/shogun-gis-client/commit/25b162502d7f3c61278ca164991c041279c910af))
+
 ## [8.6.0](https://github.com/terrestris/shogun-gis-client/compare/v8.5.0...v8.6.0) (2024-06-28)
 
 
