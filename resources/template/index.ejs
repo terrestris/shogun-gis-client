@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no">
-    <% if (htmlWebpackPlugin.options.csrf && htmlWebpackPlugin.options.csrf.csrfToken &&
-      htmlWebpackPlugin.options.csrf.csrfHeader && htmlWebpackPlugin.options.csrf.csrfParameterName) { %>
-      <meta name="_csrf" content="<%= htmlWebpackPlugin.options.csrf.csrfToken %>" />
-      <meta name="_csrf_header" content="<%= htmlWebpackPlugin.options.csrf.csrfHeader %>" />
-      <meta name="_csrf_parameter_name" content="<%= htmlWebpackPlugin.options.csrf.csrfParameterName %>" />
-    <% } %>
-    <!-- TODO Check if needed -->
-    <base href="<%= htmlWebpackPlugin.options.appPrefix %>">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <div id="loadmask" class="loadmask">
-      <img id="loadmask-image" alt="Loading, please wait…">
-    </div>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <base href="<%= appPrefix %>" />
     <style>
       .loadmask {
         position: fixed;
@@ -91,6 +77,9 @@
         loadingImageElement.src = logoPath;
       }
     </script>
+    <div id="loadmask" class="loadmask">
+      <img id="loadmask-image" alt="Loading, please wait…">
+    </div>
     <div id="app" class="app"></div>
   </body>
 </html>

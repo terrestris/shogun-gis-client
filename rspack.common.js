@@ -1,9 +1,7 @@
 const path = require('path');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
+const rspack = require('@rspack/core');
 
 const deps = require('./package.json').dependencies;
 
@@ -14,34 +12,50 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.m?js$/,
-      include: /node_modules\/@terrestris/,
+      test: /\.m?js/,
+      type: 'javascript/auto',
       resolve: {
         fullySpecified: false
       }
     }, {
-      test: /\.tsx?$/,
-      exclude: /node_modules|\.d\.ts$/,
-      use: [{
-        loader: 'babel-loader'
-      }]
+      test: /\.(j|t)s$/,
+      exclude: [/[\\/]node_modules[\\/]/],
+      loader: 'builtin:swc-loader',
+      options: {
+        jsc: {
+          parser: {
+            syntax: 'typescript'
+          },
+          externalHelpers: true
+        },
+        env: {
+          targets: 'Chrome >= 48'
+        }
+      }
+    }, {
+      test: /\.tsx$/,
+      loader: 'builtin:swc-loader',
+      exclude: [/[\\/]node_modules[\\/]/],
+      options: {
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true
+          },
+          transform: {
+            react: {
+              runtime: 'automatic'
+            }
+          },
+          externalHelpers: true
+        },
+        env: {
+          targets: 'Chrome >= 48'
+        }
+      }
     }, {
       test: /\.d\.ts$/,
       loader: 'ignore-loader'
-    }, {
-      test: /\.less|\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader'
-      }, {
-        loader: 'less-loader',
-        options: {
-          lessOptions: {
-            javascriptEnabled: true
-          }
-        }
-      }]
     }, {
       test: /\.(jpe?g|png|gif|ico|pdf|eot|svg|ttf|woff(2)?)$/,
       type: 'asset/resource'
@@ -55,7 +69,9 @@ module.exports = {
     extensions: [
       '.tsx',
       '.ts',
-      '.js'
+      '.js',
+      '.cjs',
+      '.mjs'
     ],
     fallback: {
       buffer: require.resolve('buffer/')
@@ -63,44 +79,40 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
+    publicPath: 'auto',
     clean: true
   },
   plugins: [
-    new HtmlWebpackPlugin({
+    new rspack.HtmlRspackPlugin({
       filename: 'index.html',
       title: 'SHOGun Client',
-      template: path.join(__dirname, 'resources', 'public', 'index.ejs'),
-      hash: true,
-      appPrefix: process.env.HTML_BASE_URL ?? '',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
+      template: path.join(__dirname, 'resources', 'template', 'index.ejs'),
+      templateParameters: {
+        appPrefix: process.env.HTML_BASE_URL ?? ''
+      },
+      favicon: path.join(__dirname, 'resources', 'public', 'favicon.ico'),
+      minify: true,
+      meta: {
+        charset: 'utf-8',
+        viewport: 'user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no'
       }
     }),
-    new CopyWebpackPlugin({
+    new rspack.CopyRspackPlugin({
       patterns: [{
         from: path.join(__dirname, 'resources', 'config', 'gis-client-config.js'),
         to: '.'
       }, {
-        from: './node_modules/monaco-editor/min/vs',
+        from: path.join(__dirname, 'node_modules', 'monaco-editor', 'min', 'vs'),
         to: 'vs'
       }]
     }),
-    new webpack.DefinePlugin({
+    new rspack.DefinePlugin({
       PROJECT_VERSION: JSON.stringify(require('./package.json').version),
       KEYCLOAK_HOST: JSON.stringify(process.env.KEYCLOAK_HOST),
       KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
       KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.KEYCLOAK_CLIENT_ID)
     }),
-    new webpack.ProvidePlugin({
+    new rspack.ProvidePlugin({
       Buffer: [
         'buffer',
         'Buffer'
@@ -108,35 +120,30 @@ module.exports = {
     }),
     new ModuleFederationPlugin({
       name: 'SHOGunGISClient',
+      dev: false,
       shared: {
         react: {
           singleton: true,
-          eager: true,
           requiredVersion: deps.react
         },
         'react-dom': {
           singleton: true,
-          eager: true,
           requiredVersion: deps['react-dom']
         },
         'react-redux': {
           singleton: true,
-          eager: true,
           requiredVersion: deps['react-redux']
         },
         '@terrestris/react-geo/': {
           singleton: true,
-          eager: true,
           requiredVersion: deps['@terrestris/react-geo']
         },
         'react-i18next': {
           singleton: true,
-          eager: true,
           requiredVersion: deps['react-i18next']
         },
         'ol/': {
           singleton: true,
-          eager: true,
           requiredVersion: deps.ol
         }
       }
