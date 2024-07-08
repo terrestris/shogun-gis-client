@@ -1,3 +1,11 @@
+## [8.6.2](https://github.com/terrestris/shogun-gis-client/compare/v8.6.1...v8.6.2) (2024-07-08)
+
+
+### Bugfixes
+
+* search result display overflow ([08a0b03](https://github.com/terrestris/shogun-gis-client/commit/08a0b03af3df5b3552305b9281526a22f14c1bb0))
+* update semantic release version in CI ([5cc9692](https://github.com/terrestris/shogun-gis-client/commit/5cc9692f898d7ed44d85d90bc62b3d5c3791d678))
+
 ## [8.6.1](https://github.com/terrestris/shogun-gis-client/compare/v8.6.0...v8.6.1) (2024-07-05)
 
 
