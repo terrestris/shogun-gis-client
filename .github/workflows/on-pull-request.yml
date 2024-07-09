@@ -8,6 +8,12 @@ jobs:
     steps:
     - name: Checkout sources 🔰
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Fetch all branches
+      run: git fetch --all
+
     - run: |
         git checkout -b main origin/main
         git checkout -
