@@ -8,6 +8,9 @@ jobs:
     steps:
     - name: Checkout sources 🔰
       uses: actions/checkout@v4
+    - run: |
+        git checkout -b main origin/main
+        git checkout -
 
     - name: Setup Node.js 🧮
       uses: actions/setup-node@v4
@@ -31,14 +34,6 @@ jobs:
 
     - name: Build artifacts 🏗️
       run: npm run build
-
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - run: |
-        git checkout -b main origin/main
-        git checkout -
 
     - name: Run tests related to current changes ✅
       run: |
