@@ -35,7 +35,9 @@ jobs:
     - name: Run tests related to current changes ✅
       run: |
         git fetch --no-tags --depth=1 origin main
-        npx jest --config=jest.config.js --coverage --coverageReporters json-summary --changedSince=origin/main --coverageDirectory ./coverage/changed
+        git checkout -b main
+        git checkout ${{ github.event.pull_request.head.sha }}
+        npx jest --config=jest.config.js --coverage --coverageReporters json-summary --changedSince=main --coverageDirectory ./coverage/changed
 
     - name: Check for test results ❓
       id: check-results
