@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - fix-sonarqube-scan
 
 jobs:
   build:
@@ -113,8 +113,9 @@ jobs:
           echo "sonar.projectVersion=$(node -pe "require('./package.json').version")" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
-        uses: kitabisa/sonarqube-action@v1.2.1
+        uses: SonarSource/sonarqube-scan-action@v2.3.0
         with:
-          host: ${{ secrets.SONARQUBE_HOST }}
-          login: ${{ secrets.SONARQUBE_TOKEN }}
           projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_HOST }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_TOKEN }}
