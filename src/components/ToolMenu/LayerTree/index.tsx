@@ -75,7 +75,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (initialLayersUid ?? []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
-  console.log(visibleLegendsIds);
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
