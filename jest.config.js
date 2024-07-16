@@ -33,5 +33,6 @@ module.exports = {
     'default',
     '@casualbot/jest-sonar-reporter'
   ],
+  coverageReporters: ['json-summary'],
   coverageDirectory: 'coverage/all'
 };
