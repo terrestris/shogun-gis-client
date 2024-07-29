@@ -94,7 +94,7 @@
     "@types/color": "^3.0.3",
     "@types/jest": "^29.5.12",
     "@types/js-md5": "^0.7.0",
-    "@types/node": "^20.4.2",
+    "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "babel-jest": "^29.3.1",
