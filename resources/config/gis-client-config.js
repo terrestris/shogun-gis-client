@@ -28,6 +28,7 @@ var clientConfig = {
     useNominatim: true,
     groupByCategory: true,
     useSolrHighlighting: true,
+    activateLayerOnClick: true,
     delay: 1000,
     minChars: 3,
     solrQueryConfig: {

@@ -515,6 +515,20 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       );
     }
 
+    const onSearchResultClick = (item: Item) => {
+      zoomOffsetOnClick(item);
+      if (ClientConfiguration.search?.activateLayerOnClick) {
+        activateLayer(item);
+      }
+    };
+
+    const activateLayer = (item: Item) => {
+      const layer = item?.feature.get('layer');
+      if (layer) {
+        layer.setVisible(true);
+      }
+    };
+
     const zoomOffsetOnClick = (item: Item) => {
       const extent = item.feature.getGeometry()?.getExtent();
       const toolMenuElement = document.getElementsByClassName('tool-menu');
@@ -537,7 +551,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         searchTerms={searchValue.split(' ')}
         actionsCreator={actionsCreator}
         layerStyle={layerStyle}
-        onClick={zoomOffsetOnClick}
+        onClick={onSearchResultClick}
       />
     );
   };

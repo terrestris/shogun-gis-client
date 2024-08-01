@@ -34,6 +34,7 @@ declare module 'clientConfig' {
     minChars?: number;
     coreName?: string;
     solrQueryConfig?: SolrQueryConfig;
+    activateLayerOnClick?: boolean;
   };
   type ClientConfiguration = {
     shogunBase?: string | false;
