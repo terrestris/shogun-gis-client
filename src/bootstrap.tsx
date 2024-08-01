@@ -91,7 +91,10 @@ import {
   EditLevel
 } from './store/editFeature';
 import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
-import { setLayerTreeActiveUploadTools } from './store/layerTree';
+import { 
+  setLayerTreeActiveUploadTools,
+  setLayerTreeShowLegends
+} from './store/layerTree';
 import {
   setLegal
 } from './store/legal';
@@ -270,6 +273,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'tree' && Array.isArray(tool.config.uploadTools)) {
           store.dispatch(setLayerTreeActiveUploadTools(tool.config.uploadTools));
+        }
+        if (tool.name === 'tree' && tool.config.showLegends) {
+          store.dispatch(setLayerTreeShowLegends(tool.config.showLegends));
         }
       });
     store.dispatch(setAvailableTools(availableTools));

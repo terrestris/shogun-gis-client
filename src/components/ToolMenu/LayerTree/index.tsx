@@ -38,6 +38,7 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useAppSelector from '../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import { UploadTools } from '../../../store/layerTree';
 
@@ -61,6 +62,7 @@ export type LayerTileLoadCounter = {
 export type LayerTreeConfig = {
   enabled?: boolean;
   activeUploadTools?: UploadTools[];
+  showLegends?: boolean;
 };
 
 export const LayerTree: React.FC<LayerTreeProps> = ({
@@ -72,10 +74,14 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     t
   } = useTranslation();
 
-  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>([]);
-  const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+  const showLegendsState = useAppSelector(state => state.layerTree.showLegends);
+  //check if showLegends is defined
+  const showLegends: boolean = showLegendsState ? showLegendsState : false;
 
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
+
+  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegends? initialLayersUid ?? [] : []);
+  const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
