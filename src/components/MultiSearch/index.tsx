@@ -523,7 +523,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     };
 
     const activateLayer = (item: Item) => {
-      const layer = item?.feature.get('layer');
+      const layer = item?.feature?.get('layer');
       if (layer) {
         layer.setVisible(true);
       }
