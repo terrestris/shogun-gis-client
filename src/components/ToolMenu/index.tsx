@@ -14,7 +14,7 @@ import {
   faPalette,
   faFileDownload,
   faLanguage,
-  faMousePointer,
+  faCircleInfo,
   faPlus,
   faRuler,
   faShareNodes,
@@ -297,7 +297,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         };
       case 'feature_info':
         return {
-          icon: faMousePointer,
+          icon: faCircleInfo,
           title: t('ToolMenu.featureInfo'),
           wrappedComponent: (
             <FeatureInfo />
