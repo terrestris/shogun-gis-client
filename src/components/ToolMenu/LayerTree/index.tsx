@@ -75,7 +75,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   } = useTranslation();
 
   const showLegendsState = useAppSelector(state => state.layerTree.showLegends);
-  //check if showLegends is defined
+  // check if showLegends is defined
   const showLegends: boolean = showLegendsState ? showLegendsState : false;
 
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));

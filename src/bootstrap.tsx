@@ -91,7 +91,7 @@ import {
   EditLevel
 } from './store/editFeature';
 import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
-import { 
+import {
   setLayerTreeActiveUploadTools,
   setLayerTreeShowLegends
 } from './store/layerTree';
