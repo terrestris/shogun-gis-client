@@ -3,7 +3,11 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-import { LayerTreeConfig } from '../../components/ToolMenu/LayerTree';
+export type LayerTreeConfig = {
+  enabled?: boolean;
+  activeUploadTools?: UploadTools[];
+  showLegends?: boolean;
+};
 
 // eslint-disable-next-line no-shadow
 export enum UploadTools {
@@ -13,7 +17,8 @@ export enum UploadTools {
 
 const initialState: LayerTreeConfig = {
   enabled: false,
-  activeUploadTools: [UploadTools.addWMS, UploadTools.dataUpload]
+  activeUploadTools: [UploadTools.addWMS, UploadTools.dataUpload],
+  showLegends: false
 };
 
 export const slice = createSlice({
@@ -28,13 +33,17 @@ export const slice = createSlice({
     },
     setLayerTreeActiveUploadTools(state, action: PayloadAction<UploadTools[]>) {
       state.activeUploadTools = action.payload;
+    },
+    setLayerTreeShowLegends(state, action: PayloadAction<boolean>) {
+      state.showLegends = action.payload;
     }
   }
 });
 
 export const {
   setLayerTreeEnabled,
-  setLayerTreeActiveUploadTools
+  setLayerTreeActiveUploadTools,
+  setLayerTreeShowLegends
 } = slice.actions;
 
 export default slice.reducer;
