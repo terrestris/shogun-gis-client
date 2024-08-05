@@ -40,7 +40,6 @@ import {
 
 import useAppSelector from '../../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
-import { UploadTools } from '../../../store/layerTree';
 
 import WmsTimeSlider from '../../WmsTimeSlider';
 
@@ -59,12 +58,6 @@ export type LayerTileLoadCounter = {
   };
 };
 
-export type LayerTreeConfig = {
-  enabled?: boolean;
-  activeUploadTools?: UploadTools[];
-  showLegends?: boolean;
-};
-
 export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps
 }): JSX.Element => {
@@ -74,13 +67,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     t
   } = useTranslation();
 
-  const showLegendsState = useAppSelector(state => state.layerTree.showLegends);
-  // check if showLegends is defined
-  const showLegends: boolean = showLegendsState ? showLegendsState : false;
+  const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
 
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
-  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegends? initialLayersUid ?? [] : []);
+  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
 
   const registerTileLoadHandler = useCallback(() => {

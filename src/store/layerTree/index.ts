@@ -3,7 +3,11 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-import { LayerTreeConfig } from '../../components/ToolMenu/LayerTree';
+export type LayerTreeConfig = {
+  enabled?: boolean;
+  activeUploadTools?: UploadTools[];
+  showLegends?: boolean;
+};
 
 // eslint-disable-next-line no-shadow
 export enum UploadTools {
