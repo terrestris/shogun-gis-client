@@ -45,7 +45,7 @@ jobs:
         npx jest --config=jest.config.js --coverage --coverageReporters json-summary --changedSince=main --coverageDirectory ./coverage/changed
 
     - name: Check for test results ❓
-      if: github.actor != 'dependabot[bot]'
+      if: ${{ github.actor != 'dependabot[bot]' }}
       id: check-results
       run: |
         if [ -f ./coverage/changed/coverage-summary.json ]; then
@@ -60,7 +60,7 @@ jobs:
         fi
 
     - name: Construct jest coverage comment input 💬
-      if: github.actor != 'dependabot[bot]'
+      if: ${{ github.actor != 'dependabot[bot]' }}
       id: construct-input
       run: |
         if [ "${{ env.no_tests_found }}" == "true" ]; then
@@ -70,7 +70,7 @@ jobs:
         fi
 
     - name: Jest Coverage Comment 💬
-      if: github.actor != 'dependabot[bot]'
+      if: ${{ github.actor != 'dependabot[bot]' }}
       uses: MishaKav/jest-coverage-comment@main
       with:
         hide-comment: false
@@ -79,7 +79,7 @@ jobs:
         multiple-files: ${{ env.MULTIPLE_FILES }}
       
     - name: Get Coverage Comment Id ➡️
-      if: env.no_tests_found == 'true' && github.actor != 'dependabot[bot]'
+      if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
       id: get-comment-id
       run: |
         PR_NUMBER=${{ github.event.pull_request.number }}
@@ -91,7 +91,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Post To No Tests Found Comment ⚠️
-      if: env.no_tests_found == 'true' && github.actor != 'dependabot[bot]'
+      if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
       uses: peter-evans/create-or-update-comment@v4
       with:
         comment-id: ${{ env.COVERAGE_COMMENT_ID }}
