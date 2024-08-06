@@ -1,3 +1,15 @@
+## [8.8.0](https://github.com/terrestris/shogun-gis-client/compare/v8.7.0...v8.8.0) (2024-08-06)
+
+
+### Dependencies
+
+* **deps:** bump i18next from 23.11.5 to 23.12.2 ([e53644e](https://github.com/terrestris/shogun-gis-client/commit/e53644e1c33adf54b5730bcdb7998d26e5a9d655))
+
+
+### Features
+
+* set layer visible on search result click ([e4235b2](https://github.com/terrestris/shogun-gis-client/commit/e4235b27a918b62ebcfb1311d45fcec2e2edab34))
+
 ## [8.7.0](https://github.com/terrestris/shogun-gis-client/compare/v8.6.2...v8.7.0) (2024-08-05)
 
 
