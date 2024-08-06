@@ -24,6 +24,7 @@ import ClientConfiguration from 'clientConfig';
 import _groupBy from 'lodash/groupBy';
 import _isNil from 'lodash/isNil';
 
+import { getUid } from 'ol';
 import {
   Extent as OlExtent
 } from 'ol/extent';
@@ -44,6 +45,7 @@ import {
 import logger from '@terrestris/base-util/dist/Logger';
 
 import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 import { NominatimPlace } from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
 import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import SearchResultsPanel, {
@@ -516,6 +518,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     }
 
     const onSearchResultClick = (item: Item) => {
+      setResultsVisible(false);
       zoomOffsetOnClick(item);
       if (ClientConfiguration.search?.activateLayerOnClick) {
         activateLayer(item);
@@ -524,8 +527,15 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     const activateLayer = (item: Item) => {
       const layer = item?.feature?.get('layer');
-      if (layer) {
+      if (layer && map && !layer.getVisible()) {
         layer.setVisible(true);
+        // also make all parent folders / groups visible so
+        // that the layer becomes visible in map
+        PermalinkUtil.setParentsVisible(
+          map,
+          map.getLayerGroup().getLayers(),
+          getUid(layer)
+        );
       }
     };
 
