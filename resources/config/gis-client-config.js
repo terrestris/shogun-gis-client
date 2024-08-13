@@ -45,5 +45,6 @@ var clientConfig = {
     authorizedRolesForDelete: []
   },
   wfsLockFeatureEnabled: false,
+  documentationButtonVisible: true,
   enableFallbackConfig: true
 };

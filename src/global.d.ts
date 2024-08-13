@@ -60,6 +60,7 @@ declare module 'clientConfig' {
     search?: SearchConfiguration;
     featureEditRoles?: FeatureEditConfiguration;
     wfsLockFeatureEnabled?: boolean;
+    documentationButtonVisible?: boolean;
     enableFallbackConfig?: boolean;
     staticAppConfigUrl?: string;
     layerConfigUrl?: string;

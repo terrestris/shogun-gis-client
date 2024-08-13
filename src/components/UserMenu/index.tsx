@@ -193,19 +193,16 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         username,
         divider,
         settings,
-        info,
-        docs,
-        divider,
-        logout
+        info
       ] : [
         username,
         divider,
-        info,
-        docs,
-        divider,
-        logout
+        info
       ];
-
+      if (ClientConfiguration.documentationButtonVisible) {
+        itemsForLoggedInUser.push(docs);
+      }
+      itemsForLoggedInUser.push(divider, logout);
       items.push(...itemsForLoggedInUser);
     }
 
