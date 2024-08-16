@@ -194,7 +194,6 @@ export const Draw: React.FC<DrawProps> = ({
             drawType="Point"
             type="link"
             pressed={false}
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faCircle}
@@ -212,7 +211,6 @@ export const Draw: React.FC<DrawProps> = ({
             value="draw-line"
             drawType="LineString"
             type="link"
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faGripLines}
@@ -230,7 +228,6 @@ export const Draw: React.FC<DrawProps> = ({
             value="draw-polygon"
             drawType="Polygon"
             type="link"
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faShapes}
@@ -248,7 +245,6 @@ export const Draw: React.FC<DrawProps> = ({
             value="draw-circle"
             drawType="Circle"
             type="link"
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faCircleNotch}
@@ -266,7 +262,6 @@ export const Draw: React.FC<DrawProps> = ({
             value="draw-rectangle"
             drawType="Rectangle"
             type="link"
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faSquare}
@@ -283,7 +278,6 @@ export const Draw: React.FC<DrawProps> = ({
             value="draw-text"
             drawType="Text"
             type="link"
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faFont}
@@ -300,7 +294,6 @@ export const Draw: React.FC<DrawProps> = ({
           <ModifyButton
             value="draw-modify"
             type="link"
-            buttonTransparent={true}
             onClick={() => onModifyButtonToggle}
           >
             <FontAwesomeIcon
@@ -317,7 +310,6 @@ export const Draw: React.FC<DrawProps> = ({
           <DeleteButton
             value="draw-delete"
             type="link"
-            buttonTransparent={true}
           >
             <FontAwesomeIcon
               icon={faEraser}
