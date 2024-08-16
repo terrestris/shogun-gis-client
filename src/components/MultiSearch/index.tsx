@@ -24,6 +24,7 @@ import ClientConfiguration from 'clientConfig';
 import _groupBy from 'lodash/groupBy';
 import _isNil from 'lodash/isNil';
 
+import { getUid } from 'ol';
 import {
   Extent as OlExtent
 } from 'ol/extent';
@@ -44,15 +45,17 @@ import {
 import logger from '@terrestris/base-util/dist/Logger';
 
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import SearchResultsPanel, {
-  Category as ResultCategory
-} from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
+import { PermalinkUtil } from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+import SearchResultsPanel, {
+  Category as ResultCategory
+} from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
+
+import { NominatimPlace } from '@terrestris/react-util/dist/Hooks/search/createNominatimSearchFunction';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
-import { NominatimPlace } from '@terrestris/react-util/dist/Hooks/useNominatim/useNominatim';
 
 import {
   SearchConfig

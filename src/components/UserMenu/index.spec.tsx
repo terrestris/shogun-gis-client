@@ -5,9 +5,9 @@ import {
   render
 } from '@testing-library/react';
 
-import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
-
 import { createReduxWrapper } from '../../utils/testUtils';
+
+import UserChip from '../UserChip';
 
 import UserMenu from './index';
 
