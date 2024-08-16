@@ -1,6 +1,12 @@
 import React, {
-  useEffect, useState
+  useEffect,
+  useMemo,
+  useState
 } from 'react';
+
+import {
+  Geometry
+} from 'geojson';
 
 import {
   Extent as OlExtent
@@ -13,12 +19,18 @@ import {
 } from 'react-i18next';
 
 import {
-  NominatimSearch,
-  NominatimSearchProps
-} from '@terrestris/react-geo/dist/Field/NominatimSearch/NominatimSearch';
+  SearchField,
+  SearchProps
+} from '@terrestris/react-geo/dist/Field/SearchField/SearchField';
+import {
+  NominatimPlace,
+  createNominatimGetExtentFunction,
+  createNominatimGetValueFunction,
+  createNominatimSearchFunction
+} from '@terrestris/react-util/dist/Hooks/search/createNominatimSearchFunction';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = ({
+export const BasicNominatimSearch: React.FC<Partial<SearchProps<Geometry, NominatimPlace>>> = ({
   ...restProps
 }): JSX.Element => {
   const map = useMap();
@@ -26,6 +38,13 @@ export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = ({
     t
   } = useTranslation();
   const [viewBox, setViewBox] = useState<string>();
+
+  const nominatimSearchFunction = useMemo(() => createNominatimSearchFunction({
+    countryCodes: '',
+    viewBox: viewBox ? viewBox : ''
+  }), [viewBox]);
+  const nominatimGetValue = useMemo(() => createNominatimGetValueFunction(), []);
+  const nominatimGetExtent = useMemo(() => createNominatimGetExtentFunction(), []);
 
   useEffect(() => {
     const mapViewProjection = map?.getView().getProjection();
@@ -41,12 +60,12 @@ export const BasicNominatimSearch: React.FC<Partial<NominatimSearchProps>> = ({
   }
 
   return (
-    <NominatimSearch
-      countryCodes={''}
+    <SearchField
+      searchFunction={nominatimSearchFunction}
+      getValue={nominatimGetValue}
+      getExtent={nominatimGetExtent}
       allowClear={true}
-      nominatimBaseUrl={'https://nominatim.terrestris.de/search.php?'}
       placeholder={t('Nominatim.placeholder')}
-      viewBox={viewBox ? viewBox : ''}
       {...restProps}
     />
   );
