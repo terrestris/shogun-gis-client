@@ -212,11 +212,15 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                 mapLayer?.get('featureInfoFormConfig') ?
                   <FeatureInfoTabs
                     tabConfig={mapLayer?.get('featureInfoFormConfig')}
+                    // TODO
+                    // @ts-ignore
                     features={features[layerName]}
                     layerName={layerName}
                     layer={mapLayer}
                   /> :
                   <FeatureInfoPropertyGrid
+                    // TODO
+                    // @ts-ignore
                     features={features[layerName]}
                     layerName={layerName}
                   />
@@ -272,6 +276,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       const layerName = entry[0];
       const selectedFeatures = entry[1];
 
+      // TODO
+      // @ts-ignore
       serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
     });
 
