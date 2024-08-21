@@ -66,8 +66,8 @@ jobs:
         if [ "${{ env.no_tests_found }}" == "true" ]; then
           echo "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json" >> $GITHUB_ENV
         else
-          echo -e "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json\nonly changed, ./coverage/changed/coverage-summary.json" >> $GITHUB_ENV
-        fi
+          printf 'MULTIPLE_FILES="All, ./coverage/all/coverage-summary.json\nonly changed, ./coverage/changed/coverage-summary.json"\n' >> $GITHUB_ENV
+          fi
 
     - name: Jest Coverage Comment 💬
       if: ${{ github.actor != 'dependabot[bot]' }}
