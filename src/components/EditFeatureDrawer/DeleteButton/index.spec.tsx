@@ -125,8 +125,7 @@ describe('<DeleteButton />', () => {
           layer={mockLayer}
           onSuccess={mockSuccessFunction}
         />
-      </Provider>,
-      { wrapper: createReduxWrapper() }
+      </Provider>
     );
 
     const deleteButton = screen.getByText('DeleteButton.title');
@@ -165,7 +164,6 @@ describe('<DeleteButton />', () => {
           onError={mockErrorFunction}
         />
       </Provider>,
-      { wrapper: createReduxWrapper() }
     );
 
     const deleteButton = screen.getByText('DeleteButton.title');
@@ -189,3 +187,4 @@ describe('<DeleteButton />', () => {
     });
   });
 });
+
