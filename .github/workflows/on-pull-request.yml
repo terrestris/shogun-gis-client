@@ -71,6 +71,7 @@ jobs:
           echo 'MULTIPLE_FILES<<EOF' >> $GITHUB_ENV
           echo $MULTI_LINES_TEXT >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
+        fi
 
     - name: Jest Coverage Comment 💬
       if: ${{ github.actor != 'dependabot[bot]' }}
