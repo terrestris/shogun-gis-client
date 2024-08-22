@@ -66,7 +66,8 @@ jobs:
         if [ "${{ env.no_tests_found }}" == "true" ]; then
           echo "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json" >> $GITHUB_ENV
         else
-          echo "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json\nonly changed, ./coverage/changed/coverage-summary.json" >> $GITHUB_ENV
+          echo "All, ./coverage/all/coverage-summary.json" > multiple_files.txt
+          echo "only changed, ./coverage/changed/coverage-summary.json" >> multiple_files.txt
         fi
 
     - name: Jest Coverage Comment 💬
@@ -77,7 +78,7 @@ jobs:
         create-new-comment: false
         hide-summary: false
         multiple-files: |
-          echo -e "${{ env.MULTIPLE_FILES }}"
+          $(cat multiple_files.txt)
       
     - name: Get Coverage Comment Id ➡️
       if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
