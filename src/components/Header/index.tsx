@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ClientConfiguration from 'clientConfig';
+
 import DocumentationButton from '../../components/DocumentationButton';
 import {
   useAppSelector
@@ -15,10 +17,8 @@ import {
 import SearchField from '../SearchField';
 
 import UserMenu from '../UserMenu';
-import './index.less';
-import { isVisibleComponent } from '@terrestris/react-geo';
-import ClientConfiguration from 'clientConfig';
 
+import './index.less';
 
 export interface HeaderProps extends React.ComponentProps<'div'> { }
 
