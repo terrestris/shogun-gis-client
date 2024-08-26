@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DocumentationButton from '../../components/DocumentationButton';
 import {
   useAppSelector
 } from '../../hooks/useAppSelector';
@@ -14,8 +15,10 @@ import {
 import SearchField from '../SearchField';
 
 import UserMenu from '../UserMenu';
-
 import './index.less';
+import { isVisibleComponent } from '@terrestris/react-geo';
+import ClientConfiguration from 'clientConfig';
+
 
 export interface HeaderProps extends React.ComponentProps<'div'> { }
 
@@ -97,6 +100,25 @@ export const Header: React.FC<HeaderProps> = ({
 
     return items;
   };
+  const getDocsButton = () => {
+    const items = [
+      <div
+        key="documentation-button"
+        aria-label="documentation-button"
+      >
+        <DocumentationButton
+          key="documentation-button"
+          type="link"
+        >
+        </DocumentationButton>
+
+      </div>
+    ];
+    insertPlugins('right', items);
+    if (ClientConfiguration.documentationButtonVisible) {
+      return items;
+    }
+  };
 
   return (
     <div
@@ -120,6 +142,9 @@ export const Header: React.FC<HeaderProps> = ({
       <div
         className="item-container right-items"
       >
+        {
+          getDocsButton()
+        }
         {
           getRightItems()
         }
