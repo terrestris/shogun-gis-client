@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
