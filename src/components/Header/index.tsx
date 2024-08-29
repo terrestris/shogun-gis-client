@@ -1,5 +1,8 @@
 import React from 'react';
 
+import ClientConfiguration from 'clientConfig';
+
+import DocumentationButton from '../../components/DocumentationButton';
 import {
   useAppSelector
 } from '../../hooks/useAppSelector';
@@ -81,8 +84,26 @@ export const Header: React.FC<HeaderProps> = ({
     return items;
   };
 
-  const getRightItems = () => {
-    const items = [
+  const getDocsButton = () => {
+    if (ClientConfiguration.documentationButtonVisible) {
+      return (
+        <div
+          key="documentation-button"
+          aria-label="documentation-button"
+        >
+          <DocumentationButton
+            key="documentation-button"
+            type="link"
+          >
+          </DocumentationButton>
+
+        </div>
+      );
+    }
+  };
+
+  const getUserMenu = () => {
+    return (
       <div
         key="user-menu"
         aria-label="user-menu"
@@ -91,10 +112,18 @@ export const Header: React.FC<HeaderProps> = ({
           key="user-menu"
         />
       </div>
-    ];
+    );
+  };
+
+  const getRightItems = () => {
+    const items = [
+      getDocsButton(),
+      getUserMenu()
+    ].filter((item) => {
+      return item !== undefined;
+    });
 
     insertPlugins('right', items);
-
     return items;
   };
 
