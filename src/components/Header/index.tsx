@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
     return items;
   };
 
-  const getRightItem = () => {
+  const getRightItems = () => {
 
     const items = [
       getDocsButton(),
@@ -152,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
         className="item-container right-items"
       >
         {
-          getRightItem()
+          getRightItems()
         }
       </div>
     </div>
