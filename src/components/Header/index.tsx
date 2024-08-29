@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getDocsButton = () => {
     if (ClientConfiguration.documentationButtonVisible) {
-      const items = [
+      return (
         <div
           key="documentation-button"
           aria-label="documentation-button"
@@ -98,13 +98,12 @@ export const Header: React.FC<HeaderProps> = ({
           </DocumentationButton>
 
         </div>
-      ];
-      return items;
+      );
     }
   };
 
   const getUserMenu = () => {
-    const items = [
+    return (
       <div
         key="user-menu"
         aria-label="user-menu"
@@ -113,22 +112,21 @@ export const Header: React.FC<HeaderProps> = ({
           key="user-menu"
         />
       </div>
-    ];
-
-    return items;
+    );
   };
 
   const getRightItems = () => {
-
     const items = [
       getDocsButton(),
       getUserMenu()
-    ];
-    if (!items) {
-      insertPlugins('right', items);
-    }
+    ].filter((item) => {
+      return item !== undefined;
+    });
+
+    insertPlugins('right', items);
     return items;
   };
+
   return (
     <div
       className="header"
