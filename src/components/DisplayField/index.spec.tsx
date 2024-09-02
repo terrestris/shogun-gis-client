@@ -47,7 +47,7 @@ describe('<DisplayField />', () => {
     expect(textElem).toBeVisible();
   });
 
-  it('boolean is displayed correctly', () => {
+  it('boolean is displayed correctly', async () => {
     const {
       container
     } = render(
@@ -60,8 +60,7 @@ describe('<DisplayField />', () => {
 
     expect(container).toBeVisible();
     const checkboxElem = container.querySelector('[type="checkbox"]');
-    // TODO
-    // expect(checkboxElem).toBeVisible();
+    expect(checkboxElem.parentElement).toBeVisible();
     expect(checkboxElem).toHaveAttribute('checked');
   });
 
