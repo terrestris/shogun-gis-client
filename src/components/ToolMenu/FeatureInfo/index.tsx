@@ -10,6 +10,10 @@ import {
   Tabs
 } from 'antd';
 
+import {
+  groupBy, mapValues
+} from 'lodash';
+
 import { Coordinate as OlCoordinate } from 'ol/coordinate';
 import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
@@ -200,6 +204,8 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       });
 
       if (!pluginRendererAvailable) {
+        const featuresByFeatureType = groupBy(features, 'featureType')[layerName]
+          .map(flr => flr.feature);
         items.push({
           label: mapLayer?.get('name') || layerName,
           index: mapLayerIndex,
@@ -212,16 +218,12 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                 mapLayer?.get('featureInfoFormConfig') ?
                   <FeatureInfoTabs
                     tabConfig={mapLayer?.get('featureInfoFormConfig')}
-                    // TODO
-                    // @ts-ignore
-                    features={features[layerName]}
+                    features={featuresByFeatureType}
                     layerName={layerName}
                     layer={mapLayer}
                   /> :
                   <FeatureInfoPropertyGrid
-                    // TODO
-                    // @ts-ignore
-                    features={features[layerName]}
+                    features={featuresByFeatureType}
                     layerName={layerName}
                   />
               }
@@ -271,15 +273,13 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const onSuccess = (coordinateInfoState: CoordinateInfoResult) => {
     const features = coordinateInfoState.features;
 
-    const serializedFeatures: SelectedFeatures = {};
-    Object.entries(features).forEach(entry => {
-      const layerName = entry[0];
-      const selectedFeatures = entry[1];
+    const grouped = groupBy(features, 'featureType');
+    const mapped = mapValues(grouped, g => g.map(flr => flr.feature));
 
-      // TODO
-      // @ts-ignore
-      serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
-    });
+    const serializedFeatures: SelectedFeatures = {};
+    for (const [layerName, feats] of Object.entries(mapped)) {
+      serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(feats);
+    }
 
     const layers: LayerIndex[] = Object.keys(features).map(layerName => ({
       layerName: layerName,
