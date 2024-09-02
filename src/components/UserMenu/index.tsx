@@ -5,14 +5,12 @@ import {
   faUserCog,
   faSignOut,
   faSignIn,
-  faAngleDown,
-  faCircleQuestion
+  faAngleDown
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import { Button } from 'antd';
 import {
   ItemType
 } from 'antd/lib/menu/interface';
@@ -140,25 +138,6 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
             </span>
           }
         />
-      )
-    };
-
-    const docs: ItemType = {
-      key: 'docs',
-      icon: (
-        <FontAwesomeIcon
-          icon={faCircleQuestion}
-        />
-      ),
-      label: (
-        <Button
-          type='text'
-          className="user-documentation"
-          aria-label='user-documentation'
-          onClick={() => window.open('/gis-docs', '_blank')}
-        >
-          {t('UserMenu.helpMenuTitle')}
-        </Button>
       )
     };
 
