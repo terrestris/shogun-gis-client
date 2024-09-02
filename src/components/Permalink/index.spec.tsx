@@ -3,7 +3,7 @@ import React from 'react';
 import {
   cleanup,
   screen,
-  fireEvent
+  fireEvent, waitFor
 
 } from '@testing-library/react';
 
@@ -99,8 +99,7 @@ describe('<Permalink />', () => {
     const copyElem = await screen.getByLabelText('copy');
     await expect(copyElem).toBeVisible();
     await fireEvent.click(copyElem);
-    // TODO
-    // await expect(document.querySelector('.ant-message')).toBeInTheDocument();
+    await waitFor(() => expect(document.querySelector('.ant-message')).toBeInTheDocument());
     await expect(document.execCommand).toHaveBeenCalledWith('copy');
   });
 });

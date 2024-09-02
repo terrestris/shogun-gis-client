@@ -8,7 +8,7 @@ import {
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditReferenceTable, { EditReferenceDataType } from '.';
+import EditReferenceTable from '.';
 
 let tableElem: HTMLElement | null;
 let mockParentForm;
@@ -43,7 +43,7 @@ describe('<EditReferenceTable />', () => {
       fireEvent.click(buttonElem!);
     });
     const modalElem: HTMLElement | null = document.querySelector('.edit-reference-table-modal');
-    // TODO
-    // expect(modalElem).toBeVisible();
+
+    await waitFor(() => expect(modalElem).toBeVisible());
   });
 });
