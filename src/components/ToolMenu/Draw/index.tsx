@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent,
+  ChangeEvent, useCallback,
   useState
 } from 'react';
 
@@ -25,6 +25,7 @@ import { message } from 'antd';
 import {
   Feature
 } from 'ol';
+import OlFeature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 
 import {
@@ -33,9 +34,13 @@ import {
 
 import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
-import { ModifyButton } from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
+import {
+  ModifyButton, ModifyButtonProps
+} from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import {
+  ToggleGroup, ToggleGroupProps
+} from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import UploadButton from '@terrestris/react-geo/dist/Button/UploadButton/UploadButton';
 import {
   useMap
@@ -77,7 +82,7 @@ export const Draw: React.FC<DrawProps> = ({
   showUploadFeatures,
   showDeleteFeatures
 }): JSX.Element => {
-  const [isAttributeDrawerOpen, setIsAttributeDrawerOpen] = useState(false);
+  const [selectedModifyFeature, setSelectedModifyFeature] = useState<OlFeature>();
   const [selectedButton, setSelectedButton] = useState<string>();
 
   const {
@@ -85,6 +90,21 @@ export const Draw: React.FC<DrawProps> = ({
   } = useTranslation();
 
   const map = useMap();
+
+  const onToggleChange: Exclude<ToggleGroupProps['onChange'], undefined> = useCallback((evt, value) => {
+    setSelectedButton(value);
+    if (value !== 'draw-modify') {
+      setSelectedModifyFeature(undefined);
+    }
+  }, []);
+
+  const onModifyFeatureSelect: Exclude<ModifyButtonProps['onFeatureSelect'], undefined> = useCallback(event => {
+    if (event.selected.length > 0) {
+      setSelectedModifyFeature(event.selected[0]);
+    } else {
+      setSelectedModifyFeature(undefined);
+    }
+  }, []);
 
   const onGeoJSONDownload = () => {
     const clonedFeatures: Feature[] = [];
@@ -176,17 +196,11 @@ export const Draw: React.FC<DrawProps> = ({
     return <></>;
   }
 
-  const onModifyButtonToggle = (active: boolean) => {
-    setIsAttributeDrawerOpen(active);
-  };
-
   return (
     <>
       <ToggleGroup
         selected={selectedButton}
-        onChange={(evt, value) => {
-          setSelectedButton(value);
-        }}
+        onChange={onToggleChange}
       >
         {showDrawPoint ? (
           <DrawButton
@@ -294,7 +308,7 @@ export const Draw: React.FC<DrawProps> = ({
           <ModifyButton
             value="draw-modify"
             type="link"
-            onClick={() => onModifyButtonToggle}
+            onFeatureSelect={onModifyFeatureSelect}
           >
             <FontAwesomeIcon
               icon={faPenToSquare}
@@ -377,8 +391,8 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
       </ToggleGroup>
       <AttributionDrawer
-        open={isAttributeDrawerOpen}
-        onCustomClose={() => setIsAttributeDrawerOpen(false)}
+        selectedFeature={selectedModifyFeature}
+        onCustomClose={() => setSelectedModifyFeature(undefined)}
       />
     </>
   );
