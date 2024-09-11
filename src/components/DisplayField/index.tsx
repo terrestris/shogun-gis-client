@@ -37,7 +37,7 @@ export type DisplayFieldProps = {
   /**
    * The data type of the value to display. If set to 'auto' (default),
    * the component tries to guess the data type based on the value. Otherwise
-   * the componet will try to enforce the given data type.
+   * the component will try to enforce the given data type.
    */
   dataType?: DataType;
   /**
