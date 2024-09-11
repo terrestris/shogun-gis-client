@@ -128,4 +128,55 @@ describe('<DisplayField />', () => {
     }
   });
 
+  it('can force a dataType', () => {
+    const {
+      container
+    } = render(
+      <DisplayField
+        dataType={'date'}
+        value={'2024-07-17T11:01:38.128Z'}
+      />,
+      {
+        wrapper: createReduxWrapper()
+      });
+
+    expect(container).toBeVisible();
+    const dateElem = screen.getByText('17.07.2024');
+    expect(dateElem).toBeVisible();
+  });
+
+  it('can render values from a valueMap', () => {
+    const valueMap = {
+      key1: 'value1'
+    };
+
+    render(
+      <DisplayField
+        value={'key1'}
+        valueMap={valueMap}
+      />,
+      {
+        wrapper: createReduxWrapper()
+      });
+
+    const valueElem = screen.getByText('value1');
+    expect(valueElem).toBeVisible();
+  });
+
+  it('does render empty string for undefined', () => {
+    const {
+      container
+    } = render(
+      <DisplayField
+        value={undefined}
+      />,
+      {
+        wrapper: createReduxWrapper()
+      });
+
+    expect(container).toBeVisible();
+    const fieldElem = container.querySelector('.displayfield');
+    expect(fieldElem).toHaveTextContent('');
+  });
+
 });

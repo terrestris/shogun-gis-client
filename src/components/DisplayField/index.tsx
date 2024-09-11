@@ -7,7 +7,7 @@ import {
 } from 'antd';
 
 import isString from 'lodash/isString';
-import {
+import moment, {
   isMoment
 } from 'moment';
 
@@ -26,6 +26,7 @@ import ImageUpload from '../ImageUpload';
 import ReferenceTable from '../ReferenceTable';
 
 export type ValueType = string | number | boolean | moment.Moment | Record<string, any>;
+export type DataType = 'auto' | 'number' | 'boolean' | 'string' | 'date' | 'url' | 'json';
 
 export type ReferenceConfig = {
   tablePropertyName?: string;
@@ -33,6 +34,17 @@ export type ReferenceConfig = {
 };
 
 export type DisplayFieldProps = {
+  /**
+   * The data type of the value to display. If set to 'auto' (default),
+   * the component tries to guess the data type based on the value. Otherwise
+   * the componet will try to enforce the given data type.
+   */
+  dataType?: DataType;
+  /**
+   * A map of values to display instead of the actual value. The key is the
+   * original value and the value is the value to display instead.
+   */
+  valueMap?: Record<string, ValueType>;
   format?: string;
   suffix?: string;
   value?: ValueType | ValueType[];
@@ -41,6 +53,8 @@ export type DisplayFieldProps = {
 };
 
 export const DisplayField: React.FC<DisplayFieldProps> = ({
+  dataType = 'auto',
+  valueMap,
   format = 'DD.MM.YYYY',
   suffix,
   value,
@@ -55,30 +69,52 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   let displayValue: React.ReactNode = '';
 
-  if (typeof value === 'string') {
-    displayValue = value;
+  if (value && typeof value === 'string' && valueMap?.hasOwnProperty(value)) {
+    value = valueMap[value];
   }
 
-  if (typeof value === 'boolean' || value === 'false' || value === 'true') {
+  if (
+    dataType === 'string' ||
+    (dataType === 'auto' && typeof value === 'string')
+  ) {
+    if (value) {
+      displayValue = value?.toString();
+    }
+  }
+
+  if (
+    dataType === 'boolean' ||
+    (dataType === 'auto' && typeof value === 'boolean' || value === 'false' || value === 'true')
+  ) {
     return (
       <Checkbox
-        checked={value === true || value === 'true'}
+        checked={value !== 'false' && value !== false}
         disabled
       />
     );
   }
 
-  if (Number.isFinite(value)) {
-    displayValue = new Intl.NumberFormat(i18n.language, {
-      useGrouping: false
-    }).format(Number(value));
+  if (
+    dataType === 'number' ||
+    (dataType === 'auto' && Number.isFinite(value))
+  ) {
+    if (value) {
+      displayValue = new Intl.NumberFormat(i18n.language, {
+        useGrouping: false
+      }).format(Number(value));
+    }
   }
 
-  if (isMoment(value)) {
-    displayValue = value.format(format);
+  if (
+    dataType === 'date' ||
+    (dataType === 'auto' && isMoment(value))
+  ) {
+    if (value) {
+      displayValue = moment(value as string).format(format);
+    }
   }
 
-  if (Array.isArray(value)) {
+  if (dataType === 'auto' && Array.isArray(value)) {
     displayValue = value.join(', ');
   }
 
@@ -88,16 +124,21 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     return protocols.some(protocol => lowerCandidate.startsWith(protocol));
   };
 
-  if (isString(value) && isUrl(value)) {
-    displayValue = (
-      <a
-        href={value}
-        target="_blank"
-        rel='noreferrer'
-      >
-        {value}
-      </a>
-    );
+  if (
+    dataType === 'url' ||
+    (dataType === 'auto' && isString(value) && isUrl(value))
+  ) {
+    if (value) {
+      displayValue = (
+        <a
+          href={value?.toString()}
+          target="_blank"
+          rel='noreferrer'
+        >
+          {value?.toString()}
+        </a>
+      );
+    }
   }
 
   const getUpload = (val: ValueType | ValueType[]): UploadFile<ShogunFile>[] | null => {
@@ -120,7 +161,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   const uploadValue = value && getUpload(value);
 
-  if (uploadValue) {
+  if (dataType === 'auto' && uploadValue) {
     if (uploadValue[0].response?.fileType?.startsWith('image/')) {
       return (
         <ImageUpload
@@ -152,7 +193,10 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     return typeof v === 'object' && v !== null;
   };
 
-  if (value && isJson(value)) {
+  if (
+    dataType === 'json' ||
+    dataType === 'auto' && value && isJson(value)
+  ) {
     return (
       <ReferenceTable
         value={typeof value === 'string' ? value : JSON.stringify(value)}
