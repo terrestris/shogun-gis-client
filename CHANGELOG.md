@@ -1,3 +1,34 @@
+## [8.9.0](https://github.com/terrestris/shogun-gis-client/compare/v8.8.0...v8.9.0) (2024-09-11)
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 19.3.0 to 19.4.0 ([46d98cc](https://github.com/terrestris/shogun-gis-client/commit/46d98ccbf436a2d5f4ade934eb39255a566004f2))
+* **deps-dev:** bump @playwright/test from 1.45.3 to 1.46.0 ([6f3f6c9](https://github.com/terrestris/shogun-gis-client/commit/6f3f6c9250a9dd525e74ea3a8d22ca5df5d44358))
+* **deps-dev:** bump @semantic-release/github from 10.1.3 to 10.1.5 ([b6286e0](https://github.com/terrestris/shogun-gis-client/commit/b6286e04e2dcefb1c4826a51e982d244a2462453))
+* **deps-dev:** bump @types/node from 22.0.2 to 22.3.0 ([5c20ba6](https://github.com/terrestris/shogun-gis-client/commit/5c20ba6035e99f8c1a37389c8932ad159a06cee1))
+* **deps-dev:** bump typescript from 5.5.3 to 5.5.4 ([0d32143](https://github.com/terrestris/shogun-gis-client/commit/0d321433a657d079919e1d83a3069c3155bb17f8))
+* **deps:** bump i18next from 23.12.2 to 23.12.3 ([60b5ee6](https://github.com/terrestris/shogun-gis-client/commit/60b5ee67545ae9a20ddc43d284bf18915adaeb65))
+* **deps:** bump i18next from 23.12.3 to 23.12.7 ([785e8e4](https://github.com/terrestris/shogun-gis-client/commit/785e8e44e88db1b5ce41481ec21cfd89b7b1ccba))
+* **deps:** bump react-i18next from 15.0.0 to 15.0.1 ([5537b2c](https://github.com/terrestris/shogun-gis-client/commit/5537b2cb9801abacca4cc6bad7729693bd85bf35))
+
+
+### Changes in configuration
+
+* disable dependabot ([3ccf9f1](https://github.com/terrestris/shogun-gis-client/commit/3ccf9f1d683830e8612153de122afc7cf45da793))
+
+
+### Features
+
+* adds a config for documentation button ([805b234](https://github.com/terrestris/shogun-gis-client/commit/805b234c99c3c94a2a2483a4dcf6d417c2d4048b))
+* Introduce docs button ([#1743](https://github.com/terrestris/shogun-gis-client/issues/1743)) ([c292538](https://github.com/terrestris/shogun-gis-client/commit/c292538e1415349d46f32525a92396e6fad38b09))
+* introduces dataType and valueMap to Displayfield ([411a1e7](https://github.com/terrestris/shogun-gis-client/commit/411a1e7552108e80c2d55a12f546ec9b5dfb93b9))
+
+
+### Bugfixes
+
+* escape github action conditions ([d5f8474](https://github.com/terrestris/shogun-gis-client/commit/d5f847473752e765499ecf56537fa4e196417816))
+
 ## [8.8.0](https://github.com/terrestris/shogun-gis-client/compare/v8.7.0...v8.8.0) (2024-08-06)
 
 
