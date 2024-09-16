@@ -135,7 +135,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
           target="_blank"
           rel='noreferrer'
         >
-          {value?.toString()}
+          Link
         </a>
       );
     }

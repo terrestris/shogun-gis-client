@@ -107,8 +107,10 @@ describe('<DisplayField />', () => {
 
     for (const linkValue of linkValues) {
       render(<DisplayField value={linkValue} />);
-      const link = screen.getByText(linkValue);
-      expect(link).toBeVisible();
+      const links = screen.getAllByRole('link', { name: 'Link' });
+
+      const link = links.find(l => l.getAttribute('href') === linkValue);
+
       expect(link).toBeInstanceOf(HTMLAnchorElement);
       expect(link).toHaveAttribute('href', linkValue);
     }
