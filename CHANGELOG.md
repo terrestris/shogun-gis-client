@@ -1,3 +1,10 @@
+## [8.10.0](https://github.com/terrestris/shogun-gis-client/compare/v8.9.0...v8.10.0) (2024-09-16)
+
+
+### Features
+
+* masks a link if present ([54aa536](https://github.com/terrestris/shogun-gis-client/commit/54aa5363a9a29e4210059000b0ebabeffcacc7ae))
+
 ## [8.9.0](https://github.com/terrestris/shogun-gis-client/compare/v8.8.0...v8.9.0) (2024-09-11)
 
 
