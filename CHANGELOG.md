@@ -1,3 +1,10 @@
+## [8.11.0](https://github.com/terrestris/shogun-gis-client/compare/v8.10.0...v8.11.0) (2024-09-17)
+
+
+### Features
+
+* introduces the urlDisplayValue ([fe933cb](https://github.com/terrestris/shogun-gis-client/commit/fe933cb25650faee849a479a6fcec7defcd9cc95))
+
 ## [8.10.0](https://github.com/terrestris/shogun-gis-client/compare/v8.9.0...v8.10.0) (2024-09-16)
 
 
