@@ -107,7 +107,7 @@ describe('<DisplayField />', () => {
 
     for (const linkValue of linkValues) {
       render(<DisplayField value={linkValue} />);
-      const links = screen.getAllByRole('link', { name: 'Link' });
+      const links = screen.getAllByRole('link');
 
       const link = links.find(l => l.getAttribute('href') === linkValue);
 

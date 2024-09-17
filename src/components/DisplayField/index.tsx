@@ -50,6 +50,10 @@ export type DisplayFieldProps = {
   value?: ValueType | ValueType[];
   label?: string;
   referenceConfig?: ReferenceConfig;
+  /**
+   * If set, it displays the given value instead of the URL.
+   */
+  urlDisplayValue?: string;
 };
 
 export const DisplayField: React.FC<DisplayFieldProps> = ({
@@ -60,6 +64,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   value,
   label,
   referenceConfig,
+  urlDisplayValue,
   ...passThroughProps
 }): JSX.Element => {
 
@@ -135,7 +140,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
           target="_blank"
           rel='noreferrer'
         >
-          Link
+          {urlDisplayValue ? urlDisplayValue : value?.toString()}
         </a>
       );
     }
