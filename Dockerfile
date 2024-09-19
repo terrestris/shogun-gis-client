@@ -1,4 +1,4 @@
-FROM node:20.12.2-alpine3.19 AS build
+FROM node:20.17.0-alpine3.19 AS build
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM nginx:1.25.5-alpine-slim
+FROM nginx:1.27.1-alpine-slim
 
 COPY --from=build /app/build /usr/share/nginx/html
 COPY default.conf /etc/nginx/conf.d/default.conf
