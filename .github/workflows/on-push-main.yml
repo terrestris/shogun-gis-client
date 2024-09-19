@@ -113,7 +113,7 @@ jobs:
           echo "sonar.projectVersion=$(node -pe "require('./package.json').version")" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
-        uses: SonarSource/sonarqube-scan-action@v2.3.0
+        uses: SonarSource/sonarqube-scan-action@v3.0.0
         with:
           projectBaseDir: .
         env:
