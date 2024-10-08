@@ -7,7 +7,7 @@ import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   getBearerTokenHeader

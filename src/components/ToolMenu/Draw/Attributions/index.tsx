@@ -27,7 +27,6 @@ import {
 
 import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
-import Select from 'ol/interaction/Select';
 
 import {
   useTranslation
@@ -35,11 +34,10 @@ import {
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+} from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import AttributionRow from './AttributionRow';
 
@@ -52,17 +50,17 @@ export type FormData = {
   }];
 };
 
-export interface AttributionDrawerProps extends DrawerProps {
+export type AttributionDrawerProps = Omit<DrawerProps, 'open'> & {
+  selectedFeature: OlFeature | undefined;
   onCustomClose?: (open: boolean) => void;
-}
+};
 
 const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   onCustomClose,
-  open,
   onClose,
+  selectedFeature,
   ...passThroughProps
 }) => {
-  const [selectedFeature, setSelectedFeature] = useState<OlFeature>();
   const [isFormValid, setIsFormIsValid] = useState(true);
   const [availableFeatureCollectionAttributes, setAvailableFeatureCollectionAttributes] = useState<string[]>([]);
   const [availableFeatureAttributes, setAvailableFeatureAttributes] = useState<string[]>([]);
@@ -70,6 +68,8 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const [form] = Form.useForm<FormData>();
 
   const map = useMap();
+
+  const open = selectedFeature !== undefined;
 
   const {
     t
@@ -122,25 +122,6 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     });
     setAvailableFeatureCollectionAttributes(Array.from(featureCollectionAttributes));
   }, [selectedFeature, form, map]);
-
-  useEffect(() => {
-    setSelectedFeature(undefined);
-  }, [open]);
-
-  // todo revisit react-geo to make name of the slect-interaction configurable
-  const selectInteraction = map?.getInteractions().getArray().filter(interaction => {
-    if (interaction.get('active') === true && interaction.get('name') === 'react-geo-select-interaction') {
-      return true;
-    } else {
-      return false;
-    }
-  })[0] as Select;
-
-  if (selectInteraction) {
-    selectInteraction.on('select', () => {
-      setSelectedFeature(selectInteraction.getFeatures().getArray()[0]);
-    });
-  }
 
   const onFinish = (input: FormData) => {
     if (!selectedFeature) {
@@ -296,7 +277,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
               type="primary"
               htmlType="submit"
               disabled={!isFormValid}
-              hidden={selectedFeature ? false: true}
+              hidden={!selectedFeature}
             >
               {t('Attribution.submit')}
             </Button>

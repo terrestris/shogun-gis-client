@@ -4,7 +4,7 @@ import {
   act,
   fireEvent,
   render,
-  screen
+  screen, waitFor
 } from '@testing-library/react';
 
 import { createReduxWrapper } from '../../utils/testUtils';
@@ -41,28 +41,28 @@ describe('<ApplicationInfo />', () => {
     });
 
     modalElem = document.querySelector('.application-info');
+
+    await waitFor(() => expect(modalElem).toBeVisible());
   });
 
   it('is defined', () => {
     expect(ApplicationInfo).not.toBeUndefined();
   });
 
-  it('modal is rendered', () => {
-    expect(modalElem).toBeVisible();
-  });
-
-  it('logo is visible', () => {
+  it('logo is visible', async () => {
     const logoElem = document.querySelector('.logo');
-    expect(logoElem).toBeVisible();
+    await expect(logoElem).toBeVisible();
   });
 
   it('version is visible', () => {
     const versionTitleElem = screen.getByText('ApplicationInfo.clientVersionTitle');
+
     expect(versionTitleElem).toBeVisible();
 
     const version = global.PROJECT_VERSION;
 
     const versionElem = screen.getByText(version.toString());
+
     expect(versionElem).toBeVisible();
   });
 });

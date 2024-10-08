@@ -12,14 +12,13 @@ import { FormProps } from 'antd/lib/form/Form';
 import ClientConfiguration from 'clientConfig';
 import _isNil from 'lodash/isNil';
 
-import OlGeometry from 'ol/geom/Geometry';
+import OlFeature from 'ol/Feature';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
 
 import OlLayerVector from 'ol/layer/Vector';
 import OlLayerRenderer from 'ol/renderer/Layer';
 import OlSource from 'ol/source/Source';
-import OlSourceVector from 'ol/source/Vector';
 
 import { useTranslation } from 'react-i18next';
 
@@ -27,15 +26,15 @@ import Logger from '@terrestris/base-util/dist/Logger';
 
 import { MapFishPrintV3Manager } from '@terrestris/mapfish-print-manager';
 import { MapFishPrintV3ManagerOpts } from '@terrestris/mapfish-print-manager/dist/manager/MapFishPrintV3Manager';
-import MapFishPrintV3GeoJsonSerializer
+import { MapFishPrintV3GeoJsonSerializer }
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
-import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
-import MapFishPrintV3WMTSSerializer
+import { MapFishPrintV3OSMSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
+import { MapFishPrintV3WMTSSerializer }
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
 
-import { LayerUtil } from '@terrestris/ol-util';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
+import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -66,7 +65,7 @@ export interface PrintFormProps extends Omit<FormProps, 'form'> {
   outputFormats?: string[];
 }
 
-export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlSourceVector<OlGeometry>>>>;
+export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlFeature>>>;
 
 export const PrintForm: React.FC<PrintFormProps> = ({
   active,

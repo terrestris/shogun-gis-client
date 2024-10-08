@@ -71,7 +71,7 @@ declare module 'clientConfig' {
 }
 
 // todo: remove when react-geo test util types are exported properly
-declare module '@terrestris/react-geo/dist/Util/rtlTestUtils';
+declare module '@terrestris/react-util/dist/Util/rtlTestUtils';
 declare module '@terrestris/react-geo/dist/Util/antdTestQueries';
 
 type Scope = unknown;

@@ -3,7 +3,7 @@ import React from 'react';
 import {
   cleanup,
   screen,
-  fireEvent
+  fireEvent, waitFor
 
 } from '@testing-library/react';
 
@@ -12,7 +12,7 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import { store } from '../../store/store';
 
@@ -99,7 +99,7 @@ describe('<Permalink />', () => {
     const copyElem = await screen.getByLabelText('copy');
     await expect(copyElem).toBeVisible();
     await fireEvent.click(copyElem);
-    await expect(document.querySelector('.ant-message')).toBeInTheDocument();
+    await waitFor(() => expect(document.querySelector('.ant-message')).toBeInTheDocument());
     await expect(document.execCommand).toHaveBeenCalledWith('copy');
   });
 });

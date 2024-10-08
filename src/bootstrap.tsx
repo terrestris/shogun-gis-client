@@ -1,6 +1,11 @@
 import React from 'react';
 
 import {
+  init,
+  loadRemote
+} from '@module-federation/enhanced/runtime';
+
+import {
   loader
 } from '@monaco-editor/react';
 
@@ -39,18 +44,16 @@ import OlSourceOsm from 'ol/source/OSM';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlView from 'ol/View';
 
-import {
-  render
-} from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import {
   Provider
 } from 'react-redux';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
-import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
+import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 
 import {
   AppInfo
@@ -77,6 +80,7 @@ import i18n, {
 } from './i18n';
 
 import {
+  ClientPlugin,
   ClientPluginInternal
 } from './plugin';
 
@@ -106,7 +110,8 @@ import {
   setSearchEngines
 } from './store/searchEngines';
 import {
-  createReducer, dynamicMiddleware,
+  createReducer,
+  dynamicMiddleware,
   store
 } from './store/store';
 import {
@@ -492,41 +497,27 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
   return style;
 };
 
-// ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
 const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
-  await __webpack_init_sharing__('default');
-
-  await new Promise<void>((resolve, reject) => {
-    const element = document.createElement('script');
-
-    element.src = moduleUrl;
-    element.type = 'text/javascript';
-    element.async = true;
-
-    element.onload = () => {
-      element.parentElement?.removeChild(element);
-      resolve();
-    };
-
-    element.onerror = (err) => {
-      element.parentElement?.removeChild(element);
-      reject(err);
-    };
-
-    document.head.appendChild(element);
+  init({
+    name: 'SHOGunGISClient',
+    remotes: [{
+      entry: moduleUrl,
+      name: moduleName
+    }]
   });
 
-  // @ts-ignore
-  const container = window[moduleName];
+  const modules: ClientPlugin[] = [];
 
-  // eslint-disable-next-line camelcase
-  await container.init(__webpack_share_scopes__.default);
-
-  const modules = [];
   for (const remoteName of remoteNames) {
-    const factory = await container.get(remoteName);
-    const module = factory();
-    modules.push(module);
+
+    // For backwards compatibility (existing plugin remote are potentially prefixed with './')
+    const remote = `${moduleName}/${remoteName.startsWith('./') ? remoteName.substring(2) : remoteName}`;
+
+    const clientPlugin = await loadRemote<any>(remote);
+
+    if (clientPlugin && clientPlugin.default) {
+      modules.push(clientPlugin.default);
+    }
   }
 
   return modules;
@@ -564,7 +555,7 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
 
     Logger.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
 
-    let clientPluginModules: any[];
+    let clientPluginModules: ClientPlugin[];
     try {
       clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
       Logger.info(`Successfully loaded plugin ${name}`);
@@ -574,7 +565,7 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
     }
 
     for (let module of clientPluginModules) {
-      const clientPluginDefault: ClientPluginInternal = module.default;
+      const clientPluginDefault: ClientPluginInternal = module as ClientPluginInternal;
       const PluginComponent = clientPluginDefault.component;
 
       if (toolConfig) {
@@ -659,6 +650,9 @@ const matchRole = (role: string | RegExp, element: string): boolean => {
 };
 
 const renderApp = async () => {
+  const container = document.getElementById('app');
+  const root = createRoot(container!);
+
   try {
     loader.config({
       paths: {
@@ -713,14 +707,6 @@ const renderApp = async () => {
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
 
-    ConfigProvider.config({
-      theme: {
-        primaryColor: Color(style['--primaryColor']).isLight() ?
-          Color(style['--primaryColor']).darken(0.5).hexa() :
-          style['--primaryColor']
-      }
-    });
-
     if (Color(style['--secondaryColor'])?.isLight() && Color(style['--primaryColor'])?.isLight()) {
       style['--complementaryColor'] = (Color(style['--complementaryColor']).darken(0.5).hexa());
     } else if (Color(style['--secondaryColor'])?.isDark() && Color(style['--primaryColor'])?.isDark()) {
@@ -773,12 +759,23 @@ const renderApp = async () => {
       });
     }
 
-    render(
+    root.render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
           <SHOGunAPIClientProvider client={client}>
             <PluginProvider plugins={plugins}>
-              <ConfigProvider locale={getConfigLang(i18n.language)}>
+              <ConfigProvider
+                locale={getConfigLang(i18n.language)}
+                theme={{
+                  token: {
+                    colorPrimary: Color(style['--primaryColor']).isLight() ?
+                      Color(style['--primaryColor']).darken(0.5).hex() :
+                      style['--primaryColor'],
+                    colorLink: style['--complementaryColor'],
+                    colorLinkHover: style['--secondaryColor']
+                  }
+                }}
+              >
                 <Provider store={store}>
                   <MapContext.Provider value={map}>
                     <App />
@@ -788,8 +785,7 @@ const renderApp = async () => {
             </PluginProvider>
           </SHOGunAPIClientProvider>
         </React.Suspense>
-      </React.StrictMode>,
-      document.getElementById('app')
+      </React.StrictMode>
     );
   } catch (error) {
     Logger.error(error);
@@ -829,7 +825,7 @@ const renderApp = async () => {
       errorDescription = i18n.t('Index.errorDescriptionAppConfigStaticNotFound');
     }
 
-    render(
+    root.render(
       <React.StrictMode>
         <Alert
           className="error-boundary"
@@ -838,8 +834,7 @@ const renderApp = async () => {
           type={type}
           showIcon
         />
-      </React.StrictMode>,
-      document.getElementById('app')
+      </React.StrictMode>
     );
   }
 };

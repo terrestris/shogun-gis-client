@@ -3,6 +3,7 @@ import {
   useEffect
 } from 'react';
 
+import OlFeature from 'ol/Feature';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 import OlStyleCircle from 'ol/style/Circle';
@@ -10,9 +11,9 @@ import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyle from 'ol/style/Style';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 export type HighlightVectorLayerOpts = {
   layerName: string;
@@ -64,7 +65,7 @@ export const useHighlightVectorLayer = (opts: HighlightVectorLayerOpts) => {
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, opts.layerName) as OlLayerVector<OlSourceVector>;
+    const vectorLayer = MapUtil.getLayerByName(map, opts.layerName) as OlLayerVector<OlFeature>;
 
     if (!vectorLayer) {
       return;

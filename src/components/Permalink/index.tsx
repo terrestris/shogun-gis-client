@@ -8,7 +8,9 @@ import {
   WhatsAppOutlined
 } from '@ant-design/icons';
 import {
-  Input, Tooltip, message
+  Input,
+  Tooltip,
+  message
 } from 'antd';
 import copy from 'copy-to-clipboard';
 import {
@@ -25,11 +27,11 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+import { PermalinkUtil } from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
@@ -128,12 +130,6 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       unByKey(eventKeys);
     };
   }, [layerAttributes, map, t]);
-
-  function onTwitterClick() {
-    const twitterUrl = new URL('https://twitter.com/intent/tweet');
-    twitterUrl.searchParams.set('url', mailBody);
-    window.open(twitterUrl);
-  }
 
   function onWhatsAppClick() {
     const whatsAppUrl = new URL('https://wa.me');

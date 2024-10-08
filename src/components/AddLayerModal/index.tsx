@@ -30,14 +30,14 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 import CapabilitiesUtil from '@terrestris/ol-util/dist/CapabilitiesUtil/CapabilitiesUtil';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import { SimpleButton } from '@terrestris/react-geo';
+import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -164,6 +164,8 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         };
         layerToAdd.set('layerConfig', layerConfig);
         targetGroup.getLayers().push(layerToAdd);
+        const event = new CustomEvent('layerAdded', { detail: layerToAdd });
+        document.dispatchEvent(event);
       }
     });
 

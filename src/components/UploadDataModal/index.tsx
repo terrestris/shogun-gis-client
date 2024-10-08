@@ -29,7 +29,7 @@ import ClientConfiguration from 'clientConfig';
 
 import OlLayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
-import TileWMSSource from 'ol/source/TileWMS';
+import TileWMS from 'ol/source/TileWMS';
 
 import {
   UploadRequestOption
@@ -45,11 +45,11 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
@@ -65,6 +65,7 @@ import {
 } from '../../store/uploadDataModal';
 
 import './index.less';
+// eslint-disable-next-line import/order
 
 type FeatureTypeAttribute = {
   name: string;
@@ -120,7 +121,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     dispatch(hide());
   };
 
-  const addLayer = (layer: TileLayer<TileWMSSource>) => {
+  const addLayer = (layer: TileLayer<TileWMS>) => {
     if (!map) {
       return;
     }

@@ -17,10 +17,9 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import { store } from '../../../store/store';
-import { EditReferenceDataType } from '../EditReferenceTable';
 
 import ResetButton from '.';
 
