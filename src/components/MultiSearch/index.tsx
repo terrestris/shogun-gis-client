@@ -369,14 +369,22 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     if (nominatimResults.length > 0) {
 
       const geoJsonFormat = new OlFormatGeoJSON();
-      const nFeats = nominatimResults.filter(f => !_isNil(f?.geojson)).map(f => {
-        const olFeat = geoJsonFormat.readFeature(f.geojson, {
-          dataProjection: 'EPSG:4326',
-          featureProjection: map.getView().getProjection()
-        });
-        olFeat.set('title', f.display_name);
-        return olFeat;
-      });
+      const nFeats = nominatimResults
+        .filter(f => !_isNil(f?.geojson))
+        .map(f => {
+          const olFeat = geoJsonFormat.readFeature(f.geojson, {
+            dataProjection: 'EPSG:4326',
+            featureProjection: map.getView().getProjection()
+          });
+
+          if (Array.isArray(olFeat)) {
+            return;
+          }
+
+          olFeat.set('title', f.display_name);
+          return olFeat;
+        })
+        .filter(f => f !== undefined);
 
       const nResults: ResultCategory = {
         title: t('MultiSearch.nominatimTitle'),

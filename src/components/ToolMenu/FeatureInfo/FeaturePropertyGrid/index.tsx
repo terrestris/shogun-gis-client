@@ -10,6 +10,7 @@ import {
 import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
 import OlLayerVector from 'ol/layer/Vector';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   useTranslation
@@ -57,7 +58,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
 
     if (!vectorLayer) {
       return;
@@ -76,7 +77,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
 
     if (!vectorLayer) {
       return;
