@@ -10,13 +10,9 @@ import type OlMap from 'ol/Map';
 
 import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
-export type ClientPluginLocale = {
-  [locale: string]: {
-    translation: {
-      [key: string]: any;
-    };
-  };
-};
+export type ClientPluginLocale = Record<string, {
+    translation: Record<string, any>;
+  }>;
 
 export type ClientPluginComponentProps = {
   map?: OlMap;
@@ -120,9 +116,7 @@ export type ClientPlugin = {
   /**
    * A set of redux reducers to be used in the plugin.
    */
-  reducers?: {
-    [key: string]: Reducer;
-  };
+  reducers?: Record<string, Reducer>;
   /**
    * A set of middlewares that should be added to the store
    * especially useful for usage of redux-rtk

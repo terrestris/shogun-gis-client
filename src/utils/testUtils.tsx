@@ -9,7 +9,7 @@ import {
 } from '../store/store';
 
 export const createReduxWrapper = () => {
-  // eslint-disable-next-line react/display-name
+
   return ({
     children
   }: any) => (

@@ -19,14 +19,14 @@ import {
 
 import { Provider } from 'react-redux';
 
-import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
+import { WmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import { EditLevel } from '../../../store/editFeature';
 
 import EditFeatureToolbar from '.';
 
 let layer: WmsLayer;
-let feature: Feature = {
+const feature: Feature = {
   type: 'Feature',
   geometry: {
     type: 'Point',

@@ -112,7 +112,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
     const digitizedFeatures = digitizeLayer.getSource()?.getFeatures();
 
-    const featureCollectionAttributes: Set<string> = new Set();
+    const featureCollectionAttributes = new Set<string>();
     digitizedFeatures?.forEach(feat => {
       Object.keys(feat.getProperties()).forEach(prop => {
         if (!(feat.get(prop) instanceof OlGeometry)) {

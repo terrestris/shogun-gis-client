@@ -370,7 +370,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     if (isResizing && !collapsed) {
-      let offsetLeft = (e.clientX - document.body.offsetLeft);
+      const offsetLeft = (e.clientX - document.body.offsetLeft);
       if (offsetLeft > minWidth && offsetLeft < maxWidth) {
         setWidth(offsetLeft);
         setNoCollapseWidth(offsetLeft);

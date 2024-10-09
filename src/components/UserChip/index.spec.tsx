@@ -58,7 +58,7 @@ describe('<UserChip />', () => {
       />
     );
     const chip = screen.getByText('SK').parentElement;
-    await userEvent.click(chip);
+    await userEvent.click(chip!);
     const menu = screen.getByText('Example menu');
     // `toBeVisible` does not work because antd seems to be in the way
     expect(menu).toBeInTheDocument();

@@ -74,17 +74,11 @@ interface MultiSearchProps extends InputProps {
   useNominatim: boolean;
 }
 
-export type DataSearchResult = {
-  [key: string]: string | string[] | number[];
-};
+export type DataSearchResult = Record<string, string | string[] | number[]>;
 
-export type HighlightingResult = {
-  [key: string]: string;
-};
+export type HighlightingResult = Record<string, string>;
 
-export type HighlightingResults = {
-  [key: string]: HighlightingResult;
-};
+export type HighlightingResults = Record<string, HighlightingResult>;
 
 const isFulfilled = <T, >(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
 
@@ -327,7 +321,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       'search'
     ];
 
-    let title: string = '';
+    let title = '';
 
     if (searchConfig?.displayTemplate) {
       return replaceTemplates(searchConfig.displayTemplate, dsResult);
@@ -344,7 +338,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
     Object.keys(dsResult)
       .filter(key => !blacklistedAttributes.includes(key))
       .forEach(propKey => {
-        let propValue = dsResult[propKey]?.toString();
+        const propValue = dsResult[propKey]?.toString();
         if (!title && propValue.toLowerCase().indexOf(searchValue?.toLowerCase()) > -1) {
           // show matched value followed by the attribute name in square brackets (e.g. '53111 Bonn [city]')
           title = `${propValue} [${propKey}]`;
@@ -364,7 +358,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       return;
     }
 
-    let updatedResults: ResultCategory[] = [];
+    const updatedResults: ResultCategory[] = [];
 
     if (nominatimResults.length > 0) {
 
@@ -552,7 +546,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       const extent = item.feature.getGeometry()?.getExtent();
       const toolMenuElement = document.getElementsByClassName('tool-menu');
       const toolMenuWidth = toolMenuElement[0]?.clientWidth ?? 0;
-      let padding = [0, 0, 0, toolMenuWidth];
+      const padding = [0, 0, 0, toolMenuWidth];
 
       if (extent) {
         map?.getView().fit(extent, {

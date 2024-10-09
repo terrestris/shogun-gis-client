@@ -63,7 +63,8 @@ describe('<WmsTimeSlider />', () => {
         marks={marks}
         value={value.toString()}
         onChange={onChange}
-        step={null}
+        defaultValue={value.toString()}
+        formatString={''}
       />
     );
 
