@@ -15,7 +15,7 @@ import EditFeatureTabs from '.';
 
 let mockTabConfig: PropertyFormTabConfig<PropertyFormItemEditConfig>[] | undefined;
 let mockForm: FormInstance<any>;
-let mockProperties: { [name: string]: any };
+let mockProperties: Record<string, any>;
 
 describe('<EditFeatureTabs />', () => {
 

@@ -35,9 +35,7 @@ import FeatureInfoForm from '../ToolMenu/FeatureInfo/FeatureInfoForm';
 
 import './index.less';
 
-export type ReferenceDataType = {
-  [key: string]: any;
-};
+export type ReferenceDataType = Record<string, any>;
 
 export type ReferenceTableProps = TableProps<ReferenceDataType> & {
   value?: string;

@@ -30,6 +30,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import Logger from '@terrestris/base-util/dist/Logger';
 import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 import CapabilitiesUtil from '@terrestris/ol-util/dist/CapabilitiesUtil/CapabilitiesUtil';
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
@@ -101,6 +102,8 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         message: t('AddLayerModal.errorMessage'),
         description: t('AddLayerModal.errorDescription')
       });
+
+      Logger.error(error);
     } finally {
       setLoading(false);
     }

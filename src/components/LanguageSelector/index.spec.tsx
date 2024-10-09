@@ -16,7 +16,7 @@ import LanguageSelect from '.';
 
 jest.mock('../../i18n', () => ({
   changeLanguage: jest.fn(),
-  t: (key) => key,
+  t: (key: string) => key,
   language: 'en',
   on: jest.fn(),
   off: jest.fn(),

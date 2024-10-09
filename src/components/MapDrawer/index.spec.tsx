@@ -18,7 +18,6 @@ import MapDrawer from '.';
 let map: OlMap;
 
 const createWrapper = () => {
-  // eslint-disable-next-line react/display-name
   return ({
     children
   }: any) => (

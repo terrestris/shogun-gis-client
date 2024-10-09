@@ -64,6 +64,11 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
         editLayer.getSource()?.clear();
         const format = new OlFormatGeoJson();
         const olFeat = format.readFeature(feature);
+
+        if (Array.isArray(olFeat)) {
+          return;
+        }
+
         editLayer.getSource()?.addFeature(olFeat);
       }
     }

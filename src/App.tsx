@@ -17,7 +17,7 @@ import useRestoreTransientLayers from './hooks/useRestoreTransientLayers';
 
 import './App.less';
 
-export interface AppProps extends React.ComponentProps<'div'> {}
+export type AppProps = React.ComponentProps<'div'>;
 
 export const App: React.FC<AppProps> = ({
   ...restProps

@@ -29,7 +29,12 @@ describe('<LayoutSelect />', () => {
   it('can be rendered', () => {
     const {
       container
-    } = render(<LayoutSelect printManager={printManager} />);
+    } = render(
+      <LayoutSelect
+        printManager={printManager}
+        onValueChange={() => ''}
+      />
+    );
     expect(container).toBeVisible();
   });
 

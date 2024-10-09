@@ -12,6 +12,7 @@ import _isNil from 'lodash/isNil';
 import OlFeature from 'ol/Feature';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerVector from 'ol/layer/Vector';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   Tab
@@ -62,7 +63,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
 
     if (!vectorLayer) {
       return;
@@ -82,7 +83,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
       return;
     }
 
-    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlFeature>;
+    const vectorLayer = MapUtil.getLayerByName(map, vectorLayerName) as OlLayerVector<OlSourceVector>;
 
     if (!vectorLayer) {
       return;

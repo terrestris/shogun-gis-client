@@ -17,8 +17,8 @@ import {
 } from 'geostyler-style';
 
 import OlFeature from 'ol/Feature';
-
 import OlLayerVector from 'ol/layer/Vector';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   StyleFunction,
@@ -111,7 +111,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 
     const olParser = new OlParser();
 
-    let drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<OlFeature>;
+    const drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<OlSourceVector>;
 
     const parseStyles = async () => {
       let olStylePolygon: OlStyleLike;

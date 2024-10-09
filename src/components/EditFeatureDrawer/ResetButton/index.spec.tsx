@@ -1,12 +1,13 @@
 import React from 'react';
 
 import {
-  cleanup, fireEvent, prettyDOM, render, screen,
+  cleanup,
+  fireEvent,
   waitFor
 } from '@testing-library/react';
 
 import {
-  FormInstance, useForm
+  FormInstance
 } from 'antd/lib/form/Form';
 import {
   Feature

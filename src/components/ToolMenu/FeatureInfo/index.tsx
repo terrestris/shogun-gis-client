@@ -71,9 +71,7 @@ export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
 
 export interface CoordinateInfoState {
   clickCoordinate: OlCoordinate | null;
-  features: {
-    [layerName: string]: OlFeature[];
-  };
+  features: Record<string, OlFeature[]>;
   loading: boolean;
 }
 
@@ -169,7 +167,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    const items: Array<Tab & { index: number }> = [];
+    const items: (Tab & { index: number })[] = [];
 
     Object.keys(features).forEach(layerName => {
       let pluginRendererAvailable = false;

@@ -19,7 +19,6 @@ import { setStylingDrawerVisibility } from '../../store/stylingDrawerVisibility'
 import StylingDrawerButton, { StylingDrawer } from './index';
 
 const createWrapper = () => {
-  // eslint-disable-next-line react/display-name
   return ({
     children
   }: any) => (

@@ -15,6 +15,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
   PropertyFormItemReadConfig
@@ -62,7 +64,6 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
   format = 'DD.MM.YYYY',
   suffix,
   value,
-  label,
   referenceConfig,
   urlDisplayValue,
   ...passThroughProps
@@ -74,8 +75,8 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   let displayValue: React.ReactNode = '';
 
-  if (value && typeof value === 'string' && valueMap?.hasOwnProperty(value)) {
-    value = valueMap[value];
+  if (value && typeof value === 'string' && Object.prototype.hasOwnProperty.call(valueMap, value)) {
+    value = valueMap?.[value];
   }
 
   if (
@@ -155,6 +156,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     try {
       v = JSON.parse(v);
     } catch (e) {
+      Logger.error(e);
       return null;
     }
 
@@ -192,6 +194,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     try {
       v = JSON.parse(v);
     } catch (e) {
+      Logger.error(e);
       return false;
     }
 

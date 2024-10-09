@@ -19,7 +19,7 @@ import OlMap from 'ol/Map';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlView from 'ol/View';
 
-import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
+import { WmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 

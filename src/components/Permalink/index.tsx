@@ -70,7 +70,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     if (!map) {
       return;
     }
-    let eventKeys: EventsKey[] = [];
+    const eventKeys: EventsKey[] = [];
 
     const identifierFunction = (l: BaseLayer) => l.get('name');
     const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
@@ -110,8 +110,8 @@ export const Permalink: React.FC<PermalinkProps> = () => {
         if (layerInGroup instanceof LayerGroup) {
           registerLayerCallback(layerInGroup);
         } else {
-          let eventKeyVisibility = layerInGroup.on('change:visible', updatePermalink);
-          let eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
+          const eventKeyVisibility = layerInGroup.on('change:visible', updatePermalink);
+          const eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
           eventKeys.push(eventKeyVisibility, eventKeyOpacity);
         }
       }
@@ -120,7 +120,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
     const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
 
-    let mapLayerGroup = map.getLayerGroup();
+    const mapLayerGroup = map.getLayerGroup();
     registerLayerCallback(mapLayerGroup);
     updateLayerConfig();
 

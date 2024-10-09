@@ -1,16 +1,40 @@
-/* eslint-disable quote-props */
-module.exports = {
-  files: [
-    '**/*.ts',
-    '**/*.tsx'
-  ],
+import reactPlugin from 'eslint-plugin-react';
+import importPlugin from 'eslint-plugin-import';
+import stylisticEslint from '@stylistic/eslint-plugin'
+
+import ts from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+
+import tsEslint from 'typescript-eslint';
+import eslint from '@eslint/js';
+import globals from 'globals';
+
+import eslintTerrestris from '@terrestris/eslint-config-typescript';
+
+export default tsEslint.config({
   extends: [
-    '@terrestris/eslint-config-typescript',
-    '@terrestris/eslint-config-typescript-react',
-    'plugin:react/recommended',
-    'plugin:import/recommended'
+    eslint.configs.recommended,
+    ...tsEslint.configs.recommended,
+    ...tsEslint.configs.stylistic,
+    importPlugin.flatConfigs.recommended
   ],
+  files: [
+    '**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'
+  ],
+  plugins: {
+    react: reactPlugin,
+    '@stylistic': stylisticEslint
+  },
+  languageOptions: {
+    // globals: globals.browser,
+    ecmaVersion: 'latest',
+    parserOptions: {
+      project: true,
+      tsconfigRootDir: import.meta.dirname
+    }
+  },
   rules: {
+    ...eslintTerrestris.rules,
     'max-len': [
       'warn',
       {
@@ -18,7 +42,9 @@ module.exports = {
       }
     ],
 
+    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/member-ordering': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off',
 
     'arrow-spacing': 'warn',
     'comma-spacing': 'warn',
@@ -73,9 +99,9 @@ module.exports = {
       }
     }]
   },
-  'settings': {
-    'react': {
-      'version': 'detect'
+  settings: {
+    react: {
+      version: 'detect'
     }
   }
-};
+});

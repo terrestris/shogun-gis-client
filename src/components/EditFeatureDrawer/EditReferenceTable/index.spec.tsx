@@ -6,12 +6,16 @@ import {
   waitFor
 } from '@testing-library/react';
 
+import { FormInstance } from 'antd/lib';
+
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditReferenceTable from '.';
+import EditReferenceTable, {
+  EditReferenceDataType
+} from '.';
 
 let tableElem: HTMLElement | null;
-let mockParentForm;
+let mockParentForm: FormInstance<EditReferenceDataType>;
 
 describe('<EditReferenceTable />', () => {
   it('is defined', () => {

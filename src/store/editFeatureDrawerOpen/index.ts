@@ -2,7 +2,7 @@ import {
   createSlice
 } from '@reduxjs/toolkit';
 
-const initialState: boolean = false;
+const initialState = false;
 
 const editFeatureDrawerOpenSlice = createSlice({
   name: 'editFeatureDrawerOpen',
