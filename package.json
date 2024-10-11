@@ -139,8 +139,8 @@
     "usePathForSuiteName": "true",
     "relativePaths": "true"
   },
-  "devEngines": {
-    "node": "20",
-    "npm": ">=7"
+  "engines": {
+    "node": ">=20",
+    "npm": ">=9"
   }
 }
