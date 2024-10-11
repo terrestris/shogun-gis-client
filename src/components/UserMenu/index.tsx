@@ -38,11 +38,7 @@ import UserChip from '../UserChip';
 
 import './index.less';
 
-interface OwnProps { }
-
-type UserProps = OwnProps;
-
-export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
+export const UserMenu: React.FC = (): JSX.Element => {
   const {
     t
   } = useTranslation();

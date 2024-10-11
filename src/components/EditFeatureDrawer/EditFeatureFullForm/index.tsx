@@ -104,7 +104,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
-    let editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+    const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
     if (editFormConfig?.length === 0) {
       Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);

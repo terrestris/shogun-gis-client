@@ -49,13 +49,11 @@ import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
-export type LayerTileLoadCounter = {
-  [key: string]: {
+export type LayerTileLoadCounter = Record<string, {
     loading: number;
     loaded: number;
     percent: number;
-  };
-};
+  }>;
 
 export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps

@@ -32,6 +32,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
@@ -52,12 +54,9 @@ export type FormData = {
 
 export type AttributionDrawerProps = Omit<DrawerProps, 'open'> & {
   selectedFeature: OlFeature | undefined;
-  onCustomClose?: (open: boolean) => void;
 };
 
 const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
-  onCustomClose,
-  onClose,
   selectedFeature,
   ...passThroughProps
 }) => {
@@ -112,7 +111,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
     const digitizedFeatures = digitizeLayer.getSource()?.getFeatures();
 
-    const featureCollectionAttributes: Set<string> = new Set();
+    const featureCollectionAttributes = new Set<string>();
     digitizedFeatures?.forEach(feat => {
       Object.keys(feat.getProperties()).forEach(prop => {
         if (!(feat.get(prop) instanceof OlGeometry)) {
@@ -160,6 +159,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
       setIsFormIsValid(true);
     } catch (error) {
       setIsFormIsValid(false);
+      Logger.error(error);
     }
   };
 

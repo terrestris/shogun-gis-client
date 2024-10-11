@@ -60,7 +60,7 @@ describe('<DisplayField />', () => {
 
     expect(container).toBeVisible();
     const checkboxElem = container.querySelector('[type="checkbox"]');
-    expect(checkboxElem.parentElement).toBeVisible();
+    expect(checkboxElem?.parentElement).toBeVisible();
     expect(checkboxElem).toHaveAttribute('checked');
   });
 

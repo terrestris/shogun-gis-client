@@ -117,7 +117,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       case 'removeExternal':
         removeExternalLayer();
         break;
-      case 'toggleLegend':
+      case 'toggleLegend': {
         const legendId: string = getUid(layer);
         const newLegendIds = [...visibleLegendsIds];
         if (newLegendIds.includes(legendId)) {
@@ -127,6 +127,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         }
         setVisibleLegendsIds(newLegendIds);
         break;
+      }
       case 'editLayer':
         dispatch(setFeature(null));
         dispatch(setLayerId(getUid(layer)));
@@ -236,7 +237,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     a.click();
   };
 
-  let dropdownMenuItems: ItemType[] = [];
+  const dropdownMenuItems: ItemType[] = [];
 
   if (isWmsLayer(layer)) {
     dropdownMenuItems.push({

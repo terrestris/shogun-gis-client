@@ -153,7 +153,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     }
 
     const layers = getPrintableLayers(extentLayer);
-    let allAttributions: string[] = [];
+    const allAttributions: string[] = [];
 
     layers.filter((layer: LayerType) => {
       return layer.getSource && layer.getSource()?.getAttributions && layer.getSource()?.getAttributions();

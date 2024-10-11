@@ -23,7 +23,7 @@ import {
 } from '../../plugin';
 import { Legal } from '../../store/legal';
 
-export interface FooterProps extends React.ComponentProps<'div'> { }
+export type FooterProps = React.ComponentProps<'div'>;
 
 export const Footer: React.FC<FooterProps> = ({
   ...restProps

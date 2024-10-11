@@ -9,7 +9,9 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import Editor from '@monaco-editor/react';
+import {
+  Editor
+} from '@monaco-editor/react';
 
 import {
   Button,

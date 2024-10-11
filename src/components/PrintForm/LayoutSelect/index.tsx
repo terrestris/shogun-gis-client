@@ -21,7 +21,7 @@ import {
 
 export interface LayoutSelectProps extends SelectProps<string> {
   printManager: MapFishPrintV3Manager;
-  onValueChange: Function;
+  onValueChange: () => void;
 }
 
 export const LayoutSelect: React.FC<LayoutSelectProps> = ({

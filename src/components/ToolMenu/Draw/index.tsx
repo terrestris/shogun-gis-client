@@ -32,6 +32,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+
 import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
 import {
@@ -69,7 +71,7 @@ interface DefaultDrawProps {
   showStyleFeatures?: boolean;
 }
 
-export interface DrawProps extends Partial<DefaultDrawProps> { }
+export type DrawProps = Partial<DefaultDrawProps>;
 
 export const Draw: React.FC<DrawProps> = ({
   showDrawPoint,
@@ -183,9 +185,8 @@ export const Draw: React.FC<DrawProps> = ({
         }
         message.success(t('Draw.uploadSuccess'));
       } catch (err) {
-
         message.error(t('Draw.uploadError'));
-
+        Logger.error(err);
       }
     };
 
@@ -392,7 +393,6 @@ export const Draw: React.FC<DrawProps> = ({
       </ToggleGroup>
       <AttributionDrawer
         selectedFeature={selectedModifyFeature}
-        onCustomClose={() => setSelectedModifyFeature(undefined)}
       />
     </>
   );
