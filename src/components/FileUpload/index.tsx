@@ -69,7 +69,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
     const result = await fetch(fileUrl, opts);
     const blob = await result.blob();
-    let objectUrl = window.URL.createObjectURL(blob);
+    const objectUrl = window.URL.createObjectURL(blob);
 
     anchor.href = objectUrl;
     anchor.download = fileName;

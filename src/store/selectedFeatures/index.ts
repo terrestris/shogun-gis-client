@@ -3,9 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-export type SelectedFeatures = {
-  [layerName: string]: string;
-};
+export type SelectedFeatures = Record<string, string>;
 
 const initialState: SelectedFeatures = {};
 

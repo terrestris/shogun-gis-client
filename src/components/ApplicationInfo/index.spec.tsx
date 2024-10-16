@@ -4,7 +4,8 @@ import {
   act,
   fireEvent,
   render,
-  screen, waitFor
+  screen,
+  waitFor
 } from '@testing-library/react';
 
 import { createReduxWrapper } from '../../utils/testUtils';
@@ -59,6 +60,7 @@ describe('<ApplicationInfo />', () => {
 
     expect(versionTitleElem).toBeVisible();
 
+    // @ts-expect-error no global override defined for global
     const version = global.PROJECT_VERSION;
 
     const versionElem = screen.getByText(version.toString());

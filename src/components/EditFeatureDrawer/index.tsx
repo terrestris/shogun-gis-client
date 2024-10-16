@@ -113,7 +113,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
         transaction: transaction
       });
     } catch (error) {
-      Logger.error('Error while releasing the lock on the feature');
+      Logger.error('Error while releasing the lock on the feature: ', error);
     }
   };
 

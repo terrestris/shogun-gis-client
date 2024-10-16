@@ -49,12 +49,12 @@ export const ScaleSelect: React.FC<ScaleSelectProps> = ({
     });
 
     if (printManager && transformInteraction) {
-      // @ts-ignore
+      // @ts-expect-error interaction events are not typed correctly
       transformInteraction.on('scaling', updateScale);
 
       return () => {
-        // @ts-ignore
-        transformInteraction.un('scaling', updateScale);
+        // @ts-expect-error interaction events are not typed correctly
+        transformInteraction.on('scaling', updateScale);
       };
     }
   }, [printManager, map]);

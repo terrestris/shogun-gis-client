@@ -133,7 +133,6 @@ export interface ThemeProperties extends React.CSSProperties {
   '--complementaryColor'?: string;
 }
 
-// eslint-disable-next-line no-shadow
 enum LoadingErrorCode {
   APP_ID_NOT_SET = 'APP_ID_NOT_SET',
   APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND',
@@ -564,7 +563,7 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
       return clientPlugins;
     }
 
-    for (let module of clientPluginModules) {
+    for (const module of clientPluginModules) {
       const clientPluginDefault: ClientPluginInternal = module as ClientPluginInternal;
       const PluginComponent = clientPluginDefault.component;
 

@@ -65,7 +65,6 @@ import {
 } from '../../store/uploadDataModal';
 
 import './index.less';
-// eslint-disable-next-line import/order
 
 type FeatureTypeAttribute = {
   name: string;
@@ -244,7 +243,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     const shp = await Shapefile.load(file);
 
     let featureTypeName = '';
-    let featureTypeAttributes: FeatureTypeAttributes = {
+    const featureTypeAttributes: FeatureTypeAttributes = {
       attribute: []
     };
 
@@ -436,9 +435,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
   };
 
   const getGeometryType = (type: number) => {
-    const types: {
-      [key: number]: string | null;
-    } = {
+    const types: Record<number, string | null> = {
       0: null, // Null
       1: 'org.locationtech.jts.geom.Point', // Point
       3: 'org.locationtech.jts.geom.LineString', // Polyline

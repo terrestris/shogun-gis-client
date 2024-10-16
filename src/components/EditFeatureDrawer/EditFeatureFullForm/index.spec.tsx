@@ -9,7 +9,7 @@ import {
   Feature
 } from 'geojson';
 
-import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
+import { WmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 

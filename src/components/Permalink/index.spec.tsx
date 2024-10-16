@@ -3,8 +3,8 @@ import React from 'react';
 import {
   cleanup,
   screen,
-  fireEvent, waitFor
-
+  fireEvent,
+  waitFor
 } from '@testing-library/react';
 
 import OlMap from 'ol/Map';
@@ -19,7 +19,7 @@ import { store } from '../../store/store';
 import Permalink from './index';
 
 let map: OlMap;
-let windowSpy;
+let windowSpy: jest.SpyInstance<Window | null>;
 
 describe('<Permalink />', () => {
   const originalPrompt = window.prompt;
@@ -93,7 +93,7 @@ describe('<Permalink />', () => {
       </Provider>
     );
     const linkElem = await document.querySelector('.ant-input');
-    let link = await linkElem?.getAttribute('value');
+    const link = await linkElem?.getAttribute('value');
     await expect(link).toBe('http://localhost/?customLayerAttributes=%5B%5D&center=0%3B0&zoom=10&layers=');
 
     const copyElem = await screen.getByLabelText('copy');

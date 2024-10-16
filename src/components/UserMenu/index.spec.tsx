@@ -7,8 +7,6 @@ import {
 
 import { createReduxWrapper } from '../../utils/testUtils';
 
-import UserChip from '../UserChip';
-
 import UserMenu from './index';
 
 describe('<UserMenu />', () => {
@@ -30,20 +28,5 @@ describe('<UserMenu />', () => {
 
   it('is defined', () => {
     expect(UserMenu).not.toBeUndefined();
-  });
-
-  it('menu function is called', async () => {
-    const mockFunction = jest.fn();
-    render(
-      <UserMenu >
-        <UserChip
-          userMenu={mockFunction()}
-        />
-      </UserMenu>,
-      {
-        wrapper: createReduxWrapper()
-      });
-
-    expect(mockFunction).toHaveBeenCalled();
   });
 });

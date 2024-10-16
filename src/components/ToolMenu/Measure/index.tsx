@@ -26,7 +26,7 @@ interface DefaultMeasureProps {
   showMeasureArea?: boolean;
 }
 
-export interface MeasureProps extends Partial<DefaultMeasureProps> { }
+export type MeasureProps = Partial<DefaultMeasureProps>;
 
 export const Measure: React.FC<MeasureProps> = ({
   showMeasureDistance,

@@ -9,7 +9,6 @@ export type LayerTreeConfig = {
   showLegends?: boolean;
 };
 
-// eslint-disable-next-line no-shadow
 export enum UploadTools {
   addWMS = 'addWMS',
   dataUpload = 'dataUpload'

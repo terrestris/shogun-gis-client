@@ -10,8 +10,10 @@ import {
   FormInstance
 } from 'antd/lib/form/Form';
 
-import { Feature } from 'ol';
-import { MultiPolygon } from 'ol/geom';
+import { DescribeFeatureType } from 'hooks/useExecuteWfsDescribeFeatureType';
+import OlFeature from 'ol/Feature';
+import OlGeometry from 'ol/geom/Geometry';
+import OlMultiPolygon from 'ol/geom/MultiPolygon';
 import OlLayerTile from 'ol/layer/Tile';
 import OlVectorLayer from 'ol/layer/Vector';
 import OlMap from 'ol/Map';
@@ -53,8 +55,9 @@ const mockCoordinates = [
   ]
 ];
 
-const mockFeature = {
-  geometry: new MultiPolygon([mockCoordinates]),
+const mockGeometry = new OlMultiPolygon([mockCoordinates]);
+
+const mockDescribeFeatureType: DescribeFeatureType = ({
   elementFormDefault: 'qualified',
   targetNamespace: 'http://www.openplans.org/topp',
   targetPrefix: 'topp',
@@ -62,15 +65,17 @@ const mockFeature = {
     typeName: 'states',
     properties: [{
       name: 'the_geom',
+      localType: 'MultiPolygon',
+      maxOccurs: 1,
+      minOccurs: 0,
       nillable: true,
-      type: 'gml:MultiPolygon',
-      localType: 'MultiPolygon'
+      type: 'gml:MultiPolygon'
     }]
   }]
-};
+});
 
 const mockVectorSource = new OlSourceVector({
-  features: [new Feature(mockFeature)]
+  features: [new OlFeature<OlGeometry>(mockGeometry)]
 });
 
 const mockVectorLayer = new OlVectorLayer({
@@ -79,14 +84,14 @@ const mockVectorLayer = new OlVectorLayer({
 
 jest.mock('@terrestris/ol-util/dist/MapUtil/MapUtil');
 
-const mockDescribeFeatureType = jest.fn().mockResolvedValue(mockFeature);
+const mockUseExecuteWfsDescribeFeatureType = jest.fn().mockResolvedValue(mockDescribeFeatureType);
 
 jest.mock('../../../hooks/useExecuteWfsDescribeFeatureType', () => {
   const originalModule = jest.requireActual('../../../hooks/useExecuteWfsDescribeFeatureType');
   return {
     __esModule: true,
     ...originalModule,
-    default: jest.fn(() => mockDescribeFeatureType)
+    default: jest.fn(() => mockUseExecuteWfsDescribeFeatureType)
   };
 });
 
