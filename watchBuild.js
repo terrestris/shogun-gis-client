@@ -1,24 +1,19 @@
 #!/usr/bin/env node
-/* eslint-disable require-jsdoc */
-/* eslint-disable no-console */
 
 'use strict';
 
 const path = require('path');
-
 const util = require('util');
-
 const fs = require('fs-extra');
-
-const watch = require('watch');
-
+const chokidar = require('chokidar');
+const throttle = require('lodash/throttle');
 const exec = util.promisify(require('child_process').exec);
 
 const curDir = process.cwd();
 
 if (process.argv.length < 3) {
-  console.log('please specify target path');
-  console.log('for example ../react-geo/node_modules/@terrestris/react-geo/');
+  console.log('Please specify the target path');
+  console.log('For example: ../shogun-gis-client-example-plugin/node_modules/@terrestris/shogun-gis-client/');
   process.exit(0);
 }
 
@@ -27,11 +22,11 @@ const distPath = path.join(curDir, 'dist');
 const targetDistPath = path.join(curDir, process.argv[2], 'dist');
 
 if (!fs.existsSync(targetDistPath)) {
-  throw new Error('target does not exist');
+  throw new Error('Target path does not exist');
 }
 
 async function buildAndCopy() {
-  console.log('run build:dist');
+  console.log('Run build:dist');
 
   try {
     const {
@@ -41,12 +36,12 @@ async function buildAndCopy() {
     console.log(stdout);
     console.log(stderr);
 
-    console.log('copy dist / src');
+    console.log(`Copy dist from ${distPath} to ${targetDistPath}`);
     await fs.copy(distPath, targetDistPath);
 
-    console.log('done');
+    console.log('Done');
   } catch (error) {
-    console.log('error');
+    console.log('Error');
     const {
       stdout,
       stderr
@@ -58,22 +53,9 @@ async function buildAndCopy() {
 
 buildAndCopy();
 
-let timeout;
+const throttled = throttle(buildAndCopy, 1000);
 
-function throttle(callback, time) {
-  if (!timeout) {
-    timeout = setTimeout(function () {
-      timeout = null;
-      callback();
-    }, time);
-  }
-}
-
-// eslint-disable-next-line no-unused-vars
-watch.watchTree(sourcePath, function (f, curr, prev) {
-  if (typeof f === 'object') {
-    console.log('watching');
-  } else {
-    throttle(buildAndCopy, 1000);
-  }
-});
+chokidar.watch(sourcePath)
+  .on('add', throttled)
+  .on('change', throttled)
+  .on('unlink', throttled);
