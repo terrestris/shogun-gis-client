@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent,
+  ChangeEvent, useCallback,
   useState
 } from 'react';
 
@@ -25,24 +25,31 @@ import { message } from 'antd';
 import {
   Feature
 } from 'ol';
+import OlFeature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import DeleteButton from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
+import Logger from '@terrestris/base-util/dist/Logger';
+
+import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
-import ModifyButton from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
+import {
+  ModifyButton, ModifyButtonProps
+} from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import {
+  ToggleGroup, ToggleGroupProps
+} from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import UploadButton from '@terrestris/react-geo/dist/Button/UploadButton/UploadButton';
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
   DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+} from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import './index.less';
 
@@ -64,7 +71,7 @@ interface DefaultDrawProps {
   showStyleFeatures?: boolean;
 }
 
-export interface DrawProps extends Partial<DefaultDrawProps> { }
+export type DrawProps = Partial<DefaultDrawProps>;
 
 export const Draw: React.FC<DrawProps> = ({
   showDrawPoint,
@@ -77,7 +84,7 @@ export const Draw: React.FC<DrawProps> = ({
   showUploadFeatures,
   showDeleteFeatures
 }): JSX.Element => {
-  const [isAttributeDrawerOpen, setIsAttributeDrawerOpen] = useState(false);
+  const [selectedModifyFeature, setSelectedModifyFeature] = useState<OlFeature>();
   const [selectedButton, setSelectedButton] = useState<string>();
 
   const {
@@ -85,6 +92,21 @@ export const Draw: React.FC<DrawProps> = ({
   } = useTranslation();
 
   const map = useMap();
+
+  const onToggleChange: Exclude<ToggleGroupProps['onChange'], undefined> = useCallback((evt, value) => {
+    setSelectedButton(value);
+    if (value !== 'draw-modify') {
+      setSelectedModifyFeature(undefined);
+    }
+  }, []);
+
+  const onModifyFeatureSelect: Exclude<ModifyButtonProps['onFeatureSelect'], undefined> = useCallback(event => {
+    if (event.selected.length > 0) {
+      setSelectedModifyFeature(event.selected[0]);
+    } else {
+      setSelectedModifyFeature(undefined);
+    }
+  }, []);
 
   const onGeoJSONDownload = () => {
     const clonedFeatures: Feature[] = [];
@@ -163,9 +185,8 @@ export const Draw: React.FC<DrawProps> = ({
         }
         message.success(t('Draw.uploadSuccess'));
       } catch (err) {
-
         message.error(t('Draw.uploadError'));
-
+        Logger.error(err);
       }
     };
 
@@ -176,26 +197,15 @@ export const Draw: React.FC<DrawProps> = ({
     return <></>;
   }
 
-  const onToggleChange = (childProps: any) => {
-
-    if (childProps) {
-      setSelectedButton(childProps.name);
-    }
-  };
-
-  const onModifyButtonToggle = (active: boolean) => {
-    setIsAttributeDrawerOpen(active);
-  };
-
   return (
     <>
       <ToggleGroup
-        selectedName={selectedButton}
+        selected={selectedButton}
         onChange={onToggleChange}
       >
         {showDrawPoint ? (
           <DrawButton
-            name="draw-point"
+            value="draw-point"
             drawType="Point"
             type="link"
             pressed={false}
@@ -213,7 +223,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawLine ? (
           <DrawButton
-            name="draw-line"
+            value="draw-line"
             drawType="LineString"
             type="link"
           >
@@ -230,7 +240,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawPolygon ? (
           <DrawButton
-            name="draw-polygon"
+            value="draw-polygon"
             drawType="Polygon"
             type="link"
           >
@@ -247,7 +257,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawCircle ? (
           <DrawButton
-            name="draw-circle"
+            value="draw-circle"
             drawType="Circle"
             type="link"
           >
@@ -264,7 +274,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawRectangle ? (
           <DrawButton
-            name="draw-rectangle"
+            value="draw-rectangle"
             drawType="Rectangle"
             type="link"
           >
@@ -280,7 +290,7 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
         {showDrawAnnotation ? (
           <DrawButton
-            name="draw-text"
+            value="draw-text"
             drawType="Text"
             type="link"
           >
@@ -297,9 +307,9 @@ export const Draw: React.FC<DrawProps> = ({
         <StylingButton />
         {showModifyFeatures ? (
           <ModifyButton
-            name="draw-modify"
+            value="draw-modify"
             type="link"
-            onToggle={onModifyButtonToggle}
+            onFeatureSelect={onModifyFeatureSelect}
           >
             <FontAwesomeIcon
               icon={faPenToSquare}
@@ -313,7 +323,7 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
         {showDeleteFeatures ? (
           <DeleteButton
-            name="draw-delete"
+            value="draw-delete"
             type="link"
           >
             <FontAwesomeIcon
@@ -328,7 +338,7 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
         {showDeleteFeatures ? (
           <DeleteAllButton
-            name="draw-delete-all"
+            value="draw-delete-all"
             type="link"
           >
             <FontAwesomeIcon
@@ -344,7 +354,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showUploadFeatures ? (
           <UploadButton
-            name="draw-upload"
+            value="draw-upload"
             onChange={onUploadChange}
             type="link"
             aria-label='draw-upload'
@@ -366,7 +376,7 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showUploadFeatures ? (
           <SimpleButton
-            name="draw-export"
+            value="draw-export"
             onClick={onGeoJSONDownload}
             type="link"
           >
@@ -382,8 +392,7 @@ export const Draw: React.FC<DrawProps> = ({
         ) : <></>}
       </ToggleGroup>
       <AttributionDrawer
-        open={isAttributeDrawerOpen}
-        onCustomClose={() => setIsAttributeDrawerOpen(false)}
+        selectedFeature={selectedModifyFeature}
       />
     </>
   );

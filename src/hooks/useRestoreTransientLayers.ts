@@ -12,12 +12,12 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { PermalinkUtil } from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
@@ -26,11 +26,15 @@ import useQueryParams from './useQueryParams';
 import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export const useRestoreTransientLayers = async () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const map = useMap();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const client = useSHOGunAPIClient();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const queryParams = useQueryParams();
   const {
     t
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useTranslation();
 
   const layers = queryParams.get('layers');
@@ -69,8 +73,7 @@ export const useRestoreTransientLayers = async () => {
       client
     });
 
-    for (let i = 0; i < config.length; i++) {
-      const cfg = config[i];
+    for (const cfg of config) {
       if (!_isEmpty(cfg?.layerConfig)) {
         const layerConfig: Layer = cfg.layerConfig;
         const olLayer = await parser.parseLayer(layerConfig);

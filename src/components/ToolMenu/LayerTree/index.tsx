@@ -14,7 +14,6 @@ import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
-import OlSource from 'ol/source/Source';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -22,16 +21,16 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import {
-  useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
 import RgLayerTree, {
   LayerTreeProps as RgLayerTreeProps
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
-import Legend from '@terrestris/react-geo/dist/Legend/Legend';
+import { Legend } from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
 import {
@@ -50,13 +49,11 @@ import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
-export type LayerTileLoadCounter = {
-  [key: string]: {
+export type LayerTileLoadCounter = Record<string, {
     loading: number;
     loaded: number;
     percent: number;
-  };
-};
+  }>;
 
 export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps
@@ -67,17 +64,22 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     t
   } = useTranslation();
 
-  const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
-
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
+  const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+  const [updateLayers, setUpdatedLayers] = useState<boolean>(false);
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
       return;
     }
+
+    const layerAddedHandler = () => {
+      setUpdatedLayers(!updateLayers);
+    };
+    document.addEventListener('layerAdded', layerAddedHandler);
 
     const allLayers = MapUtil.getAllLayers(map);
     allLayers.forEach(layer => {
@@ -101,7 +103,12 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         }
       }
     });
-  }, [map]);
+
+    return () => {
+      document.removeEventListener('layerAdded', layerAddedHandler);
+    };
+
+  }, [map, updateLayers]);
 
   const checkListeners = useCallback(() => {
     const activeLayers = map?.getAllLayers().map(l => getUid(l));
@@ -185,7 +192,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     });
   };
 
-  const treeFilterFunction = (layer: OlLayer<OlSource> | OlLayerGroup) => {
+  const treeFilterFunction = (layer: OlBaseLayer | OlLayerGroup) => {
     if ((layer as OlLayerGroup).getLayers) {
       return !layer.get('hideInLayerTree');
     }
@@ -300,7 +307,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     <RgLayerTree
       aria-label="layertree"
       className="layertree"
-      map={map}
       nodeTitleRenderer={treeNodeTitleRenderer}
       filterFunction={treeFilterFunction}
       draggable

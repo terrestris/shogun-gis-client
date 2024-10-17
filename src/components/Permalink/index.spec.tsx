@@ -3,8 +3,8 @@ import React from 'react';
 import {
   cleanup,
   screen,
-  fireEvent
-
+  fireEvent,
+  waitFor
 } from '@testing-library/react';
 
 import OlMap from 'ol/Map';
@@ -12,14 +12,14 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import { store } from '../../store/store';
 
 import Permalink from './index';
 
 let map: OlMap;
-let windowSpy;
+let windowSpy: jest.SpyInstance<Window | null>;
 
 describe('<Permalink />', () => {
   const originalPrompt = window.prompt;
@@ -93,13 +93,13 @@ describe('<Permalink />', () => {
       </Provider>
     );
     const linkElem = await document.querySelector('.ant-input');
-    let link = await linkElem?.getAttribute('value');
+    const link = await linkElem?.getAttribute('value');
     await expect(link).toBe('http://localhost/?customLayerAttributes=%5B%5D&center=0%3B0&zoom=10&layers=');
 
     const copyElem = await screen.getByLabelText('copy');
     await expect(copyElem).toBeVisible();
     await fireEvent.click(copyElem);
-    await expect(document.querySelector('.ant-message')).toBeInTheDocument();
+    await waitFor(() => expect(document.querySelector('.ant-message')).toBeInTheDocument());
     await expect(document.execCommand).toHaveBeenCalledWith('copy');
   });
 });

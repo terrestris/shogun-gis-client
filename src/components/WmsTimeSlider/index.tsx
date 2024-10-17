@@ -70,7 +70,7 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
     setValue(timeValues[timeValues.length - 1]);
 
     const m: Record<string | number, string> = {};
-    timeValues.forEach((val: string, idx: number) => {
+    timeValues.forEach((val: string) => {
       m[val] = moment(val).format('YYYY-MM-DD');
     });
 
@@ -79,7 +79,7 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
     if (timeValues.default === 'current') {
       let nearest: [number, string] = [NaN, ''];
       Object.values(m).forEach(d => {
-        let diff = moment().diff(moment(d));
+        const diff = moment().diff(moment(d));
 
         if (diff < nearest[0]) {
           nearest = [diff, d];
@@ -109,14 +109,15 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
         {t('WmsTimeSlider.title')}
       </Divider>
       {
-        marks ?
+        marks && min && max ?
           <TimeSlider
+            formatString={''}
+            defaultValue={''}
             min={min}
             max={max}
             marks={marks}
             value={value}
             onChange={onChange}
-            step={null}
             {...passThroughProps}
           /> :
           <span>

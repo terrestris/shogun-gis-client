@@ -35,9 +35,7 @@ import FeatureInfoForm from '../ToolMenu/FeatureInfo/FeatureInfoForm';
 
 import './index.less';
 
-export type ReferenceDataType = {
-  [key: string]: any;
-};
+export type ReferenceDataType = Record<string, any>;
 
 export type ReferenceTableProps = TableProps<ReferenceDataType> & {
   value?: string;
@@ -66,6 +64,7 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
         let resolved = referenceConfig?.tablePropertyName;
         let match;
 
+        // eslint-disable-next-line no-cond-assign
         while (match = regex.exec(referenceConfig?.tablePropertyName)) {
           resolved = resolved.replace(match[0], record[match[1]]);
         }

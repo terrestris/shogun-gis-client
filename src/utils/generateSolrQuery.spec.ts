@@ -66,7 +66,7 @@ describe('<generateSolrQuery />', () => {
 
     map.setLayers([layerWithoutAttributeConfig]);
 
-    let generatedQueries = generateSolrQuery({
+    const generatedQueries = generateSolrQuery({
       searchValue: 'foo',
       map
     });
@@ -88,7 +88,7 @@ describe('<generateSolrQuery />', () => {
       searchable: true
     });
 
-    let generatedQueries = generateSolrQuery({
+    const generatedQueries = generateSolrQuery({
       searchValue: 'foo',
       map
     });
@@ -114,7 +114,7 @@ describe('<generateSolrQuery />', () => {
       searchable: true
     });
 
-    let generatedQueries = generateSolrQuery({
+    const generatedQueries = generateSolrQuery({
       searchValue: 'dummy',
       map
     });
@@ -127,12 +127,11 @@ describe('<generateSolrQuery />', () => {
   });
 
   it('returns the correct solr query (single term, two attributes specified)', () => {
-    let generatedQueries = generateSolrQuery({
+    const generatedQueries = generateSolrQuery({
       searchValue: 'lorem',
       map
     });
 
-    // eslint-disable-next-line max-len
     const expectedSolrQueryFoo = '(featureType:"SHOGUN:foo") AND ((lorem^4 OR *lorem*^2 OR lorem~1))';
     const expectedSolrQueryBar = '(featureType:"SHOGUN:bar") AND ((lorem^4 OR *lorem*^2 OR lorem~1))';
 
@@ -144,7 +143,7 @@ describe('<generateSolrQuery />', () => {
   });
 
   it('returns the correct solr query (search phrase, two attributes specified)', () => {
-    let generatedQueries = generateSolrQuery({
+    const generatedQueries = generateSolrQuery({
       searchValue: 'lorem ipsum',
       map
     });

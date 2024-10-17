@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   faDrawPolygon,
@@ -13,11 +13,11 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MeasureButton from '@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import { MeasureButton } from '@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton';
+import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
 
@@ -26,7 +26,7 @@ interface DefaultMeasureProps {
   showMeasureArea?: boolean;
 }
 
-export interface MeasureProps extends Partial<DefaultMeasureProps> { }
+export type MeasureProps = Partial<DefaultMeasureProps>;
 
 export const Measure: React.FC<MeasureProps> = ({
   showMeasureDistance,
@@ -38,17 +38,23 @@ export const Measure: React.FC<MeasureProps> = ({
 
   const map = useMap();
 
+  const [selected, setSelected] = useState<string>();
+
   if (!map) {
     return <></>;
   }
 
   return (
-    <ToggleGroup>
+    <ToggleGroup
+      selected={selected}
+      onChange={(evt, value) => {
+        setSelected(value);
+      }}
+    >
       {showMeasureDistance ? (
         <MeasureButton
           geodesic
-          name="line"
-          map={map}
+          value="line"
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
@@ -56,13 +62,14 @@ export const Measure: React.FC<MeasureProps> = ({
           <FontAwesomeIcon icon={faPenRuler} />
           <span className="measure-text">{t('Measure.line')}</span>
         </MeasureButton>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
 
       {showMeasureArea ? (
         <MeasureButton
           geodesic
-          name="poly"
-          map={map}
+          value="poly"
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}
@@ -70,8 +77,9 @@ export const Measure: React.FC<MeasureProps> = ({
           <FontAwesomeIcon icon={faDrawPolygon} />
           <span className="measure-text">{t('Measure.area')}</span>
         </MeasureButton>
-      ) : <></>}
-
+      ) : (
+        <></>
+      )}
     </ToggleGroup>
   );
 };

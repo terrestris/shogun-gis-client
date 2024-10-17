@@ -3,7 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: string = './shogun_logo.png';
+const initialState = './shogun_logo.png';
 
 export const slice = createSlice({
   name: 'logoPath',

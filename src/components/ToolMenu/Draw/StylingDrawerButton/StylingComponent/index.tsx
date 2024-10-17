@@ -5,7 +5,8 @@ import {
   useState
 } from 'react';
 
-import CardStyle, {
+import {
+  CardStyle,
   CardStyleProps
 } from 'geostyler/dist/Component/CardStyle/CardStyle';
 
@@ -16,21 +17,19 @@ import {
 } from 'geostyler-style';
 
 import OlFeature from 'ol/Feature';
-
 import OlLayerVector from 'ol/layer/Vector';
-
-import VectorSource from 'ol/source/Vector';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   StyleFunction,
   StyleLike as OlStyleLike
 } from 'ol/style/Style';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 export type StylingComponentProps = CardStyleProps;
 
@@ -112,7 +111,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 
     const olParser = new OlParser();
 
-    let drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<VectorSource>;
+    const drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<OlSourceVector>;
 
     const parseStyles = async () => {
       let olStylePolygon: OlStyleLike;

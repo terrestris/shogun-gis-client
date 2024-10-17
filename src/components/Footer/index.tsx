@@ -11,7 +11,7 @@ import { createStringXY } from 'ol/coordinate';
 import { useTranslation } from 'react-i18next';
 
 import ScaleCombo from '@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -23,7 +23,7 @@ import {
 } from '../../plugin';
 import { Legal } from '../../store/legal';
 
-export interface FooterProps extends React.ComponentProps<'div'> { }
+export type FooterProps = React.ComponentProps<'div'>;
 
 export const Footer: React.FC<FooterProps> = ({
   ...restProps
@@ -118,7 +118,6 @@ export const Footer: React.FC<FooterProps> = ({
         {t('Footer.scale')}:&nbsp;
         <ScaleCombo
           aria-label='scalecombo-dropdown'
-          map={map}
         />
         <Divider
           type="vertical"

@@ -9,7 +9,7 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import { store } from '../../store/store';
 
@@ -18,7 +18,6 @@ import MapDrawer from '.';
 let map: OlMap;
 
 const createWrapper = () => {
-  // eslint-disable-next-line react/display-name
   return ({
     children
   }: any) => (

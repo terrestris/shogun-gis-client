@@ -3,7 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: string = '';
+const initialState = '';
 
 export const slice = createSlice({
   name: 'description',

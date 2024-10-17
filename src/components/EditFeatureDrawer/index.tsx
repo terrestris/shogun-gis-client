@@ -15,18 +15,18 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -113,7 +113,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
         transaction: transaction
       });
     } catch (error) {
-      Logger.error('Error while releasing the lock on the feature');
+      Logger.error('Error while releasing the lock on the feature: ', error);
     }
   };
 

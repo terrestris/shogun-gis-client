@@ -209,7 +209,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             />
           );
         }
-      case 'REFERENCE_TABLE':
+      case 'REFERENCE_TABLE': {
         const referenceTableConfig = (fieldCfg as PropertyFormItemEditReferenceTableConfig);
 
         return (
@@ -222,6 +222,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             {...referenceTableConfig.fieldProps}
           />
         );
+      }
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;

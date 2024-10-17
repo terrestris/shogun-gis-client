@@ -1,22 +1,22 @@
 import * as React from 'react';
 import {
-  useEffect, useState
+  useEffect,
+  useState
 } from 'react';
 
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
-import OlGeometry from 'ol/geom/Geometry';
 import OlVectorLayer from 'ol/layer/Vector';
-import OlVectorSource from 'ol/source/Vector';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   useTranslation
 } from 'react-i18next';
 
+import SimpleButton, { SimpleButtonProps } from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
 import {
-  SimpleButton, useMap
-} from '@terrestris/react-geo';
-import { SimpleButtonProps } from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 const { confirm } = Modal;
@@ -26,7 +26,7 @@ interface OwnProps {
    * The vector layer which will be used for digitize features.
    * The standard digitizeLayer can be retrieved via `DigitizeUtil.getDigitizeLayer(map)`.
    */
-  digitizeLayer?: OlVectorLayer<OlVectorSource<OlGeometry>>;
+  digitizeLayer?: OlVectorLayer<OlSourceVector>;
 }
 
 export type DeleteAllButtonProps = OwnProps & SimpleButtonProps;
@@ -41,7 +41,7 @@ export const DeleteAllButton: React.FC<DeleteAllButtonProps> = ({
   digitizeLayer,
   ...passThroughProps
 }) => {
-  const [layers, setLayers] = useState<[OlVectorLayer<OlVectorSource<OlGeometry>>]|null>(null);
+  const [layers, setLayers] = useState<[OlVectorLayer<OlSourceVector>] | null>(null);
 
   const map = useMap();
 

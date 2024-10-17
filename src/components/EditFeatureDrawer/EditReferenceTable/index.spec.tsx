@@ -6,12 +6,16 @@ import {
   waitFor
 } from '@testing-library/react';
 
+import { FormInstance } from 'antd/lib';
+
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditReferenceTable, { EditReferenceDataType } from '.';
+import EditReferenceTable, {
+  EditReferenceDataType
+} from '.';
 
 let tableElem: HTMLElement | null;
-let mockParentForm;
+let mockParentForm: FormInstance<EditReferenceDataType>;
 
 describe('<EditReferenceTable />', () => {
   it('is defined', () => {
@@ -43,6 +47,7 @@ describe('<EditReferenceTable />', () => {
       fireEvent.click(buttonElem!);
     });
     const modalElem: HTMLElement | null = document.querySelector('.edit-reference-table-modal');
-    expect(modalElem).toBeVisible();
+
+    await waitFor(() => expect(modalElem).toBeVisible());
   });
 });

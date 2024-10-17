@@ -1,6 +1,6 @@
 import OlLayer from 'ol/layer/Layer';
 
-import MapFishPrintV3WMSSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMSSerializer';
+import { MapFishPrintV3WMSSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMSSerializer';
 
 export class SHOGunMapFishPrintV3WMSSerializer extends MapFishPrintV3WMSSerializer {
 
