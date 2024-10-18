@@ -2,6 +2,7 @@
 <html>
   <head>
     <base href="<%= appPrefix %>" />
+    <link href="favicon.ico" rel="icon">
     <style>
       .loadmask {
         position: fixed;
@@ -12,10 +13,6 @@
         transform: -moz-translate(-50%, -50%);
         transform: -ms-translate(-50%, -50%);
         z-index: 999;
-
-        /* Keeping this for future reference */
-        /* opacity: 0;
-        animation: heartBeat 2s ease-in-out infinite; */
       }
 
       .loadmask-hidden {
@@ -58,6 +55,12 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <div id="loadmask" class="loadmask">
+      <img src="loading-placeholder.png" id="loadmask-image">
+      <span id="loading-text">
+        Loading, please wait…
+      </span>
+    </div>
     <script src="./gis-client-config.js"></script>
     <script>
       if (!window.clientConfig) {
@@ -67,7 +70,8 @@
     </script>
     <script>
       const regex = /\applicationId=(\d+)/;
-      const appId = location.search.match(regex)[1];
+      const appIdCand = location.search.match(regex);
+      let appId = appIdCand ? appIdCand[1] : null;
       let logoPath = './shogun_spinner.gif';
       if (appId) {
         logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
@@ -78,12 +82,7 @@
         loadingImageElement.src = logoPath;
       }
     </script>
-    <div id="loadmask" class="loadmask">
-      <img src="loading-placeholder.png" id="loadmask-image">
-      <span id="loading-text">
-        Loading, please wait…
-      </span>
-    </div>
+
     <div id="app" class="app"></div>
   </body>
 </html>

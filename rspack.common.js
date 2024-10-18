@@ -90,7 +90,6 @@ module.exports = {
       templateParameters: {
         appPrefix: process.env.HTML_BASE_URL ?? ''
       },
-      favicon: path.join(__dirname, 'resources', 'public', 'favicon.ico'),
       meta: {
         charset: 'utf-8',
         viewport: 'user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no'
