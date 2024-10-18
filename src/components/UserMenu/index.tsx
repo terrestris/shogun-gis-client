@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import {
   faInfo,
@@ -43,10 +46,21 @@ export const UserMenu: React.FC = (): JSX.Element => {
     t
   } = useTranslation();
 
+  const [loginUrl, setLoginUrl] = useState<string>();
+
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
 
   const user = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    const getLoginUrl = async () => {
+      const url = await keycloak?.createLoginUrl()
+      setLoginUrl(url);
+    };
+
+    getLoginUrl();
+  }, [keycloak]);
 
   const onMenuClick = (evt: MenuInfo) => {
     switch (evt.key) {
@@ -66,7 +80,7 @@ export const UserMenu: React.FC = (): JSX.Element => {
       case 'logout':
         if (keycloak) {
           keycloak.logout({
-            redirectUri: keycloak.createLoginUrl()
+            redirectUri: loginUrl
           });
         }
         break;
