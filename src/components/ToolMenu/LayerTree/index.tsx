@@ -69,17 +69,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
-  const [updateLayers, setUpdatedLayers] = useState<boolean>(false);
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
       return;
     }
-
-    const layerAddedHandler = () => {
-      setUpdatedLayers(!updateLayers);
-    };
-    document.addEventListener('layerAdded', layerAddedHandler);
 
     const allLayers = MapUtil.getAllLayers(map);
     allLayers.forEach(layer => {
@@ -103,12 +97,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         }
       }
     });
-
-    return () => {
-      document.removeEventListener('layerAdded', layerAddedHandler);
-    };
-
-  }, [map, updateLayers]);
+  }, [map]);
 
   const checkListeners = useCallback(() => {
     const activeLayers = map?.getAllLayers().map(l => getUid(l));
