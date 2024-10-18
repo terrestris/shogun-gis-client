@@ -771,7 +771,12 @@ const renderApp = async () => {
                       Color(style['--primaryColor']).darken(0.5).hex() :
                       style['--primaryColor'],
                     colorLink: style['--complementaryColor'],
-                    colorLinkHover: style['--secondaryColor']
+                    colorLinkHover: style['--secondaryColor'],
+                    borderRadius: 0,
+                    borderRadiusLG: 0,
+                    borderRadiusSM: 0,
+                    borderRadiusXS: 0,
+                    borderRadiusOuter: 0
                   }
                 }}
               >

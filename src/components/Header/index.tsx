@@ -87,17 +87,9 @@ export const Header: React.FC<HeaderProps> = ({
   const getDocsButton = () => {
     if (ClientConfiguration.documentationButtonVisible) {
       return (
-        <div
+        <DocumentationButton
           key="documentation-button"
-          aria-label="documentation-button"
-        >
-          <DocumentationButton
-            key="documentation-button"
-            type="link"
-          >
-          </DocumentationButton>
-
-        </div>
+        />
       );
     }
   };
