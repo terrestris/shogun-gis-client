@@ -55,7 +55,7 @@ export const UserMenu: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     const getLoginUrl = async () => {
-      const url = await keycloak?.createLoginUrl()
+      const url = await keycloak?.createLoginUrl();
       setLoginUrl(url);
     };
 

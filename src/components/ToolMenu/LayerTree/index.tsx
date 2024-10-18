@@ -32,7 +32,7 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
+import type { LayerType } from '@terrestris/shogun-util/dist/model/enum/LayerType';
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';

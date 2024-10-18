@@ -8,7 +8,7 @@ import type {
 import { CollapsePanelProps } from 'antd';
 import type OlMap from 'ol/Map';
 
-import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type ClientPluginLocale = Record<string, {
     translation: Record<string, any>;
