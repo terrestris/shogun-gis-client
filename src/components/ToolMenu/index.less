@@ -84,7 +84,7 @@
       .ant-collapse-header {
         border-radius: 0px;
         background-color: #fff;
-        padding: 6px 40px 6px 16px;
+        padding: 6px 16px 6px 16px;
 
         .ant-collapse-header-text span {
           padding-left: 10px;
@@ -130,14 +130,18 @@
       &.ant-collapse-item {
         border-radius: 0px;
       }
+
+      &:last-child {
+        // TODO Get color from variable?
+        border-bottom: 1px solid #d9d9d9;
+      }
     }
   }
 
   button.collapse-btn {
     width: 100%;
     border: none;
-    border-radius: 0 0 8px 8px;
-    }
+  }
 
   button:hover {
     color: var(--secondaryColor);

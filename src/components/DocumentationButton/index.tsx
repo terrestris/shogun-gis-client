@@ -22,13 +22,14 @@ export const DocumentationButton: React.FC<DocumentationButtonProps> = ({
     <SimpleButton
       onClick={() => window.open('/gis-docs', '_blank')}
       className={finalClassName}
+      aria-label="documentation-button"
       icon={
         <FontAwesomeIcon
           icon={faCircleQuestion}
         />
       }
-    >
-    </SimpleButton>
+      type='link'
+    />
   );
 };
 
