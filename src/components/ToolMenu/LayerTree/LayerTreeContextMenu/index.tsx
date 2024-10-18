@@ -17,7 +17,7 @@ import {
 } from 'antd';
 import {
   ItemType
-} from 'antd/lib/menu/hooks/useItems';
+} from 'antd/lib/menu/interface';
 
 import {
   getUid
@@ -43,14 +43,15 @@ import {
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+
+import {
+  isWmsLayer
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-import {
-  isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   DownloadConfig
@@ -116,7 +117,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       case 'removeExternal':
         removeExternalLayer();
         break;
-      case 'toggleLegend':
+      case 'toggleLegend': {
         const legendId: string = getUid(layer);
         const newLegendIds = [...visibleLegendsIds];
         if (newLegendIds.includes(legendId)) {
@@ -126,6 +127,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         }
         setVisibleLegendsIds(newLegendIds);
         break;
+      }
       case 'editLayer':
         dispatch(setFeature(null));
         dispatch(setLayerId(getUid(layer)));
@@ -235,7 +237,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     a.click();
   };
 
-  let dropdownMenuItems: ItemType[] = [];
+  const dropdownMenuItems: ItemType[] = [];
 
   if (isWmsLayer(layer)) {
     dropdownMenuItems.push({

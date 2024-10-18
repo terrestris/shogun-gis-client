@@ -10,7 +10,7 @@ import _isNil from 'lodash/isNil';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { addCustomParam } from '../../../store/print';
 
-interface CustomFieldInputProps extends InputProps {}
+export type CustomFieldInputProps = InputProps;
 
 export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
   value,

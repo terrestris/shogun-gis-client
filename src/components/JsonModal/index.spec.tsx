@@ -4,7 +4,7 @@ import {
   act,
   fireEvent,
   render,
-  screen
+  screen, waitFor
 } from '@testing-library/react';
 
 import { createReduxWrapper } from '../../utils/testUtils';
@@ -56,7 +56,7 @@ describe('<JsonModal />', () => {
       fireEvent.click(buttonElem);
     });
 
-    const titleElem = await screen.getByText('test-label');
-    await expect(titleElem).toBeVisible();
+    const titleElem = screen.getByText('test-label');
+    await waitFor(() => expect(titleElem).toBeVisible());
   });
 });

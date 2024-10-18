@@ -7,26 +7,11 @@ import {
 import OlMap from 'ol/Map';
 import OlView from 'ol/View';
 
-import { Provider } from 'react-redux';
-
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
-
-import { store } from '../../store/store';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import MapDrawer from '.';
 
 let map: OlMap;
-
-const createWrapper = () => {
-  // eslint-disable-next-line react/display-name
-  return ({
-    children
-  }: any) => (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
-};
 
 describe('MapDrawer', () => {
   beforeEach(() => {
@@ -59,10 +44,8 @@ describe('MapDrawer', () => {
       map,
       <MapDrawer
         open={false}
-      />,
-      {
-        wrapper: createWrapper()
-      });
+      />
+    );
     expect(container).toBeVisible();
   });
 });

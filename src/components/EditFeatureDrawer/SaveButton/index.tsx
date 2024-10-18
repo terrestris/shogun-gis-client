@@ -22,20 +22,19 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger
-} from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 
-import {
-  useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-import {
-  DigitizeUtil
-} from '@terrestris/react-geo/dist/Util/DigitizeUtil';
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import {
+  DigitizeUtil
+} from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';

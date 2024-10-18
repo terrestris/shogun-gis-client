@@ -26,9 +26,7 @@ import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
 import user from './user';
 
-type AsyncReducer = {
-  [key: string]: Reducer;
-};
+type AsyncReducer = Record<string, Reducer>;
 
 export const dynamicMiddleware = createDynamicMiddleware();
 
