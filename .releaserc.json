@@ -1,6 +1,17 @@
 {
   "branches": [
-    "main"
+    {
+      "name": "8.x",
+      "range": "8.x",
+      "channel": "8.x"
+    },
+    {
+      "name": "main"
+    },
+    {
+      "name": "next",
+      "prerelease": true
+    }
   ],
   "plugins": [
     [
