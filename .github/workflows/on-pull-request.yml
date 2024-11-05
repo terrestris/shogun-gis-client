@@ -62,11 +62,18 @@ jobs:
     - name: Construct jest coverage comment input 💬
       if: ${{ github.actor != 'dependabot[bot]' }}
       id: construct-input
+      env:
+        MULTI_LINES_TEXT: |
+          All, ./coverage/all/coverage-summary.json
+          only changed, ./coverage/changed/coverage-summary.json
       run: |
         if [ "${{ env.no_tests_found }}" == "true" ]; then
           echo "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json" >> $GITHUB_ENV
         else
-          echo "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json\nonly changed, ./coverage/changed/coverage-summary.json" >> $GITHUB_ENV
+          echo "MULTIPLE_FILES<<EOF" >> $GITHUB_ENV
+          echo "$MULTI_LINES_TEXT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          cat $GITHUB_ENV
         fi
 
     - name: Jest Coverage Comment 💬
@@ -76,7 +83,8 @@ jobs:
         hide-comment: false
         create-new-comment: false
         hide-summary: false
-        multiple-files: ${{ env.MULTIPLE_FILES }}
+        multiple-files: |
+          ${{ env.MULTIPLE_FILES }}
       
     - name: Get Coverage Comment Id ➡️
       if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}

@@ -11,8 +11,11 @@ module.exports = {
     '^.+\\.tsx?$': 'babel-jest'
   },
   testMatch: ['<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'],
-  testPathIgnorePatterns: ['/e2e-tests/'],
-  collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
+  testPathIgnorePatterns: ['<rootDir>/src/e2e-tests/'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{tsx,jsx,ts,js}', 
+    '!<rootDir>/src/e2e-tests/**'
+  ],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
     '<rootDir>/jest/matchMediaMock.js',
@@ -33,6 +36,6 @@ module.exports = {
     'default',
     '@casualbot/jest-sonar-reporter'
   ],
-  coverageReporters: ['json-summary', 'lcov'],
+  coverageReporters: ['json-summary', 'lcov', 'text'],
   coverageDirectory: 'coverage/all'
 };

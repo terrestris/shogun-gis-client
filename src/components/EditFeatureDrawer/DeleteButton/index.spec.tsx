@@ -6,7 +6,8 @@ import {
   fireEvent,
   render,
   screen,
-  waitFor
+  waitFor,
+  within
 } from '@testing-library/react';
 
 import {
@@ -19,8 +20,14 @@ import OlMap from 'ol/Map';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlView from 'ol/View';
 
+import { Provider } from 'react-redux';
+
+import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
 import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
 
+import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
+import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
+import { store } from '../../../store/store';
 import { createReduxWrapper } from '../../../utils/testUtils';
 
 import DeleteButton from '.';
@@ -28,6 +35,9 @@ import DeleteButton from '.';
 let mockLayer: WmsLayer;
 let mockFeature: Feature;
 let map: OlMap;
+
+jest.mock('../../../hooks/useWriteWfsTransaction');
+jest.mock('../../../hooks/useExecuteWfsTransaction');
 
 describe('<DeleteButton />', () => {
 
@@ -96,14 +106,26 @@ describe('<DeleteButton />', () => {
     expect(deleteButton).toBeVisible();
   });
 
-  it('confirm popover is opened on click', async () => {
-    render(
-      <DeleteButton
-        data-testid='delete'
-        feature={mockFeature}
-        layer={mockLayer}
-      />,
-      { wrapper: createReduxWrapper() }
+  it('confirm popover is opened on click and delete is successfully executed on confirm', async () => {
+    const mockSuccessFunction = jest.fn();
+    const mockTransaction = document.createElement('div');
+    mockTransaction.textContent = 'Mocked Node';
+    const mockWriteWfsTransaction = jest.fn().mockResolvedValue(mockTransaction);
+    const mockExecuteWfsTransaction = jest.fn().mockResolvedValue({});
+
+    (useWriteWfsTransaction as jest.Mock).mockReturnValueOnce(mockWriteWfsTransaction);
+    (useExecuteWfsTransaction as jest.Mock).mockReturnValueOnce(mockExecuteWfsTransaction);
+
+    renderInMapContext(
+      map,
+      <Provider store={store}>
+        <DeleteButton
+          data-testid='delete'
+          feature={mockFeature}
+          layer={mockLayer}
+          onSuccess={mockSuccessFunction}
+        />
+      </Provider>
     );
 
     const deleteButton = screen.getByText('DeleteButton.title');
@@ -117,5 +139,52 @@ describe('<DeleteButton />', () => {
     await waitFor(() => {
       expect(popover).toBeVisible();
     });
+
+    const tooltip = within(screen.getByRole('tooltip'));
+
+    fireEvent.click(tooltip.getByText('OK'));
+
+    await waitFor(() => {
+      expect(mockWriteWfsTransaction).toHaveBeenCalled();
+      expect(mockExecuteWfsTransaction).toHaveBeenCalled();
+      expect(mockSuccessFunction).toHaveBeenCalled();
+    });
+  });
+
+  it('Error function is called when delete operation can not be executed', async () => {
+    const mockErrorFunction = jest.fn();
+
+    renderInMapContext(
+      map,
+      <Provider store={store}>
+        <DeleteButton
+          data-testid='delete'
+          feature={mockFeature}
+          layer={mockLayer}
+          onError={mockErrorFunction}
+        />
+      </Provider>,
+    );
+
+    const deleteButton = screen.getByText('DeleteButton.title');
+    expect(deleteButton).toBeVisible();
+
+    act(() => {
+      fireEvent.click(deleteButton);
+    });
+
+    const popover = document.querySelector('.ant-popover-open');
+    await waitFor(() => {
+      expect(popover).toBeVisible();
+    });
+
+    const tooltip = within(screen.getByRole('tooltip'));
+
+    fireEvent.click(tooltip.getByText('OK'));
+
+    await waitFor(() => {
+      expect(mockErrorFunction).toHaveBeenCalled();
+    });
   });
 });
+
