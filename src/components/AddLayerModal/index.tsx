@@ -57,9 +57,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   const [layers, setLayers] = useState<(ImageLayer<ImageWMSSource> | TileLayer<TileWMSSource>)[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [validationStatus, setValidationStatus] = useState<InputStatus>('');
-  const [url, setUrl] = useState(
-    'https://sgx.geodatenzentrum.de/wms_topplus_open'
-  );
+  const [url, setUrl] = useState('https://sgx.geodatenzentrum.de/wms_topplus_open');
   const [sanitizedUrl, setSanitizedUrl] = useState<string>();
   const [version, setVersion] = useState<string>('1.3.0');
 
@@ -131,14 +129,13 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
 
     const targetFolderName = t('AddLayerModal.externalWmsFolder');
     let targetGroup = MapUtil.getLayerByName(map, targetFolderName) as OlLayerGroup;
+    const targetGroupAvailableInMap = !!targetGroup;
 
     if (!targetGroup) {
       targetGroup = new OlLayerGroup({
         layers: []
       });
       targetGroup.set('name', targetFolderName);
-      const existingGroups = map.getLayerGroup().getLayers();
-      existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
     }
 
     layersToAdd.forEach(layerToAdd => {
@@ -169,6 +166,11 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         targetGroup.getLayers().push(layerToAdd);
       }
     });
+
+    if (!targetGroupAvailableInMap) {
+      const existingGroups = map.getLayerGroup().getLayers();
+      existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
+    }
 
     closeModal();
   };
