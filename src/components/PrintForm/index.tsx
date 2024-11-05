@@ -338,7 +338,6 @@ export const PrintForm: React.FC<PrintFormProps> = ({
                 aria-label='print-title'
                 name="title"
                 label={t('PrintForm.title')}
-                initialValue={t('PrintForm.initialTitle')}
               >
                 <CustomFieldInput
                   aria-label='print-title-input'
