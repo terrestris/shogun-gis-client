@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent, useCallback,
+  useCallback,
   useState
 } from 'react';
 
@@ -21,7 +21,10 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import { message } from 'antd';
+import {
+  Button
+} from 'antd';
+
 import {
   Feature
 } from 'ol';
@@ -32,8 +35,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import Logger from '@terrestris/base-util/dist/Logger';
-
 import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton';
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
 import {
@@ -43,7 +44,6 @@ import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleB
 import {
   ToggleGroup, ToggleGroupProps
 } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
-import UploadButton from '@terrestris/react-geo/dist/Button/UploadButton/UploadButton';
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
@@ -51,11 +51,12 @@ import {
   DigitizeUtil
 } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
-import './index.less';
-
 import AttributionDrawer from './Attributions';
 import DeleteAllButton from './DeleteAllButton';
+import ImportDataModal from './ImportDataModal';
 import StylingButton from './StylingDrawerButton';
+
+import './index.less';
 
 interface DefaultDrawProps {
   showDrawPoint?: boolean;
@@ -86,6 +87,7 @@ export const Draw: React.FC<DrawProps> = ({
 }): JSX.Element => {
   const [selectedModifyFeature, setSelectedModifyFeature] = useState<OlFeature>();
   const [selectedButton, setSelectedButton] = useState<string>();
+  const [isImportDataModalOpen, setIsImportDataModalOpen] = useState<boolean>(false);
 
   const {
     t
@@ -138,59 +140,12 @@ export const Draw: React.FC<DrawProps> = ({
     }
   };
 
-  const checkValidityOfUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const uploadedFiles = e.target.files;
-    let validity = false;
-    if (
-      (uploadedFiles && uploadedFiles.length === 1) &&
-      (
-        uploadedFiles[0].type === 'application/geo+json' ||
-        uploadedFiles[0].type === 'application/geojson' ||
-        uploadedFiles[0].name.includes('.geojson') ||
-        uploadedFiles[0].name.includes('.json')
-      )
-    ){
-      validity = true;
-    }
-    return validity;
+  const onImportDataClick = () => {
+    setIsImportDataModalOpen(true);
   };
 
-  const onUploadChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const uploadedFiles = e.target.files;
-    if (checkValidityOfUploadFile(e)){
-      onGeoJSONUpload(uploadedFiles![0]);
-    } else {
-
-      message.error(t('Draw.uploadError'));
-
-    }
-  };
-
-  const onGeoJSONUpload = (geoJSONFile: File) => {
-    const fileReader = new FileReader();
-
-    fileReader.onload = () => {
-      try {
-
-        const geoJSONFeatures = new GeoJSON().readFeatures(fileReader.result);
-
-        if (map) {
-          const mapProjection = map.getView().getProjection().getCode();
-          geoJSONFeatures.forEach(feat => {
-            feat.getGeometry()?.transform('EPSG:4326', mapProjection);
-          });
-          const digitizeLayer = DigitizeUtil.getDigitizeLayer(map);
-          const digitizeLayerSource = digitizeLayer.getSource();
-          digitizeLayerSource?.addFeatures(geoJSONFeatures);
-        }
-        message.success(t('Draw.uploadSuccess'));
-      } catch (err) {
-        message.error(t('Draw.uploadError'));
-        Logger.error(err);
-      }
-    };
-
-    fileReader.readAsText(geoJSONFile);
+  const onCloseImportDataModal = () => {
+    setIsImportDataModalOpen(false);
   };
 
   if (!map) {
@@ -198,7 +153,9 @@ export const Draw: React.FC<DrawProps> = ({
   }
 
   return (
-    <>
+    <div
+      className="draw-tools"
+    >
       <ToggleGroup
         selected={selectedButton}
         onChange={onToggleChange}
@@ -336,65 +293,67 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </DeleteButton>
         ) : <></>}
-        {showDeleteFeatures ? (
-          <DeleteAllButton
-            value="draw-delete-all"
-            type="link"
+      </ToggleGroup>
+      {showDeleteFeatures ? (
+        <DeleteAllButton
+          value="draw-delete-all"
+          type="link"
+        >
+          <FontAwesomeIcon
+            icon={faTrash}
+          />
+          <span
+            className="draw-delete-all"
           >
-            <FontAwesomeIcon
-              icon={faTrash}
-            />
-            <span
-              className="draw-delete-all"
-            >
-              {t('DeleteAllButton.deleteAll')}
-            </span>
-          </DeleteAllButton>
-        ):<></>}
-
-        {showUploadFeatures ? (
-          <UploadButton
-            value="draw-upload"
-            onChange={onUploadChange}
-            type="link"
+            {t('DeleteAllButton.deleteAll')}
+          </span>
+        </DeleteAllButton>
+      ):<></>}
+      {showUploadFeatures ? (
+        <>
+          <Button
+            onClick={onImportDataClick}
             aria-label='draw-upload'
-          >
-            <SimpleButton
-              type="link"
-            >
+            type="link"
+            icon={
               <FontAwesomeIcon
                 icon={faUpload}
               />
-              <span
-                className="draw-upload"
-              >
-                {t('Draw.upload')}
-              </span>
-            </SimpleButton>
-          </UploadButton>
-        ) : <></>}
-
-        {showUploadFeatures ? (
-          <SimpleButton
-            value="draw-export"
-            onClick={onGeoJSONDownload}
-            type="link"
+            }
           >
-            <FontAwesomeIcon
-              icon={faDownload}
-            />
             <span
-              className="draw-export"
+              className="draw-upload"
             >
-              {t('Draw.export')}
+              {t('Draw.upload')}
             </span>
-          </SimpleButton>
-        ) : <></>}
-      </ToggleGroup>
+          </Button>
+          <ImportDataModal
+            open={isImportDataModalOpen}
+            onCancel={onCloseImportDataModal}
+            onSuccess={onCloseImportDataModal}
+          />
+        </>
+      ) : <></>}
+      {showUploadFeatures ? (
+        <SimpleButton
+          value="draw-export"
+          onClick={onGeoJSONDownload}
+          type="link"
+        >
+          <FontAwesomeIcon
+            icon={faDownload}
+          />
+          <span
+            className="draw-export"
+          >
+            {t('Draw.export')}
+          </span>
+        </SimpleButton>
+      ) : <></>}
       <AttributionDrawer
         selectedFeature={selectedModifyFeature}
       />
-    </>
+    </div>
   );
 };
 

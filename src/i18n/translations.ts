@@ -56,8 +56,6 @@ export default {
         text: 'Anmerkung',
         modify: 'Bearbeitung',
         upload: 'Hochladen',
-        uploadSuccess: 'Die Datei wurde erfolgreich importiert',
-        uploadError: 'Der Import ist fehlgeschlagen. Bitte beachten Sie, dass nur .geojson-Dateien unterstützt werden.',
         delete: 'Löschen',
         export: 'Exportieren'
       },
@@ -283,6 +281,16 @@ export default {
       EditReferenceTable: {
         modalTitle: 'Details zu {{referenceValue}}',
         confirmDeleteTitle: 'Das referenzierte Objekt wird vollständig gelöscht. Fortfahren?'
+      },
+      ImportDataModal: {
+        title: 'Daten importieren',
+        description: 'Klicken Sie oder ziehen Sie die Datei zum Importieren in diesen Bereich',
+        hint: 'Unterstütztes Dateiformat für den Import ist GeoJSON (*.geojson oder *.json)',
+        success: 'Die Features wurden erfolgreich importiert',
+        error: {
+          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+          parsing: 'Die Datei konnte nicht gelesen werden'
+        }
       }
     }
   },
@@ -340,8 +348,6 @@ export default {
         text: 'Annotation',
         modify: 'Edit',
         upload: 'Upload',
-        uploadSuccess: 'The file was uploaded successfully',
-        uploadError: 'The import failed, please note that only .geojson files are supported',
         delete: 'Delete',
         export: 'Export'
       },
@@ -566,6 +572,16 @@ export default {
       EditReferenceTable: {
         modalTitle: 'Details for {{referenceValue}}',
         confirmDeleteTitle: 'The referenced feature will be deleted completely. Proceed?'
+      },
+      ImportDataModal: {
+        title: 'Import data',
+        description: 'Click or drag file to this area to import',
+        hint: 'Supported file format is GeoJSON (*.geojson or *.json)',
+        success: 'Successfully imported the features',
+        error: {
+          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
+          parsing: 'Error while reading the file'
+        }
       }
     }
   }
