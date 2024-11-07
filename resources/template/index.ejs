@@ -9,9 +9,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        transform: -webkit-translate(-50%, -50%);
-        transform: -moz-translate(-50%, -50%);
-        transform: -ms-translate(-50%, -50%);
         z-index: 999;
       }
 
@@ -19,10 +16,17 @@
         animation: fadeOut 1.5s forwards;
       }
 
-      .loadmask > img {
-        min-width: 50%;
+      .loadmask > #loadmask-image {
+        width: 100%;
+        height: 100%;
+        max-width: 250px;
+        object-fit: scale-down;
+      }
+
+      .loadmask > #loadmask-indicator {
+        width: 50px;
+        display: table;
         margin: 0 auto;
-        display: block;
       }
 
       @keyframes fadeOut {
@@ -37,18 +41,6 @@
           transform: scale(0.5);
         }
       }
-
-      @keyframes heartBeat {
-        0% {
-          opacity: 0.2;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0.2;
-        }
-      }
     </style>
   </head>
   <body>
@@ -56,10 +48,8 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="loadmask" class="loadmask">
-      <img src="loading-placeholder.png" id="loadmask-image">
-      <span id="loading-text">
-        Loading, please wait…
-      </span>
+      <img src="./loading-placeholder.png" id="loadmask-image">
+      <img src="./loading-indicator.gif" id="loadmask-indicator">
     </div>
     <script src="./gis-client-config.js"></script>
     <script>
@@ -69,14 +59,13 @@
       }
     </script>
     <script>
-      const regex = /\applicationId=(\d+)/;
-      const appIdCand = location.search.match(regex);
+      const appIdExpression = /\applicationId=(\d+)/;
+      const appIdCand = location.search.match(appIdExpression);
       let appId = appIdCand ? appIdCand[1] : null;
       let logoPath = './shogun_spinner.gif';
       if (appId) {
         logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
       }
-      document.getElementById('loading-text').style.display = 'none';
       const loadingImageElement = document.getElementById('loadmask-image');
       if (logoPath && loadingImageElement) {
         loadingImageElement.src = logoPath;
