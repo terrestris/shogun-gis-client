@@ -28,28 +28,6 @@
     }
   }
 
-  .react-geo-togglegroup.vertical-toggle-group {
-    button {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      justify-content: flex-start;
-      color: var(--primaryColor);
-      border-color: transparent;
-
-      svg {
-        padding-top: 4px;
-        width: 25px;
-        margin-right: 10px;
-      }
-    }
-
-    button:hover {
-      border-color: transparent;
-      color: var(--secondaryColor);
-    }
-  }
-
   &.collapsed {
     min-width: unset;
 
@@ -133,19 +111,24 @@
     }
   }
 
-  button.collapse-btn {
-    width: 100%;
-    border: none;
-    border-radius: 0 0 8px 8px;
+  button {
+    color: #000000;
+
+    &.collapse-btn {
+      width: 100%;
+      border: none;
+      border-radius: 0 0 8px 8px;
     }
 
-  button:hover {
-    color: var(--secondaryColor);
-  }
+    &.react-geo-togglebutton.btn-pressed {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--secondaryColor);
+    }
 
-  .react-geo-togglebutton.btn-pressed {
-    font-size: 1.2em;
-    text-shadow: 0.5px 0.5px 0.5px color-mix(in srgb, var(--secondaryColor), black 20%);
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      color: var(--secondaryColor);
+    }
   }
 }
 

@@ -46,6 +46,7 @@ export const Measure: React.FC<MeasureProps> = ({
 
   return (
     <ToggleGroup
+      className="measure-tools"
       selected={selected}
       onChange={(evt, value) => {
         setSelected(value);

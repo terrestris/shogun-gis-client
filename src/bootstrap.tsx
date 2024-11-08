@@ -476,7 +476,7 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
   if (theme.secondaryColor) {
     style['--secondaryColor'] = theme.secondaryColor;
   }
-  if (theme.secondaryColor) {
+  if (theme.complementaryColor) {
     style['--complementaryColor'] = theme.complementaryColor;
   }
   if (theme.faviconPath) {
