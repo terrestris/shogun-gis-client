@@ -405,12 +405,15 @@ const setupSHOGunMap = async (application: Application) => {
     layers = await parser.parseLayerTreeNodes(application, layersConfig, projection);
   }
 
+  const interactions = await parser.parseMapInteractions(application);
+
   return new OlMap({
     view,
     layers,
     controls: OlControlDefaults({
       zoom: false
-    })
+    }),
+    interactions
   });
 };
 
