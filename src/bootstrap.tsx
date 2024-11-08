@@ -766,6 +766,7 @@ const renderApp = async () => {
               <ConfigProvider
                 locale={getConfigLang(i18n.language)}
                 theme={{
+                  cssVar: true,
                   token: {
                     colorPrimary: Color(style['--primaryColor']).isLight() ?
                       Color(style['--primaryColor']).darken(0.5).hex() :

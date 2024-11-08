@@ -34,7 +34,7 @@ import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/Del
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
 import { ModifyButton } from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
@@ -77,6 +77,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
 
   const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector>>();
   const [, setRevision] = useState<number>(0);
+  const [selected, setSelected] = useState<string | undefined>(undefined);
 
   const gjFormat = useMemo(() => new OlFormatGeoJson(), []);
 
@@ -104,8 +105,8 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
     if (isModified && !formDirty) {
       dispatch(setFormDirty(true));
     }
-  // we only want to change formDirty state when the editHistory changes
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // we only want to change formDirty state when the editHistory changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, editHistory.current.past]);
 
   useEffect(() => {
@@ -221,10 +222,16 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
         className="geometry-edit-tb"
         alignment="vertical"
       >
-        <ToggleGroup>
+        <ToggleGroup
+        selected={selected}
+        onChange={(_evt: any, value: string | undefined) => {
+          setSelected(value)
+        }}
+        >
           {
             allowedEditMode.includes('CREATE') ?
               <DrawButton
+                value="one"
                 icon={
                   <FontAwesomeIcon icon={faPencil} />
                 }
@@ -243,6 +250,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           {
             allowedEditMode.includes('UPDATE') ?
               <ModifyButton
+                value="two"
                 icon={
                   <FontAwesomeIcon icon={faDrawPolygon} />
                 }
@@ -262,6 +270,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           {
             allowedEditMode.includes('DELETE') ?
               <DeleteButton
+                value="three"
                 icon={
                   <FontAwesomeIcon icon={faTrash} />
                 }
