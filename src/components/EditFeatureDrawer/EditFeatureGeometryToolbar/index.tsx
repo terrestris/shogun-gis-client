@@ -34,7 +34,7 @@ import { DeleteButton } from '@terrestris/react-geo/dist/Button/DeleteButton/Del
 import DrawButton from '@terrestris/react-geo/dist/Button/DrawButton/DrawButton';
 import { ModifyButton } from '@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton';
 import SimpleButton from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
-import ToggleGroup from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
+import { ToggleGroup } from '@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup';
 
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import {
@@ -225,7 +225,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
         <ToggleGroup
           selected={selected}
           onChange={(_evt: any, value: string | undefined) => {
-            setSelected(value)
+            setSelected(value);
           }}
         >
           {
