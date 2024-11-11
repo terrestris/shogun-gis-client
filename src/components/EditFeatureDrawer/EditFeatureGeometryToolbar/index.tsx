@@ -223,15 +223,15 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
         alignment="vertical"
       >
         <ToggleGroup
-        selected={selected}
-        onChange={(_evt: any, value: string | undefined) => {
-          setSelected(value)
-        }}
+          selected={selected}
+          onChange={(_evt: any, value: string | undefined) => {
+            setSelected(value)
+          }}
         >
           {
             allowedEditMode.includes('CREATE') ?
               <DrawButton
-                value="one"
+                value="create"
                 icon={
                   <FontAwesomeIcon icon={faPencil} />
                 }
@@ -250,7 +250,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           {
             allowedEditMode.includes('UPDATE') ?
               <ModifyButton
-                value="two"
+                value="update"
                 icon={
                   <FontAwesomeIcon icon={faDrawPolygon} />
                 }
@@ -270,7 +270,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
           {
             allowedEditMode.includes('DELETE') ?
               <DeleteButton
-                value="three"
+                value="delete"
                 icon={
                   <FontAwesomeIcon icon={faTrash} />
                 }
