@@ -20,6 +20,7 @@ export const DocumentationButton: React.FC<DocumentationButtonProps> = ({
 
   return (
     <SimpleButton
+      type='link'
       onClick={() => window.open('/gis-docs', '_blank')}
       className={finalClassName}
       icon={
