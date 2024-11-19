@@ -443,6 +443,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         <div
           className ="dynamicWidth"
           onMouseDown={onMouseDown}
+          role="button"
         />
       ) : <></>}
     </div>
