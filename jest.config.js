@@ -13,8 +13,10 @@ module.exports = {
   testMatch: ['<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'],
   testPathIgnorePatterns: ['<rootDir>/src/e2e-tests/'],
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.{tsx,jsx,ts,js}', 
-    '!<rootDir>/src/e2e-tests/**'
+    '<rootDir>/src/**/*.{tsx,jsx,ts,js}',
+    '!<rootDir>/src/e2e-tests/**',
+    '!<rootDir>/src/bootsrap.tsx',
+    '!<rootDir>/src/global.d.ts'
   ],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
