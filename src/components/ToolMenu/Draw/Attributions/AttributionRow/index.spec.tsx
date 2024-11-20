@@ -31,9 +31,9 @@ describe('<AttributionRow />', () => {
 
     const autoComplete = document.querySelector('#field1_name');
 
-    if(!autoComplete) {
-      return
-    }
+    if (!autoComplete) {
+      return;
+    };
 
     expect(within(autoComplete.parentElement!).getByText('AttributionRow.keyPlaceholder')).toBeInTheDocument();
 
@@ -44,7 +44,6 @@ describe('<AttributionRow />', () => {
     expect(screen.getByText('Option1')).toBeInTheDocument();
     expect(screen.getByText('Option2')).toBeInTheDocument();
   });
-
 
   it('calls onChange when Input value changes', () => {
     const handleChange = jest.fn();
@@ -74,9 +73,9 @@ describe('<AttributionRow />', () => {
     const autoComplete = document.querySelector('#field1_name');
     const input = screen.getByPlaceholderText('AttributionRow.valuePlaceholder');
 
-    if(!autoComplete) {
-      return
-    }
+    if (!autoComplete) {
+      return;
+    };
 
     fireEvent.blur(autoComplete);
     fireEvent.blur(input);
@@ -89,8 +88,8 @@ describe('<AttributionRow />', () => {
     const mockFormData = {
       fields: {
         field1: { name: 'DuplicateKey' },
-        field2: { name: 'DuplicateKey' },
-      },
+        field2: { name: 'DuplicateKey' }
+      }
     };
 
     render(
@@ -101,9 +100,9 @@ describe('<AttributionRow />', () => {
 
     const autoComplete = document.querySelector('#field1_name');
 
-    if(!autoComplete) {
-      return
-    }
+    if (!autoComplete) {
+      return;
+    };
 
     fireEvent.change(autoComplete, { target: { value: 'DuplicateKey' } });
     fireEvent.blur(autoComplete);
