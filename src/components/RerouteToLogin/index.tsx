@@ -31,7 +31,9 @@ const RerouteToLogin: React.FC<RerouteToLoginProps> = ({
   useEffect(() => {
     const getLoginUrl = async () => {
       const url = await keycloak?.createLoginUrl();
-      setLoginUrl(url);
+      if (url) {
+        setLoginUrl(url);
+      }
     };
 
     getLoginUrl();

@@ -823,9 +823,9 @@ const renderApp = async () => {
       errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
       type = 'error';
       action =
-      <RerouteToLogin
-        rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
-      />;
+        <RerouteToLogin
+          rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
+        />;
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
@@ -843,16 +843,14 @@ const renderApp = async () => {
     root.render(
       <React.StrictMode>
         <SHOGunAPIClientProvider client={client}>
-          <>
-            <Alert
-              className="error-boundary"
-              message={i18n.t('Index.errorMessage')}
-              description={errorDescription}
-              type={type}
-              action={action}
-              showIcon
-            />
-          </>
+          <Alert
+            className="error-boundary"
+            message={i18n.t('Index.errorMessage')}
+            description={errorDescription}
+            type={type}
+            action={action}
+            showIcon
+          />
         </SHOGunAPIClientProvider>
       </React.StrictMode>
     );
