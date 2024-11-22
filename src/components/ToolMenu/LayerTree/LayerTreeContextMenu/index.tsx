@@ -1,10 +1,12 @@
 import React, {
+  useEffect,
   useState
 } from 'react';
 
 import {
   faEllipsisV
 } from '@fortawesome/free-solid-svg-icons';
+
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
@@ -15,10 +17,7 @@ import {
   notification,
   Spin
 } from 'antd';
-import {
-  ItemType
-} from 'antd/lib/menu/interface';
-
+import { ItemType } from 'antd/lib/menu/interface';
 import {
   getUid
 } from 'ol';
@@ -76,6 +75,9 @@ import {
   setLayer as setLayerDetailsLayer,
   show as showLayerDetailsModal
 } from '../../../../store/layerDetailsModal';
+import { setStylingDrawerLayerUid } from '../../../../store/stylingDrawerLayerUid';
+import { setStylingDrawerVisibility } from '../../../../store/stylingDrawerVisibility';
+import { checkIfGeoserverLayer } from '../../../../utils/geoserverUtils';
 
 export type LayerTreeContextMenuProps = {
   layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
@@ -92,6 +94,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
 
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [extentLoading, setExtentLoading] = useState<boolean>(false);
+  const [isGeoserverLayer, setIsGeoserverLayer] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const client = useSHOGunAPIClient();
@@ -100,11 +103,23 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     t
   } = useTranslation();
 
+  const drawerVisibilty = useAppSelector(state => state.stylingDrawerVisibility);
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
   );
   const metadataVisible = useAppSelector(state => state.layerTree.metadataVisible);
+
+  useEffect(() => {
+    if (layer) {
+      const layerSource = layer.getSource();
+      if (layerSource) {
+        setIsGeoserverLayer(checkIfGeoserverLayer(layerSource));
+      } else {
+        setIsGeoserverLayer(false);
+      }
+    }
+  }, [layer]);
 
   const onContextMenuItemClick = (evt: MenuInfo): void => {
     if (evt?.key.startsWith('downloadLayer')) {
@@ -112,6 +127,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       downloadLayer(decodeURI(url));
     }
     switch (evt?.key) {
+      case 'geostyler':
+        configureStyles();
+        break;
       case 'zoomToExtent':
         zoomToLayerExtent();
         break;
@@ -238,6 +256,11 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     a.click();
   };
 
+  const configureStyles = () => {
+    dispatch(setStylingDrawerVisibility(true));
+    dispatch(setStylingDrawerLayerUid(getUid(layer)));
+  };
+
   const dropdownMenuItems: ItemType[] = [];
 
   if (isWmsLayer(layer)) {
@@ -297,6 +320,12 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.layerDetails'),
       key: 'layerDetails'
+    });
+  }
+  if (isGeoserverLayer) {
+    dropdownMenuItems.push({
+      label: 'Geostyler',
+      key: 'geostyler'
     });
   }
 
