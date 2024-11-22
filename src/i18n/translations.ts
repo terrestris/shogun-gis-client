@@ -163,7 +163,7 @@ export default {
         errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
         errorDescriptionAppConfigStaticNotFound: 'Die Konfiguration der Applikation konnte nicht geladen werden.',
         permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.',
-        rerouteToLoginPage: 'Zurück zur Anmeldeseite.'
+        rerouteToLoginPage: 'Zur Anmeldeseite.'
       },
       Nominatim: {
         placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
@@ -455,7 +455,7 @@ export default {
         errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
         errorDescriptionAppConfigStaticNotFound: 'The configuration of the application could not be loaded correctly.',
         permissionDeniedUnauthorized: 'This application is not public. Authentication required.',
-        rerouteToLoginPage: 'Return to login page.'
+        rerouteToLoginPage: 'To login page.'
       },
       Nominatim: {
         placeholder: 'Place name, street name, district name, POI, etc.'
