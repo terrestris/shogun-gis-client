@@ -108,6 +108,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
   );
+  const metadataVisible = useAppSelector(state => state.layerTree.metadataVisible);
 
   useEffect(() => {
     if (layer) {
@@ -326,6 +327,13 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     label: t('LayerTreeContextMenu.layerDetails'),
     key: 'layerDetails'
   });
+
+  if (metadataVisible) {
+    dropdownMenuItems.push({
+      label: t('LayerTreeContextMenu.layerDetails'),
+      key: 'layerDetails'
+    });
+  }
 
   return (
     <div
