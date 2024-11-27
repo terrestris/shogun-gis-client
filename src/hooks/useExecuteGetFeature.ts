@@ -26,7 +26,7 @@ import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export type GetFeatureOpts = {
   layer: WmsLayer;
-  filter?: OlFormatFilter;
+  filter?: OlFormatFilter | Element;
 };
 
 export const useExecuteGetFeature = () => {
@@ -34,7 +34,7 @@ export const useExecuteGetFeature = () => {
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
-  const executeGetFeature = useCallback(async (opts: GetFeatureOpts) => {
+  const executeGetFeature = useCallback(async (opts: GetFeatureOpts, version = '1.1.0') => {
     if (!map) {
       return;
     }
@@ -64,14 +64,18 @@ export const useExecuteGetFeature = () => {
       url = url.slice(0, -1);
     }
 
-    const featureRequest = new OlFormatWFS().writeGetFeature({
+    const featureRequest = new OlFormatWFS({version: version}).writeGetFeature({
       srsName: map.getView().getProjection().getCode(),
       featureNS: describeFeatureType.targetNamespace,
       featurePrefix: describeFeatureType.targetPrefix,
       featureTypes: [source?.getParams().LAYERS],
       outputFormat: 'application/json',
-      filter: opts.filter
+      filter: opts.filter instanceof OlFormatFilter ? opts.filter : undefined
     });
+
+    if (featureRequest instanceof Element && opts.filter instanceof Element) {
+      featureRequest.getElementsByTagName('Query')[0].appendChild(opts.filter);
+    }
 
     const defaultHeaders = {
       'Content-Type': 'application/json'
