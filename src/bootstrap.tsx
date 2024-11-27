@@ -68,6 +68,7 @@ import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIC
 
 const App = React.lazy(() => import('./App'));
 
+import RerouteToLogin from './components/RerouteToLogin';
 import {
   PluginProvider
 } from './context/PluginContext';
@@ -815,6 +816,7 @@ const renderApp = async () => {
     }
 
     let type: AlertProps['type'] = 'warning';
+    let action: React.ReactNode;
     let errorDescription = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
@@ -824,6 +826,10 @@ const renderApp = async () => {
     if ((error as Error)?.message === LoadingErrorCode.APP_UNAUTHORIZED) {
       errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
       type = 'error';
+      action =
+        <RerouteToLogin
+          rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
+        />;
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
@@ -840,13 +846,16 @@ const renderApp = async () => {
 
     root.render(
       <React.StrictMode>
-        <Alert
-          className="error-boundary"
-          message={i18n.t('Index.errorMessage')}
-          description={errorDescription}
-          type={type}
-          showIcon
-        />
+        <SHOGunAPIClientProvider client={client}>
+          <Alert
+            className="error-boundary"
+            message={i18n.t('Index.errorMessage')}
+            description={errorDescription}
+            type={type}
+            action={action}
+            showIcon
+          />
+        </SHOGunAPIClientProvider>
       </React.StrictMode>
     );
   }

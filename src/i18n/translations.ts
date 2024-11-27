@@ -162,7 +162,8 @@ export default {
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
         errorDescriptionAppConfigStaticNotFound: 'Die Konfiguration der Applikation konnte nicht geladen werden.',
-        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.'
+        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.',
+        rerouteToLoginPage: 'Zur Anmeldeseite.'
       },
       Nominatim: {
         placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
@@ -453,7 +454,8 @@ export default {
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
         errorDescriptionAppConfigStaticNotFound: 'The configuration of the application could not be loaded correctly.',
-        permissionDeniedUnauthorized: 'This application is not public. Authentication required.'
+        permissionDeniedUnauthorized: 'This application is not public. Authentication required.',
+        rerouteToLoginPage: 'To login page.'
       },
       Nominatim: {
         placeholder: 'Place name, street name, district name, POI, etc.'
