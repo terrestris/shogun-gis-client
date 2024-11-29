@@ -31,9 +31,9 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-export type StylingComponentProps = CardStyleProps;
+export type DrawLayerStylingPanelProps = CardStyleProps;
 
-export const StylingComponent: React.FC<StylingComponentProps> = ({
+export const DrawLayerStylingPanel: React.FC<DrawLayerStylingPanelProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 
@@ -113,6 +113,10 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 
     const drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<OlSourceVector>;
 
+    if (!drawVectorLayer) {
+      return;
+    }
+
     const parseStyles = async () => {
       let olStylePolygon: OlStyleLike;
       let olStyleLineString: OlStyleLike;
@@ -187,4 +191,4 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
   );
 };
 
-export default StylingComponent;
+export default DrawLayerStylingPanel;
