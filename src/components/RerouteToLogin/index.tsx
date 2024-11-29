@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 
 import {
-  DoubleLeftOutlined
+  LoginOutlined
 } from '@ant-design/icons';
 
 import {
@@ -56,10 +56,10 @@ const RerouteToLogin: React.FC<RerouteToLoginProps> = ({
           type='link'
           onClick={onLoginLinkClick}
         >
-          <DoubleLeftOutlined />
+          <LoginOutlined />
+          {rerouteMsg}
         </Button>
       </Tooltip>
-      {rerouteMsg}
     </Flex>
   );
 };
