@@ -4,8 +4,12 @@ import React, {
 } from 'react';
 
 import {
-  LoginOutlined
-} from '@ant-design/icons';
+  faRightToBracket
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
 
 import {
   Button,
@@ -55,9 +59,12 @@ const RerouteToLogin: React.FC<RerouteToLoginProps> = ({
         <Button
           type='link'
           onClick={onLoginLinkClick}
+          icon={
+            <FontAwesomeIcon icon={faRightToBracket} />
+          }
         >
-          <LoginOutlined />
           {rerouteMsg}
+          <i className="fa-solid fa-right-to-bracket"></i>
         </Button>
       </Tooltip>
     </Flex>
