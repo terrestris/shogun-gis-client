@@ -786,6 +786,9 @@ const renderApp = async () => {
                   components: {
                     Button: {
                       primaryShadow: 'none'
+                    },
+                    Dropdown: {
+                      paddingBlock: 2
                     }
                   }
                 }}
