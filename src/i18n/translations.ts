@@ -165,9 +165,6 @@ export default {
         permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.',
         rerouteToLoginPage: 'Zur Anmeldeseite.'
       },
-      Nominatim: {
-        placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
-      },
       UserMenu: {
         settingsMenuTitle: 'Profil bearbeiten',
         infoMenuTitle: 'Über',
@@ -195,9 +192,12 @@ export default {
       MultiSearch: {
         searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
         searchData: 'Layerdaten durchsuchen',
-        searchNominatim: 'Ortssuche (Nominatim)',
-        nominatimTitle: 'Ortssuche',
-        searchPlaceholder: 'Orts- und Datensuche…'
+        searchGeocoder: 'Ortssuche',
+        searchPlaceholder: 'Orts- und Layersuche…',
+        searchPlaceholderGeocoderOnly: 'Suche nach Orten, Straßen, POIs…',
+        searchPlaceholderDataOnly: 'Suche nach Inhalten in Layern…',
+        settingsTooltip: 'Einstellungen',
+        placeholder: 'e, POI usw.'
       },
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
@@ -292,6 +292,9 @@ export default {
           supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
           parsing: 'Die Datei konnte nicht gelesen werden'
         }
+      },
+      useNominatimSearchEngine: {
+        title: 'Ortssuche'
       }
     }
   },
@@ -457,9 +460,6 @@ export default {
         permissionDeniedUnauthorized: 'This application is not public. Authentication required.',
         rerouteToLoginPage: 'To login page.'
       },
-      Nominatim: {
-        placeholder: 'Place name, street name, district name, POI, etc.'
-      },
       UserMenu: {
         settingsMenuTitle: 'Edit profile',
         infoMenuTitle: 'About',
@@ -487,9 +487,11 @@ export default {
       MultiSearch: {
         searchInViewBox: 'Search in current extent',
         searchData: 'Search layer data',
-        searchNominatim: 'Search nominatim',
-        nominatimTitle: 'Nominatim',
-        searchPlaceholder: 'Address and data search…'
+        searchGeocoder: 'Search location',
+        searchPlaceholder: 'Location and layer search…',
+        searchPlaceholderGeocoderOnly: 'Search for locations, streets, POIs…',
+        searchPlaceholderDataOnly: 'Search in the layer contents…',
+        settingsTooltip: 'Settings'
       },
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
@@ -584,6 +586,9 @@ export default {
           supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
           parsing: 'Error while reading the file'
         }
+      },
+      useNominatimSearchEngine: {
+        title: 'Location'
       }
     }
   }

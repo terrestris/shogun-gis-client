@@ -6,6 +6,9 @@ import {
   FeatureCollection
 } from 'geojson';
 
+import {
+  Extent as OlExtent
+} from 'ol/extent';
 import OlFormatFilter from 'ol/format/filter/Filter';
 import OlFormatWFS from 'ol/format/WFS';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
@@ -15,18 +18,40 @@ import {
   WmsLayer
 } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
-import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
-import useExecuteWfsDescribeFeatureType from './useExecuteWfsDescribeFeatureType';
+import useExecuteWfsDescribeFeatureType, {
+  isGeometryType
+} from './useExecuteWfsDescribeFeatureType';
 import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export type GetFeatureOpts = {
+  /**
+   * The layer to generate the WFS GetFeature request for.
+   */
   layer: WmsLayer;
+  /**
+   * The filter to apply to the GetFeature request.
+   */
   filter?: OlFormatFilter;
+  /**
+   * The properties to return for each feature.
+   */
+  propertyNames?: string[];
+  /**
+   * Maximum number of features to get.
+   */
+  maxFeatures?: number;
+  /**
+   * Extent to use for the BBOX filter. The geometryName option must be set.
+   */
+  bbox?: OlExtent;
 };
 
 export const useExecuteGetFeature = () => {
@@ -64,13 +89,23 @@ export const useExecuteGetFeature = () => {
       url = url.slice(0, -1);
     }
 
+    // We expect a single feature type here since we filter on the feature type
+    // in the describe feature type request.
+    const geomProperty = describeFeatureType.featureTypes[0]?.properties
+      ?.find(property => isGeometryType(property.type));
+
     const featureRequest = new OlFormatWFS().writeGetFeature({
       srsName: map.getView().getProjection().getCode(),
       featureNS: describeFeatureType.targetNamespace,
       featurePrefix: describeFeatureType.targetPrefix,
       featureTypes: [source?.getParams().LAYERS],
       outputFormat: 'application/json',
-      filter: opts.filter
+      maxFeatures: opts.maxFeatures,
+      // Ensure the geometry is always returned.
+      propertyNames: (opts.propertyNames && geomProperty?.name) ? [...opts.propertyNames, geomProperty?.name] : undefined,
+      bbox: opts.bbox,
+      filter: opts.filter,
+      geometryName: geomProperty?.name
     });
 
     const defaultHeaders = {
@@ -87,7 +122,7 @@ export const useExecuteGetFeature = () => {
     });
 
     if (!response.ok) {
-      throw new Error('No successful response');
+      throw new Error('No successful response while executing a WFS-GetFeature');
     }
 
     return await response.json() as FeatureCollection;
