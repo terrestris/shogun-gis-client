@@ -5,6 +5,17 @@ import React, {
 } from 'react';
 
 import {
+  faTriangleExclamation
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
+  Tooltip
+} from 'antd';
+
+import {
   getUid
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
@@ -13,6 +24,7 @@ import OlLayerGroup from 'ol/layer/Group';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerTile from 'ol/layer/Tile';
+import OlSourceImage from 'ol/source/Image';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceVector from 'ol/source/Vector';
@@ -53,6 +65,7 @@ export type LayerTileLoadCounter = Record<string, {
   loading: number;
   loaded: number;
   percent: number;
+  errors: number;
 }>;
 
 export const LayerTree: React.FC<LayerTreeProps> = ({
@@ -76,9 +89,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     }
 
     const allLayers = MapUtil.getAllLayers(map);
+
     allLayers.forEach(layer => {
       if (layer instanceof OlLayer) {
         const source = layer.getSource();
+        // TODO Check for source TileImage to also catch XYZ?
         if (source instanceof OlSourceTileWMS) {
           if (!source.hasListener('tileloadstart')) {
             source.on('tileloadstart', tileLoadStartListener);
@@ -88,6 +103,14 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           }
         }
         if (source instanceof OlSourceImageWMS) {
+          if (!source.hasListener('imageloadstart')) {
+            source.on('imageloadstart', tileLoadStartListener);
+          }
+          if (!source.hasListener('imageloadend') && !source.hasListener('imageloaderror')) {
+            source.on(['imageloadend', 'imageloaderror'], tileLoadEndListener);
+          }
+        }
+        if (source instanceof OlSourceImage) {
           if (!source.hasListener('imageloadstart')) {
             source.on('imageloadstart', tileLoadStartListener);
           }
@@ -140,22 +163,29 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     setLayerTileLoadCounter(counter => {
       const uid = getUid(evt.target);
       const update = structuredClone(counter);
+
       // reset when load was finished
       if (update[uid] && update[uid].loaded >= update[uid].loading) {
         update[uid].loading = 1;
         update[uid].loaded = 0;
         update[uid].percent = 0;
+        update[uid].errors = 0;
+
         return update;
       }
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
           loaded: 0,
-          percent: 0
+          percent: 0,
+          errors: 0
         };
       }
+
       update[uid].loading = Number.isInteger(update[uid].loading) ?
         update[uid].loading + 1 : 1;
+
       return update;
     });
   };
@@ -164,19 +194,29 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     setLayerTileLoadCounter(counter => {
       const uid = getUid(evt.target);
       const update = structuredClone(counter);
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
           loaded: 0,
-          percent: 0
+          percent: 0,
+          errors: 0
         };
       }
+
       update[uid].loaded = Number.isInteger(update[uid].loaded) ?
         update[uid].loaded + 1 : 1;
+
       const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
+
       if (percent > update[uid].percent) {
         update[uid].percent = percent;
       }
+
+      if (evt.type === 'tileloaderror' || evt.type === 'imageloaderror') {
+        update[uid].errors++;
+      }
+
       return update;
     });
   };
@@ -189,6 +229,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     return !((layer as OlLayer).getSource && ((layer as OlLayer).getSource() as OlSourceVector)?.forEachFeature);
   };
 
+  // TODO own component?
   const treeNodeTitleRenderer = (layer: OlBaseLayer) => {
     if (!map) {
       return;
@@ -200,6 +241,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
     const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
       layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
+    const hasTileLoadError = layer instanceof OlLayer && getUid(layer.getSource()) ?
+      layerTileLoadCounter[getUid(layer.getSource())]?.errors > 0 : false;
 
     if (layer instanceof OlLayerGroup) {
       return (
@@ -226,6 +269,23 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               >
                 {percent < 100 && <LoadingIndicator />}
               </span>
+            </span>
+            <span
+              aria-label="layer-infos"
+              className="layer-infos"
+            >
+              {
+                (layer.get('visible') && hasTileLoadError) && (
+                  <Tooltip
+                    title={t('LayerTree.tileLoadErrorTooltip')}
+                  >
+                    <FontAwesomeIcon
+                      className="tile-load-error"
+                      icon={faTriangleExclamation}
+                    />
+                  </Tooltip>
+                )
+              }
             </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
