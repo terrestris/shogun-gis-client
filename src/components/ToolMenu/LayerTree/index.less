@@ -19,6 +19,7 @@
   .ant-tree-node-content-wrapper {
     flex: 1;
     overflow-x: auto;
+
     .ant-tree-title {
       .tree-node-header {
         display: flex;
@@ -27,18 +28,9 @@
           margin-right: 8px;
         }
 
-        .loading-dots{
-          position: fixed;
-        }
-
         .loading-indicator {
           flex: 1;
           opacity: 0.75;
-          transition: opacity 2s;
-        }
-
-        .loading-indicator.ant-progress-status-success {
-          opacity: 0;
           transition: opacity 2s;
         }
 
