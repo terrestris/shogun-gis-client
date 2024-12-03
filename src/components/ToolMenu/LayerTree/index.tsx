@@ -43,9 +43,9 @@ import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
+import LoadingIndicator from './LoadingIndicator';
 
 import './index.less';
-import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
@@ -137,9 +137,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   }, [map, registerTileLoadHandler, checkListeners]);
 
   const tileLoadStartListener = (evt: BaseEvent) => {
-    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+    setLayerTileLoadCounter(counter => {
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
       // reset when load was finished
       if (update[uid] && update[uid].loaded >= update[uid].loading) {
         update[uid].loading = 1;
@@ -161,9 +161,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   };
 
   const tileLoadEndListener = (evt: BaseEvent | Event) => {
-    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+    setLayerTileLoadCounter(counter => {
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
@@ -204,7 +204,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (layer instanceof OlLayerGroup) {
       return (
         <div
-          aria-label='layer-group'
+          aria-label="layer-group"
         >
           {layer.get('name')}
         </div>
@@ -217,12 +217,12 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             aria-label="tree-node-header"
           >
             <span
-              aria-label='layer-name'
-              className='layer-name'
+              aria-label="layer-name"
+              className="layer-name"
             >
               {layer.get('name')}
               <span
-                className='loading-dots'
+                className="loading-dots"
               >
                 {percent < 100 && <LoadingIndicator />}
               </span>
@@ -230,7 +230,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
                 <div
-                  aria-label='layer-context-menu'
+                  aria-label="layer-context-menu"
                 >
                   <LayerTreeContextMenu
                     layer={layer}
@@ -246,7 +246,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             layer.get('visible') &&
             <div
               className="layer-transparency"
-              aria-label='transparency-slider'
+              aria-label="transparency-slider"
             >
               <LayerTransparencySlider
                 tooltip={{
