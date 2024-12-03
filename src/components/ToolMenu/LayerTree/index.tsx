@@ -5,6 +5,17 @@ import React, {
 } from 'react';
 
 import {
+  faTriangleExclamation
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
+  Tooltip
+} from 'antd';
+
+import {
   getUid
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
@@ -43,9 +54,9 @@ import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
+import LoadingIndicator from './LoadingIndicator';
 
 import './index.less';
-import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
@@ -53,6 +64,7 @@ export type LayerTileLoadCounter = Record<string, {
   loading: number;
   loaded: number;
   percent: number;
+  errors: number;
 }>;
 
 export const LayerTree: React.FC<LayerTreeProps> = ({
@@ -137,46 +149,63 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   }, [map, registerTileLoadHandler, checkListeners]);
 
   const tileLoadStartListener = (evt: BaseEvent) => {
-    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+    setLayerTileLoadCounter(counter => {
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
+
       // reset when load was finished
       if (update[uid] && update[uid].loaded >= update[uid].loading) {
         update[uid].loading = 1;
         update[uid].loaded = 0;
         update[uid].percent = 0;
+        update[uid].errors = 0;
+
         return update;
       }
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
           loaded: 0,
-          percent: 0
+          percent: 0,
+          errors: 0
         };
       }
+
       update[uid].loading = Number.isInteger(update[uid].loading) ?
         update[uid].loading + 1 : 1;
+
       return update;
     });
   };
 
   const tileLoadEndListener = (evt: BaseEvent | Event) => {
-    setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+    setLayerTileLoadCounter(counter => {
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
           loaded: 0,
-          percent: 0
+          percent: 0,
+          errors: 0
         };
       }
+
       update[uid].loaded = Number.isInteger(update[uid].loaded) ?
         update[uid].loaded + 1 : 1;
+
       const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
+
       if (percent > update[uid].percent) {
         update[uid].percent = percent;
       }
+
+      if (evt.type === 'tileloaderror' || evt.type === 'imageloaderror') {
+        update[uid].errors++;
+      }
+
       return update;
     });
   };
@@ -200,11 +229,13 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
     const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
       layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
+    const hasTileLoadError = layer instanceof OlLayer && getUid(layer.getSource()) ?
+      layerTileLoadCounter[getUid(layer.getSource())]?.errors > 0 : false;
 
     if (layer instanceof OlLayerGroup) {
       return (
         <div
-          aria-label='layer-group'
+          aria-label="layer-group"
         >
           {layer.get('name')}
         </div>
@@ -217,20 +248,37 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             aria-label="tree-node-header"
           >
             <span
-              aria-label='layer-name'
-              className='layer-name'
+              aria-label="layer-name"
+              className="layer-name"
             >
               {layer.get('name')}
               <span
-                className='loading-dots'
+                className="loading-dots"
               >
                 {percent < 100 && <LoadingIndicator />}
               </span>
             </span>
+            <span
+              aria-label="layer-infos"
+              className="layer-infos"
+            >
+              {
+                (layer.get('visible') && hasTileLoadError) && (
+                  <Tooltip
+                    title={t('LayerTree.tileLoadErrorTooltip')}
+                  >
+                    <FontAwesomeIcon
+                      className="tile-load-error"
+                      icon={faTriangleExclamation}
+                    />
+                  </Tooltip>
+                )
+              }
+            </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
                 <div
-                  aria-label='layer-context-menu'
+                  aria-label="layer-context-menu"
                 >
                   <LayerTreeContextMenu
                     layer={layer}
@@ -246,7 +294,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             layer.get('visible') &&
             <div
               className="layer-transparency"
-              aria-label='transparency-slider'
+              aria-label="transparency-slider"
             >
               <LayerTransparencySlider
                 tooltip={{

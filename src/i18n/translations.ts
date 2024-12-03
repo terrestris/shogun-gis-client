@@ -80,7 +80,8 @@ export default {
       },
       LayerTree: {
         transparency: 'Transparenz',
-        noLegendAvailable: 'Keine Legende verfügbar'
+        noLegendAvailable: 'Keine Legende verfügbar',
+        tileLoadErrorTooltip: 'Fehler beim Laden des Layers'
       },
       LayerTreeContextMenu: {
         layerZoomToExtent: 'Auf Layerausdehnung zoomen',
@@ -376,7 +377,8 @@ export default {
       },
       LayerTree: {
         transparency: 'Transparency',
-        noLegendAvailable: 'No legend available'
+        noLegendAvailable: 'No legend available',
+        tileLoadErrorTooltip: 'Error while loading the layer'
       },
       LayerTreeContextMenu: {
         layerZoomToExtent: 'Zoom to layer extent',
