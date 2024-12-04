@@ -5,6 +5,15 @@ import React, {
 } from 'react';
 
 import {
+  faMagnifyingGlass,
+  faCircleInfo,
+  faPen
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
   getUid
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
@@ -221,6 +230,21 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               className='layer-name'
             >
               {layer.get('name')}
+              {layer.get('searchable') &&
+                < FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className='layer-icon'
+                />}
+              {layer.get('hoverable') &&
+                < FontAwesomeIcon
+                  icon={faCircleInfo}
+                  className='layer-icon'
+                />}
+              {layer.get('editable') &&
+                < FontAwesomeIcon
+                  icon={faPen}
+                  className='layer-icon'
+                />}
               <span
                 className='loading-dots'
               >
