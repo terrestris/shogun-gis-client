@@ -13,11 +13,12 @@ import {
 
 import {
   Button,
-  Tooltip,
   Flex
 } from 'antd';
 
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+
+import './index.less';
 
 export interface RerouteToLoginProps {
   rerouteMsg: string;
@@ -53,20 +54,16 @@ const RerouteToLogin: React.FC<RerouteToLoginProps> = ({
     <Flex
       align='center'
     >
-      <Tooltip
-        title='Login'
+      <Button
+        type='link'
+        onClick={onLoginLinkClick}
+        icon={
+          <FontAwesomeIcon icon={faRightToBracket} />
+        }
       >
-        <Button
-          type='link'
-          onClick={onLoginLinkClick}
-          icon={
-            <FontAwesomeIcon icon={faRightToBracket} />
-          }
-        >
-          {rerouteMsg}
-          <i className="fa-solid fa-right-to-bracket"></i>
-        </Button>
-      </Tooltip>
+        {rerouteMsg}
+        <i className="fa-solid fa-right-to-bracket"></i>
+      </Button>
     </Flex>
   );
 };

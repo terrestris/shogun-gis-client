@@ -816,20 +816,22 @@ const renderApp = async () => {
     }
 
     let type: AlertProps['type'] = 'warning';
-    let action: React.ReactNode;
-    let errorDescription = i18n.t('Index.errorDescription');
+    let errorDescription: string |React.ReactElement = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
       errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_UNAUTHORIZED) {
-      errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
+      errorDescription =
+        <p>
+          {i18n.t('Index.permissionDeniedUnauthorized')}
+          <RerouteToLogin
+            rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
+          />
+        </p>;
+
       type = 'error';
-      action =
-        <RerouteToLogin
-          rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
-        />;
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
@@ -852,7 +854,6 @@ const renderApp = async () => {
             message={i18n.t('Index.errorMessage')}
             description={errorDescription}
             type={type}
-            action={action}
             showIcon
           />
         </SHOGunAPIClientProvider>
