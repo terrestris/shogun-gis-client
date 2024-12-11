@@ -99,7 +99,8 @@ import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
 import {
   setLayerTreeActiveUploadTools,
   setLayerTreeShowLegends,
-  setMetadataVisible
+  setMetadataVisible,
+  setLayerIconsVisible
 } from './store/layerTree';
 import {
   setLegal
@@ -285,6 +286,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'tree' && typeof tool.config.metadataVisible !== 'undefined') {
           store.dispatch(setMetadataVisible(tool.config.metadataVisible));
+        }
+        if (tool.name === 'tree' && typeof tool.config.layerIconsVisible !== 'undefined') {
+          store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
         }
       });
     store.dispatch(setAvailableTools(availableTools));

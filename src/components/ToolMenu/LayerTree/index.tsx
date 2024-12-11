@@ -5,6 +5,15 @@ import React, {
 } from 'react';
 
 import {
+  faMagnifyingGlass,
+  faCircleInfo,
+  faPen
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
   getUid
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
@@ -67,8 +76,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
   const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
-  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
+  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>(showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+  const layerIconsVisible: boolean = useAppSelector(state => state.layerTree.layerIconsVisible) ?? false;
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
@@ -225,6 +235,28 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
                 className='loading-dots'
               >
                 {percent < 100 && <LoadingIndicator />}
+              </span>
+              <span
+                className='layer-icons-group'
+              >
+                {layer.get('searchable') && layerIconsVisible && (
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className='layer-icon'
+                  />
+                )}
+                {layer.get('hoverable') && layer.get('visible') && layerIconsVisible && (
+                  <FontAwesomeIcon
+                    icon={faCircleInfo}
+                    className='layer-icon'
+                  />
+                )}
+                {layer.get('editable') && layerIconsVisible && (
+                  <FontAwesomeIcon
+                    icon={faPen}
+                    className='layer-icon'
+                  />
+                )}
               </span>
             </span>
             {
