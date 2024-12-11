@@ -247,6 +247,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             <div
               className="layer-transparency"
               aria-label='transparency-slider'
+              onClick={e => e.stopPropagation()}
+              onDragStart={e => {e.stopPropagation(); e.preventDefault();}}
+              draggable={true}
             >
               <LayerTransparencySlider
                 tooltip={{
