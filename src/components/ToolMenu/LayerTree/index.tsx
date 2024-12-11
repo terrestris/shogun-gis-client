@@ -78,6 +78,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+  const layerIconsVisible: boolean = useAppSelector(state => state.layerTree.layerIconsVisible) ?? false;
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
@@ -209,6 +210,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
     const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
       layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
+    const shouldDisplayIcon = layer.get('visible') && layerIconsVisible;
 
     if (layer instanceof OlLayerGroup) {
       return (
@@ -230,21 +232,24 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               className='layer-name'
             >
               {layer.get('name')}
-              {layer.get('searchable') &&
+              {layer.get('searchable') && shouldDisplayIcon && (
                 < FontAwesomeIcon
                   icon={faMagnifyingGlass}
                   className='layer-icon'
-                />}
-              {layer.get('hoverable') &&
+                />
+              )}
+              {layer.get('hoverable') && shouldDisplayIcon && (
                 < FontAwesomeIcon
                   icon={faCircleInfo}
                   className='layer-icon'
-                />}
-              {layer.get('editable') &&
+                />
+              )}
+              {layer.get('editable') && shouldDisplayIcon && (
                 < FontAwesomeIcon
                   icon={faPen}
                   className='layer-icon'
-                />}
+                />
+              )}
               <span
                 className='loading-dots'
               >
