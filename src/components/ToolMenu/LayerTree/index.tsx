@@ -76,7 +76,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
   const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
-  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
+  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>(showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
   const layerIconsVisible: boolean = useAppSelector(state => state.layerTree.layerIconsVisible) ?? false;
 
@@ -210,7 +210,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
     const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
       layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
-    const shouldDisplayIcon = layer.get('visible') && layerIconsVisible;
 
     if (layer instanceof OlLayerGroup) {
       return (
@@ -232,28 +231,32 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               className='layer-name'
             >
               {layer.get('name')}
-              {layer.get('searchable') && shouldDisplayIcon && (
-                < FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  className='layer-icon'
-                />
-              )}
-              {layer.get('hoverable') && shouldDisplayIcon && (
-                < FontAwesomeIcon
-                  icon={faCircleInfo}
-                  className='layer-icon'
-                />
-              )}
-              {layer.get('editable') && shouldDisplayIcon && (
-                < FontAwesomeIcon
-                  icon={faPen}
-                  className='layer-icon'
-                />
-              )}
               <span
                 className='loading-dots'
               >
                 {percent < 100 && <LoadingIndicator />}
+              </span>
+              <span
+                className='layer-icons-group'
+              >
+                {layer.get('searchable') && layerIconsVisible && (
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className='layer-icon'
+                  />
+                )}
+                {layer.get('hoverable') && layer.get('visible') && layerIconsVisible && (
+                  <FontAwesomeIcon
+                    icon={faCircleInfo}
+                    className='layer-icon'
+                  />
+                )}
+                {layer.get('editable') && layerIconsVisible && (
+                  <FontAwesomeIcon
+                    icon={faPen}
+                    className='layer-icon'
+                  />
+                )}
               </span>
             </span>
             {
