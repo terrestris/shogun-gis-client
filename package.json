@@ -45,7 +45,7 @@
     "@terrestris/base-util": "^2.0.0",
     "@terrestris/mapfish-print-manager": "^15.0.0",
     "@terrestris/ol-util": "^20.0.0",
-    "@terrestris/react-geo": "25.1.2",
+    "@terrestris/react-geo": "26.2.1",
     "@terrestris/react-util": "^9.0.0",
     "@terrestris/shogun-e2e-tests": "^1.0.8",
     "@terrestris/shogun-util": "^10.1.0",
