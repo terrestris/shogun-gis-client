@@ -488,13 +488,13 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
     style['--complementaryColor'] = theme.complementaryColor;
   }
   if (theme.faviconPath) {
-    const favicon = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+    const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
     if (favicon) {
       favicon.href = theme.faviconPath;
     } else {
       // If no favicon is set, create a new one
       const newLink = document.createElement('link');
-      newLink.rel = 'shortcut icon';
+      newLink.rel = 'icon';
       newLink.type = 'image/x-icon';
       newLink.href = theme.faviconPath;
       document.head.appendChild(newLink);
