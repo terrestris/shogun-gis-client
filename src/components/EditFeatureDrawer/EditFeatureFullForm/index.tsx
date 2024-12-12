@@ -118,7 +118,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
       });
 
-      if (tabConfigs.length > 1) {
+      if (tabConfigs?.length > 1) {
         Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
       }
 
