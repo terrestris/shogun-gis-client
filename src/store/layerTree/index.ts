@@ -8,6 +8,7 @@ export type LayerTreeConfig = {
   activeUploadTools?: UploadTools[];
   showLegends?: boolean;
   metadataVisible?: boolean;
+  layerIconsVisible?: boolean;
 };
 
 export enum UploadTools {
@@ -19,7 +20,8 @@ const initialState: LayerTreeConfig = {
   enabled: false,
   activeUploadTools: [UploadTools.addWMS, UploadTools.dataUpload],
   showLegends: false,
-  metadataVisible: true
+  metadataVisible: true,
+  layerIconsVisible: false
 };
 
 export const slice = createSlice({
@@ -40,6 +42,9 @@ export const slice = createSlice({
     },
     setMetadataVisible(state, action: PayloadAction<boolean>) {
       state.metadataVisible = action.payload;
+    },
+    setLayerIconsVisible(state, action: PayloadAction<boolean>) {
+      state.layerIconsVisible = action.payload;
     }
   }
 });
@@ -48,7 +53,8 @@ export const {
   setLayerTreeEnabled,
   setLayerTreeActiveUploadTools,
   setLayerTreeShowLegends,
-  setMetadataVisible
+  setMetadataVisible,
+  setLayerIconsVisible
 } = slice.actions;
 
 export default slice.reducer;
