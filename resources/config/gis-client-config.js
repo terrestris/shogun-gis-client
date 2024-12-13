@@ -22,10 +22,10 @@ var clientConfig = {
     }
   },
   search: {
+    nominatimUrl: 'https://nominatim.openstreetmap.org/search?',
     solrBasePath: '/search/query',
     coreName: 'search',
     defaultUseViewBox: true,
-    useNominatim: true,
     groupByCategory: true,
     useSolrHighlighting: true,
     activateLayerOnClick: true,

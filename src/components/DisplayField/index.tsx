@@ -157,7 +157,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     try {
       v = JSON.parse(v);
     } catch (e) {
-      Logger.error(e);
+      Logger.trace(e);
       return null;
     }
 
@@ -195,7 +195,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
     try {
       v = JSON.parse(v);
     } catch (e) {
-      Logger.error(e);
+      Logger.trace(e);
       return false;
     }
 

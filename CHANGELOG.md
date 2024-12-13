@@ -1,3 +1,29 @@
+## [9.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.1...v9.0.0-next.2) (2024-11-27)
+
+
+### Features
+
+* add XYZ and Stamen/Stadia serializers ([a0141cf](https://github.com/terrestris/shogun-gis-client/commit/a0141cf952325f360ddacebdb0942e57a4565625))
+* adds reroute link from error page to login ([133c46c](https://github.com/terrestris/shogun-gis-client/commit/133c46c3489ba44e4eea85f7d556ba1ac892d0a2))
+* init ImportDataModal (and fix minor styling issues) ([08b1016](https://github.com/terrestris/shogun-gis-client/commit/08b101692153ce3192b5cc30f3daf21eb0738e94))
+* parse map interactions ([4525420](https://github.com/terrestris/shogun-gis-client/commit/4525420966f92aefdedc613c885f4015334e444f))
+* remove static loading text, add loading indicator and minor css cleanup ([92b0ec7](https://github.com/terrestris/shogun-gis-client/commit/92b0ec7509a7fbdcbe0a0ecdd1efa3a8078b2a06))
+
+
+### Bugfixes
+
+* add layer to target group before adding it to the map ([4279c64](https://github.com/terrestris/shogun-gis-client/commit/4279c64d30b6a2215c0f1d6123209ae10989d3a9))
+* cursor jumps on keystroke ([691fe6f](https://github.com/terrestris/shogun-gis-client/commit/691fe6f90535f710afbdc21bae9a645d5dd5bc5c))
+* geometry edit tools and styling ([#1762](https://github.com/terrestris/shogun-gis-client/issues/1762)) ([1b6b833](https://github.com/terrestris/shogun-gis-client/commit/1b6b8332fa09a5188c397e66d60fd102c395b878))
+* layout and styling ([b8ee0df](https://github.com/terrestris/shogun-gis-client/commit/b8ee0dfce6822cea53b497c6ee2da8b9ce64d659))
+* make metadata configurable ([e8b5d3a](https://github.com/terrestris/shogun-gis-client/commit/e8b5d3a1d6c1cf892a421eca81960687528fb357))
+* remove empty element and add check ([a06b8ee](https://github.com/terrestris/shogun-gis-client/commit/a06b8ee710f819cbb97d41d17f05e27f5dccbcc3))
+* restore the initial value ([a73e05b](https://github.com/terrestris/shogun-gis-client/commit/a73e05b07967932118817f76dfebf96ecb2cde09))
+* rewording of translation text ([f76cf95](https://github.com/terrestris/shogun-gis-client/commit/f76cf9580c18ec374fd6ef12ebd2786385c9ecae))
+* styling ([553d512](https://github.com/terrestris/shogun-gis-client/commit/553d51202a49124339fa0e76e022ce66446b607e))
+* update feature info to changes in react-geo ([35e8ab1](https://github.com/terrestris/shogun-gis-client/commit/35e8ab18773416dc071f8e47ea89925e244043f7))
+* white space ([080d582](https://github.com/terrestris/shogun-gis-client/commit/080d5827293cd25d9b0101bf7020eef076209e09))
+
 ## [9.0.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v8.11.0...v9.0.0-next.1) (2024-10-18)
 
 

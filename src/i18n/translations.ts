@@ -162,10 +162,8 @@ export default {
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
         errorDescriptionAppConfigStaticNotFound: 'Die Konfiguration der Applikation konnte nicht geladen werden.',
-        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.'
-      },
-      Nominatim: {
-        placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
+        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.',
+        rerouteToLoginPage: 'Zur Anmeldeseite.'
       },
       UserMenu: {
         settingsMenuTitle: 'Profil bearbeiten',
@@ -194,9 +192,12 @@ export default {
       MultiSearch: {
         searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
         searchData: 'Layerdaten durchsuchen',
-        searchNominatim: 'Ortssuche (Nominatim)',
-        nominatimTitle: 'Ortssuche',
-        searchPlaceholder: 'Orts- und Datensuche…'
+        searchGeocoder: 'Ortssuche',
+        searchPlaceholder: 'Orts- und Layersuche…',
+        searchPlaceholderGeocoderOnly: 'Suche nach Orten, Straßen, POIs…',
+        searchPlaceholderDataOnly: 'Suche nach Inhalten in Layern…',
+        settingsTooltip: 'Einstellungen',
+        placeholder: 'e, POI usw.'
       },
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
@@ -291,6 +292,9 @@ export default {
           supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
           parsing: 'Die Datei konnte nicht gelesen werden'
         }
+      },
+      useNominatimSearchEngine: {
+        title: 'Ortssuche'
       }
     }
   },
@@ -453,10 +457,8 @@ export default {
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
         errorDescriptionAppConfigStaticNotFound: 'The configuration of the application could not be loaded correctly.',
-        permissionDeniedUnauthorized: 'This application is not public. Authentication required.'
-      },
-      Nominatim: {
-        placeholder: 'Place name, street name, district name, POI, etc.'
+        permissionDeniedUnauthorized: 'This application is not public. Authentication required.',
+        rerouteToLoginPage: 'To login page.'
       },
       UserMenu: {
         settingsMenuTitle: 'Edit profile',
@@ -485,9 +487,11 @@ export default {
       MultiSearch: {
         searchInViewBox: 'Search in current extent',
         searchData: 'Search layer data',
-        searchNominatim: 'Search nominatim',
-        nominatimTitle: 'Nominatim',
-        searchPlaceholder: 'Address and data search…'
+        searchGeocoder: 'Search location',
+        searchPlaceholder: 'Location and layer search…',
+        searchPlaceholderGeocoderOnly: 'Search for locations, streets, POIs…',
+        searchPlaceholderDataOnly: 'Search in the layer contents…',
+        settingsTooltip: 'Settings'
       },
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
@@ -582,6 +586,9 @@ export default {
           supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
           parsing: 'Error while reading the file'
         }
+      },
+      useNominatimSearchEngine: {
+        title: 'Location'
       }
     }
   }

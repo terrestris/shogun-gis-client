@@ -25,8 +25,8 @@ declare module 'clientConfig' {
     requireFieldMatch?: boolean;
   };
   type SearchConfiguration = {
+    nominatimUrl?: string;
     solrBasePath?: string;
-    useNominatim?: boolean;
     groupByCategory?: boolean;
     useSolrHighlighting?: boolean;
     defaultUseViewBox?: boolean;

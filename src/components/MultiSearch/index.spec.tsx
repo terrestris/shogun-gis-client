@@ -10,17 +10,11 @@ import MultiSearch from './index';
 
 describe('<MultiSearch />', () => {
 
-  it('is defined', () => {
-    expect(MultiSearch).not.toBeUndefined();
-  });
-
   it('can be rendered', () => {
     const {
       container
     } = render(
-      <MultiSearch
-        useNominatim={true}
-      />, {
+      <MultiSearch />, {
         wrapper: createReduxWrapper()
       }
     );

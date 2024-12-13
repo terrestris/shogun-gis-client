@@ -223,6 +223,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                   <FeatureInfoPropertyGrid
                     features={features}
                     layerName={layerName}
+                    layer={mapLayer}
                   />
               }
             </div>

@@ -68,6 +68,7 @@ import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIC
 
 const App = React.lazy(() => import('./App'));
 
+import RerouteToLogin from './components/RerouteToLogin';
 import {
   PluginProvider
 } from './context/PluginContext';
@@ -98,7 +99,8 @@ import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
 import {
   setLayerTreeActiveUploadTools,
   setLayerTreeShowLegends,
-  setMetadataVisible
+  setMetadataVisible,
+  setLayerIconsVisible
 } from './store/layerTree';
 import {
   setLegal
@@ -284,6 +286,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'tree' && typeof tool.config.metadataVisible !== 'undefined') {
           store.dispatch(setMetadataVisible(tool.config.metadataVisible));
+        }
+        if (tool.name === 'tree' && typeof tool.config.layerIconsVisible !== 'undefined') {
+          store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
         }
       });
     store.dispatch(setAvailableTools(availableTools));
@@ -487,13 +492,13 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
     style['--complementaryColor'] = theme.complementaryColor;
   }
   if (theme.faviconPath) {
-    const favicon = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+    const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
     if (favicon) {
       favicon.href = theme.faviconPath;
     } else {
       // If no favicon is set, create a new one
       const newLink = document.createElement('link');
-      newLink.rel = 'shortcut icon';
+      newLink.rel = 'icon';
       newLink.type = 'image/x-icon';
       newLink.href = theme.faviconPath;
       document.head.appendChild(newLink);
@@ -815,6 +820,7 @@ const renderApp = async () => {
     }
 
     let type: AlertProps['type'] = 'warning';
+    let action: React.ReactNode;
     let errorDescription = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
@@ -824,6 +830,10 @@ const renderApp = async () => {
     if ((error as Error)?.message === LoadingErrorCode.APP_UNAUTHORIZED) {
       errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
       type = 'error';
+      action =
+        <RerouteToLogin
+          rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
+        />;
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
@@ -840,13 +850,16 @@ const renderApp = async () => {
 
     root.render(
       <React.StrictMode>
-        <Alert
-          className="error-boundary"
-          message={i18n.t('Index.errorMessage')}
-          description={errorDescription}
-          type={type}
-          showIcon
-        />
+        <SHOGunAPIClientProvider client={client}>
+          <Alert
+            className="error-boundary"
+            message={i18n.t('Index.errorMessage')}
+            description={errorDescription}
+            type={type}
+            action={action}
+            showIcon
+          />
+        </SHOGunAPIClientProvider>
       </React.StrictMode>
     );
   }
