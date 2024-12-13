@@ -39,7 +39,7 @@ export type GetFeatureOpts = {
   /**
    * The filter to apply to the GetFeature request.
    */
-  filter?: OlFormatFilter;
+  filter?: OlFormatFilter | Element;
   /**
    * The properties to return for each feature.
    */
@@ -59,7 +59,7 @@ export const useExecuteGetFeature = () => {
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
-  const executeGetFeature = useCallback(async (opts: GetFeatureOpts) => {
+  const executeGetFeature = useCallback(async (opts: GetFeatureOpts, version = '1.1.0') => {
     if (!map) {
       return;
     }
@@ -94,7 +94,7 @@ export const useExecuteGetFeature = () => {
     const geomProperty = describeFeatureType.featureTypes[0]?.properties
       ?.find(property => isGeometryType(property.type));
 
-    const featureRequest = new OlFormatWFS().writeGetFeature({
+    const featureRequest = new OlFormatWFS({version: version}).writeGetFeature({
       srsName: map.getView().getProjection().getCode(),
       featureNS: describeFeatureType.targetNamespace,
       featurePrefix: describeFeatureType.targetPrefix,
@@ -104,9 +104,13 @@ export const useExecuteGetFeature = () => {
       // Ensure the geometry is always returned.
       propertyNames: (opts.propertyNames && geomProperty?.name) ? [...opts.propertyNames, geomProperty?.name] : undefined,
       bbox: opts.bbox,
-      filter: opts.filter,
+      filter: opts.filter instanceof OlFormatFilter ? opts.filter : undefined,
       geometryName: geomProperty?.name
     });
+
+    if (featureRequest instanceof Element && opts.filter instanceof Element) {
+      featureRequest.getElementsByTagName('Query')[0].appendChild(opts.filter);
+    }
 
     const defaultHeaders = {
       'Content-Type': 'application/json'
