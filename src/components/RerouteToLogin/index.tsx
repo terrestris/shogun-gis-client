@@ -4,16 +4,21 @@ import React, {
 } from 'react';
 
 import {
-  DoubleLeftOutlined
-} from '@ant-design/icons';
+  faRightToBracket
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
 
 import {
   Button,
-  Tooltip,
   Flex
 } from 'antd';
 
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+
+import './index.less';
 
 export interface RerouteToLoginProps {
   rerouteMsg: string;
@@ -49,17 +54,16 @@ const RerouteToLogin: React.FC<RerouteToLoginProps> = ({
     <Flex
       align='center'
     >
-      <Tooltip
-        title='Login'
+      <Button
+        type='link'
+        onClick={onLoginLinkClick}
+        icon={
+          <FontAwesomeIcon icon={faRightToBracket} />
+        }
       >
-        <Button
-          type='link'
-          onClick={onLoginLinkClick}
-        >
-          <DoubleLeftOutlined />
-        </Button>
-      </Tooltip>
-      {rerouteMsg}
+        {rerouteMsg}
+        <i className="fa-solid fa-right-to-bracket"></i>
+      </Button>
     </Flex>
   );
 };
