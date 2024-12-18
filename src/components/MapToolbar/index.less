@@ -1,0 +1,21 @@
+.map-toolbar {
+  position: absolute;
+  top: calc(var(--headerHeight) + 1em);
+  right: 10px;
+  transition: 0.3s;
+  flex-direction: column;
+  z-index: 1;
+
+  button {
+    margin: 5px;
+    display: block;
+    color: var(--complementaryColor);
+    background: var(--primaryColor);
+    border-color: var(--primaryColor);
+
+    &:hover {
+      background: var(--secondaryColor);
+      border-color: var(--secondaryColor);
+    }
+  }
+}
