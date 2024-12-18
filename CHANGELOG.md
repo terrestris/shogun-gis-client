@@ -1,3 +1,34 @@
+## [9.0.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.2...v9.0.0-next.3) (2024-12-18)
+
+
+### Dependencies
+
+* ignore test-results in subpaths ([6eb402c](https://github.com/terrestris/shogun-gis-client/commit/6eb402c6a3afd2da3fe36f4a135136580ba85f3a))
+* merge branch 'next' into reloadFeatureFix ([810521e](https://github.com/terrestris/shogun-gis-client/commit/810521eb7157733ee05ec5306d2d542f92ddb3ce))
+* update react-geo ([c278008](https://github.com/terrestris/shogun-gis-client/commit/c278008daa7854c0c1119ab94cbca06718a240d8))
+
+
+### Features
+
+* adds a configuration in the ToolConfig in order to customise display of layer-icons per app ([2f6538f](https://github.com/terrestris/shogun-gis-client/commit/2f6538f67796b079bd5a52d5dd8443293f8e0d98))
+* adds icon to indicate searchable, hoverable and/or editable layer ([25ef26a](https://github.com/terrestris/shogun-gis-client/commit/25ef26ae78e0e03b5b09420ceaaa56f6051b2ea3))
+* include wfs search and refactor MultiSearch ([ada52b2](https://github.com/terrestris/shogun-gis-client/commit/ada52b2e5f55b9303c5191b4dd5c690343ae6933))
+
+
+### Bugfixes
+
+* add missing fields due to dependency update ([d623c5a](https://github.com/terrestris/shogun-gis-client/commit/d623c5ab0e37993e40d0598f2a671e3df36f7ef4))
+* check condition for icon display and styling ([bc33a7e](https://github.com/terrestris/shogun-gis-client/commit/bc33a7ebbd80eef550abf653843036302a416f2c))
+* create deep clone from state value ([66dcc10](https://github.com/terrestris/shogun-gis-client/commit/66dcc10cb9f580e6128512b1631ca61112368354))
+* drag and drop in nodeTitleRenderer ([a9264f2](https://github.com/terrestris/shogun-gis-client/commit/a9264f253ca88dd0d3e85d379695c9f9b31227c0))
+* fix client with terrestris dependencies update ([984dc23](https://github.com/terrestris/shogun-gis-client/commit/984dc23b2b2b9f6398746c145f5f6a0b360827b1))
+* layout fixes ([3312620](https://github.com/terrestris/shogun-gis-client/commit/331262046e54883ec91761ea37d756effd40ee42))
+* make gfi edit button work in all scenarios ([96560c6](https://github.com/terrestris/shogun-gis-client/commit/96560c6d2f5ebbcedc53d2f78d246e8473422236))
+* padding and extend link to the text ([038f251](https://github.com/terrestris/shogun-gis-client/commit/038f2510f67bf758131964fa7ac0731847696fc1))
+* padding in header ([3ed6ee5](https://github.com/terrestris/shogun-gis-client/commit/3ed6ee5bca855aba6788134ced0d2075c832b5b9))
+* readd support for a custom favicon path ([7bd4bf4](https://github.com/terrestris/shogun-gis-client/commit/7bd4bf455066af2ee95d84c8baf3838913fc61b5))
+* reloadFeature ([703b34f](https://github.com/terrestris/shogun-gis-client/commit/703b34f8704a30288675548de31d6aeb5b6e0d1b))
+
 ## [9.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.1...v9.0.0-next.2) (2024-11-27)
 
 
