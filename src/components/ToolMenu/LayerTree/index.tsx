@@ -148,8 +148,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
   const tileLoadStartListener = (evt: BaseEvent) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
+
       // reset when load was finished
       if (update[uid] && update[uid].loaded >= update[uid].loading) {
         update[uid].loading = 1;
@@ -157,6 +158,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         update[uid].percent = 0;
         return update;
       }
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
@@ -164,16 +166,19 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           percent: 0
         };
       }
+
       update[uid].loading = Number.isInteger(update[uid].loading) ?
         update[uid].loading + 1 : 1;
+
       return update;
     });
   };
 
   const tileLoadEndListener = (evt: BaseEvent | Event) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
@@ -181,12 +186,16 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           percent: 0
         };
       }
+
       update[uid].loaded = Number.isInteger(update[uid].loaded) ?
         update[uid].loaded + 1 : 1;
+
       const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
+
       if (percent > update[uid].percent) {
         update[uid].percent = percent;
       }
+
       return update;
     });
   };
