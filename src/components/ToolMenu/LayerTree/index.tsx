@@ -14,6 +14,10 @@ import {
 } from '@fortawesome/react-fontawesome';
 
 import {
+  Tooltip
+} from 'antd';
+
+import {
   getUid
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
@@ -249,22 +253,34 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
                 className='layer-icons-group'
               >
                 {layer.get('searchable') && layerIconsVisible && (
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className='layer-icon'
-                  />
+                  <>
+                    <Tooltip title={t('ToolMenu.searchable')}>
+                      <FontAwesomeIcon
+                        icon={faMagnifyingGlass}
+                        className='layer-icon'
+                      />
+                    </Tooltip>
+                  </>
                 )}
                 {layer.get('hoverable') && layer.get('visible') && layerIconsVisible && (
-                  <FontAwesomeIcon
-                    icon={faCircleInfo}
-                    className='layer-icon'
-                  />
+                  <>
+                    <Tooltip title={t('ToolMenu.queryable')}>
+                      <FontAwesomeIcon
+                        icon={faCircleInfo}
+                        className='layer-icon'
+                      />
+                    </Tooltip>
+                  </>
                 )}
                 {layer.get('editable') && layerIconsVisible && (
-                  <FontAwesomeIcon
-                    icon={faPen}
-                    className='layer-icon'
-                  />
+                  <>
+                    <Tooltip title={t('ToolMenu.editable')}>
+                      <FontAwesomeIcon
+                        icon={faPen}
+                        className='layer-icon'
+                      />
+                    </Tooltip>
+                  </>
                 )}
               </span>
             </span>

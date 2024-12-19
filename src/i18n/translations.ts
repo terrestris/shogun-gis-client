@@ -124,7 +124,10 @@ export default {
         uploadData: 'Daten hochladen',
         print: 'Export',
         layertree: 'Karten',
-        languageSelect: 'Sprachauswahl'
+        languageSelect: 'Sprachauswahl',
+        searchable: 'durchsuchbar',
+        queryable: 'abfragbar',
+        editable: 'editierbar'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -420,7 +423,10 @@ export default {
         uploadData: 'Upload data',
         print: 'Export',
         layertree: 'Maps',
-        languageSelect: 'Language selector'
+        languageSelect: 'Language selector',
+        searchable: 'searchable',
+        queryable: 'queryable',
+        editable: 'editable'
       },
       PrintForm: {
         title: 'Title',
