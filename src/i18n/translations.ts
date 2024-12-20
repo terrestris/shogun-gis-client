@@ -126,6 +126,11 @@ export default {
         layertree: 'Karten',
         languageSelect: 'Sprachauswahl'
       },
+      MapToolbar: {
+        zoomInTooltip: 'Reinzoomen',
+        zoomOutTooltip: 'Rauszoomen',
+        geoLocation: 'Geolokalisierung'
+      },
       PrintForm: {
         title: 'Kartentitel',
         initialTitle: 'Druckausgabe',
@@ -421,6 +426,11 @@ export default {
         print: 'Export',
         layertree: 'Maps',
         languageSelect: 'Language selector'
+      },
+      MapToolbar: {
+        zoomInTooltip: 'Zoom in',
+        zoomOutTooltip: 'Zoom out',
+        geoLocation: 'Geolocation'
       },
       PrintForm: {
         title: 'Title',
