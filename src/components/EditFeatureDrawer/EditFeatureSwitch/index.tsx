@@ -129,6 +129,13 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
           return 'MultiPolygon';
         case 'gml:Polygon':
           return 'Polygon';
+        case 'xsd:boolean':
+        case 'xsd:date':
+        case 'xsd:int':
+        case 'xsd:number':
+        case 'xsd:string':
+        case undefined:
+          return;
         default:
           break;
       }

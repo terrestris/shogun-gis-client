@@ -2,14 +2,25 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import { FormInstance } from 'antd';
+import { Form } from 'antd';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditFeatureForm from '.';
+import EditFeatureForm, {
+  EditFeatureFormProps
+} from '.';
 
 describe('<EditFeatureForm />', () => {
-  let mockedForm: FormInstance<any>;
+  const EditFeatureFormWrapper = (props: Omit<EditFeatureFormProps, 'form'>) => {
+    const [form] = Form.useForm();
+
+    return (
+      <EditFeatureForm
+        {...props}
+        form={form}
+      />
+    );
+  };
 
   it('is defined', () => {
     expect(EditFeatureForm).toBeDefined();
@@ -19,9 +30,7 @@ describe('<EditFeatureForm />', () => {
     const {
       container
     } = render(
-      <EditFeatureForm
-        form={mockedForm}
-      />,
+      <EditFeatureFormWrapper />,
       {
         wrapper: createReduxWrapper()
       });

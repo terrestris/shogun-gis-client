@@ -6,18 +6,28 @@ import {
   waitFor
 } from '@testing-library/react';
 
-import { FormInstance } from 'antd/lib';
+import { Form } from 'antd';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
 import EditReferenceTable, {
-  EditReferenceDataType
+  EditReferenceTableProps
 } from '.';
 
 let tableElem: HTMLElement | null;
-let mockParentForm: FormInstance<EditReferenceDataType>;
 
 describe('<EditReferenceTable />', () => {
+  const EditReferenceTableWrapper = (props: Omit<EditReferenceTableProps, 'parentForm'>) => {
+    const [form] = Form.useForm();
+
+    return (
+      <EditReferenceTable
+        {...props}
+        parentForm={form}
+      />
+    );
+  };
+
   it('is defined', () => {
     expect(EditReferenceTable).toBeDefined();
   });
@@ -25,8 +35,7 @@ describe('<EditReferenceTable />', () => {
   beforeEach(() => {
     const { container } =
       render(
-        <EditReferenceTable
-          parentForm={mockParentForm}
+        <EditReferenceTableWrapper
           propertyName={'test'}
         />,
         {
