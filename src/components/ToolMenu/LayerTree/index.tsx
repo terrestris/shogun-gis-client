@@ -1,7 +1,8 @@
 import React, {
   useState,
   useEffect,
-  useCallback
+  useCallback,
+  useMemo
 } from 'react';
 
 import {
@@ -14,7 +15,8 @@ import {
 } from '@fortawesome/react-fontawesome';
 
 import {
-  getUid
+  getUid,
+  MapEvent as OlMapEvent
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
 import OlBaseLayer from 'ol/layer/Base';
@@ -52,9 +54,9 @@ import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
+import LoadingIndicator from './LoadingIndicator';
 
 import './index.less';
-import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
@@ -76,9 +78,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
   const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
+  const layerIconsVisible: boolean = useAppSelector(state => state.layerTree.layerIconsVisible) ?? false;
+
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>(showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
-  const layerIconsVisible: boolean = useAppSelector(state => state.layerTree.layerIconsVisible) ?? false;
+  const [mapScale, setMapScale] = useState<number>();
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
@@ -116,6 +120,38 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       registerTileLoadHandler();
     }
   }, [map, initialLayersUid, registerTileLoadHandler]);
+
+  const legendRequestExtraParams = useMemo(() => ({
+    scale: mapScale,
+    LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
+    TRANSPARENT: true
+  }), [mapScale]);
+
+  const legendRequestHeaders = useMemo(() => ({
+    ...getBearerTokenHeader(client?.getKeycloak())
+  }), [client]);
+
+  const onMapMoveEnd = useCallback((evt: OlMapEvent) => {
+    const mapView = evt.map.getView();
+
+    const unit = mapView.getProjection().getUnits() || 'm';
+    const resolution = mapView.getResolution();
+    const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
+
+    setMapScale(scale);
+  }, []);
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    map.on('moveend', onMapMoveEnd);
+
+    return () => {
+      map.un('moveend', onMapMoveEnd);
+    };
+  }, [map, onMapMoveEnd]);
 
   useEffect(() => {
     if (!map) {
@@ -213,10 +249,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       return;
     }
 
-    const mapView = map.getView();
-    const unit = mapView.getProjection().getUnits() || 'm';
-    const resolution = mapView.getResolution();
-    const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
     const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
       layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
 
@@ -313,18 +345,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             <Legend
               layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
               errorMsg={t('LayerTree.noLegendAvailable')}
-              extraParams={{
-                scale,
-                LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
-                TRANSPARENT: true
-              }}
-              headers={
-                layer.get('useBearerToken') ?
-                  {
-                    ...getBearerTokenHeader(client?.getKeycloak())
-                  } :
-                  {}
-              }
+              extraParams={legendRequestExtraParams}
+              headers={layer.get('useBearerToken') && legendRequestHeaders}
             />
           }
         </>
