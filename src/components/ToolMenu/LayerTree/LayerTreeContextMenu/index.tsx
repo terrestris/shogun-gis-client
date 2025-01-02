@@ -103,7 +103,6 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     t
   } = useTranslation();
 
-  const drawerVisibilty = useAppSelector(state => state.stylingDrawerVisibility);
   const downloadConfig: DownloadConfig[] = layer.get('downloadConfig') ?? null;
   const allowedEditMode = useAppSelector(
     state => state.editFeature.userEditMode
@@ -257,8 +256,10 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   };
 
   const configureStyles = () => {
-    dispatch(setStylingDrawerVisibility(true));
-    dispatch(setStylingDrawerLayerUid(getUid(layer)));
+    if (layer) {
+      dispatch(setStylingDrawerVisibility(true));
+      dispatch(setStylingDrawerLayerUid(getUid(layer)));
+    }
   };
 
   const dropdownMenuItems: ItemType[] = [];
@@ -324,7 +325,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   }
   if (isGeoserverLayer) {
     dropdownMenuItems.push({
-      label: 'Geostyler',
+      label: t('LayerTreeContextMenu.styleLayer'),
       key: 'geostyler'
     });
   }

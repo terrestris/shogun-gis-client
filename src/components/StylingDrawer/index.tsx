@@ -46,7 +46,6 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
   } = useTranslation();
 
   useEffect(() => {
-
     if (!layerUid) {
       setIsImageLayer(false);
     }

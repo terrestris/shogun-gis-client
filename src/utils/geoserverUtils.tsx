@@ -104,15 +104,13 @@ export const fetchGeoserverStyle = async (
   }
 };
 
-export const getLayerUrl = (layerSource: Source | undefined): string | false => {
-  if (!layerSource) {
-    return false;
-  }
+export const getLayerUrl = (layerSource: Source | undefined): string | undefined => {
+
   let url: string | undefined;
   if (layerSource instanceof TileWMS || layerSource instanceof ImageWMS) {
     url = layerSource instanceof TileWMS ? layerSource.getUrls()?.[0] : layerSource.getUrl();
   }
-  return url || false;
+  return url || undefined;
 };
 
 export const checkIfGeoserverLayer = (layerSource: Source | undefined): boolean => {
