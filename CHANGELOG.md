@@ -1,3 +1,23 @@
+## [9.0.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.3...v9.0.0-next.4) (2025-01-09)
+
+
+### Dependencies
+
+* update dependencies ([e7fc751](https://github.com/terrestris/shogun-gis-client/commit/e7fc751ccf3ab4a3015ed20506ad4bde4174f6dd))
+
+
+### Features
+
+* adds tooltips to layertree icons ([#1785](https://github.com/terrestris/shogun-gis-client/issues/1785)) ([05cf7ea](https://github.com/terrestris/shogun-gis-client/commit/05cf7ea0deae93224e07438720c3d01d237eff33))
+
+
+### Bugfixes
+
+* layertree checkbox css ([c008409](https://github.com/terrestris/shogun-gis-client/commit/c0084092c5de192c0fad2ce2c00c20e4ccf2f100))
+* prevent unnecessary rerenders of the Legend ([8219f57](https://github.com/terrestris/shogun-gis-client/commit/8219f57cf461acbda5da0f857209b17c44dbb7bd))
+* reactivate drill down feature info requests ([0058b88](https://github.com/terrestris/shogun-gis-client/commit/0058b88aa37dab53ac93a2a823b5f5ab9a3930cc))
+* show legend for WMS layers only ([26dc9ee](https://github.com/terrestris/shogun-gis-client/commit/26dc9ee747266f632df975b0ffb3f93ed145973d))
+
 ## [9.0.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.2...v9.0.0-next.3) (2024-12-18)
 
 
