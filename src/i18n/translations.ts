@@ -125,9 +125,9 @@ export default {
         print: 'Export',
         layertree: 'Karten',
         languageSelect: 'Sprachauswahl',
-        searchable: 'durchsuchbar',
-        queryable: 'abfragbar',
-        editable: 'editierbar'
+        searchable: 'Der Inhalt dieses Layers kann im Suchfeld abgefragt werden',
+        queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
+        editable: 'Die Features dieses Layers sind editierbar'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -424,9 +424,9 @@ export default {
         print: 'Export',
         layertree: 'Maps',
         languageSelect: 'Language selector',
-        searchable: 'searchable',
-        queryable: 'queryable',
-        editable: 'editable'
+        searchable: 'The contents of this layer can be queried in the search input',
+        queryable: 'The contents of this layer can be queried in the query map features tool',
+        editable: 'The features of this layer are editable'
       },
       PrintForm: {
         title: 'Title',
