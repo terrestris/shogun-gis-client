@@ -31,12 +31,14 @@ import {
 } from 'react-i18next';
 
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { isWmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import RgLayerTree, {
   LayerTreeProps as RgLayerTreeProps
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
 import { Legend } from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
+
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
@@ -52,9 +54,9 @@ import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
+import LoadingIndicator from './LoadingIndicator';
 
 import './index.less';
-import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
@@ -309,9 +311,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             </div>
           }
           {
-            (layer.get('visible') && visibleLegendsIds.includes(getUid(layer))) &&
+            (layer.get('visible') && isWmsLayer(layer) && visibleLegendsIds.includes(getUid(layer))) &&
             <Legend
-              layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+              layer={layer}
               errorMsg={t('LayerTree.noLegendAvailable')}
               extraParams={{
                 scale,
