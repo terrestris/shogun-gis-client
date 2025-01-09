@@ -124,7 +124,10 @@ export default {
         uploadData: 'Daten hochladen',
         print: 'Export',
         layertree: 'Karten',
-        languageSelect: 'Sprachauswahl'
+        languageSelect: 'Sprachauswahl',
+        searchable: 'Der Inhalt dieses Layers kann im Suchfeld abgefragt werden',
+        queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
+        editable: 'Die Features dieses Layers sind editierbar'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -420,7 +423,10 @@ export default {
         uploadData: 'Upload data',
         print: 'Export',
         layertree: 'Maps',
-        languageSelect: 'Language selector'
+        languageSelect: 'Language selector',
+        searchable: 'The contents of this layer can be queried in the search input',
+        queryable: 'The contents of this layer can be queried in the query map features tool',
+        editable: 'The features of this layer are editable'
       },
       PrintForm: {
         title: 'Title',
