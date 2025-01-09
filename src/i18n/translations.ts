@@ -158,12 +158,14 @@ export default {
       Index: {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
         applicationLoadErrorDescription:
-          'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
-          'Die Standardkonfiguration wird stattdessen geladen.',
+          'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        applicationLoadByNameErrorMessage:
+          'Die Applikation mit dem Namen {{applicationName}} konnte nicht geladen werden.',
         errorMessage: 'Fehler beim Laden der Applikation',
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        errorDescriptionAppConfigByNameNotFound: 'Die Applikation mit dem Namen {{applicationName}} konnte nicht geladen werden.',
         errorDescriptionAppConfigStaticNotFound: 'Die Konfiguration der Applikation konnte nicht geladen werden.',
         permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.',
         rerouteToLoginPage: 'Zur Anmeldeseite.'
@@ -456,12 +458,14 @@ export default {
       Index: {
         applicationLoadErrorMessage: 'Error while loading the application',
         applicationLoadErrorDescription:
-          'The application with ID {{applicationId}} could not be loaded correctly. ' +
-          'You\'re seeing the default application configuration.',
+          'The application with ID {{applicationId}} could not be loaded correctly.',
+        applicationLoadByNameErrorMessage:
+          'The application with the name {{applicationName}} could not be loaded correctly.',
         errorMessage: 'Error while loading the application',
         errorDescription: 'An unexpected error occurred while loading the application.',
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
+        errorDescriptionAppConfigByNameNotFound: 'The application with the name {{applicationName}} could not be loaded correctly.',
         errorDescriptionAppConfigStaticNotFound: 'The configuration of the application could not be loaded correctly.',
         permissionDeniedUnauthorized: 'This application is not public. Authentication required.',
         rerouteToLoginPage: 'To login page.'

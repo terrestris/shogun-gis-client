@@ -183,6 +183,23 @@ const getApplicationConfiguration = async (shogunClient: SHOGunAPIClient, applic
   }
 };
 
+const getApplicationConfigurationByName = async (shogunClient: SHOGunAPIClient, applicationName: string) => {
+  try {
+    Logger.info(`Loading application with name: ${applicationName}`);
+
+    const application = await shogunClient.application().findOneByName(applicationName);
+
+    Logger.info(`Successfully loaded application with name: ${applicationName}`);
+
+    return application;
+  } catch (error) {
+    if ((error as Error).message.indexOf('401') > -1) {
+      throw new Error(LoadingErrorCode.APP_UNAUTHORIZED);
+    }
+    Logger.error(`Error while loading application with name: ${applicationName}: ${error}`);
+  }
+};
+
 const getStaticApplicationConfiguration = async (staticAppContextUrl: string) => {
   try {
     Logger.info('Loading static application');
@@ -678,13 +695,18 @@ const renderApp = async () => {
     }
 
     const applicationIdString = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+    const applicationName = UrlUtil.getQueryParam(window.location.href, 'applicationName');
+
     const applicationId = applicationIdString ? parseInt(applicationIdString, 10) : undefined;
 
-    if (!applicationId && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
+    if (!applicationId && !applicationName && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
       throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
     }
     let appConfig;
-    if (applicationId && client) {
+    if (applicationName && client) {
+      appConfig = await getApplicationConfigurationByName(client, applicationName);
+      setLoadingImage(applicationName, appConfig?.clientConfig?.theme?.logoPath);
+    } else if (applicationId && client) {
       appConfig = await getApplicationConfiguration(client, applicationId);
       setLoadingImage(applicationId, appConfig?.clientConfig?.theme?.logoPath);
     } else if (ClientConfiguration.staticAppConfigUrl) {
@@ -760,11 +782,19 @@ const renderApp = async () => {
 
     const plugins = await loadPlugins(map, appConfig?.toolConfig);
 
-    if (!appConfig) {
+    if (!appConfig && applicationId) {
       notification.error({
         message: i18n.t('Index.applicationLoadErrorMessage'),
         description: i18n.t('Index.applicationLoadErrorDescription', {
           applicationId: applicationId
+        }),
+        duration: 0
+      });
+    } else if (!appConfig && applicationName) {
+      notification.error({
+        message: i18n.t('Index.applicationLoadErrorMessage'),
+        description: i18n.t('Index.applicationLoadByNameErrorDescription', {
+          applicationName: applicationName
         }),
         duration: 0
       });
@@ -843,10 +873,17 @@ const renderApp = async () => {
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
       const appId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+      const appName = UrlUtil.getQueryParam(window.location.href, 'applicationName');
 
-      errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
-        applicationId: appId
-      });
+      if (appId) {
+        errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
+          applicationId: appId
+        });
+      } else if (appName) {
+        errorDescription = i18n.t('Index.errorDescriptionAppConfigByNameNotFound', {
+          applicationName: appName
+        });
+      }
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_STATIC_NOT_FOUND) {
