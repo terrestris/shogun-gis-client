@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleQuestion
+} from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
