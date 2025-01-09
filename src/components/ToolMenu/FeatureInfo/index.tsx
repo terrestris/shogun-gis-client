@@ -302,6 +302,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         resultRenderer={resultRenderer}
         fetchOpts={getFetchOpts}
         onSuccess={onSuccess}
+        drillDown={true}
         {...restProps}
       />
     </div>
