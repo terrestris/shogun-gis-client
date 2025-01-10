@@ -113,6 +113,25 @@ In addition webpack has been replaced by rspack.
 * fixes broken image symbol ([ef955f0](https://github.com/terrestris/shogun-gis-client/commit/ef955f0c3f4481efd0f12f27ee73fef9680857ee))
 * fixes bug in case no appID is passed ([95e9a23](https://github.com/terrestris/shogun-gis-client/commit/95e9a23f6c58cf8b8699ee24a03c3a692f297a2e))
 
+## [8.11.1](https://github.com/terrestris/shogun-gis-client/compare/v8.11.0...v8.11.1) (2024-10-18)
+
+
+### Dependencies
+
+* **deps:** bump SonarSource/sonarqube-scan-action from 2.3.0 to 3.0.0 ([8cbb4e6](https://github.com/terrestris/shogun-gis-client/commit/8cbb4e60ca811f3d32800c4795729a7a58616297))
+
+
+### Changes in configuration
+
+* enable releases from next and 8.x branches ([069e941](https://github.com/terrestris/shogun-gis-client/commit/069e941aa01cedd23da7d48d939eb9885c3fd234))
+
+
+### Bugfixes
+
+* :lipstick: ([050ef7e](https://github.com/terrestris/shogun-gis-client/commit/050ef7ec6616f4014bcecbc5f30814c2b979e413))
+* fixes broken image symbol ([ef955f0](https://github.com/terrestris/shogun-gis-client/commit/ef955f0c3f4481efd0f12f27ee73fef9680857ee))
+* fixes bug in case no appID is passed ([95e9a23](https://github.com/terrestris/shogun-gis-client/commit/95e9a23f6c58cf8b8699ee24a03c3a692f297a2e))
+
 ## [8.11.0](https://github.com/terrestris/shogun-gis-client/compare/v8.10.0...v8.11.0) (2024-09-17)
 
 
