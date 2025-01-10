@@ -49,6 +49,36 @@ jest.mock('../EditReferenceTable', () => {
   return EditReferenceTable;
 });
 
+jest.mock('../../../hooks/useAppDispatch', () => () => jest.fn());
+jest.mock('../../../hooks/useAppSelector', () => jest.fn(() => false));
+jest.mock('../../../hooks/useSHOGunAPIClient', () => jest.fn(() => ({})));
+jest.mock('../../../store/editFeature', () => ({
+  setFormDirty: jest.fn()
+}));
+jest.mock('../../DisplayField', () => {
+  const DisplayField = () => <div data-testid="display-field" />;
+  DisplayField.displayName = 'DisplayField';
+  return DisplayField;
+});
+
+jest.mock('../../FileUpload', () => {
+  const FileUpload = () => <div data-testid="file-upload" />;
+  FileUpload.displayName = 'FileUpload';
+  return FileUpload;
+});
+
+jest.mock('../../ImageUpload', () => {
+  const ImageUpload = () => <div data-testid="image-upload" />;
+  ImageUpload.displayName = 'ImageUpload';
+  return ImageUpload;
+});
+
+jest.mock('../EditReferenceTable', () => {
+  const EditReferenceTable = () => <div data-testid="edit-reference-table" />;
+  EditReferenceTable.displayName = 'EditReferenceTable';
+  return EditReferenceTable;
+});
+
 describe('<EditFeatureForm />', () => {
   const EditFeatureFormWrapper = (props: Omit<EditFeatureFormProps, 'form'>) => {
     const [form] = Form.useForm();
