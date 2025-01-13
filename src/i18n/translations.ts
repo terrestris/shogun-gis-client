@@ -90,7 +90,8 @@ export default {
         hideLegend: 'Legende ausblenden',
         downloadLayer: 'Layer exportieren ({{formatName}})',
         editLayer: 'Layer bearbeiten',
-        layerDetails: 'Eigenschaften'
+        layerDetails: 'Eigenschaften',
+        styleLayer: 'Layer Stil'
       },
       LayerDetailsModal: {
         title: 'Eigenschaften des Layers {{layerName}}',
@@ -389,7 +390,8 @@ export default {
         hideLegend: 'Hide legend',
         downloadLayer: 'Export layer as {{formatName}}',
         editLayer: 'Edit layer',
-        layerDetails: 'Properties'
+        layerDetails: 'Properties',
+        styleLayer: 'Layer style'
       },
       LayerDetailsModal: {
         title: 'Properties of layer {{layerName}}',

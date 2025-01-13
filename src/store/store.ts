@@ -20,6 +20,7 @@ import logoPath from './logoPath';
 import print from './print';
 import searchEngines from './searchEngines';
 import selectedFeatures from './selectedFeatures';
+import stylingDrawerLayerUid from './stylingDrawerLayerUid';
 import stylingDrawerVisibility from './stylingDrawerVisibility';
 import title from './title';
 import toolMenu from './toolMenu';
@@ -50,6 +51,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     searchEngines,
     user,
     stylingDrawerVisibility,
+    stylingDrawerLayerUid,
     ...asyncReducers
   });
 };
