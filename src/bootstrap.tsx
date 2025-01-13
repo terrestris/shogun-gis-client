@@ -695,7 +695,10 @@ const renderApp = async () => {
     }
 
     const applicationIdString = UrlUtil.getQueryParam(window.location.href, 'applicationId');
-    const applicationName = UrlUtil.getQueryParam(window.location.href, 'applicationName');
+
+    const url = new URL(window.location.href);
+    const pathSegments = url.pathname.split('/');
+    const applicationName = pathSegments[2];
 
     const applicationId = applicationIdString ? parseInt(applicationIdString, 10) : undefined;
 
@@ -705,7 +708,9 @@ const renderApp = async () => {
     let appConfig;
     if (applicationName && client) {
       appConfig = await getApplicationConfigurationByName(client, applicationName);
-      setLoadingImage(applicationName, appConfig?.clientConfig?.theme?.logoPath);
+      if (appConfig?.id) {
+        setLoadingImage(appConfig.id, appConfig?.clientConfig?.theme?.logoPath);
+      }
     } else if (applicationId && client) {
       appConfig = await getApplicationConfiguration(client, applicationId);
       setLoadingImage(applicationId, appConfig?.clientConfig?.theme?.logoPath);
