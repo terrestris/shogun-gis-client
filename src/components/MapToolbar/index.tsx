@@ -42,7 +42,7 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   const [pressed, setPressed] = useState(false);
 
-  const [visible, setVisible] = useState(store.getState().toolMenu.availableTools.find((toolName) => toolName === 'map_toolbar'));
+  const [visible] = useState(store.getState().toolMenu.availableTools.find((toolName) => toolName === 'map_toolbar'));
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
