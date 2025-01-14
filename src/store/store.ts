@@ -17,7 +17,7 @@ import layerDetailsModal from './layerDetailsModal';
 import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
-import mapToolBarVisibility from './mapToolbarVisibility';
+import mapToolbarVisible from './mapToolbarVisible';
 import print from './print';
 import searchEngines from './searchEngines';
 import selectedFeatures from './selectedFeatures';
@@ -51,7 +51,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     searchEngines,
     user,
     stylingDrawerVisibility,
-    mapToolBarVisibility,
+    mapToolbarVisible,
     ...asyncReducers
   });
 };

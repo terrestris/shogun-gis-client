@@ -27,6 +27,7 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import { store } from '../../store/store';
 import Toolbar, { ToolbarProps } from '../Toolbar';
 
 import './index.less';
@@ -41,6 +42,8 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   const [pressed, setPressed] = useState(false);
 
+  const [visible, setVisible] = useState(store.getState().toolMenu.availableTools.find((toolName) => toolName === 'map_toolbar'));
+
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
     tooltipProps: {
@@ -49,56 +52,60 @@ export const MapToolbar: React.FC = (): JSX.Element => {
   };
 
   return (
-    <Toolbar
-      className='map-toolbar'
-      alignment="vertical"
-      role="toolbar"
-    >
+    <>
+      { visible &&
+        <Toolbar
+          className='map-toolbar'
+          alignment="vertical"
+          role="toolbar"
+        >
 
-      {map &&
-        <ZoomButton
-          aria-label='zoom-in'
-          tooltip={t('MapToolbar.zoomInTooltip')}
-          icon={
-            <FontAwesomeIcon
-              icon={faPlus}
-            />
-          }
-          {...btnTooltipProps}
-        />}
-      {map &&
-        <ZoomButton
-          aria-label='zoom-out'
-          tooltip={t('MapToolbar.zoomOutTooltip')}
-          delta={-1}
-          icon={
-            <FontAwesomeIcon
-              icon={faMinus}
-            />
-          }
-          {...btnTooltipProps}
-        />}
-      {map &&
-        <GeoLocationButton
-          aria-label='geolocation'
-          showMarker={true}
-          follow={true}
-          pressed={pressed}
-          onChange={() => setPressed(!pressed)}
-          tooltip={t('MapToolbar.geoLocation')}
-          icon={
-            <FontAwesomeIcon
-              icon={faLocation}
-            />
-          }
-          pressedIcon={
-            <FontAwesomeIcon
-              icon={faLocationPin}
-            />
-          }
-          {...btnTooltipProps}
-        />}
-    </Toolbar>
+          {map &&
+            <ZoomButton
+              aria-label='zoom-in'
+              tooltip={t('MapToolbar.zoomInTooltip')}
+              icon={
+                <FontAwesomeIcon
+                  icon={faPlus}
+                />
+              }
+              {...btnTooltipProps}
+            />}
+          {map &&
+            <ZoomButton
+              aria-label='zoom-out'
+              tooltip={t('MapToolbar.zoomOutTooltip')}
+              delta={-1}
+              icon={
+                <FontAwesomeIcon
+                  icon={faMinus}
+                />
+              }
+              {...btnTooltipProps}
+            />}
+          {map &&
+            <GeoLocationButton
+              aria-label='geolocation'
+              showMarker={true}
+              follow={true}
+              pressed={pressed}
+              onChange={() => setPressed(!pressed)}
+              tooltip={t('MapToolbar.geoLocation')}
+              icon={
+                <FontAwesomeIcon
+                  icon={faLocation}
+                />
+              }
+              pressedIcon={
+                <FontAwesomeIcon
+                  icon={faLocationPin}
+                />
+              }
+              {...btnTooltipProps}
+            />}
+        </Toolbar>
+      }
+    </>
   );
 };
 

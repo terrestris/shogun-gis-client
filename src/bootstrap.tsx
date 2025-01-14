@@ -110,7 +110,7 @@ import {
 } from './store/logoPath';
 import {
   setMapToolbarVisible
-} from './store/mapToolbarVisibility';
+} from './store/mapToolbarVisible';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines

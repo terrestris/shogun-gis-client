@@ -3,14 +3,16 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState = false;
+const initialState = {
+  visible: false
+};
 
 export const slice = createSlice({
-  name: 'mapToolbar',
+  name: 'map_toolbar',
   initialState,
   reducers: {
-    setMapToolbarVisible: (state, action: PayloadAction<boolean>) => {
-      return action.payload;
+    setMapToolbarVisible(state, action: PayloadAction<boolean>) {
+      state.visible = action.payload;
     }
   }
 });

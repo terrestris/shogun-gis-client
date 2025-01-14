@@ -428,8 +428,8 @@ export default {
         languageSelect: 'Language selector'
       },
       MapToolbar: {
-        zoomInTooltip: 'Zoom in',
-        zoomOutTooltip: 'Zoom out',
+        zoomInTooltip: 'Zoom-in',
+        zoomOutTooltip: 'Zoom-out',
         geoLocation: 'Geolocation'
       },
       PrintForm: {
