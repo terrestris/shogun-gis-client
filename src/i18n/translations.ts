@@ -127,8 +127,8 @@ export default {
         languageSelect: 'Sprachauswahl'
       },
       MapToolbar: {
-        zoomInTooltip: 'Reinzoomen',
-        zoomOutTooltip: 'Rauszoomen',
+        zoomInTooltip: 'Hereinzoomen',
+        zoomOutTooltip: 'Herauszoomen',
         geoLocation: 'Geolokalisierung'
       },
       PrintForm: {
