@@ -129,6 +129,11 @@ export default {
         queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
         editable: 'Die Features dieses Layers sind editierbar'
       },
+      MapToolbar: {
+        zoomInTooltip: 'Hereinzoomen',
+        zoomOutTooltip: 'Herauszoomen',
+        geoLocation: 'Geolokalisierung'
+      },
       PrintForm: {
         title: 'Kartentitel',
         initialTitle: 'Druckausgabe',
@@ -427,6 +432,11 @@ export default {
         searchable: 'The contents of this layer can be queried in the search input',
         queryable: 'The contents of this layer can be queried in the query map features tool',
         editable: 'The features of this layer are editable'
+      },
+      MapToolbar: {
+        zoomInTooltip: 'Zoom-in',
+        zoomOutTooltip: 'Zoom-out',
+        geoLocation: 'Geolocation'
       },
       PrintForm: {
         title: 'Title',
