@@ -1,3 +1,35 @@
+## [9.0.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.4...v9.0.0-next.5) (2025-01-15)
+
+
+### Dependencies
+
+* latest updates especially shogun-util and module federation ([46a950a](https://github.com/terrestris/shogun-gis-client/commit/46a950a826c92cdeed642461de16b909477b7c58))
+* **release:** 8.11.1 [skip ci] ([aaf88e9](https://github.com/terrestris/shogun-gis-client/commit/aaf88e9f7dbeb885981a17221c8fe0b472a8cbab))
+* resolve merge conflicts ([e2e534d](https://github.com/terrestris/shogun-gis-client/commit/e2e534dd509ddf9ea5d24a4ead60561d4261e115))
+* resolve merge conflicts for merge into main ([91e9bc2](https://github.com/terrestris/shogun-gis-client/commit/91e9bc28842f0b295a6efd6c6e3b56bca2803966))
+
+
+### Changes in configuration
+
+* define MULTI_LINES_TEXT ([f5ba097](https://github.com/terrestris/shogun-gis-client/commit/f5ba0970dbf93a6600b23914ec8bc2792c521d7f))
+* ensure proper formatting ([8b89ca4](https://github.com/terrestris/shogun-gis-client/commit/8b89ca42e18c5c4d92b9ae8f3c4ab45fce62114f))
+* fix end of file ([07e397f](https://github.com/terrestris/shogun-gis-client/commit/07e397fef0a4104b2757f8f34de9447e4fcaad35))
+* fix multiline handling ([d6dc266](https://github.com/terrestris/shogun-gis-client/commit/d6dc266b223c605045a1238dfb0e70efcc9d9fb9))
+* properly escape echo command ([4ef7c94](https://github.com/terrestris/shogun-gis-client/commit/4ef7c94fb6d3ec15a639e2f4a1206940f0bae384))
+* store and pass multiple-files-input correctly ([9a7cb97](https://github.com/terrestris/shogun-gis-client/commit/9a7cb97ce769260dde5f3471c30a801c58303daa))
+
+
+### Features
+
+* adds Map Toolbar to the gis-client ([#1784](https://github.com/terrestris/shogun-gis-client/issues/1784)) ([6159ce8](https://github.com/terrestris/shogun-gis-client/commit/6159ce80c32df260f4d08202f1468517db3897bc))
+* update react-geo ([d51a10b](https://github.com/terrestris/shogun-gis-client/commit/d51a10b0abec01f80c80551ec6a2b01596e3434b))
+
+
+### Bugfixes
+
+* coverage comment ([f43c290](https://github.com/terrestris/shogun-gis-client/commit/f43c2907b0212cf709719413e2ccde2869895eef))
+* coverage comment (use printf) ([3c0cab7](https://github.com/terrestris/shogun-gis-client/commit/3c0cab76a4b45a2655c145651edb7509a080661e))
+
 ## [9.0.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.3...v9.0.0-next.4) (2025-01-09)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@terrestris/shogun-gis-client",
-  "version": "9.0.0-next.4",
+  "version": "9.0.0-next.5",
   "description": "This is the default GIS client used in the SHOGun project. Based on the react-geo-client template",
   "keywords": [
     "shogun",
