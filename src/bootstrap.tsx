@@ -108,6 +108,9 @@ import {
 import {
   setLogoPath
 } from './store/logoPath';
+import {
+  setMapToolbarVisible
+} from './store/mapToolbarVisible';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines
@@ -306,6 +309,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'tree' && typeof tool.config.layerIconsVisible !== 'undefined') {
           store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
+        }
+        if (tool.name === 'map_toolbar') {
+          store.dispatch(setMapToolbarVisible(tool.config.visible));
         }
       });
     store.dispatch(setAvailableTools(availableTools));

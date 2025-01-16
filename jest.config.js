@@ -11,8 +11,11 @@ module.exports = {
     '^.+\\.tsx?$': 'babel-jest'
   },
   testMatch: ['<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'],
-  testPathIgnorePatterns: ['/e2e-tests/'],
-  collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
+  testPathIgnorePatterns: ['<rootDir>/src/e2e-tests/'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{tsx,jsx,ts,js}',
+    '!<rootDir>/src/e2e-tests/**'
+  ],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
     '<rootDir>/jest/matchMediaMock.js',
@@ -21,7 +24,7 @@ module.exports = {
   testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris|color-*[a-z]*|@camptocamp|d3-*[a-z]*|' +
-    'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler))'
+    'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler|pbf))'
   ],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
@@ -34,6 +37,6 @@ module.exports = {
     'default',
     '@casualbot/jest-sonar-reporter'
   ],
-  coverageReporters: ['json-summary', 'lcov'],
+  coverageReporters: ['json-summary', 'lcov', 'text'],
   coverageDirectory: 'coverage/all'
 };
