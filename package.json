@@ -33,7 +33,8 @@
     "start": "rspack serve --config rspack.dev.js",
     "test": "jest --maxWorkers=50% --coverage",
     "tsc": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "watch:buildto": "node watchBuild.js"
   },
   "browserslist": [
     "defaults",
