@@ -272,7 +272,7 @@ const setApplicationToStore = async (application?: Application) => {
     const availableTools: string[] = [];
     application.toolConfig
       .forEach((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible && tool.name !== 'search') {
+        if (tool.config?.visible && tool.name !== 'search') {
           availableTools.push(tool.name);
         }
         if (tool.name === 'search' && tool.config.engines.length > 0) {
@@ -294,7 +294,7 @@ const setApplicationToStore = async (application?: Application) => {
           store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
         }
         if (tool.name === 'map_toolbar') {
-          store.dispatch(setMapToolbarVisible(tool.config.visible));
+          store.dispatch(setMapToolbarVisible(tool.config?.visible));
         }
       });
     store.dispatch(setAvailableTools(availableTools));

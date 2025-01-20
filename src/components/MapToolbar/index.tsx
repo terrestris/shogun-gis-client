@@ -27,7 +27,7 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import { store } from '../../store/store';
+import useAppSelector from '../../hooks/useAppSelector';
 import Toolbar, { ToolbarProps } from '../Toolbar';
 
 import './index.less';
@@ -40,9 +40,9 @@ export const MapToolbar: React.FC = (): JSX.Element => {
   } = useTranslation();
   const map = useMap();
 
-  const [pressed, setPressed] = useState(false);
+  const [geolocationButtonPressed, setGeolocationButtonPressed] = useState(false);
 
-  const [visible] = useState(store.getState().toolMenu.availableTools.find((toolName) => toolName === 'map_toolbar'));
+  const mapToolbarVisible = useAppSelector(state => state.mapToolbarVisible.visible);
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
@@ -53,9 +53,9 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   return (
     <>
-      { visible &&
+      {mapToolbarVisible &&
         <Toolbar
-          className='map-toolbar'
+          id='map-toolbar'
           alignment="vertical"
           role="toolbar"
         >
@@ -88,8 +88,8 @@ export const MapToolbar: React.FC = (): JSX.Element => {
               aria-label='geolocation'
               showMarker={true}
               follow={true}
-              pressed={pressed}
-              onChange={() => setPressed(!pressed)}
+              pressed={geolocationButtonPressed}
+              onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
               tooltip={t('MapToolbar.geoLocation')}
               icon={
                 <FontAwesomeIcon
