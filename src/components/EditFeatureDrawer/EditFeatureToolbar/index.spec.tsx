@@ -11,21 +11,21 @@ import {
   screen
 } from '@testing-library/react';
 
-import { FormInstance } from 'antd/lib/form/hooks/useForm';
+import { Form } from 'antd';
 
 import {
   Feature
 } from 'geojson';
 
-import { Provider } from 'react-redux';
+import OlLayerTile from 'ol/layer/Tile';
+import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import { WmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+import { Provider } from 'react-redux';
 
 import { EditLevel } from '../../../store/editFeature';
 
-import EditFeatureToolbar from '.';
+import EditFeatureToolbar, { EditFeatureToolbarProps } from '.';
 
-let layer: WmsLayer;
 const feature: Feature = {
   type: 'Feature',
   geometry: {
@@ -37,7 +37,6 @@ const feature: Feature = {
 
 };
 let toolbarElem: HTMLInputElement | null;
-let form: FormInstance<any>;
 
 interface EditFeatureState {
   userEditMode: EditLevel[];
@@ -47,6 +46,16 @@ let initialEditFeatureState: EditFeatureState = {
   userEditMode: ['CREATE']
 };
 describe('<EditFeatureToolbar />', () => {
+  const EditFeatureToolbarWrapper = (props: Omit<EditFeatureToolbarProps, 'form'>) => {
+    const [form] = Form.useForm();
+
+    return (
+      <EditFeatureToolbar
+        {...props}
+        form={form}
+      />
+    );
+  };
 
   afterEach(() => {
     cleanup();
@@ -69,10 +78,11 @@ describe('<EditFeatureToolbar />', () => {
       container
     } = render(
       <Provider store={store}>
-        <EditFeatureToolbar
+        <EditFeatureToolbarWrapper
           feature={feature!}
-          layer={layer}
-          form={form}
+          layer={new OlLayerTile({
+            source: new OlSourceTileWMS()
+          })}
         />,
       </Provider>
     );

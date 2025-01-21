@@ -223,6 +223,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                   <FeatureInfoPropertyGrid
                     features={features}
                     layerName={layerName}
+                    layer={mapLayer}
                   />
               }
             </div>
@@ -301,6 +302,7 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         resultRenderer={resultRenderer}
         fetchOpts={getFetchOpts}
         onSuccess={onSuccess}
+        drillDown={true}
         {...restProps}
       />
     </div>

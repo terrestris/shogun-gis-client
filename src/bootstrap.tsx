@@ -68,6 +68,7 @@ import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIC
 
 const App = React.lazy(() => import('./App'));
 
+import RerouteToLogin from './components/RerouteToLogin';
 import {
   PluginProvider
 } from './context/PluginContext';
@@ -97,7 +98,9 @@ import {
 import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
 import {
   setLayerTreeActiveUploadTools,
-  setLayerTreeShowLegends
+  setLayerTreeShowLegends,
+  setMetadataVisible,
+  setLayerIconsVisible
 } from './store/layerTree';
 import {
   setLegal
@@ -105,6 +108,9 @@ import {
 import {
   setLogoPath
 } from './store/logoPath';
+import {
+  setMapToolbarVisible
+} from './store/mapToolbarVisible';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines
@@ -266,7 +272,7 @@ const setApplicationToStore = async (application?: Application) => {
     const availableTools: string[] = [];
     application.toolConfig
       .forEach((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible && tool.name !== 'search') {
+        if (tool.config?.visible && tool.name !== 'search') {
           availableTools.push(tool.name);
         }
         if (tool.name === 'search' && tool.config.engines.length > 0) {
@@ -280,6 +286,15 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'tree' && tool.config.showLegends) {
           store.dispatch(setLayerTreeShowLegends(tool.config.showLegends));
+        }
+        if (tool.name === 'tree' && typeof tool.config.metadataVisible !== 'undefined') {
+          store.dispatch(setMetadataVisible(tool.config.metadataVisible));
+        }
+        if (tool.name === 'tree' && typeof tool.config.layerIconsVisible !== 'undefined') {
+          store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
+        }
+        if (tool.name === 'map_toolbar') {
+          store.dispatch(setMapToolbarVisible(tool.config?.visible));
         }
       });
     store.dispatch(setAvailableTools(availableTools));
@@ -483,13 +498,13 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
     style['--complementaryColor'] = theme.complementaryColor;
   }
   if (theme.faviconPath) {
-    const favicon = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+    const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
     if (favicon) {
       favicon.href = theme.faviconPath;
     } else {
       // If no favicon is set, create a new one
       const newLink = document.createElement('link');
-      newLink.rel = 'shortcut icon';
+      newLink.rel = 'icon';
       newLink.type = 'image/x-icon';
       newLink.href = theme.faviconPath;
       document.head.appendChild(newLink);
@@ -781,6 +796,9 @@ const renderApp = async () => {
                   components: {
                     Button: {
                       primaryShadow: 'none'
+                    },
+                    Dropdown: {
+                      paddingBlock: 2
                     }
                   }
                 }}
@@ -811,14 +829,21 @@ const renderApp = async () => {
     }
 
     let type: AlertProps['type'] = 'warning';
-    let errorDescription = i18n.t('Index.errorDescription');
+    let errorDescription: string |React.ReactElement = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
       errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_UNAUTHORIZED) {
-      errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
+      errorDescription =
+        <p>
+          {i18n.t('Index.permissionDeniedUnauthorized')}
+          <RerouteToLogin
+            rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
+          />
+        </p>;
+
       type = 'error';
     }
 
@@ -836,13 +861,15 @@ const renderApp = async () => {
 
     root.render(
       <React.StrictMode>
-        <Alert
-          className="error-boundary"
-          message={i18n.t('Index.errorMessage')}
-          description={errorDescription}
-          type={type}
-          showIcon
-        />
+        <SHOGunAPIClientProvider client={client}>
+          <Alert
+            className="error-boundary"
+            message={i18n.t('Index.errorMessage')}
+            description={errorDescription}
+            type={type}
+            showIcon
+          />
+        </SHOGunAPIClientProvider>
       </React.StrictMode>
     );
   }

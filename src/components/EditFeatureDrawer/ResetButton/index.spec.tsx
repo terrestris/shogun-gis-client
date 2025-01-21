@@ -70,7 +70,8 @@ describe('<ResetButton />', () => {
       isFieldValidating: jest.fn(),
       isFieldsValidating: jest.fn(),
       setFields: jest.fn(),
-      setFieldValue: jest.fn()
+      setFieldValue: jest.fn(),
+      focusField: jest.fn()
     };
   });
 

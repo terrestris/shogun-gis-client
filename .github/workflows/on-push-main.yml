@@ -110,7 +110,7 @@ jobs:
 
       - name: Get shogun-gis-client version 🔖
         run: |
-          echo "sonar.projectVersion=$(node -pe "require('./package.json').version")" >> ./sonar-project.properties
+          echo "sonar.projectVersion=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
         uses: SonarSource/sonarqube-scan-action@v3.0.0

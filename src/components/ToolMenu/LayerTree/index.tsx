@@ -1,11 +1,26 @@
 import React, {
   useState,
   useEffect,
-  useCallback
+  useCallback,
+  useMemo
 } from 'react';
 
 import {
-  getUid
+  faMagnifyingGlass,
+  faCircleInfo,
+  faPen
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
+import {
+  Tooltip
+} from 'antd';
+
+import {
+  getUid,
+  MapEvent as OlMapEvent
 } from 'ol';
 import BaseEvent from 'ol/events/Event';
 import OlBaseLayer from 'ol/layer/Base';
@@ -22,12 +37,14 @@ import {
 } from 'react-i18next';
 
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { isWmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import RgLayerTree, {
   LayerTreeProps as RgLayerTreeProps
 } from '@terrestris/react-geo/dist/LayerTree/LayerTree';
 import { Legend } from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
+
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
@@ -43,9 +60,9 @@ import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import WmsTimeSlider from '../../WmsTimeSlider';
 
 import LayerTreeContextMenu from './LayerTreeContextMenu';
+import LoadingIndicator from './LoadingIndicator';
 
 import './index.less';
-import LoadingIndicator from './LoadingIndicator';
 
 export type LayerTreeProps = Partial<RgLayerTreeProps>;
 
@@ -67,8 +84,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
   const showLegendsState: boolean = useAppSelector(state => state.layerTree.showLegends) ?? false;
-  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]> (showLegendsState ? initialLayersUid ?? [] : []);
+  const layerIconsVisible: boolean = useAppSelector(state => state.layerTree.layerIconsVisible) ?? false;
+
+  const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>(showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
+  const [mapScale, setMapScale] = useState<number>();
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
@@ -107,6 +127,38 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     }
   }, [map, initialLayersUid, registerTileLoadHandler]);
 
+  const legendRequestExtraParams = useMemo(() => ({
+    scale: mapScale,
+    LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
+    TRANSPARENT: true
+  }), [mapScale]);
+
+  const legendRequestHeaders = useMemo(() => ({
+    ...getBearerTokenHeader(client?.getKeycloak())
+  }), [client]);
+
+  const onMapMoveEnd = useCallback((evt: OlMapEvent) => {
+    const mapView = evt.map.getView();
+
+    const unit = mapView.getProjection().getUnits() || 'm';
+    const resolution = mapView.getResolution();
+    const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
+
+    setMapScale(scale);
+  }, []);
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    map.on('moveend', onMapMoveEnd);
+
+    return () => {
+      map.un('moveend', onMapMoveEnd);
+    };
+  }, [map, onMapMoveEnd]);
+
   useEffect(() => {
     if (!map) {
       return;
@@ -138,8 +190,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
   const tileLoadStartListener = (evt: BaseEvent) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
+
       // reset when load was finished
       if (update[uid] && update[uid].loaded >= update[uid].loading) {
         update[uid].loading = 1;
@@ -147,6 +200,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         update[uid].percent = 0;
         return update;
       }
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
@@ -154,16 +208,19 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           percent: 0
         };
       }
+
       update[uid].loading = Number.isInteger(update[uid].loading) ?
         update[uid].loading + 1 : 1;
+
       return update;
     });
   };
 
   const tileLoadEndListener = (evt: BaseEvent | Event) => {
     setLayerTileLoadCounter((counter: LayerTileLoadCounter) => {
-      const uid = parseInt(getUid(evt.target), 10);
-      const update = { ...counter };
+      const uid = getUid(evt.target);
+      const update = structuredClone(counter);
+
       if (!update[uid]) {
         update[uid] = {
           loading: 0,
@@ -171,12 +228,16 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
           percent: 0
         };
       }
+
       update[uid].loaded = Number.isInteger(update[uid].loaded) ?
         update[uid].loaded + 1 : 1;
+
       const percent = Math.round(update[uid].loaded / update[uid].loading * 100);
+
       if (percent > update[uid].percent) {
         update[uid].percent = percent;
       }
+
       return update;
     });
   };
@@ -194,10 +255,6 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
       return;
     }
 
-    const mapView = map.getView();
-    const unit = mapView.getProjection().getUnits() || 'm';
-    const resolution = mapView.getResolution();
-    const scale = resolution ? MapUtil.getScaleForResolution(resolution, unit) : undefined;
     const percent = layer instanceof OlLayer && getUid(layer.getSource()) ?
       layerTileLoadCounter[getUid(layer.getSource())]?.percent : 100;
 
@@ -226,6 +283,40 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               >
                 {percent < 100 && <LoadingIndicator />}
               </span>
+              <span
+                className='layer-icons-group'
+              >
+                {layer.get('searchable') && layerIconsVisible && (
+                  <>
+                    <Tooltip title={t('ToolMenu.searchable')}>
+                      <FontAwesomeIcon
+                        icon={faMagnifyingGlass}
+                        className='layer-icon'
+                      />
+                    </Tooltip>
+                  </>
+                )}
+                {layer.get('hoverable') && layer.get('visible') && layerIconsVisible && (
+                  <>
+                    <Tooltip title={t('ToolMenu.queryable')}>
+                      <FontAwesomeIcon
+                        icon={faCircleInfo}
+                        className='layer-icon'
+                      />
+                    </Tooltip>
+                  </>
+                )}
+                {layer.get('editable') && layerIconsVisible && (
+                  <>
+                    <Tooltip title={t('ToolMenu.editable')}>
+                      <FontAwesomeIcon
+                        icon={faPen}
+                        className='layer-icon'
+                      />
+                    </Tooltip>
+                  </>
+                )}
+              </span>
             </span>
             {
               (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
@@ -247,6 +338,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             <div
               className="layer-transparency"
               aria-label='transparency-slider'
+              onClick={e => e.stopPropagation()}
+              onDragStart={e => {e.stopPropagation(); e.preventDefault();}}
+              draggable={true}
             >
               <LayerTransparencySlider
                 tooltip={{
@@ -265,22 +359,12 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             </div>
           }
           {
-            (layer.get('visible') && visibleLegendsIds.includes(getUid(layer))) &&
+            (layer.get('visible') && isWmsLayer(layer) && visibleLegendsIds.includes(getUid(layer))) &&
             <Legend
-              layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
+              layer={layer}
               errorMsg={t('LayerTree.noLegendAvailable')}
-              extraParams={{
-                scale,
-                LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
-                TRANSPARENT: true
-              }}
-              headers={
-                layer.get('useBearerToken') ?
-                  {
-                    ...getBearerTokenHeader(client?.getKeycloak())
-                  } :
-                  {}
-              }
+              extraParams={legendRequestExtraParams}
+              headers={layer.get('useBearerToken') && legendRequestHeaders}
             />
           }
         </>
