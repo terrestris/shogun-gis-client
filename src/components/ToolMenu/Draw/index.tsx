@@ -163,6 +163,7 @@ export const Draw: React.FC<DrawProps> = ({
         {showDrawPoint ? (
           <DrawButton
             value="draw-point"
+            key="draw-point"
             drawType="Point"
             type="link"
             pressed={false}
@@ -181,6 +182,7 @@ export const Draw: React.FC<DrawProps> = ({
         {showDrawLine ? (
           <DrawButton
             value="draw-line"
+            key="draw-line"
             drawType="LineString"
             type="link"
           >
@@ -198,6 +200,7 @@ export const Draw: React.FC<DrawProps> = ({
         {showDrawPolygon ? (
           <DrawButton
             value="draw-polygon"
+            key="draw-polygon"
             drawType="Polygon"
             type="link"
           >
@@ -215,6 +218,7 @@ export const Draw: React.FC<DrawProps> = ({
         {showDrawCircle ? (
           <DrawButton
             value="draw-circle"
+            key="draw-circle"
             drawType="Circle"
             type="link"
           >
@@ -232,6 +236,7 @@ export const Draw: React.FC<DrawProps> = ({
         {showDrawRectangle ? (
           <DrawButton
             value="draw-rectangle"
+            key="draw-rectangle"
             drawType="Rectangle"
             type="link"
           >
@@ -245,9 +250,11 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </DrawButton>
         ) : <></>}
+
         {showDrawAnnotation ? (
           <DrawButton
             value="draw-text"
+            key="draw-text"
             drawType="Text"
             type="link"
           >
@@ -261,10 +268,15 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </DrawButton>
         ) : <></>}
-        <StylingButton />
+
+        <StylingButton
+          key="styling"
+        />
+
         {showModifyFeatures ? (
           <ModifyButton
             value="draw-modify"
+            key="draw-modify"
             type="link"
             onFeatureSelect={onModifyFeatureSelect}
           >
@@ -278,9 +290,11 @@ export const Draw: React.FC<DrawProps> = ({
             </span>
           </ModifyButton>
         ) : <></>}
+
         {showDeleteFeatures ? (
           <DeleteButton
             value="draw-delete"
+            key="draw-delete"
             type="link"
           >
             <FontAwesomeIcon
