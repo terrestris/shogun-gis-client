@@ -164,7 +164,7 @@ export default {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
         applicationLoadErrorDescription:
           'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
-        applicationLoadByNameErrorMessage:
+        applicationLoadByNameErrorDescription:
           'Die Applikation mit dem Namen {{applicationName}} konnte nicht geladen werden.',
         errorMessage: 'Fehler beim Laden der Applikation',
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
@@ -469,7 +469,7 @@ export default {
         applicationLoadErrorMessage: 'Error while loading the application',
         applicationLoadErrorDescription:
           'The application with ID {{applicationId}} could not be loaded correctly.',
-        applicationLoadByNameErrorMessage:
+        applicationLoadByNameErrorDescription:
           'The application with the name {{applicationName}} could not be loaded correctly.',
         errorMessage: 'Error while loading the application',
         errorDescription: 'An unexpected error occurred while loading the application.',
