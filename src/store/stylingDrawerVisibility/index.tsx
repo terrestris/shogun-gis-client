@@ -3,7 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: boolean = false;
+const initialState = false;
 
 export const slice = createSlice({
   name: 'stylingDrawerVisibility',

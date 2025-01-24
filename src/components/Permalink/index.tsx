@@ -8,7 +8,9 @@ import {
   WhatsAppOutlined
 } from '@ant-design/icons';
 import {
-  Input, Tooltip, message
+  Input,
+  Tooltip,
+  message
 } from 'antd';
 import copy from 'copy-to-clipboard';
 import {
@@ -25,21 +27,17 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermalinkUtil from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+import { PermalinkUtil } from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import './index.less';
 
-interface DefaultPermalinkProps { }
-
-export interface PermalinkProps extends Partial<DefaultPermalinkProps> { }
-
-export const Permalink: React.FC<PermalinkProps> = () => {
+export const Permalink: React.FC = () => {
   const map = useMap();
   const layerAttributes = useMemo(() => [
     'layerConfig',
@@ -68,7 +66,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     if (!map) {
       return;
     }
-    let eventKeys: EventsKey[] = [];
+    const eventKeys: EventsKey[] = [];
 
     const identifierFunction = (l: BaseLayer) => l.get('name');
     const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
@@ -102,14 +100,12 @@ export const Permalink: React.FC<PermalinkProps> = () => {
 
     const registerLayerCallback = (layerGroup: LayerGroup) => {
       const layersInGroup = layerGroup.getLayers().getArray();
-      for (let i = 0; i < layersInGroup.length; i++) {
-        const layerInGroup = layersInGroup[i];
-
+      for (const layerInGroup of layersInGroup) {
         if (layerInGroup instanceof LayerGroup) {
           registerLayerCallback(layerInGroup);
         } else {
-          let eventKeyVisibility = layerInGroup.on('change:visible', updatePermalink);
-          let eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
+          const eventKeyVisibility = layerInGroup.on('change:visible', updatePermalink);
+          const eventKeyOpacity = layerInGroup.on('change:opacity', updateLayerConfig);
           eventKeys.push(eventKeyVisibility, eventKeyOpacity);
         }
       }
@@ -118,7 +114,7 @@ export const Permalink: React.FC<PermalinkProps> = () => {
     const listenerKeyCenter = map.getView().on('change:center', updatePermalink);
     const listenerKeyResolution = map.getView().on('change:resolution', updatePermalink);
 
-    let mapLayerGroup = map.getLayerGroup();
+    const mapLayerGroup = map.getLayerGroup();
     registerLayerCallback(mapLayerGroup);
     updateLayerConfig();
 
@@ -128,12 +124,6 @@ export const Permalink: React.FC<PermalinkProps> = () => {
       unByKey(eventKeys);
     };
   }, [layerAttributes, map, t]);
-
-  function onTwitterClick() {
-    const twitterUrl = new URL('https://twitter.com/intent/tweet');
-    twitterUrl.searchParams.set('url', mailBody);
-    window.open(twitterUrl);
-  }
 
   function onWhatsAppClick() {
     const whatsAppUrl = new URL('https://wa.me');

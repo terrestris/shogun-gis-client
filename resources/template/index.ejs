@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="<%= appPrefix %>" />
+    <link href="favicon.ico" rel="icon">
+    <style>
+      .loadmask {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+      }
+
+      .loadmask-hidden {
+        animation: fadeOut 1.5s forwards;
+      }
+
+      .loadmask > #loadmask-image {
+        width: 100%;
+        height: 100%;
+        max-width: 250px;
+        object-fit: scale-down;
+      }
+
+      .loadmask > #loadmask-indicator {
+        width: 50px;
+        display: table;
+        margin: 0 auto;
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          z-index: -1;
+          opacity: 0;
+          top: 0;
+          left: 0;
+          transform: scale(0.5);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="loadmask" class="loadmask">
+      <img src="./loading-placeholder.png" id="loadmask-image">
+      <img src="./loading-indicator.gif" id="loadmask-indicator">
+    </div>
+    <script src="./gis-client-config.js"></script>
+    <script>
+      if (!window.clientConfig) {
+        console.warn('No config found, client defaults will be used.');
+        window.clientConfig = {};
+      }
+    </script>
+    <script>
+      const appIdExpression = /\applicationId=(\d+)/;
+      const appIdCand = location.search.match(appIdExpression);
+      let appId = appIdCand ? appIdCand[1] : null;
+      let logoPath = './shogun_spinner.gif';
+      if (appId) {
+        logoPath = localStorage.getItem(`SHOGun_Logo_Path_${appId}`);
+      }
+      const loadingImageElement = document.getElementById('loadmask-image');
+      if (logoPath && loadingImageElement) {
+        loadingImageElement.src = logoPath;
+      }
+    </script>
+
+    <div id="app" class="app"></div>
+  </body>
+</html>

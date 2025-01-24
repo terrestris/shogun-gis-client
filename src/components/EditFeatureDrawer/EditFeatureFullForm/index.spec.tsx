@@ -5,21 +5,14 @@ import {
   render
 } from '@testing-library/react';
 
-import {
-  Feature
-} from 'geojson';
-
-import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
+import OlLayerTile from 'ol/layer/Tile';
+import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
 import EditFeatureFullForm from '.';
 
-let layer: WmsLayer;
-let feature: Feature;
-
 describe('<EditFeatureFullForm />', () => {
-
   afterEach(() => {
     cleanup();
   });
@@ -29,13 +22,23 @@ describe('<EditFeatureFullForm />', () => {
   });
 
   it('can be rendered', () => {
-
     const {
       container
     } = render(
       <EditFeatureFullForm
-        feature={feature}
-        layer={layer}
+        feature={{
+          type: 'Feature',
+          geometry: {
+            coordinates: [0, 0],
+            type: 'Point'
+          },
+          properties: {
+            foo: 'bar'
+          }
+        }}
+        layer={new OlLayerTile({
+          source: new OlSourceTileWMS()
+        })}
       />, {
         wrapper: createReduxWrapper()
       }

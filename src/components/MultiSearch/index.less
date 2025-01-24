@@ -1,61 +1,62 @@
-.search {
-
+.multi-search {
   position: relative;
 
-  span.ant-input-group-addon {
-    background-color: var(--secondaryColor);
+  .ant-space-compact {
+    width: 100%;
 
-    span.anticon {
-      color: var(--primaryColor);
+    button {
+      border-radius: 0;
+
+      &.ant-btn-variant-outlined:hover {
+        color: var(--secondaryColor);
+      }
     }
   }
 
-  >div {
-    .search-result-div {
-      box-shadow: var(--componentShadow);
-      margin-top: 2px;
-      top: unset;
-      width: 100%;
+  .search-result-div {
+    box-shadow: var(--componentShadow);
+    margin-top: 2px;
+    top: unset;
+    width: 100%;
 
-      .ant-collapse {
+    .ant-collapse {
+      overflow-y: auto;
+      max-height: 80vh;
+      background-color: white;
 
+      .ant-collapse-header {
+        line-height: unset;
+        border-bottom: solid 1px var(--secondaryColor);
+        background-color: color-mix(in srgb, var(--secondaryColor) 15%, white);
+      }
+
+      .ant-collapse-content {
+        max-height: 25vh;
         overflow-y: auto;
-        max-height: 80vh;
 
-        .ant-collapse-header {
-          line-height: unset;
-          border-bottom: solid 1px var(--secondaryColor);
-          background-color: color-mix(in srgb, var(--secondaryColor) 15%, white);
-        }
+        .ant-list-item {
+          justify-content: flex-start;
 
-        .ant-collapse-content {
-          max-height: 25vh;
-          overflow-y: auto;
+          .result-prefix:not(:empty) {
+            width: 130px;
 
-          .ant-list-item {
-            justify-content: flex-start;
-
-            .result-prefix:not(:empty) {
-              width: 130px;
-
-              .ant-tag {
-                width: 100%;
-                text-align: center;
-              }
+            .ant-tag {
+              width: 100%;
+              text-align: center;
             }
+          }
 
-            .result-text {
-              flex: 1;
-            }
+          .result-text {
+            flex: 1;
           }
         }
       }
     }
+  }
 
-    .no-search-result-div {
-      background-color: white;
-      position: absolute;
-      width: 100%;
-    }
+  .no-search-result-div {
+    background-color: white;
+    position: absolute;
+    width: 100%;
   }
 }

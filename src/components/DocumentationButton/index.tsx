@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleQuestion
+} from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
@@ -20,6 +22,7 @@ export const DocumentationButton: React.FC<DocumentationButtonProps> = ({
 
   return (
     <SimpleButton
+      type='link'
       onClick={() => window.open('/gis-docs', '_blank')}
       className={finalClassName}
       icon={

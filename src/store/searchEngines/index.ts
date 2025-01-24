@@ -3,13 +3,15 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState: string[] = ['nominatim'];
+export type SearchEngine = 'nominatim' | 'solr' | 'wfs';
+
+const initialState: SearchEngine[] = ['nominatim'];
 
 export const slice = createSlice({
   name: 'searchEngines',
   initialState,
   reducers: {
-    setSearchEngines: (state, action: PayloadAction<string[]>) => {
+    setSearchEngines: (state, action: PayloadAction<SearchEngine[]>) => {
       return action.payload;
     }
   }

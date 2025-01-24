@@ -2,22 +2,23 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import { FormInstance } from 'antd';
-
-import {
-  PropertyFormItemEditConfig,
-  PropertyFormTabConfig
-} from '@terrestris/shogun-util/dist/model/Layer';
+import { Form } from 'antd';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditFeatureTabs from '.';
-
-let mockTabConfig: PropertyFormTabConfig<PropertyFormItemEditConfig>[] | undefined;
-let mockForm: FormInstance<any>;
-let mockProperties: { [name: string]: any };
+import EditFeatureTabs, { EditFeatureTabsProps } from '.';
 
 describe('<EditFeatureTabs />', () => {
+  const EditFeatureTabsWrapper = (props: Omit<EditFeatureTabsProps, 'form'>) => {
+    const [form] = Form.useForm();
+
+    return (
+      <EditFeatureTabs
+        {...props}
+        form={form}
+      />
+    );
+  };
 
   it('is defined', () => {
     expect(EditFeatureTabs).toBeDefined();
@@ -26,11 +27,7 @@ describe('<EditFeatureTabs />', () => {
   it('can be rendered', () => {
     const { container } =
       render(
-        <EditFeatureTabs
-          tabConfig={mockTabConfig}
-          form={mockForm}
-          initialValues={mockProperties}
-        />,
+        <EditFeatureTabsWrapper />,
         {
           wrapper: createReduxWrapper()
         });

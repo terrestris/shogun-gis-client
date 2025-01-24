@@ -56,8 +56,6 @@ export default {
         text: 'Anmerkung',
         modify: 'Bearbeitung',
         upload: 'Hochladen',
-        uploadSuccess: 'Die Datei wurde erfolgreich importiert',
-        uploadError: 'Der Import ist fehlgeschlagen. Bitte beachten Sie, dass nur .geojson-Dateien unterstützt werden.',
         delete: 'Löschen',
         export: 'Exportieren'
       },
@@ -126,7 +124,15 @@ export default {
         uploadData: 'Daten hochladen',
         print: 'Export',
         layertree: 'Karten',
-        languageSelect: 'Sprachauswahl'
+        languageSelect: 'Sprachauswahl',
+        searchable: 'Der Inhalt dieses Layers kann im Suchfeld abgefragt werden',
+        queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
+        editable: 'Die Features dieses Layers sind editierbar'
+      },
+      MapToolbar: {
+        zoomInTooltip: 'Hereinzoomen',
+        zoomOutTooltip: 'Herauszoomen',
+        geoLocation: 'Geolokalisierung'
       },
       PrintForm: {
         title: 'Kartentitel',
@@ -157,17 +163,17 @@ export default {
       Index: {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
         applicationLoadErrorDescription:
-          'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden. ' +
-          'Die Standardkonfiguration wird stattdessen geladen.',
+          'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        applicationLoadByNameErrorMessage:
+          'Die Applikation mit dem Namen {{applicationName}} konnte nicht geladen werden.',
         errorMessage: 'Fehler beim Laden der Applikation',
         errorDescription: 'Aufgrund eines unerwarteten Fehlers konnte die Applikation nicht geladen werden.',
         errorDescriptionAppIdNotSet: 'Keine Applikations-ID angegeben. Bitte geben Sie die ID als Abfrageparameter an, z.B. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'Die Applikation mit der ID {{applicationId}} konnte nicht geladen werden.',
+        errorDescriptionAppConfigByNameNotFound: 'Die Applikation mit dem Namen {{applicationName}} konnte nicht geladen werden.',
         errorDescriptionAppConfigStaticNotFound: 'Die Konfiguration der Applikation konnte nicht geladen werden.',
-        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.'
-      },
-      Nominatim: {
-        placeholder: 'Ortsname, Straßenname, Stadtteilname, POI usw.'
+        permissionDeniedUnauthorized: 'Dies ist keine öffentliche Applikation. Anmeldung erforderlich.',
+        rerouteToLoginPage: 'Zur Anmeldeseite.'
       },
       UserMenu: {
         settingsMenuTitle: 'Profil bearbeiten',
@@ -196,9 +202,12 @@ export default {
       MultiSearch: {
         searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
         searchData: 'Layerdaten durchsuchen',
-        searchNominatim: 'Ortssuche (Nominatim)',
-        nominatimTitle: 'Ortssuche',
-        searchPlaceholder: 'Orts- und Datensuche…'
+        searchGeocoder: 'Ortssuche',
+        searchPlaceholder: 'Orts- und Layersuche…',
+        searchPlaceholderGeocoderOnly: 'Suche nach Orten, Straßen, POIs…',
+        searchPlaceholderDataOnly: 'Suche nach Inhalten in Layern…',
+        settingsTooltip: 'Einstellungen',
+        placeholder: 'e, POI usw.'
       },
       EditFeatureDrawer: {
         featureEditor: 'Objekteditor',
@@ -283,6 +292,19 @@ export default {
       EditReferenceTable: {
         modalTitle: 'Details zu {{referenceValue}}',
         confirmDeleteTitle: 'Das referenzierte Objekt wird vollständig gelöscht. Fortfahren?'
+      },
+      ImportDataModal: {
+        title: 'Daten importieren',
+        description: 'Klicken Sie oder ziehen Sie die Datei zum Importieren in diesen Bereich',
+        hint: 'Unterstütztes Dateiformat für den Import ist GeoJSON (*.geojson oder *.json)',
+        success: 'Die Features wurden erfolgreich importiert',
+        error: {
+          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+          parsing: 'Die Datei konnte nicht gelesen werden'
+        }
+      },
+      useNominatimSearchEngine: {
+        title: 'Ortssuche'
       }
     }
   },
@@ -340,8 +362,6 @@ export default {
         text: 'Annotation',
         modify: 'Edit',
         upload: 'Upload',
-        uploadSuccess: 'The file was uploaded successfully',
-        uploadError: 'The import failed, please note that only .geojson files are supported',
         delete: 'Delete',
         export: 'Export'
       },
@@ -410,7 +430,15 @@ export default {
         uploadData: 'Upload data',
         print: 'Export',
         layertree: 'Maps',
-        languageSelect: 'Language selector'
+        languageSelect: 'Language selector',
+        searchable: 'The contents of this layer can be queried in the search input',
+        queryable: 'The contents of this layer can be queried in the query map features tool',
+        editable: 'The features of this layer are editable'
+      },
+      MapToolbar: {
+        zoomInTooltip: 'Zoom-in',
+        zoomOutTooltip: 'Zoom-out',
+        geoLocation: 'Geolocation'
       },
       PrintForm: {
         title: 'Title',
@@ -440,17 +468,17 @@ export default {
       Index: {
         applicationLoadErrorMessage: 'Error while loading the application',
         applicationLoadErrorDescription:
-          'The application with ID {{applicationId}} could not be loaded correctly. ' +
-          'You\'re seeing the default application configuration.',
+          'The application with ID {{applicationId}} could not be loaded correctly.',
+        applicationLoadByNameErrorMessage:
+          'The application with the name {{applicationName}} could not be loaded correctly.',
         errorMessage: 'Error while loading the application',
         errorDescription: 'An unexpected error occurred while loading the application.',
         errorDescriptionAppIdNotSet: 'No application ID given. Please provide the ID as query parameter, e.g. ?applicationId=1909',
         errorDescriptionAppConfigNotFound: 'The application with ID {{applicationId}} could not be loaded correctly.',
+        errorDescriptionAppConfigByNameNotFound: 'The application with the name {{applicationName}} could not be loaded correctly.',
         errorDescriptionAppConfigStaticNotFound: 'The configuration of the application could not be loaded correctly.',
-        permissionDeniedUnauthorized: 'This application is not public. Authentication required.'
-      },
-      Nominatim: {
-        placeholder: 'Place name, street name, district name, POI, etc.'
+        permissionDeniedUnauthorized: 'This application is not public. Authentication required.',
+        rerouteToLoginPage: 'To login page.'
       },
       UserMenu: {
         settingsMenuTitle: 'Edit profile',
@@ -479,9 +507,11 @@ export default {
       MultiSearch: {
         searchInViewBox: 'Search in current extent',
         searchData: 'Search layer data',
-        searchNominatim: 'Search nominatim',
-        nominatimTitle: 'Nominatim',
-        searchPlaceholder: 'Address and data search…'
+        searchGeocoder: 'Search location',
+        searchPlaceholder: 'Location and layer search…',
+        searchPlaceholderGeocoderOnly: 'Search for locations, streets, POIs…',
+        searchPlaceholderDataOnly: 'Search in the layer contents…',
+        settingsTooltip: 'Settings'
       },
       EditFeatureDrawer: {
         featureEditor: 'Feature editor',
@@ -566,6 +596,19 @@ export default {
       EditReferenceTable: {
         modalTitle: 'Details for {{referenceValue}}',
         confirmDeleteTitle: 'The referenced feature will be deleted completely. Proceed?'
+      },
+      ImportDataModal: {
+        title: 'Import data',
+        description: 'Click or drag file to this area to import',
+        hint: 'Supported file format is GeoJSON (*.geojson or *.json)',
+        success: 'Successfully imported the features',
+        error: {
+          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
+          parsing: 'Error while reading the file'
+        }
+      },
+      useNominatimSearchEngine: {
+        title: 'Location'
       }
     }
   }

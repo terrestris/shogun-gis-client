@@ -19,26 +19,20 @@ import {
 
 import moment from 'moment';
 
-import {
-  equalTo
-} from 'ol/format/filter';
-
 import { ValidateErrorEntity } from 'rc-field-form/es/interface';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Logger
-} from '@terrestris/base-util';
-
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
@@ -89,10 +83,18 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
+    const root = document.implementation.createDocument(null, 'root');
+    const filter = root.createElement('Filter');
+    const resourceId = root.createElement('ResourceId');
+    resourceId.setAttribute('rid', id);
+    filter.appendChild(resourceId);
+    root.documentElement.appendChild(filter);
+
     const updatedFeatures = await executeGetFeature({
       layer: layer,
-      filter: equalTo('id', id)
-    });
+      filter: filter
+    },
+    '2.0.0');
 
     if (
       updatedFeatures?.features[0]
@@ -106,7 +108,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       return;
     }
 
-    let editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
+    const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
     if (editFormConfig?.length === 0) {
       Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
@@ -120,7 +122,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         return tabCfg.children?.find(formCfg => formCfg.propertyName === key);
       });
 
-      if (tabConfigs.length > 1) {
+      if (tabConfigs?.length > 1) {
         Logger.warn(`Property ${key} is configured in multiple tabs. Is this intended?`);
       }
 
@@ -232,9 +234,14 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     // get feature id from response
     const featureId = xmlDoc.getElementsByTagName('ogc:FeatureId');
     const idString = featureId.item(0)?.getAttribute('fid');
-    const id = idString?.split('.')[1];
-    if (id) {
-      reloadFeature(id);
+    if (idString === 'none') {
+      const featId = feature.id;
+      if (!featId) {
+        return;
+      }
+      reloadFeature((featId as string));
+    } else if (idString) {
+      reloadFeature(idString);
     }
   };
 

@@ -28,22 +28,6 @@
     }
   }
 
-  .react-geo-togglegroup.vertical-toggle-group {
-    button {
-      display: flex;
-      width: 100%;
-
-      svg {
-        padding-top: 4px;
-        width: 25px;
-      }
-
-      span {
-        flex: 1;
-      }
-    }
-  }
-
   &.collapsed {
     min-width: unset;
 
@@ -72,11 +56,13 @@
     border: none;
     max-height: calc(100vh - var(--headerHeight) - var(--footerHeight) - 32px);
     overflow-y: auto;
+    border-radius: 0px;
 
     .ant-collapse-item {
       .ant-collapse-header {
+        border-radius: 0px;
         background-color: #fff;
-        padding: 6px 40px 6px 16px;
+        padding: 6px 15px 6px 16px;
 
         .ant-collapse-header-text span {
           padding-left: 10px;
@@ -118,22 +104,31 @@
           color: var(--complementaryColor);
         }
       }
+
+      &.ant-collapse-item {
+        border-radius: 0px;
+      }
     }
   }
 
-  button.collapse-btn {
-    width: 100%;
-    border: none;
-    border-radius: 0;
-  }
+  button {
+    color: #000000;
 
-  button:hover {
-    color: var(--secondaryColor);
-  }
+    &.collapse-btn {
+      width: 100%;
+      border: none;
+      border-radius: 0
+    }
 
-  .react-geo-togglebutton.btn-pressed {
-    font-size: 1.2em;
-    text-shadow: 0.5px 0.5px 0.5px color-mix(in srgb, var(--secondaryColor), black 20%);
+    &.react-geo-togglebutton.btn-pressed {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--secondaryColor);
+    }
+
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      color: var(--secondaryColor);
+    }
   }
 }
 

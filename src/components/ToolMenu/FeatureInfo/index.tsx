@@ -1,11 +1,21 @@
 import React, {
-  useCallback, useEffect, useState
+  useCallback,
+  useEffect,
+  useState
 } from 'react';
 
 import {
-  FormProps, Spin, Tabs
+  FormProps,
+  Spin,
+  Tabs
 } from 'antd';
 
+import {
+  groupBy, mapValues
+} from 'lodash';
+
+import { Coordinate as OlCoordinate } from 'ol/coordinate';
+import OlFeature from 'ol/Feature';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
@@ -17,16 +27,20 @@ import { Tab } from 'rc-tabs/lib/interface';
 
 import { useTranslation } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import CoordinateInfo, {
-  CoordinateInfoProps,
-  CoordinateInfoState
-} from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
 import {
-  isWmsLayer, WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+  isWmsLayer,
+  WmsLayer
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  CoordinateInfo,
+  CoordinateInfoProps
+} from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
+
+import { CoordinateInfoResult } from '@terrestris/react-util/dist/Hooks/useCoordinateInfo/useCoordinateInfo';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
@@ -54,6 +68,12 @@ export type FeatureInfoConfig = {
 };
 
 export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
+
+export interface CoordinateInfoState {
+  clickCoordinate: OlCoordinate | null;
+  features: Record<string, OlFeature[]>;
+  loading: boolean;
+}
 
 type LayerIndex = {
   layerName: string;
@@ -135,11 +155,11 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     });
   };
 
-  const resultRenderer = (coordinateInfoState: CoordinateInfoState) => {
-    const features = coordinateInfoState.features;
+  const resultRenderer = (coordinateInfoState: CoordinateInfoResult) => {
+    const featureLayerResult = coordinateInfoState.features;
     const loading = coordinateInfoState.loading;
 
-    if (Object.keys(features).length === 0) {
+    if (featureLayerResult.length === 0) {
       return (
         <span className='usage-hint'>
           {t('FeatureInfo.usageHint')}
@@ -147,13 +167,15 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       );
     }
 
-    const items: Array<Tab & { index: number }> = [];
+    const items: (Tab & { index: number })[] = [];
 
-    Object.keys(features).forEach(layerName => {
+    const groupedResultsByLayer = groupBy(featureLayerResult, 'featureType');
+
+    Object.entries(groupedResultsByLayer).forEach(([layerName, featureLayerResults]) => {
       let pluginRendererAvailable = false;
 
+      const features = featureLayerResults.map(flr => flr.feature);
       const allLayers = map.getAllLayers();
-
       const mapLayerIndex = findMapLayerIndex(layerName);
       const mapLayer = allLayers[mapLayerIndex];
 
@@ -194,13 +216,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
                 mapLayer?.get('featureInfoFormConfig') ?
                   <FeatureInfoTabs
                     tabConfig={mapLayer?.get('featureInfoFormConfig')}
-                    features={features[layerName]}
+                    features={features}
                     layerName={layerName}
                     layer={mapLayer}
                   /> :
                   <FeatureInfoPropertyGrid
-                    features={features[layerName]}
+                    features={features}
                     layerName={layerName}
+                    layer={mapLayer}
                   />
               }
             </div>
@@ -246,21 +269,23 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     };
   };
 
-  const onSuccess = (coordinateInfoState: CoordinateInfoState) => {
-    const features = coordinateInfoState.features;
+  const onSuccess = (coordinateInfoState: CoordinateInfoResult) => {
+    const featureLayerResult = coordinateInfoState.features;
+
+    const grouped = groupBy(featureLayerResult, 'featureType');
+    const mapped = mapValues(grouped, g => g.map(flr => flr.feature));
 
     const serializedFeatures: SelectedFeatures = {};
-    Object.entries(features).forEach(entry => {
-      const layerName = entry[0];
-      const selectedFeatures = entry[1];
+    for (const [layerName, feats] of Object.entries(mapped)) {
+      serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(feats);
+    }
 
-      serializedFeatures[layerName] = new OlFormatGeoJSON().writeFeatures(selectedFeatures);
-    });
-
-    const layers: LayerIndex[] = Object.keys(features).map(layerName => ({
-      layerName: layerName,
-      index: findMapLayerIndex(layerName)
-    })).sort((a, b) => b.index - a.index);
+    const layers: LayerIndex[] = featureLayerResult
+      .map(result => ({
+        layerName: result.featureType,
+        index: findMapLayerIndex(result.featureType)
+      }))
+      .sort((a, b) => b.index - a.index);
 
     if (layers.length > 0) {
       setActiveTabKey(layers[0].layerName);
@@ -273,11 +298,11 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     <div className='feature-info-panel'>
       <CoordinateInfo
         featureCount={10}
-        map={map}
         queryLayers={queryLayers}
         resultRenderer={resultRenderer}
         fetchOpts={getFetchOpts}
         onSuccess={onSuccess}
+        drillDown={true}
         {...restProps}
       />
     </div>

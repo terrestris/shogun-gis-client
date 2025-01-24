@@ -4,7 +4,7 @@ import Map from 'ol/Map';
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   SearchConfig
@@ -30,8 +30,8 @@ export const generateSolrQuery = ({
 }: SolrQueryProps): SolrQuery[] => {
   // parse searchValue into an array of search terms,
   // removing special characters and white spaces
-  let parts = searchValue.trim()
-    .replaceAll(/[()\\\-_./\/]/g, ' ')
+  const parts = searchValue.trim()
+    .replaceAll(/[()\\\-_.//]/g, ' ')
     .split(' ')
     .map(s => s.trim())
     .filter(s => s !== '');

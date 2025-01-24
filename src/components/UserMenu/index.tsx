@@ -1,21 +1,22 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import {
   faInfo,
   faUserCog,
   faSignOut,
   faSignIn,
-  faAngleDown,
-  faCircleQuestion
+  faAngleDown
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import { Button } from 'antd';
 import {
   ItemType
-} from 'antd/lib/menu/hooks/useItems';
+} from 'antd/lib/menu/interface';
 
 import ClientConfiguration from 'clientConfig';
 
@@ -29,8 +30,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
-
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 import {
@@ -38,22 +37,30 @@ import {
 } from '../../utils/getGravatarUrl';
 
 import ApplicationInfo from '../ApplicationInfo';
+import UserChip from '../UserChip';
 
 import './index.less';
 
-interface OwnProps { }
-
-type UserProps = OwnProps;
-
-export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
+export const UserMenu: React.FC = (): JSX.Element => {
   const {
     t
   } = useTranslation();
+
+  const [loginUrl, setLoginUrl] = useState<string>();
 
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
 
   const user = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    const getLoginUrl = async () => {
+      const url = await keycloak?.createLoginUrl();
+      setLoginUrl(url);
+    };
+
+    getLoginUrl();
+  }, [keycloak]);
 
   const onMenuClick = (evt: MenuInfo) => {
     switch (evt.key) {
@@ -73,7 +80,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
       case 'logout':
         if (keycloak) {
           keycloak.logout({
-            redirectUri: keycloak.createLoginUrl()
+            redirectUri: loginUrl
           });
         }
         break;
@@ -102,7 +109,7 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
         >
           <span>
             {
-              user.providerDetails?.email
+              user.providerDetails?.username
             }
           </span>
         </div>
@@ -141,25 +148,6 @@ export const UserMenu: React.FC<UserProps> = (): JSX.Element => {
             </span>
           }
         />
-      )
-    };
-
-    const docs: ItemType = {
-      key: 'docs',
-      icon: (
-        <FontAwesomeIcon
-          icon={faCircleQuestion}
-        />
-      ),
-      label: (
-        <Button
-          type='text'
-          className="user-documentation"
-          aria-label='user-documentation'
-          onClick={() => window.open('/gis-docs', '_blank')}
-        >
-          {t('UserMenu.helpMenuTitle')}
-        </Button>
       )
     };
 

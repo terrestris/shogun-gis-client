@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type SHOGunAPIClientProviderProps = {
   client?: SHOGunAPIClient;

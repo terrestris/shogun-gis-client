@@ -20,7 +20,7 @@ import UserMenu from '../UserMenu';
 
 import './index.less';
 
-export interface HeaderProps extends React.ComponentProps<'div'> { }
+export type HeaderProps = React.ComponentProps<'div'>;
 
 export const Header: React.FC<HeaderProps> = ({
   ...restProps
