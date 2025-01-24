@@ -1,1 +1,49 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1,shrink-to-fit=no"><base href=""><link rel="shortcut icon" type="image/x-icon" href="favicon.ico"><div id="loadmask" class="loadmask"><img src="loading-placeholder.png" id="loadmask-image"> <span id="loading-text">Loading, please wait…</span></div><title>SHOGun Client</title><style>.loadmask{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);transform:-webkit-translate(-50%,-50%);transform:-moz-translate(-50%,-50%);transform:-ms-translate(-50%,-50%);z-index:999}.loadmask-hidden{animation:fadeOut 1.5s forwards}.loadmask>img{min-width:50%;margin:0 auto;display:block}@keyframes fadeOut{from{opacity:1}to{z-index:-1;opacity:0;top:0;left:0;transform:scale(.5)}}@keyframes heartBeat{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}</style><script defer="defer" src="manifest.b2f399f6d9ea731a36d1.js?9198dcf9f51bd323af35"></script><script defer="defer" src="node_vendors.1c16087f9ae77611b897.js?9198dcf9f51bd323af35"></script><script defer="defer" src="common.29fcbb300e742e7f709e.js?9198dcf9f51bd323af35"></script><script defer="defer" src="main.f1c31919ebc8e58b095e.js?9198dcf9f51bd323af35"></script><link href="node_vendors.0a840a3a7d40af740e71.css?9198dcf9f51bd323af35" rel="stylesheet"><link href="common.54ff958e7053cc2fc0c4.css?9198dcf9f51bd323af35" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><script src="./gis-client-config.js"></script><script>window.clientConfig||(console.warn("No config found, client defaults will be used."),window.clientConfig={})</script><script>const regex=/\applicationId=(\d+)/,appId=location.search.match(regex)[1];let logoPath="./shogun_spinner.gif";appId&&(logoPath=localStorage.getItem(`SHOGun_Logo_Path_${appId}`)),document.getElementById("loading-text").style.display="none";const loadingImageElement=document.getElementById("loadmask-image");logoPath&&loadingImageElement&&(loadingImageElement.src=logoPath)</script><div id="app" class="app"></div></body></html>
+<!doctype html><html><head><base href=""><link href="favicon.ico" rel="icon"><style>
+      .loadmask {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+      }
+
+      .loadmask-hidden {
+        animation: fadeOut 1.5s forwards;
+      }
+
+      .loadmask > #loadmask-image {
+        width: 100%;
+        height: 100%;
+        max-width: 250px;
+        object-fit: scale-down;
+      }
+
+      .loadmask > #loadmask-indicator {
+        width: 50px;
+        display: table;
+        margin: 0 auto;
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          z-index: -1;
+          opacity: 0;
+          top: 0;
+          left: 0;
+          transform: scale(0.5);
+        }
+      }
+    </style><meta content="user-scalable=no,width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><meta content="utf-8" name="charset"><script defer src="manifest.a3d72ba445ce00fe.js"></script><script defer src="main.79099717f8f63d2e.js"></script></head><body><noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="loadmask" class="loadmask">
+      <img src="./loading-placeholder.png" id="loadmask-image">
+      <img src="./loading-indicator.gif" id="loadmask-indicator">
+    </div>
+    <script src="./gis-client-config.js"></script>
+    <script>window.clientConfig||(console.warn("No config found, client defaults will be used."),window.clientConfig={});let appIdExpression=/\applicationId=(\d+)/,appIdCand=location.search.match(appIdExpression),appId=appIdCand?appIdCand[1]:null,logoPath="./shogun_spinner.gif";appId&&(logoPath=localStorage.getItem(`SHOGun_Logo_Path_${appId}`));let loadingImageElement=document.getElementById("loadmask-image");logoPath&&loadingImageElement&&(loadingImageElement.src=logoPath)</script>
+
+    <div id="app" class="app"></div></body></html>

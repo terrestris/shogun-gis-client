@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_terrestris_shogun_gis_client=self.webpackChunk_terrestris_shogun_gis_client||[]).push([["4940"],{9520:function(t,e,n){n.r(e),n.d(e,{preventDefault:function(){return s},stopPropagation:function(){return r}});function r(t){t.stopPropagation()}function s(t){t.preventDefault()}e.default=class t{constructor(t){this.propagationStopped,this.defaultPrevented,this.type=t,this.target=null}preventDefault(){this.defaultPrevented=!0}stopPropagation(){this.propagationStopped=!0}}}}]);
+//# sourceMappingURL=4940.6e4d26cea336fa94.js.map
