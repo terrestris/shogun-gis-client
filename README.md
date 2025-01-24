@@ -1,6 +1,3 @@
-<!-- Jest Coverage Comment:Begin -->
-<!-- Jest Coverage Comment:End -->
-
 # SHOGun GIS client
 
 This repository contains the default WebGIS client used within the [SHOGun project](https://github.com/terrestris/shogun-docker).
