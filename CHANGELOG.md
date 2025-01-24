@@ -1,3 +1,23 @@
+## [9.0.0-next.6](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.5...v9.0.0-next.6) (2025-01-24)
+
+
+### Dependencies
+
+* add a watch:buildto npm script entry ([18d5500](https://github.com/terrestris/shogun-gis-client/commit/18d5500d3e710603f1a224301b71aa2ed38b1bf4))
+* update dependencies ([7f91b84](https://github.com/terrestris/shogun-gis-client/commit/7f91b84a8b10584b493a394b14a0fdf3c92a8d4d))
+* update dependencies ([74460e9](https://github.com/terrestris/shogun-gis-client/commit/74460e992b793b8545bdd37348aaf79821947d56))
+
+
+### Features
+
+* introduces the new api endpoint applicationName ([#1791](https://github.com/terrestris/shogun-gis-client/issues/1791)) ([3d07d57](https://github.com/terrestris/shogun-gis-client/commit/3d07d5703e863c496c13610d6b89e1ae93e74de2))
+
+
+### Bugfixes
+
+* add missing keys in list ([9719761](https://github.com/terrestris/shogun-gis-client/commit/97197618bffc3f0b694af914ccde69e34f6b2316))
+* condition checks and css ([87a1114](https://github.com/terrestris/shogun-gis-client/commit/87a1114f8b7ba89e461b19010ce388b96e60859f))
+
 ## [9.0.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0-next.4...v9.0.0-next.5) (2025-01-15)
 
 
