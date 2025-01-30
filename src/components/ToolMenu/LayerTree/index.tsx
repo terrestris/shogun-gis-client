@@ -364,7 +364,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               layer={layer}
               errorMsg={t('LayerTree.noLegendAvailable')}
               extraParams={legendRequestExtraParams}
-              headers={layer.get('useBearerToken') && legendRequestHeaders}
+              headers={layer.get('useBearerToken') ? legendRequestHeaders : undefined}
             />
           }
         </>
