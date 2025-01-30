@@ -7,31 +7,43 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import SimpleButton, { SimpleButtonProps } from '@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton';
+import {
+  Button,
+  Tooltip
+} from 'antd';
+import { ButtonProps } from 'antd/lib';
 
-export type DocumentationButtonProps = SimpleButtonProps;
+import { useTranslation } from 'react-i18next';
+
+export type DocumentationButtonProps = ButtonProps;
 
 const defaultClassName = 'documentationbutton';
 export const DocumentationButton: React.FC<DocumentationButtonProps> = ({
   className
 }) => {
 
+  const { t } = useTranslation();
+
   const finalClassName = className
     ? `${defaultClassName} ${className}`
     : defaultClassName;
 
   return (
-    <SimpleButton
-      type='link'
-      onClick={() => window.open('/gis-docs', '_blank')}
-      className={finalClassName}
-      icon={
-        <FontAwesomeIcon
-          icon={faCircleQuestion}
-        />
-      }
+    <Tooltip
+      title={t('DocumentationButton.tooltip')}
     >
-    </SimpleButton>
+      <Button
+        type="link"
+        aria-label="documentation-button"
+        onClick={() => window.open('/gis-docs', '_blank')}
+        className={finalClassName}
+        icon={
+          <FontAwesomeIcon
+            icon={faCircleQuestion}
+          />
+        }
+      />
+    </Tooltip>
   );
 };
 

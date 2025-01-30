@@ -12,6 +12,12 @@ import { createReduxWrapper } from '../../utils/testUtils';
 
 import Header from './index';
 
+jest.mock('clientConfig', () => ({
+  keycloak: {
+    enabled: true
+  }
+}));
+
 describe('<Header />', () => {
 
   it('is defined', () => {

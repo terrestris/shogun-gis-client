@@ -158,7 +158,9 @@ export default {
         mousePosition: 'Mausposition',
         imprint: 'Impressum',
         contact: 'Kontakt',
-        privacypolicy: 'Datenschutz'
+        privacypolicy: 'Datenschutz',
+        about: 'Über',
+        aboutTooltip: 'Zeige die Beschreibung und Versionsinformationen'
       },
       Index: {
         applicationLoadErrorMessage: 'Fehler beim Laden der Applikation',
@@ -177,10 +179,12 @@ export default {
       },
       UserMenu: {
         settingsMenuTitle: 'Profil bearbeiten',
-        infoMenuTitle: 'Über',
-        helpMenuTitle: 'Dokumentation',
         logoutMenuTitle: 'Ausloggen',
-        loginMenuTitle: 'Anmelden'
+        loginMenuTitle: 'Anmelden',
+        loginTooltip: 'Zur Anmeldung'
+      },
+      DocumentationButton: {
+        tooltip: 'Öffne die Dokumentation'
       },
       WmsTimeSlider: {
         title: 'Zeitlicher Bezug',
@@ -463,7 +467,9 @@ export default {
         mousePosition: 'Mouse position',
         imprint: 'Imprint',
         contact: 'Contact',
-        privacypolicy: 'Privacy'
+        privacypolicy: 'Privacy',
+        about: 'About',
+        aboutTooltip: 'Show description and version information'
       },
       Index: {
         applicationLoadErrorMessage: 'Error while loading the application',
@@ -482,10 +488,12 @@ export default {
       },
       UserMenu: {
         settingsMenuTitle: 'Edit profile',
-        infoMenuTitle: 'About',
-        helpMenuTitle: 'Documentation',
         logoutMenuTitle: 'Logout',
-        loginMenuTitle: 'Login'
+        loginMenuTitle: 'Login',
+        loginTooltip: 'Go to login'
+      },
+      DocumentationButton: {
+        tooltip: 'Open the documentation'
       },
       WmsTimeSlider: {
         title: 'Time reference',

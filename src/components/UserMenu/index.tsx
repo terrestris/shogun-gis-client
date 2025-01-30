@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 
 import {
-  faInfo,
   faUserCog,
   faSignOut,
   faSignIn,
@@ -15,10 +14,12 @@ import {
 } from '@fortawesome/react-fontawesome';
 
 import {
+  Button,
+  Tooltip
+} from 'antd';
+import {
   ItemType
 } from 'antd/lib/menu/interface';
-
-import ClientConfiguration from 'clientConfig';
 
 import _isEmpty from 'lodash/isEmpty';
 
@@ -36,7 +37,6 @@ import {
   getGravatarUrl
 } from '../../utils/getGravatarUrl';
 
-import ApplicationInfo from '../ApplicationInfo';
 import UserChip from '../UserChip';
 
 import './index.less';
@@ -69,14 +69,6 @@ export const UserMenu: React.FC = (): JSX.Element => {
           keycloak.accountManagement();
         }
         break;
-      case 'info':
-        // Don't do anything, visible state will be handled by the menu itself.
-        break;
-      case 'login':
-        if (keycloak) {
-          keycloak.login();
-        }
-        break;
       case 'logout':
         if (keycloak) {
           keycloak.logout({
@@ -90,26 +82,26 @@ export const UserMenu: React.FC = (): JSX.Element => {
   };
 
   const getMenu = () => {
-    const login: ItemType = {
-      key: 'login',
-      icon: (
-        <FontAwesomeIcon
-          icon={faSignIn}
-        />
-      ),
-      label: t('UserMenu.loginMenuTitle')
-    };
-
     const username: ItemType = {
       key: 'username',
       label: (
         <div
-          className="user-name"
-          aria-label='user-name'
+          className="username-menu-item"
+          aria-label="user-name"
         >
-          <span>
+          <span
+            className="item-username"
+          >
             {
-              user.providerDetails?.username
+              user.providerDetails?.username || user.authProviderId
+            }
+          </span>
+          <br />
+          <span
+            className="item-fullname"
+          >
+            {
+              `${user.providerDetails?.firstName || ''} ${user.providerDetails?.lastName || ''}`
             }
           </span>
         </div>
@@ -130,27 +122,6 @@ export const UserMenu: React.FC = (): JSX.Element => {
       label: t('UserMenu.settingsMenuTitle')
     };
 
-    const info: ItemType = {
-      key: 'info',
-      icon: (
-        <FontAwesomeIcon
-          icon={faInfo}
-        />
-      ),
-      label: (
-        <ApplicationInfo
-          opener={
-            <span
-              className="info-opener"
-              aria-label='info-opener'
-            >
-              {t('UserMenu.infoMenuTitle')}
-            </span>
-          }
-        />
-      )
-    };
-
     const logout: ItemType = {
       key: 'logout',
       icon: (
@@ -160,40 +131,27 @@ export const UserMenu: React.FC = (): JSX.Element => {
       ),
       label: (
         <div
-          aria-label='login'
+          aria-label="logout"
         >
           {t('UserMenu.logoutMenuTitle')}
         </div>
       )
     };
 
-    const items: ItemType[] = [];
+    const accountRoles = keycloak?.tokenParsed?.resource_access?.account?.roles;
+    const hasUserManagementAccess = Array.isArray(accountRoles) && accountRoles.indexOf('manage-account') > -1;
 
-    if (_isEmpty(user)) {
-      if (ClientConfiguration.keycloak?.enabled) {
-        items.push(login);
-      }
-      items.push(info);
-    } else {
-      const accountRoles = keycloak?.tokenParsed?.resource_access?.account?.roles;
-      const hasUserManagementAccess = Array.isArray(accountRoles) && accountRoles.indexOf('manage-account') > -1;
-      const itemsForLoggedInUser = hasUserManagementAccess ? [
-        username,
-        divider,
-        settings,
-        info,
-        divider,
-        logout
-      ] : [
-        username,
-        divider,
-        info,
-        divider,
-        logout
-      ];
-
-      items.push(...itemsForLoggedInUser);
-    }
+    const items: ItemType[] = hasUserManagementAccess ? [
+      username,
+      divider,
+      settings,
+      divider,
+      logout
+    ] : [
+      username,
+      divider,
+      logout
+    ];
 
     return {
       items,
@@ -201,24 +159,48 @@ export const UserMenu: React.FC = (): JSX.Element => {
     };
   };
 
-  if (_isEmpty(user)) {
-    return <></>;
-  }
+  const onLoginClick = () => {
+    if (keycloak) {
+      keycloak.login();
+    }
+  };
 
   return (
-    <UserChip
-      size={'small'}
-      imageSrc={getGravatarUrl({
-        email: user.providerDetails?.email || '',
-        size: 28
-      })}
-      userName={
-        <FontAwesomeIcon
-          icon={faAngleDown}
+    <div
+      className="user-menu"
+    >
+      {_isEmpty(user) ? (
+        <Tooltip
+          title={t('UserMenu.loginTooltip')}
+        >
+          <Button
+            type="link"
+            onClick={onLoginClick}
+            icon={
+              <FontAwesomeIcon
+                icon={faSignIn}
+              />
+            }
+          >
+            {t('UserMenu.loginMenuTitle')}
+          </Button>
+        </Tooltip>
+      ) : (
+        <UserChip
+          size="small"
+          imageSrc={getGravatarUrl({
+            email: user.providerDetails?.email || '',
+            size: 28
+          })}
+          userName={
+            <FontAwesomeIcon
+              icon={faAngleDown}
+            />
+          }
+          userMenu={getMenu()}
         />
-      }
-      userMenu={getMenu()}
-    />
+      )}
+    </div>
   );
 };
 

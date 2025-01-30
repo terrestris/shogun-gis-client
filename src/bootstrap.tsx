@@ -129,6 +129,9 @@ import {
 import {
   setUser
 } from './store/user';
+import {
+  setVisible as setUserMenuVisible
+} from './store/userMenu';
 
 import './index.less';
 
@@ -289,7 +292,7 @@ const setApplicationToStore = async (application?: Application) => {
     const availableTools: string[] = [];
     application.toolConfig
       .forEach((tool: DefaultApplicationToolConfig) => {
-        if (tool.config?.visible && tool.name !== 'search') {
+        if (tool.config?.visible && !['search', 'user_menu', 'map_toolbar'].includes(tool.name)) {
           availableTools.push(tool.name);
         }
         if (tool.name === 'search' && tool.config.engines.length > 0) {
@@ -312,6 +315,9 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'map_toolbar') {
           store.dispatch(setMapToolbarVisible(tool.config?.visible));
+        }
+        if (tool.name === 'user_menu') {
+          store.dispatch(setUserMenuVisible(tool.config?.visible ?? true));
         }
       });
     store.dispatch(setAvailableTools(availableTools));
