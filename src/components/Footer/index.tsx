@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect
+} from 'react';
 
 import {
-  Button, Divider
+  Button,
+  Divider,
+  Tooltip
 } from 'antd';
 
 import OlControlMousePosition from 'ol/control/MousePosition';
@@ -13,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 import ScaleCombo from '@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';
 import { usePlugins } from '../../hooks/usePlugins';
 
@@ -21,7 +24,12 @@ import {
   FooterPlacementOrientation,
   isFooterIntegration
 } from '../../plugin';
+
 import { Legal } from '../../store/legal';
+
+import { ApplicationInfo } from '../ApplicationInfo';
+
+import './index.less';
 
 export type FooterProps = React.ComponentProps<'div'>;
 
@@ -173,7 +181,22 @@ export const Footer: React.FC<FooterProps> = ({
         type="link"
       >
         {t('Footer.privacypolicy')}
-      </Button>
+      </Button>,
+      <ApplicationInfo
+        key="application-info"
+        opener={
+          <Tooltip
+            title={t('Footer.aboutTooltip')}
+          >
+            <Button
+              type="link"
+              aria-label="info-opener"
+            >
+              {t('Footer.about')}
+            </Button>
+          </Tooltip>
+        }
+      />
     ];
 
     if (plugins.length > 0) {

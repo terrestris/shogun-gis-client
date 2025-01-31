@@ -25,8 +25,10 @@ export type HeaderProps = React.ComponentProps<'div'>;
 export const Header: React.FC<HeaderProps> = ({
   ...restProps
 }): JSX.Element => {
-  const title = useAppSelector((state) => state.title);
-  const logoPath = useAppSelector((state) => state.logoPath);
+  const title = useAppSelector(state => state.title);
+  const logoPath = useAppSelector(state => state.logoPath);
+  const userMenuVisible = useAppSelector(state => state.userMenu.visible);
+
   const plugins = usePlugins();
 
   const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
@@ -85,24 +87,20 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const getDocsButton = () => {
-    if (ClientConfiguration.documentationButtonVisible) {
-      return (
-        <div
-          key="documentation-button"
-          aria-label="documentation-button"
-        >
-          <DocumentationButton
-            key="documentation-button"
-            type="link"
-          >
-          </DocumentationButton>
-
-        </div>
-      );
+    if (!ClientConfiguration.documentationButtonVisible) {
+      return;
     }
+
+    return (
+      <DocumentationButton />
+    );
   };
 
   const getUserMenu = () => {
+    if (!userMenuVisible || !ClientConfiguration.keycloak?.enabled) {
+      return;
+    }
+
     return (
       <div
         key="user-menu"

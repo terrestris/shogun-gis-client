@@ -26,6 +26,7 @@ import title from './title';
 import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
 import user from './user';
+import userMenu from './userMenu';
 
 type AsyncReducer = Record<string, Reducer>;
 
@@ -52,6 +53,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     user,
     stylingDrawerVisibility,
     mapToolbarVisible,
+    userMenu,
     ...asyncReducers
   });
 };
