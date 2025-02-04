@@ -145,7 +145,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
   };
 
   const onBeforeFileUpload = (file: RcFile) => {
-    const maxSize = ClientConfiguration.geoserver?.upload?.limit || 200000000;
+    const maxSize = ClientConfiguration.geoserver?.upload?.limit ?? 200000000;
     const fileType = file.type;
     const fileSize = file.size;
 
@@ -338,8 +338,8 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
 
     const splittedFileName = (file as RcFile).name.split('.');
     const fileType = (file as RcFile).type;
-    const geoServerBaseUrl = ClientConfiguration.geoserver?.base || '/geoserver';
-    const workspace = ClientConfiguration.geoserver?.upload?.workspace || 'SHOGUN';
+    const geoServerBaseUrl = ClientConfiguration.geoserver?.base ?? '/geoserver';
+    const workspace = ClientConfiguration.geoserver?.upload?.workspace ?? 'SHOGUN';
     const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
 
     const uploadData = {

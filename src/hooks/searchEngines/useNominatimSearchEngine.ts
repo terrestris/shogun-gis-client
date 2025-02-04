@@ -42,7 +42,7 @@ export const useNominatimSearchEngine = () => {
       bounded: viewBox ? 1 : undefined,
       viewBox: viewBox ? viewBox?.toString() : undefined,
       countryCodes: '',
-      nominatimBaseUrl: ClientConfiguration.search?.nominatimUrl || 'https://nominatim.openstreetmap.org/search?'
+      nominatimBaseUrl: ClientConfiguration.search?.nominatimUrl ?? 'https://nominatim.openstreetmap.org/search?'
     });
 
     const response = await executeNominatimSearch(value);

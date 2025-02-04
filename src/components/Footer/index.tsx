@@ -50,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({
           wrappedComponent: WrappedPluginComponent
         } = plugin;
 
-        items.splice(plugin.integration?.insertionIndex || 0, 0,
+        items.splice(plugin.integration?.insertionIndex ?? 0, 0,
           <WrappedPluginComponent
             key={key}
           />

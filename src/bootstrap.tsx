@@ -150,7 +150,7 @@ enum LoadingErrorCode {
 }
 
 const client = ClientConfiguration.shogunBase !== false ? new SHOGunAPIClient({
-  url: ClientConfiguration.shogunBase || '/'
+  url: ClientConfiguration.shogunBase ?? '/'
 }) : undefined;
 
 const parser = new SHOGunApplicationUtil({

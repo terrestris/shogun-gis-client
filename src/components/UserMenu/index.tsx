@@ -93,7 +93,7 @@ export const UserMenu: React.FC = (): JSX.Element => {
             className="item-username"
           >
             {
-              user.providerDetails?.username || user.authProviderId
+              user.providerDetails?.username ?? user.authProviderId
             }
           </span>
           <br />
@@ -101,7 +101,7 @@ export const UserMenu: React.FC = (): JSX.Element => {
             className="item-fullname"
           >
             {
-              `${user.providerDetails?.firstName || ''} ${user.providerDetails?.lastName || ''}`
+              `${user.providerDetails?.firstName ?? ''} ${user.providerDetails?.lastName ?? ''}`
             }
           </span>
         </div>
@@ -189,7 +189,7 @@ export const UserMenu: React.FC = (): JSX.Element => {
         <UserChip
           size="small"
           imageSrc={getGravatarUrl({
-            email: user.providerDetails?.email || '',
+            email: user.providerDetails?.email ?? '',
             size: 28
           })}
           userName={

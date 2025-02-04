@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
           wrappedComponent: WrappedPluginComponent
         } = plugin;
 
-        items.splice(plugin.integration?.insertionIndex || 0, 0,
+        items.splice(plugin.integration?.insertionIndex ?? 0, 0,
           <WrappedPluginComponent
             key={key}
           />
