@@ -32,7 +32,7 @@ import Toolbar, { ToolbarProps } from '../Toolbar';
 
 import './index.less';
 
-export type MapToolbarProps = React.HTMLAttributes<HTMLDivElement> & ToolbarProps & {};
+export type MapToolbarProps = React.HTMLAttributes<HTMLDivElement> & ToolbarProps;
 
 export const MapToolbar: React.FC = (): JSX.Element => {
   const {

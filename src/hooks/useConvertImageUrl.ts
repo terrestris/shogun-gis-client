@@ -15,7 +15,7 @@ export const useConvertImageUrl = () => {
 
   const imageUrlToBase64 = useCallback(async (url: string) => {
     if (_isNil(url)) {
-      return Promise.reject();
+      return Promise.reject(new Error(`Passed url '${url}' is null or undefined`));
     }
 
     const response = await fetch(url, {

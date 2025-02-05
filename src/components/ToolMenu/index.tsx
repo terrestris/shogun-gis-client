@@ -239,7 +239,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             children: <WrappedPluginComponent />
           };
 
-          panels.splice(insertionIndex || 0, 0, newItem);
+          panels.splice(insertionIndex ?? 0, 0, newItem);
         }
       });
     }

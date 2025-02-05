@@ -96,7 +96,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
 
   const resolvePlaceholder = (record: EditReferenceDataType): string | number => {
     if (!tablePropertyName) {
-      return record[defaultPropertyName] || '';
+      return record[defaultPropertyName] ?? '';
     }
 
     const regex = /{{(.*?)}}/g;

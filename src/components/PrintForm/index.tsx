@@ -186,7 +186,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       return;
     }
     let pManagerOpts: MapFishPrintV3ManagerOpts = {
-      url: ClientConfiguration.print?.url || '/print',
+      url: ClientConfiguration.print?.url ?? '/print',
       map,
       customPrintScales: map
         ?.getView()

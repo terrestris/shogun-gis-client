@@ -60,7 +60,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   selectedFeature,
   ...passThroughProps
 }) => {
-  const [isFormValid, setIsFormIsValid] = useState(true);
+  const [isFormValid, setIsFormValid] = useState(true);
   const [availableFeatureCollectionAttributes, setAvailableFeatureCollectionAttributes] = useState<string[]>([]);
   const [availableFeatureAttributes, setAvailableFeatureAttributes] = useState<string[]>([]);
   const [, contextHolder] = notification.useNotification();
@@ -156,9 +156,9 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   const onChange = async () => {
     try {
       await form.validateFields();
-      setIsFormIsValid(true);
+      setIsFormValid(true);
     } catch (error) {
-      setIsFormIsValid(false);
+      setIsFormValid(false);
       Logger.error(error);
     }
   };

@@ -151,8 +151,9 @@ export const useWriteWfsTransaction = () => {
         const geometry = feature.getGeometry()?.clone();
 
         if (geometry && !isEmpty(geometry.getExtent()) && allowedEditMode?.includes('EDIT_GEOMETRY')) {
-          feat.set(geomProperty?.name || 'geom', geometry);
-          feat.setGeometryName(geomProperty?.name || 'geom');
+          const geomPropName = geomProperty?.name ?? 'geom';
+          feat.set(geomPropName, geometry);
+          feat.setGeometryName(geomPropName);
         }
 
         if (opts.form) {
