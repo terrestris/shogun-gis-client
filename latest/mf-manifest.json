@@ -2114,16 +2114,14 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/format/GeoJSON",
-      "name": "ol/format/GeoJSON",
+      "id": "SHOGunGISClient:ol/format/GeoJSON.js",
+      "name": "ol/format/GeoJSON.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "5773.8633abe13deb43d8.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3094,8 +3092,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/layer/Layer.js",
-      "name": "ol/layer/Layer.js",
+      "id": "SHOGunGISClient:ol/layer/Layer",
+      "name": "ol/layer/Layer",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
@@ -3133,16 +3131,14 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/layer/Vector",
-      "name": "ol/layer/Vector",
+      "id": "SHOGunGISClient:ol/layer/Vector.js",
+      "name": "ol/layer/Vector.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "6976.b8c55e73d373a950.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3169,8 +3165,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/loadingstrategy",
-      "name": "ol/loadingstrategy",
+      "id": "SHOGunGISClient:ol/loadingstrategy.js",
+      "name": "ol/loadingstrategy.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
@@ -3449,8 +3445,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/source/Vector",
-      "name": "ol/source/Vector",
+      "id": "SHOGunGISClient:ol/source/Vector.js",
+      "name": "ol/source/Vector.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
@@ -3570,7 +3566,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "1867.40c11e9076772063.js",
+            "7379.458ac13b61a1b75c.js",
+            "7410.ddcaff22b1a7e3d2.js",
+            "8606.1d51cf47600acab1.js",
+            "9755.d8dbca24b77dbc0a.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3579,8 +3581,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/style/Icon",
-      "name": "ol/style/Icon",
+      "id": "SHOGunGISClient:ol/style/Icon.js",
+      "name": "ol/style/Icon.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
@@ -3645,7 +3647,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "5572.122db1475db3b853.js",
+            "7410.ddcaff22b1a7e3d2.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3654,8 +3659,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/style/Style",
-      "name": "ol/style/Style",
+      "id": "SHOGunGISClient:ol/style/Style.js",
+      "name": "ol/style/Style.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
@@ -3679,7 +3684,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "1867.40c11e9076772063.js",
+            "2597.94f892b0f67a1e2f.js",
+            "7379.458ac13b61a1b75c.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3708,8 +3717,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/tilegrid/TileGrid",
-      "name": "ol/tilegrid/TileGrid",
+      "id": "SHOGunGISClient:ol/tilegrid/TileGrid.js",
+      "name": "ol/tilegrid/TileGrid.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
@@ -3837,6 +3846,97 @@
           "async": [],
           "sync": [
             "1512.c197381701fa0941.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/layer/Vector",
+      "name": "ol/layer/Vector",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "6976.b8c55e73d373a950.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/source/Vector",
+      "name": "ol/source/Vector",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "9728.26f8837f418745cf.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/format/GeoJSON",
+      "name": "ol/format/GeoJSON",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "5773.8633abe13deb43d8.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/loadingstrategy",
+      "name": "ol/loadingstrategy",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "2378.76fe43e438afc3c5.js",
+            "9728.26f8837f418745cf.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/tilegrid/TileGrid",
+      "name": "ol/tilegrid/TileGrid",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "7222.3e32bea1aff8e6b5.js"
           ]
         },
         "css": {
@@ -4052,6 +4152,24 @@
       }
     },
     {
+      "id": "SHOGunGISClient:ol/style/Style",
+      "name": "ol/style/Style",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "7410.ddcaff22b1a7e3d2.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
       "id": "SHOGunGISClient:ol/style/Stroke",
       "name": "ol/style/Stroke",
       "version": "10.3.1",
@@ -4124,6 +4242,26 @@
             "7410.ddcaff22b1a7e3d2.js",
             "8606.1d51cf47600acab1.js",
             "9755.d8dbca24b77dbc0a.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/style/Icon",
+      "name": "ol/style/Icon",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "2597.94f892b0f67a1e2f.js",
+            "3671.117d5f156a1aa1ad.js",
+            "8725.eb282dc671413b34.js"
           ]
         },
         "css": {
@@ -4429,58 +4567,6 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/style/Icon.js",
-      "name": "ol/style/Icon.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": [
-            "2597.94f892b0f67a1e2f.js",
-            "3671.117d5f156a1aa1ad.js",
-            "8725.eb282dc671413b34.js"
-          ]
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
-      "id": "SHOGunGISClient:ol/style/Style.js",
-      "name": "ol/style/Style.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": []
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
-      "id": "SHOGunGISClient:ol/format/GeoJSON.js",
-      "name": "ol/format/GeoJSON.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": []
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
       "id": "SHOGunGISClient:ol/layer/Image.js",
       "name": "ol/layer/Image.js",
       "version": "10.3.1",
@@ -4489,6 +4575,24 @@
         "js": {
           "async": [],
           "sync": []
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/layer/Layer.js",
+      "name": "ol/layer/Layer.js",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "9287.7e52de2891ca1f3b.js"
+          ]
         },
         "css": {
           "async": [],
@@ -4533,22 +4637,6 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/tilegrid/TileGrid.js",
-      "name": "ol/tilegrid/TileGrid.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": []
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
       "id": "SHOGunGISClient:ol/layer/Tile.js",
       "name": "ol/layer/Tile.js",
       "version": "10.3.1",
@@ -4565,40 +4653,6 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/layer/Vector.js",
-      "name": "ol/layer/Vector.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": []
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
-      "id": "SHOGunGISClient:ol/source/Vector.js",
-      "name": "ol/source/Vector.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": [
-            "9728.26f8837f418745cf.js"
-          ]
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
       "id": "SHOGunGISClient:ol/View.js",
       "name": "ol/View.js",
       "version": "10.3.1",
@@ -4607,25 +4661,6 @@
         "js": {
           "async": [],
           "sync": []
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
-      "id": "SHOGunGISClient:ol/loadingstrategy.js",
-      "name": "ol/loadingstrategy.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": [
-            "2378.76fe43e438afc3c5.js",
-            "9728.26f8837f418745cf.js"
-          ]
         },
         "css": {
           "async": [],
@@ -4660,22 +4695,6 @@
           "sync": [
             "5109.1af713be61deb470.js"
           ]
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
-      "id": "SHOGunGISClient:ol/layer/Layer",
-      "name": "ol/layer/Layer",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": []
         },
         "css": {
           "async": [],
