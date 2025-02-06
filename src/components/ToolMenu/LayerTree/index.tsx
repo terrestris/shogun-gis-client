@@ -128,7 +128,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   }, [map, initialLayersUid, registerTileLoadHandler]);
 
   const legendRequestExtraParams = useMemo(() => ({
-    scale: mapScale,
+    SCALE: mapScale,
     LEGEND_OPTIONS: 'fontAntiAliasing:true;forceLabels:on',
     TRANSPARENT: true
   }), [mapScale]);
@@ -151,6 +151,9 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (!map) {
       return;
     }
+
+    // Trigger once on initial render to set the current map scale.
+    onMapMoveEnd(new OlMapEvent('moveend', map));
 
     map.on('moveend', onMapMoveEnd);
 
