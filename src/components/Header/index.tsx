@@ -92,7 +92,9 @@ export const Header: React.FC<HeaderProps> = ({
     }
 
     return (
-      <DocumentationButton />
+      <DocumentationButton
+        key="docs-button"
+      />
     );
   };
 
