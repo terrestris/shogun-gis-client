@@ -66,6 +66,7 @@
     "keycloak-js": "^26.1.0",
     "normalize.css": "^8.0.1",
     "ol": "^10.3.1",
+    "proj4": "^2.15.0",
     "react": "^18.3.1",
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^18.3.1",
@@ -149,6 +150,7 @@
     "relativePaths": "true"
   },
   "overrides": {
-    "ol": "$ol"
+    "ol": "$ol",
+    "proj4": "$proj4"
   }
 }
