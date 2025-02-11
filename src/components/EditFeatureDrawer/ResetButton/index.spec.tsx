@@ -1,12 +1,13 @@
 import React from 'react';
 
 import {
-  cleanup, fireEvent, prettyDOM, render, screen,
+  cleanup,
+  fireEvent,
   waitFor
 } from '@testing-library/react';
 
 import {
-  FormInstance, useForm
+  FormInstance
 } from 'antd/lib/form/Form';
 import {
   Feature
@@ -17,10 +18,9 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import { store } from '../../../store/store';
-import { EditReferenceDataType } from '../EditReferenceTable';
 
 import ResetButton from '.';
 
@@ -70,7 +70,8 @@ describe('<ResetButton />', () => {
       isFieldValidating: jest.fn(),
       isFieldsValidating: jest.fn(),
       setFields: jest.fn(),
-      setFieldValue: jest.fn()
+      setFieldValue: jest.fn(),
+      focusField: jest.fn()
     };
   });
 

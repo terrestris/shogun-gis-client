@@ -44,10 +44,10 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
-        label={fieldCfg.displayName || fieldCfg.propertyName}
+        label={fieldCfg.displayName ?? fieldCfg.propertyName}
       >
         <DisplayField
-          label={fieldCfg.displayName || fieldCfg.propertyName}
+          label={fieldCfg.displayName ?? fieldCfg.propertyName}
           {...fieldCfg.fieldProps}
         />
       </Form.Item>

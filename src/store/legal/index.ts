@@ -20,9 +20,9 @@ export const slice = createSlice({
   reducers: {
     setLegal: (state, action: PayloadAction<Legal>) => {
       return {
-        contact: action.payload.contact || initialState.contact,
-        imprint: action.payload.imprint || initialState.imprint,
-        privacy: action.payload.privacy || initialState.privacy
+        contact: action.payload.contact ?? initialState.contact,
+        imprint: action.payload.imprint ?? initialState.imprint,
+        privacy: action.payload.privacy ?? initialState.privacy
       };
     }
   }

@@ -129,7 +129,7 @@ dist
 .pnp.*
 
 # Playwright test output
-/test-results/
+test-results/
 /playwright-report/
 /playwright/.cache/
 /storageState.json

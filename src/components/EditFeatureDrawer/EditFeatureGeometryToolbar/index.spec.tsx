@@ -13,6 +13,7 @@ import {
 } from 'geojson';
 import { Feature } from 'ol';
 import { MultiPolygon } from 'ol/geom';
+import OlGeometry from 'ol/geom/Geometry';
 import OlVectorLayer from 'ol/layer/Vector';
 import OlMap from 'ol/Map';
 import { fromLonLat } from 'ol/proj';
@@ -21,8 +22,8 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { DigitizeUtil} from '@terrestris/react-util/dist/Util/DigitizeUtil';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import useAppSelector from '../../../hooks/useAppSelector';
 import { EditLevel } from '../../../store/editFeature';
@@ -76,7 +77,7 @@ const mockFeature = {
 };
 
 const mockVectorSource = new OlSourceVector({
-  features: [new Feature(mockFeature)]
+  features: [new Feature<OlGeometry>(mockFeature)]
 });
 
 const mockVectorLayer = new OlVectorLayer({
@@ -119,7 +120,7 @@ describe('EditFeatureGeometryToolbar', () => {
 
   it('can be rendered', async () => {
     const getDigitizeLayerMock = jest.spyOn(DigitizeUtil, 'getDigitizeLayer').mockReturnValue(mockVectorLayer);
-    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation(callback => callback({
+    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation((callback: any) => callback({
       editFeature: {
         userEditMode: mockAllowedEditMode
       }
@@ -152,7 +153,7 @@ describe('EditFeatureGeometryToolbar', () => {
 
   it('is empty when not allowed to edit geometery', async () => {
     mockAllowedEditMode = [];
-    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation(callback => callback({
+    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation((callback: any) => callback({
       editFeature: {
         userEditMode: mockAllowedEditMode
       }
@@ -173,9 +174,8 @@ describe('EditFeatureGeometryToolbar', () => {
   });
 
   it('renders draw button in edit model create', async () => {
-    const getDigitizeLayerMock = jest.spyOn(DigitizeUtil, 'getDigitizeLayer').mockReturnValue(mockVectorLayer);
     mockAllowedEditMode = ['EDIT_GEOMETRY', 'CREATE'];
-    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation(callback => callback({
+    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation((callback: any) => callback({
       editFeature: {
         userEditMode: mockAllowedEditMode
       }
@@ -206,9 +206,8 @@ describe('EditFeatureGeometryToolbar', () => {
   });
 
   it('renders delete button', async () => {
-    const getDigitizeLayerMock = jest.spyOn(DigitizeUtil, 'getDigitizeLayer').mockReturnValue(mockVectorLayer);
     mockAllowedEditMode = ['EDIT_GEOMETRY', 'DELETE'];
-    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation(callback => callback({
+    jest.requireMock('../../../hooks/useAppSelector').default.mockImplementation((callback: any) => callback({
       editFeature: {
         userEditMode: mockAllowedEditMode
       }

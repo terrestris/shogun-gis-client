@@ -1,58 +1,49 @@
-.react-geo-userchip {
+.user-menu {
   padding: 6px;
 
-  .ant-avatar {
-    border: 1px solid var(--complementaryColor);
-    height: 30px;
-    width: 30px;
-    transition: border .3s;
+  .userchip {
+    .ant-avatar {
+      border: 1px solid var(--complementaryColor);
+      height: 30px;
+      width: 30px;
+      transition: border .3s;
 
-    &:hover {
-      border-color: var(--secondaryColor);
-    }
-  }
-
-  .username {
-    span {
-      font-size: 0.6em;
+      &:hover {
+        border-color: var(--secondaryColor);
+      }
     }
 
-    transition: color .3s;
+    .username {
+      span {
+        font-size: 0.6em;
+      }
 
-    &:hover {
-      color: var(--secondaryColor);
+      transition: color .3s;
+
+      &:hover {
+        color: var(--secondaryColor);
+      }
+    }
+
+    .ant-dropdown {
+      svg {
+        width: 20px;
+        padding-right: 10px;
+      }
+
+      .username-menu-item {
+        margin: 13px;
+        cursor: default;
+        text-align: right;
+
+        .item-username {
+          font-weight: bold;
+        }
+
+        .item-fullname {
+          font-size: small;
+        }
+      }
     }
   }
-}
-
-.user-chip-menu {
-  svg {
-    width: 20px;
-    padding-right: 10px;
-  }
-
-  div.user-name {
-    margin: 13px;
-    cursor: default;
-
-    span {
-      font-weight: bold;
-    }
-  }
-
-  .ant-dropdown-menu-title-content {
-    display: flex;
-
-    .info-opener {
-      width: 100%;
-    }
-  }
-}
-
-.ant-dropdown-menu-item {
-  height: 32px;
-}
-
-.user-documentation {
-  padding: 0;
 }

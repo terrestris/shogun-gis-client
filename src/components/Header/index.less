@@ -9,7 +9,6 @@
 
   background-color: var(--primaryColor);
   display: flex;
-  padding: 0 .5rem;
   box-shadow: var(--componentShadow);
   font-size: .95em;
 
@@ -22,7 +21,7 @@
 
       .logo {
         height: 100%;
-        padding: 3px;
+        padding: 10px;
       }
 
       .title {
@@ -36,7 +35,7 @@
 
         display: -webkit-box;
         -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        line-clamp: 2;
       }
     }
 
@@ -48,6 +47,7 @@
 
     &.right-items {
       justify-content: flex-end;
+      padding-right: 5px;
     }
   }
 
@@ -72,6 +72,7 @@
     .item-container {
       &.left-items {
         max-width: 400px;
+        padding: 3px;
 
         .title {
           font-size: 0.9rem;

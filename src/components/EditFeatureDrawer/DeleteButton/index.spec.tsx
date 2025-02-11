@@ -22,8 +22,9 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
-import { WmsLayer } from '@terrestris/react-geo/dist/Util/typeUtils';
+import { WmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import useExecuteWfsTransaction from '../../../hooks/useExecuteWfsTransaction';
 import useWriteWfsTransaction from '../../../hooks/useWriteWfsTransaction';
@@ -163,7 +164,7 @@ describe('<DeleteButton />', () => {
           layer={mockLayer}
           onError={mockErrorFunction}
         />
-      </Provider>,
+      </Provider>
     );
 
     const deleteButton = screen.getByText('DeleteButton.title');

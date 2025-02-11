@@ -5,7 +5,6 @@ import {
 
 import { FeatureInfoConfig } from '../../components/ToolMenu/FeatureInfo';
 
-// eslint-disable-next-line no-shadow
 export enum CopyTools {
   COPY_AS_GEOJSON = 'COPY_AS_GEOJSON',
   COPY_AS_OBJECT = 'COPY_AS_OBJECT'

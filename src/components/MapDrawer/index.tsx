@@ -10,7 +10,7 @@ import type {
   DrawerProps
 } from 'antd/es/drawer';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
 
@@ -34,7 +34,7 @@ export const MapDrawer: React.FC<MapDrawerProps> = ({
 
   return (
     <Drawer
-      className="map-drawer"
+      rootClassName="map-drawer"
       mask={false}
       open={open}
       placement="right"

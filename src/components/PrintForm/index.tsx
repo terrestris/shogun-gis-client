@@ -1,21 +1,25 @@
 import React, {
-  useCallback, useEffect, useState
+  useCallback,
+  useEffect,
+  useState
 } from 'react';
 
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
-  Alert, Button, Form
+  Alert,
+  Button,
+  Form
 } from 'antd';
 import { FormProps } from 'antd/lib/form/Form';
+
 import ClientConfiguration from 'clientConfig';
+
 import _isNil from 'lodash/isNil';
 
-import OlGeometry from 'ol/geom/Geometry';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
-
 import OlLayerVector from 'ol/layer/Vector';
 import OlLayerRenderer from 'ol/renderer/Layer';
 import OlSource from 'ol/source/Source';
@@ -25,23 +29,32 @@ import { useTranslation } from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import { MapFishPrintV3Manager } from '@terrestris/mapfish-print-manager';
-import { MapFishPrintV3ManagerOpts } from '@terrestris/mapfish-print-manager/dist/manager/MapFishPrintV3Manager';
-import MapFishPrintV3GeoJsonSerializer
+import {
+  MapFishPrintV3Manager,
+  MapFishPrintV3ManagerOpts
+} from '@terrestris/mapfish-print-manager/dist/manager/MapFishPrintV3Manager';
+import { MapFishPrintV3GeoJsonSerializer }
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3GeoJsonSerializer';
-import MapFishPrintV3OSMSerializer from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
-import MapFishPrintV3WMTSSerializer
+import { MapFishPrintV3OSMSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3OSMSerializer';
+import { MapFishPrintV3StamenSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3StamenSerializer';
+import { MapFishPrintV3WMTSSerializer }
   from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3WMTSSerializer';
+import { MapFishPrintV3XYZSerializer } from '@terrestris/mapfish-print-manager/dist/serializer/MapFishPrintV3XYZSerializer';
 
-import { LayerUtil } from '@terrestris/ol-util';
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
-import { useMap } from '@terrestris/react-geo/dist/Hook/useMap';
+import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+
+import { useAsyncEffect } from '@terrestris/react-util/dist/Hooks/useAsyncEffect/useAsyncEffect';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+
 import { addCustomParam } from '../../store/print';
+
 import SHOGunMapFishPrintV3TiledWMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3TiledWMSSerializer';
 import SHOGunMapFishPrintV3WMSSerializer from '../PrintForm/Serializer/SHOGunMapFishPrintV3WMSSerializer';
 
@@ -66,12 +79,11 @@ export interface PrintFormProps extends Omit<FormProps, 'form'> {
   outputFormats?: string[];
 }
 
-export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlSourceVector<OlGeometry>>>>;
+export type LayerType = OlLayer<OlSource, OlLayerRenderer<OlLayerVector<OlSourceVector>>>;
 
 export const PrintForm: React.FC<PrintFormProps> = ({
   active,
   customPrintScales = [],
-
   layerBlackList = [],
   outputFormats = ['pdf', 'png'],
   ...restProps
@@ -155,7 +167,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     }
 
     const layers = getPrintableLayers(extentLayer);
-    let allAttributions: string[] = [];
+    const allAttributions: string[] = [];
 
     layers.filter((layer: LayerType) => {
       return layer.getSource && layer.getSource()?.getAttributions && layer.getSource()?.getAttributions();
@@ -169,12 +181,12 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     return allAttributions.join(', ').trim();
   }, [getPrintableLayers]);
 
-  const initializeMapProvider = useCallback(async () => {
+  const initializePrintManager = useCallback(async () => {
     if (_isNil(map)) {
       return;
     }
     let pManagerOpts: MapFishPrintV3ManagerOpts = {
-      url: ClientConfiguration.print?.url || '/print',
+      url: ClientConfiguration.print?.url ?? '/print',
       map,
       customPrintScales: map
         ?.getView()
@@ -200,9 +212,11 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         rotate: false
       },
       serializers: [
+        new MapFishPrintV3StamenSerializer(),
         new MapFishPrintV3GeoJsonSerializer(),
         new MapFishPrintV3OSMSerializer(),
         new MapFishPrintV3WMTSSerializer(),
+        new MapFishPrintV3XYZSerializer(),
         new SHOGunMapFishPrintV3WMSSerializer(),
         new SHOGunMapFishPrintV3TiledWMSSerializer()
       ],
@@ -237,7 +251,8 @@ export const PrintForm: React.FC<PrintFormProps> = ({
       pManager.setOutputFormat(pManager.getOutputFormats()[0]);
       pManager.setDpi(pManager.getDpis()[0]);
       pManager.setLayout(pManager.getLayouts()[0]?.name);
-      setPrintManager(pManager);
+
+      return pManager;
     } catch (error) {
       setErrorMsg(() => t('PrintForm.managerErrorMessage'));
       Logger.error('Could not initialize print manager: ', error);
@@ -252,17 +267,20 @@ export const PrintForm: React.FC<PrintFormProps> = ({
     }
   }, [dispatch, getAttributions, printManager]);
 
-  useEffect(() => {
+  useAsyncEffect(async () => {
     if (active) {
       if (!printManager) {
         form.resetFields();
-        initializeMapProvider();
+        const manager = await initializePrintManager();
+        if (manager) {
+          setPrintManager(manager);
+        }
       }
     } else {
       printManager?.shutdownManager();
       setPrintManager(null);
     }
-  }, [printManager, active, initializeMapProvider, form]);
+  }, [printManager, active, initializePrintManager, form]);
 
   useEffect(() => {
     if (printManager) {
@@ -310,7 +328,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
   return (
     <div
       className="print"
-      aria-label='print-form'
+      aria-label="print-form"
     >
       {
         errorMsg && (
@@ -324,103 +342,104 @@ export const PrintForm: React.FC<PrintFormProps> = ({
           />
         )
       }
-      {
-        printManager?.isInitiated() && (
-          <>
-            <Form
-              form={form}
-              className="print-form"
-              labelAlign="left"
-              labelCol={{
-                flex: '90px'
-              }}
-              {...restProps}
-            >
-              <Form.Item
-                aria-label='print-title'
-                name="title"
-                label={t('PrintForm.title')}
-                initialValue={t('PrintForm.initialTitle')}
-              >
-                <CustomFieldInput
-                  aria-label='print-title-input'
-                  maxLength={50}
-                  placeholder={t('PrintForm.titlePlaceholder')}
-                />
-              </Form.Item>
-              <Form.Item
-                aria-label='print-comment'
-                name="comment"
-                label={t('PrintForm.comment')}
-              >
-                <CustomFieldInput
-                  aria-label='print-comment-input'
-                  maxLength={200}
-                  placeholder={t('PrintForm.commentPlaceholder')}
-                />
-              </Form.Item>
-              <Form.Item
-                aria-label='print-layout'
-                name="layout"
-                label={t('PrintForm.layout')}
-                initialValue={printManager?.getLayouts()[0]?.name}
-              >
-                <LayoutSelect
-                  aria-label='print-layout-input'
-                  printManager={printManager}
-                  onValueChange={handleLayoutChange}
-                />
-              </Form.Item>
-              <Form.Item
-                aria-label='print-scale'
-                name='scale'
-                label={t('PrintForm.scale')}
-                initialValue={printManager?.getClosestScaleToFitMap()}
-              >
-                <ScaleSelect
-                  aria-label='print-scale-input'
-                  printManager={printManager}
-                />
-              </Form.Item>
-              <Form.Item
-                aria-label='print-dpi'
-                name="dpi"
-                label={t('PrintForm.dpi')}
-                initialValue={printManager.getDpis()[0]}
-              >
-                <ResolutionSelect
-                  aria-label='print-dpi-input'
-                  printManager={printManager}
-                  placeholder={t('PrintForm.resolutionPlaceholder')}
-                />
-              </Form.Item>
-              <Form.Item
-                aria-label='print-format'
-                name="format"
-                label={t('PrintForm.format')}
-                initialValue="pdf"
-              >
-                <OutputFormatSelect
-                  aria-label='print-format-input'
-                  printManager={printManager}
-                  outputFormats={outputFormats}
-                  placeholder={t('PrintForm.outputFormatPlaceholder')}
-                />
-              </Form.Item>
-            </Form>
-            <Button
-              aria-label='create-print'
-              className='print-button tool-menu-button'
-              disabled={!printManager?.isInitiated()}
-              icon={<FontAwesomeIcon icon={faDownload} />}
-              loading={loading}
-              onClick={onDownloadClick}
-            >
-              {t('PrintForm.downloadBtnText')}
-            </Button>
-          </>
-        )
-      }
+      <>
+        <Form
+          form={form}
+          className="print-form"
+          labelAlign="left"
+          labelCol={{
+            flex: '90px'
+          }}
+          {...restProps}
+        >
+          {
+            printManager?.isInitiated() && (
+              <>
+                <Form.Item
+                  aria-label='print-title'
+                  name="title"
+                  label={t('PrintForm.title')}
+                  initialValue={t('PrintForm.initialTitle')}
+                >
+                  <CustomFieldInput
+                    aria-label='print-title-input'
+                    maxLength={50}
+                    placeholder={t('PrintForm.titlePlaceholder')}
+                  />
+                </Form.Item>
+                <Form.Item
+                  aria-label='print-comment'
+                  name="comment"
+                  label={t('PrintForm.comment')}
+                >
+                  <CustomFieldInput
+                    aria-label='print-comment-input'
+                    maxLength={200}
+                    placeholder={t('PrintForm.commentPlaceholder')}
+                  />
+                </Form.Item>
+                <Form.Item
+                  aria-label='print-layout'
+                  name="layout"
+                  label={t('PrintForm.layout')}
+                  initialValue={printManager?.getLayouts()[0]?.name}
+                >
+                  <LayoutSelect
+                    aria-label='print-layout-input'
+                    printManager={printManager}
+                    onValueChange={handleLayoutChange}
+                  />
+                </Form.Item>
+                <Form.Item
+                  aria-label='print-scale'
+                  name='scale'
+                  label={t('PrintForm.scale')}
+                  initialValue={printManager?.getClosestScaleToFitMap()}
+                >
+                  <ScaleSelect
+                    aria-label='print-scale-input'
+                    printManager={printManager}
+                  />
+                </Form.Item>
+                <Form.Item
+                  aria-label='print-dpi'
+                  name="dpi"
+                  label={t('PrintForm.dpi')}
+                  initialValue={printManager.getDpis()[0]}
+                >
+                  <ResolutionSelect
+                    aria-label='print-dpi-input'
+                    printManager={printManager}
+                    placeholder={t('PrintForm.resolutionPlaceholder')}
+                  />
+                </Form.Item>
+                <Form.Item
+                  aria-label='print-format'
+                  name="format"
+                  label={t('PrintForm.format')}
+                  initialValue="pdf"
+                >
+                  <OutputFormatSelect
+                    aria-label='print-format-input'
+                    printManager={printManager}
+                    outputFormats={outputFormats}
+                    placeholder={t('PrintForm.outputFormatPlaceholder')}
+                  />
+                </Form.Item>
+              </>
+            )}
+        </Form>
+        <Button
+          aria-label='create-print'
+          className='print-button tool-menu-button'
+          disabled={!printManager?.isInitiated()}
+          icon={<FontAwesomeIcon icon={faDownload} />}
+          loading={loading}
+          onClick={onDownloadClick}
+        >
+          {t('PrintForm.downloadBtnText')}
+        </Button>
+      </>
     </div>
   );
 };

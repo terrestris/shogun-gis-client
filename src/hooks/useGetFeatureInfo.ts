@@ -9,16 +9,15 @@ import {
 
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 
+import Logger from '@terrestris/base-util/dist/Logger';
+
 import {
-  Logger
-} from '@terrestris/base-util';
+  WmsLayer
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-import {
-  WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   getBearerTokenHeader

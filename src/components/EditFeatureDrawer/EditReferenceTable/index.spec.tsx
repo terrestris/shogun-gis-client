@@ -6,14 +6,28 @@ import {
   waitFor
 } from '@testing-library/react';
 
+import { Form } from 'antd';
+
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditReferenceTable, { EditReferenceDataType } from '.';
+import EditReferenceTable, {
+  EditReferenceTableProps
+} from '.';
 
 let tableElem: HTMLElement | null;
-let mockParentForm;
 
 describe('<EditReferenceTable />', () => {
+  const EditReferenceTableWrapper = (props: Omit<EditReferenceTableProps, 'parentForm'>) => {
+    const [form] = Form.useForm();
+
+    return (
+      <EditReferenceTable
+        {...props}
+        parentForm={form}
+      />
+    );
+  };
+
   it('is defined', () => {
     expect(EditReferenceTable).toBeDefined();
   });
@@ -21,8 +35,7 @@ describe('<EditReferenceTable />', () => {
   beforeEach(() => {
     const { container } =
       render(
-        <EditReferenceTable
-          parentForm={mockParentForm}
+        <EditReferenceTableWrapper
           propertyName={'test'}
         />,
         {
@@ -43,6 +56,7 @@ describe('<EditReferenceTable />', () => {
       fireEvent.click(buttonElem!);
     });
     const modalElem: HTMLElement | null = document.querySelector('.edit-reference-table-modal');
-    expect(modalElem).toBeVisible();
+
+    await waitFor(() => expect(modalElem).toBeVisible());
   });
 });

@@ -7,7 +7,7 @@ import {
   waitFor
 } from '@testing-library/react';
 
-import { FormInstance } from 'antd';
+import { Form } from 'antd';
 
 import { PropertyFormItemEditConfig } from '@terrestris/shogun-util/dist/model/Layer';
 
@@ -15,8 +15,39 @@ import { setFormDirty } from '../../../store/editFeature';
 
 import { createReduxWrapper } from '../../../utils/testUtils';
 
-import EditFeatureForm from '.';
+import EditFeatureForm, {
+  EditFeatureFormProps
+} from '.';
 
+jest.mock('../../../hooks/useAppDispatch', () => () => jest.fn());
+jest.mock('../../../hooks/useAppSelector', () => jest.fn(() => false));
+jest.mock('../../../hooks/useSHOGunAPIClient', () => jest.fn(() => ({})));
+jest.mock('../../../store/editFeature', () => ({
+  setFormDirty: jest.fn()
+}));
+jest.mock('../../DisplayField', () => {
+  const DisplayField = () => <div data-testid="display-field" />;
+  DisplayField.displayName = 'DisplayField';
+  return DisplayField;
+});
+
+jest.mock('../../FileUpload', () => {
+  const FileUpload = () => <div data-testid="file-upload" />;
+  FileUpload.displayName = 'FileUpload';
+  return FileUpload;
+});
+
+jest.mock('../../ImageUpload', () => {
+  const ImageUpload = () => <div data-testid="image-upload" />;
+  ImageUpload.displayName = 'ImageUpload';
+  return ImageUpload;
+});
+
+jest.mock('../EditReferenceTable', () => {
+  const EditReferenceTable = () => <div data-testid="edit-reference-table" />;
+  EditReferenceTable.displayName = 'EditReferenceTable';
+  return EditReferenceTable;
+});
 
 jest.mock('../../../hooks/useAppDispatch', () => () => jest.fn());
 jest.mock('../../../hooks/useAppSelector', () => jest.fn(() => false));
@@ -49,10 +80,18 @@ jest.mock('../EditReferenceTable', () => {
 });
 
 describe('<EditFeatureForm />', () => {
-  let mockedForm: FormInstance<any>;
-  let formConfig: PropertyFormItemEditConfig[];
+  const EditFeatureFormWrapper = (props: Omit<EditFeatureFormProps, 'form'>) => {
+    const [form] = Form.useForm();
 
-  formConfig = [
+    return (
+      <EditFeatureForm
+        {...props}
+        form={form}
+      />
+    );
+  };
+
+  const formConfig: PropertyFormItemEditConfig[] = [
     {
       propertyName: 'inputField',
       displayName: 'Input Field',
@@ -80,7 +119,7 @@ describe('<EditFeatureForm />', () => {
       displayName: 'Image Upload Field',
       component: 'UPLOAD',
       fieldProps: { type: 'IMAGE' }
-    },
+    }
   ];
 
   it('is defined', () => {
@@ -91,8 +130,7 @@ describe('<EditFeatureForm />', () => {
     const {
       container
     } = render(
-      <EditFeatureForm
-        form={mockedForm}
+      <EditFeatureFormWrapper
         formConfig={formConfig}
       />,
       {
@@ -112,8 +150,7 @@ describe('<EditFeatureForm />', () => {
 
   it('marks the form as dirty when values change', async () => {
     render(
-      <EditFeatureForm
-        form={mockedForm}
+      <EditFeatureFormWrapper
         formConfig={formConfig}
       />,
       {

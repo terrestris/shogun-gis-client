@@ -17,6 +17,7 @@ import layerDetailsModal from './layerDetailsModal';
 import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
+import mapToolbarVisible from './mapToolbarVisible';
 import print from './print';
 import searchEngines from './searchEngines';
 import selectedFeatures from './selectedFeatures';
@@ -25,10 +26,9 @@ import title from './title';
 import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
 import user from './user';
+import userMenu from './userMenu';
 
-type AsyncReducer = {
-  [key: string]: Reducer;
-};
+type AsyncReducer = Record<string, Reducer>;
 
 export const dynamicMiddleware = createDynamicMiddleware();
 
@@ -52,6 +52,8 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     searchEngines,
     user,
     stylingDrawerVisibility,
+    mapToolbarVisible,
+    userMenu,
     ...asyncReducers
   });
 };

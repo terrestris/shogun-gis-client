@@ -27,8 +27,8 @@ import {
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
-import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import {
@@ -64,6 +64,11 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
         editLayer.getSource()?.clear();
         const format = new OlFormatGeoJson();
         const olFeat = format.readFeature(feature);
+
+        if (Array.isArray(olFeat)) {
+          return;
+        }
+
         editLayer.getSource()?.addFeature(olFeat);
       }
     }

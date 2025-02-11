@@ -14,10 +14,13 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -126,6 +129,13 @@ export const EditFeatureSwitch: React.FC<EditFeatureSwitchProps> = ({
           return 'MultiPolygon';
         case 'gml:Polygon':
           return 'Polygon';
+        case 'xsd:boolean':
+        case 'xsd:date':
+        case 'xsd:int':
+        case 'xsd:number':
+        case 'xsd:string':
+        case undefined:
+          return;
         default:
           break;
       }

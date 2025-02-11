@@ -1,6 +1,5 @@
-@import '~antd/dist/antd.variable.min.css';
-@import '~ol/ol.css';
-@import '~normalize.css/normalize.css';
+@import 'ol/ol.css';
+@import 'normalize.css/normalize.css';
 
 :root {
   --headerHeight: 50px;
@@ -35,8 +34,17 @@ body,
 .error-boundary {
   min-width: 400px;
   position: absolute;
+  padding: 18px;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+
+  .ant-alert-description p {
+    margin: 0;
+  }
+
+  .ant-flex {
+    padding-top: 2px;
+  }
 }

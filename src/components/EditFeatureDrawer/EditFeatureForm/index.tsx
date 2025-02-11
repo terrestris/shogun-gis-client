@@ -118,7 +118,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
         if (Array.isArray(e)) {
           return e;
         }
-        return e && e.fileList;
+        return e?.fileList;
       };
     }
 
@@ -126,7 +126,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
-        label={fieldCfg.displayName || fieldCfg.propertyName}
+        label={fieldCfg.displayName ?? fieldCfg.propertyName}
         {...formItemProps}
       >
         {field}
@@ -209,7 +209,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             />
           );
         }
-      case 'REFERENCE_TABLE':
+      case 'REFERENCE_TABLE': {
         const referenceTableConfig = (fieldCfg as PropertyFormItemEditReferenceTableConfig);
 
         return (
@@ -222,6 +222,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
             {...referenceTableConfig.fieldProps}
           />
         );
+      }
       default:
         Logger.error(`Component type "${fieldCfg?.component}" is not supported`);
         return <></>;

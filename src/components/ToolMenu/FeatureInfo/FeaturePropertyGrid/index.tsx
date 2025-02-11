@@ -9,6 +9,7 @@ import {
 
 import OlFeature from 'ol/Feature';
 import OlGeometry from 'ol/geom/Geometry';
+import OlLayer from 'ol/layer/Layer';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -16,10 +17,10 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import PropertyGrid from '@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
 
@@ -30,11 +31,13 @@ import './index.less';
 export type FeatureInfoPropertyGridProps = {
   features: OlFeature[];
   layerName: string;
+  layer?: OlLayer;
 } & TableProps<OlFeature>;
 
 export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = ({
   features,
   layerName,
+  layer,
   ...restProps
 }): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<number>();
@@ -119,6 +122,7 @@ export const FeatureInfoPropertyGrid: React.FC<FeatureInfoPropertyGridProps> = (
           features={features}
           selectedFeature={selectedFeature}
           current={currentPage}
+          layer={layer}
           onChange={onChange}
         />
       )}
