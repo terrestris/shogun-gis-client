@@ -1,4 +1,4 @@
-define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t=Object.defineProperty,r=Object.getOwnPropertyDescriptor,a=Object.getOwnPropertyNames,o=Object.prototype.hasOwnProperty,n=(e,n,i,s)=>{if(n&&"object"==typeof n||"function"==typeof n)for(let c of a(n))o.call(e,c)||c===i||t(e,c,{get:()=>n[c],enumerable:!(s=r(n,c))||s.enumerable});return e},i={};((e,r)=>{for(var a in r)t(e,a,{get:r[a],enumerable:!0})})(i,{conf:()=>s,language:()=>v});var s={comments:{lineComment:"//",blockComment:["/*","*/"]},brackets:[["{","}"],["[","]"],["(",")"]],autoClosingPairs:[{open:"[",close:"]"},{open:"{",close:"}"},{open:"(",close:")"}],surroundingPairs:[{open:"{",close:"}"},{open:"[",close:"]"},{open:"(",close:")"}]};function c(e){let t=[],r=e.split(/\t+|\r+|\n+| +/);for(let e=0;e<r.length;++e)r[e].length>0&&t.push(r[e]);return t}var m=c("true false"),l=c(`
+define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{var e=Object.defineProperty,t=Object.getOwnPropertyDescriptor,r=Object.getOwnPropertyNames,a=Object.prototype.hasOwnProperty,o={};((t,r)=>{for(var a in r)e(t,a,{get:r[a],enumerable:!0})})(o,{conf:()=>n,language:()=>h});var n={comments:{lineComment:"//",blockComment:["/*","*/"]},brackets:[["{","}"],["[","]"],["(",")"]],autoClosingPairs:[{open:"[",close:"]"},{open:"{",close:"}"},{open:"(",close:")"}],surroundingPairs:[{open:"{",close:"}"},{open:"[",close:"]"},{open:"(",close:")"}]};function i(e){let t=[],r=e.split(/\t+|\r+|\n+| +/);for(let e=0;e<r.length;++e)r[e].length>0&&t.push(r[e]);return t}var s=i("true false"),c=i(`
 			  alias
 			  break
 			  case
@@ -23,7 +23,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 			  switch
 			  var
 			  while
-			  `),u=c(`
+			  `),m=i(`
 			  NULL
 			  Self
 			  abstract
@@ -169,7 +169,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 			  with
 			  writeonly
 			  yield
-			  `),p=c(`
+			  `),l=i(`
 		read write read_write
 		function private workgroup uniform storage
 		perspective linear flat
@@ -195,7 +195,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 		rgba32sint
 		rgba32float
 		bgra8unorm
-`),d=c(`
+`),u=i(`
 		bool
 		f16
 		f32
@@ -209,7 +209,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 		texture_external
 		texture_external
 		u32
-		`),x=c(`
+		`),p=i(`
 		array
 		atomic
 		mat2x2
@@ -236,7 +236,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 		vec2
 		vec3
 		vec4
-		`),f=c(`
+		`),d=i(`
 		vec2i vec3i vec4i
 		vec2u vec3u vec4u
 		vec2f vec3f vec4f
@@ -247,7 +247,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 		mat2x2h mat2x3h mat2x4h
 		mat3x2h mat3x3h mat3x4h
 		mat4x2h mat4x3h mat4x4h
-		`),_=c(`
+		`),x=i(`
   bitcast all any select arrayLength abs acos acosh asin asinh atan atanh atan2
   ceil clamp cos cosh countLeadingZeros countOneBits countTrailingZeros cross
   degrees determinant distance dot exp exp2 extractBits faceForward firstLeadingBit
@@ -263,7 +263,7 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
   pack4x8unorm pack2x16snorm pack2x16unorm pack2x16float unpack4x8snorm unpack4x8unorm
   unpack2x16snorm unpack2x16unorm unpack2x16float storageBarrier workgroupBarrier
   workgroupUniformLoad
-`),g=c(`
+`),f=i(`
 					 &
 					 &&
 					 ->
@@ -295,4 +295,4 @@ define("vs/basic-languages/wgsl/wgsl",["require","require"],e=>(()=>{let e;var t
 					 ^=
 					 >>=
 					 <<=
-					 `),h=/[_\p{XID_Start}]\p{XID_Continue}*/u,b="variable.predefined",v={tokenPostfix:".wgsl",defaultToken:"invalid",unicode:!0,atoms:m,keywords:l,reserved:u,predeclared_enums:p,predeclared_types:d,predeclared_type_generators:x,predeclared_type_aliases:f,predeclared_intrinsics:_,operators:g,symbols:/[!%&*+\-\.\/:;<=>^|_~,]+/,tokenizer:{root:[[/enable|requires|diagnostic/,"keyword","@directive"],[h,{cases:{"@atoms":b,"@keywords":"keyword","@reserved":"invalid","@predeclared_enums":b,"@predeclared_types":b,"@predeclared_type_generators":b,"@predeclared_type_aliases":b,"@predeclared_intrinsics":b,"@default":"identifier"}}],{include:"@commentOrSpace"},{include:"@numbers"},[/[{}()\[\]]/,"@brackets"],["@","annotation","@attribute"],[/@symbols/,{cases:{"@operators":"operator","@default":"delimiter"}}],[/./,"invalid"]],commentOrSpace:[[/\s+/,"white"],[/\/\*/,"comment","@blockComment"],[/\/\/.*$/,"comment"]],blockComment:[[/[^\/*]+/,"comment"],[/\/\*/,"comment","@push"],[/\*\//,"comment","@pop"],[/[\/*]/,"comment"]],attribute:[{include:"@commentOrSpace"},[/\w+/,"annotation","@pop"]],directive:[{include:"@commentOrSpace"},[/[()]/,"@brackets"],[/,/,"delimiter"],[h,"meta.content"],[/;/,"delimiter","@pop"]],numbers:[[/0[fh]/,"number.float"],[/[1-9][0-9]*[fh]/,"number.float"],[/[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?[fh]?/,"number.float"],[/[0-9]+\.[0-9]*([eE][+-]?[0-9]+)?[fh]?/,"number.float"],[/[0-9]+[eE][+-]?[0-9]+[fh]?/,"number.float"],[/0[xX][0-9a-fA-F]*\.[0-9a-fA-F]+(?:[pP][+-]?[0-9]+[fh]?)?/,"number.hex"],[/0[xX][0-9a-fA-F]+\.[0-9a-fA-F]*(?:[pP][+-]?[0-9]+[fh]?)?/,"number.hex"],[/0[xX][0-9a-fA-F]+[pP][+-]?[0-9]+[fh]?/,"number.hex"],[/0[xX][0-9a-fA-F]+[iu]?/,"number.hex"],[/[1-9][0-9]*[iu]?/,"number"],[/0[iu]?/,"number"]]}};return e=i,n(t({},"__esModule",{value:!0}),e)})());
+					 `),_=/[_\p{XID_Start}]\p{XID_Continue}*/u,g="variable.predefined",h={tokenPostfix:".wgsl",defaultToken:"invalid",unicode:!0,atoms:s,keywords:c,reserved:m,predeclared_enums:l,predeclared_types:u,predeclared_type_generators:p,predeclared_type_aliases:d,predeclared_intrinsics:x,operators:f,symbols:/[!%&*+\-\.\/:;<=>^|_~,]+/,tokenizer:{root:[[/enable|requires|diagnostic/,"keyword","@directive"],[_,{cases:{"@atoms":g,"@keywords":"keyword","@reserved":"invalid","@predeclared_enums":g,"@predeclared_types":g,"@predeclared_type_generators":g,"@predeclared_type_aliases":g,"@predeclared_intrinsics":g,"@default":"identifier"}}],{include:"@commentOrSpace"},{include:"@numbers"},[/[{}()\[\]]/,"@brackets"],["@","annotation","@attribute"],[/@symbols/,{cases:{"@operators":"operator","@default":"delimiter"}}],[/./,"invalid"]],commentOrSpace:[[/\s+/,"white"],[/\/\*/,"comment","@blockComment"],[/\/\/.*$/,"comment"]],blockComment:[[/[^\/*]+/,"comment"],[/\/\*/,"comment","@push"],[/\*\//,"comment","@pop"],[/[\/*]/,"comment"]],attribute:[{include:"@commentOrSpace"},[/\w+/,"annotation","@pop"]],directive:[{include:"@commentOrSpace"},[/[()]/,"@brackets"],[/,/,"delimiter"],[_,"meta.content"],[/;/,"delimiter","@pop"]],numbers:[[/0[fh]/,"number.float"],[/[1-9][0-9]*[fh]/,"number.float"],[/[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?[fh]?/,"number.float"],[/[0-9]+\.[0-9]*([eE][+-]?[0-9]+)?[fh]?/,"number.float"],[/[0-9]+[eE][+-]?[0-9]+[fh]?/,"number.float"],[/0[xX][0-9a-fA-F]*\.[0-9a-fA-F]+(?:[pP][+-]?[0-9]+[fh]?)?/,"number.hex"],[/0[xX][0-9a-fA-F]+\.[0-9a-fA-F]*(?:[pP][+-]?[0-9]+[fh]?)?/,"number.hex"],[/0[xX][0-9a-fA-F]+[pP][+-]?[0-9]+[fh]?/,"number.hex"],[/0[xX][0-9a-fA-F]+[iu]?/,"number.hex"],[/[1-9][0-9]*[iu]?/,"number"],[/0[iu]?/,"number"]]}};return((o,n,i,s)=>{if(n&&"object"==typeof n||"function"==typeof n)for(let i of r(n))a.call(o,i)||void 0===i||e(o,i,{get:()=>n[i],enumerable:!(s=t(n,i))||s.enumerable});return o})(e({},"__esModule",{value:!0}),o)})());
