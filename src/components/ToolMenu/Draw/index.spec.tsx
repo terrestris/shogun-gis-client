@@ -151,7 +151,7 @@ describe('<Draw />', () => {
     fireEvent.change(input, { target: { files: [file] } });
 
     expect(input.files).not.toBeNull();
-    expect(input.files[0]).toBe(file);
+    expect(input.files![0]).toBe(file);
   });
 
   it('downloads GeoJSON on export button click', async () => {
