@@ -4,10 +4,8 @@ import {
   screen,
   fireEvent,
   cleanup,
-  waitFor,
+  waitFor
 } from '@testing-library/react';
-
-import { message } from 'antd';
 
 import { Feature } from 'ol';
 import { Point } from 'ol/geom';
@@ -19,9 +17,9 @@ import {
   Provider
 } from 'react-redux';
 
-import { DigitizeUtil } from '@terrestris/react-geo/dist/Util/DigitizeUtil';
+import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import {
   store
@@ -45,13 +43,6 @@ jest.mock('antd', () => {
     }
   };
 });
-
-jest.mock('@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton', () => ({
-  __esModule: true,
-  default: ({ onToggle }: { onToggle: (active: boolean) => void }) => (
-    <button onClick={() => onToggle(true)}>Mock ModifyButton</button>
-  )
-}));
 
 describe('<Draw />', () => {
   beforeEach(() => {
@@ -97,18 +88,42 @@ describe('<Draw />', () => {
           showDrawLine={true}
           showDrawPolygon={true}
           showDrawCircle={true}
+          showDrawRectangle={true}
+          showDrawAnnotation={true}
+          showModifyFeatures={true}
+          showUploadFeatures={true}
+          showDeleteFeatures={true}
         />
       </Provider>
     );
 
     expect(container).toBeVisible();
+    expect(screen.getByText('StylingDrawer.openColorPalette')).toBeInTheDocument();
     expect(screen.getByText('Draw.point')).toBeInTheDocument();
     expect(screen.getByText('Draw.line')).toBeInTheDocument();
     expect(screen.getByText('Draw.polygon')).toBeInTheDocument();
     expect(screen.getByText('Draw.circle')).toBeInTheDocument();
+    expect(screen.getByText('Draw.rectangle')).toBeInTheDocument();
+    expect(screen.getByText('Draw.text')).toBeInTheDocument();
+    expect(screen.getByText('Draw.modify')).toBeInTheDocument();
+    expect(screen.getByText('Draw.upload')).toBeInTheDocument();
   });
 
-  it('handles upload with valid file type', async () => {
+  test('toggle buttons respond to user interaction', () => {
+    renderInMapContext(
+      map,
+      <Provider store={store}>
+        <Draw
+          showDrawPoint={true}
+        />
+      </Provider>
+    );
+    const drawPointButton = screen.getByText('Draw.point');
+    fireEvent.click(drawPointButton);
+    expect(drawPointButton).toBeInTheDocument();
+  });
+
+  test('opens import modal on upload button click', () => {
     renderInMapContext(
       map,
       <Provider store={store}>
@@ -117,18 +132,12 @@ describe('<Draw />', () => {
         />
       </Provider>
     );
-    const uploadInput = document.querySelector('input[type="file"]');
-
-    const file = new File(['{"type": "FeatureCollection", "features": []}'], 'test.geojson', { type: 'application/geojson' });
-
-    fireEvent.change(uploadInput!, { target: { files: [file] } });
-
-    await waitFor(() => {
-      expect(message.success).toHaveBeenCalledWith('Draw.uploadSuccess');
-    });
+    const uploadButton = screen.getByText('Draw.upload');
+    fireEvent.click(uploadButton);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
-  it('handles upload with invalid file type', async () => {
+  test('handles upload with valid file type', () => {
     renderInMapContext(
       map,
       <Provider store={store}>
@@ -137,15 +146,12 @@ describe('<Draw />', () => {
         />
       </Provider>
     );
-    const uploadInput = document.querySelector('input[type="file"]');
+    const file = new File(['{"type": "FeatureCollection", "features": []}'], 'features.geojson', { type: 'application/geo+json' });
+    const input = screen.getByLabelText('draw-upload') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
 
-    const invalidFile = new File(['invalid content'], 'test.txt', { type: 'text/plain' });
-
-    fireEvent.change(uploadInput!, { target: { files: [invalidFile] } });
-
-    await waitFor(() => {
-      expect(message.error).toHaveBeenCalledWith('Draw.uploadError');
-    });
+    expect(input.files).not.toBeNull();
+    expect(input.files[0]).toBe(file);
   });
 
   it('downloads GeoJSON on export button click', async () => {

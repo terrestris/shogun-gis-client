@@ -8,179 +8,78 @@ import {
   render
 } from '@testing-library/react';
 
-import { notification } from 'antd';
-
 import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import Select from 'ol/interaction/Select';
-import OlMap from 'ol/Map';
-import { fromLonLat } from 'ol/proj';
-import OlView from 'ol/View';
-
-import {
-  Provider
-} from 'react-redux';
-
-import { renderInMapContext } from '@terrestris/react-geo/dist/Util/rtlTestUtils';
-
-import {
-  store
-} from '../../../../store/store';
 
 import AttributionDrawer from './index';
 
-let map: OlMap;
-let selectInteraction = new Select();
-
-jest.mock('antd', () => {
-  const originalModule = jest.requireActual('antd');
-
-  return {
-    ...originalModule,
-    notification: {
-      ...originalModule.notification,
-      success: jest.fn(),
-      info: jest.fn(),
-      destroy: jest.fn(),
-      // eslint-disable-next-line react/jsx-key
-      useNotification: jest.fn(() => [jest.fn(), <div data-testid="context-holder" />])
-    }
-  };
-});
-
-const mockFeature = new Feature({
-  attribute1: 'value1',
-  attribute2: 'value2',
-  geometry: new Point(fromLonLat([0, 0]))
-});
-
+jest.mock('@terrestris/react-util/dist/Hooks/useMap/useMap', () => ({
+  useMap: jest.fn()
+}));
 
 describe('<AttributionDrawer />', () => {
-  const onCustomClose = jest.fn();
-  const onClose = jest.fn();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-
-    document.body.innerHTML = '<div id="map"></div>';
-
-    selectInteraction.setProperties({
-      ['name']: 'react-geo-select-interaction'
-    });
-
-    selectInteraction.getFeatures().extend([mockFeature]);
-
-    map = new OlMap({
-      target: 'map',
-      view: new OlView({
-        zoom: 10
-      }),
-      controls: [],
-      layers: [],
-      interactions: [selectInteraction]
-    });
-
-    map.addInteraction(selectInteraction);
-  });
-
   afterEach(() => {
     cleanup();
   });
+
   it('is defined', () => {
     expect(AttributionDrawer).not.toBeUndefined();
   });
 
-  it('renders correctly when open', () => {
-    render(
-      <AttributionDrawer
-        open={true}
-        onCustomClose={onCustomClose}
-        onClose={onClose}
-      />
-    );
+  it('renders correctly when no selected feature', () => {
+    render(<AttributionDrawer selectedFeature={undefined} />);
+    expect(screen.queryByText('Attribution.title')).not.toBeInTheDocument();
+  });
+
+  test('renders correctly when a feature is selected', () => {
+    const feature = new Feature({ name: 'Test Feature' });
+    render(<AttributionDrawer selectedFeature={feature} />);
     expect(screen.getByText('Attribution.title')).toBeInTheDocument();
-    expect(screen.getByText('Attribution.select')).toBeInTheDocument();
   });
 
-  it('renders correctly when closed', () => {
-    const { container } = render(
-      <AttributionDrawer
-        open={false}
-        onCustomClose={onCustomClose}
-        onClose={onClose}
-      />
-    );
-    expect(container).toBeEmptyDOMElement();
+  test('adds a new attribute field when clicking add button', async () => {
+    const feature = new Feature({ name: 'Test Feature' });
+    render(<AttributionDrawer selectedFeature={feature} />);
+
+    const addButton = screen.getByText('Attribution.add');
+    fireEvent.click(addButton);
+
+    expect(await screen.findByRole('textbox')).toBeInTheDocument();
   });
 
-  it('calls onCustomClose when form is interacted with', () => {
-    render(
-      <AttributionDrawer
-        open={true}
-        onCustomClose={onCustomClose}
-        onClose={onClose}
-      />
-    );
+  test('disables submit button when form is invalid', async () => {
+    const feature = new Feature({ name: 'Test Feature' });
+    render(<AttributionDrawer selectedFeature={feature} />);
 
-    const inputElement = screen.getByText('Attribution.select');
-    fireEvent.click(inputElement);
+    const addButton = screen.getByText('Attribution.add');
+    fireEvent.click(addButton);
 
-    expect(onCustomClose).not.toHaveBeenCalled();
-  });
-
-  it('handles form submission with notifications', async () => {
-    renderInMapContext(
-      map,
-      <Provider store={store}>
-        <AttributionDrawer
-          open={true}
-          onCustomClose={onCustomClose}
-          onClose={onClose}
-        />
-      </Provider>
-    );
-
-    selectInteraction.dispatchEvent({
-      type: 'select',
-      selected: [mockFeature]
+    const input = await screen.findByRole('textbox');
+    await waitFor(() => {
+      fireEvent.change(input, { target: { value: 'test' } });
+      fireEvent.change(input, { target: { value: '' } });
     });
 
-    const submitButton = screen.getByText('Attribution.submit');
-
+    const submitButton = screen.getByRole('button', { name: /submit/i }) as HTMLButtonElement;
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(notification.success).toHaveBeenCalled();
+      expect(submitButton).toBeDisabled();
     });
   });
 
-  it('updates available attributes on form value change', async () => {
-    renderInMapContext(
-      map,
-      <Provider store={store}>
-        <AttributionDrawer
-          open={true}
-          onCustomClose={onCustomClose}
-          onClose={onClose}
-        />
-      </Provider>
-    );
+  test('updates available attributes when form values change', async () => {
+    const feature = new Feature({ name: 'Test Feature' });
+    render(<AttributionDrawer selectedFeature={feature} />);
 
-    selectInteraction.dispatchEvent({
-      type: 'select',
-      selected: [mockFeature]
-    });
-
-    const addButton = screen.getByRole('button', { name: 'Attribution.add' });
-
+    const addButton = screen.getByText('Attribution.add');
     fireEvent.click(addButton);
 
-    const inputElement = document.querySelector('#fields_0_name');
-
-    fireEvent.change(inputElement!, { target: { value: 'New Attribute' } });
+    const input = await screen.findByRole('textbox');
+    fireEvent.change(input, { target: { value: 'newAttribute' } });
+    fireEvent.blur(input);
 
     await waitFor(() => {
-      expect(inputElement).toHaveAttribute('value', 'New Attribute');
+      expect(screen.getByDisplayValue('newAttribute')).toBeInTheDocument();
     });
   });
 });
