@@ -53,7 +53,7 @@
     "@types/color": "^4.2.0",
     "@types/js-md5": "^0.7.2",
     "@types/react": "^18.3.17",
-    "@types/react-dom": "^18.3.5",
+    "@types/react-dom": "^19.0.3",
     "antd": "^5.23.2",
     "color": "^5.0.0",
     "dotenv": "^16.4.7",
@@ -69,7 +69,7 @@
     "proj4": "^2.15.0",
     "react": "^18.3.1",
     "react-cookie-consent": "^9.0.0",
-    "react-dom": "^18.3.1",
+    "react-dom": "^19.0.0",
     "react-i18next": "^15.4.0",
     "react-redux": "^9.2.0",
     "shapefile.js": "^1.1.4"
