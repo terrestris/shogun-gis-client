@@ -433,6 +433,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       {!collapsed ? (
         <div
           className="dynamicWidth"
+          role="button"
           tabIndex={0}
           onMouseDown={onMouseDown}
           onKeyDown={e => {

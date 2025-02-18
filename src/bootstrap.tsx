@@ -394,12 +394,15 @@ const initKeycloak = async () => {
     clientId: keycloakClientId
   });
 
-  keycloak.onTokenExpired = async () => {
-    try {
-      await keycloak.updateToken(0);
-    } catch (error) {
-      Logger.error('Error while refreshing the access token: ', error);
-    }
+  keycloak.onTokenExpired = () => {
+    (async () => {
+      try {
+        await keycloak.updateToken(0);
+        Logger.info('Token successfully refreshed.');
+      } catch (error) {
+        Logger.error('Error while refreshing the access token: ', error);
+      }
+    })();
   };
 
   await keycloak.init({
