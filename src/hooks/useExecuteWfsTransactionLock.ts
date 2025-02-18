@@ -56,7 +56,7 @@ export const useExecuteWfsLockFeature = () => {
 
     const typeName = opts.layer.getSource()?.getParams().LAYERS;
 
-    const lockFeatureDoc = document.createElementNS('http://www.opengis.net/wfs/2.0', 'LockFeature');
+    const lockFeatureDoc = document.createElementNS('https://www.opengis.net/wfs/2.0', 'LockFeature');
 
     lockFeatureDoc.setAttribute('service', 'WFS');
     lockFeatureDoc.setAttribute('version', '2.0.0');
@@ -64,17 +64,17 @@ export const useExecuteWfsLockFeature = () => {
     lockFeatureDoc.setAttribute('expiry', '300');
     lockFeatureDoc.setAttribute('lockAction', 'SOME');
 
-    const queryElement = document.createElementNS('http://www.opengis.net/wfs/2.0', 'Query');
+    const queryElement = document.createElementNS('https://www.opengis.net/wfs/2.0', 'Query');
     queryElement.setAttribute('typeNames', typeName);
 
-    const filterElement = document.createElementNS('http://www.opengis.net/fes/2.0', 'Filter');
-    const isEqualToElement = document.createElementNS('http://www.opengis.net/fes/2.0', 'PropertyIsEqualTo');
+    const filterElement = document.createElementNS('https://www.opengis.net/fes/2.0', 'Filter');
+    const isEqualToElement = document.createElementNS('https://www.opengis.net/fes/2.0', 'PropertyIsEqualTo');
 
-    const valueReferenceElement = document.createElementNS('http://www.opengis.net/fes/2.0', 'ValueReference');
+    const valueReferenceElement = document.createElementNS('https://www.opengis.net/fes/2.0', 'ValueReference');
     const valueReferenceValue = document.createTextNode(idProperty);
     valueReferenceElement.appendChild(valueReferenceValue);
 
-    const literalElement = document.createElementNS('http://www.opengis.net/fes/2.0', 'Literal');
+    const literalElement = document.createElementNS('https://www.opengis.net/fes/2.0', 'Literal');
     const literalValue = document.createTextNode(id.toString());
     literalElement.appendChild(literalValue);
 

@@ -340,8 +340,16 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
             layer.get('visible') &&
             <div
               className="layer-transparency"
+              role="button"
               aria-label='transparency-slider'
+              tabIndex={0}
               onClick={e => e.stopPropagation()}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              }}
               onDragStart={e => {e.stopPropagation(); e.preventDefault();}}
               draggable={true}
             >

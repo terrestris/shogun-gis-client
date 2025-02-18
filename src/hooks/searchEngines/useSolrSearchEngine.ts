@@ -146,7 +146,7 @@ export const useSolrSearchEngine = () => {
     const fulfilledResponses = results.filter(res => res.status === 'fulfilled');
     const rejectedResponses = results.filter(res => res.status === 'rejected');
 
-    rejectedResponses.map(res => {
+    rejectedResponses.forEach(res => {
       Logger.error('Error while fetching the solr results for layer ', res.reason);
     });
 
