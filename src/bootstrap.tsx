@@ -337,13 +337,14 @@ const initKeycloak = async () => {
   });
 
   keycloak.onTokenExpired = () => {
-    keycloak.updateToken(0)
-      .then(() => {
+    (async () => {
+      try {
+        await keycloak.updateToken(0);
         Logger.info('Token successfully refreshed.');
-      })
-      .catch((error) => {
+      } catch (error) {
         Logger.error('Error while refreshing the access token: ', error);
-      });
+      }
+    })();
   };
 
   await keycloak.init({
