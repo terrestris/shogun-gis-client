@@ -24,31 +24,6 @@ import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtil
 import {
   store
 } from '../../../store/store';
-=======
-/* eslint-disable import/order */
-import React from 'react';
-
-import {
-  cleanup,
-  fireEvent,
-  screen,
-  waitFor
-} from '@testing-library/react';
-
-import { setupJestCanvasMock } from 'jest-canvas-mock';
-
-import OlFeature from 'ol/Feature';
-import OlPoint from 'ol/geom/Point';
-import OlView from 'ol/View';
-import OlMap from 'ol/Map';
-
-import { Provider } from 'react-redux';
-
-import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
-import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
-
-import { store } from '../../../store/store';
-
 
 import Draw from './index';
 
@@ -74,8 +49,6 @@ describe('<Draw />', () => {
     jest.clearAllMocks();
 
     document.body.innerHTML = '<div id="map"></div>';
-
- 
 
     map = new OlMap({
       target: 'map',
@@ -124,7 +97,6 @@ describe('<Draw />', () => {
         />
       </Provider>
     );
-
 
     expect(container).toBeVisible();
     expect(screen.getByText('StylingDrawer.openColorPalette')).toBeInTheDocument();
