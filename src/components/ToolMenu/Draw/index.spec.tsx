@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import React from 'react';
 
 import {
@@ -9,19 +10,19 @@ import {
 
 import { setupJestCanvasMock } from 'jest-canvas-mock';
 
-import OlMap from 'ol/Map';
-import OlView from 'ol/View';
 import OlFeature from 'ol/Feature';
 import OlPoint from 'ol/geom/Point';
-
-import Draw from './index';
+import OlView from 'ol/View';
+import OlMap from 'ol/Map';
 
 import { Provider } from 'react-redux';
 
-import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
+import { renderInMapContext } from '@terrestris/react-util/dist/Util/rtlTestUtils';
 
 import { store } from '../../../store/store';
+
+import Draw from './index';
 
 describe('<Draw />', () => {
   let map: OlMap;
@@ -64,8 +65,7 @@ describe('<Draw />', () => {
       container
     } = renderInMapContext(map,
       <Provider store={store}>
-        <Draw
-        />
+        <Draw />
       </Provider>
     );
     expect(container).toBeVisible();
@@ -112,7 +112,7 @@ describe('<Draw />', () => {
       fireEvent.click(screen.getByText('Draw.upload'));
     });
 
-    const exportButton = screen.getByText('Draw.export')
+    const exportButton = screen.getByText('Draw.export');
     expect(exportButton).toBeVisible();
 
     await waitFor(() => {
