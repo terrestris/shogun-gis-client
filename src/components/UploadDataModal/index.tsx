@@ -29,7 +29,7 @@ import ClientConfiguration from 'clientConfig';
 
 import OlLayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
-import TileWMSSource from 'ol/source/TileWMS';
+import TileWMS from 'ol/source/TileWMS';
 
 import {
   UploadRequestOption
@@ -45,11 +45,11 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import MapUtil from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
@@ -120,7 +120,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     dispatch(hide());
   };
 
-  const addLayer = (layer: TileLayer<TileWMSSource>) => {
+  const addLayer = (layer: TileLayer<TileWMS>) => {
     if (!map) {
       return;
     }
@@ -145,7 +145,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
   };
 
   const onBeforeFileUpload = (file: RcFile) => {
-    const maxSize = ClientConfiguration.geoserver?.upload?.limit || 200000000;
+    const maxSize = ClientConfiguration.geoserver?.upload?.limit ?? 200000000;
     const fileType = file.type;
     const fileSize = file.size;
 
@@ -243,7 +243,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     const shp = await Shapefile.load(file);
 
     let featureTypeName = '';
-    let featureTypeAttributes: FeatureTypeAttributes = {
+    const featureTypeAttributes: FeatureTypeAttributes = {
       attribute: []
     };
 
@@ -338,8 +338,8 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
 
     const splittedFileName = (file as RcFile).name.split('.');
     const fileType = (file as RcFile).type;
-    const geoServerBaseUrl = ClientConfiguration.geoserver?.base || '/geoserver';
-    const workspace = ClientConfiguration.geoserver?.upload?.workspace || 'SHOGUN';
+    const geoServerBaseUrl = ClientConfiguration.geoserver?.base ?? '/geoserver';
+    const workspace = ClientConfiguration.geoserver?.upload?.workspace ?? 'SHOGUN';
     const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
 
     const uploadData = {
@@ -435,9 +435,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
   };
 
   const getGeometryType = (type: number) => {
-    const types: {
-      [key: number]: string | null;
-    } = {
+    const types: Record<number, string | null> = {
       0: null, // Null
       1: 'org.locationtech.jts.geom.Point', // Point
       3: 'org.locationtech.jts.geom.LineString', // Polyline

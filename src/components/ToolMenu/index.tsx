@@ -14,7 +14,7 @@ import {
   faPalette,
   faFileDownload,
   faLanguage,
-  faMousePointer,
+  faCircleInfo,
   faPlus,
   faRuler,
   faShareNodes,
@@ -36,8 +36,7 @@ import {
 import ClientConfiguration from 'clientConfig';
 
 import _toArray from 'lodash/toArray';
-
-const { Panel } = Collapse;
+import { ItemType } from 'rc-collapse/lib/interface';
 
 import {
   useTranslation
@@ -45,7 +44,7 @@ import {
 
 import {
   useMap
-} from '@terrestris/react-geo/dist/Hook/useMap';
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -60,6 +59,9 @@ import {
   show as showAdd
 } from '../../store/addLayerModal';
 import { setFeatureInfoEnabled } from '../../store/featureInfo';
+import {
+  UploadTools, setLayerTreeEnabled
+} from '../../store/layerTree';
 import {
   setActiveKeys
 } from '../../store/toolMenu';
@@ -90,11 +92,13 @@ export type ToolPanelConfig = {
 };
 
 export type ToolMenuProps = Partial<CollapsePanelProps> & {
+  collapseWidth?: number;
   minWidth?: number;
   maxWidth?: number;
 };
 
 export const ToolMenu: React.FC<ToolMenuProps> = ({
+  collapseWidth = 40,
   minWidth = 240,
   maxWidth = 600,
   ...restProps
@@ -128,8 +132,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
     if (isMobile) {
       setCollapsed(true);
+      setWidth(collapseWidth);
     }
-  }, []);
+  }, [collapseWidth]);
 
   useEffect(() => {
     if (menuTools.length < 1) {
@@ -154,7 +159,8 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       'print',
       'measure_tools',
       'draw_tools',
-      'feature_info'
+      'feature_info',
+      'tree'
     ];
 
     const activeExclusiveTools = exclusiveTools.filter(tool =>
@@ -175,39 +181,36 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     }
 
     dispatch(setFeatureInfoEnabled(activeKeys.includes('feature_info')));
+    dispatch(setLayerTreeEnabled(activeKeys.includes('tree')));
+
   }, [activeKeys, dispatch]);
 
-  const getToolPanels = (): JSX.Element[] => {
-
-    const panels: JSX.Element[] = [];
+  const getToolPanels = (): ItemType[] => {
+    const panels: ItemType[] = [];
 
     menuTools.forEach((tool: string) => {
-      const toolPanelConfig: ToolPanelConfig | undefined = getToolPanelConfig(tool);
+      const toolPanelConfig = getToolPanelConfig(tool);
 
       if (!toolPanelConfig) {
         return;
       }
+
       const {
         icon,
         title,
         wrappedComponent
       } = toolPanelConfig;
 
-      const panel = (
-        <Panel
-          className={tool}
-          header={
-            <>
-              {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
-              <span>{title}</span>
-            </>
-          }
-          key={tool}
-        >
-          {wrappedComponent}
-        </Panel>
-      );
-      panels.push(panel);
+      panels.push({
+        key: tool,
+        label: (
+          <>
+            {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+            <span>{title}</span>
+          </>
+        ),
+        children: wrappedComponent
+      });
     });
 
     if (plugins) {
@@ -217,7 +220,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             key,
             wrappedComponent: WrappedPluginComponent,
             integration: {
-              placement,
               label = 'Plugin',
               insertionIndex,
               icon,
@@ -225,25 +227,26 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             }
           } = plugin;
 
-          panels.splice(insertionIndex || 0, 0, (
-            <Panel
-              header={
-                <>
-                  {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
-                  <span>{t(label)}</span>
-                </>
-              }
-              key={key}
-              {...passThroughProps}
-            >
-              <WrappedPluginComponent />
-            </Panel>
-          ));
+          const newItem: ItemType = {
+            key,
+            label: (
+              <>
+                {icon ? <FontAwesomeIcon icon={icon} /> : undefined}
+                <span>{t(label)}</span>
+              </>
+            ),
+            ...passThroughProps,
+            children: <WrappedPluginComponent />
+          };
+
+          panels.splice(insertionIndex ?? 0, 0, newItem);
         }
       });
     }
     return panels;
   };
+
+  const activeUploadTools = useAppSelector(state => state.layerTree.activeUploadTools);
 
   const getToolPanelConfig = (tool: string): ToolPanelConfig | undefined => {
     switch (tool) {
@@ -286,7 +289,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         };
       case 'feature_info':
         return {
-          icon: faMousePointer,
+          icon: faCircleInfo,
           title: t('ToolMenu.featureInfo'),
           wrappedComponent: (
             <FeatureInfo />
@@ -313,16 +316,20 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           wrappedComponent: (
             <div className='tree-wrapper'>
               <LayerTree />
-              <Button
-                className='add-wms-button tool-menu-button'
-                icon={<FontAwesomeIcon icon={faPlus} />}
-                onClick={() => dispatch(showAdd())}
-              >
-                {t('ToolMenu.addWms')}
-              </Button>
+              {activeUploadTools?.includes(UploadTools.addWMS) && (
+                <Button
+                  className='add-wms-button tool-menu-button'
+                  icon={<FontAwesomeIcon icon={faPlus} />}
+                  onClick={() => dispatch(showAdd())}
+                >
+                  {t('ToolMenu.addWms')}
+                </Button>
+              )
+              }
               {
                 keycloak && ClientConfiguration.geoserver?.upload?.authorizedRoles?.some(
-                  role => keycloak.hasResourceRole(role, keycloak.clientId)) && (
+                  role => keycloak.hasResourceRole(role, keycloak.clientId)) &&
+                  activeUploadTools?.includes(UploadTools.dataUpload) && (
                   <Button
                     className='upload-data-button tool-menu-button'
                     icon={<FontAwesomeIcon icon={faUpload} />}
@@ -362,7 +369,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     if (isResizing && !collapsed) {
-      let offsetLeft = (e.clientX - document.body.offsetLeft);
+      const offsetLeft = (e.clientX - document.body.offsetLeft);
       if (offsetLeft > minWidth && offsetLeft < maxWidth) {
         setWidth(offsetLeft);
         setNoCollapseWidth(offsetLeft);
@@ -397,10 +404,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             setWidth(noCollapseWidth);
           }
         }}
+        items={getToolPanels()}
         {...restProps}
-      >
-        {getToolPanels()}
-      </Collapse>
+      />
       <Tooltip
         placement={'right'}
         title={collapsed ? t('ToolMenu.expand') : t('ToolMenu.collapse')}
@@ -419,7 +425,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             if (collapsed){
               setWidth(noCollapseWidth);
             } else {
-              setWidth(40);
+              setWidth(collapseWidth);
             }
           }}
         />

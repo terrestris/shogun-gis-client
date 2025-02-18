@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
-          semantic_version: 19
+          semantic_version: 23
 
       - name: Login to Nexus ⌨️
         uses: docker/login-action@v3
@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.NEXUS_PASSWORD }}
 
       - name: Build docker image (latest) 🏗️
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           tags: |
@@ -50,7 +50,7 @@ jobs:
 
       - name: Build docker image (version) 🏗️
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           tags: |
@@ -67,7 +67,7 @@ jobs:
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
 
       - name: Build docker image e2e-tests (latest) 🏗️
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           file: Dockerfile.e2e
           context: .
@@ -77,7 +77,7 @@ jobs:
 
       - name: Build docker image e2e-tests (version) 🏗️
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           file: Dockerfile.e2e
           context: .

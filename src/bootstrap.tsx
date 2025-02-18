@@ -1,6 +1,11 @@
 import React from 'react';
 
 import {
+  init,
+  loadRemote
+} from '@module-federation/enhanced/runtime';
+
+import {
   loader
 } from '@monaco-editor/react';
 
@@ -39,18 +44,16 @@ import OlSourceOsm from 'ol/source/OSM';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlView from 'ol/View';
 
-import {
-  render
-} from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import {
   Provider
 } from 'react-redux';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import UrlUtil from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
-import MapContext from '@terrestris/react-geo/dist/Context/MapContext/MapContext';
+import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 
 import {
   AppInfo
@@ -61,10 +64,11 @@ import Application, {
 } from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 const App = React.lazy(() => import('./App'));
 
+import RerouteToLogin from './components/RerouteToLogin';
 import {
   PluginProvider
 } from './context/PluginContext';
@@ -77,6 +81,7 @@ import i18n, {
 } from './i18n';
 
 import {
+  ClientPlugin,
   ClientPluginInternal
 } from './plugin';
 
@@ -92,17 +97,27 @@ import {
 } from './store/editFeature';
 import { setFeatureInfoActiveCopyTools } from './store/featureInfo';
 import {
+  setLayerTreeActiveUploadTools,
+  setLayerTreeShowLegends,
+  setMetadataVisible,
+  setLayerIconsVisible
+} from './store/layerTree';
+import {
   setLegal
 } from './store/legal';
 import {
   setLogoPath
 } from './store/logoPath';
+import {
+  setMapToolbarVisible
+} from './store/mapToolbarVisible';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines
 } from './store/searchEngines';
 import {
-  createReducer, dynamicMiddleware,
+  createReducer,
+  dynamicMiddleware,
   store
 } from './store/store';
 import {
@@ -114,6 +129,9 @@ import {
 import {
   setUser
 } from './store/user';
+import {
+  setVisible as setUserMenuVisible
+} from './store/userMenu';
 
 import './index.less';
 
@@ -124,7 +142,6 @@ export interface ThemeProperties extends React.CSSProperties {
   '--complementaryColor'?: string;
 }
 
-// eslint-disable-next-line no-shadow
 enum LoadingErrorCode {
   APP_ID_NOT_SET = 'APP_ID_NOT_SET',
   APP_CONFIG_NOT_FOUND = 'APP_CONFIG_NOT_FOUND',
@@ -133,7 +150,7 @@ enum LoadingErrorCode {
 }
 
 const client = ClientConfiguration.shogunBase !== false ? new SHOGunAPIClient({
-  url: ClientConfiguration.shogunBase || '/'
+  url: ClientConfiguration.shogunBase ?? '/'
 }) : undefined;
 
 const parser = new SHOGunApplicationUtil({
@@ -169,6 +186,23 @@ const getApplicationConfiguration = async (shogunClient: SHOGunAPIClient, applic
       throw new Error(LoadingErrorCode.APP_UNAUTHORIZED);
     }
     Logger.error(`Error while loading application with ID ${applicationId}: ${error}`);
+  }
+};
+
+const getApplicationConfigurationByName = async (shogunClient: SHOGunAPIClient, applicationName: string) => {
+  try {
+    Logger.info(`Loading application with name: ${applicationName}`);
+
+    const application = await shogunClient.application().findOneByName(applicationName);
+
+    Logger.info(`Successfully loaded application with name: ${applicationName}`);
+
+    return application;
+  } catch (error) {
+    if ((error as Error).message.indexOf('401') > -1) {
+      throw new Error(LoadingErrorCode.APP_UNAUTHORIZED);
+    }
+    Logger.error(`Error while loading application with name: ${applicationName}: ${error}`);
   }
 };
 
@@ -258,7 +292,7 @@ const setApplicationToStore = async (application?: Application) => {
     const availableTools: string[] = [];
     application.toolConfig
       .forEach((tool: DefaultApplicationToolConfig) => {
-        if (tool.config.visible && tool.name !== 'search') {
+        if (tool.config?.visible && !['search', 'user_menu', 'map_toolbar'].includes(tool.name)) {
           availableTools.push(tool.name);
         }
         if (tool.name === 'search' && tool.config.engines.length > 0) {
@@ -266,6 +300,24 @@ const setApplicationToStore = async (application?: Application) => {
         }
         if (tool.name === 'feature_info' && Array.isArray(tool.config.activeCopyTools)) {
           store.dispatch(setFeatureInfoActiveCopyTools(tool.config.activeCopyTools));
+        }
+        if (tool.name === 'tree' && Array.isArray(tool.config.uploadTools)) {
+          store.dispatch(setLayerTreeActiveUploadTools(tool.config.uploadTools));
+        }
+        if (tool.name === 'tree' && tool.config.showLegends) {
+          store.dispatch(setLayerTreeShowLegends(tool.config.showLegends));
+        }
+        if (tool.name === 'tree' && typeof tool.config.metadataVisible !== 'undefined') {
+          store.dispatch(setMetadataVisible(tool.config.metadataVisible));
+        }
+        if (tool.name === 'tree' && typeof tool.config.layerIconsVisible !== 'undefined') {
+          store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
+        }
+        if (tool.name === 'map_toolbar') {
+          store.dispatch(setMapToolbarVisible(tool.config?.visible));
+        }
+        if (tool.name === 'user_menu') {
+          store.dispatch(setUserMenuVisible(tool.config?.visible ?? true));
         }
       });
     store.dispatch(setAvailableTools(availableTools));
@@ -391,12 +443,15 @@ const setupSHOGunMap = async (application: Application) => {
     layers = await parser.parseLayerTreeNodes(application, layersConfig, projection);
   }
 
+  const interactions = await parser.parseMapInteractions(application);
+
   return new OlMap({
     view,
     layers,
     controls: OlControlDefaults({
       zoom: false
-    })
+    }),
+    interactions
   });
 };
 
@@ -462,17 +517,17 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
   if (theme.secondaryColor) {
     style['--secondaryColor'] = theme.secondaryColor;
   }
-  if (theme.secondaryColor) {
+  if (theme.complementaryColor) {
     style['--complementaryColor'] = theme.complementaryColor;
   }
   if (theme.faviconPath) {
-    const favicon = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+    const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
     if (favicon) {
       favicon.href = theme.faviconPath;
     } else {
       // If no favicon is set, create a new one
       const newLink = document.createElement('link');
-      newLink.rel = 'shortcut icon';
+      newLink.rel = 'icon';
       newLink.type = 'image/x-icon';
       newLink.href = theme.faviconPath;
       document.head.appendChild(newLink);
@@ -482,41 +537,27 @@ const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
   return style;
 };
 
-// ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
 const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
-  await __webpack_init_sharing__('default');
-
-  await new Promise<void>((resolve, reject) => {
-    const element = document.createElement('script');
-
-    element.src = moduleUrl;
-    element.type = 'text/javascript';
-    element.async = true;
-
-    element.onload = () => {
-      element.parentElement?.removeChild(element);
-      resolve();
-    };
-
-    element.onerror = (err) => {
-      element.parentElement?.removeChild(element);
-      reject(err);
-    };
-
-    document.head.appendChild(element);
+  init({
+    name: 'SHOGunGISClient',
+    remotes: [{
+      entry: moduleUrl,
+      name: moduleName
+    }]
   });
 
-  // @ts-ignore
-  const container = window[moduleName];
+  const modules: ClientPlugin[] = [];
 
-  // eslint-disable-next-line camelcase
-  await container.init(__webpack_share_scopes__.default);
-
-  const modules = [];
   for (const remoteName of remoteNames) {
-    const factory = await container.get(remoteName);
-    const module = factory();
-    modules.push(module);
+
+    // For backwards compatibility (existing plugin remote are potentially prefixed with './')
+    const remote = `${moduleName}/${remoteName.startsWith('./') ? remoteName.substring(2) : remoteName}`;
+
+    const clientPlugin = await loadRemote<any>(remote);
+
+    if (clientPlugin && clientPlugin.default) {
+      modules.push(clientPlugin.default);
+    }
   }
 
   return modules;
@@ -554,7 +595,7 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
 
     Logger.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
 
-    let clientPluginModules: any[];
+    let clientPluginModules: ClientPlugin[];
     try {
       clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
       Logger.info(`Successfully loaded plugin ${name}`);
@@ -563,8 +604,8 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
       return clientPlugins;
     }
 
-    for (let module of clientPluginModules) {
-      const clientPluginDefault: ClientPluginInternal = module.default;
+    for (const module of clientPluginModules) {
+      const clientPluginDefault: ClientPluginInternal = module as ClientPluginInternal;
       const PluginComponent = clientPluginDefault.component;
 
       if (toolConfig) {
@@ -649,6 +690,9 @@ const matchRole = (role: string | RegExp, element: string): boolean => {
 };
 
 const renderApp = async () => {
+  const container = document.getElementById('app');
+  const root = createRoot(container!);
+
   try {
     loader.config({
       paths: {
@@ -663,13 +707,23 @@ const renderApp = async () => {
     }
 
     const applicationIdString = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+
+    const url = new URL(window.location.href);
+    const pathSegments = url.pathname.split('/');
+    const applicationName = pathSegments[2];
+
     const applicationId = applicationIdString ? parseInt(applicationIdString, 10) : undefined;
 
-    if (!applicationId && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
+    if (!applicationId && !applicationName && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
       throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
     }
     let appConfig;
-    if (applicationId && client) {
+    if (applicationName && client) {
+      appConfig = await getApplicationConfigurationByName(client, applicationName);
+      if (appConfig?.id) {
+        setLoadingImage(appConfig.id, appConfig?.clientConfig?.theme?.logoPath);
+      }
+    } else if (applicationId && client) {
       appConfig = await getApplicationConfiguration(client, applicationId);
       setLoadingImage(applicationId, appConfig?.clientConfig?.theme?.logoPath);
     } else if (ClientConfiguration.staticAppConfigUrl) {
@@ -702,14 +756,6 @@ const renderApp = async () => {
     }
 
     const style = parseTheme(appConfig?.clientConfig?.theme);
-
-    ConfigProvider.config({
-      theme: {
-        primaryColor: Color(style['--primaryColor']).isLight() ?
-          Color(style['--primaryColor']).darken(0.5).hexa() :
-          style['--primaryColor']
-      }
-    });
 
     if (Color(style['--secondaryColor'])?.isLight() && Color(style['--primaryColor'])?.isLight()) {
       style['--complementaryColor'] = (Color(style['--complementaryColor']).darken(0.5).hexa());
@@ -753,7 +799,7 @@ const renderApp = async () => {
 
     const plugins = await loadPlugins(map, appConfig?.toolConfig);
 
-    if (!appConfig) {
+    if (!appConfig && applicationId) {
       notification.error({
         message: i18n.t('Index.applicationLoadErrorMessage'),
         description: i18n.t('Index.applicationLoadErrorDescription', {
@@ -761,14 +807,43 @@ const renderApp = async () => {
         }),
         duration: 0
       });
+    } else if (!appConfig && applicationName) {
+      notification.error({
+        message: i18n.t('Index.applicationLoadErrorMessage'),
+        description: i18n.t('Index.applicationLoadByNameErrorDescription', {
+          applicationName: applicationName
+        }),
+        duration: 0
+      });
     }
 
-    render(
+    root.render(
       <React.StrictMode>
         <React.Suspense fallback={<span></span>}>
           <SHOGunAPIClientProvider client={client}>
             <PluginProvider plugins={plugins}>
-              <ConfigProvider locale={getConfigLang(i18n.language)}>
+              <ConfigProvider
+                locale={getConfigLang(i18n.language)}
+                theme={{
+                  cssVar: true,
+                  token: {
+                    colorPrimary: Color(style['--primaryColor']).isLight() ?
+                      Color(style['--primaryColor']).darken(0.5).hex() :
+                      style['--primaryColor'],
+                    colorLink: style['--complementaryColor'],
+                    colorLinkHover: style['--secondaryColor'],
+                    borderRadius: 0
+                  },
+                  components: {
+                    Button: {
+                      primaryShadow: 'none'
+                    },
+                    Dropdown: {
+                      paddingBlock: 2
+                    }
+                  }
+                }}
+              >
                 <Provider store={store}>
                   <MapContext.Provider value={map}>
                     <App />
@@ -778,8 +853,7 @@ const renderApp = async () => {
             </PluginProvider>
           </SHOGunAPIClientProvider>
         </React.Suspense>
-      </React.StrictMode>,
-      document.getElementById('app')
+      </React.StrictMode>
     );
   } catch (error) {
     Logger.error(error);
@@ -796,40 +870,55 @@ const renderApp = async () => {
     }
 
     let type: AlertProps['type'] = 'warning';
-    let errorDescription = i18n.t('Index.errorDescription');
+    let errorDescription: string |React.ReactElement = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
       errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_UNAUTHORIZED) {
-      errorDescription = i18n.t('Index.permissionDeniedUnauthorized');
+      errorDescription =
+        <p>
+          {i18n.t('Index.permissionDeniedUnauthorized')}
+          <RerouteToLogin
+            rerouteMsg={i18n.t('Index.rerouteToLoginPage')}
+          />
+        </p>;
+
       type = 'error';
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_NOT_FOUND) {
       const appId = UrlUtil.getQueryParam(window.location.href, 'applicationId');
+      const appName = UrlUtil.getQueryParam(window.location.href, 'applicationName');
 
-      errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
-        applicationId: appId
-      });
+      if (appId) {
+        errorDescription = i18n.t('Index.errorDescriptionAppConfigNotFound', {
+          applicationId: appId
+        });
+      } else if (appName) {
+        errorDescription = i18n.t('Index.errorDescriptionAppConfigByNameNotFound', {
+          applicationName: appName
+        });
+      }
     }
 
     if ((error as Error)?.message === LoadingErrorCode.APP_CONFIG_STATIC_NOT_FOUND) {
       errorDescription = i18n.t('Index.errorDescriptionAppConfigStaticNotFound');
     }
 
-    render(
+    root.render(
       <React.StrictMode>
-        <Alert
-          className="error-boundary"
-          message={i18n.t('Index.errorMessage')}
-          description={errorDescription}
-          type={type}
-          showIcon
-        />
-      </React.StrictMode>,
-      document.getElementById('app')
+        <SHOGunAPIClientProvider client={client}>
+          <Alert
+            className="error-boundary"
+            message={i18n.t('Index.errorMessage')}
+            description={errorDescription}
+            type={type}
+            showIcon
+          />
+        </SHOGunAPIClientProvider>
+      </React.StrictMode>
     );
   }
 };

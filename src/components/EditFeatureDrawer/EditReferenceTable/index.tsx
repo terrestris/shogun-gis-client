@@ -96,7 +96,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
 
   const resolvePlaceholder = (record: EditReferenceDataType): string | number => {
     if (!tablePropertyName) {
-      return record[defaultPropertyName] || '';
+      return record[defaultPropertyName] ?? '';
     }
 
     const regex = /{{(.*?)}}/g;
@@ -108,6 +108,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
     let resolved = tablePropertyName;
     let match;
 
+    // eslint-disable-next-line no-cond-assign
     while (match = regex.exec(tablePropertyName)) {
       resolved = resolved.replace(match[0], record[match[1]]);
     }

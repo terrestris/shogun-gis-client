@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect
+} from 'react';
 
 import {
-  Button, Divider
+  Button,
+  Divider,
+  Tooltip
 } from 'antd';
 
 import OlControlMousePosition from 'ol/control/MousePosition';
@@ -11,9 +15,8 @@ import { createStringXY } from 'ol/coordinate';
 import { useTranslation } from 'react-i18next';
 
 import ScaleCombo from '@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo';
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
+import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import './index.less';
 import useAppSelector from '../../hooks/useAppSelector';
 import { usePlugins } from '../../hooks/usePlugins';
 
@@ -21,9 +24,14 @@ import {
   FooterPlacementOrientation,
   isFooterIntegration
 } from '../../plugin';
+
 import { Legal } from '../../store/legal';
 
-export interface FooterProps extends React.ComponentProps<'div'> { }
+import { ApplicationInfo } from '../ApplicationInfo';
+
+import './index.less';
+
+export type FooterProps = React.ComponentProps<'div'>;
 
 export const Footer: React.FC<FooterProps> = ({
   ...restProps
@@ -42,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({
           wrappedComponent: WrappedPluginComponent
         } = plugin;
 
-        items.splice(plugin.integration?.insertionIndex || 0, 0,
+        items.splice(plugin.integration?.insertionIndex ?? 0, 0,
           <WrappedPluginComponent
             key={key}
           />
@@ -118,7 +126,6 @@ export const Footer: React.FC<FooterProps> = ({
         {t('Footer.scale')}:&nbsp;
         <ScaleCombo
           aria-label='scalecombo-dropdown'
-          map={map}
         />
         <Divider
           type="vertical"
@@ -174,7 +181,22 @@ export const Footer: React.FC<FooterProps> = ({
         type="link"
       >
         {t('Footer.privacypolicy')}
-      </Button>
+      </Button>,
+      <ApplicationInfo
+        key="application-info"
+        opener={
+          <Tooltip
+            title={t('Footer.aboutTooltip')}
+          >
+            <Button
+              type="link"
+              aria-label="info-opener"
+            >
+              {t('Footer.about')}
+            </Button>
+          </Tooltip>
+        }
+      />
     ];
 
     if (plugins.length > 0) {

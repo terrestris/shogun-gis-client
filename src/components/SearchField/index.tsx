@@ -4,41 +4,71 @@ import {
   InputProps
 } from 'antd/lib/input';
 
-import logger from '@terrestris/base-util/dist/Logger';
+import Logger from '@terrestris/base-util/dist/Logger';
 
+import useNominatimSearchEngine from '../../hooks/searchEngines/useNominatimSearchEngine';
+import useSolrSearchEngine from '../../hooks/searchEngines/useSolrSearchEngine';
+import useWfsSearchEngine from '../../hooks/searchEngines/useWfsSearchEngine';
 import useAppSelector from '../../hooks/useAppSelector';
-import BasicNominatimSearch from '../BasicNominatimSearch';
+
 import MultiSearch from '../MultiSearch';
 
 import './index.less';
 
-interface SearchFieldProps extends InputProps { }
+export type SearchFieldProps = InputProps;
 
-export const SearchField: React.FC<SearchFieldProps> = (): JSX.Element => {
+export const SearchField: React.FC<SearchFieldProps> = ({
+  ...passThroughProps
+}): JSX.Element => {
 
   const useNominatim = useAppSelector((state) => state.searchEngines.includes('nominatim'));
   const useSolr = useAppSelector((state) => state.searchEngines.includes('solr'));
+  const useWfs = useAppSelector((state) => state.searchEngines.includes('wfs'));
 
-  if (!useNominatim && !useSolr) {
-    logger.warn('Neither nominatim nor solr search is configured.');
+  const wfsSearchEngine = useWfsSearchEngine();
+  const solrSearchEngine = useSolrSearchEngine();
+  const nominatimSearchEngine = useNominatimSearchEngine();
+
+  const getGeocoderSearchEngine = () => {
+    if (useNominatim) {
+      return nominatimSearchEngine;
+    }
+  };
+
+  const getDataSearchEngine = () => {
+    // Only allow solr or wfs simultaneously.
+    if (useSolr && useWfs) {
+      Logger.warn('Both solr and wfs search are configured. Only one of them ' +
+        'can be used at the same time.');
+      return;
+    }
+
+    if (useSolr) {
+      return solrSearchEngine;
+    }
+
+    if (useWfs) {
+      return wfsSearchEngine;
+    }
+  };
+
+  // At least a single search engine should be configured.
+  if (!useNominatim && !useSolr && !useWfs ) {
+    Logger.warn('Neither nominatim, solr nor wfs search is configured.');
     return <></>;
   }
 
   return (
     <div
       className="search"
-      aria-label='search-field'
+      aria-label="search-field"
     >
-      {
-        useSolr ?
-          <MultiSearch
-            aria-label='search'
-            useNominatim={useNominatim}
-          /> :
-          <BasicNominatimSearch
-            aria-label='search'
-          />
-      }
+      <MultiSearch
+        aria-label="search"
+        geocoderSearchEngine={getGeocoderSearchEngine()}
+        dataSearchEngine={getDataSearchEngine()}
+        {...passThroughProps}
+      />
     </div>
   );
 };

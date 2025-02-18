@@ -22,10 +22,13 @@ import OlFormatWFS, {
   WriteTransactionOptions as OlWriteTransactionOptions
 } from 'ol/format/WFS';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   PropertyFormTabConfig,
@@ -148,8 +151,9 @@ export const useWriteWfsTransaction = () => {
         const geometry = feature.getGeometry()?.clone();
 
         if (geometry && !isEmpty(geometry.getExtent()) && allowedEditMode?.includes('EDIT_GEOMETRY')) {
-          feat.set(geomProperty?.name || 'geom', geometry);
-          feat.setGeometryName(geomProperty?.name || 'geom');
+          const geomPropName = geomProperty?.name ?? 'geom';
+          feat.set(geomPropName, geometry);
+          feat.setGeometryName(geomPropName);
         }
 
         if (opts.form) {

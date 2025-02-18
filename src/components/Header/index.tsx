@@ -1,5 +1,8 @@
 import React from 'react';
 
+import ClientConfiguration from 'clientConfig';
+
+import DocumentationButton from '../../components/DocumentationButton';
 import {
   useAppSelector
 } from '../../hooks/useAppSelector';
@@ -17,13 +20,15 @@ import UserMenu from '../UserMenu';
 
 import './index.less';
 
-export interface HeaderProps extends React.ComponentProps<'div'> { }
+export type HeaderProps = React.ComponentProps<'div'>;
 
 export const Header: React.FC<HeaderProps> = ({
   ...restProps
 }): JSX.Element => {
-  const title = useAppSelector((state) => state.title);
-  const logoPath = useAppSelector((state) => state.logoPath);
+  const title = useAppSelector(state => state.title);
+  const logoPath = useAppSelector(state => state.logoPath);
+  const userMenuVisible = useAppSelector(state => state.userMenu.visible);
+
   const plugins = usePlugins();
 
   const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
@@ -34,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
           wrappedComponent: WrappedPluginComponent
         } = plugin;
 
-        items.splice(plugin.integration?.insertionIndex || 0, 0,
+        items.splice(plugin.integration?.insertionIndex ?? 0, 0,
           <WrappedPluginComponent
             key={key}
           />
@@ -81,8 +86,24 @@ export const Header: React.FC<HeaderProps> = ({
     return items;
   };
 
-  const getRightItems = () => {
-    const items = [
+  const getDocsButton = () => {
+    if (!ClientConfiguration.documentationButtonVisible) {
+      return;
+    }
+
+    return (
+      <DocumentationButton
+        key="docs-button"
+      />
+    );
+  };
+
+  const getUserMenu = () => {
+    if (!userMenuVisible || !ClientConfiguration.keycloak?.enabled) {
+      return;
+    }
+
+    return (
       <div
         key="user-menu"
         aria-label="user-menu"
@@ -91,10 +112,18 @@ export const Header: React.FC<HeaderProps> = ({
           key="user-menu"
         />
       </div>
-    ];
+    );
+  };
+
+  const getRightItems = () => {
+    const items = [
+      getDocsButton(),
+      getUserMenu()
+    ].filter((item) => {
+      return item !== undefined;
+    });
 
     insertPlugins('right', items);
-
     return items;
   };
 

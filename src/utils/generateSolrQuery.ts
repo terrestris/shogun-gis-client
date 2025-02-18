@@ -4,7 +4,7 @@ import Map from 'ol/Map';
 import {
   WmsLayer,
   isWmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
   SearchConfig
@@ -30,8 +30,8 @@ export const generateSolrQuery = ({
 }: SolrQueryProps): SolrQuery[] => {
   // parse searchValue into an array of search terms,
   // removing special characters and white spaces
-  let parts = searchValue.trim()
-    .replaceAll(/[()\\\-_./\/]/g, ' ')
+  const parts = searchValue.trim()
+    .replaceAll(/[()\\\-_.//]/g, ' ')
     .split(' ')
     .map(s => s.trim())
     .filter(s => s !== '');
@@ -45,8 +45,10 @@ export const generateSolrQuery = ({
       .filter(l => isWmsLayer(l))
       .map(l => (l as WmsLayer).getSource()?.getParams()?.LAYERS);
 
-    const queriesPerQueryFields = layerNames.map(layerName => `(featureType:"${layerName}" AND (${generateSearchQuery(parts)}))`);
-    const query = queriesPerQueryFields.join(' OR ');
+    const featureTypeParts = layerNames.map(layerName => `featureType:"${layerName}"`);
+    const featureTypeQuery = featureTypeParts.join(' OR ');
+
+    const query = `(${featureTypeQuery}) AND (${generateSearchQuery(parts)})`;
     searchQueries.push({
       query: query,
       fieldList: key !== 'undefined' ? key.split(',').join(' ') : undefined
@@ -65,7 +67,7 @@ const generateSearchQuery = (
   searchParts: string[]
 ): string => {
   const subQueries = searchParts.map(part => {
-    return `(${part.trim()}*^3 OR *${part.trim()}*^2 OR ${part.trim()}~1 OR ${part.trim()})`;
+    return `(${part.trim()}^4 OR *${part.trim()}*^2 OR ${part.trim()}~1)`;
   });
   return subQueries.join(' AND ');
 };

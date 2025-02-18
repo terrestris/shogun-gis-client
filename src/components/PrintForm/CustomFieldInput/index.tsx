@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useState
+  useEffect
 } from 'react';
 
 import { Input } from 'antd';
@@ -10,7 +10,7 @@ import _isNil from 'lodash/isNil';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { addCustomParam } from '../../../store/print';
 
-interface CustomFieldInputProps extends InputProps {}
+export type CustomFieldInputProps = InputProps;
 
 export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
   value,
@@ -20,27 +20,20 @@ export const CustomFieldInput: React.FC<CustomFieldInputProps> = ({
   ...restProps
 }): JSX.Element => {
 
-  const [inputText, setInputText] = useState<any>(value);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!_isNil(id)) {
       dispatch(addCustomParam({
-        [id]: inputText
+        [id]: value
       }));
     }
-  }, [inputText, id, dispatch]);
-
-  useEffect(() => {
-    setInputText(value);
-  }, [value]);
+  }, [value, id, dispatch]);
 
   return (
     <Input
       id={id}
-      value={inputText}
-      onChange={(event) => setInputText(event.target.value)}
+      value={value}
       placeholder={placeholder}
       maxLength={maxLength}
       showCount={!!(maxLength && maxLength > 1)}

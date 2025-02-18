@@ -22,11 +22,13 @@ var clientConfig = {
     }
   },
   search: {
+    nominatimUrl: 'https://nominatim.openstreetmap.org/search?',
     solrBasePath: '/search/query',
     coreName: 'search',
     defaultUseViewBox: true,
-    useNominatim: true,
+    groupByCategory: true,
     useSolrHighlighting: true,
+    activateLayerOnClick: true,
     delay: 1000,
     minChars: 3,
     solrQueryConfig: {
@@ -43,5 +45,6 @@ var clientConfig = {
     authorizedRolesForDelete: []
   },
   wfsLockFeatureEnabled: false,
+  documentationButtonVisible: true,
   enableFallbackConfig: true
 };

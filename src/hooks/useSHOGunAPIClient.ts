@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 import SHOGunAPIClientContext from '../context/SHOGunAPIClientContext';
 

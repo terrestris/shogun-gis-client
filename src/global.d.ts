@@ -25,14 +25,16 @@ declare module 'clientConfig' {
     requireFieldMatch?: boolean;
   };
   type SearchConfiguration = {
+    nominatimUrl?: string;
     solrBasePath?: string;
-    useNominatim?: boolean;
+    groupByCategory?: boolean;
     useSolrHighlighting?: boolean;
     defaultUseViewBox?: boolean;
     delay?: number;
     minChars?: number;
     coreName?: string;
     solrQueryConfig?: SolrQueryConfig;
+    activateLayerOnClick?: boolean;
   };
   type ClientConfiguration = {
     shogunBase?: string | false;
@@ -58,6 +60,7 @@ declare module 'clientConfig' {
     search?: SearchConfiguration;
     featureEditRoles?: FeatureEditConfiguration;
     wfsLockFeatureEnabled?: boolean;
+    documentationButtonVisible?: boolean;
     enableFallbackConfig?: boolean;
     staticAppConfigUrl?: string;
     layerConfigUrl?: string;
@@ -66,14 +69,3 @@ declare module 'clientConfig' {
 
   export default config;
 }
-
-// todo: remove when react-geo test util types are exported properly
-declare module '@terrestris/react-geo/dist/Util/rtlTestUtils';
-declare module '@terrestris/react-geo/dist/Util/antdTestQueries';
-
-type Scope = unknown;
-type Factory = () => any;
-// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
-declare const __webpack_init_sharing__: (shareScope: string) => Promise<void>;
-// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
-declare const __webpack_share_scopes__: { default: Scope };

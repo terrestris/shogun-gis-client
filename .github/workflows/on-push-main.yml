@@ -36,7 +36,7 @@ jobs:
       run: npm run build
 
     - name: Deploy (to latest) 🚀
-      uses: JamesIves/github-pages-deploy-action@v4.6.1
+      uses: JamesIves/github-pages-deploy-action@v4.7.2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
@@ -51,7 +51,7 @@ jobs:
         password: ${{ secrets.NEXUS_PASSWORD }}
 
     - name: Build docker image (main) 🏗️
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: .
         tags: |
@@ -63,7 +63,7 @@ jobs:
         docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:main
 
     - name: Build docker image e2e-tests (main) 🏗️
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         file: Dockerfile.e2e
         context: .
@@ -76,6 +76,7 @@ jobs:
         docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:main
 
   sonarqube:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
@@ -109,10 +110,12 @@ jobs:
 
       - name: Get shogun-gis-client version 🔖
         run: |
-          echo "sonar.projectVersion=$(node -pe "require('./package.json').version")" >> ./sonar-project.properties
+          echo "sonar.projectVersion=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
-        uses: kitabisa/sonarqube-action@v1.2.1
+        uses: SonarSource/sonarqube-scan-action@v4.2.1
         with:
-          host: ${{ secrets.SONARQUBE_HOST }}
-          login: ${{ secrets.SONARQUBE_TOKEN }}
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}

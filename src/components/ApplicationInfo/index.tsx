@@ -39,10 +39,10 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   const logoPath = useAppSelector(state => state.logoPath);
   const appDescription = useAppSelector(state => state.description);
 
-  const [isVisible, setVisible] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => {
-    setVisible(!isVisible);
+    setIsVisible(!isVisible);
   };
 
   let Opener;

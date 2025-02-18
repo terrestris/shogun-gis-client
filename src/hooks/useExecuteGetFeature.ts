@@ -6,26 +6,52 @@ import {
   FeatureCollection
 } from 'geojson';
 
+import {
+  Extent as OlExtent
+} from 'ol/extent';
 import OlFormatFilter from 'ol/format/filter/Filter';
 import OlFormatWFS from 'ol/format/WFS';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
-import useMap from '@terrestris/react-geo/dist/Hook/useMap';
 import {
   WmsLayer
-} from '@terrestris/react-geo/dist/Util/typeUtils';
+} from '@terrestris/ol-util/dist/typeUtils/typeUtils';
+
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
-import useExecuteWfsDescribeFeatureType from './useExecuteWfsDescribeFeatureType';
+import useExecuteWfsDescribeFeatureType, {
+  isGeometryType
+} from './useExecuteWfsDescribeFeatureType';
 import useSHOGunAPIClient from './useSHOGunAPIClient';
 
 export type GetFeatureOpts = {
+  /**
+   * The layer to generate the WFS GetFeature request for.
+   */
   layer: WmsLayer;
-  filter?: OlFormatFilter;
+  /**
+   * The filter to apply to the GetFeature request.
+   */
+  filter?: OlFormatFilter | Element;
+  /**
+   * The properties to return for each feature.
+   */
+  propertyNames?: string[];
+  /**
+   * Maximum number of features to get.
+   */
+  maxFeatures?: number;
+  /**
+   * Extent to use for the BBOX filter. The geometryName option must be set.
+   */
+  bbox?: OlExtent;
 };
 
 export const useExecuteGetFeature = () => {
@@ -33,7 +59,7 @@ export const useExecuteGetFeature = () => {
   const map = useMap();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
-  const executeGetFeature = useCallback(async (opts: GetFeatureOpts) => {
+  const executeGetFeature = useCallback(async (opts: GetFeatureOpts, version = '1.1.0') => {
     if (!map) {
       return;
     }
@@ -63,14 +89,28 @@ export const useExecuteGetFeature = () => {
       url = url.slice(0, -1);
     }
 
-    const featureRequest = new OlFormatWFS().writeGetFeature({
+    // We expect a single feature type here since we filter on the feature type
+    // in the describe feature type request.
+    const geomProperty = describeFeatureType.featureTypes[0]?.properties
+      ?.find(property => isGeometryType(property.type));
+
+    const featureRequest = new OlFormatWFS({version: version}).writeGetFeature({
       srsName: map.getView().getProjection().getCode(),
       featureNS: describeFeatureType.targetNamespace,
       featurePrefix: describeFeatureType.targetPrefix,
       featureTypes: [source?.getParams().LAYERS],
       outputFormat: 'application/json',
-      filter: opts.filter
+      maxFeatures: opts.maxFeatures,
+      // Ensure the geometry is always returned.
+      propertyNames: (opts.propertyNames && geomProperty?.name) ? [...opts.propertyNames, geomProperty?.name] : undefined,
+      bbox: opts.bbox,
+      filter: opts.filter instanceof OlFormatFilter ? opts.filter : undefined,
+      geometryName: geomProperty?.name
     });
+
+    if (featureRequest instanceof Element && opts.filter instanceof Element) {
+      featureRequest.getElementsByTagName('Query')[0].appendChild(opts.filter);
+    }
 
     const defaultHeaders = {
       'Content-Type': 'application/json'
@@ -86,7 +126,7 @@ export const useExecuteGetFeature = () => {
     });
 
     if (!response.ok) {
-      throw new Error('No successful response');
+      throw new Error('No successful response while executing a WFS-GetFeature');
     }
 
     return await response.json() as FeatureCollection;

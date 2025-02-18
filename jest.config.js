@@ -1,17 +1,21 @@
 module.exports = {
+  roots: ['<rootDir>/src'],
   globals: {
-    PROJECT_VERSION: '42.0.0',
+    PROJECT_VERSION: JSON.stringify(require('./package.json').version),
     KEYCLOAK_HOST: 'localhost',
     KEYCLOAK_REALM: 'SHOGun',
     KEYCLOAK_CLIENT_ID: 'shogun-client'
   },
   transform: {
-    '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
-    '^.+\\.tsx?$': '<rootDir>/node_modules/babel-jest'
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.tsx?$': 'babel-jest'
   },
-  testMatch: ['<rootDir>/src/**/?!(*.ui)(spec|test).(j|t)s?(x)'],
-  testPathIgnorePatterns: ['/e2e-tests/'],
-  collectCoverageFrom: ['src/**/?!(*.ui)*.{tsx,jsx,ts,js}'],
+  testMatch: ['<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'],
+  testPathIgnorePatterns: ['<rootDir>/src/e2e-tests/'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{tsx,jsx,ts,js}',
+    '!<rootDir>/src/e2e-tests/**'
+  ],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
     '<rootDir>/jest/matchMediaMock.js',
@@ -19,7 +23,8 @@ module.exports = {
   ],
   testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris))'
+    '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris|color-*[a-z]*|@camptocamp|d3-*[a-z]*|' +
+    'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler|pbf))'
   ],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
@@ -27,11 +32,11 @@ module.exports = {
     '^.+\\.(css|less)$': '<rootDir>/jest/cssTransform.js',
     clientConfig: '<rootDir>/resources/config/gis-client-config.js'
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   reporters: [
     'default',
     '@casualbot/jest-sonar-reporter'
   ],
-  coverageReporters: ['json-summary'],
+  coverageReporters: ['json-summary', 'lcov', 'text'],
   coverageDirectory: 'coverage/all'
 };

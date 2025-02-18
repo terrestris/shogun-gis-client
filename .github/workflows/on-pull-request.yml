@@ -8,6 +8,14 @@ jobs:
     steps:
     - name: Checkout sources 🔰
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Create local branch based on 'origin/main' 🚧
+      run: |
+        git fetch origin main
+        git checkout -b main origin/main
+        git checkout -
 
     - name: Setup Node.js 🧮
       uses: actions/setup-node@v4
@@ -34,14 +42,66 @@ jobs:
 
     - name: Run tests related to current changes ✅
       run: |
-        npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
+        npx jest --config=jest.config.js --coverage --coverageReporters json-summary --changedSince=main --coverageDirectory ./coverage/changed
+
+    - name: Check for test results ❓
+      if: ${{ github.actor != 'dependabot[bot]' }}
+      id: check-results
+      run: |
+        if [ -f ./coverage/changed/coverage-summary.json ]; then
+          COVERAGE_CONTENT=$(cat ./coverage/changed/coverage-summary.json)
+          if echo "$COVERAGE_CONTENT" | jq '.total.lines.pct' | grep -q 'Unknown'; then
+            echo "no_tests_found=true" >> $GITHUB_ENV
+          else
+            echo "no_tests_found=false" >> $GITHUB_ENV
+          fi
+        else
+          echo "no_tests_found=true" >> $GITHUB_ENV
+        fi
+
+    - name: Construct jest coverage comment input 💬
+      if: ${{ github.actor != 'dependabot[bot]' }}
+      id: construct-input
+      env:
+        MULTI_LINES_TEXT: |
+          All, ./coverage/all/coverage-summary.json
+          only changed, ./coverage/changed/coverage-summary.json
+      run: |
+        if [ "${{ env.no_tests_found }}" == "true" ]; then
+          echo "MULTIPLE_FILES=All, ./coverage/all/coverage-summary.json" >> $GITHUB_ENV
+        else
+          echo "MULTIPLE_FILES<<EOF" >> $GITHUB_ENV
+          echo "$MULTI_LINES_TEXT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          cat $GITHUB_ENV
+        fi
 
     - name: Jest Coverage Comment 💬
+      if: ${{ github.actor != 'dependabot[bot]' }}
       uses: MishaKav/jest-coverage-comment@main
       with:
         hide-comment: false
         create-new-comment: false
         hide-summary: false
         multiple-files: |
-          All, ./coverage/all/coverage-summary.json
-          only changed, ./coverage/changed/coverage-summary.json
+          ${{ env.MULTIPLE_FILES }}
+      
+    - name: Get Coverage Comment Id ➡️
+      if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
+      id: get-comment-id
+      run: |
+        PR_NUMBER=${{ github.event.pull_request.number }}
+        COMMENTS_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments")
+        COVERAGE_COMMENT_ID=$(echo "${COMMENTS_JSON}" | jq -r 'map(select(.user.login == "github-actions[bot]")) | sort_by(.created_at) | .[0].id')
+        echo "COVERAGE_COMMENT_ID=${COVERAGE_COMMENT_ID}" >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Post To No Tests Found Comment ⚠️
+      if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        comment-id: ${{ env.COVERAGE_COMMENT_ID }}
+        body: |
+          ❌ No tests were found related to the files changed
