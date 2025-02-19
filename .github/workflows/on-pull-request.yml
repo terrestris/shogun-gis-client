@@ -125,14 +125,11 @@ jobs:
         run: npm run build
         
       - name: Start App 🌐 
-        run: npm start & wait-on http://localhost:8080
-        env:
-          ENV: 'dev'
-          HOST: 'localhost:8080'
+        run: npm start & wait-on http://localhost:8080 
         continue-on-error: true  
         
       - name: Run Cypress Tests 🧪
-        run: npx cypress run
+        run: npx cypress run --env ENV=dev,HOST=localhost:8080
         
       - name: Upload Cypress Screenshots & Videos on Failure 📄 
         if: failure()

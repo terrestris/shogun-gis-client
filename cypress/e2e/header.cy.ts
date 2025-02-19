@@ -13,6 +13,11 @@ describe('Header', () => {
       .should('be.visible')
   });
 
+  it('checks environment variables', () => {
+    cy.log('ENV:', Cypress.env('ENV'));
+    cy.log('HOST:', Cypress.env('HOST'));
+  });
+
   it('should have a complete header', () => {
     cy.get('[aria-label="logo"]').should('be.visible');
     cy.get('[aria-label="search-field"]').should('be.visible');
