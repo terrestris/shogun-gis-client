@@ -105,3 +105,41 @@ jobs:
         comment-id: ${{ env.COVERAGE_COMMENT_ID }}
         body: |
           ❌ No tests were found related to the files changed
+
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js 🧮
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+        
+      - name: Install dependencies ⏬
+        run: npm ci
+        
+      - name: Build artifacts 🏗️
+        run: npm run build
+        
+      - name: Start App 🌐 
+        run: npm start & wait-on http://localhost:8080
+        env:
+          ENV: 'dev'
+          HOST: 'localhost:8080'
+        continue-on-error: true  
+        
+      - name: Run Cypress Tests 🧪
+        run: npx cypress run
+        
+      - name: Upload Cypress Screenshots & Videos on Failure 📄 
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/screenshots
+            cypress/videos
+        
