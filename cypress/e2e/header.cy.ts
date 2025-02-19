@@ -1,5 +1,8 @@
 describe('Header', () => {
   beforeEach(() => {
+    cy.log('ENV:', Cypress.env('ENV'));
+    cy.log('HOST:', Cypress.env('HOST'));
+    
     if (Cypress.env('ENV') == 'dev') {
       cy.visit(`http://${Cypress.env('HOST')}/`);
     } else {
@@ -13,17 +16,12 @@ describe('Header', () => {
       .should('be.visible')
   });
 
-  it('checks environment variables', () => {
-    cy.log('ENV:', Cypress.env('ENV'));
-    cy.log('HOST:', Cypress.env('HOST'));
-  });
-
   it('should have a complete header', () => {
     cy.get('[aria-label="logo"]').should('be.visible');
     cy.get('[aria-label="search-field"]').should('be.visible');
     cy.get('[aria-label="documentation-button"]').should('be.visible');
 
-    if (Cypress.env('ENV') == 'dev') {
+    if (Cypress.env('ENV') != 'dev') {
       cy.get('[aria-label="user-menu"]').should('be.visible');
     }
   });
