@@ -75,6 +75,7 @@
     "shapefile.js": "^1.1.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
     "@babel/cli": "^7.26.4",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
@@ -105,6 +106,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.9",
+    "axe-html-reporter": "^2.2.11",
     "babel-jest": "^29.7.0",
     "babel-loader": "^9.2.1",
     "buffer": "^6.0.3",
