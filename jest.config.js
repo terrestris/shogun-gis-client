@@ -8,7 +8,7 @@ module.exports = {
   },
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.tsx?$': 'babel-jest'
+    '^.+\\.tsx?$': 'ts-jest'
   },
   testMatch: ['<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'],
   testPathIgnorePatterns: ['<rootDir>/src/e2e-tests/'],
@@ -25,7 +25,7 @@ module.exports = {
   ],
   testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(ol|antd|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris|color-*[a-z]*|@camptocamp|d3-*[a-z]*|' +
+    '<rootDir>/node_modules/(?!(ol|antd|keycloak-js|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris|color-*[a-z]*|@camptocamp|d3-*[a-z]*|' +
     'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler|pbf))'
   ],
   moduleNameMapper: {
