@@ -21,7 +21,7 @@ jobs:
         run: |
           # The command lists the latest 10 Git tags, filtered and sorted by the following rules:
           #
-          # * Minimum version: Only tags with a major version >= v17 are included (where the docker base image feature has been introduced)
+          # * Minimum version: Only tags with a major version >= v9 are included (where the docker base image feature has been introduced)
           # * Only one "-next" version: Displays only the latest -next.x tag, if present.
           # * Limit Per Major Line: Shows up to 3 tags per major version.
           # * The final output is limited to 10 tags.
