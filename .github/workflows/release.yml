@@ -1,14 +1,18 @@
 name: Release
 
-on: [workflow_dispatch]
-
-env:
-  DOCKER_REGISTRY: docker-public.terrestris.de/terrestris
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - next
 
 jobs:
-  release:
+  release-npm:
     name: Release
     runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - name: Checkout 🔰
         uses: actions/checkout@v4
@@ -32,64 +36,12 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           semantic_version: 23
-
-      - name: Login to Nexus ⌨️
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.DOCKER_REGISTRY }}
-          username: ${{ secrets.NEXUS_USERNAME }}
-          password: ${{ secrets.NEXUS_PASSWORD }}
-
-      - name: Build docker image (latest) 🏗️
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
-          load: true
-
-      - name: Build docker image (version) 🏗️
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
-          load: true
-
-      - name: Push docker image to Nexus (latest) 📠
-        run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
-
-      - name: Push docker image to Nexus (version) 📠
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ steps.semantic.outputs.new_release_version }}
-
-      - name: Build docker image e2e-tests (latest) 🏗️
-        uses: docker/build-push-action@v6
-        with:
-          file: Dockerfile.e2e
-          context: .
-          tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
-          load: true
-
-      - name: Build docker image e2e-tests (version) 🏗️
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v6
-        with:
-          file: Dockerfile.e2e
-          context: .
-          tags: |
-            ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}
-          load: true
-
-      - name: Push docker image to Nexus e2e-tests (latest) 📠
-        run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
-
-      - name: Push docker image to Nexus e2e-tests (version) 📠
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}
+  release-docker:
+    needs: release-npm
+    uses: ./.github/workflows/release_docker.yml
+    with:
+      release_is_published: ${{ needs.release-npm.outputs.new_release_published }}
+      release_version: ${{ needs.release-npm.outputs.new_release_version }}
+    secrets:
+      nexus_user: ${{ secrets.NEXUS_USERNAME}}
+      nexus_pass: ${{ secrets.NEXUS_PASSWORD}}
