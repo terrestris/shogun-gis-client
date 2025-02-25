@@ -44,10 +44,6 @@ describe('StylingDrawer', () => {
     (MapUtil.getLayerByName as jest.Mock).mockReturnValue(mockVectorLayer);
   });
 
-  it('is defined', () => {
-    expect(StylingComponent).not.toBeUndefined();
-  });
-
   it('can be rendered', () => {
     const {
       container
@@ -70,7 +66,24 @@ describe('StylingDrawer', () => {
     await waitFor(() => {
       expect(OlParser).toHaveBeenCalled();
       expect(MapUtil.getLayerByName).toHaveBeenCalledWith(expect.any(Object), 'react-geo_digitize');
+
+    });
+  });
+
+  it('applies the style function to the vector layer', async () => {
+    const mockSetStyle = jest.fn();
+    const mockVectorLayer = new OlLayerVector({ source: new OlSourceVector() });
+    mockVectorLayer.setStyle = mockSetStyle;
+
+    (MapUtil.getLayerByName as jest.Mock).mockReturnValue(mockVectorLayer);
+
+    render(<StylingComponent />);
+
+    await waitFor(() => {
+      expect(mockSetStyle).toHaveBeenCalled();
+      expect(typeof mockSetStyle.mock.calls[0][0]).toBe('function');
     });
   });
 });
+
 
