@@ -172,7 +172,7 @@ const getConfigLang = (lang: string) => {
   }
 };
 
-const getApplicationConfiguration = async (shogunClient: SHOGunAPIClient, applicationId: number) => {
+export const getApplicationConfiguration = async (shogunClient: SHOGunAPIClient, applicationId: number) => {
   try {
     Logger.info(`Loading application with ID ${applicationId}`);
 
@@ -189,7 +189,7 @@ const getApplicationConfiguration = async (shogunClient: SHOGunAPIClient, applic
   }
 };
 
-const getApplicationConfigurationByName = async (shogunClient: SHOGunAPIClient, applicationName: string) => {
+export const getApplicationConfigurationByName = async (shogunClient: SHOGunAPIClient, applicationName: string) => {
   try {
     Logger.info(`Loading application with name: ${applicationName}`);
 
@@ -206,7 +206,7 @@ const getApplicationConfigurationByName = async (shogunClient: SHOGunAPIClient, 
   }
 };
 
-const getStaticApplicationConfiguration = async (staticAppContextUrl: string) => {
+export const getStaticApplicationConfiguration = async (staticAppContextUrl: string) => {
   try {
     Logger.info('Loading static application');
 
@@ -243,7 +243,7 @@ const getApplicationInfo = async (shogunClient: SHOGunAPIClient) => {
   }
 };
 
-const getUser = async (shogunClient: SHOGunAPIClient, userId?: number) => {
+export const getUser = async (shogunClient: SHOGunAPIClient, userId?: number) => {
   if (!userId) {
     Logger.info('No user ID given, can\'t load it\'s details.');
     return;
@@ -262,7 +262,7 @@ const getUser = async (shogunClient: SHOGunAPIClient, userId?: number) => {
   }
 };
 
-const setApplicationToStore = async (application?: Application) => {
+export const setApplicationToStore = async (application?: Application) => {
   if (!application) {
     Logger.info('No application configuration provided, the default store will be loaded');
 
@@ -505,7 +505,7 @@ const setupDefaultMap = () => {
   });
 };
 
-const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
+export const parseTheme = (theme?: DefaultApplicationTheme): ThemeProperties => {
   const style: ThemeProperties = {
     '--primaryColor': '#59666C',
     '--secondaryColor': '#70B3BE',
@@ -652,7 +652,7 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
   return clientPlugins;
 };
 
-const checkRoles = (
+export const checkRoles = (
   list: string[],
   featureEditRoles: FeatureEditConfiguration
 ): EditLevel[] => {
@@ -682,7 +682,7 @@ const checkRoles = (
   return result;
 };
 
-const matchRole = (role: string | RegExp, element: string): boolean => {
+export const matchRole = (role: string | RegExp, element: string): boolean => {
   if (typeof role === 'string') {
     return element === role;
   }
