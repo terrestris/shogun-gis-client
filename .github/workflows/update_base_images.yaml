@@ -9,7 +9,8 @@ jobs:
   latest-tags:
     runs-on: ubuntu-latest
     outputs:
-      latest_tags: ${{ steps.latest_tags.outputs.latest_tags }}
+      latest_tag: ${{ steps.set-tags.outputs.latest_tag }}
+      remaining_tags: ${{ steps.set-tags.outputs.remaining_tags }}
     steps:
       - name: Checkout sources 🔰
         uses: actions/checkout@v4
@@ -68,15 +69,34 @@ jobs:
             | paste -sd "," - \
             | awk '{print "latest_tags=["$0"]"}' | tee -a $GITHUB_OUTPUT
 
+      - name: Extract latest and the remaining tags
+        id: set-tags
+        run: |
+          LATEST_TAGS='${{ steps.latest_tags.outputs.latest_tags }}'
+          LATEST_TAG=$(echo "$LATEST_TAGS" | jq -r '.[0]')
+          REMAINING_LATEST_TAGS=$(echo "$LATEST_TAGS" | jq -c '.[1:]')
+          echo "latest_tag=$LATEST_TAG" | tee -a $GITHUB_OUTPUT
+          echo "remaining_tags=$REMAINING_LATEST_TAGS" | tee -a $GITHUB_OUTPUT
+
   run-for-tag:
     needs: latest-tags
     uses: ./.github/workflows/release_docker.yml
     strategy:
       matrix:
-        tag: ${{ fromJSON(needs.latest-tags.outputs.latest_tags) }}
+        tag: ${{ fromJSON(needs.latest-tags.outputs.remaining_tags) }}
     with:
       release_is_published: "true"
       release_version: ${{ matrix.tag }}
+    secrets:
+      nexus_user: ${{ secrets.NEXUS_USERNAME }}
+      nexus_pass: ${{ secrets.NEXUS_PASSWORD }}
+
+  run-latest-tag:
+    needs: [latest-tags, run-for-tag]
+    uses: ./.github/workflows/release_docker.yml
+    with:
+      release_is_published: "true"
+      release_version: ${{ needs.latest-tags.outputs.latest_tag }}
     secrets:
       nexus_user: ${{ secrets.NEXUS_USERNAME }}
       nexus_pass: ${{ secrets.NEXUS_PASSWORD }}
