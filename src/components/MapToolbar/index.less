@@ -6,6 +6,10 @@
   flex-direction: column;
   z-index: 1;
 
+  &.drawer-open {
+    right: calc(var(--drawerWidth) + 10px);
+  }
+
   .ant-btn {
     margin: 5px;
     display: block;

@@ -38,7 +38,7 @@ export const MapDrawer: React.FC<MapDrawerProps> = ({
       mask={false}
       open={open}
       placement="right"
-      width={getComputedStyle(document.documentElement).getPropertyValue('--editDrawerWidth')}
+      width={getComputedStyle(document.documentElement).getPropertyValue('--drawerWidth')}
       afterOpenChange={onAfterDrawerOpenChange}
       {...passThroughProps}
     >

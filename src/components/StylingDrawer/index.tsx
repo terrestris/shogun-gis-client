@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  Drawer,
   DrawerProps
 } from 'antd';
 
@@ -14,6 +13,7 @@ import './index.less';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { setStylingDrawerVisibility } from '../../store/stylingDrawerVisibility';
+import MapDrawer from '../MapDrawer';
 import StylingComponent from '../ToolMenu/Draw/StylingDrawerButton/StylingComponent';
 
 export type StylingDrawerProps = DrawerProps;
@@ -34,7 +34,7 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
   };
 
   return (
-    <Drawer
+    <MapDrawer
       title={t('StylingDrawer.title')}
       placement="right"
       onClose={onClose}
@@ -45,7 +45,7 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
       {...passThroughProps}
     >
       <StylingComponent />
-    </Drawer>
+    </MapDrawer>
   );
 };
 
