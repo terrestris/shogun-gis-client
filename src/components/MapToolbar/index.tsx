@@ -44,6 +44,11 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   const mapToolbarVisible = useAppSelector(state => state.mapToolbarVisible.visible);
 
+  const stylingDrawerVisibility = useAppSelector(state => state.stylingDrawerVisibility);
+  const editFeatureDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
+  const drawerOpen = stylingDrawerVisibility || editFeatureDrawerOpen;
+  const className = drawerOpen ? 'drawer-open' : '';
+
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
     tooltipProps: {
@@ -56,10 +61,10 @@ export const MapToolbar: React.FC = (): JSX.Element => {
       {mapToolbarVisible &&
         <Toolbar
           id='map-toolbar'
+          className={className}
           alignment="vertical"
           role="toolbar"
         >
-
           {map &&
             <ZoomButton
               aria-label='zoom-in'
