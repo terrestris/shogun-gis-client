@@ -20,7 +20,7 @@
       "api": "."
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.10.0",
+    "pluginVersion": "0.11.0",
     "prefetchInterface": false,
     "publicPath": "auto"
   },
@@ -3399,17 +3399,14 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/proj/Units",
-      "name": "ol/proj/Units",
+      "id": "SHOGunGISClient:ol/proj/Units.js",
+      "name": "ol/proj/Units.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7325.94d31ded8bb6c4f8.js",
-            "8778.129dd34a0a5bff90.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3741,11 +3738,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2342.2a5f9abf0cd56488.js",
-            "6583.3db3ba041d1f56ed.js",
-            "7410.7ab7aaa29a062e42.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3761,13 +3754,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "3040.aa8b86b9efa97326.js",
-            "7002.7bea95dc37573551.js",
-            "7379.082d45dfeb375df0.js",
-            "7410.7ab7aaa29a062e42.js",
-            "9755.fd48cb84e80b5687.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3776,18 +3763,14 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/style/Icon",
-      "name": "ol/style/Icon",
+      "id": "SHOGunGISClient:ol/style/Icon.js",
+      "name": "ol/style/Icon.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2597.1c6a2ede5e62c6b8.js",
-            "4287.de0d7c27622d338a.js",
-            "8725.c8485ed488650d02.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3842,10 +3825,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "5572.122db1475db3b853.js",
-            "7410.7ab7aaa29a062e42.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3861,9 +3841,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.7ab7aaa29a062e42.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3879,11 +3857,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2597.1c6a2ede5e62c6b8.js",
-            "7002.7bea95dc37573551.js",
-            "7379.082d45dfeb375df0.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -4430,8 +4404,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/style/Icon.js",
-      "name": "ol/style/Icon.js",
+      "id": "SHOGunGISClient:ol/style/Icon",
+      "name": "ol/style/Icon",
       "version": "10.3.1",
       "requiredVersion": "^10.3.1",
       "assets": {
@@ -4441,6 +4415,25 @@
             "2597.1c6a2ede5e62c6b8.js",
             "4287.de0d7c27622d338a.js",
             "8725.c8485ed488650d02.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/proj/Units",
+      "name": "ol/proj/Units",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "7325.94d31ded8bb6c4f8.js",
+            "8778.129dd34a0a5bff90.js"
           ]
         },
         "css": {
@@ -4625,22 +4618,6 @@
             "2378.76fe43e438afc3c5.js",
             "9728.ee3d4bcfe5ccd4c8.js"
           ]
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
-      "id": "SHOGunGISClient:ol/proj/Units.js",
-      "name": "ol/proj/Units.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": []
         },
         "css": {
           "async": [],
