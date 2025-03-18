@@ -62,6 +62,7 @@ import {
 
 import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useAppSelector from '../../../../hooks/useAppSelector';
+import useGetFitPadding from '../../../../hooks/useGetFitPadding';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 import {
@@ -96,6 +97,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const dispatch = useAppDispatch();
   const client = useSHOGunAPIClient();
   const map = useMap();
+  const getFitPadding = useGetFitPadding();
   const {
     t
   } = useTranslation();
@@ -158,7 +160,9 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         } : {}
       });
       extent = transformExtent(extent, 'EPSG:4326', map.getView().getProjection());
-      map.getView().fit(extent);
+      map.getView().fit(extent, {
+        padding: getFitPadding()
+      });
     } catch (error) {
       Logger.error(error);
       notification.error({
