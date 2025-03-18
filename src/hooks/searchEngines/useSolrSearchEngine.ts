@@ -191,6 +191,7 @@ export const useSolrSearchEngine = () => {
         const olFeat = new OlFeature({
           geometry
         });
+        // TODO: get all properties from search result
         olFeat.set('title', getFeatureTitle(value, dsResult, hlResults?.[id]));
         let ftName;
         if (dsResult.featureType?.[0]) {
