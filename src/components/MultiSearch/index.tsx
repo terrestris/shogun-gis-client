@@ -56,6 +56,7 @@ import {
 
 import './index.less';
 import useAppDispatch from '../../hooks/useAppDispatch';
+import useGetFitPadding from '../../hooks/useGetFitPadding';
 import { setSearchResultState } from '../../store/searchResult';
 
 export type SearchEngineFunction = (value: string, viewBox?: OlExtent) => Promise<ResultCategory[] | undefined>;
@@ -99,6 +100,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const [resultsVisible, setResultsVisible] = useState<boolean>(false);
   const [settingsVisible, setSettingsVisible] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<ResultCategory[]>([]);
+  const getFitPadding = useGetFitPadding();
 
   useEffect(() => {
     window.addEventListener('mousedown', handleClickAway);
@@ -334,22 +336,11 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     const zoomOffsetOnClick = (item: Item) => {
       const extent = item.feature.getGeometry()?.getExtent();
-      const toolMenuElement = document.querySelector('.tool-menu');
-      const toolMenuWidth = toolMenuElement?.clientWidth ?? 0;
-
-      let drawerWidth = 0;
-      if (ClientConfiguration.search?.searchResultDrawer) {
-        drawerWidth = Number(
-          getComputedStyle(document.body).getPropertyValue('--drawerWidth').replace('px', '')
-        ) || 450;
-      }
-
-      const padding = [0, drawerWidth, 0, toolMenuWidth];
 
       if (extent) {
         map?.getView().fit(extent, {
           size: map.getSize(),
-          padding
+          padding: getFitPadding(ClientConfiguration.search?.searchResultDrawer)
         });
       }
     };
