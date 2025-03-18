@@ -8,8 +8,6 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import './index.less';
-
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { setStylingDrawerVisibility } from '../../store/stylingDrawerVisibility';
@@ -39,7 +37,6 @@ export const StylingDrawer: React.FC<StylingDrawerProps> = ({
       placement="right"
       onClose={onClose}
       open={isStylingDrawerVisible}
-      rootClassName="color-pick-drawer"
       maskClosable={false}
       mask={false}
       {...passThroughProps}

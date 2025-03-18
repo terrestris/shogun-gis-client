@@ -24,13 +24,12 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
-import {
-  getUid
-} from 'ol';
+import { getUid } from 'ol';
 import {
   Extent as OlExtent
 } from 'ol/extent';
 import OlFeature from 'ol/Feature';
+import GeoJSON from 'ol/format/GeoJSON';
 import {
   transformExtent
 } from 'ol/proj';
@@ -45,9 +44,8 @@ import {
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import {
-  PermalinkUtil
-} from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+import { PermalinkUtil } from '@terrestris/ol-util';
+
 import SearchResultsPanel, {
   Category as ResultCategory
 } from '@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel';
@@ -57,6 +55,8 @@ import {
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import { setSearchResultState } from '../../store/searchResult';
 
 export type SearchEngineFunction = (value: string, viewBox?: OlExtent) => Promise<ResultCategory[] | undefined>;
 
@@ -85,7 +85,11 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
   const {
     t
   } = useTranslation();
+
+  const dispatch = useAppDispatch();
   const clickAwayRef = useRef<HTMLDivElement>(null);
+
+  const geoJSONFormat = useMemo(() => new GeoJSON(), []);
 
   const [isGeocoderEnabled, setIsGeocoderEnabled] = useState<boolean>(!!geocoderSearchEngine);
   const [isDataSearchEnabled, setIsDataSearchEnabled] = useState<boolean>(!!dataSearchEngine);
@@ -304,6 +308,14 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       if (ClientConfiguration.search?.activateLayerOnClick) {
         activateLayer(item);
       }
+
+      if (ClientConfiguration.search?.searchResultDrawer) {
+        dispatch(setSearchResultState({
+          geoJSONFeature: geoJSONFormat.writeFeatureObject(item.feature),
+          drawerVisibility: true
+        }));
+        setSearchValue('');
+      }
     };
 
     const activateLayer = (item: Item) => {
@@ -322,9 +334,17 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
     const zoomOffsetOnClick = (item: Item) => {
       const extent = item.feature.getGeometry()?.getExtent();
-      const toolMenuElement = document.getElementsByClassName('tool-menu');
-      const toolMenuWidth = toolMenuElement[0]?.clientWidth ?? 0;
-      const padding = [0, 0, 0, toolMenuWidth];
+      const toolMenuElement = document.querySelector('.tool-menu');
+      const toolMenuWidth = toolMenuElement?.clientWidth ?? 0;
+
+      let drawerWidth = 0;
+      if (ClientConfiguration.search?.searchResultDrawer) {
+        drawerWidth = Number(
+          getComputedStyle(document.body).getPropertyValue('--drawerWidth').replace('px', '')
+        ) || 450;
+      }
+
+      const padding = [0, drawerWidth, 0, toolMenuWidth];
 
       if (extent) {
         map?.getView().fit(extent, {
