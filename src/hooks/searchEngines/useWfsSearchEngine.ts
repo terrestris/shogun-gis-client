@@ -152,6 +152,8 @@ export const useWfsSearchEngine = () => {
         featureProjection: map.getView().getProjection()
       });
 
+      // TODO: check if feature has all properties
+
       features.forEach(feature => {
         feature.set('title', getFeatureTitle(value, feature, fulfilledResponse.layer));
         feature.set('layer', fulfilledResponse.layer);
