@@ -1,5 +1,5 @@
 import React, {
-  useEffect,
+  useEffect, useMemo,
   useState
 } from 'react';
 
@@ -14,8 +14,8 @@ import {
   Divider
 } from 'antd';
 
-import moment from 'moment';
-
+import dayjs, { Dayjs } from 'dayjs';
+import _isNil from 'lodash/isNil';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
@@ -26,6 +26,7 @@ import {
 } from 'react-i18next';
 
 import TimeSlider, {
+  TimeSliderMark,
   TimeSliderProps
 } from '@terrestris/react-geo/dist/Slider/TimeSlider/TimeSlider';
 
@@ -36,14 +37,43 @@ interface WmsTimeSliderProps extends Omit<TimeSliderProps, 'min' | 'max' | 'mark
   layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
 }
 
+const formatString = 'YYYY-MM-DD';
+
 export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
   layer,
   ...passThroughProps
 }) => {
-  const [value, setValue] = useState<string | [string, string]>(layer.getSource()?.getParams().TIME);
-  const [min, setMin] = useState<string>();
-  const [max, setMax] = useState<string>();
-  const [marks, setMarks] = useState<Record<string | number, string> | undefined>();
+  const [value, setValue] = useState<Dayjs | [Dayjs, Dayjs]>();
+  const [startDate, setStartDate] = useState<Dayjs>();
+  const [endDate, setEndDate] = useState<Dayjs>();
+
+  const marks: TimeSliderMark[] = useMemo(() => {
+    if (_isNil(startDate) || _isNil(endDate)) {
+      return [];
+    }
+    const mid = startDate!.clone().add(endDate!.diff(startDate) / 2);
+    return [{
+      timestamp: startDate,
+      markConfig: {
+        label: startDate.format(formatString)
+      }
+    }, {
+      timestamp: mid,
+      markConfig: {
+        label: mid.format(formatString)
+      }
+    }, {
+      timestamp: endDate,
+      markConfig: {
+        label: endDate.format(formatString),
+        style: {
+          left: 'unset',
+          right: 0,
+          transform: 'translate(50%)'
+        }
+      }
+    }] satisfies TimeSliderMark[];
+  }, [endDate, startDate]);
 
   const {
     t
@@ -65,36 +95,34 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
       return;
     }
 
-    setMin(timeValues[0]);
-    setMax(timeValues[timeValues.length - 1]);
-    setValue(timeValues[timeValues.length - 1]);
+    setStartDate(dayjs(timeValues[0]));
+    setEndDate(dayjs(timeValues[timeValues.length - 1]));
+    setValue(dayjs(timeValues[timeValues.length - 1]));
 
     const m: Record<string | number, string> = {};
     timeValues.forEach((val: string) => {
-      m[val] = moment(val).format('YYYY-MM-DD');
+      m[val] = dayjs(val).format('YYYY-MM-DD');
     });
-
-    setMarks(m);
 
     if (timeValues.default === 'current') {
       let nearest: [number, string] = [NaN, ''];
       Object.values(m).forEach(d => {
-        const diff = moment().diff(moment(d));
+        const diff = dayjs().diff(dayjs(d));
 
         if (diff < nearest[0]) {
           nearest = [diff, d];
         }
       });
 
-      setValue(nearest[1]);
+      setValue(dayjs(nearest[1]));
     }
   }, [layer]);
 
-  const onChange = (val: string | [string, string]) => {
+  const onChange = (val: Dayjs | [Dayjs, Dayjs]) => {
     setValue(val);
 
     layer.getSource()?.updateParams({
-      TIME: val
+      TIME: Array.isArray(val) ? val[0].format(formatString) : val.format(formatString)
     });
   };
 
@@ -109,15 +137,15 @@ export const WmsTimeSlider: React.FC<WmsTimeSliderProps> = ({
         {t('WmsTimeSlider.title')}
       </Divider>
       {
-        marks && min && max ?
+        marks && startDate && endDate ?
           <TimeSlider
-            formatString={''}
-            defaultValue={''}
-            min={min}
-            max={max}
+            defaultValue={dayjs()}
+            formatString={formatString}
             marks={marks}
-            value={value}
+            max={endDate}
+            min={startDate}
             onChange={onChange}
+            value={value}
             {...passThroughProps}
           /> :
           <span>

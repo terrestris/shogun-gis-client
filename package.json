@@ -56,6 +56,7 @@
     "@types/react-dom": "^18.3.5",
     "antd": "^5.23.2",
     "color": "^5.0.0",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "geostyler": "^16.0.1",
     "geostyler-openlayers-parser": "^5.0.1",
