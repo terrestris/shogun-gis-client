@@ -268,6 +268,9 @@ export default {
         title: 'Speichern',
         errorNoGeometry: 'Objekt kann ohne Geometrie nicht gespeichert werden.'
       },
+      SearchResultDrawer: {
+        title: 'Suchergebnisse'
+      },
       DeleteButton: {
         title: 'Objekt löschen',
         confirm: 'Das Objekt wird vollständig gelöscht. Fortfahren?'
@@ -575,6 +578,9 @@ export default {
       SaveButton: {
         title: 'Save',
         errorNoGeometry: 'Cannot save feature without geometry.'
+      },
+      SearchResultDrawer: {
+        title: 'Search results'
       },
       DeleteButton: {
         title: 'Delete feature',

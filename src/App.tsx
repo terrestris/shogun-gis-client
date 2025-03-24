@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import LayerDetailsModal from './components/LayerDetailsModal';
 import MapToolbar from './components/MapToolbar';
+import SearchResultDrawer from './components/SearchResultDrawer';
 import StylingDrawer from './components/StylingDrawer';
 import ToolMenu from './components/ToolMenu';
 import UploadDataModal from './components/UploadDataModal';
@@ -50,6 +51,7 @@ export const App: React.FC<AppProps> = ({
       <EditFeatureDrawer />
       <LayerDetailsModal />
       <StylingDrawer />
+      <SearchResultDrawer />
     </div>
   );
 };
