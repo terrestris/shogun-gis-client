@@ -1,7 +1,7 @@
 import React, {
-  useCallback,
-  useEffect,
-  useState
+  useState,
+  FC,
+  JSX
 } from 'react';
 
 import {
@@ -14,8 +14,7 @@ import {
   groupBy, mapValues
 } from 'lodash';
 
-import { Coordinate as OlCoordinate } from 'ol/coordinate';
-import OlFeature from 'ol/Feature';
+import _isNil from 'lodash/isNil';
 import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
@@ -26,8 +25,6 @@ import OlSourceTileWMS from 'ol/source/TileWMS';
 import { Tab } from 'rc-tabs/lib/interface';
 
 import { useTranslation } from 'react-i18next';
-
-import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   isWmsLayer,
@@ -69,18 +66,12 @@ export type FeatureInfoConfig = {
 
 export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
 
-export interface CoordinateInfoState {
-  clickCoordinate: OlCoordinate | null;
-  features: Record<string, OlFeature[]>;
-  loading: boolean;
-}
-
 type LayerIndex = {
   layerName: string;
-  index: number;
+  index?: number;
 };
 
-export const FeatureInfo: React.FC<FeatureInfoProps> = ({
+export const FeatureInfo: FC<FeatureInfoProps> = ({
   ...restProps
 }): JSX.Element => {
 
@@ -93,11 +84,13 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   const plugins = usePlugins();
   const dispatch = useAppDispatch();
 
-  const [queryLayers, setQueryLayers] = useState<WmsLayer[]>([]);
   const [activeTabKey, setActiveTabKey] = useState<string | undefined>(undefined);
   const featureInfoEnabled = useAppSelector(state => state.featureInfo.enabled);
 
   const layerFilter = (layer: OlLayerBase) => {
+    if (!layer.getVisible()) {
+      return false;
+    }
     if (!layer.get('hoverable')) {
       return false;
     }
@@ -107,40 +100,14 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     return layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS;
   };
 
-  const updateQueryLayers = useCallback(() => {
-    if (!map) {
-      return;
-    }
-
-    const layerCandidates = MapUtil.getAllLayers(map, layerFilter) as WmsLayer[];
-    setQueryLayers(layerCandidates.filter(l => l.getVisible()));
-  }, [map]);
-
-  useEffect(() => {
-    if (!map) {
-      return;
-    }
-
-    updateQueryLayers();
-
-    const mapLayers = MapUtil.getAllLayers(map, layerFilter) as WmsLayer[];
-    mapLayers.forEach(l => l.on('change:visible', updateQueryLayers));
-
-    return () => {
-      mapLayers.forEach(l => l.un('change:visible', updateQueryLayers));
-    };
-
-  }, [map, updateQueryLayers]);
-
-  if (!map) {
-    return <></>;
-  }
-
   const changeActiveKey = (key: string) => {
     setActiveTabKey(key);
   };
 
   const findMapLayerIndex = (layerName: string) => {
+    if (_isNil(map)) {
+      return;
+    }
     const allLayers = map.getAllLayers();
 
     return allLayers.findIndex(l => {
@@ -156,6 +123,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
   };
 
   const resultRenderer = (coordinateInfoState: CoordinateInfoResult) => {
+    if (_isNil(map)) {
+      return <></>;
+    }
     const featureLayerResult = coordinateInfoState.features;
     const loading = coordinateInfoState.loading;
 
@@ -177,6 +147,9 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       const features = featureLayerResults.map(flr => flr.feature);
       const allLayers = map.getAllLayers();
       const mapLayerIndex = findMapLayerIndex(layerName);
+      if (_isNil(mapLayerIndex)) {
+        return;
+      }
       const mapLayer = allLayers[mapLayerIndex];
 
       plugins.forEach(plugin => {
@@ -255,10 +228,6 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
       layerName.split(':')[0];
   };
 
-  if (!featureInfoEnabled) {
-    return <></>;
-  }
-
   const getFetchOpts = (layer: WmsLayer) => {
     return {
       headers: {
@@ -285,7 +254,12 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
         layerName: result.featureType,
         index: findMapLayerIndex(result.featureType)
       }))
-      .sort((a, b) => b.index - a.index);
+      .sort((a, b) => {
+        if (_isNil(a.index) || _isNil(b.index)) {
+          return 0;
+        }
+        return b.index - a.index;
+      });
 
     if (layers.length > 0) {
       setActiveTabKey(layers[0].layerName);
@@ -294,15 +268,24 @@ export const FeatureInfo: React.FC<FeatureInfoProps> = ({
     dispatch(setSelectedFeatures(serializedFeatures));
   };
 
+  if (!map) {
+    return <></>;
+  }
+
+  if (!featureInfoEnabled) {
+    return <></>;
+  }
+
   return (
     <div className='feature-info-panel'>
       <CoordinateInfo
-        featureCount={10}
-        queryLayers={queryLayers}
-        resultRenderer={resultRenderer}
-        fetchOpts={getFetchOpts}
-        onSuccess={onSuccess}
+        active={featureInfoEnabled}
         drillDown={true}
+        featureCount={10}
+        fetchOpts={getFetchOpts}
+        layerFilter={layerFilter}
+        onSuccess={onSuccess}
+        resultRenderer={resultRenderer}
         {...restProps}
       />
     </div>

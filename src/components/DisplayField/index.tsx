@@ -9,7 +9,10 @@ import {
   UploadFile
 } from 'antd';
 
-import dayjs, { Dayjs, isDayjs } from 'dayjs';
+import dayjs, {
+  Dayjs,
+  isDayjs
+} from 'dayjs';
 
 import _isString from 'lodash/isString';
 import {
@@ -117,7 +120,7 @@ export const DisplayField: FC<DisplayFieldProps> = ({
     dataType === 'date' ||
     (dataType === 'auto' && dayjs(`${value}`).isValid())
   ) {
-    if (value && isDayjs(value)) {
+    if (value && (isDayjs(value) || (_isString(value) && dayjs(`${value}`).isValid()))) {
       displayValue = dayjs(value).format(format);
     }
   }
