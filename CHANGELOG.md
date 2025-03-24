@@ -1,3 +1,20 @@
+## [10.0.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v9.1.0-next.1...v10.0.0-next.1) (2025-03-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **time:** replace moment by dayjs
+
+### Dependencies
+
+* several dependecy upgrades ([b951a6d](https://github.com/terrestris/shogun-gis-client/commit/b951a6d0920b7448e33f8d2be78f6726f2035971))
+
+
+### Bugfixes
+
+* keep node versions in Dockerfiles in sync with the required one by nvmrc ([2740832](https://github.com/terrestris/shogun-gis-client/commit/2740832c29b8eecd197e29923d0f43849d9213ed))
+* **time:** replace moment by dayjs ([a6cc8c7](https://github.com/terrestris/shogun-gis-client/commit/a6cc8c718fde744813e2e6275a6cb5f6230a5e6d))
+
 ## [9.1.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v9.0.0...v9.1.0-next.1) (2025-03-24)
 
 
