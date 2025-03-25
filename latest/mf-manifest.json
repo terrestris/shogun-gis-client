@@ -2275,14 +2275,16 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/extent",
-      "name": "ol/extent",
+      "id": "SHOGunGISClient:ol/extent.js",
+      "name": "ol/extent.js",
       "version": "10.4.0",
       "requiredVersion": "^10.4.0",
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "5109.7586b4926e57a760.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3739,11 +3741,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2342.2a5f9abf0cd56488.js",
-            "6583.3db3ba041d1f56ed.js",
-            "7410.7ab7aaa29a062e42.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3759,13 +3757,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "3040.aa8b86b9efa97326.js",
-            "7002.7bea95dc37573551.js",
-            "7379.082d45dfeb375df0.js",
-            "7410.7ab7aaa29a062e42.js",
-            "9755.fd48cb84e80b5687.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3840,10 +3832,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "5572.122db1475db3b853.js",
-            "7410.7ab7aaa29a062e42.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3859,9 +3848,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.7ab7aaa29a062e42.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -4480,24 +4467,6 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/extent.js",
-      "name": "ol/extent.js",
-      "version": "10.3.1",
-      "requiredVersion": "^10.3.1",
-      "assets": {
-        "js": {
-          "async": [],
-          "sync": [
-            "5109.7586b4926e57a760.js"
-          ]
-        },
-        "css": {
-          "async": [],
-          "sync": []
-        }
-      }
-    },
-    {
       "id": "SHOGunGISClient:ol/format/GeoJSON.js",
       "name": "ol/format/GeoJSON.js",
       "version": "10.3.1",
@@ -4656,7 +4625,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7325.94d31ded8bb6c4f8.js",
+            "8778.129dd34a0a5bff90.js"
+          ]
         },
         "css": {
           "async": [],
@@ -4722,7 +4694,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7222.f152b828b2afd6f0.js"
+          ]
         },
         "css": {
           "async": [],
@@ -4767,8 +4741,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/TileState.js",
-      "name": "ol/TileState.js",
+      "id": "SHOGunGISClient:ol/extent",
+      "name": "ol/extent",
       "version": "10.3.1",
       "requiredVersion": "^10.3.1",
       "assets": {
@@ -4778,6 +4752,222 @@
         },
         "css": {
           "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/TileState.js",
+      "name": "ol/TileState.js",
+      "version": "10.3.1",
+      "requiredVersion": "^10.3.1",
+      "assets": {
+        "js": {
+          "async": [
+            "3647.c14853b55fc153da.js",
+            "3439.bb388b937d2ff45b.js",
+            "6694.4e777b01ed0313e5.js",
+            "9905.7a8b00413006f72c.js",
+            "4445.eeda1a4792297bb0.js",
+            "4116.ac7d59e0347caf73.js",
+            "8707.55cd2a9ac089e409.js",
+            "8172.ad74a08b84741ccc.js",
+            "5896.a45823e08e5b9102.js",
+            "9839.e327c85a2f8776f3.js",
+            "1570.a91d7ceb7192eb5a.js",
+            "8123.2f0a5b92293d9e96.js",
+            "312.73de7091b703f4a4.js",
+            "3106.366e7d83da3420f0.js",
+            "4714.0876f888bd641721.js",
+            "611.438d3808f61d2780.js",
+            "681.282f36dba6b3c0c4.js",
+            "2804.a91dcd4a1034e4fc.js",
+            "3292.d370efec9020eadc.js",
+            "4886.d3c4596e2f055e55.js",
+            "4695.003b6fdc85c93a5e.js",
+            "5109.7586b4926e57a760.js",
+            "8778.129dd34a0a5bff90.js",
+            "6244.ddac27895ad23ab0.js",
+            "7382.364a9bd82053264d.js",
+            "4005.e55dd8612cf2dc47.js",
+            "6042.631b8563cc41447c.js",
+            "1241.65377030aebd06f1.js",
+            "768.5d02d5e1eebc8f44.js",
+            "4104.5c42d75e4413cc0e.js",
+            "1952.5e858e208cfa9752.js",
+            "8901.5116e1583b747026.js",
+            "1919.91c0d7584f503e01.js",
+            "2573.a3d5ef12da5f1425.js",
+            "4694.45d7878ea5b0a46d.js",
+            "8886.7c7dfe78bfb6e555.js",
+            "5934.aab3dec0b3d325e8.js",
+            "3577.864307fa3207a5ba.js",
+            "1509.f3071e20731eee49.js",
+            "9331.d49b417d6950d54a.js",
+            "9287.7108e3db8bc66ab2.js",
+            "9430.9a2790d15d081831.js",
+            "7440.4cd51489b2d445e4.js",
+            "5798.9dd51de4c50e1703.js",
+            "7410.7ab7aaa29a062e42.js",
+            "2597.1c6a2ede5e62c6b8.js",
+            "7348.56306e3d06647606.js",
+            "975.169df492fdb8e750.js",
+            "6976.eb7cfcc421556ec6.js",
+            "3823.bdf8dd8e2ce32899.js",
+            "2008.499a77028407ccba.js",
+            "7005.c9f361c2c02dff63.js",
+            "9728.ee3d4bcfe5ccd4c8.js",
+            "7849.4286a9fe93412fbc.js",
+            "1510.364099dfe4a65f58.js",
+            "2057.f6885d266185d205.js",
+            "3214.e6bc45a55e156847.js",
+            "193.1bf2a9d4a1c4688a.js",
+            "229.e387e32f8b7c2dd7.js",
+            "4618.c04cd653794b14e5.js",
+            "3480.4d8e44a1a656bd65.js",
+            "6841.b8bf1287bd592dff.js",
+            "7989.2879db3fe7460fda.js",
+            "8573.94313a6106e0ed77.js",
+            "3986.c5d57f0e66a75a86.js",
+            "3443.161704d8e5e6a5c1.js",
+            "5292.2ce879640c662e68.js",
+            "4350.9b3f19825cf9f883.js",
+            "6073.31aa0d20b800b860.js",
+            "4001.341cfa6cfeea61ae.js",
+            "4022.ae751f59b728ccf1.js",
+            "4321.5d48bbd97c4710eb.js",
+            "664.cef9d20262f896d5.js",
+            "3377.68be6097c6ecc0f2.js",
+            "2169.c121ea901f8dbe00.js",
+            "8803.5d95fe74af5e3e27.js",
+            "6942.4217d1a4f4d99619.js",
+            "991.b9584923379cccbd.js",
+            "7470.64908b2126d0e425.js",
+            "9661.87bfb746adcc1e9d.js",
+            "1537.d15f71b4b6cfc2ab.js",
+            "4948.d6894ec06bdde60f.js",
+            "9970.07881baaef8b58f3.js",
+            "3911.099b16ced6a7622f.js",
+            "9317.1432be69d7e0a82e.js",
+            "5484.9e48a1287bb52678.js",
+            "2370.aaf83de54eb057f7.js",
+            "3759.2130f6b9c19e9bed.js",
+            "3874.c9a7185185a1add7.js",
+            "247.b2895e7384c06a8d.js",
+            "6852.28b2efcebb5b51e6.js",
+            "1703.7c53cb1a1fdefc59.js",
+            "1512.454aa285729fa66c.js",
+            "5144.9068523d303279a8.js",
+            "8869.04b959dce527a9ab.js",
+            "3262.526253670af937de.js",
+            "5449.f96b0ce406b93c98.js",
+            "2958.cad79b7cf3cdf1ec.js",
+            "3479.eec6f3a0b0cdfe4f.js",
+            "8555.503b6f04abbcd473.js",
+            "6179.b67679adf45ea227.js",
+            "7222.f152b828b2afd6f0.js",
+            "9177.4e3cc46e85b3490a.js",
+            "9826.9e2343f6e764bd06.js",
+            "7856.d67fdfc2aab3d6c8.js",
+            "6540.ee2dc3f2929e5daf.js",
+            "9485.454df6efca72f372.js",
+            "4046.8ce01a144a8291ea.js",
+            "7987.1b2a373ae8e1a4d6.js",
+            "2762.b152c75c7493c503.js",
+            "5773.1375aec0269bd187.js",
+            "1443.8c5deb053a505fbf.js",
+            "8709.3c5e4da8873a01bd.js",
+            "3851.975510c31b2f12b6.js",
+            "4594.2915c49404986001.js",
+            "9419.38a0058943eb95fa.js",
+            "4588.604aa4bad7d13d1d.js",
+            "7713.f5e4414a6da8e684.js",
+            "2045.f3a328e91cbb3336.js",
+            "9720.b10f9f8a0f637a60.js",
+            "503.1263b1089d800859.js",
+            "4135.4511407888e7f26a.js",
+            "5698.d85f0c133fa56df5.js",
+            "2851.dda50a6a8bef1dcf.js",
+            "2999.9060dbe9c2d5e3a1.js",
+            "7914.33a86a540e88097b.js",
+            "7986.376c406241301181.js",
+            "274.c57a501eca74bb97.js",
+            "2034.930d50dd9deec475.js",
+            "2378.76fe43e438afc3c5.js",
+            "1848.7d0369fe79b42eb0.js",
+            "9616.1396ff406cbd1066.js",
+            "7430.be974616578c372e.js",
+            "7193.f036e9f05348ba8f.js",
+            "9333.4d7adc79917be762.js",
+            "1850.f8e947c52f7853d4.js",
+            "5778.1034aba72f8154aa.js",
+            "6583.3db3ba041d1f56ed.js",
+            "9755.fd48cb84e80b5687.js",
+            "8725.c8485ed488650d02.js",
+            "5572.122db1475db3b853.js",
+            "9890.ff9018b27cb7b738.js",
+            "7379.082d45dfeb375df0.js",
+            "1462.2dd748b4c885f9f9.js",
+            "19.9be9d1a2f6fb73dc.js",
+            "7581.1aab3a27b20317fb.js",
+            "3054.df63a7d42e6a6c94.js",
+            "978.ea401e22d71696b4.js",
+            "7325.94d31ded8bb6c4f8.js",
+            "6174.698194ec9018daec.js",
+            "850.e338e0cd38feb497.js",
+            "689.5304cc5360de45a1.js",
+            "5893.4e387d441fc0b93e.js",
+            "439.e6bafe94e9151a22.js",
+            "2725.03b23e52752d25f8.js",
+            "2860.d056a68bba3e1dec.js",
+            "4448.aa96e80b31c106e6.js",
+            "4820.19ca767135200031.js",
+            "7002.7bea95dc37573551.js",
+            "2342.2a5f9abf0cd56488.js",
+            "3040.aa8b86b9efa97326.js",
+            "4287.de0d7c27622d338a.js",
+            "1987.287673755472a83f.js",
+            "8944.5635b3cc71e166aa.js",
+            "4733.8c4564297de8b8e0.js",
+            "3827.d95deb2357b6e61f.js",
+            "7210.67340736e6c8bc4b.js",
+            "9571.a881c62dce31b0d3.js",
+            "8065.d94ca5c03906cfee.js",
+            "4220.8ac70733e7c4827c.js",
+            "6376.b10ed51a2077913c.js"
+          ],
+          "sync": [
+            "1170.ac7daa4c3ff7d1d1.js",
+            "1228.9ca88b8c2cfdc4fe.js",
+            "1926.f9613d05677e1a13.js",
+            "2446.f8005fedf7157fe3.js",
+            "3212.467e5f0c61a2ffff.js",
+            "4046.8ce01a144a8291ea.js",
+            "6179.b67679adf45ea227.js",
+            "6540.ee2dc3f2929e5daf.js",
+            "6728.3410d190a9e7018d.js",
+            "7193.f036e9f05348ba8f.js",
+            "8143.69954f258e22943f.js",
+            "9481.c6d3b1dbc38bcf13.js",
+            "9750.3f12b39dad656266.js",
+            "9790.7653bea865781ad1.js"
+          ]
+        },
+        "css": {
+          "async": [
+            "611.a06e615fa868d5a3.css",
+            "681.2d88457159ed01f3.css",
+            "8886.9763c24e87db4cbf.css",
+            "7005.9763c24e87db4cbf.css",
+            "1510.9763c24e87db4cbf.css",
+            "193.36686d81ade4bea0.css",
+            "7989.db66aef0ccd462f0.css",
+            "2199.8236bde76508171f.css",
+            "5292.9763c24e87db4cbf.css",
+            "5484.1e7abb0db003bab8.css",
+            "2370.d83eb6cfb1553e36.css",
+            "9277.b5ba3fdb6f6d1660.css"
+          ],
           "sync": []
         }
       }
