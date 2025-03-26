@@ -29,7 +29,10 @@ export const slice = createSlice({
   initialState,
   reducers: {
     setLayerTreeConfig(state, action: PayloadAction<LayerTreeConfig>) {
-      state = action.payload;
+      return {
+        ...state,
+        ...action.payload
+      };
     },
     setLayerTreeEnabled(state, action: PayloadAction<boolean>) {
       state.enabled = action.payload;
