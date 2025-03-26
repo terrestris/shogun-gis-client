@@ -1,3 +1,10 @@
+## [10.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.1...v10.0.0-next.2) (2025-03-26)
+
+
+### Bugfixes
+
+* **measure:** use geodesic length measurements only for sperical projections ([15ce7e9](https://github.com/terrestris/shogun-gis-client/commit/15ce7e9051405a0837741e1838951e2374081734))
+
 ## [10.0.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v9.1.0-next.1...v10.0.0-next.1) (2025-03-24)
 
 
