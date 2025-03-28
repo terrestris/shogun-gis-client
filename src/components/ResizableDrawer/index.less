@@ -4,7 +4,7 @@
   width: 100%;
 
   &.vertical {
-    height: calc( 100% - var(--footer-height) - var(--header-height)) !important;
+    height: calc(100% - var(--footer-height) - var(--header-height)) !important;
   }
 
   .ant-drawer-content-wrapper {
@@ -12,36 +12,48 @@
   }
 
   .resize-handle {
-    z-index: 1000 !important;
+    z-index: 1909 !important;
     user-select: unset;
     &:hover {
       &.resize-handle-right {
         border-right: 5px solid var(--secondaryColor);
+        right: unset !important;
       }
       &.resize-handle-left {
         border-left: 5px solid var(--secondaryColor);
+        left: unset !important;
       }
       &.resize-handle-top {
         border-top: 5px solid var(--secondaryColor);
+        top: unset !important;
       }
       &.resize-handle-bottom {
         border-top: 5px solid var(--secondaryColor);
+        bottom: unset !important;
       }
       &.resize-handle-bottom-right {
         border-bottom: 5px solid var(--secondaryColor);
         border-right: 5px solid var(--secondaryColor);
+        right: unset !important;
+        bottom: unset !important;
       }
       &.resize-handle-bottom-left {
         border-bottom: 5px solid var(--secondaryColor);
         border-left: 5px solid var(--secondaryColor);
+        left: unset !important;
+        bottom: unset !important;
       }
       &.resize-handle-top-right {
         border-top: 5px solid var(--secondaryColor);
         border-right: 5px solid var(--secondaryColor);
+        right: unset !important;
+        top: unset !important;
       }
       &.resize-handle-top-left {
         border-top: 5px solid var(--secondaryColor);
         border-left: 5px solid var(--secondaryColor);
+        left: unset !important;
+        top: unset !important;
       }
     }
   }

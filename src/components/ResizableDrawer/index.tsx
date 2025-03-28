@@ -106,15 +106,6 @@ export function ResizableDrawer({
     onDrawerHeightChange(height + delta.height);
   };
 
-  const containerStyle: React.CSSProperties = useMemo(() => ({
-    height: placement === 'bottom' || placement === 'top' ? height : '100%',
-    width: placement === 'left' || placement === 'right' ? width : '100%',
-    top: placement === 'top' ? 0 : 'unset',
-    bottom: placement === 'bottom' ? 0 : 'unset',
-    left: placement === 'left' ? 0 : 'unset',
-    right: placement === 'right' ? 0 : 'unset'
-  }), [height, placement, width]);
-
   if (_isNil(children)) {
     return null;
   }
@@ -152,7 +143,14 @@ export function ResizableDrawer({
         width: placement === 'bottom' || placement === 'top' ? '100%' : width,
         height: placement === 'left' || placement === 'right' ? '100%' : height
       }}
-      style={containerStyle}
+      style={{
+        height: placement === 'bottom' || placement === 'top' ? height : '100%',
+        width: placement === 'left' || placement === 'right' ? width : '100%',
+        top: placement === 'top' ? 0 : 'unset',
+        bottom: placement === 'bottom' ? 0 : 'unset',
+        left: placement === 'left' ? 0 : 'unset',
+        right: placement === 'right' ? 0 : 'unset'
+      }}
     >
       <Drawer
         {...drawerProps}
