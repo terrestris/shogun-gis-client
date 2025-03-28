@@ -1,3 +1,21 @@
+## [10.0.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.2...v10.0.0-next.3) (2025-03-28)
+
+
+### Dependencies
+
+* copy src files in watch build script as well ([e7fa502](https://github.com/terrestris/shogun-gis-client/commit/e7fa50254facb775f20480ae5e5220c03c970b0f))
+
+
+### Features
+
+* introduce resizable drawer and introduce maxHeight to toolMenu ([c69e62c](https://github.com/terrestris/shogun-gis-client/commit/c69e62c784fe4e3ed49328f993950d51895d976f))
+
+
+### Bugfixes
+
+* layout improvements ([308ae96](https://github.com/terrestris/shogun-gis-client/commit/308ae96407c83ce23d26fcb730059d0fb96d005b))
+* pin version of ol-mapbox-style to 12.4.0 ([a02e58d](https://github.com/terrestris/shogun-gis-client/commit/a02e58df52c2681b5484fa2220f5a30e61ad022e))
+
 ## [10.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.1...v10.0.0-next.2) (2025-03-26)
 
 
