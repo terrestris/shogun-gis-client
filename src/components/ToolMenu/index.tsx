@@ -113,6 +113,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const dispatch = useAppDispatch();
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
+  const selectedFeatures = useAppSelector(state => state.selectedFeatures);
 
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
@@ -122,15 +123,17 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const [isResizing, setIsResizing] = useState(false);
   const [width, setWidth] = useState(320);
   const [noCollapseWidth, setNoCollapseWidth] = useState(width);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('only screen and (max-width: 450px) and (orientation: portrait),' +
       'only screen and (max-width: 750px) and (orientation: landscape), only screen and (max-width: 580px)');
     const mobileNavigatorRegEx = new RegExp('/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle' +
       '|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/');
-    const isMobile = mobileQuery.matches || mobileNavigatorRegEx.test(window.navigator.userAgent);
+    const mobile = mobileQuery.matches || mobileNavigatorRegEx.test(window.navigator.userAgent);
+    setIsMobile(mobile);
 
-    if (isMobile) {
+    if (mobile) {
       setCollapsed(true);
       setWidth(collapseWidth);
     }
@@ -387,6 +390,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     };
   }, [onMouseMove, onMouseUp]);
 
+  useEffect(() => {
+    if (isMobile && (Object.keys(selectedFeatures).length > 0)) {
+      setCollapsed(false);
+      setWidth(noCollapseWidth);
+    }
+  }, [selectedFeatures, noCollapseWidth, isMobile]);
+
   return (
     <div
       aria-label="tool-menu"
@@ -398,11 +408,13 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
         activeKey={activeKeys}
         destroyInactivePanel={true}
         onChange={(keys: string[] | string) => {
-          setCollapsed(false);
-          dispatch(setActiveKeys(_toArray(keys)));
-          if (collapsed) {
-            setWidth(noCollapseWidth);
+          if (keys[0] === 'feature_info' && keys.length === 1 && isMobile) {
+            setCollapsed(true);
+          } else {
+            setCollapsed(false);
           }
+          dispatch(setActiveKeys(_toArray(keys)));
+          setWidth(collapsed ? collapseWidth : noCollapseWidth);
         }}
         items={getToolPanels()}
         {...restProps}
