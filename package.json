@@ -125,7 +125,7 @@
     "less": "^4.2.2",
     "less-loader": "^12.2.0",
     "nwsapi": "2.2.20",
-    "react-refresh": "^0.16.0",
+    "react-refresh": "^0.17.0",
     "semantic-release": "^24.2.1",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.2.5",
