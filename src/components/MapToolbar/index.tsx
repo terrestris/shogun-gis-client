@@ -46,7 +46,8 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   const stylingDrawerVisibility = useAppSelector(state => state.stylingDrawerVisibility);
   const editFeatureDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
-  const drawerOpen = stylingDrawerVisibility || editFeatureDrawerOpen;
+  const searchResultDrawerOpen = useAppSelector(state => state.searchResult.drawerVisibility);
+  const drawerOpen = stylingDrawerVisibility || editFeatureDrawerOpen || searchResultDrawerOpen;
   const className = drawerOpen ? 'drawer-open' : '';
 
   const btnTooltipProps = {
