@@ -1,3 +1,10 @@
+## [10.0.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.4...v10.0.0-next.5) (2025-04-10)
+
+
+### Bugfixes
+
+* bump shogun-util to v10.5.2 ([3d5482b](https://github.com/terrestris/shogun-gis-client/commit/3d5482b001daeb6713b5c4af3d73bec0f4b9db7c))
+
 ## [10.0.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.3...v10.0.0-next.4) (2025-04-10)
 
 
