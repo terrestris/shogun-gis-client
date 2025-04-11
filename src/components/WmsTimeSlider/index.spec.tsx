@@ -6,8 +6,7 @@ import {
   screen
 } from '@testing-library/react';
 
-import moment from 'moment';
-
+import dayjs from 'dayjs';
 import OlLayerTile from 'ol/layer/Tile';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
@@ -20,10 +19,9 @@ describe('<WmsTimeSlider />', () => {
   let dividerElem: HTMLInputElement | null;
   let handleElem: HTMLInputElement | null;
   const format = 'YYYY-MM-DD hh:mm:ss';
-  const min = moment('2024-01-01 12:00:00', format);
-  const max = moment('2024-01-03 12:00:00', format);
-  const marks = {};
-  const value = moment('2024-01-02 12:00:00', format);
+  const min = dayjs('2024-01-01 12:00:00', format);
+  const max = dayjs('2024-01-03 12:00:00', format);
+  const value = dayjs('2024-01-02 12:00:00', format);
   const onChange = jest.fn();
 
   const mockLayer = new OlLayerTile({
@@ -58,13 +56,12 @@ describe('<WmsTimeSlider />', () => {
       container
     } = render(
       <TimeSlider
-        min={min.toString()}
-        max={max.toString()}
-        marks={marks}
-        value={value.toString()}
-        onChange={onChange}
-        defaultValue={value.toString()}
+        defaultValue={value}
         formatString={''}
+        max={max}
+        min={min}
+        onChange={onChange}
+        value={value}
       />
     );
 

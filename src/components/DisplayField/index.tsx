@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  FC,
+  JSX
+} from 'react';
 
 import {
   Checkbox,
@@ -6,11 +9,12 @@ import {
   UploadFile
 } from 'antd';
 
-import isString from 'lodash/isString';
-import moment, {
-  isMoment
-} from 'moment';
+import dayjs, {
+  Dayjs,
+  isDayjs
+} from 'dayjs';
 
+import _isString from 'lodash/isString';
 import {
   useTranslation
 } from 'react-i18next';
@@ -27,7 +31,7 @@ import FileUpload from '../FileUpload';
 import ImageUpload from '../ImageUpload';
 import ReferenceTable from '../ReferenceTable';
 
-export type ValueType = string | number | boolean | moment.Moment | Record<string, any>;
+export type ValueType = string | number | boolean | Dayjs | Record<string, any>;
 export type DataType = 'auto' | 'number' | 'boolean' | 'string' | 'date' | 'url' | 'json';
 
 export type ReferenceConfig = {
@@ -58,7 +62,7 @@ export type DisplayFieldProps = {
   urlDisplayValue?: string;
 };
 
-export const DisplayField: React.FC<DisplayFieldProps> = ({
+export const DisplayField: FC<DisplayFieldProps> = ({
   dataType = 'auto',
   valueMap,
   format = 'DD.MM.YYYY',
@@ -114,10 +118,10 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   if (
     dataType === 'date' ||
-    (dataType === 'auto' && isMoment(value))
+    (dataType === 'auto' && dayjs(`${value}`).isValid())
   ) {
-    if (value) {
-      displayValue = moment(value as string).format(format);
+    if (value && (isDayjs(value) || (_isString(value) && dayjs(`${value}`).isValid()))) {
+      displayValue = dayjs(value).format(format);
     }
   }
 
@@ -133,7 +137,7 @@ export const DisplayField: React.FC<DisplayFieldProps> = ({
 
   if (
     dataType === 'url' ||
-    (dataType === 'auto' && isString(value) && isUrl(value))
+    (dataType === 'auto' && _isString(value) && isUrl(value))
   ) {
     if (value) {
       displayValue = (

@@ -2,10 +2,10 @@
 
 'use strict';
 
-const path = require('path');
-const util = require('util');
 const fs = require('fs-extra');
+const path = require('path');
 const chokidar = require('chokidar');
+const util = require('util');
 const throttle = require('lodash/throttle');
 const exec = util.promisify(require('child_process').exec);
 
@@ -20,8 +20,9 @@ if (process.argv.length < 3) {
 const sourcePath = path.join(curDir, 'src');
 const distPath = path.join(curDir, 'dist');
 const targetDistPath = path.join(curDir, process.argv[2], 'dist');
+const targetSrcPath = path.join(curDir, process.argv[2], 'src');
 
-if (!fs.existsSync(targetDistPath)) {
+if (!fs.existsSync(targetDistPath) ) {
   throw new Error('Target path does not exist');
 }
 
@@ -36,16 +37,15 @@ async function buildAndCopy() {
     console.log(stdout);
     console.log(stderr);
 
-    console.log(`Copy dist from ${distPath} to ${targetDistPath}`);
+    console.log(`Copy dist & src from ${curDir} to ${path.join(curDir, process.argv[2])}`);
+
     await fs.copy(distPath, targetDistPath);
+    await fs.copy(sourcePath, targetSrcPath);
 
     console.log('Done');
   } catch (error) {
     console.log('Error');
-    const {
-      stdout,
-      stderr
-    } = error;
+    const { stdout, stderr } = error;
     console.log(stdout);
     console.log(stderr);
   }
