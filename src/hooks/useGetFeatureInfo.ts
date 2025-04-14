@@ -29,7 +29,7 @@ export const useGetFeatureInfo = (layer?: WmsLayer, onSuccess?: (featureCollecti
   const map = useMap();
   const client = useSHOGunAPIClient();
 
-  const onSingleClick = useCallback(async (evt: MapBrowserEvent<MouseEvent>) => {
+  const onSingleClick = useCallback(async (evt: MapBrowserEvent<PointerEvent | KeyboardEvent | WheelEvent>) => {
     if (!map || !layer) {
       return;
     }
@@ -92,7 +92,7 @@ export const useGetFeatureInfo = (layer?: WmsLayer, onSuccess?: (featureCollecti
     }
   }, [client, layer, map, onSuccess, onFailure]);
 
-  const onPointerMove = useCallback((evt: MapBrowserEvent<MouseEvent>) => {
+  const onPointerMove = useCallback((evt: MapBrowserEvent<PointerEvent | KeyboardEvent | WheelEvent>) => {
     if (!map || !layer) {
       return;
     }

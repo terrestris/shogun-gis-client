@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useMemo,
+  FC,
+  JSX
+} from 'react';
 
 import {
   faDrawPolygon,
@@ -9,6 +14,10 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
+import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
+import _isNil from 'lodash/isNil';
+import proj4 from 'proj4';
 import {
   useTranslation
 } from 'react-i18next';
@@ -28,7 +37,7 @@ interface DefaultMeasureProps {
 
 export type MeasureProps = Partial<DefaultMeasureProps>;
 
-export const Measure: React.FC<MeasureProps> = ({
+export const Measure: FC<MeasureProps> = ({
   showMeasureDistance,
   showMeasureArea
 }): JSX.Element => {
@@ -37,6 +46,16 @@ export const Measure: React.FC<MeasureProps> = ({
   } = useTranslation();
 
   const map = useMap();
+
+  const isGeodesicMeasurement = useMemo(() => {
+    if (_isNil(map)) {
+      return true;
+    }
+
+    const proj = proj4.Proj(map.getView().getProjection().getCode());
+    const projName = _get(proj, 'projName');
+    return _isEmpty(projName) || projName === 'longlat' || projName === 'geocent';
+  }, [map]);
 
   const [selected, setSelected] = useState<string>();
 
@@ -54,7 +73,7 @@ export const Measure: React.FC<MeasureProps> = ({
     >
       {showMeasureDistance ? (
         <MeasureButton
-          geodesic
+          geodesic={isGeodesicMeasurement}
           value="line"
           measureType="line"
           type="link"
@@ -69,7 +88,7 @@ export const Measure: React.FC<MeasureProps> = ({
 
       {showMeasureArea ? (
         <MeasureButton
-          geodesic
+          geodesic={isGeodesicMeasurement}
           value="poly"
           measureType="polygon"
           type="link"

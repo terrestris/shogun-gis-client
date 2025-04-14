@@ -18,6 +18,7 @@ import {
   Modal,
   ModalProps
 } from 'antd';
+import { Dayjs } from 'dayjs';
 
 import {
   useTranslation
@@ -25,7 +26,7 @@ import {
 
 import './index.less';
 
-export type ValueType = string | number | boolean | moment.Moment;
+export type ValueType = string | number | boolean | Dayjs;
 
 export type JsonModalProps = {
   value?: string;
