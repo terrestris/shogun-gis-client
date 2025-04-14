@@ -1,3 +1,10 @@
+## [10.0.0-next.6](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.5...v10.0.0-next.6) (2025-04-14)
+
+
+### Bugfixes
+
+* update react-geo ([4d47160](https://github.com/terrestris/shogun-gis-client/commit/4d47160c57c0bb5ff81d5e16820d5fdaf670faa4))
+
 ## [10.0.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.4...v10.0.0-next.5) (2025-04-10)
 
 
