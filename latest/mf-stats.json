@@ -2286,9 +2286,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "9287.12494b1c860758a5.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2356,10 +2354,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2378.76fe43e438afc3c5.js",
-            "9728.f3271cf139bbfaed.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3897,9 +3892,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.6ea1a63375c6f44d.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
