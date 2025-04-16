@@ -280,7 +280,8 @@ export default {
       },
       FeaturePropertyGrid: {
         key: 'Name',
-        value: 'Wert'
+        value: 'Wert',
+        linkText: 'Link'
       },
       PaginationToolbar: {
         copyAsGeoJson: 'Als GeoJSON kopieren (inkl. Geometrie)',
@@ -591,7 +592,8 @@ export default {
       },
       FeaturePropertyGrid: {
         key: 'Name',
-        value: 'Value'
+        value: 'Value',
+        linkText: 'Link'
       },
       PaginationToolbar: {
         copyAsGeoJson: 'Copy as GeoJSON (incl. geometry)',
