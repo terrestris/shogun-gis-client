@@ -25,6 +25,10 @@ import {
 import PropertyGrid from '@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import {
+  PropertyFormItemReadConfig, PropertyFormTabConfig
+} from '@terrestris/shogun-util/dist/model/Layer';
+
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import {
@@ -108,6 +112,53 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
     highlightLayer?.getSource()!.clear();
   };
 
+  const normalizeFeatureProperties = (feature: OlFeature, keys: string[]) => {
+    keys.forEach(key => {
+      const val = feature.get(key);
+
+      if (
+        Array.isArray(val) &&
+        val.length === 1 &&
+        typeof val[0] === 'string'
+      ) {
+        feature.set(key, val[0]);
+      }
+    });
+  };
+
+  const isUrl = (value: string) => {
+    return /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/.test(value);
+  };
+
+  const searchFeatureConfig: PropertyFormTabConfig<PropertyFormItemReadConfig> | null =
+    olFeature?.get('layer')?.get('searchFeatureConfig') ?? null;
+
+  useEffect(() => {
+    if (olFeature && searchFeatureConfig?.children) {
+      const keysToNormalize = searchFeatureConfig.children.map(
+        c => c.propertyName
+      );
+      normalizeFeatureProperties(olFeature, keysToNormalize);
+    }
+  }, [olFeature, searchFeatureConfig?.children]);
+
+  const attributeFilter = useMemo(() => {
+    return searchFeatureConfig?.children
+      ? searchFeatureConfig.children.map(c => c.propertyName)
+      : undefined;
+  }, [searchFeatureConfig]);
+
+  const attributeNames = useMemo(() => {
+    return searchFeatureConfig?.children
+      ? Object.fromEntries(
+        searchFeatureConfig.children.map(c => [
+          c.propertyName,
+          c.displayName ?? ''
+        ])
+      )
+      : undefined;
+  }, [searchFeatureConfig]);
+
   return (
     <MapDrawer
       title={t('SearchResultDrawer.title')}
@@ -119,15 +170,18 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
       {...passThroughProps}
     >
       <div>
-        {olFeature &&<h3>{olFeature.get('title')}</h3>}
+        {olFeature && (
+          <h3>{searchFeatureConfig?.title ?? olFeature.get('title')}</h3>
+        )}
         {
           olFeature && Object.keys(olFeature.getProperties()).length > 1 &&
           <PropertyGrid
             className="property-grid"
             feature={olFeature}
-            // attributeFilter={attributeFilter}
+            attributeFilter={attributeFilter}
             size="small"
             sticky={true}
+            attributeNames={attributeNames}
             columns={[{
               title: t('FeaturePropertyGrid.key'),
               dataIndex: 'attributeName',
@@ -141,7 +195,35 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
               dataIndex: 'attributeValue',
               key: 'attributeValue',
               width: '50%',
-              ellipsis: true
+              ellipsis: true,
+              render: (value: any) => {
+                let normalized = value;
+
+                if (
+                  Array.isArray(value) &&
+                  value.length === 1 &&
+                  typeof value[0] === 'string'
+                ) {
+                  normalized = value[0];
+                }
+
+                if (
+                  typeof normalized === 'string' &&
+                  isUrl(normalized) &&
+                  searchFeatureConfig
+                ) {
+                  return (
+                    <a
+                      href={normalized}
+                      target="_blank"
+                    >
+                      {t('FeaturePropertyGrid.linkText')}
+                    </a>
+                  );
+                }
+
+                return normalized ?? '';
+              }
             }]}
             scroll={{
               scrollToFirstRowOnChange: true,
