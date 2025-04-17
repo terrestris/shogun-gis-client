@@ -66,11 +66,7 @@ export const useSolrSearchEngine = () => {
     const searchConfig = layer?.get('searchConfig') as SearchConfig;
 
     const blacklistedAttributes = [
-      'category',
-      'id',
-      'featureType',
-      'geometry',
-      'search'
+      'geometry'
     ];
 
     let title = '';
@@ -105,15 +101,10 @@ export const useSolrSearchEngine = () => {
     return title;
   }, [map, replaceTemplates]);
 
-  const applyAttributesToFeature = (
+  const applyAttributesToFeature = useCallback((
     olFeature: OlFeature,
     dsResult: DataSearchResult
   ): void => {
-
-    if (!map) {
-      return;
-    }
-
     const blacklistedAttributes = [
       'category',
       'id',
@@ -131,7 +122,7 @@ export const useSolrSearchEngine = () => {
           olFeature.set(key, value);
         }
       });
-  };
+  }, []);
 
   const performSolrSearch = useCallback(async (value: string, viewBox?: OlExtent) => {
     if (!map) {
@@ -244,7 +235,7 @@ export const useSolrSearchEngine = () => {
     });
 
     return solrResults;
-  }, [executeSolrQuery, getFeatureTitle, map]);
+  }, [applyAttributesToFeature, executeSolrQuery, getFeatureTitle, map]);
 
   return performSolrSearch;
 };
