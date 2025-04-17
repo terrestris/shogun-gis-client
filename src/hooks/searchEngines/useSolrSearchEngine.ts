@@ -105,6 +105,34 @@ export const useSolrSearchEngine = () => {
     return title;
   }, [map, replaceTemplates]);
 
+  const applyAttributesToFeature = useCallback((
+    olFeature: OlFeature,
+    dsResult: DataSearchResult
+  ): void => {
+
+    if (!map) {
+      return;
+    }
+
+    const blacklistedAttributes = [
+      'category',
+      'id',
+      'featureType',
+      'geometry',
+      'search',
+      '_version_'
+    ];
+
+    Object.keys(dsResult)
+      .filter(key => !blacklistedAttributes.includes(key))
+      .forEach(key => {
+        const value = dsResult[key];
+        if (value !== undefined) {
+          olFeature.set(key, value);
+        }
+      });
+  }, [map]);
+
   const performSolrSearch = useCallback(async (value: string, viewBox?: OlExtent) => {
     if (!map) {
       return;
@@ -191,6 +219,9 @@ export const useSolrSearchEngine = () => {
         const olFeat = new OlFeature({
           geometry
         });
+
+        applyAttributesToFeature(olFeat, dsResult);
+
         olFeat.set('title', getFeatureTitle(value, dsResult, hlResults?.[id]));
         let ftName;
         if (dsResult.featureType?.[0]) {
@@ -213,7 +244,7 @@ export const useSolrSearchEngine = () => {
     });
 
     return solrResults;
-  }, [executeSolrQuery, getFeatureTitle, map]);
+  }, [applyAttributesToFeature, executeSolrQuery, getFeatureTitle, map]);
 
   return performSolrSearch;
 };

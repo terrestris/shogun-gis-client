@@ -20,6 +20,7 @@ import logoPath from './logoPath';
 import mapToolbarVisible from './mapToolbarVisible';
 import print from './print';
 import searchEngines from './searchEngines';
+import searchResult from './searchResult';
 import selectedFeatures from './selectedFeatures';
 import stylingDrawerVisibility from './stylingDrawerVisibility';
 import title from './title';
@@ -44,15 +45,16 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     layerTree,
     legal,
     logoPath,
+    mapToolbarVisible,
     print,
+    searchEngines,
+    searchResult,
     selectedFeatures,
+    stylingDrawerVisibility,
     title,
     toolMenu,
     uploadDataModal,
-    searchEngines,
     user,
-    stylingDrawerVisibility,
-    mapToolbarVisible,
     userMenu,
     ...asyncReducers
   });

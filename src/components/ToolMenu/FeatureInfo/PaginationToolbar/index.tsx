@@ -45,6 +45,7 @@ import { DigitizeUtil } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
 import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useAppSelector from '../../../../hooks/useAppSelector';
+import useGetFitPadding from '../../../../hooks/useGetFitPadding';
 import {
   setLayerId,
   setFeature
@@ -76,6 +77,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
   } = useTranslation();
   const dispatch = useAppDispatch();
   const map = useMap();
+  const getFitPadding = useGetFitPadding();
 
   const activeCopyTools = useAppSelector(state => state.featureInfo.activeCopyTools);
 
@@ -152,7 +154,7 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       }
 
       map.getView().fit(source.getExtent(), {
-        padding: [150, 150, 150, 150]
+        padding: getFitPadding()
       });
       dispatch(setLayerId(getUid(layer)));
       dispatch(setFeature(geojsonFeature));
