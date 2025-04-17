@@ -105,7 +105,7 @@ export const useSolrSearchEngine = () => {
     return title;
   }, [map, replaceTemplates]);
 
-  const applyAttributesToFeature = (
+  const applyAttributesToFeature = useCallback((
     olFeature: OlFeature,
     dsResult: DataSearchResult
   ): void => {
@@ -131,7 +131,7 @@ export const useSolrSearchEngine = () => {
           olFeature.set(key, value);
         }
       });
-  };
+  }, [map]);
 
   const performSolrSearch = useCallback(async (value: string, viewBox?: OlExtent) => {
     if (!map) {
@@ -244,7 +244,7 @@ export const useSolrSearchEngine = () => {
     });
 
     return solrResults;
-  }, [executeSolrQuery, getFeatureTitle, map]);
+  }, [applyAttributesToFeature, executeSolrQuery, getFeatureTitle, map]);
 
   return performSolrSearch;
 };

@@ -8,6 +8,7 @@ import React, {
 import {
   DrawerProps
 } from 'antd';
+import { ColumnType } from 'antd/es/table';
 
 import OlFeature from 'ol/Feature';
 import GeoJSONParser from 'ol/format/GeoJSON';
@@ -37,6 +38,12 @@ import {
 import MapDrawer from '../MapDrawer';
 
 export type SearchResultDrawerProps = DrawerProps;
+
+type AttributeRecord = {
+  key: string;
+  attributeName: string;
+  attributeValue: string | number | string[] | number[];
+};
 
 export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
   ...passThroughProps
@@ -130,6 +137,27 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
     return /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/.test(value);
   };
 
+  const resolveTitle = (
+    feature: OlFeature | null,
+    configTitle?: string
+  ): string => {
+    if (!feature) {
+      return '';
+    }
+
+    if (!configTitle) {
+      return feature.get('title') ?? '';
+    }
+
+    const match = configTitle.match(/^{(.+)}$/);
+    if (match) {
+      const key = match[1];
+      return feature.get(key) ?? '';
+    }
+
+    return configTitle;
+  };
+
   const searchFeatureConfig: PropertyFormTabConfig<PropertyFormItemReadConfig> | null =
     olFeature?.get('layer')?.get('searchFeatureConfig') ?? null;
 
@@ -159,6 +187,53 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
       : undefined;
   }, [searchFeatureConfig]);
 
+  const columns: ColumnType<AttributeRecord>[] = [{
+    title: t('FeaturePropertyGrid.key'),
+    dataIndex: 'attributeName',
+    key: 'attributeName',
+    width: '50%',
+    ellipsis: true,
+    defaultSortOrder: 'ascend',
+    sorter: (a, b) => a.key.localeCompare(b.key)
+  }, {
+    title: t('FeaturePropertyGrid.value'),
+    dataIndex: 'attributeValue',
+    key: 'attributeValue',
+    width: '50%',
+    ellipsis: true,
+    render: (value, record) => {
+      let normalized = value;
+
+      if (Array.isArray(value) && value.length === 1 && typeof value[0] === 'string') {
+        normalized = value[0];
+      }
+
+      if (
+        typeof normalized === 'string' &&
+        isUrl(normalized) &&
+        searchFeatureConfig
+      ) {
+        const fieldConfig = searchFeatureConfig.children?.find(
+          c => c.displayName === record.attributeName
+        );
+        const displayText =
+          fieldConfig?.fieldProps?.urlDisplayValue || normalized;
+
+        return (
+          <a
+            href={normalized}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {displayText}
+          </a>
+        );
+      }
+
+      return normalized ?? '';
+    }
+  }];
+
   return (
     <MapDrawer
       title={t('SearchResultDrawer.title')}
@@ -171,7 +246,7 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
     >
       <div>
         {olFeature && (
-          <h3>{searchFeatureConfig?.title ?? olFeature.get('title')}</h3>
+          <h3>{resolveTitle(olFeature, searchFeatureConfig?.title)}</h3>
         )}
         {
           olFeature && Object.keys(olFeature.getProperties()).length > 1 &&
@@ -182,49 +257,7 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
             size="small"
             sticky={true}
             attributeNames={attributeNames}
-            columns={[{
-              title: t('FeaturePropertyGrid.key'),
-              dataIndex: 'attributeName',
-              key: 'attributeName',
-              width: '50%',
-              ellipsis: true,
-              defaultSortOrder: 'ascend',
-              sorter: (a, b) => a.key.localeCompare(b.key)
-            }, {
-              title: t('FeaturePropertyGrid.value'),
-              dataIndex: 'attributeValue',
-              key: 'attributeValue',
-              width: '50%',
-              ellipsis: true,
-              render: (value: any) => {
-                let normalized = value;
-
-                if (
-                  Array.isArray(value) &&
-                  value.length === 1 &&
-                  typeof value[0] === 'string'
-                ) {
-                  normalized = value[0];
-                }
-
-                if (
-                  typeof normalized === 'string' &&
-                  isUrl(normalized) &&
-                  searchFeatureConfig
-                ) {
-                  return (
-                    <a
-                      href={normalized}
-                      target="_blank"
-                    >
-                      {t('FeaturePropertyGrid.linkText')}
-                    </a>
-                  );
-                }
-
-                return normalized ?? '';
-              }
-            }]}
+            columns={columns}
             scroll={{
               scrollToFirstRowOnChange: true,
               y: 'calc(100% - 90px)'
