@@ -311,7 +311,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
         activateLayer(item);
       }
 
-      if (ClientConfiguration.search?.searchResultDrawer) {
+      if (ClientConfiguration.search?.showSearchResultDrawer) {
         dispatch(setSearchResultState({
           geoJSONFeature: geoJSONFormat.writeFeatureObject(item.feature),
           drawerVisibility: true
@@ -340,7 +340,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       if (extent) {
         map?.getView().fit(extent, {
           size: map.getSize(),
-          padding: getFitPadding(ClientConfiguration.search?.searchResultDrawer)
+          padding: getFitPadding(ClientConfiguration.search?.showSearchResultDrawer)
         });
       }
     };

@@ -85,11 +85,7 @@ export const useWfsSearchEngine = () => {
     feature: OlFeature
   ): void => {
     const blacklistedAttributes = [
-      'category',
-      'id',
-      'featureType',
-      'geometry',
-      'search'
+      'geometry'
     ];
 
     const properties = feature.getProperties();
