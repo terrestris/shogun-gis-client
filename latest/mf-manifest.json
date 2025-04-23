@@ -1506,11 +1506,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "19.be712f0f917d3836.js",
-            "2958.7f89e0616f6ac499.js",
-            "3262.65685d0edd2b024c.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2320,7 +2316,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7410.6ea1a63375c6f44d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2357,7 +2355,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "5572.122db1475db3b853.js",
+            "7410.6ea1a63375c6f44d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2373,7 +2374,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2597.d88576b0712babe4.js",
+            "7002.e98dc25ef621cb6d.js",
+            "7379.f223be52246ca11d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2409,7 +2414,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "3040.13dcc1acee1565d1.js",
+            "7002.e98dc25ef621cb6d.js",
+            "7379.f223be52246ca11d.js",
+            "7410.6ea1a63375c6f44d.js",
+            "9755.966317742f0b8535.js"
+          ]
         },
         "css": {
           "async": [],
