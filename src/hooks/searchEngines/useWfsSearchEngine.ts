@@ -81,6 +81,22 @@ export const useWfsSearchEngine = () => {
     return feature.getId();
   }, [replaceTemplates]);
 
+  const applyAttributesToFeature = (
+    feature: OlFeature
+  ): void => {
+    const blacklistedAttributes = [
+      'geometry'
+    ];
+
+    const properties = feature.getProperties();
+
+    Object.entries(properties).forEach(([key, value]) => {
+      if (!blacklistedAttributes.includes(key) && value !== undefined) {
+        feature.set(key, value);
+      }
+    });
+  };
+
   const performWfsSearch = useCallback(async (value: string, viewBox?: OlExtent) => {
     if (!map) {
       return;
@@ -154,6 +170,7 @@ export const useWfsSearchEngine = () => {
 
       features.forEach(feature => {
         feature.set('title', getFeatureTitle(value, feature, fulfilledResponse.layer));
+        applyAttributesToFeature(feature);
         feature.set('layer', fulfilledResponse.layer);
       });
 
