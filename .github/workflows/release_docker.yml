@@ -9,6 +9,9 @@ on:
       release_version:
         required: true
         type: string
+      last_release_version:
+        required: true
+        type: string
     secrets:
       nexus_user:
         required: true
@@ -26,7 +29,7 @@ jobs:
       - name: Checkout sources 🔰
         uses: actions/checkout@v4
         with:
-          ref: v${{ inputs.release_version }}
+          ref: v${{ inputs.release_version || inputs.last_release_version }}
 
       - name: Login to Nexus
         uses: docker/login-action@v3
