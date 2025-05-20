@@ -20,7 +20,7 @@
       "api": "."
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.13.1",
+    "pluginVersion": "0.14.0",
     "prefetchInterface": false,
     "publicPath": "auto"
   },
@@ -778,7 +778,7 @@
           "sync": [
             "1170.ac7daa4c3ff7d1d1.js",
             "1228.9ca88b8c2cfdc4fe.js",
-            "1926.400813a5d19a3dd6.js",
+            "1926.45f80e1134464db4.js",
             "2446.f8005fedf7157fe3.js",
             "3212.a0b8adca5a4210b5.js",
             "4046.51e11e37f95892b9.js",
@@ -881,7 +881,7 @@
             "1703.85054432335ac7d6.js",
             "1762.fc19761cc619c73d.js",
             "1802.164cc412ab218a96.js",
-            "1926.400813a5d19a3dd6.js",
+            "1926.45f80e1134464db4.js",
             "1987.287673755472a83f.js",
             "2057.781f50ac5180dbf8.js",
             "2169.02ae0d6d7ccce977.js",
@@ -2434,9 +2434,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.6ea1a63375c6f44d.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2625,7 +2623,7 @@
             "1228.9ca88b8c2cfdc4fe.js",
             "166.8b57208ce6cf7dbb.js",
             "1762.fc19761cc619c73d.js",
-            "1926.400813a5d19a3dd6.js",
+            "1926.45f80e1134464db4.js",
             "2057.781f50ac5180dbf8.js",
             "2279.0f07e1d484d6b028.js",
             "2446.f8005fedf7157fe3.js",
