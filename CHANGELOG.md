@@ -1,3 +1,10 @@
+## [10.0.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.8...v10.0.0-next.9) (2025-05-20)
+
+
+### Bugfixes
+
+* unify ol import paths for rspack ([023fb33](https://github.com/terrestris/shogun-gis-client/commit/023fb33fdf7a4b1f1115bb8d22cca6c2f8581dcc))
+
 ## [10.0.0-next.8](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.7...v10.0.0-next.8) (2025-05-15)
 
 
