@@ -1,3 +1,19 @@
+## [10.0.0-next.10](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.9...v10.0.0-next.10) (2025-05-20)
+
+
+### Features
+
+* adds processing of the configuration for SearchResult ([902c165](https://github.com/terrestris/shogun-gis-client/commit/902c1653af7306993f156c644ffc3699bdd0451b))
+* adds useGetFitPadding hook ([b1019f8](https://github.com/terrestris/shogun-gis-client/commit/b1019f8598ecbc121ac871ed40f9c6379e7acf90))
+* enhance SearchResultDrawer with dynamic title resolution and attribute display ([b7c0274](https://github.com/terrestris/shogun-gis-client/commit/b7c0274a064f4487b7ed3a4047b266b921e2f01d))
+* introduces SearchResultDrawer ([0779354](https://github.com/terrestris/shogun-gis-client/commit/07793544feabf33d2825d1d54172b92d776d9239))
+
+
+### Bugfixes
+
+* rename slice ([0f3f524](https://github.com/terrestris/shogun-gis-client/commit/0f3f524e6ead1ed3ceb0ebbd0a86a72018ad4e32))
+* wrap methods in useCallback to prevent infinity loops ([73a6819](https://github.com/terrestris/shogun-gis-client/commit/73a6819cd82277e34bed78d8de19fee69eea55a5))
+
 ## [10.0.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.8...v10.0.0-next.9) (2025-05-20)
 
 
