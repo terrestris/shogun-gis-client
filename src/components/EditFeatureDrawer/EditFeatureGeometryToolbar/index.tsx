@@ -120,7 +120,12 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
         return;
       }
 
-      const source = editLayer.getSource() as OlSourceVector;
+      const source = editLayer.getSource();
+
+      if (!source) {
+        return;
+      }
+
       source.addFeature(olFeat);
       setRevision(r => r + 1);
 

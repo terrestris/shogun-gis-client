@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 /**
  * This hook returns a function to calculate padding for the fit method
  * of an ol.View. It considers the menu width, header height, footer height
@@ -15,11 +17,11 @@
  */
 export const useGetFitPadding = () => {
 
-  const getCssPropertyValue = (value: string, fallback: number) => {
+  const getCssPropertyValue = useCallback((value: string, fallback: number) => {
     return Number(
       getComputedStyle(document.body).getPropertyValue(value).replace('px', '')
     ) || fallback;
-  };
+  }, []);
 
   /**
    * This function calculates the padding for the fit method of an ol.View.
@@ -27,7 +29,7 @@ export const useGetFitPadding = () => {
    * @param drawerOpen Include the drawer width in the calculation
    * @returns [topPadding, rightPadding, bottomPadding, leftPadding]
    */
-  function getFitPadding(drawerOpen = false) {
+  const getFitPadding = useCallback((drawerOpen = false) => {
     const toolMenuElement = document.querySelector('.tool-menu');
     const toolMenuWidth = toolMenuElement?.clientWidth ?? 0;
 
@@ -40,7 +42,7 @@ export const useGetFitPadding = () => {
     }
 
     return [headerHeight, drawerWidth, footerHeight, toolMenuWidth];
-  };
+  }, [getCssPropertyValue]);
 
   return getFitPadding;
 };
