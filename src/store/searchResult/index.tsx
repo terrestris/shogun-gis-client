@@ -16,7 +16,7 @@ const initialState: SearchResultState = {
 };
 
 export const slice = createSlice({
-  name: 'stylingDrawerVisibility',
+  name: 'searchResultDrawer',
   initialState,
   reducers: {
     setSearchResultState: (state, action: PayloadAction<SearchResultState>) => {
