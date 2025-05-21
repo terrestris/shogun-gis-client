@@ -1,3 +1,15 @@
+## [10.0.0-next.11](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.10...v10.0.0-next.11) (2025-05-21)
+
+
+### Dependencies
+
+* add note about search.showSearchResultDrawer ([8a533fa](https://github.com/terrestris/shogun-gis-client/commit/8a533fa41d60f522c131fbd7d492813ce585095b))
+
+
+### Bugfixes
+
+* update style ([3089c13](https://github.com/terrestris/shogun-gis-client/commit/3089c132f29235f159d2fce7de16e04ce3b47d61))
+
 ## [10.0.0-next.10](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.9...v10.0.0-next.10) (2025-05-20)
 
 
