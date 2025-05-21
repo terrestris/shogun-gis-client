@@ -13,8 +13,6 @@ import useAppSelector from '../../hooks/useAppSelector';
 
 import MultiSearch from '../MultiSearch';
 
-import './index.less';
-
 export type SearchFieldProps = InputProps;
 
 export const SearchField: React.FC<SearchFieldProps> = ({
