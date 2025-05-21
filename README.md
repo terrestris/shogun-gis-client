@@ -1,5 +1,5 @@
-[![Coverage](https://sq.terrestris.de/api/project_badges/measure?project=shogun-gis-client&metric=coverage&token=sqb_977992296292cb28180b84c03d38805ef4dad8c9)](https://sq.terrestris.de/dashboard?id=shogun-gis-client) 
-[![Security Rating](https://sq.terrestris.de/api/project_badges/measure?project=shogun-gis-client&metric=software_quality_security_rating&token=sqb_977992296292cb28180b84c03d38805ef4dad8c9)](https://sq.terrestris.de/dashboard?id=shogun-gis-client) 
+[![Coverage](https://sq.terrestris.de/api/project_badges/measure?project=shogun-gis-client&metric=coverage&token=sqb_977992296292cb28180b84c03d38805ef4dad8c9)](https://sq.terrestris.de/dashboard?id=shogun-gis-client)
+[![Security Rating](https://sq.terrestris.de/api/project_badges/measure?project=shogun-gis-client&metric=software_quality_security_rating&token=sqb_977992296292cb28180b84c03d38805ef4dad8c9)](https://sq.terrestris.de/dashboard?id=shogun-gis-client)
 [![Maintainability Rating](https://sq.terrestris.de/api/project_badges/measure?project=shogun-gis-client&metric=software_quality_maintainability_rating&token=sqb_977992296292cb28180b84c03d38805ef4dad8c9)](https://sq.terrestris.de/dashboard?id=shogun-gis-client)
 [![Reliability Rating](https://sq.terrestris.de/api/project_badges/measure?project=shogun-gis-client&metric=software_quality_reliability_rating&token=sqb_977992296292cb28180b84c03d38805ef4dad8c9)](https://sq.terrestris.de/dashboard?id=shogun-gis-client)
 
@@ -64,6 +64,7 @@ Several global settings for the client can be configured via the [`gis-client-co
 | search.solrQueryConfig.tagPre | HTML tag applied before search highlight.                                                                                                                                                                | `<b>`               |
 | search.solrQueryConfig.tagPost | HTML tag applied after search highlight.                                                                                                                                                                 | `</b>`              |
 | search.solrQueryConfig.requireFieldMatch | Only query terms aligning with the field being highlighted will in turn be highlighted.                                                                                                                  | true                |
+| search.showSearchResultDrawer | Whether the results of the search should be displayed in a separate drawer on the right or not.                                                                                                                  | false                |
 
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 

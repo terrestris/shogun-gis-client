@@ -17,12 +17,14 @@
     align-items: center;
 
     &.left-items {
-      flex: 0 1 0;
+      flex: 1 1 0;
       justify-content: flex-start;
 
       .logo {
         height: 100%;
-        padding: 10px;
+        object-fit: contain;
+        padding: 5px;
+        box-sizing: border-box;
       }
 
       .title {
@@ -30,11 +32,12 @@
         text-align: center;
         font-size: 1.1rem;
         font-weight: bold;
-        margin-left: 2rem;
+        margin: 0 2rem;
         text-overflow: ellipsis;
         overflow: hidden;
 
         display: -webkit-box;
+        -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         line-clamp: 2;
       }
@@ -44,12 +47,17 @@
       flex: 1 1 0;
       display: flex;
       justify-content: center;
+
+      .search {
+        width: 100%;
+        max-width: 800px;
+      }
     }
 
     &.right-items {
-      flex: 0 1 0;
+      flex: 1 1 0;
       justify-content: flex-end;
-      padding-right: 5px;
+      margin-right: 5px;
     }
   }
 

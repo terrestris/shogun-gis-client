@@ -5,7 +5,7 @@ import {
   screen
 } from '@testing-library/react';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { createReduxWrapper } from '../../utils/testUtils';
 
@@ -65,7 +65,7 @@ describe('<DisplayField />', () => {
   });
 
   it('date is displayed correctly', () => {
-    const now = moment('01-01-2024');
+    const now = dayjs('01-01-2024');
     const format = 'DD.MM.YYYY';
 
     render(

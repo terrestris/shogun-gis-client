@@ -5,6 +5,8 @@ const rspack = require('@rspack/core');
 
 const deps = require('./package.json').dependencies;
 
+const OlImportRewritePlugin = require('./OlImportRewritePlugin');
+
 module.exports = {
   entry: './src/index.tsx',
   externals: {
@@ -116,6 +118,7 @@ module.exports = {
         'Buffer'
       ]
     }),
+    new OlImportRewritePlugin(),
     new ModuleFederationPlugin({
       name: 'SHOGunGISClient',
       dev: false,

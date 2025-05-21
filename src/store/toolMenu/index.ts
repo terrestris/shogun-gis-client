@@ -6,6 +6,7 @@ import {
 export interface ToolMenuState {
   activeKeys: string[];
   availableTools: string[];
+  maxHeight?: number | string;
 }
 
 const initialState: ToolMenuState = {
@@ -23,13 +24,17 @@ export const slice = createSlice({
     },
     setAvailableTools(state, action: PayloadAction<string[]>) {
       state.availableTools = [...action.payload];
+    },
+    setToolMenuMaxHeight(state, action: PayloadAction<string | number>) {
+      state.maxHeight = action.payload;
     }
   }
 });
 
 export const {
   setActiveKeys,
-  setAvailableTools
+  setAvailableTools,
+  setToolMenuMaxHeight
 } = slice.actions;
 
 export default slice.reducer;
