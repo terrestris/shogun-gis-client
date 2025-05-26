@@ -2,7 +2,7 @@ import React, {
   useState,
   useMemo,
   FC,
-  JSX
+  JSX, useEffect
 } from 'react';
 
 import {
@@ -29,6 +29,11 @@ import {
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+import {
+  removeInteractionStatus, setMapInteractionStatus
+} from '../../../store/mapInteractionStatus';
 
 interface DefaultMeasureProps {
   showMeasureDistance?: boolean;
@@ -41,6 +46,12 @@ export const Measure: FC<MeasureProps> = ({
   showMeasureDistance,
   showMeasureArea
 }): JSX.Element => {
+  const [selected, setSelected] = useState<string>();
+
+  const mapInteractionStatus = useAppSelector(state => state.mapInteractionStatus);
+
+  const dispatch = useAppDispatch();
+
   const {
     t
   } = useTranslation();
@@ -57,7 +68,19 @@ export const Measure: FC<MeasureProps> = ({
     return _isEmpty(projName) || projName === 'longlat' || projName === 'geocent';
   }, [map]);
 
-  const [selected, setSelected] = useState<string>();
+  useEffect(() => {
+    if (selected !== undefined) {
+      dispatch(setMapInteractionStatus('measure'));
+    } else {
+      dispatch(removeInteractionStatus('measure'));
+    }
+  }, [selected, dispatch]);
+
+  useEffect(() => {
+    if (mapInteractionStatus !== 'measure') {
+      setSelected(undefined);
+    }
+  }, [mapInteractionStatus]);
 
   if (!map) {
     return <></>;

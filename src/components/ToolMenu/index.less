@@ -8,15 +8,17 @@
   box-shadow: var(--componentShadow);
   overflow-y: auto;
 
+  .ant-collapse-header:not(.ant-collapse-collapsible-disabled) {
+    .ant-collapse-header-text:hover {
+      color: var(--secondaryColor);
+      font-weight: bold;
+    }
+  }
+
   .ant-collapse-header-text {
     display: flex;
     width: 100%;
     transition: color .3s;
-
-    &:hover {
-      color: var(--secondaryColor);
-      font-weight: bold;
-    }
 
     svg {
       width: 25px;

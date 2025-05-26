@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useEffect,
   useState
 } from 'react';
 
@@ -51,6 +52,12 @@ import {
   DigitizeUtil
 } from '@terrestris/react-util/dist/Util/DigitizeUtil';
 
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+import {
+  removeInteractionStatus, setMapInteractionStatus
+} from '../../../store/mapInteractionStatus';
+
 import AttributionDrawer from './Attributions';
 import DeleteAllButton from './DeleteAllButton';
 import ImportDataModal from './ImportDataModal';
@@ -89,11 +96,29 @@ export const Draw: React.FC<DrawProps> = ({
   const [selectedButton, setSelectedButton] = useState<string>();
   const [isImportDataModalOpen, setIsImportDataModalOpen] = useState<boolean>(false);
 
+  const mapInteractionStatus = useAppSelector(state => state.mapInteractionStatus);
+
+  const dispatch = useAppDispatch();
+
   const {
     t
   } = useTranslation();
 
   const map = useMap();
+
+  useEffect(() => {
+    if (selectedButton !== undefined) {
+      dispatch(setMapInteractionStatus('draw'));
+    } else {
+      dispatch(removeInteractionStatus('draw'));
+    }
+  }, [selectedButton, dispatch]);
+
+  useEffect(() => {
+    if (mapInteractionStatus !== 'draw') {
+      setSelectedButton(undefined);
+    }
+  }, [mapInteractionStatus]);
 
   const onToggleChange: Exclude<ToggleGroupProps['onChange'], undefined> = useCallback((evt, value) => {
     setSelectedButton(value);

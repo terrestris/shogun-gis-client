@@ -17,6 +17,7 @@ import layerDetailsModal from './layerDetailsModal';
 import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
+import mapInteractionStatus from './mapInteractionStatus';
 import mapToolbarVisible from './mapToolbarVisible';
 import print from './print';
 import searchEngines from './searchEngines';
@@ -45,6 +46,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     layerTree,
     legal,
     logoPath,
+    mapInteractionStatus,
     mapToolbarVisible,
     print,
     searchEngines,

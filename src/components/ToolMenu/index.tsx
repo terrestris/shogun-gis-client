@@ -64,6 +64,11 @@ import {
   UploadTools, setLayerTreeEnabled
 } from '../../store/layerTree';
 import {
+  removeInteractionStatus,
+  setMapInteractionStatus
+} from '../../store/mapInteractionStatus';
+import {
+  removeActiveKey,
   setActiveKeys
 } from '../../store/toolMenu';
 import {
@@ -79,6 +84,7 @@ import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
 
 import Measure from './Measure';
+
 import './index.less';
 
 export interface TitleEventEntity {
@@ -115,6 +121,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
   const maxHeight = useAppSelector(state => state.toolMenu.maxHeight);
+  const mapInteractionStatus = useAppSelector(state => state.mapInteractionStatus);
 
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
@@ -177,15 +184,38 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
       if (lastExclusiveTool) {
         dispatch(
-          setActiveKeys(activeKeys.filter(keys => keys !== lastExclusiveTool))
+          removeActiveKey(lastExclusiveTool)
         );
       }
     }
 
-    dispatch(setFeatureInfoEnabled(activeKeys.includes('feature_info')));
-    dispatch(setLayerTreeEnabled(activeKeys.includes('tree')));
+    const featureInfoEnabled = activeKeys.includes('feature_info');
+    dispatch(setFeatureInfoEnabled(featureInfoEnabled));
 
+    if (featureInfoEnabled) {
+      dispatch(setMapInteractionStatus('feature-info'));
+    } else if (!featureInfoEnabled) {
+      dispatch(removeInteractionStatus('feature-info'));
+    }
+
+    dispatch(setLayerTreeEnabled(activeKeys.includes('tree')));
   }, [activeKeys, dispatch]);
+
+  useEffect(() => {
+    if (mapInteractionStatus === 'feature-info') {
+      return () => {
+        dispatch(removeActiveKey('feature_info'));
+      };
+    }
+  }, [mapInteractionStatus, dispatch]);
+
+  useEffect(() => {
+    if (mapInteractionStatus === 'feature-info') {
+      return () => {
+        dispatch(removeActiveKey('feature_info'));
+      };
+    }
+  }, [mapInteractionStatus, dispatch]);
 
   const getToolPanels = (): ItemType[] => {
     const panels: ItemType[] = [];

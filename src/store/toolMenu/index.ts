@@ -22,6 +22,9 @@ export const slice = createSlice({
     setActiveKeys(state, action: PayloadAction<string[]>) {
       state.activeKeys = [...action.payload];
     },
+    removeActiveKey(state, action: PayloadAction<string>) {
+      state.activeKeys = state.activeKeys.filter(key => key !== action.payload);
+    },
     setAvailableTools(state, action: PayloadAction<string[]>) {
       state.availableTools = [...action.payload];
     },
@@ -34,6 +37,7 @@ export const slice = createSlice({
 export const {
   setActiveKeys,
   setAvailableTools,
+  removeActiveKey,
   setToolMenuMaxHeight
 } = slice.actions;
 
