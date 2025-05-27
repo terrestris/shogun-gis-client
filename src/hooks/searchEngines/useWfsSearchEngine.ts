@@ -59,19 +59,7 @@ export const useWfsSearchEngine = () => {
       return replaceTemplates(searchConfig.displayTemplate, feature);
     }
 
-    const blacklistedAttributes = [
-      'category',
-      'id',
-      'featureType',
-      'geometry',
-      'search'
-    ];
-
     for (const [key, value] of Object.entries(feature.getProperties())) {
-      if (blacklistedAttributes.includes(key)) {
-        continue;
-      }
-
       const propValue = value?.toString();
 
       if (propValue.toLowerCase().indexOf(searchValue?.toLowerCase()) > -1) {
@@ -83,22 +71,6 @@ export const useWfsSearchEngine = () => {
     // Fallback.
     return feature.getId();
   }, [replaceTemplates]);
-
-  const applyAttributesToFeature = (
-    feature: OlFeature
-  ): void => {
-    const blacklistedAttributes = [
-      'geometry'
-    ];
-
-    const properties = feature.getProperties();
-
-    Object.entries(properties).forEach(([key, value]) => {
-      if (!blacklistedAttributes.includes(key) && value !== undefined) {
-        feature.set(key, value);
-      }
-    });
-  };
 
   const performWfsSearch = useCallback(async (value: string, viewBox?: OlExtent) => {
     if (!map) {
@@ -223,7 +195,6 @@ export const useWfsSearchEngine = () => {
 
       features.forEach(feature => {
         feature.set('title', getFeatureTitle(value, feature, fulfilledResponse.layer));
-        applyAttributesToFeature(feature);
         feature.set('layer', fulfilledResponse.layer);
       });
 
