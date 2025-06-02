@@ -1,3 +1,10 @@
+## [10.0.0-next.14](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.13...v10.0.0-next.14) (2025-06-02)
+
+
+### Features
+
+* allow vector layers in layer tree if they have a shogunId ([01fa09b](https://github.com/terrestris/shogun-gis-client/commit/01fa09bad435bed752ccb6681ccbb8a36afba762))
+
 ## [10.0.0-next.13](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.12...v10.0.0-next.13) (2025-06-02)
 
 
