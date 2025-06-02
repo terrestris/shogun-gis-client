@@ -1,3 +1,11 @@
+## [10.0.0-next.13](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.12...v10.0.0-next.13) (2025-06-02)
+
+
+### Bugfixes
+
+* add support for searching numeric types ([a93703a](https://github.com/terrestris/shogun-gis-client/commit/a93703abbfa2939d98d4c81be2d141c40020da70))
+* remove unneeded blacklisting attributes ([bd59d81](https://github.com/terrestris/shogun-gis-client/commit/bd59d8191c29f34a7ddf3137509f331728f08d29))
+
 ## [10.0.0-next.12](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.11...v10.0.0-next.12) (2025-05-21)
 
 
