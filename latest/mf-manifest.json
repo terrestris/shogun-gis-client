@@ -20,7 +20,7 @@
       "api": "."
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.14.0",
+    "pluginVersion": "0.14.3",
     "prefetchInterface": false,
     "publicPath": "auto"
   },
@@ -735,7 +735,7 @@
           "sync": [
             "1170.ac7daa4c3ff7d1d1.js",
             "1228.9ca88b8c2cfdc4fe.js",
-            "1926.f903a5485aa28581.js",
+            "1926.637b9de4959b4be5.js",
             "2446.f8005fedf7157fe3.js",
             "3212.a0b8adca5a4210b5.js",
             "4046.51e11e37f95892b9.js",
@@ -832,7 +832,7 @@
             "1703.85054432335ac7d6.js",
             "1762.fc19761cc619c73d.js",
             "1802.164cc412ab218a96.js",
-            "1926.f903a5485aa28581.js",
+            "1926.637b9de4959b4be5.js",
             "1987.287673755472a83f.js",
             "2057.781f50ac5180dbf8.js",
             "2169.02ae0d6d7ccce977.js",
@@ -1750,9 +1750,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7222.93a7da57ea6739c1.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2391,11 +2389,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2342.2a5f9abf0cd56488.js",
-            "6583.3db3ba041d1f56ed.js",
-            "7410.6ea1a63375c6f44d.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2427,11 +2421,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2597.d88576b0712babe4.js",
-            "4287.6409f7c65461d244.js",
-            "8725.3a87fe9b264f9496.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2489,7 +2479,7 @@
             "1228.9ca88b8c2cfdc4fe.js",
             "166.8b57208ce6cf7dbb.js",
             "1762.fc19761cc619c73d.js",
-            "1926.f903a5485aa28581.js",
+            "1926.637b9de4959b4be5.js",
             "2057.781f50ac5180dbf8.js",
             "2279.0f07e1d484d6b028.js",
             "2446.f8005fedf7157fe3.js",
