@@ -1842,7 +1842,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7222.93a7da57ea6739c1.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2434,7 +2436,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7410.6ea1a63375c6f44d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2473,7 +2477,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "5572.122db1475db3b853.js",
+            "7410.6ea1a63375c6f44d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2490,7 +2497,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2597.d88576b0712babe4.js",
+            "7002.e98dc25ef621cb6d.js",
+            "7379.f223be52246ca11d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2507,7 +2518,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2342.2a5f9abf0cd56488.js",
+            "6583.3db3ba041d1f56ed.js",
+            "7410.6ea1a63375c6f44d.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2524,7 +2539,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "3040.13dcc1acee1565d1.js",
+            "7002.e98dc25ef621cb6d.js",
+            "7379.f223be52246ca11d.js",
+            "7410.6ea1a63375c6f44d.js",
+            "9755.966317742f0b8535.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2541,7 +2562,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2597.d88576b0712babe4.js",
+            "4287.6409f7c65461d244.js",
+            "8725.3a87fe9b264f9496.js"
+          ]
         },
         "css": {
           "async": [],
