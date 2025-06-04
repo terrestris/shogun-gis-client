@@ -51,7 +51,7 @@
     "@terrestris/shogun-e2e-tests": "^1.0.8",
     "@terrestris/shogun-util": "^10.4.1",
     "@types/color": "^4.2.0",
-    "@types/js-md5": "^0.7.2",
+    "@types/js-md5": "^0.8.0",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
     "antd": "^5.23.2",
