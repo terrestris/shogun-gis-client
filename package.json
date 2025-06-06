@@ -57,7 +57,7 @@
     "antd": "^5.23.2",
     "color": "^5.0.0",
     "dotenv": "^16.4.7",
-    "geostyler": "^16.0.1",
+    "geostyler": "^17.0.0",
     "geostyler-openlayers-parser": "^5.0.1",
     "geostyler-style": "^9.2.0",
     "i18next": "^24.2.1",
