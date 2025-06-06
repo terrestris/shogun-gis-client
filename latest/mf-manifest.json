@@ -1506,11 +1506,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "19.2561c839de88fbbd.js",
-            "2958.96f387ecb853aa59.js",
-            "3262.15bfcee0243c22f5.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -1750,9 +1746,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7222.93a7da57ea6739c1.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2248,22 +2242,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "1170.5375314e27fa81a4.js",
-            "1228.e3f313f4a5d0dd0f.js",
-            "1926.7f014e508aee34d1.js",
-            "2446.b20980fef03c5b45.js",
-            "3212.ba0cb3d7257807de.js",
-            "4046.51e11e37f95892b9.js",
-            "6179.7a31ef6a903b6cf7.js",
-            "6540.3254cb9fd779991a.js",
-            "6728.da13826d0e53a0d5.js",
-            "7193.ee0a0ee34ce2f5e8.js",
-            "8143.1277141bd7ecf2a8.js",
-            "9481.c6d3b1dbc38bcf13.js",
-            "9750.9f0ee92c5e423783.js",
-            "9790.565e84744df95973.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2337,9 +2316,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.95dccff54aeea2e7.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2392,11 +2369,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2597.bacd6d2945b47fe2.js",
-            "7002.25812ac7932e7384.js",
-            "7379.2b7fad79f6d4e9bd.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2428,13 +2401,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "3040.f9687c27ed60cadb.js",
-            "7002.25812ac7932e7384.js",
-            "7379.2b7fad79f6d4e9bd.js",
-            "7410.95dccff54aeea2e7.js",
-            "9755.966317742f0b8535.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2450,11 +2417,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2597.bacd6d2945b47fe2.js",
-            "4287.68cf539d2692b714.js",
-            "8725.135286527efde09a.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
