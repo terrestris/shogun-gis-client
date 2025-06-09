@@ -59,7 +59,7 @@
     "dotenv": "^16.4.7",
     "geostyler": "^16.0.1",
     "geostyler-openlayers-parser": "^5.0.1",
-    "geostyler-style": "^9.2.0",
+    "geostyler-style": "^10.2.0",
     "i18next": "^24.2.1",
     "i18next-browser-languagedetector": "^8.0.2",
     "js-md5": "^0.8.3",
