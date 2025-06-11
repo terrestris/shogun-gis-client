@@ -401,7 +401,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       <Collapse
         expandIconPosition='end'
         activeKey={activeKeys}
-        destroyInactivePanel={true}
+        destroyOnHidden={true}
         onChange={(keys: string[] | string) => {
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));
