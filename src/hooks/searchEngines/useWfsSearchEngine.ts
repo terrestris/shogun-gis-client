@@ -180,7 +180,7 @@ export const useWfsSearchEngine = () => {
     const fulfilledResponses = results.filter(res => res.status === 'fulfilled');
     const rejectedResponses = results.filter(res => res.status === 'rejected');
 
-    rejectedResponses.map(res => {
+    rejectedResponses.forEach(res => {
       Logger.error(`Error while fetching the layer search results for layer "${res.layer.get('name')}": `, res.reason);
     });
 

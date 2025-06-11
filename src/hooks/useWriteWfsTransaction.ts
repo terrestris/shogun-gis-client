@@ -141,43 +141,27 @@ export const useWriteWfsTransaction = () => {
 
     let overallUpdateMode = false;
 
-    if (opts.upsertFeatures) {
-      for (const feature of opts.upsertFeatures) {
-        const feat = new OlFeature();
+    opts.upsertFeatures?.forEach(feature => {
+      const feat = new OlFeature();
+      const geometry = feature.getGeometry()?.clone();
 
-        const geometry = feature.getGeometry()?.clone();
-
-        if (geometry && !isEmpty(geometry.getExtent()) && allowedEditMode?.includes('EDIT_GEOMETRY')) {
-          const geomPropName = geomProperty?.name ?? 'geom';
-          feat.set(geomPropName, geometry);
-          feat.setGeometryName(geomPropName);
-        }
-
-        if (opts.form) {
-          feat.setProperties(cleanFormValues(_cloneDeep(opts.form?.getFieldsValue()), formConfig, true));
-        }
-
-        const updateMode = !!feature.getId();
-
-        if (updateMode && !overallUpdateMode) {
-          overallUpdateMode = true;
-        }
-
-        if (updateMode) {
-          feat.setId(feature.getId());
-        }
-
-        if (updateMode) {
-          updates.push(feat);
-        } else {
-          inserts.push(feat);
-        }
+      if (geometry && !isEmpty(geometry.getExtent()) && allowedEditMode?.includes('EDIT_GEOMETRY')) {
+        const geomPropName = geomProperty?.name ?? 'geom';
+        feat.set(geomPropName, geometry);
+        feat.setGeometryName(geomPropName);
       }
-    }
 
-    if (opts.deleteFeatures) {
-      deletes.push(...opts.deleteFeatures);
-    }
+      if (opts.form) {
+        feat.setProperties(cleanFormValues(_cloneDeep(opts.form.getFieldsValue()), formConfig, true));
+      }
+
+      const updateMode = !!feature.getId();
+      overallUpdateMode ||= updateMode;
+      if (updateMode) {
+        feat.setId(feature.getId());
+      }
+      (updateMode ? updates : inserts).push(feat);
+    });
 
     const transactionOpts: OlWriteTransactionOptions = {
       featureNS: describeFeatureType.targetNamespace,
@@ -188,16 +172,12 @@ export const useWriteWfsTransaction = () => {
       nativeElements: []
     };
 
-    const format = new OlFormatWFS();
-
-    const transaction = format.writeTransaction(inserts, updates, deletes, transactionOpts);
+    const transaction = new OlFormatWFS().writeTransaction(inserts, updates, deletes, transactionOpts);
 
     if (overallUpdateMode && ClientConfiguration.wfsLockFeatureEnabled) {
-      const rootNode = transaction.getRootNode() as Element;
-      const lockId = document.createElementNS('http://www.opengis.net/wfs', 'LockId');
-      const lockIdValue = document.createTextNode('GeoServer');
-      lockId.appendChild(lockIdValue);
-      rootNode.appendChild(lockId);
+      const lockId = document.createElementNS('https://www.opengis.net/wfs', 'LockId');
+      lockId.appendChild(document.createTextNode('GeoServer'));
+      transaction.getRootNode()?.appendChild(lockId);
     }
 
     return transaction;

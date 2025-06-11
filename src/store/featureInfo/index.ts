@@ -20,7 +20,10 @@ export const slice = createSlice({
   initialState,
   reducers: {
     setFeatureInfoConfig(state, action: PayloadAction<FeatureInfoConfig>) {
-      state = action.payload;
+      return {
+        ...state,
+        ...action.payload
+      };
     },
     setFeatureInfoEnabled(state, action: PayloadAction<boolean>) {
       state.enabled = action.payload;

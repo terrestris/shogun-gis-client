@@ -288,38 +288,54 @@ export const setApplicationToStore = async (application?: Application) => {
   // nominatim search is active by default
   store.dispatch(setSearchEngines(['nominatim']));
 
-  if (application.toolConfig && application.toolConfig.length > 0) {
+  if (application.toolConfig?.length) {
     const availableTools: string[] = [];
-    application.toolConfig
-      .forEach((tool: DefaultApplicationToolConfig) => {
-        if (tool.config?.visible && !['search', 'user_menu', 'map_toolbar'].includes(tool.name)) {
-          availableTools.push(tool.name);
+    const toolActions: Record<string, (config: any) => void> = {
+      search: (config) => {
+        if (config.engines?.length) {
+          store.dispatch(setSearchEngines(config.engines));
         }
-        if (tool.name === 'search' && tool.config.engines.length > 0) {
-          store.dispatch(setSearchEngines(tool.config.engines));
+      },
+      // eslint-disable-next-line camelcase
+      feature_info: (config) => {
+        if (Array.isArray(config.activeCopyTools)) {
+          store.dispatch(setFeatureInfoActiveCopyTools(config.activeCopyTools));
         }
-        if (tool.name === 'feature_info' && Array.isArray(tool.config.activeCopyTools)) {
-          store.dispatch(setFeatureInfoActiveCopyTools(tool.config.activeCopyTools));
+      },
+      tree: (config) => {
+        if (Array.isArray(config.uploadTools)) {
+          store.dispatch(setLayerTreeActiveUploadTools(config.uploadTools));
         }
-        if (tool.name === 'tree' && Array.isArray(tool.config.uploadTools)) {
-          store.dispatch(setLayerTreeActiveUploadTools(tool.config.uploadTools));
+        if (config.showLegends) {
+          store.dispatch(setLayerTreeShowLegends(config.showLegends));
         }
-        if (tool.name === 'tree' && tool.config.showLegends) {
-          store.dispatch(setLayerTreeShowLegends(tool.config.showLegends));
+        if (typeof config.metadataVisible !== 'undefined') {
+          store.dispatch(setMetadataVisible(config.metadataVisible));
         }
-        if (tool.name === 'tree' && typeof tool.config.metadataVisible !== 'undefined') {
-          store.dispatch(setMetadataVisible(tool.config.metadataVisible));
+        if (typeof config.layerIconsVisible !== 'undefined') {
+          store.dispatch(setLayerIconsVisible(config.layerIconsVisible));
         }
-        if (tool.name === 'tree' && typeof tool.config.layerIconsVisible !== 'undefined') {
-          store.dispatch(setLayerIconsVisible(tool.config.layerIconsVisible));
-        }
-        if (tool.name === 'map_toolbar') {
-          store.dispatch(setMapToolbarVisible(tool.config?.visible));
-        }
-        if (tool.name === 'user_menu') {
-          store.dispatch(setUserMenuVisible(tool.config?.visible ?? true));
-        }
-      });
+      },
+      // eslint-disable-next-line camelcase
+      map_toolbar: (config) => {
+        store.dispatch(setMapToolbarVisible(config?.visible));
+      },
+      // eslint-disable-next-line camelcase
+      user_menu: (config) => {
+        store.dispatch(setUserMenuVisible(config?.visible ?? true));
+      }
+    };
+
+    application.toolConfig.forEach(({
+      name,
+      config
+    }) => {
+      if (config?.visible && !['search', 'user_menu', 'map_toolbar'].includes(name)) {
+        availableTools.push(name);
+      }
+      toolActions[name]?.(config);
+    });
+
     store.dispatch(setAvailableTools(availableTools));
   }
 };
@@ -873,7 +889,7 @@ const renderApp = async () => {
     }
 
     let type: AlertProps['type'] = 'warning';
-    let errorDescription: string |React.ReactElement = i18n.t('Index.errorDescription');
+    let errorDescription: string | React.ReactElement = i18n.t('Index.errorDescription');
 
     if ((error as Error)?.message === LoadingErrorCode.APP_ID_NOT_SET) {
       errorDescription = i18n.t('Index.errorDescriptionAppIdNotSet');

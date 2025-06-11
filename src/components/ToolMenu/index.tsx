@@ -331,7 +331,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               {
                 keycloak && ClientConfiguration.geoserver?.upload?.authorizedRoles?.some(
                   role => keycloak.hasResourceRole(role, keycloak.clientId)) &&
-                  activeUploadTools?.includes(UploadTools.dataUpload) && (
+                activeUploadTools?.includes(UploadTools.dataUpload) && (
                   <Button
                     className='upload-data-button tool-menu-button'
                     icon={<FontAwesomeIcon icon={faUpload} />}
@@ -427,7 +427,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           onClick={() => {
             dispatch(setActiveKeys([]));
             setCollapsed(!collapsed);
-            if (collapsed){
+            if (collapsed) {
               setWidth(noCollapseWidth);
             } else {
               setWidth(collapseWidth);
@@ -437,9 +437,16 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       </Tooltip>
       {!collapsed ? (
         <div
-          className ="dynamicWidth"
-          onMouseDown={onMouseDown}
+          className="dynamicWidth"
           role="button"
+          tabIndex={0}
+          onMouseDown={onMouseDown}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onMouseDown();
+            }
+          }}
         />
       ) : <></>}
     </div>

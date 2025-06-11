@@ -75,6 +75,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
         <img
           className="logo"
           src={logoPath}
+          alt="Logo"
         />
         <div
           className="description"
