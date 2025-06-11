@@ -1,3 +1,18 @@
+## [10.0.0-next.16](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.15...v10.0.0-next.16) (2025-06-11)
+
+
+### Dependencies
+
+* replace deprecated prop ([51b6dec](https://github.com/terrestris/shogun-gis-client/commit/51b6dec14c5bbb55f21a5ae76318ca5026dfe5c3))
+
+
+### Bugfixes
+
+* issues reported by SonarQube ([eb16488](https://github.com/terrestris/shogun-gis-client/commit/eb16488a39f1da7119e848aad2b88adfe12abba7))
+* reduce cognitive complexity ([598291b](https://github.com/terrestris/shogun-gis-client/commit/598291bdf1f42ce153792d0e158526616f78c767))
+* remove trailing space ([e07cd15](https://github.com/terrestris/shogun-gis-client/commit/e07cd15d4bda36ea27b3d8ca26c4b68317616eb8))
+* remove unneeded mock ([f9a8b97](https://github.com/terrestris/shogun-gis-client/commit/f9a8b97c3a124b6be344c02b82cea0a5eafbc9e7))
+
 ## [10.0.0-next.15](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.14...v10.0.0-next.15) (2025-06-11)
 
 
