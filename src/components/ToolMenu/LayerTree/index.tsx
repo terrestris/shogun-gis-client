@@ -18,6 +18,8 @@ import {
   Tooltip
 } from 'antd';
 
+import _isNil from 'lodash/isNil';
+
 import {
   getUid,
   MapEvent as OlMapEvent
@@ -28,9 +30,9 @@ import OlLayerGroup from 'ol/layer/Group';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerTile from 'ol/layer/Tile';
+import OlVectorLayer from 'ol/layer/Vector';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
-import OlSourceVector from 'ol/source/Vector';
 
 import {
   useTranslation
@@ -246,11 +248,11 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   };
 
   const treeFilterFunction = (layer: OlBaseLayer | OlLayerGroup) => {
-    if ((layer as OlLayerGroup).getLayers) {
-      return !layer.get('hideInLayerTree');
+    if (layer instanceof OlLayerGroup) {
+      return true;
     }
 
-    return !((layer as OlLayer).getSource && ((layer as OlLayer).getSource() as OlSourceVector)?.forEachFeature);
+    return !(layer instanceof OlVectorLayer) || !_isNil(layer.get('shogunId'));
   };
 
   const treeNodeTitleRenderer = (layer: OlBaseLayer) => {

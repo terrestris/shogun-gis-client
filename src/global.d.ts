@@ -35,6 +35,7 @@ declare module 'clientConfig' {
     coreName?: string;
     solrQueryConfig?: SolrQueryConfig;
     activateLayerOnClick?: boolean;
+    showSearchResultDrawer?: boolean;
   };
   type ClientConfiguration = {
     shogunBase?: string | false;

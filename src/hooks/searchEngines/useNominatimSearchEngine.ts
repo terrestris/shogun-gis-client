@@ -51,7 +51,7 @@ export const useNominatimSearchEngine = () => {
     const nFeats = response?.features
       .filter(f => !_isNil(f?.properties.geojson))
       .map(f => {
-        const olFeat = geoJsonFormat.readFeature(f.properties.geojson, {
+        const olFeat = geoJsonFormat.readFeature(f.geometry, {
           dataProjection: 'EPSG:4326',
           featureProjection: map.getView().getProjection()
         });
@@ -59,6 +59,8 @@ export const useNominatimSearchEngine = () => {
         if (Array.isArray(olFeat)) {
           return;
         }
+
+        olFeat.setProperties(f.properties);
 
         olFeat.set('title', f.properties.display_name);
 

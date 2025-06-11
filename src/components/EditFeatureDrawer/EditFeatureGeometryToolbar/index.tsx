@@ -43,6 +43,7 @@ import {
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useGetFitPadding from '../../../hooks/useGetFitPadding';
 
 import {
   setFormDirty
@@ -74,6 +75,7 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
 
   const map = useMap();
   const dispatch = useAppDispatch();
+  const getFitPadding = useGetFitPadding();
 
   const [editLayer, setEditLayer] = useState<OlLayerVector<OlSourceVector>>();
   const [, setRevision] = useState<number>(0);
@@ -118,17 +120,22 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
         return;
       }
 
-      const source = editLayer.getSource() as OlSourceVector;
+      const source = editLayer.getSource();
+
+      if (!source) {
+        return;
+      }
+
       source.addFeature(olFeat);
       setRevision(r => r + 1);
 
       if (!isEmptyOlExtent(source.getExtent())) {
         map?.getView().fit(source.getExtent(), {
-          padding: [50, 50, 50, 50]
+          padding: getFitPadding(true)
         });
       }
     }
-  }, [feature, editLayer, gjFormat, map]);
+  }, [feature, editLayer, gjFormat, map, getFitPadding]);
 
   const undoEdit = () => {
 

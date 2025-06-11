@@ -1,43 +1,30 @@
 import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState
+  ReactNode, useCallback, useEffect, useState
 } from 'react';
 
 import {
-  Alert,
-  UploadFile
+  Alert, UploadFile
 } from 'antd';
-import {
-  useForm
-} from 'antd/lib/form/Form';
+import { useForm } from 'antd/lib/form/Form';
 
-import {
-  Feature
-} from 'geojson';
-
-import moment from 'moment';
+import dayjs from 'dayjs';
+import { Feature } from 'geojson';
 
 import { ValidateErrorEntity } from 'rc-field-form/es/interface';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import {
-  WmsLayer,
-  isWmsLayer
+  isWmsLayer, WmsLayer
 } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import ShogunFile from '@terrestris/shogun-util/dist/model/File';
 import {
-  PropertyFormItemEditConfig,
-  PropertyFormTabConfig
+  PropertyFormItemEditConfig, PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -45,9 +32,7 @@ import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
-import {
-  setFeature
-} from '../../../store/editFeature';
+import { setFeature } from '../../../store/editFeature';
 
 import { isFileConfig } from '../EditFeatureForm';
 import EditFeatureGeometryToolbar from '../EditFeatureGeometryToolbar';
@@ -132,7 +117,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         });
 
         if (isDate) {
-          const parsedDate = moment(value);
+          const parsedDate = dayjs(value);
 
           if (parsedDate.isValid()) {
             properties[key] = parsedDate;
@@ -166,8 +151,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
                 };
               });
 
-              const result = await Promise.all(fileListWithBlob);
-              properties[key] = result;
+              properties[key] = await Promise.all(fileListWithBlob);
             } catch (error) {
               Logger.error('Could not parse file list from JSON config: ', error);
               properties[key] = [];
@@ -213,14 +197,12 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
       }
     });
 
-    const formattedMessage = collectedFieldErrors.map((line, index) => (
+    return collectedFieldErrors.map((line, index) => (
       <React.Fragment key={index}>
         {line}
-        {index !== collectedFieldErrors.length - 1 && <br />}
+        {index !== collectedFieldErrors.length - 1 && <br/>}
       </React.Fragment>
     ));
-
-    return formattedMessage;
   };
 
   const onSaveSuccess = (responseText?: string) => {

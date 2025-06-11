@@ -1,7 +1,8 @@
 import React, {
   useCallback,
   useEffect,
-  useState
+  useState,
+  JSX
 } from 'react';
 
 import type {
@@ -113,6 +114,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const dispatch = useAppDispatch();
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
+  const maxHeight = useAppSelector(state => state.toolMenu.maxHeight);
 
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
@@ -391,12 +393,15 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     <div
       aria-label="tool-menu"
       className={`tool-menu ${collapsed ? 'collapsed' : ''}`}
-      style={{ width: width } as React.CSSProperties}
+      style={{
+        width,
+        maxHeight: maxHeight ?? '100%'
+      }}
     >
       <Collapse
         expandIconPosition='end'
         activeKey={activeKeys}
-        destroyInactivePanel={true}
+        destroyOnHidden={true}
         onChange={(keys: string[] | string) => {
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));

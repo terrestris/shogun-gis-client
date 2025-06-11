@@ -1,4 +1,4 @@
-FROM node:23.3.0-alpine3.19 AS build
+FROM node:20-alpine3.20 AS build
 
 RUN apk update && apk upgrade --no-cache
 

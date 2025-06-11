@@ -8,11 +8,8 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
+import dayjs from 'dayjs';
 import _cloneDeep from 'lodash/cloneDeep';
-
-import {
-  isMoment
-} from 'moment';
 
 import {
   isEmpty
@@ -95,7 +92,7 @@ export const useWriteWfsTransaction = () => {
       }
 
       // Transform moments back to iso string.
-      if (isMoment(value)) {
+      if (dayjs(value).isValid()) {
         formValues[key] = value.toISOString();
       }
 

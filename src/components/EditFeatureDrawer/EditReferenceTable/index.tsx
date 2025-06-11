@@ -1,53 +1,37 @@
-import React, {
-  useState
-} from 'react';
+import React, { useState } from 'react';
 
 import {
-  faEdit,
-  faTrash,
-  faPlus
+  faEdit, faPlus, faTrash
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
-  Button,
-  Modal,
-  Popconfirm,
-  Table
+  Button, Modal, Popconfirm, Table
 } from 'antd';
 
 import {
-  FormInstance,
-  useForm
+  FormInstance, useForm
 } from 'antd/lib/form/Form';
 
 import {
-  ColumnsType,
-  TableProps
+  ColumnsType, TableProps
 } from 'antd/lib/table';
 
+import dayjs from 'dayjs';
 import { FileInfoList } from 'hooks/useWriteWfsTransaction';
 
 import _cloneDeep from 'lodash/cloneDeep';
-
-import moment from 'moment';
+import _isFinite from 'lodash/isFinite';
+import _isString from 'lodash/isString';
 
 import OlFeature from 'ol/Feature';
-import {
-  getUid
-} from 'ol/util';
+import { getUid } from 'ol/util';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import {
-  PropertyFormItemEditConfig
-} from '@terrestris/shogun-util/dist/model/Layer';
+import { PropertyFormItemEditConfig } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
@@ -182,11 +166,10 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
     valueCopy.forEach(v => {
       Object.entries(v).forEach(async ([key, val]) => {
         const isDate = formConfig?.some(cfg => cfg.propertyName === key && cfg.component === 'DATE');
-        if (isDate && val) {
-          const parsedDate = moment(value);
-
+        if (isDate && (_isString(val) || _isFinite(val)) && (_isString(value) || _isFinite(value))) {
+          const parsedDate = dayjs(`${value}`);
           if (parsedDate.isValid()) {
-            v[key] = moment(val);
+            v[key] = dayjs(`${val}`);
           } else {
             Logger.warn('Could not parse date');
             v[key] = null;
@@ -207,8 +190,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
                 : undefined,
               url: upload.type.startsWith('image') ? undefined : upload.url
             }));
-            const result = await Promise.all(vMap);
-            v[key] = result;
+            v[key] = await Promise.all(vMap);
           } else {
             v[key] = [];
           }
@@ -221,11 +203,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
         return true;
       }
 
-      if (typeof el.id === 'string' && el.id.length > 0) {
-        return true;
-      }
-
-      return false;
+      return typeof el.id === 'string' && el.id.length > 0;
     });
 
     if (!isIdAvailable) {
@@ -268,11 +246,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
         return true;
       }
 
-      if (deleteCandidate.internalId && (deleteCandidate.internalId === record.internalId)) {
-        return true;
-      }
-
-      return false;
+      return !!(deleteCandidate.internalId && (deleteCandidate.internalId === record.internalId));
     });
 
     if (deleteIdx === -1) {
@@ -308,11 +282,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
         return true;
       }
 
-      if (existingReference.internalId && (existingReference.internalId === formValues.internalId)) {
-        return true;
-      }
-
-      return false;
+      return !!(existingReference.internalId && (existingReference.internalId === formValues.internalId));
     });
 
     if (targetIdx > -1) {

@@ -7,6 +7,7 @@ import {
 } from 'ol/extent';
 import OlFeature from 'ol/Feature';
 import {
+  equalTo,
   like,
   or
 } from 'ol/format/filter';
@@ -35,6 +36,7 @@ import {
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useExecuteGetFeature from '../useExecuteGetFeature';
+import useExecuteWfsDescribeFeatureType from '../useExecuteWfsDescribeFeatureType';
 
 export const isFulfilled = <T, >(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
 export const isRejected = <T, >(p: PromiseSettledResult<T>): p is PromiseRejectedResult => p.status === 'rejected';
@@ -42,6 +44,7 @@ export const isRejected = <T, >(p: PromiseSettledResult<T>): p is PromiseRejecte
 export const useWfsSearchEngine = () => {
   const map = useMap();
   const executeGetFeature = useExecuteGetFeature();
+  const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
   const replaceTemplates = useCallback((template: string, feature: OlFeature): string => {
     // regex for template string with values in brackets, e.g. {name}
@@ -56,19 +59,7 @@ export const useWfsSearchEngine = () => {
       return replaceTemplates(searchConfig.displayTemplate, feature);
     }
 
-    const blacklistedAttributes = [
-      'category',
-      'id',
-      'featureType',
-      'geometry',
-      'search'
-    ];
-
     for (const [key, value] of Object.entries(feature.getProperties())) {
-      if (blacklistedAttributes.includes(key)) {
-        continue;
-      }
-
       const propValue = value?.toString();
 
       if (propValue.toLowerCase().indexOf(searchValue?.toLowerCase()) > -1) {
@@ -111,9 +102,59 @@ export const useWfsSearchEngine = () => {
         continue;
       }
 
-      const filter = searchConfig.attributes.map(attr => {
-        return like(attr, `*${value}*`, '*', '.', '!', false);
-      });
+      const describeFeatureType = await executeWfsDescribeFeatureType(searchableLayer);
+
+      if (!describeFeatureType) {
+        Logger.warn('No successful DescribeFeatureType for layer: ', searchableLayer);
+        continue;
+      }
+
+      const layerName: string | null = searchableLayer.getSource()?.getParams()?.LAYERS;
+
+      if (!layerName) {
+        Logger.warn('No layer name available for layer: ', searchableLayer);
+        continue;
+      }
+
+      const featureType = describeFeatureType.featureTypes.find(ft => ft.typeName === layerName || ft.typeName === layerName.split(':')?.[1]);
+
+      if (!featureType) {
+        Logger.warn('No corresponding feature type for layer: ', searchableLayer);
+        continue;
+      }
+
+      const filter = searchConfig.attributes
+        .map(attribute => {
+          const attr = featureType.properties.find(property => property.name === attribute);
+
+          if (!attr) {
+            Logger.warn(`Attribute "${attribute}" not found in feature type `+
+              `"${featureType.typeName}" for layer "${searchableLayer.get('name')}".`);
+            return null;
+          }
+
+          if (attr.localType === 'string') {
+            return like(attribute, `*${value}*`, '*', '.', '!', false);
+          } else if (attr.localType === 'number' || attr.localType === 'int') {
+            const numValue = Number(value);
+
+            if (isNaN(numValue)) {
+              return null;
+            }
+
+            return equalTo(attribute, numValue);
+          } else {
+            Logger.warn(`Attribute "${attribute}" with type "${attr.localType}" ` +
+              `not supported for search in layer "${searchableLayer.get('name')}".`);
+            return null;
+          }
+        })
+        .filter(f => f !== null);
+
+      if (filter.length === 0) {
+        Logger.warn('No valid filter available for layer: ', searchableLayer);
+        continue;
+      }
 
       promises.push(
         executeGetFeature({
@@ -164,7 +205,7 @@ export const useWfsSearchEngine = () => {
     }
 
     return wfsResults;
-  }, [executeGetFeature, getFeatureTitle, map]);
+  }, [executeGetFeature, executeWfsDescribeFeatureType, getFeatureTitle, map]);
 
   return performWfsSearch;
 };
