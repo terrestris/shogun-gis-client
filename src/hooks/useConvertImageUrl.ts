@@ -32,7 +32,7 @@ export const useConvertImageUrl = () => {
         reader.onload = function () { onSuccess(this.result as string); };
         reader.readAsDataURL(blob);
       } catch (e) {
-        onError(new Error(`Error reading file: ${e}`)); 
+        onError(new Error(`Error reading file: ${e}`));
       }
     });
   }, [client]);
