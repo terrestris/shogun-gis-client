@@ -58,7 +58,7 @@ export const ReferenceTable: React.FC<ReferenceTableProps> = ({
 
   const resolvePlaceholder = (record: ReferenceDataType) => {
     if (referenceConfig?.tablePropertyName) {
-      const regex = /{{(.*?)}}/g;
+      const regex = /{{([^}]*)}}/g;
 
       if (referenceConfig?.tablePropertyName.match(regex)) {
         let resolved = referenceConfig?.tablePropertyName;

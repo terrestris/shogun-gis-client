@@ -99,7 +99,7 @@ export const EditReferenceTable: React.FC<EditReferenceTableProps> = ({
       return record[defaultPropertyName] ?? '';
     }
 
-    const regex = /{{(.*?)}}/g;
+    const regex = /{{([^}]*)}}/g;
 
     if (!tablePropertyName.match(regex)) {
       return record[tablePropertyName];
