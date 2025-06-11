@@ -53,7 +53,9 @@ describe('<UploadDataModal />', () => {
 
     expect(modal).not.toHaveStyle('display: none');
 
-    const closeButton = screen.getByLabelText('Close');
+    const closeButton = screen.getByLabelText('Close', {
+      selector: 'button'
+    });
 
     fireEvent.click(closeButton);
 

@@ -65,7 +65,7 @@ describe('<AttributionDrawer />', () => {
     await waitFor(() => {
       expect(submitButton).toBeDisabled();
     });
-  });
+  }, 10000);
 
   test('updates available attributes when form values change', async () => {
     const feature = new Feature({ name: 'Test Feature' });

@@ -18,6 +18,8 @@ import {
   Tooltip
 } from 'antd';
 
+import _isNil from 'lodash/isNil';
+
 import {
   getUid,
   MapEvent as OlMapEvent
@@ -28,15 +30,13 @@ import OlLayerGroup from 'ol/layer/Group';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerTile from 'ol/layer/Tile';
-import OlVectorLayer from "ol/layer/Vector";
+import OlVectorLayer from 'ol/layer/Vector';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import {
   useTranslation
 } from 'react-i18next';
-
-import _isNil from "lodash/isNil";
 
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 import { isWmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
