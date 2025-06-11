@@ -9,12 +9,6 @@ import {
 
 import DocumentationButton from '.';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: jest.fn(() => ({
-    t: (key: string) => key
-  }))
-}));
-
 describe('<DocumentationButton />', () => {
 
   afterEach(() => {
