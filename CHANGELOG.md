@@ -1,3 +1,54 @@
+## [10.0.0-next.15](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.14...v10.0.0-next.15) (2025-06-11)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.27.1 to 7.27.4 ([eeb15df](https://github.com/terrestris/shogun-gis-client/commit/eeb15dfc055ba8b5df4735d3831a5d570d2d5f5d))
+* **deps-dev:** bump @babel/runtime from 7.27.1 to 7.27.4 ([ed43a85](https://github.com/terrestris/shogun-gis-client/commit/ed43a85a97126241e386e9b5fba558d0e007d807))
+* **deps-dev:** bump @babel/runtime from 7.27.4 to 7.27.6 ([d741987](https://github.com/terrestris/shogun-gis-client/commit/d7419878446e1774711a590bcd8557aa913ba390))
+* **deps-dev:** bump @eslint/js from 9.26.0 to 9.27.0 ([bc95fe4](https://github.com/terrestris/shogun-gis-client/commit/bc95fe4fbdfd74469c7b4ea5be31f54ed02a471e))
+* **deps-dev:** bump @eslint/js from 9.27.0 to 9.28.0 ([6a35a38](https://github.com/terrestris/shogun-gis-client/commit/6a35a38903c5ff4860ea406089c81860ae2c73c2))
+* **deps-dev:** bump @module-federation/enhanced from 0.13.1 to 0.14.0 ([989dc2c](https://github.com/terrestris/shogun-gis-client/commit/989dc2cd12ecaf1044cf92d1f4d398ada714c0d9))
+* **deps-dev:** bump @module-federation/enhanced from 0.14.0 to 0.14.3 ([f472d55](https://github.com/terrestris/shogun-gis-client/commit/f472d558bcc66f41f30c77f384840789abfc2265))
+* **deps-dev:** bump @module-federation/enhanced from 0.14.3 to 0.15.0 ([8192a77](https://github.com/terrestris/shogun-gis-client/commit/8192a77eb0af71a293cb646a835b0224124bb34e))
+* **deps-dev:** bump @playwright/test from 1.52.0 to 1.53.0 ([0b39ba1](https://github.com/terrestris/shogun-gis-client/commit/0b39ba1e25d79dbc0448fb12a34c304ced14fbb1))
+* **deps-dev:** bump @rspack/cli from 1.3.10 to 1.3.11 ([0f40ff4](https://github.com/terrestris/shogun-gis-client/commit/0f40ff4a6478bf52d890d93d342192eafb94f609))
+* **deps-dev:** bump @rspack/cli from 1.3.11 to 1.3.13 ([4eb9858](https://github.com/terrestris/shogun-gis-client/commit/4eb9858d1ac9d553ce38ee09fd979c0cd7b471bc))
+* **deps-dev:** bump @rspack/cli from 1.3.13 to 1.3.15 ([62c55c5](https://github.com/terrestris/shogun-gis-client/commit/62c55c56b5f29e974cef5fd6690aefa589e205f7))
+* **deps-dev:** bump @rspack/core from 1.3.10 to 1.3.11 ([8be0b86](https://github.com/terrestris/shogun-gis-client/commit/8be0b8665bbac6b1a2e295d61544236bc5356fcc))
+* **deps-dev:** bump @rspack/core from 1.3.11 to 1.3.13 ([df8843c](https://github.com/terrestris/shogun-gis-client/commit/df8843c796eb45646aaf24c3afecd275fa91014e))
+* **deps-dev:** bump @rspack/core from 1.3.13 to 1.3.15 ([ab06233](https://github.com/terrestris/shogun-gis-client/commit/ab062333d166404c7408de6e6eaf5b68574d42d7))
+* **deps-dev:** bump @semantic-release/github from 11.0.2 to 11.0.3 ([cdd1ba3](https://github.com/terrestris/shogun-gis-client/commit/cdd1ba311fd93fd58b1a5dca829625fbcde194ee))
+* **deps-dev:** bump @stylistic/eslint-plugin from 4.2.0 to 4.4.0 ([c681768](https://github.com/terrestris/shogun-gis-client/commit/c681768c7b1a77d97c2693f13f702c6c79150021))
+* **deps-dev:** bump @stylistic/eslint-plugin from 4.4.0 to 4.4.1 ([4a61b5c](https://github.com/terrestris/shogun-gis-client/commit/4a61b5cec3eaff710b6e5574ad9618773565d039))
+* **deps-dev:** bump @types/node from 22.15.18 to 22.15.19 ([0817cee](https://github.com/terrestris/shogun-gis-client/commit/0817cee3fb283ede5a219cc9db577112ba37161a))
+* **deps-dev:** bump @types/node from 22.15.19 to 22.15.21 ([7750419](https://github.com/terrestris/shogun-gis-client/commit/7750419828bbc18e49316589f8033887cc848ee2))
+* **deps-dev:** bump @types/node from 22.15.21 to 22.15.29 ([0d26535](https://github.com/terrestris/shogun-gis-client/commit/0d2653553ae56493c5a30147fc24419ec316c869))
+* **deps-dev:** bump @types/node from 22.15.29 to 22.15.30 ([fc92e65](https://github.com/terrestris/shogun-gis-client/commit/fc92e6596904a9fe874b77427dcbaf5a8a5e491e))
+* **deps-dev:** bump @types/node from 22.15.30 to 24.0.0 ([208e470](https://github.com/terrestris/shogun-gis-client/commit/208e47021c4cb3de83cc76dd31aa38022c446bfe))
+* **deps-dev:** bump @typescript-eslint/parser from 8.33.0 to 8.33.1 ([587b5d4](https://github.com/terrestris/shogun-gis-client/commit/587b5d402febcbc66e801bf45168221ed219c861))
+* **deps-dev:** bump eslint from 9.26.0 to 9.27.0 ([71881b9](https://github.com/terrestris/shogun-gis-client/commit/71881b9f3bb12a9652ea0de5115b2aa7345c8e8e))
+* **deps-dev:** bump eslint from 9.27.0 to 9.28.0 ([f01fe2b](https://github.com/terrestris/shogun-gis-client/commit/f01fe2b95350b556b10f11880022de7852264f84))
+* **deps-dev:** bump globals from 16.1.0 to 16.2.0 ([e568f78](https://github.com/terrestris/shogun-gis-client/commit/e568f782ef5aebd44e41b6d1fce1335b164b0aad))
+* **deps-dev:** bump semantic-release from 24.2.3 to 24.2.4 ([4e30cf9](https://github.com/terrestris/shogun-gis-client/commit/4e30cf9b3668e7e7765740ea7570f107e5b7de44))
+* **deps-dev:** bump semantic-release from 24.2.4 to 24.2.5 ([aaf81d4](https://github.com/terrestris/shogun-gis-client/commit/aaf81d470262c5d5124308f80aab589bb06a87da))
+* **deps-dev:** bump ts-jest from 29.3.3 to 29.3.4 ([7e8c962](https://github.com/terrestris/shogun-gis-client/commit/7e8c9623a78bbc97e02f4c5bbb2ca4f61ec61014))
+* **deps-dev:** bump typescript-eslint from 8.32.1 to 8.33.0 ([231f1cd](https://github.com/terrestris/shogun-gis-client/commit/231f1cda7296b5bbe98563e550fbe45b09b9d320))
+* **deps-dev:** bump typescript-eslint from 8.33.0 to 8.33.1 ([e195e2b](https://github.com/terrestris/shogun-gis-client/commit/e195e2bfc71dd21898a907234d5c86c2dca9cdd5))
+* **deps-dev:** bump typescript-eslint from 8.33.1 to 8.34.0 ([ebed975](https://github.com/terrestris/shogun-gis-client/commit/ebed975b2db37c5505d15eae7ae8320a6a2e947f))
+* **deps:** bump @terrestris/shogun-util from 10.6.0 to 10.7.0 ([e704115](https://github.com/terrestris/shogun-gis-client/commit/e70411516558f8f18052c6e80d069e3e980a3bf4))
+* **deps:** bump @types/js-md5 from 0.7.2 to 0.8.0 ([25049b1](https://github.com/terrestris/shogun-gis-client/commit/25049b190969f8de3eeecd1734a70e6e581e4fcf))
+* **deps:** bump geostyler-openlayers-parser from 5.1.0 to 5.1.1 ([44c938f](https://github.com/terrestris/shogun-gis-client/commit/44c938ff2069551b15be383b8a6514a4fa40f51b))
+* **deps:** bump playwright from v1.52.0-jammy to v1.53.0-jammy ([a429cf2](https://github.com/terrestris/shogun-gis-client/commit/a429cf20ff3ec673e6fa597e257ecd6903f6a356))
+* **deps:** bump proj4 from 2.16.2 to 2.17.0 ([5748eea](https://github.com/terrestris/shogun-gis-client/commit/5748eeae78180cff98e27a4de48bccd02c9cff21))
+* **deps:** bump react-i18next from 15.5.1 to 15.5.2 ([76600ea](https://github.com/terrestris/shogun-gis-client/commit/76600ea26bcbd932083aa587accd39101a090341))
+
+
+### Bugfixes
+
+* merge current main ([b036e00](https://github.com/terrestris/shogun-gis-client/commit/b036e00e393df010e4df8193c98ac23d94c74b27))
+* update some compatible packages ([c060f6f](https://github.com/terrestris/shogun-gis-client/commit/c060f6f277d185bc043b9c24abd69eb5595e6403))
+
 ## [10.0.0-next.14](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0-next.13...v10.0.0-next.14) (2025-06-02)
 
 
