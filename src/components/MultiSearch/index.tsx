@@ -24,7 +24,9 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
-import { getUid } from 'ol';
+import {
+  getUid
+} from 'ol';
 import {
   Extent as OlExtent
 } from 'ol/extent';
@@ -312,10 +314,17 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       }
 
       if (ClientConfiguration.search?.showSearchResultDrawer) {
+        const featureObject = geoJSONFormat.writeFeatureObject(item.feature);
+
+        // Remove layer from properties, as it is not serializable
+        delete featureObject.properties?.layer;
+
         dispatch(setSearchResultState({
-          geoJSONFeature: geoJSONFormat.writeFeatureObject(item.feature),
+          geoJSONFeature: featureObject,
+          layerId: getUid(item.feature.get('layer')),
           drawerVisibility: true
         }));
+
         setSearchValue('');
       }
     };

@@ -3,15 +3,19 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-import { Feature } from 'geojson';
+import {
+  Feature
+} from 'geojson';
 
 export interface SearchResultState {
   geoJSONFeature: Feature | null;
+  layerId: string | null;
   drawerVisibility: boolean;
 }
 
 const initialState: SearchResultState = {
   drawerVisibility: false,
+  layerId: null,
   geoJSONFeature: null
 };
 
