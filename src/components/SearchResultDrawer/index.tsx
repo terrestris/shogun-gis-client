@@ -22,12 +22,15 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+
 import PropertyGrid from '@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 import { useOlLayer } from '@terrestris/react-util/dist/Hooks/useOlLayer/useOlLayer';
 
 import {
-  PropertyFormItemReadConfig, PropertyFormTabConfig
+  PropertyFormItemReadConfig,
+  PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -55,12 +58,19 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
   const map = useMap();
   const isSearchResultDrawerVisible = useAppSelector(state => state.searchResult.drawerVisibility);
   const geoJSONFeature = useAppSelector(state => state.searchResult.geoJSONFeature);
+  const targetLayerId = useAppSelector(state => state.searchResult.layerId);
   const olFeature: OlFeature | null = useMemo(() => {
     if (!geoJSONFeature) {
       return null;
     }
     return new GeoJSONParser().readFeature(geoJSONFeature) as OlFeature;
   }, [geoJSONFeature]);
+  const targetLayer = useMemo(() => {
+    if (!targetLayerId || !map) {
+      return null;
+    }
+    return MapUtil.getLayerByOlUid(map, targetLayerId);
+  }, [targetLayerId, map]);
 
   const highlightLayer = useOlLayer(() => {
     return new OlLayerVector({
@@ -108,6 +118,7 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
   const onClose = () => {
     dispatch(setSearchResultState({
       drawerVisibility: false,
+      layerId: null,
       geoJSONFeature: null
     }));
     highlightLayer?.getSource()!.clear();
@@ -149,7 +160,7 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
   };
 
   const resultDrawerConfig: PropertyFormTabConfig<PropertyFormItemReadConfig> | null =
-  olFeature?.get('layer')?.get('searchConfig')?.resultDrawerConfig ?? null;
+    targetLayer?.get('searchConfig')?.resultDrawerConfig ?? null;
 
   useEffect(() => {
     if (olFeature && resultDrawerConfig?.children) {
