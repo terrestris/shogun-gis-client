@@ -100,7 +100,7 @@
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
-    "@stylistic/eslint-plugin": "^4.0.1",
+    "@stylistic/eslint-plugin": "^5.0.0",
     "@swc/helpers": "^0.5.15",
     "@terrestris/eslint-config-typescript": "^9.0.0",
     "@terrestris/eslint-config-typescript-react": "^5.0.1",
