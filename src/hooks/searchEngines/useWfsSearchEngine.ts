@@ -2,6 +2,8 @@ import {
   useCallback
 } from 'react';
 
+import ClientConfiguration from 'clientConfig';
+
 import {
   Extent as OlExtent
 } from 'ol/extent';
@@ -156,6 +158,20 @@ export const useWfsSearchEngine = () => {
         continue;
       }
 
+      // Get all properties that
+      //   1. are defined in the display template
+      //   2. are defined in the result drawer config (if needed)
+      const propertyNames: string[] = [];
+
+      if (searchConfig.displayTemplate) {
+        const pattern = /{\s*(\w+?)\s*}/g;
+        propertyNames.push(...Array.from(searchConfig.displayTemplate.matchAll(pattern), m => m[1]));
+      }
+
+      if (ClientConfiguration.search?.showSearchResultDrawer) {
+        propertyNames.push(...searchConfig.resultDrawerConfig?.children?.map(child => child.propertyName) || []);
+      }
+
       promises.push(
         executeGetFeature({
           layer: searchableLayer,
@@ -163,7 +179,7 @@ export const useWfsSearchEngine = () => {
           // BBOX must be in map projection.
           bbox: viewBox ? transformExtent(viewBox, 'EPSG:4326', map.getView().getProjection()) : undefined,
           maxFeatures: 10,
-          propertyNames: searchConfig.attributes
+          propertyNames: Array.from(new Set(propertyNames))
         })
       );
       layers.push(searchableLayer);
