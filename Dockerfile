@@ -13,7 +13,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM nginx:1.27.5-alpine-slim
+FROM nginx:1.29.0-alpine-slim
 
 RUN apk update && apk upgrade --no-cache
 
