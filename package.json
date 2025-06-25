@@ -103,7 +103,7 @@
     "@stylistic/eslint-plugin": "^4.0.1",
     "@swc/helpers": "^0.5.15",
     "@terrestris/eslint-config-typescript": "^9.0.0",
-    "@terrestris/eslint-config-typescript-react": "^5.0.1",
+    "@terrestris/eslint-config-typescript-react": "^6.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
