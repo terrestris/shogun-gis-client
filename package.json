@@ -60,7 +60,7 @@
     "color": "^5.0.0",
     "dayjs": "^1.11.13",
     "dotenv": "^17.0.0",
-    "geostyler": "^17.0.0",
+    "geostyler": "^18.0.0",
     "geostyler-openlayers-parser": "^5.1.1",
     "geostyler-style": "10.1.0",
     "i18next": "^25.2.1",
