@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, JSX } from 'react';
 
 import {
   DrawerProps
@@ -16,7 +16,7 @@ import StylingComponent from '../ToolMenu/Draw/StylingDrawerButton/StylingCompon
 
 export type StylingDrawerProps = DrawerProps;
 
-export const StylingDrawer: React.FC<StylingDrawerProps> = ({
+export const StylingDrawer: FC<StylingDrawerProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 

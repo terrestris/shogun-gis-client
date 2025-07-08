@@ -1,6 +1,7 @@
 import React, {
   useCallback,
-  useState
+  useState,
+  JSX
 } from 'react';
 
 import {
@@ -162,11 +163,11 @@ export const Draw: React.FC<DrawProps> = ({
       >
         {showDrawPoint ? (
           <DrawButton
-            value="draw-point"
-            key="draw-point"
             drawType="Point"
-            type="link"
+            key="draw-point"
             pressed={false}
+            type="link"
+            value="draw-point"
           >
             <FontAwesomeIcon
               icon={faCircle}
@@ -181,10 +182,10 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawLine ? (
           <DrawButton
-            value="draw-line"
-            key="draw-line"
             drawType="LineString"
+            key="draw-line"
             type="link"
+            value="draw-line"
           >
             <FontAwesomeIcon
               icon={faGripLines}
@@ -235,10 +236,10 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawRectangle ? (
           <DrawButton
-            value="draw-rectangle"
-            key="draw-rectangle"
             drawType="Rectangle"
+            key="draw-rectangle"
             type="link"
+            value="draw-rectangle"
           >
             <FontAwesomeIcon
               icon={faSquare}
@@ -253,10 +254,13 @@ export const Draw: React.FC<DrawProps> = ({
 
         {showDrawAnnotation ? (
           <DrawButton
-            value="draw-text"
-            key="draw-text"
             drawType="Text"
+            key="draw-text"
+            modalPromptCancelButtonText={t('Draw.modalPromptCancelButtonText')}
+            modalPromptOkButtonText={t('Draw.modalPromptOkButtonText')}
+            modalPromptTitle={t('Draw.modalPromptTitle')}
             type="link"
+            value="draw-text"
           >
             <FontAwesomeIcon
               icon={faFont}
