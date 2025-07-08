@@ -20,7 +20,7 @@
       "api": "."
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.15.0",
+    "pluginVersion": "0.16.0",
     "prefetchInterface": false,
     "publicPath": "auto"
   },
@@ -1100,7 +1100,7 @@
             "5145.f90fe3dba654b533.js",
             "5204.8106a10ca16a3e3e.js",
             "5238.74249b5970b97e41.js",
-            "5762.fc2fdfe7b9d6003f.js",
+            "5762.c712d8ed646d849f.js",
             "6255.844fc99aeabbed6d.js",
             "6583.e97ef46190d36256.js",
             "6717.1aa492e1e92bfaa8.js",
