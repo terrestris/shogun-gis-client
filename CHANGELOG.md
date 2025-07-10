@@ -1,3 +1,43 @@
+## [10.1.0](https://github.com/terrestris/shogun-gis-client/compare/v10.0.1...v10.1.0) (2025-07-10)
+
+
+### Dependencies
+
+* bump peer dependencies as well ([fea7aac](https://github.com/terrestris/shogun-gis-client/commit/fea7aac4539fbededad0dc57034fe75058adc01a))
+* **deps-dev:** bump @babel/core from 7.27.4 to 7.27.7 ([f0bdfe8](https://github.com/terrestris/shogun-gis-client/commit/f0bdfe8e04f387e77e2d8629467ad5117b6a1820))
+* **deps-dev:** bump @module-federation/enhanced from 0.15.0 to 0.16.0 ([072e27c](https://github.com/terrestris/shogun-gis-client/commit/072e27c27ea76bec2ad4e9b3114c053b66fe44c6))
+* **deps-dev:** bump @playwright/test from 1.53.1 to 1.53.2 ([c679945](https://github.com/terrestris/shogun-gis-client/commit/c679945af245f76f4e08ec3dc0e39df853d23527))
+* **deps-dev:** bump @rspack/cli from 1.4.0 to 1.4.1 ([77a3041](https://github.com/terrestris/shogun-gis-client/commit/77a30413da908c47be7cdd33dd91f2d830d6940a))
+* **deps-dev:** bump @rspack/cli from 1.4.1 to 1.4.4 ([feafef9](https://github.com/terrestris/shogun-gis-client/commit/feafef96ec869d1c21903824fc366bd3fe26920e))
+* **deps-dev:** bump @rspack/core from 1.4.0 to 1.4.1 ([0a7025c](https://github.com/terrestris/shogun-gis-client/commit/0a7025c13fb97536984dd2347d8dd59fdfffabd9))
+* **deps-dev:** bump @rspack/core from 1.4.1 to 1.4.5 ([b334c21](https://github.com/terrestris/shogun-gis-client/commit/b334c2173c8e4344788c0550d2cdf8ed0c33e042))
+* **deps-dev:** bump @terrestris/eslint-config-typescript ([d266115](https://github.com/terrestris/shogun-gis-client/commit/d2661157b0c818cc35bd233027b791b2df0be1b6))
+* **deps-dev:** bump @types/node from 24.0.4 to 24.0.8 ([7a18cf5](https://github.com/terrestris/shogun-gis-client/commit/7a18cf58b9c9f1ab3393c97f0266062d6d05b40a))
+* **deps-dev:** bump @types/node from 24.0.8 to 24.0.12 ([e4bcd5f](https://github.com/terrestris/shogun-gis-client/commit/e4bcd5f7fbaeb5518fa84c28b5b37f4eddf15c2d))
+* **deps-dev:** bump @typescript-eslint/parser from 8.35.0 to 8.36.0 ([63c304a](https://github.com/terrestris/shogun-gis-client/commit/63c304adcdfe991c9f401ea8b5abc873f414d8c1))
+* **deps-dev:** bump babel-jest from 30.0.2 to 30.0.4 ([bb78d7d](https://github.com/terrestris/shogun-gis-client/commit/bb78d7df72a37ffcf968707a6ef93aaf2b169e10))
+* **deps-dev:** bump eslint from 9.29.0 to 9.30.0 ([d126e29](https://github.com/terrestris/shogun-gis-client/commit/d126e292d6c34fd87261aaf90308581c112325fc))
+* **deps-dev:** bump eslint from 9.30.0 to 9.30.1 ([7a936d6](https://github.com/terrestris/shogun-gis-client/commit/7a936d69ecc4491be8ee9916f769d6d9ab9104a6))
+* **deps-dev:** bump semantic-release from 24.2.5 to 24.2.6 ([e829efd](https://github.com/terrestris/shogun-gis-client/commit/e829efd6b08110292ca7828d91cbee42886e41b3))
+* **deps:** bump dotenv from 16.5.0 to 17.0.0 ([83ab9f9](https://github.com/terrestris/shogun-gis-client/commit/83ab9f9b79b02e10136861eba54140cc2c11bbe8))
+* **deps:** bump playwright from v1.53.1-jammy to v1.53.2-jammy ([bc6caef](https://github.com/terrestris/shogun-gis-client/commit/bc6caefbf711312a3dc0fe8c4a6993e0b2780cd3))
+* **deps:** bump proj4 from 2.19.4 to 2.19.5 ([fac4f71](https://github.com/terrestris/shogun-gis-client/commit/fac4f71b2af994c7a89b22083ca01acf14ce3176))
+* update outdated package lock ([caea437](https://github.com/terrestris/shogun-gis-client/commit/caea437e1f76770449d6a16922590443d01a3abe))
+
+
+### Features
+
+* **i18:** bump geostyler version to 18.1.0 ([ce3c4f2](https://github.com/terrestris/shogun-gis-client/commit/ce3c4f2f2e10a66b97d07d941e73bbe9c7dc7c5f))
+
+
+### Bugfixes
+
+* add Geostyler config to provide locales ([8528a99](https://github.com/terrestris/shogun-gis-client/commit/8528a990a5de75d22d2291525eff35fc99bd44bb))
+* import of geostyler-openlayers-parser ([c4b533b](https://github.com/terrestris/shogun-gis-client/commit/c4b533b28102d1d35d1c2fc6f9835048868c2f38))
+* remove uneeded stream-browserify ([c3b42f1](https://github.com/terrestris/shogun-gis-client/commit/c3b42f196a3dc4fbc31899645a191970d8607d6b))
+* **rspack:** adds fallback for stream and export json correctly ([3786e19](https://github.com/terrestris/shogun-gis-client/commit/3786e194ea38aa60c721d12c758507f3e0e4bd6b))
+* set primary color for text in active toolbar tab ([7ee4824](https://github.com/terrestris/shogun-gis-client/commit/7ee4824603c5f6827925cc08e167519f47d9d4a2))
+
 ## [10.0.1](https://github.com/terrestris/shogun-gis-client/compare/v10.0.0...v10.0.1) (2025-06-27)
 
 
