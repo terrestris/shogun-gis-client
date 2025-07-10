@@ -1,4 +1,6 @@
-import React, { FC, JSX } from 'react';
+import React, {
+  FC, JSX
+} from 'react';
 
 import {
   DrawerProps
