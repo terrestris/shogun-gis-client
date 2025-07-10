@@ -1,21 +1,29 @@
-import * as React from 'react';
-
-import {
+import React, {
   useEffect,
-  useState
+  useState,
+  FC,
+  JSX, useMemo
 } from 'react';
 
+import {
+  locale as GsLocale
+} from 'geostyler';
 import {
   CardStyle,
   CardStyleProps
 } from 'geostyler/dist/Component/CardStyle/CardStyle';
 
-import OlParser from 'geostyler-openlayers-parser';
+import {
+  GeoStylerContext
+} from 'geostyler/dist/context/GeoStylerContext/GeoStylerContext';
+
+import { OlStyleParser } from 'geostyler-openlayers-parser';
 
 import {
   Style as GsStyle
 } from 'geostyler-style';
 
+import _get from 'lodash/get';
 import OlFeature from 'ol/Feature';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
@@ -25,22 +33,48 @@ import {
   StyleLike as OlStyleLike
 } from 'ol/style/Style';
 
+import { useTranslation } from 'react-i18next';
+
+import logger from '@terrestris/base-util/dist/Logger';
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import i18n from '../../../../../i18n';
+
 export type StylingComponentProps = CardStyleProps;
 
-export const StylingComponent: React.FC<StylingComponentProps> = ({
+export const StylingComponent: FC<StylingComponentProps> = ({
   ...passThroughProps
 }): JSX.Element => {
 
+  const { t } = useTranslation();
+
+  const gsLocale = useMemo(() => {
+    let currentLocale = i18n.language || i18n.options?.lng || 'en_US';
+    switch (currentLocale) {
+      case 'en':
+      case 'en_GB':
+      case 'en_US':
+        currentLocale = 'en_US'; break;
+      case 'de':
+        currentLocale = 'de_DE'; break;
+      case 'pl':
+        currentLocale = 'pl_Pl'; break;
+      case 'cz':
+        currentLocale = 'cs_CZ'; break;
+      default:
+        currentLocale = '';
+    }
+    return _get(GsLocale, currentLocale) || GsLocale.en_US;
+  }, []);
+
   const defaultStyle: GsStyle = {
-    name: 'Default Style',
+    name: t('StylingComponent.defaultStyleName'),
     rules: [{
-      name: 'Area',
+      name: t('StylingComponent.defaultAreaStyleName'),
       symbolizers: [{
         kind: 'Fill',
         color: '#00b72b',
@@ -51,7 +85,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
         outlineColor: '#00b72b'
       }]
     }, {
-      name: 'Line',
+      name: t('StylingComponent.defaultLineStyleName'),
       symbolizers: [{
         kind: 'Line',
         color: '#00b72b',
@@ -59,7 +93,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
         opacity: 0.8
       }]
     }, {
-      name: 'Point',
+      name: t('StylingComponent.defaultPointStyleName'),
       symbolizers: [{
         kind: 'Mark',
         wellKnownName: 'circle',
@@ -75,7 +109,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
         'undefined'
       ]
     }, {
-      name: 'Text',
+      name: t('StylingComponent.defaultTextStyleName'),
       symbolizers: [{
         kind: 'Text',
         label: '{{label}}',
@@ -109,7 +143,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
       return;
     }
 
-    const olParser = new OlParser();
+    const olParser = new OlStyleParser();
 
     const drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<OlSourceVector>;
 
@@ -127,7 +161,7 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
 
         const olStyle = await olParser.writeStyle(newStyle);
 
-        if (!olStyle.output) {
+        if (!olStyle.output || rule.symbolizers.length < 1) {
           return;
         }
 
@@ -175,15 +209,20 @@ export const StylingComponent: React.FC<StylingComponentProps> = ({
       drawVectorLayer.setStyle(drawLayerStyleFunction as StyleFunction);
     };
 
-    parseStyles();
+    parseStyles().then(() => logger.info('Styles parsed and applied to draw layer.'));
   }, [style, map]);
 
   return (
-    <CardStyle
-      style={style}
-      onStyleChange={setStyle}
-      {...passThroughProps}
-    />
+    <GeoStylerContext.Provider value={{
+      locale: gsLocale
+    }}
+    >
+      <CardStyle
+        style={style}
+        onStyleChange={setStyle}
+        {...passThroughProps}
+      />
+    </GeoStylerContext.Provider>
   );
 };
 

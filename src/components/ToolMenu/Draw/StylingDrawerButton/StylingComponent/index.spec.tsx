@@ -6,7 +6,7 @@ import {
   waitFor
 } from '@testing-library/react';
 
-import OlParser from 'geostyler-openlayers-parser';
+import OlFeature from 'ol/Feature';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
 
@@ -25,12 +25,6 @@ jest.mock('@terrestris/ol-util/dist/MapUtil/MapUtil', () => ({
     getLayerByName: jest.fn()
   }
 }));
-
-jest.mock('geostyler-openlayers-parser', () => {
-  return jest.fn().mockImplementation(() => ({
-    writeStyle: jest.fn().mockResolvedValue({ output: jest.fn() })
-  }));
-});
 
 describe('StylingDrawer', () => {
   beforeEach(() => {
@@ -57,16 +51,48 @@ describe('StylingDrawer', () => {
 
     const inputElement = screen.getByPlaceholderText('Enter name') as HTMLInputElement;
     expect(inputElement).toBeInTheDocument();
-    expect(inputElement.value).toBe('Default Style');
+    expect(inputElement.value).toBe('StylingComponent.defaultStyleName');
   });
 
   it('processes styles and applies them to the map', async () => {
     render(<StylingComponent />);
 
     await waitFor(() => {
-      expect(OlParser).toHaveBeenCalled();
       expect(MapUtil.getLayerByName).toHaveBeenCalledWith(expect.any(Object), 'react-geo_digitize');
+    });
+  });
 
+  it('applies polygon style to polygon features', async () => {
+    const mockSetStyle = jest.fn();
+    const mockVectorLayer = new OlLayerVector({ source: new OlSourceVector() });
+    mockVectorLayer.setStyle = mockSetStyle;
+
+    (MapUtil.getLayerByName as jest.Mock).mockReturnValue(mockVectorLayer);
+
+    render(<StylingComponent />);
+
+    await waitFor(() => {
+      const styleFunction = mockSetStyle.mock.calls[0][0];
+      const mockFeature = { getGeometry: () => ({ getType: () => 'Polygon' }) };
+      const result = styleFunction(mockFeature, 1);
+      expect(result).toBeDefined();
+    });
+  });
+
+  it('applies polygon style to polygon features', async () => {
+    const mockSetStyle = jest.fn();
+    const mockVectorLayer = new OlLayerVector({ source: new OlSourceVector() });
+    mockVectorLayer.setStyle = mockSetStyle;
+
+    (MapUtil.getLayerByName as jest.Mock).mockReturnValue(mockVectorLayer);
+
+    render(<StylingComponent />);
+
+    await waitFor(() => {
+      const styleFunction = mockSetStyle.mock.calls[0][0];
+      const mockFeature = { getGeometry: () => ({ getType: () => 'Polygon' }) } as unknown as OlFeature;
+      const result = styleFunction(mockFeature, 1);
+      expect(result).toBeDefined();
     });
   });
 

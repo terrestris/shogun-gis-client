@@ -48,16 +48,19 @@ export default {
         clicktodrawarea: 'Zum Zeichnen einer Fläche klicken'
       },
       Draw: {
-        point: 'Punkt',
-        line: 'Linie',
-        polygon: 'Polygon',
         circle: 'Kreis',
+        delete: 'Löschen',
+        export: 'Exportieren',
+        line: 'Linie',
+        modalPromptCancelButtonText: 'Abbrechen',
+        modalPromptOkButtonText: 'Ok',
+        modalPromptTitle: 'Text eingeben',
+        modify: 'Bearbeitung',
+        point: 'Punkt',
+        polygon: 'Polygon',
         rectangle: 'Rechteck',
         text: 'Anmerkung',
-        modify: 'Bearbeitung',
-        upload: 'Hochladen',
-        delete: 'Löschen',
-        export: 'Exportieren'
+        upload: 'Hochladen'
       },
       DeleteAllButton:{
         deleteAll: 'Alles Löschen',
@@ -312,6 +315,13 @@ export default {
       },
       useNominatimSearchEngine: {
         title: 'Ortssuche'
+      },
+      StylingComponent: {
+        defaultStyleName: 'Standardstil',
+        defaultAreaStyleName: 'Polygon',
+        defaultLineStyleName: 'Linie',
+        defaultPointStyleName: 'Punkt',
+        defaultTextStyleName: 'Text'
       }
     }
   },
@@ -623,6 +633,13 @@ export default {
       },
       useNominatimSearchEngine: {
         title: 'Location'
+      },
+      StylingComponent: {
+        defaultStyleName: 'Default style',
+        defaultAreaStyleName: 'Polygon',
+        defaultLineStyleName: 'Line',
+        defaultPointStyleName: 'Point',
+        defaultTextStyleName: 'Text'
       }
     }
   }

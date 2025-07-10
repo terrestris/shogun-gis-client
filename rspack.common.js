@@ -20,7 +20,7 @@ module.exports = {
         fullySpecified: false
       }
     }, {
-      test: /\.(j|t)s$/,
+      test: /\.([jt])s$/,
       exclude: [/[\\/]node_modules[\\/]/],
       loader: 'builtin:swc-loader',
       options: {
@@ -34,6 +34,9 @@ module.exports = {
           targets: 'Chrome >= 48'
         }
       }
+    }, {
+      test: /\.json$/,
+      type: 'json'
     }, {
       test: /\.tsx$/,
       loader: 'builtin:swc-loader',
