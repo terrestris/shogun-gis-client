@@ -17,7 +17,7 @@ import {
   GeoStylerContext
 } from 'geostyler/dist/context/GeoStylerContext/GeoStylerContext';
 
-import OlParser from 'geostyler-openlayers-parser';
+import { OlStyleParser } from 'geostyler-openlayers-parser';
 
 import {
   Style as GsStyle
@@ -143,7 +143,7 @@ export const StylingComponent: FC<StylingComponentProps> = ({
       return;
     }
 
-    const olParser = new OlParser();
+    const olParser = new OlStyleParser();
 
     const drawVectorLayer = MapUtil.getLayerByName(map, 'react-geo_digitize') as OlLayerVector<OlSourceVector>;
 
