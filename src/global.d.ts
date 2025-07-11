@@ -48,6 +48,7 @@ declare module 'clientConfig' {
     };
     print?: {
       url?: string;
+      outputFormats?: string[];
     };
     plugins?: PluginConfiguration[];
     search?: SearchConfiguration;
