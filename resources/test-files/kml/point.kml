@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="multiple__point" id="multiple__point">
+	<SimpleField name="fid" type="float"></SimpleField>
+</Schema>
+<Folder><name>multiple__point</name>
+  <Placemark>
+	<name>1</name>
+	<ExtendedData><SchemaData schemaUrl="#multiple__point">
+		<SimpleData name="fid">1</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-101.635153073343,45.8279217562433</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2</name>
+	<ExtendedData><SchemaData schemaUrl="#multiple__point">
+		<SimpleData name="fid">2</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-54.1926616145304,-16.3090136728019</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>3</name>
+	<ExtendedData><SchemaData schemaUrl="#multiple__point">
+		<SimpleData name="fid">3</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>21.4529699280921,10.5166235328483</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>4</name>
+	<ExtendedData><SchemaData schemaUrl="#multiple__point">
+		<SimpleData name="fid">4</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>77.6406211028146,60.6753120865052</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>
