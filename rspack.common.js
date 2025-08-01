@@ -107,6 +107,9 @@ module.exports = {
       }, {
         from: path.join(__dirname, 'node_modules', 'monaco-editor', 'min', 'vs'),
         to: 'vs'
+      }, {
+        from: 'node_modules/@ngageoint/geopackage/dist/sql-wasm.wasm',
+        to: 'geopackage/'
       }]
     }),
     new rspack.DefinePlugin({

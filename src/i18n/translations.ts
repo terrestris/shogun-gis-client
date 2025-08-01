@@ -197,14 +197,15 @@ export default {
         title: 'Daten hochladen',
         uploadedDataFolder: 'Hochgeladene Daten',
         description: 'Klicken Sie oder ziehen Sie die Datei zum Hochladen in diesen Bereich',
-        hint: 'Unterstützte Dateiformate sind Shapefile (gebündelt als *.zip) und GeoTIFF',
-        success: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt',
+        hint: 'Die üblichen Dateiformate wie Geopackage, GeoJSON, Shapefile (gebündelt als *.zip) und GeoTIFF werden unterstützt',
+        success: 'Datei {{fileName}} wurde erfolgreich geladen',
         error: {
           general: 'Fehler beim Hochladen der Datei {{fileName}}',
-          maxSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
-          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
-          zipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
-        }
+          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})'
+        },
+        selectEntriesHint: 'Wählen Sie die Einträge aus, die der Karte hinzugefügt werden sollen:',
+        nameColumnTitle: 'Name',
+        addSelectedButtonTitle: 'Ausgewählte Einträge hinzufügen'
       },
       MultiSearch: {
         searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
@@ -516,14 +517,15 @@ export default {
         title: 'Upload data',
         uploadedDataFolder: 'Uploaded data',
         description: 'Click or drag file to this area to upload',
-        hint: 'Supported file formats are Shapefile (bundled as *.zip) and GeoTIFF',
-        success: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}',
+        hint: 'The common formats like Geopackage, GeoJSON, Shapefile (bundled as *.zip) and GeoTIFF are supported',
+        success: 'Successfully uploaded file {{fileName}}',
         error: {
           general: 'Error while uploading file {{fileName}}',
-          maxSize: 'The file exceeds the upload limit of {{maxSize}} MB',
-          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
-          zipContent: 'Multiple geodatasets within one archive are not supported'
-        }
+          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})'
+        },
+        selectEntriesHint: 'Please select the entries you want to add to the map:',
+        nameColumnTitle: 'Name',
+        addSelectedButtonTitle: 'Add selected entries'
       },
       MultiSearch: {
         searchInViewBox: 'Search in current extent',
