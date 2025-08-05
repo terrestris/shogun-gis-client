@@ -40,6 +40,8 @@ import {
 } from '../../store/searchResult';
 import MapDrawer from '../MapDrawer';
 
+import { FeatureInfoForm } from '../ToolMenu/FeatureInfo/FeatureInfoForm';
+
 import { AttributeValueCell } from './AttributeValueCell';
 
 export type SearchResultDrawerProps = DrawerProps;
@@ -226,20 +228,28 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
           <h3>{resolveTitle(olFeature, resultDrawerConfig?.title)}</h3>
         )}
         {
-          olFeature && Object.keys(olFeature.getProperties()).length > 1 &&
-          <PropertyGrid
-            className="property-grid"
-            feature={olFeature}
-            attributeFilter={attributeFilter}
-            size="small"
-            sticky={true}
-            attributeNames={attributeNames}
-            columns={columns}
-            scroll={{
-              scrollToFirstRowOnChange: true,
-              y: 'calc(100% - 90px)'
-            }}
-          />
+          olFeature && Object.keys(olFeature.getProperties()).length > 1 && (
+            resultDrawerConfig ? (
+              <FeatureInfoForm
+                name={resultDrawerConfig?.title}
+                feature={olFeature}
+                formConfig={resultDrawerConfig?.children}
+              />
+            ) : (
+              <PropertyGrid
+                className="property-grid"
+                feature={olFeature}
+                attributeFilter={attributeFilter}
+                size="small"
+                sticky={false}
+                attributeNames={attributeNames}
+                columns={columns}
+                scroll={{
+                  scrollToFirstRowOnChange: true
+                }}
+              />
+            )
+          )
         }
       </div>
     </MapDrawer>

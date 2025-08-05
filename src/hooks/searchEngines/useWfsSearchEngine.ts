@@ -161,6 +161,7 @@ export const useWfsSearchEngine = () => {
       // Get all properties that
       //   1. are defined in the display template
       //   2. are defined in the result drawer config (if needed)
+      // Note: if no result drawer config is provided, all the attributes should be requested -> propertyNames is set to undefined
       const propertyNames: string[] = [];
 
       if (searchConfig.displayTemplate) {
@@ -168,7 +169,7 @@ export const useWfsSearchEngine = () => {
         propertyNames.push(...Array.from(searchConfig.displayTemplate.matchAll(pattern), m => m[1]));
       }
 
-      if (ClientConfiguration.search?.showSearchResultDrawer) {
+      if (ClientConfiguration.search?.showSearchResultDrawer && searchConfig.resultDrawerConfig) {
         propertyNames.push(...searchConfig.resultDrawerConfig?.children?.map(child => child.propertyName) || []);
       }
 
@@ -179,7 +180,7 @@ export const useWfsSearchEngine = () => {
           // BBOX must be in map projection.
           bbox: viewBox ? transformExtent(viewBox, 'EPSG:4326', map.getView().getProjection()) : undefined,
           maxFeatures: 10,
-          propertyNames: Array.from(new Set(propertyNames))
+          propertyNames: searchConfig.resultDrawerConfig ? Array.from(new Set(propertyNames)) : undefined
         })
       );
       layers.push(searchableLayer);

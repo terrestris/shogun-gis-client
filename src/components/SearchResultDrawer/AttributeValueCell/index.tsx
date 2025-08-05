@@ -54,10 +54,15 @@ export const AttributeValueCell: React.FC<AttributeValueCellProps> = ({
   }
 
   return (
-    <>
+    <div
+      style={{
+        wordBreak: 'break-word',
+        whiteSpace: 'pre-line'
+      }}
+    >
       {normalized == null || typeof normalized === 'object'
         ? ''
         : normalized}
-    </>
+    </div>
   );
 };
