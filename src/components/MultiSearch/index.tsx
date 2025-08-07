@@ -316,12 +316,14 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
       if (ClientConfiguration.search?.showSearchResultDrawer) {
         const featureObject = geoJSONFormat.writeFeatureObject(item.feature);
 
+        const layerUndefined = featureObject.properties?.layer === undefined;
+
         // Remove layer from properties, as it is not serializable
         delete featureObject.properties?.layer;
 
         dispatch(setSearchResultState({
           geoJSONFeature: featureObject,
-          layerId: getUid(item.feature.get('layer')),
+          layerId: layerUndefined ? null : getUid(item.feature.get('layer')),
           drawerVisibility: true
         }));
 
