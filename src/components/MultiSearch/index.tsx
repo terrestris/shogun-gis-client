@@ -323,7 +323,7 @@ export const MultiSearch: React.FC<MultiSearchProps> = ({
 
         dispatch(setSearchResultState({
           geoJSONFeature: featureObject,
-          layerId:layerUndefined ? (item.feature as any)?.ol_uid : getUid(item.feature.get('layer')),
+          layerId: layerUndefined ? null : getUid(item.feature.get('layer')),
           drawerVisibility: true
         }));
 
