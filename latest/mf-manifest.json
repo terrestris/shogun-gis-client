@@ -1667,9 +1667,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.b917fbcca293a0de.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3284,8 +3282,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/functions",
-      "name": "ol/functions",
+      "id": "SHOGunGISClient:ol/render/Feature",
+      "name": "ol/render/Feature",
       "version": "10.6.1",
       "requiredVersion": "^10.6.1",
       "assets": {
@@ -3300,8 +3298,8 @@
       }
     },
     {
-      "id": "SHOGunGISClient:ol/render/Feature",
-      "name": "ol/render/Feature",
+      "id": "SHOGunGISClient:ol/functions",
+      "name": "ol/functions",
       "version": "10.6.1",
       "requiredVersion": "^10.6.1",
       "assets": {
