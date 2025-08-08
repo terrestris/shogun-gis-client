@@ -1500,10 +1500,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2378.76fe43e438afc3c5.js",
-            "9728.ec7e4793e747df29.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -1831,7 +1828,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7325.94d31ded8bb6c4f8.js",
+            "8778.88bce685dec93ff8.js"
+          ]
         },
         "css": {
           "async": [],
@@ -1886,9 +1886,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "9287.68cd39f6f0d85cbc.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2610,11 +2608,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "1867.0aecb83930c4eb14.js",
-            "2597.e09ab94f79ec284a.js",
-            "7379.16c3ec6786551ece.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3445,9 +3439,9 @@
       "usedIn": []
     },
     {
-      "id": "SHOGunGISClient:ol/render/Feature",
+      "id": "SHOGunGISClient:ol/functions",
       "requiredVersion": "^10.6.1",
-      "name": "ol/render/Feature",
+      "name": "ol/functions",
       "version": "10.6.1",
       "assets": {
         "js": {
@@ -3462,9 +3456,9 @@
       "usedIn": []
     },
     {
-      "id": "SHOGunGISClient:ol/functions",
+      "id": "SHOGunGISClient:ol/render/Feature",
       "requiredVersion": "^10.6.1",
-      "name": "ol/functions",
+      "name": "ol/render/Feature",
       "version": "10.6.1",
       "assets": {
         "js": {
