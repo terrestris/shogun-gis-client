@@ -1,6 +1,13 @@
 import React from 'react';
 
+import {
+  Tooltip,
+  Typography
+} from 'antd';
+
 import ClientConfiguration from 'clientConfig';
+
+import { useTranslation } from 'react-i18next';
 
 import DocumentationButton from '../../components/DocumentationButton';
 import {
@@ -29,7 +36,10 @@ export const Header: React.FC<HeaderProps> = ({
   const logoPath = useAppSelector(state => state.logoPath);
   const userMenuVisible = useAppSelector(state => state.userMenu.visible);
 
+  const { t } = useTranslation();
   const plugins = usePlugins();
+
+  const { Link } = Typography;
 
   const insertPlugins = (itemPosition: HeaderPlacementOrientation, items: JSX.Element[]) => {
     plugins.forEach(plugin => {
@@ -49,14 +59,26 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const getLeftItems = () => {
-    const items = [(
-      <img
+    const items = [
+      <Tooltip
         key="logo"
-        className="logo"
-        aria-label="logo"
-        src={logoPath}
-      />
-    ), (
+        title={t('Header.backToHome')}
+        placement="bottomLeft"
+      >
+        <Link
+          href="/"
+          aria-label={t('Header.backToHome')}
+          className="logo-link"
+        >
+          <img
+            className="logo"
+            data-testid="logo"
+            src={logoPath}
+            alt=""
+            aria-hidden="true"
+          />
+        </Link>
+      </Tooltip>,
       <div
         key="title"
         className="title"
@@ -64,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
       >
         {title}
       </div>
-    )];
+    ];
 
     insertPlugins('left', items);
 
