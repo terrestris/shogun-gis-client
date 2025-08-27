@@ -33,17 +33,23 @@ describe('<Header />', () => {
     expect(container).toBeVisible();
   });
 
-  it('logo is rendered', () => {
+  it('renders logo link with correct href and img', () => {
     store.dispatch(setLogoPath('test-path'));
 
     render(<Header />, {
       wrapper: createReduxWrapper()
     });
 
-    const logoElem = screen.getByLabelText('logo');
+    const link = screen.getByRole('link', { name: 'Header.backToHome' });
+    expect(link).toBeVisible();
+    expect(link).toHaveAttribute('href', '/');
+
+    const logoElem = screen.getByTestId('logo');
 
     expect(logoElem).toBeVisible();
     expect(logoElem).toHaveAttribute('src', 'test-path');
+    expect(logoElem).toHaveAttribute('aria-hidden', 'true');
+    expect(logoElem).toHaveAttribute('alt', '');
   });
 
   it('title is visible', () => {

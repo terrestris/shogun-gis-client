@@ -155,6 +155,9 @@ export default {
         resolutionPlaceholder: 'Bitte wählen Sie eine Ausgabequalität aus',
         managerErrorMessage: 'Fehler bei der Initialisierung der Export-Engine'
       },
+      Header: {
+        backToHome: 'Zurück zur Startseite'
+      },
       Footer: {
         refSystem: 'Bezugssystem',
         scale: 'Maßstab',
@@ -473,6 +476,9 @@ export default {
         outputFormatPlaceholder: 'Please select an output format',
         resolutionPlaceholder: 'Please select an output quality',
         managerErrorMessage: 'Error while initializing the export engine'
+      },
+      Header: {
+        backToHome: 'Back to home'
       },
       Footer: {
         refSystem: 'Reference system',
