@@ -2634,7 +2634,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7410.b917fbcca293a0de.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2775,7 +2777,12 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "214.05f85668f448f994.js",
+            "2446.c43632dcb41e00b2.js",
+            "3276.50f318a49d751a39.js",
+            "9481.c6d3b1dbc38bcf13.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3100,7 +3107,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2378.76fe43e438afc3c5.js",
+            "9728.ec7e4793e747df29.js"
+          ]
         },
         "css": {
           "async": [],
