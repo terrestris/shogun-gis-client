@@ -2708,7 +2708,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2597.e09ab94f79ec284a.js",
+            "3671.2395011bd4f09b4f.js",
+            "8725.5f34dfa9e7985b43.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2764,9 +2768,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7410.b917fbcca293a0de.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2783,7 +2785,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "1867.0aecb83930c4eb14.js",
+            "2597.e09ab94f79ec284a.js",
+            "7379.16c3ec6786551ece.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3251,10 +3257,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2378.76fe43e438afc3c5.js",
-            "9728.ec7e4793e747df29.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
