@@ -2777,12 +2777,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "214.05f85668f448f994.js",
-            "2446.c43632dcb41e00b2.js",
-            "3276.50f318a49d751a39.js",
-            "9481.c6d3b1dbc38bcf13.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3091,10 +3086,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7325.94d31ded8bb6c4f8.js",
-            "8778.88bce685dec93ff8.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
