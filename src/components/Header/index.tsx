@@ -66,7 +66,11 @@ export const Header: React.FC<HeaderProps> = ({
         placement="bottomLeft"
       >
         <Link
-          href="/"
+          href={
+            ClientConfiguration.logoLinkUrl ||
+            ClientConfiguration.shogunBase ||
+            '/'
+          }
           aria-label={t('Header.backToHome')}
           className="logo-link"
         >

@@ -65,6 +65,7 @@ declare module 'clientConfig' {
     enableFallbackConfig?: boolean;
     staticAppConfigUrl?: string;
     layerConfigUrl?: string;
+    logoLinkUrl?: string;
   };
   const config: ClientConfiguration;
 
