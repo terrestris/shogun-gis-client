@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_terrestris_shogun_gis_client=self.webpackChunk_terrestris_shogun_gis_client||[]).push([["7325"],{40868:function(e,t,n){n.r(t),n.d(t,{METERS_PER_UNIT:function(){return u},fromCode:function(){return s}});let r={9001:"m",9002:"ft",9003:"us-ft",9101:"radians",9102:"degrees"};function s(e){return r[e]}let u={radians:6370997/(2*Math.PI),degrees:2*Math.PI*6370997/360,ft:.3048,m:1,"us-ft":1200/3937}}}]);
-//# sourceMappingURL=7325.94d31ded8bb6c4f8.js.map

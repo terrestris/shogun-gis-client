@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_terrestris_shogun_gis_client=self.webpackChunk_terrestris_shogun_gis_client||[]).push([["2170"],{38225:function(e,t,n){n.r(t),n.d(t,{MapComponent:function(){return a}});var r=n(76395),s=n.n(r);let a=({map:e,mapDivId:t="map",...n})=>{let a=(0,r.useCallback)(t=>{e&&(null===t?e.setTarget(void 0):e.setTarget(t))},[e]);return e?s().createElement("div",{id:t,ref:a,className:"map",role:"presentation",...n}):s().createElement(s().Fragment,null)};t.default=a}}]);
+//# sourceMappingURL=2170.693c232549f011f9.js.map

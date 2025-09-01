@@ -1,0 +1,1 @@
+{"version":3,"file":"2637.271c294a129e36a6.css","sources":["webpack://@terrestris/shogun-gis-client/./node_modules/@terrestris/react-geo/dist/LayerTree/LayerTree.less"],"sourcesContent":[".react-geo-layertree {\n  .out-of-range {\n    opacity: 0.5;\n  }\n}\n"],"names":[],"mappings":"AAAA"}
