@@ -113,7 +113,7 @@ jobs:
           echo "sonar.projectVersion=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
-        uses: SonarSource/sonarqube-scan-action@v5.3.0
+        uses: SonarSource/sonarqube-scan-action@v5.3.1
         with:
           projectBaseDir: .
         env:
