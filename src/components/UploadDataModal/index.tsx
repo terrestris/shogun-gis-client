@@ -219,6 +219,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
 
   const createVectorLayer = (features: OlFeature[], fileName: string) => {
     const layer = new OlLayerVector({
+      visible: true,
       source: new OlSourceVector({
         features: features
       }),
@@ -266,6 +267,9 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
       const existingGroups = map.getLayerGroup().getLayers();
       existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
     }
+
+    // TODO Check why not visible in tree
+    map.getView().dispatchEvent('change:resolution');
   };
 
   const generateExtent = async (layers: OlLayer[]) => {
@@ -373,6 +377,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
           }
         } else {
           // TODO Check for upload with EPSG:25832 or similiar
+          // TODO Allow to force data projection? e.g. for wkt/wkb
           const features = await readFeaturesFromFile((file.originFileObj as File), map?.getView().getProjection());
 
           if (!features || Object.keys(features).length === 0) {
