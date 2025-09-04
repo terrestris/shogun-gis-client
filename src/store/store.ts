@@ -10,6 +10,7 @@ import {
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
 import backgroundLayerChooser from './backgroundLayerChooser';
+import classificationDrawer from './classificationDrawer';
 import description from './description';
 import editFeature from './editFeature';
 import editFeatureDrawerOpen from './editFeatureDrawerOpen';
@@ -39,6 +40,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     addLayerModal,
     appInfo,
     backgroundLayerChooser,
+    classificationDrawer,
     description,
     editFeature,
     editFeatureDrawerOpen,
