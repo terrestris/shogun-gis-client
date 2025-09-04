@@ -4,4 +4,14 @@
   bottom: var(--footerHeight);
   z-index: 1;
   text-align: justify;
+
+  &.ant-drawer-right {
+    .ant-drawer-header-title {
+      flex-direction: row-reverse;
+
+      button {
+        margin-inline-end: unset;
+      }
+    }
+  }
 }
