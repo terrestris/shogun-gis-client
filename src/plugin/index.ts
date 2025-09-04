@@ -11,12 +11,17 @@ import type OlMap from 'ol/Map';
 import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type ClientPluginLocale = Record<string, {
-    translation: Record<string, any>;
-  }>;
+  translation: Record<string, any>;
+}>;
 
-export type ClientPluginComponentProps = {
+export type PluginConfig = {
+  disabled?: boolean;
+};
+
+export type ClientPluginComponentProps<T extends PluginConfig = PluginConfig> = {
   map?: OlMap;
   client?: SHOGunAPIClient;
+  config?: T;
 };
 
 export type ClientPluginIntegration = {

@@ -626,19 +626,18 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
     for (const module of clientPluginModules) {
       const clientPluginDefault: ClientPluginInternal = module as ClientPluginInternal;
       const PluginComponent = clientPluginDefault.component;
+      const pluginApplicationConfig = toolConfig?.find((tc) => tc.name === clientPluginDefault.key);
 
-      if (toolConfig) {
-        const pluginApplicationConfig = toolConfig.find((tc) => tc.name === clientPluginDefault.key);
-        if (pluginApplicationConfig?.config?.disabled) {
-          Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
-          continue;
-        }
+      if (pluginApplicationConfig?.config?.disabled) {
+        Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
+        continue;
       }
 
       const WrappedPluginComponent = () => (
         <PluginComponent
           map={map}
           client={client}
+          config={pluginApplicationConfig?.config}
         />
       );
 
