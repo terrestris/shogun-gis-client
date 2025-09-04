@@ -124,7 +124,8 @@ import {
   setTitle
 } from './store/title';
 import {
-  setAvailableTools
+  setAvailableTools,
+  setToolMenuWidth
 } from './store/toolMenu';
 import {
   setUser
@@ -338,6 +339,10 @@ export const setApplicationToStore = async (application?: Application) => {
 
     store.dispatch(setAvailableTools(availableTools));
   }
+};
+
+const setInitialToolMenuWidth = (width = 320) => {
+  store.dispatch(setToolMenuWidth(width));
 };
 
 const setAppInfoToStore = async (appInfo?: AppInfo) => {
@@ -735,7 +740,7 @@ const renderApp = async () => {
     if (!applicationId && !applicationName && !ClientConfiguration.enableFallbackConfig && !ClientConfiguration.staticAppConfigUrl) {
       throw new Error(LoadingErrorCode.APP_ID_NOT_SET);
     }
-    let appConfig;
+    let appConfig: Application | undefined;
     if (applicationName && client) {
       appConfig = await getApplicationConfigurationByName(client, applicationName);
       if (appConfig?.id) {
@@ -784,6 +789,8 @@ const renderApp = async () => {
     Object.keys(style).forEach((key: any) => {
       document.body.style.setProperty(key, style[key as keyof ThemeProperties] as string);
     });
+
+    setInitialToolMenuWidth(appConfig?.clientConfig?.theme?.toolMenuWidth);
 
     setApplicationToStore(appConfig);
 
