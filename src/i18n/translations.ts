@@ -91,6 +91,7 @@ export default {
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
+        legendFilter: 'Legende filtern',
         downloadLayer: 'Layer exportieren ({{formatName}})',
         editLayer: 'Layer bearbeiten',
         layerDetails: 'Eigenschaften'
@@ -325,6 +326,21 @@ export default {
         defaultLineStyleName: 'Linie',
         defaultPointStyleName: 'Punkt',
         defaultTextStyleName: 'Text'
+      },
+      ClassificationDrawer: {
+        title: 'Legendenfilter',
+        noLayerSelected: 'Kein Layer ausgewählt'
+      },
+      SldClassificationPanel: {
+        filterApplyError: 'Fehler beim Anwenden des Filters',
+        applyButtonText: 'Übernehmen',
+        applyButtonTooltip: 'Filter übernehmen',
+        restoreButtonText: 'Zurücksetzen',
+        restoreButtonTooltip: 'Filter zurücksetzen',
+        scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
+        scaleDenominatorText2: '(ab 1:${{min}})',
+        scaleDenominatorText3: '(ab 1:${{min}})',
+        scaleDenominatorText4: '(bis 1:${{max}})'
       }
     }
   },
@@ -414,6 +430,7 @@ export default {
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
+        legendFilter: 'Filter legend',
         downloadLayer: 'Export layer as {{formatName}}',
         editLayer: 'Edit layer',
         layerDetails: 'Properties'
@@ -646,6 +663,21 @@ export default {
         defaultLineStyleName: 'Line',
         defaultPointStyleName: 'Point',
         defaultTextStyleName: 'Text'
+      },
+      ClassificationDrawer: {
+        title: 'Legend filter',
+        noLayerSelected: 'No layer selected'
+      },
+      SldClassificationPanel: {
+        filterApplyError: 'Error applying the filter style',
+        applyButtonText: 'Apply',
+        applyButtonTooltip: 'Apply filter',
+        restoreButtonText: 'Clear filter',
+        restoreButtonTooltip: 'Reset the filter',
+        scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
+        scaleDenominatorText2: '(from 1:${{min}})',
+        scaleDenominatorText3: '(from 1:${{min}})',
+        scaleDenominatorText4: '(until 1:${{max}})'
       }
     }
   }
