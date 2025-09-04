@@ -37,7 +37,10 @@ import {
 import ClientConfiguration from 'clientConfig';
 
 import _toArray from 'lodash/toArray';
-import { ItemType } from 'rc-collapse/lib/interface';
+
+import {
+  ItemType
+} from 'rc-collapse/lib/interface';
 
 import {
   useTranslation
@@ -59,12 +62,16 @@ import {
 import {
   show as showAdd
 } from '../../store/addLayerModal';
-import { setFeatureInfoEnabled } from '../../store/featureInfo';
 import {
-  UploadTools, setLayerTreeEnabled
+  setFeatureInfoEnabled
+} from '../../store/featureInfo';
+import {
+  UploadTools,
+  setLayerTreeEnabled
 } from '../../store/layerTree';
 import {
-  setActiveKeys
+  setActiveKeys,
+  setToolMenuWidth
 } from '../../store/toolMenu';
 import {
   show as showUpload
@@ -79,6 +86,7 @@ import FeatureInfo from './FeatureInfo';
 import LayerTree from './LayerTree';
 
 import Measure from './Measure';
+
 import './index.less';
 
 export interface TitleEventEntity {
@@ -115,6 +123,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const availableTools = useAppSelector(state => state.toolMenu.availableTools);
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
   const maxHeight = useAppSelector(state => state.toolMenu.maxHeight);
+  const width = useAppSelector(state => state.toolMenu.width);
 
   const client = useSHOGunAPIClient();
   const keycloak = client?.getKeycloak();
@@ -122,7 +131,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
   const [isResizing, setIsResizing] = useState(false);
-  const [width, setWidth] = useState(320);
   const [noCollapseWidth, setNoCollapseWidth] = useState(width);
 
   useEffect(() => {
@@ -134,9 +142,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
 
     if (isMobile) {
       setCollapsed(true);
-      setWidth(collapseWidth);
+      dispatch(setToolMenuWidth(collapseWidth));
     }
-  }, [collapseWidth]);
+  }, [collapseWidth, dispatch]);
 
   useEffect(() => {
     if (menuTools.length < 1) {
@@ -165,9 +173,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       'tree'
     ];
 
-    const activeExclusiveTools = exclusiveTools.filter(tool =>
-      activeKeys.includes(tool)
-    );
+    const activeExclusiveTools = exclusiveTools.filter(tool => activeKeys.includes(tool));
 
     if (activeExclusiveTools.length > 1) {
       const lastExclusiveTool = activeKeys
@@ -373,11 +379,11 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
     if (isResizing && !collapsed) {
       const offsetLeft = (e.clientX - document.body.offsetLeft);
       if (offsetLeft > minWidth && offsetLeft < maxWidth) {
-        setWidth(offsetLeft);
+        dispatch(setToolMenuWidth(offsetLeft));
         setNoCollapseWidth(offsetLeft);
       }
     }
-  }, [isResizing, collapsed, minWidth, maxWidth]);
+  }, [isResizing, collapsed, minWidth, maxWidth, dispatch]);
 
   useEffect(() => {
     document.addEventListener('mousemove', onMouseMove);
@@ -406,7 +412,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           setCollapsed(false);
           dispatch(setActiveKeys(_toArray(keys)));
           if (collapsed) {
-            setWidth(noCollapseWidth);
+            dispatch(setToolMenuWidth(noCollapseWidth));
           }
         }}
         items={getToolPanels()}
@@ -428,9 +434,9 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
             dispatch(setActiveKeys([]));
             setCollapsed(!collapsed);
             if (collapsed) {
-              setWidth(noCollapseWidth);
+              dispatch(setToolMenuWidth(noCollapseWidth));
             } else {
-              setWidth(collapseWidth);
+              dispatch(setToolMenuWidth(collapseWidth));
             }
           }}
         />
