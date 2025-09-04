@@ -16,6 +16,7 @@ import {
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import useDragDropUpload from '../../hooks/useDragDropUpload';
 import usePlugins from '../../hooks/usePlugins';
 
 import {
@@ -27,6 +28,8 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
 }): JSX.Element => {
   const map = useMap();
   const plugins = usePlugins();
+
+  useDragDropUpload();
 
   const {
     t,

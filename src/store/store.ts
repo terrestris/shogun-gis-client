@@ -9,6 +9,7 @@ import {
 
 import addLayerModal from './addLayerModal';
 import appInfo from './appInfo';
+import classificationDrawer from './classificationDrawer';
 import description from './description';
 import editFeature from './editFeature';
 import editFeatureDrawerOpen from './editFeatureDrawerOpen';
@@ -37,6 +38,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
   return combineReducers({
     addLayerModal,
     appInfo,
+    classificationDrawer,
     description,
     editFeature,
     editFeatureDrawerOpen,

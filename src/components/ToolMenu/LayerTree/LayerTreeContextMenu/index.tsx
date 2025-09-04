@@ -66,6 +66,10 @@ import useGetFitPadding from '../../../../hooks/useGetFitPadding';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 import {
+  setVisibility as setClassificationDrawerVisibility,
+  setLayerId as setClassificationDrawerLayerId
+} from '../../../../store/classificationDrawer';
+import {
   setLayerId,
   setFeature
 } from '../../../../store/editFeature';
@@ -139,6 +143,10 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       case 'layerDetails':
         dispatch(setLayerDetailsLayer(getUid(layer)));
         dispatch(showLayerDetailsModal());
+        break;
+      case 'legendFilter':
+        dispatch(setClassificationDrawerVisibility(true));
+        dispatch(setClassificationDrawerLayerId(getUid(layer)));
         break;
       default:
         break;
@@ -263,6 +271,11 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     dropdownMenuItems.push({
       label: legendVisible ? t('LayerTreeContextMenu.hideLegend') : t('LayerTreeContextMenu.showLegend'),
       key: 'toggleLegend'
+    });
+
+    dropdownMenuItems.push({
+      label: t('LayerTreeContextMenu.legendFilter'),
+      key: 'legendFilter'
     });
   }
 
