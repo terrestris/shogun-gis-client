@@ -91,7 +91,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     >
       {blcVisible &&
         <BackgroundLayerChooser
-          layers={map.getAllLayers().filter(l => l.get('isBackgroundLayer') === true)}
+          layers={map.getAllLayers().filter(l => l.get('isBackgroundLayer') === true).reverse()}
           allowEmptyBackground = {allowEmptyBackground}
         />
       }
