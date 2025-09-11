@@ -36,7 +36,7 @@
           transform: scale(0.5);
         }
       }
-    </style><title>SHOGun Client</title><meta content="utf-8" name="charset"><meta content="user-scalable=no,width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><script defer src="manifest.95706775af77f425.js"></script><script defer src="main.adf5ccaaac7aea11.js"></script></head><body><noscript>
+    </style><title>SHOGun Client</title><meta content="utf-8" name="charset"><meta content="user-scalable=no,width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><script defer src="manifest.ff1613d11b4f6acb.js"></script><script defer src="main.adf5ccaaac7aea11.js"></script></head><body><noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="loadmask" class="loadmask">
@@ -44,6 +44,6 @@
       <img src="./loading-indicator.gif" id="loadmask-indicator">
     </div>
     <script src="./gis-client-config.js"></script>
-    <script>window.clientConfig||(console.warn("No config found, client defaults will be used."),window.clientConfig={});let appIdExpression=/\applicationId=(\d+)/,appIdCand=location.search.match(appIdExpression),appId=appIdCand?appIdCand[1]:null,logoPath="./shogun_spinner.gif";appId&&(logoPath=localStorage.getItem(`SHOGun_Logo_Path_${appId}`));let loadingImageElement=document.getElementById("loadmask-image");logoPath&&loadingImageElement&&(loadingImageElement.src=logoPath)</script>
+    <script>window.clientConfig||(console.warn("No config found, client defaults will be used."),window.clientConfig={});const appIdExpression=/\applicationId=(\d+)/,appIdCand=location.search.match(appIdExpression);let appId=appIdCand?appIdCand[1]:null,logoPath="./shogun_spinner.gif";appId&&(logoPath=localStorage.getItem(`SHOGun_Logo_Path_${appId}`));const loadingImageElement=document.getElementById("loadmask-image");logoPath&&loadingImageElement&&(loadingImageElement.src=logoPath)</script>
 
     <div id="app" class="app"></div></body></html>
