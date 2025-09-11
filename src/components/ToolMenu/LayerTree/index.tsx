@@ -251,8 +251,16 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (layer instanceof OlLayerGroup) {
       return true;
     }
-
-    return !(layer instanceof OlVectorLayer) || !_isNil(layer.get('shogunId'));
+    if (layer instanceof OlVectorLayer) {
+      return false;
+    }
+    if (_isNil(layer.get('shogunId'))) {
+      return false;
+    }
+    if (layer.get('isBackgroundLayer')) {
+      return false;
+    }
+    return true;
   };
 
   const treeNodeTitleRenderer = (layer: OlBaseLayer) => {

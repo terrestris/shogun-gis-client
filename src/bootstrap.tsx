@@ -89,6 +89,10 @@ import {
   setAppInfo
 } from './store/appInfo';
 import {
+  setBackgroundLayerChooserAllowEmptyBackground,
+  setBackgroundLayerChooserVisible
+} from './store/backgroundLayerChooser';
+import {
   setDescription
 } from './store/description';
 import {
@@ -324,6 +328,11 @@ export const setApplicationToStore = async (application?: Application) => {
       // eslint-disable-next-line camelcase
       user_menu: (config) => {
         store.dispatch(setUserMenuVisible(config?.visible ?? true));
+      },
+      // eslint-disable-next-line camelcase
+      background_layer_chooser: (config) => {
+        store.dispatch(setBackgroundLayerChooserVisible(config?.visible ?? false));
+        store.dispatch(setBackgroundLayerChooserAllowEmptyBackground(config?.allowEmptyBackground ?? false));
       }
     };
 
@@ -468,6 +477,56 @@ const setupSHOGunMap = async (application: Application) => {
   }
 
   const interactions = await parser.parseMapInteractions(application);
+
+  const blcLayers = application.toolConfig?.find(config => config.name === 'background_layer_chooser')?.config.layers;
+  const initiallySelectedLayerId = application.toolConfig?.find(config => config.name === 'background_layer_chooser')?.config.initiallySelectedLayer;
+  const mapLayers = [];
+
+  if (blcLayers){
+    let initiallySelectedLayerPresent = false;
+
+    for (const layer of blcLayers) {
+      try {
+        if (!layer.layerId) {
+          continue;
+        }
+        const l = await client?.layer().findOne(layer.layerId);
+        if (!l) {
+          continue;
+        }
+        const ol = await parser.parseLayer(l);
+        if (!ol || ol instanceof OlLayerGroup) {
+          continue;
+        }
+        ol.set('isBackgroundLayer', true);
+        ol.setVisible(false);
+
+        if (layer.title) {
+          ol.set('name', layer.title);
+        }
+
+        if (layer.opacity) {
+          ol.set('opacity', layer.opacity);
+        }
+
+        if (layer.layerId === initiallySelectedLayerId) {
+          ol.setVisible(true);
+          initiallySelectedLayerPresent = true;
+        }
+        mapLayers.push(ol);
+      }
+      catch (error){
+        Logger.error(error);
+      }
+    }
+
+    // Fallback for when no initiallySelectedLayerId is set. Choose first layer as default.
+    if (!initiallySelectedLayerPresent && mapLayers.length >= 1) {
+      mapLayers[0].setVisible(true);
+    }
+
+    layers?.getLayers().extend(mapLayers);
+  }
 
   return new OlMap({
     view,

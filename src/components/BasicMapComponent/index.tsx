@@ -10,17 +10,23 @@ import {
 
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
+import BackgroundLayerChooser from '@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser';
+
 import {
   MapComponent,
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import useAppSelector from '../../hooks/useAppSelector';
+
 import usePlugins from '../../hooks/usePlugins';
 
 import {
   isMapIntegration
 } from '../../plugin';
+
+import './index.less';
 
 export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
   ...restProps
@@ -32,6 +38,9 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
     t,
     i18n
   } = useTranslation();
+
+  const blcVisible = useAppSelector(state => state.backgroundLayerChooser.visible);
+  const allowEmptyBackground = useAppSelector(state => state.backgroundLayerChooser.allowEmptyBackground);
 
   /**
    * Updates external layer group name when language changes.
@@ -80,6 +89,12 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       map={map}
       {...restProps}
     >
+      {blcVisible &&
+        <BackgroundLayerChooser
+          layers={map.getAllLayers().filter(l => l.get('isBackgroundLayer') === true)}
+          allowEmptyBackground = {allowEmptyBackground}
+        />
+      }
       {
         pluginComponents
       }
