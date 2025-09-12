@@ -1,3 +1,10 @@
+## [10.2.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.2...v10.2.0-next.3) (2025-09-12)
+
+
+### Bugfixes
+
+* minor bug fixes ([5558642](https://github.com/terrestris/shogun-gis-client/commit/55586421feefbe23dc71576a9b5a7da206843a2e))
+
 ## [10.2.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.1...v10.2.0-next.2) (2025-09-12)
 
 
