@@ -31,9 +31,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import Keycloak from 'keycloak-js';
 
+import { Collection } from 'ol';
 import {
   defaults as OlControlDefaults
 } from 'ol/control';
+import BaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayerTile from 'ol/layer/Tile';
 import OlMap from 'ol/Map';
@@ -88,6 +90,10 @@ import {
 import {
   setAppInfo
 } from './store/appInfo';
+import {
+  setAllowEmptyBackground as setBackgroundLayerChooserAllowEmptyBackground,
+  setVisible as setBackgroundLayerChooserVisible
+} from './store/backgroundLayerChooser';
 import {
   setDescription
 } from './store/description';
@@ -324,6 +330,11 @@ export const setApplicationToStore = async (application?: Application) => {
       // eslint-disable-next-line camelcase
       user_menu: (config) => {
         store.dispatch(setUserMenuVisible(config?.visible ?? true));
+      },
+      // eslint-disable-next-line camelcase
+      background_layer_chooser: (config) => {
+        store.dispatch(setBackgroundLayerChooserVisible(config?.visible ?? false));
+        store.dispatch(setBackgroundLayerChooserAllowEmptyBackground(config?.allowEmptyBackground ?? false));
       }
     };
 
@@ -469,6 +480,8 @@ const setupSHOGunMap = async (application: Application) => {
 
   const interactions = await parser.parseMapInteractions(application);
 
+  layers = await addBackgroundLayers(application, layers);
+
   return new OlMap({
     view,
     layers,
@@ -477,6 +490,67 @@ const setupSHOGunMap = async (application: Application) => {
     }),
     interactions
   });
+};
+
+const addBackgroundLayers = async (application: Application, layers: OlLayerGroup | undefined): Promise< Collection<BaseLayer> | undefined> => {
+  const blcLayers = application.toolConfig?.find(config => config.name === 'background_layer_chooser')?.config.layers;
+  const initiallySelectedLayerId = application.toolConfig?.find(config => config.name === 'background_layer_chooser')?.config.initiallySelectedLayer;
+  const backgroundMapLayers = [];
+
+  if (blcLayers){
+    let initiallySelectedLayerPresent = false;
+
+    for (const layer of blcLayers) {
+      try {
+        if (!layer.layerId) {
+          continue;
+        }
+
+        const existingLayer = layers?.getLayersArray().find(item => item.get('shogunId')=== layer.layerId);
+        let olLayer;
+        if (existingLayer) {
+          olLayer = existingLayer;
+        } else {
+          const l = await client?.layer().findOne(layer.layerId);
+          if (!l) {
+            continue;
+          }
+          olLayer = await parser.parseLayer(l);
+        }
+
+        if (!olLayer || olLayer instanceof OlLayerGroup) {
+          continue;
+        }
+        olLayer.set('isBackgroundLayer', true);
+        olLayer.setVisible(false);
+
+        if (layer.title) {
+          olLayer.set('name', layer.title);
+        }
+
+        if (layer.layerId === initiallySelectedLayerId) {
+          olLayer.setVisible(true);
+          initiallySelectedLayerPresent = true;
+        }
+        if (!existingLayer) {
+          backgroundMapLayers.push(olLayer);
+        }
+      }
+      catch (error){
+        Logger.error(`Layer ${layer.layerId} could not be loaded successfully: `, error);
+      }
+    }
+
+    // Fallback for when no initiallySelectedLayerId is set. Choose first layer as default.
+    if (!initiallySelectedLayerPresent && backgroundMapLayers.length >= 1) {
+      backgroundMapLayers[0].setVisible(true);
+    }
+
+    for (const backgroundLayerMap of backgroundMapLayers) {
+      layers?.getLayers().insertAt(0, backgroundLayerMap);
+    }
+    return layers?.getLayers();
+  }
 };
 
 // TODO Make default/fallback app configurable?
