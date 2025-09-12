@@ -1,0 +1,163 @@
+module.exports = {
+  "branches": [
+    {
+      "name": "8.x",
+      "range": "8.x",
+      "channel": "8.x"
+    },
+    {
+      "name": "main"
+    },
+    {
+      "name": "next",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "releaseRules": [
+          {
+            "type": "breaking",
+            "release": "major"
+          },
+          {
+            "type": "ci",
+            "release": false
+          },
+          {
+            "type": "config",
+            "release": "patch"
+          },
+          {
+            "type": "norelease",
+            "release": false
+          },
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "type": "style",
+            "release": "patch"
+          },
+          {
+            "type": "test",
+            "release": false
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "header": "Changelog of shogun-gis-client",
+          "types": [
+            {
+              "type": "breaking",
+              "section": "Breaking changes"
+            },
+            {
+              "type": "chore",
+              "section": "Dependencies"
+            },
+            {
+              "type": "ci",
+              "section": "Changes in configuration"
+            },
+            {
+              "type": "config",
+              "section": "Changes in configuration"
+            },
+            {
+              "type": "docs",
+              "hidden": true
+            },
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bugfixes"
+            },
+            {
+              "type": "norelease",
+              "hidden": true
+            },
+            {
+              "type": "perf",
+              "hidden": true
+            },
+            {
+              "type": "refactor",
+              "hidden": true
+            },
+            {
+              "type": "style",
+              "section": "Changes in layout"
+            },
+            {
+              "type": "test",
+              "hidden": true
+            }
+          ]
+        },
+        "writerOpts": {
+          "transform": function (commit, context) {
+            const issues = []
+            const notes = commit.notes.map(note => note.text)
+            
+            // Ensure date objects are properly handled to fix Date.prototype.toString issues
+            if (commit.committerDate && typeof commit.committerDate === 'string') {
+              commit.committerDate = new Date(commit.committerDate)
+            }
+            
+            if (commit.authorDate && typeof commit.authorDate === 'string') {
+              commit.authorDate = new Date(commit.authorDate)
+            }
+            
+            if (context.date && typeof context.date === 'string') {
+              context.date = new Date(context.date)
+            }
+            
+            // Ensure all date objects are valid before toString operations
+            if (commit.committerDate && isNaN(commit.committerDate.getTime())) {
+              commit.committerDate = new Date()
+            }
+            
+            if (commit.authorDate && isNaN(commit.authorDate.getTime())) {
+              commit.authorDate = new Date()
+            }
+            
+            if (context.date && isNaN(context.date.getTime())) {
+              context.date = new Date()
+            }
+            
+            commit.notes = notes
+            commit.issues = issues
+            
+            return commit
+          }
+        }
+      }
+    ],
+    "@semantic-release/npm",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "package.json",
+          "package-lock.json"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "@semantic-release/github"
+  ]
+}
