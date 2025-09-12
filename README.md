@@ -70,7 +70,6 @@ Several global settings for the client can be configured via the [`gis-client-co
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 
 ```yml
-version: '3.7'
 services:
   shogun-gis-client:
     image: docker-public.terrestris.de/terrestris/shogun-gis-client:latest
