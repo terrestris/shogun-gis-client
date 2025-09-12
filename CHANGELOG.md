@@ -1,3 +1,10 @@
+## [10.2.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.1...v10.2.0-next.2) (2025-09-12)
+
+
+### Bugfixes
+
+* remove obsolete version ([a15bb6f](https://github.com/terrestris/shogun-gis-client/commit/a15bb6f8e548dbb06cb25a5ef5541feab9933f7a))
+
 ## [10.2.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v10.1.1...v10.2.0-next.1) (2025-09-12)
 
 
