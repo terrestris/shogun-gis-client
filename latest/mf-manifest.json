@@ -26,6 +26,28 @@
   },
   "shared": [
     {
+      "id": "SHOGunGISClient:@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser",
+      "name": "@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser",
+      "version": "32.3.0",
+      "requiredVersion": "^32.3.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "2855.9aefab25f3b74a34.js",
+            "5236.c13f4c2f1bb2ec6d.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": [
+            "2855.2dc62a1f188695b8.css",
+            "5236.97d54991392c915a.css"
+          ]
+        }
+      }
+    },
+    {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton",
       "name": "@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton",
       "version": "32.3.0",
@@ -56,14 +78,14 @@
         "js": {
           "async": [],
           "sync": [
-            "8497.40a79be94b30c46e.js",
+            "2189.9b2f427eadb67937.js",
             "9648.5ea7e0449ff0b164.js"
           ]
         },
         "css": {
           "async": [],
           "sync": [
-            "8497.3da32032c62cd535.css",
+            "2189.eda5492120ba5808.css",
             "9648.d64e16c89b2e63c9.css"
           ]
         }
@@ -122,14 +144,14 @@
         "js": {
           "async": [],
           "sync": [
-            "3296.d9b04eb3d6517927.js",
+            "6436.5231a00cb11a0672.js",
             "7917.42339db0df2b1275.js"
           ]
         },
         "css": {
           "async": [],
           "sync": [
-            "3296.cb67f2b1918b6f6d.css",
+            "6436.2debf7d233330306.css",
             "7917.27c6a68001f531ed.css"
           ]
         }
@@ -145,14 +167,19 @@
           "async": [],
           "sync": [
             "1914.dcb24bfe23bd26dd.js",
+            "2855.9aefab25f3b74a34.js",
             "4431.edbea883925065a2.js",
+            "5236.c13f4c2f1bb2ec6d.js",
             "6812.eafb403278196455.js",
             "9533.74a94af3d2c7ddbc.js"
           ]
         },
         "css": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2855.2dc62a1f188695b8.css",
+            "5236.97d54991392c915a.css"
+          ]
         }
       }
     },
@@ -206,8 +233,8 @@
         "js": {
           "async": [],
           "sync": [
-            "223.9409f3062d050dc1.js",
-            "4474.0ba1a69d0a07e51a.js"
+            "4474.0ba1a69d0a07e51a.js",
+            "639.ce9a72101532d690.js"
           ]
         },
         "css": {
@@ -311,12 +338,17 @@
           "async": [],
           "sync": [
             "2170.693c232549f011f9.js",
+            "2855.9aefab25f3b74a34.js",
+            "5236.c13f4c2f1bb2ec6d.js",
             "9789.a6311791924103bd.js"
           ]
         },
         "css": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2855.2dc62a1f188695b8.css",
+            "5236.97d54991392c915a.css"
+          ]
         }
       }
     },
@@ -611,7 +643,7 @@
         "js": {
           "async": [],
           "sync": [
-            "63.78f8f588446b4269.js",
+            "6724.03e534431fc9c434.js",
             "7967.7de1bcf91df0569c.js"
           ]
         },
@@ -630,6 +662,7 @@
         "js": {
           "async": [],
           "sync": [
+            "6178.284ed797b754b2ed.js",
             "8055.53842a57360703d3.js",
             "8559.4eb8d281906d81de.js",
             "940.535ad7d7afd05d56.js",
@@ -670,8 +703,26 @@
           "async": [],
           "sync": [
             "1313.0456eb7712f86d6c.js",
-            "3694.c8fb61e6def2e5cc.js",
-            "63.78f8f588446b4269.js"
+            "2781.dfdf921f8818cc52.js",
+            "3694.c8fb61e6def2e5cc.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      }
+    },
+    {
+      "id": "SHOGunGISClient:ol/control/OverviewMap",
+      "name": "ol/control/OverviewMap",
+      "version": "10.6.1",
+      "requiredVersion": "^10.6.1",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "6724.03e534431fc9c434.js"
           ]
         },
         "css": {
@@ -690,8 +741,8 @@
           "async": [],
           "sync": [
             "1973.b46135c933ee707a.js",
-            "4354.c5583a028f552c61.js",
-            "63.78f8f588446b4269.js"
+            "2781.dfdf921f8818cc52.js",
+            "4354.c5583a028f552c61.js"
           ]
         },
         "css": {
@@ -709,7 +760,7 @@
         "js": {
           "async": [],
           "sync": [
-            "63.78f8f588446b4269.js"
+            "2781.dfdf921f8818cc52.js"
           ]
         },
         "css": {
@@ -764,6 +815,7 @@
             "5164.20c58b3df1eebc48.js",
             "5269.8fa6028094fbce52.js",
             "5486.0718cdcb24ad6c73.js",
+            "6178.284ed797b754b2ed.js",
             "6279.0eb7fac38b87324a.js",
             "6356.56122b916b81bb2b.js",
             "6872.548a642f5e71602a.js",
@@ -1793,10 +1845,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "1888.472729d96e9221e9.js",
-            "7329.0d02c03c5c69c5c4.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2233,9 +2282,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2330,7 +2377,6 @@
           "sync": [
             "1268.d75586319f2c7ea0.js",
             "1517.6afcebecf87c4c9e.js",
-            "223.9409f3062d050dc1.js",
             "2320.29ffd15b3760f8c4.js",
             "2323.17dbb5a1f311e11e.js",
             "2405.f46ad91f72e40b09.js",
@@ -2364,14 +2410,17 @@
             "5164.20c58b3df1eebc48.js",
             "5269.8fa6028094fbce52.js",
             "533.aece18dade033495.js",
+            "5361.1b80d29e89ba0e60.js",
             "5435.0f7db219169f5ac3.js",
             "5574.88dff8d855e7a404.js",
             "5765.818d19820d9e7ab3.js",
             "5771.8e8830a50702cd4c.js",
             "5914.0571cc5f09e62353.js",
             "6050.412030f08136a826.js",
+            "6178.284ed797b754b2ed.js",
             "6279.0eb7fac38b87324a.js",
             "6356.56122b916b81bb2b.js",
+            "639.ce9a72101532d690.js",
             "6506.0317153f57a6e43f.js",
             "6526.78ae724653408de1.js",
             "6570.b0e1f131b055c5b8.js",
@@ -2387,7 +2436,6 @@
             "8072.931cde16e1b5ebe2.js",
             "8073.9e0c215380117911.js",
             "812.f47872de04e6d25f.js",
-            "8413.c8f7046c80f164bd.js",
             "8417.3f0b80366159b945.js",
             "8431.ebb2eb093277ead9.js",
             "8433.5a553300077bc05c.js",
@@ -2713,6 +2761,7 @@
             "5765.818d19820d9e7ab3.js",
             "5964.6c228a7960ae18a9.js",
             "6050.412030f08136a826.js",
+            "6178.284ed797b754b2ed.js",
             "6279.0eb7fac38b87324a.js",
             "6356.56122b916b81bb2b.js",
             "6526.78ae724653408de1.js",
@@ -2777,7 +2826,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "6178.284ed797b754b2ed.js",
+            "8055.53842a57360703d3.js",
+            "8559.4eb8d281906d81de.js",
+            "940.535ad7d7afd05d56.js",
+            "9965.edb6122962befbd4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2951,7 +3006,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "588.c647f5a44415e350.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3084,7 +3141,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "1888.472729d96e9221e9.js",
+            "7329.0d02c03c5c69c5c4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3214,6 +3274,7 @@
             "5574.88dff8d855e7a404.js",
             "5765.818d19820d9e7ab3.js",
             "6050.412030f08136a826.js",
+            "6178.284ed797b754b2ed.js",
             "6279.0eb7fac38b87324a.js",
             "6356.56122b916b81bb2b.js",
             "6526.78ae724653408de1.js",
@@ -3297,6 +3358,7 @@
             "5574.88dff8d855e7a404.js",
             "5765.818d19820d9e7ab3.js",
             "6050.412030f08136a826.js",
+            "6178.284ed797b754b2ed.js",
             "6279.0eb7fac38b87324a.js",
             "6356.56122b916b81bb2b.js",
             "6526.78ae724653408de1.js",
