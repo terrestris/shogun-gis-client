@@ -6,7 +6,18 @@
 
     .layer-cards {
       overflow: auto;
-      width: calc(100% - 170px);
+      box-sizing: border-box;
+      overflow: auto;
+      max-width: calc(100vw - 600px);
+    }
+
+    .bg-preview,
+    .layer-cards {
+      .no-background-preview,
+      span.layer-title {
+        box-sizing: border-box;
+        font-size: 14px;
+      }
     }
   }
 }
