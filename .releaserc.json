@@ -54,7 +54,7 @@
       {
         "preset": "conventionalcommits",
         "presetConfig": {
-          "header": "Changelog of shogun-admin",
+          "header": "Changelog of shogun-gis-client",
           "types": [
             {
               "type": "breaking",
