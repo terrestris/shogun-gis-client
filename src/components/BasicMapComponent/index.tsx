@@ -10,7 +10,9 @@ import {
 
 import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import BackgroundLayerChooser from '@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser';
+import {
+  BackgroundLayerChooser
+} from '@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser';
 
 import {
   MapComponent,

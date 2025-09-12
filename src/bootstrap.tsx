@@ -546,8 +546,8 @@ const addBackgroundLayers = async (application: Application, layers: OlLayerGrou
       backgroundMapLayers[0].setVisible(true);
     }
 
-    for (const element of backgroundMapLayers) {
-      layers?.getLayers().insertAt(0, element);
+    for (const backgroundLayerMap of backgroundMapLayers) {
+      layers?.getLayers().insertAt(0, backgroundLayerMap);
     }
     return layers?.getLayers();
   }
