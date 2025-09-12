@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js 🧮
         uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 20
 
       - name: Install dependencies ⏬
         run: npm ci
@@ -29,13 +29,13 @@ jobs:
         run: npm run build:dist
 
       - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v5
+        uses: cycjimmy/semantic-release-action@v4
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
-          semantic_version: 24
+          semantic_version: 23
   release-docker:
     needs: release-npm
     uses: ./.github/workflows/release_docker.yml
