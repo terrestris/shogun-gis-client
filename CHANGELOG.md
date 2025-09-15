@@ -1,3 +1,10 @@
+## [10.2.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.3...v10.2.0-next.4) (2025-09-15)
+
+
+### Bugfixes
+
+* collect all plugin reducers ([b53f52d](https://github.com/terrestris/shogun-gis-client/commit/b53f52d82cb9c8c1e013033f571d925929e12695))
+
 ## [10.2.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.2...v10.2.0-next.3) (2025-09-12)
 
 
