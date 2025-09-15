@@ -121,6 +121,7 @@ import {
   setSearchEngines
 } from './store/searchEngines';
 import {
+  AsyncReducer,
   createReducer,
   dynamicMiddleware,
   store
@@ -682,6 +683,8 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
 
   const clientPlugins: ClientPluginInternal[] = [];
 
+  const reducers: AsyncReducer = {};
+
   for (const plugin of ClientConfiguration.plugins) {
     const name = plugin.name;
     const resourcePath = plugin.resourcePath;
@@ -742,8 +745,12 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
       }
 
       if (clientPluginDefault.reducers) {
-        const reducers = createReducer(clientPluginDefault.reducers);
-        store.replaceReducer(reducers);
+        Object.entries(clientPluginDefault.reducers).forEach(([key, value]) => {
+          if (reducers[key]) {
+            Logger.warn(`Reducer with ${key} already exists in store. The existing reducer will be overwritten.`);
+          }
+          reducers[key] = value;
+        });
       }
 
       if (Array.isArray(clientPluginDefault.middlewares)) {
@@ -752,6 +759,10 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
 
       clientPlugins.push(clientPluginDefault);
     }
+  }
+
+  if (Object.keys(reducers).length > 0) {
+    store.replaceReducer(createReducer(reducers));
   }
 
   return clientPlugins;
