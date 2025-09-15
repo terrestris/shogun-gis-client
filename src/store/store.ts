@@ -30,7 +30,7 @@ import uploadDataModal from './uploadDataModal';
 import user from './user';
 import userMenu from './userMenu';
 
-type AsyncReducer = Record<string, Reducer>;
+export type AsyncReducer = Record<string, Reducer>;
 
 export const dynamicMiddleware = createDynamicMiddleware();
 
