@@ -1930,7 +1930,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "1888.472729d96e9221e9.js",
+            "7329.0d02c03c5c69c5c4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2391,7 +2394,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7094.56fc6699cc267158.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3156,7 +3161,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "588.c647f5a44415e350.js"
+          ]
         },
         "css": {
           "async": [],
