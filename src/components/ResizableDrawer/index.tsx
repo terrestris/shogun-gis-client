@@ -7,7 +7,7 @@ import React, {
 
 import { Drawer } from 'antd';
 import { DrawerProps } from 'antd/lib/drawer';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import _isNil from 'lodash/isNil';
 import {
   Resizable, ResizableProps, ResizeDirection

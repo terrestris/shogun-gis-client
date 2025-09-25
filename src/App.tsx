@@ -4,6 +4,7 @@ import React, {
 
 import AddLayerModal from './components/AddLayerModal/index';
 import BasicMapComponent from './components/BasicMapComponent';
+import ClassificationDrawer from './components/ClassificationDrawer';
 import CookieBanner from './components/CookieBanner';
 import EditFeatureDrawer from './components/EditFeatureDrawer';
 import Footer from './components/Footer';
@@ -52,6 +53,7 @@ export const App: React.FC<AppProps> = ({
       <LayerDetailsModal />
       <StylingDrawer />
       <SearchResultDrawer />
+      <ClassificationDrawer />
     </div>
   );
 };
