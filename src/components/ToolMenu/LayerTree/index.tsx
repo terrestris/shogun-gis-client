@@ -251,13 +251,10 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
     if (layer instanceof OlLayerGroup) {
       return true;
     }
-    if (layer instanceof OlVectorLayer) {
-      return false;
-    }
-    if (_isNil(layer.get('shogunId'))) {
-      return false;
-    }
     if (layer.get('isBackgroundLayer')) {
+      return false;
+    }
+    if (layer instanceof OlVectorLayer && _isNil(layer.get('shogunId'))) {
       return false;
     }
     return true;
@@ -332,7 +329,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
               </span>
             </span>
             {
-              (layer instanceof OlLayerTile || layer instanceof OlLayerImage) && (
+              (layer instanceof OlLayer) && (
                 <div
                   aria-label='layer-context-menu'
                 >

@@ -3,11 +3,15 @@ import 'jest-canvas-mock';
 import {
   TextDecoder,
   TextEncoder
-} from 'util';
+} from 'node:util';
+import {
+  DecompressionStream
+} from 'node:stream/web';
 
 Object.assign(global, {
   TextDecoder,
-  TextEncoder
+  TextEncoder,
+  DecompressionStream
 });
 
 jest.mock('react-i18next', () => ({
@@ -20,4 +24,3 @@ jest.mock('react-i18next', () => ({
     init: jest.fn()
   }
 }));
-

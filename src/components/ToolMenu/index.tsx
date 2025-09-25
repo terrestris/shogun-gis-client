@@ -34,8 +34,6 @@ import {
   Tooltip
 } from 'antd';
 
-import ClientConfiguration from 'clientConfig';
-
 import _toArray from 'lodash/toArray';
 
 import {
@@ -53,7 +51,6 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import usePlugins from '../../hooks/usePlugins';
-import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
   isToolMenuIntegration
@@ -124,9 +121,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const activeKeys = useAppSelector(state => state.toolMenu.activeKeys);
   const maxHeight = useAppSelector(state => state.toolMenu.maxHeight);
   const width = useAppSelector(state => state.toolMenu.width);
-
-  const client = useSHOGunAPIClient();
-  const keycloak = client?.getKeycloak();
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
@@ -322,7 +316,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           icon: faStream,
           title: t('ToolMenu.layertree'),
           wrappedComponent: (
-            <div className='tree-wrapper'>
+            <div className="tree-wrapper">
               <LayerTree />
               {activeUploadTools?.includes(UploadTools.addWMS) && (
                 <Button
@@ -335,8 +329,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               )
               }
               {
-                keycloak && ClientConfiguration.geoserver?.upload?.authorizedRoles?.some(
-                  role => keycloak.hasResourceRole(role, keycloak.clientId)) &&
                 activeUploadTools?.includes(UploadTools.dataUpload) && (
                   <Button
                     className='upload-data-button tool-menu-button'

@@ -19,8 +19,10 @@ import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
+import OlLayerVector from 'ol/layer/Vector';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
+import OlSourceVector from 'ol/source/Vector';
 
 import { Tab } from 'rc-tabs/lib/interface';
 
@@ -97,7 +99,13 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
     if (layer instanceof OlLayerImage && layer.getSource() instanceof OlSourceImageWMS) {
       return true;
     }
-    return layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS;
+    if (layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS) {
+      return true;
+    }
+    if (layer instanceof OlLayerVector && layer.getSource() instanceof OlSourceVector) {
+      return true;
+    }
+    return false;
   };
 
   const changeActiveKey = (key: string) => {
@@ -212,7 +220,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
         spinning={loading}
       >
         <Tabs
-          destroyInactiveTabPane={true}
+          destroyOnHidden={true}
           items={items}
           activeKey={activeTabKey}
           defaultActiveKey={items[0].key}
