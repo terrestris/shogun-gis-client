@@ -1,17 +1,17 @@
-
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import {
+  render
+} from '@testing-library/react';
 
-import Measure from './index';
+import LoadingIndicator from '.';
 
-describe('<Measure />', () => {
-
+describe('LoadingIndicator', () => {
   it('can be rendered', () => {
     const {
       container
     } = render(
-      <Measure />
+      <LoadingIndicator />
     );
     expect(container).toBeVisible();
   });
