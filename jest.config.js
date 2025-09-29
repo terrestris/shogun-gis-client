@@ -26,7 +26,7 @@ module.exports = {
   testEnvironment: './jest/CustomTestEnvironment.js',
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!(ol|antd|keycloak-js|@babel|jest-runtime|(rc-*[a-z]*)|@ant-design|@terrestris|color-*[a-z]*|@camptocamp|d3-*[a-z]*|' +
-    'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler|pbf|quickselect|lodash-es))'
+    'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler|pbf|quickselect|lodash-es|quick-lru))'
   ],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':

@@ -18,9 +18,13 @@ import {
   Tab
 } from 'rc-tabs/lib/interface';
 
-import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import {
+  MapUtil
+} from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   PropertyFormItemReadConfig,
