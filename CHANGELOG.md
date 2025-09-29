@@ -1,3 +1,10 @@
+## [10.2.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.4...v10.2.0-next.5) (2025-09-29)
+
+
+### Features
+
+* allow uploading multiple file formats to the client ([8fba359](https://github.com/terrestris/shogun-gis-client/commit/8fba359a1f23cecaed66726c1b158873015e7a5e))
+
 ## [10.2.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.3...v10.2.0-next.4) (2025-09-15)
 
 
