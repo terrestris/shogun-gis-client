@@ -115,7 +115,7 @@ describe('<FeatureInfoTabs />', () => {
       />
     );
     expect(screen.getAllByTestId('feature-info-form')).toHaveLength(2);
-});
+  });
 
   it('calls exportFilter and returns true for matching property', () => {
     render(
@@ -127,7 +127,7 @@ describe('<FeatureInfoTabs />', () => {
       />
     );
     expect(screen.getByTestId('pagination-toolbar')).toBeInTheDocument();
-});
+  });
 
   it('renders with additional props passed to Tabs', () => {
     render(
