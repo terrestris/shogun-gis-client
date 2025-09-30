@@ -1,3 +1,10 @@
+## [10.2.0-next.6](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.5...v10.2.0-next.6) (2025-09-30)
+
+
+### Features
+
+* add classification drawer ([2318f5c](https://github.com/terrestris/shogun-gis-client/commit/2318f5ce5c1736b508d88fbbc20c3410cdffb65b))
+
 ## [10.2.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.4...v10.2.0-next.5) (2025-09-29)
 
 
