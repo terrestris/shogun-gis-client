@@ -92,6 +92,7 @@ export default {
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
+        legendFilter: 'Legende filtern',
         downloadLayer: 'Layer exportieren ({{formatName}})',
         editLayer: 'Layer bearbeiten',
         layerDetails: 'Eigenschaften'
@@ -131,7 +132,8 @@ export default {
         languageSelect: 'Sprachauswahl',
         searchable: 'Der Inhalt dieses Layers kann im Suchfeld abgefragt werden',
         queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
-        editable: 'Die Features dieses Layers sind editierbar'
+        editable: 'Die Features dieses Layers sind editierbar',
+        filtered: 'Die Inhalte des Layers sind gefiltert'
       },
       MapToolbar: {
         zoomInTooltip: 'Hereinzoomen',
@@ -331,6 +333,22 @@ export default {
         defaultLineStyleName: 'Linie',
         defaultPointStyleName: 'Punkt',
         defaultTextStyleName: 'Text'
+      },
+      ClassificationDrawer: {
+        title: 'Legendenfilter',
+        noLayerSelected: 'Kein Layer ausgewählt'
+      },
+      SldClassificationPanel: {
+        errorMessage: 'Fehler',
+        filterApplyError: 'Fehler beim Anwenden des Filters',
+        updateRulesError: 'Fehler beim Auslesen der Regeln',
+        applyButtonText: 'Übernehmen',
+        applyButtonTooltip: 'Filter übernehmen',
+        restoreButtonText: 'Zurücksetzen',
+        restoreButtonTooltip: 'Filter zurücksetzen',
+        scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
+        scaleDenominatorText2: '(ab 1:${{min}})',
+        scaleDenominatorText3: '(bis 1:${{max}})'
       }
     }
   },
@@ -421,6 +439,7 @@ export default {
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
+        legendFilter: 'Filter legend',
         downloadLayer: 'Export layer as {{formatName}}',
         editLayer: 'Edit layer',
         layerDetails: 'Properties'
@@ -460,7 +479,8 @@ export default {
         languageSelect: 'Language selector',
         searchable: 'The contents of this layer can be queried in the search input',
         queryable: 'The contents of this layer can be queried in the query map features tool',
-        editable: 'The features of this layer are editable'
+        editable: 'The features of this layer are editable',
+        filtered: 'The layer contents are filtered'
       },
       MapToolbar: {
         zoomInTooltip: 'Zoom-in',
@@ -658,6 +678,22 @@ export default {
         defaultLineStyleName: 'Line',
         defaultPointStyleName: 'Point',
         defaultTextStyleName: 'Text'
+      },
+      ClassificationDrawer: {
+        title: 'Legend filter',
+        noLayerSelected: 'No layer selected'
+      },
+      SldClassificationPanel: {
+        errorMessage: 'Error',
+        filterApplyError: 'Error applying the filter style',
+        updateRulesError: 'Error reading the rules',
+        applyButtonText: 'Apply',
+        applyButtonTooltip: 'Apply filter',
+        restoreButtonText: 'Clear filter',
+        restoreButtonTooltip: 'Reset the filter',
+        scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
+        scaleDenominatorText2: '(from 1:${{min}})',
+        scaleDenominatorText3: '(until 1:${{max}})'
       }
     }
   }
