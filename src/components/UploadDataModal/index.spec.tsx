@@ -7,6 +7,8 @@ import {
   waitFor
 } from '@testing-library/react';
 
+import { Shapefile } from 'shapefile.js';
+
 import {
   store
 } from '../../store/store';
@@ -108,7 +110,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 300000000 }); // 300MB
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -130,7 +132,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 1000 });
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -152,7 +154,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 5000000 }); // 5MB
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -172,7 +174,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 5000000 }); // 5MB
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -187,7 +189,7 @@ describe('<UploadDataModal />', () => {
   describe('GeoTIFF upload', () => {
     it('successfully uploads a GeoTIFF file', async () => {
       (global.fetch as jest.Mock)
-        .mockResolvedValueOnce({ ok: true }) 
+        .mockResolvedValueOnce({ ok: true })
         .mockResolvedValueOnce({ ok: true });
 
       render(<UploadDataModal />, {
@@ -198,7 +200,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 1000000 });
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -220,7 +222,10 @@ describe('<UploadDataModal />', () => {
     });
 
     it('displays error when GeoTIFF upload fails', async () => {
-      (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false, status: 500 });
+      (global.fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 500
+      });
 
       render(<UploadDataModal />, {
         wrapper: createReduxWrapper()
@@ -230,7 +235,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 1000000 });
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -246,15 +251,22 @@ describe('<UploadDataModal />', () => {
 
   describe('Shapefile upload', () => {
     it('successfully uploads a shapefile ZIP', async () => {
-      const { Shapefile } = require('shapefile.js');
-      
-      Shapefile.load.mockResolvedValueOnce({
-        'test_layer': {
+      (Shapefile.load as jest.Mock).mockResolvedValueOnce({
+        // eslint-disable-next-line camelcase
+        test_layer: {
           parse: jest.fn()
             .mockReturnValueOnce({
               fields: [
-                { name: 'ID', type: 'N', length: 10 },
-                { name: 'NAME', type: 'C', length: 50 }
+                {
+                  name: 'ID',
+                  type: 'N',
+                  length: 10
+                },
+                {
+                  name: 'NAME',
+                  type: 'C',
+                  length: 50
+                }
               ]
             })
             .mockReturnValueOnce({
@@ -275,7 +287,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 1000000 });
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
@@ -289,11 +301,9 @@ describe('<UploadDataModal />', () => {
     });
 
     it('displays error when shapefile has invalid content', async () => {
-      const { Shapefile } = require('shapefile.js');
-      
-      Shapefile.load.mockResolvedValueOnce({
-        'layer1': {},
-        'layer2': {} 
+      (Shapefile.load as jest.Mock).mockResolvedValueOnce({
+        layer1: {},
+        layer2: {}
       });
 
       render(<UploadDataModal />, {
@@ -304,7 +314,7 @@ describe('<UploadDataModal />', () => {
       Object.defineProperty(file, 'size', { value: 1000000 });
 
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      
+
       Object.defineProperty(fileInput, 'files', {
         value: [file],
         writable: false
