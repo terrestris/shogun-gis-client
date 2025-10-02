@@ -130,7 +130,7 @@
     "less": "^4.2.2",
     "less-loader": "^12.2.0",
     "nwsapi": "2.2.22",
-    "react-refresh": "^0.17.0",
+    "react-refresh": "^0.18.0",
     "rimraf": "^6.0.1",
     "semantic-release": "^24.2.1",
     "style-loader": "^4.0.0",
