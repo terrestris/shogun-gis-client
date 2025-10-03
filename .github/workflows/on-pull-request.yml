@@ -100,7 +100,7 @@ jobs:
 
     - name: Post To No Tests Found Comment ⚠️
       if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
-      uses: peter-evans/create-or-update-comment@v4
+      uses: peter-evans/create-or-update-comment@v5
       with:
         comment-id: ${{ env.COVERAGE_COMMENT_ID }}
         body: |
