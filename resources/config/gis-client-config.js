@@ -8,7 +8,11 @@ var clientConfig = {
     onLoadAction: 'check-sso'
   },
   print: {
-    url: '/print'
+    url: '/print',
+    outputFormats: [
+      'pdf',
+      'png'
+    ]
   },
   plugins: [],
   search: {

@@ -34,6 +34,8 @@ import {
   Tooltip
 } from 'antd';
 
+import ClientConfiguration from 'clientConfig';
+
 import _toArray from 'lodash/toArray';
 
 import {
@@ -304,6 +306,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           wrappedComponent: map ? (
             <PrintForm
               active={activeKeys.includes('print')}
+              outputFormats={ClientConfiguration.print?.outputFormats ?? undefined}
               layerBlackList={[
                 'react-geo_measure',
                 'hoverVectorLayer'
