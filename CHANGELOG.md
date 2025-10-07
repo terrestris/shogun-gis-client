@@ -1,3 +1,10 @@
+## [10.2.0-next.7](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.6...v10.2.0-next.7) (2025-10-07)
+
+
+### Features
+
+* make print export output formats configurable ([085e0c3](https://github.com/terrestris/shogun-gis-client/commit/085e0c3a8cb617c6512eee1e83e7d68cbc5bf493))
+
 ## [10.2.0-next.6](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.5...v10.2.0-next.6) (2025-09-30)
 
 
