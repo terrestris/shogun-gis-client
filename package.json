@@ -43,7 +43,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
     "@reduxjs/toolkit": "^2.5.0",
-    "@terrestris/base-util": "^3.0.0",
+    "@terrestris/base-util": "^4.0.0",
     "@terrestris/mapfish-print-manager": "^16.0.2",
     "@terrestris/ol-util": "^21.3.0",
     "@terrestris/react-geo": "^32.1.1",
