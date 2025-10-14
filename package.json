@@ -74,7 +74,7 @@
     "react": "^18.3.1",
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^18.3.1",
-    "react-i18next": "^15.4.0",
+    "react-i18next": "^16.0.1",
     "react-redux": "^9.2.0",
     "react-rnd": "^10.5.2",
     "shapefile.js": "^1.1.4"
