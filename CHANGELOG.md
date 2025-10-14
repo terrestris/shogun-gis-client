@@ -1,3 +1,10 @@
+## [10.2.0-next.8](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.7...v10.2.0-next.8) (2025-10-14)
+
+
+### Bugfixes
+
+* render layer tree icons again ([adc2ab7](https://github.com/terrestris/shogun-gis-client/commit/adc2ab73b05c9c2277667f7a2973294ca42a76cc))
+
 ## [10.2.0-next.7](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.6...v10.2.0-next.7) (2025-10-07)
 
 
