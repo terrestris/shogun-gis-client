@@ -47,7 +47,7 @@ describe('<DeleteButton />', () => {
 
     mockLayer = new OlLayerTile({
       source: new OlSourceTileWMS({
-        url: 'https://shogun2022.intranet.terrestris.de/geoserver/ows?',
+        url: 'https://ows.terrestris.de/osm/service?',
         params: {
           LAYERS: [],
           useBearerToken: true
