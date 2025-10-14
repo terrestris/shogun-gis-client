@@ -153,9 +153,9 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
           <div
             className="layer-icons-group"
           >
-            {
-              layerIconsVisible && (
-                layer.get('searchable') && (
+            <>
+              {
+                (layerIconsVisible && layer.get('searchable')) && (
                   <>
                     <Tooltip title={t('ToolMenu.searchable')}>
                       <FontAwesomeIcon
@@ -164,8 +164,10 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
                       />
                     </Tooltip>
                   </>
-                ),
-                layer.get('hoverable') && layer.get('visible') && (
+                )
+              }
+              {
+                (layerIconsVisible && layer.get('hoverable') && layer.get('visible')) && (
                   <>
                     <Tooltip title={t('ToolMenu.queryable')}>
                       <FontAwesomeIcon
@@ -174,8 +176,10 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
                       />
                     </Tooltip>
                   </>
-                ),
-                layer.get('editable') && (
+                )
+              }
+              {
+                (layerIconsVisible && layer.get('editable')) && (
                   <>
                     <Tooltip title={t('ToolMenu.editable')}>
                       <FontAwesomeIcon
@@ -184,8 +188,10 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
                       />
                     </Tooltip>
                   </>
-                ),
-                layer.get('filtered') && (
+                )
+              }
+              {
+                (layerIconsVisible && layer.get('filtered')) && (
                   <>
                     <Tooltip title={t('ToolMenu.filtered')}>
                       <FontAwesomeIcon
@@ -195,8 +201,8 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
                     </Tooltip>
                   </>
                 )
-              )
-            }
+              }
+            </>
           </div>
           <div
             className="loading-indicator"
