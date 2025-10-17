@@ -20,6 +20,7 @@ import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
 import mapToolbarVisible from './mapToolbarVisible';
+import newsText from './newsText';
 import print from './print';
 import searchEngines from './searchEngines';
 import searchResult from './searchResult';
@@ -50,6 +51,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     legal,
     logoPath,
     mapToolbarVisible,
+    newsText,
     print,
     searchEngines,
     searchResult,

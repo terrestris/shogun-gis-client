@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import LayerDetailsModal from './components/LayerDetailsModal';
 import MapToolbar from './components/MapToolbar';
+import NewsModal from './components/NewsModal';
 import SearchResultDrawer from './components/SearchResultDrawer';
 import StylingDrawer from './components/StylingDrawer';
 import ToolMenu from './components/ToolMenu';
@@ -54,6 +55,7 @@ export const App: React.FC<AppProps> = ({
       <StylingDrawer />
       <SearchResultDrawer />
       <ClassificationDrawer />
+      <NewsModal/>
     </div>
   );
 };

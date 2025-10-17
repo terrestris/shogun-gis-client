@@ -116,6 +116,7 @@ import {
 import {
   setMapToolbarVisible
 } from './store/mapToolbarVisible';
+import { setNewsText } from './store/newsText';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines
@@ -290,6 +291,10 @@ export const setApplicationToStore = async (application?: Application) => {
 
   if (application?.clientConfig?.theme?.logoPath) {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
+  }
+
+  if (application?.clientConfig?.newsText) {
+    store.dispatch(setNewsText(application.clientConfig.newsText));
   }
 
   // nominatim search is active by default
