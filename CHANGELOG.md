@@ -1,3 +1,10 @@
+## [10.2.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.8...v10.2.0-next.9) (2025-10-17)
+
+
+### Bugfixes
+
+* remove hardcoded width ([9500093](https://github.com/terrestris/shogun-gis-client/commit/9500093edd5dffc41ac067002d1f9e6918b75f93))
+
 ## [10.2.0-next.8](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.7...v10.2.0-next.8) (2025-10-14)
 
 
