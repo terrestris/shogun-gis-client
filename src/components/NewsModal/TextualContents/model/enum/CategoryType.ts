@@ -1,10 +1,4 @@
 type CategoryType =
-  | 'NEWS'
-  | 'MISC'
-  | 'TERMS'
-  | 'CONTACT'
-  | 'PRIVACYPOLICY'
-  | 'IMPRINT'
-  | 'LINK_ONLY';
+  | 'NEWS';
 
 export default CategoryType;

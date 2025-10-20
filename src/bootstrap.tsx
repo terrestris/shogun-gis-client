@@ -293,8 +293,8 @@ export const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 
-  if (application?.clientConfig?.newsText) {
-    store.dispatch(setNewsText(application.clientConfig.newsText));
+  if (application?.clientConfig?.newsTextIds) {
+    store.dispatch(setNewsText(application.clientConfig.newsTextIds));
   }
 
   // nominatim search is active by default

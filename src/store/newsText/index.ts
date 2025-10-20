@@ -3,13 +3,13 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState = -1;
+const initialState: number[] = [];
 
 export const slice = createSlice({
-  name: 'newsText',
+  name: 'newsTextIds',
   initialState,
   reducers: {
-    setNewsText: (state, action: PayloadAction<number>) => {
+    setNewsText: (state, action: PayloadAction<number[]>) => {
       return action.payload;
     }
   }

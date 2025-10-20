@@ -1,9 +1,13 @@
 import React, {
-  useEffect, useState
+  useCallback,
+  useEffect, useMemo, useState
 } from 'react';
 
 import {
-  Modal, Checkbox, CheckboxChangeEvent
+  Modal, Checkbox, CheckboxChangeEvent,
+  Row,
+  Col,
+  Pagination
 } from 'antd';
 
 import { useTranslation } from 'react-i18next';
@@ -21,92 +25,127 @@ import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getB
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
-import TextualContent from './TextualContents/model/TextualContent';
 import TextualContentService from './TextualContents/service/TextualContentService';
 
 export const NewsModal: React.FC = (): JSX.Element => {
-  const {
-    t
-  } = useTranslation();
+  const { t } = useTranslation();
   const client = useSHOGunAPIClient();
 
-  const newsTextId = useAppSelector(state => state.newsText);
-  const newsTextPresent = newsTextId > -1 || false;
-  const [isModalOpen, setIsModalOpen] = useState(newsTextPresent && !JSON.parse(localStorage.getItem('hide-news-modal') || 'false'));
-  const [markdownContent, setMarkdownContent] = useState<string>('');
-  const [markdownTitle, setMarkdownTitle] = useState<string>('');
+  const newsTextIds = useAppSelector(state => state.newsTextIds);
+  // only show those entries which are not hidden
+  const newsTextIdsPresent = useMemo(() => {
+    return newsTextIds.filter(id => {
+      const hidden = JSON.parse(localStorage.getItem('hide-news-modal-' + id.toString()) || 'false');
+      return !hidden;
+    });
+  }, [newsTextIds]);
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(newsTextIdsPresent.length > 0);
+  const [markdownContents, setMarkdownContents] = useState<{ title: string | undefined; markdown: string | undefined; checked: boolean }[]>([]);
 
-  useEffect(() => {
-    const fetchTextualContents = async () => {
-      const reqOpts = {
-        method: 'GET',
-        headers: {
-          ...getBearerTokenHeader(client?.getKeycloak())
-        }
-      };
-
-      try {
-        const textualContentService = new TextualContentService();
-        const textualContents = await textualContentService.findAll(undefined, reqOpts);
-
-        textualContents.content.forEach((textualContent: TextualContent) => {
-          textualContent.modified = new Date(textualContent.modified!);
-          textualContent.created = new Date(textualContent.created!);
-        });
-        return textualContents.content;
-
-      } catch (error) {
-        Logger.error(`Error fetching all textual contents: ${error}`);
+  const fetchTextualContents = useCallback(async (id: number) => {
+    const reqOpts = {
+      method: 'GET',
+      headers: {
+        ...getBearerTokenHeader(client?.getKeycloak())
       }
     };
 
-    const getTextualContent = async () => {
-      try {
-        const textualContents = await fetchTextualContents();
+    try {
+      const textualContentService = new TextualContentService();
+      const textualContents = await textualContentService.findOne(id, reqOpts);
 
-        if (textualContents && newsTextId) {
-          const markdownEntry = textualContents.find(item => item.id === newsTextId)?.markdown;
-          const title = textualContents.find(item => item.id === newsTextId)?.title;
-          if (markdownEntry && title) {
-            setMarkdownContent(markdownEntry);
-            setMarkdownTitle(title);
-          } else {
-            setMarkdownContent('');
-            setMarkdownTitle('');
-          }
-        }
+      return textualContents;
+
+    } catch (error) {
+      Logger.error(`Error fetching textual content with id ${id}: ${error}`);
+    }
+  }, [client]);
+
+  useEffect(() => {
+    const getAllContents = async () => {
+      try {
+        const contentsPromises = newsTextIdsPresent.map(id => fetchTextualContents(id));
+        const contentsResults = await Promise.all(contentsPromises);
+        const markdownResults = contentsResults
+          .filter(r => r && r.markdown && r.title)
+          .map(r => ({
+            title: r!.title,
+            markdown: r!.markdown,
+            checked: JSON.parse(localStorage.getItem('hide-news-modal-' + r!.id) || 'false')
+          }));
+        setMarkdownContents(markdownResults);
       } catch (error) {
         Logger.error(error);
       }
     };
 
-    getTextualContent();
-  }, [client, newsTextId]);
+    if (newsTextIdsPresent.length > 0) {
+      getAllContents();
+    }
+  }, [client, fetchTextualContents, newsTextIdsPresent]);
 
   const onChange = (evt: CheckboxChangeEvent) => {
     const checked = evt.target.checked;
+    if (newsTextIdsPresent[currentIndex] != null) {
+      localStorage.setItem(
+        'hide-news-modal-' + newsTextIdsPresent[currentIndex].toString(),
+        JSON.stringify(checked)
+      );
 
-    localStorage.setItem('hide-news-modal', JSON.stringify(checked));
+      setMarkdownContents(prev => {
+        const newContents = [...prev];
+        newContents[currentIndex] = {
+          ...newContents[currentIndex],
+          checked
+        };
+        return newContents;
+      });
+    }
   };
+
+  const handlePageChange = (page: number) => {
+    setCurrentIndex(page-1);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  if (markdownContents.length === 0) {
+    return <></>;
+  }
 
   return (
     <>
-      {newsTextPresent &&
       <Modal
-        title={markdownTitle}
+        title={markdownContents[currentIndex].title}
         closable={true}
         maskClosable={false}
         footer={
-          <Checkbox
-            onChange={onChange}
-            defaultChecked={localStorage.getItem('hide-news-modal') === 'true'}
+          <Row justify="space-between"
+            align="middle"
           >
-            {t('NewsModal.hideModalCheckboxTitle')}
-          </Checkbox>
+            <Col>
+              <Checkbox
+                onChange={onChange}
+                checked={markdownContents[currentIndex].checked}
+              >
+                {t('NewsModal.hideModalCheckboxTitle')}
+              </Checkbox>
+            </Col>
+            <Col>
+              <Pagination
+                current={currentIndex + 1}
+                total={markdownContents.length}
+                pageSize={1}
+                onChange={handlePageChange}
+                showSizeChanger={false}
+                showQuickJumper={false}
+              />
+            </Col>
+          </Row>
         }
         centered={true}
         open={isModalOpen}
@@ -122,10 +161,9 @@ export const NewsModal: React.FC = (): JSX.Element => {
               rel: ['noopener', 'noreferrer']
             }]
           ]}
-          children={markdownContent}
+          children={markdownContents[currentIndex].markdown}
         />
       </Modal>
-      }
     </>
   );
 };
