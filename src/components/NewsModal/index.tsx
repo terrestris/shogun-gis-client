@@ -22,10 +22,10 @@ import Logger from '@terrestris/base-util/dist/Logger';
 
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import TextualContentService from '@terrestris/shogun-util/dist/service/TextualContentService';
+
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
-
-import TextualContentService from './TextualContents/service/TextualContentService';
 
 export const NewsModal: React.FC = (): JSX.Element => {
   const { t } = useTranslation();
