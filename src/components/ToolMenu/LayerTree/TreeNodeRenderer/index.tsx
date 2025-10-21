@@ -1,7 +1,8 @@
 import React, {
   useEffect,
   useMemo,
-  useState
+  useState,
+  useCallback
 } from 'react';
 
 import {
@@ -9,7 +10,8 @@ import {
   faCircleInfo,
   faPen,
   faFilter,
-  faCircleNotch
+  faCircleNotch,
+  faClock
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
@@ -21,11 +23,7 @@ import {
 
 import OlBaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
-import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
-import OlLayerTile from 'ol/layer/Tile';
-import OlSourceImageWMS from 'ol/source/ImageWMS';
-import OlSourceTileWMS from 'ol/source/TileWMS';
 
 import {
   useTranslation
@@ -39,21 +37,15 @@ import {
   Legend
 } from '@terrestris/react-geo/dist/Legend/Legend';
 import LayerTransparencySlider from '@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider';
-
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
-
-import type {
-  LayerType
-} from '@terrestris/shogun-util/dist/model/enum/LayerType';
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
-import WmsTimeSlider from '../../../WmsTimeSlider';
 import LayerTreeContextMenu from '../LayerTreeContextMenu';
 
 export type TreeNodeRendererProps = {
@@ -64,6 +56,7 @@ export type TreeNodeRendererProps = {
   legendVisible?: boolean;
   visibleLegendsIds: string[];
   setVisibleLegendsIds: React.Dispatch<React.SetStateAction<string[]>>;
+  onTimeModalOpen?: (layer: OlLayer) => void;
 };
 
 export type GetLegendGraphicParameters = {
@@ -86,7 +79,8 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
   layerTileLoadCounter,
   legendVisible,
   visibleLegendsIds,
-  setVisibleLegendsIds
+  setVisibleLegendsIds,
+  onTimeModalOpen
 }): JSX.Element => {
   const map = useMap();
   const client = useSHOGunAPIClient();
@@ -95,6 +89,17 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
   } = useTranslation();
 
   const [sldBody, setSldBody] = useState<string | undefined>();
+
+  const handleTimeModalOpen = useCallback(() => {
+    if (onTimeModalOpen && layer instanceof OlLayer) {
+      onTimeModalOpen(layer);
+    }
+  }, [onTimeModalOpen, layer]);
+
+  const isTimeLayer = useMemo(() => {
+    const layerType = layer?.get('type');
+    return layerType && layerType.toUpperCase() === 'WMSTIME';
+  }, [layer]);
 
   let rawSld: string | undefined;
   if (isWmsLayer(layer) && layer.getSource()?.getParams().SLD_BODY) {
@@ -202,6 +207,19 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
                   </>
                 )
               }
+              {
+                isTimeLayer && (
+                  <>
+                    <Tooltip title={t('ToolMenu.timeLayer')}>
+                      <FontAwesomeIcon
+                        icon={faClock}
+                        className="layer-icon time-layer-icon"
+                        onClick={handleTimeModalOpen}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    </Tooltip>
+                  </>
+                )}
             </>
           </div>
           <div
@@ -252,16 +270,6 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
                 formatter: val => `${t('LayerTree.transparency')}: ${val}%`
               }}
               layer={layer}
-            />
-          </div>
-        }
-        {
-          (layer.get('visible') && layer.get('type') as LayerType === 'WMSTIME') &&
-          <div
-            className="layer-time-slider"
-          >
-            <WmsTimeSlider
-              layer={layer as OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>}
             />
           </div>
         }
