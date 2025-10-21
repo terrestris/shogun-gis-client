@@ -133,7 +133,8 @@ export default {
         searchable: 'Der Inhalt dieses Layers kann im Suchfeld abgefragt werden',
         queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
         editable: 'Die Features dieses Layers sind editierbar',
-        filtered: 'Die Inhalte des Layers sind gefiltert'
+        filtered: 'Die Inhalte des Layers sind gefiltert',
+        timeLayer: 'Zeitsteuerung für diese Karte öffnen'
       },
       MapToolbar: {
         zoomInTooltip: 'Hereinzoomen',
@@ -198,6 +199,20 @@ export default {
       WmsTimeSlider: {
         title: 'Zeitlicher Bezug',
         default: 'Keine Daten gefunden'
+      },
+      TimeLayerModal: {
+        title: 'Zeitsteuerung für Karte {{layerName}}',
+        unknownLayer: 'Unbekannte Karte',
+        tooltips: {
+          dataRange: 'Zeitspanne festlegen',
+          days: 'Tage',
+          hours: 'Stunden',
+          minutes: 'Minuten',
+          months: 'Monate',
+          weeks: 'Wochen',
+          years: 'Jahre',
+          setToMostRecent: 'Auf neuestes Datum setzen'
+        }
       },
       UploadDataModal: {
         title: 'Daten hochladen',
@@ -483,7 +498,8 @@ export default {
         searchable: 'The contents of this layer can be queried in the search input',
         queryable: 'The contents of this layer can be queried in the query map features tool',
         editable: 'The features of this layer are editable',
-        filtered: 'The layer contents are filtered'
+        filtered: 'The layer contents are filtered',
+        timeLayer: 'Open time controls for this map'
       },
       MapToolbar: {
         zoomInTooltip: 'Zoom-in',
@@ -547,6 +563,20 @@ export default {
       WmsTimeSlider: {
         title: 'Time reference',
         default: 'No data found'
+      },
+      TimeLayerModal: {
+        title: 'Time controls for map {{layerName}}',
+        unknownLayer: 'Unknown map',
+        tooltips: {
+          dataRange: 'Set date range',
+          days: 'Days',
+          hours: 'Hours',
+          minutes: 'Minutes',
+          months: 'Months',
+          weeks: 'Weeks',
+          years: 'Years',
+          setToMostRecent: 'Set to most recent date'
+        }
       },
       UploadDataModal: {
         title: 'Upload data',
