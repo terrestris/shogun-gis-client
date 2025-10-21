@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {
+  useState
+} from 'react';
 
 import {
   faPlus,
@@ -27,8 +29,9 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import useAppSelector from '../../hooks/useAppSelector';
-import Toolbar, { ToolbarProps } from '../Toolbar';
+import Toolbar, {
+  ToolbarProps
+} from '../Toolbar';
 
 import './index.less';
 
@@ -42,14 +45,6 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   const [geolocationButtonPressed, setGeolocationButtonPressed] = useState(false);
 
-  const mapToolbarVisible = useAppSelector(state => state.mapToolbarVisible.visible);
-
-  const stylingDrawerVisibility = useAppSelector(state => state.stylingDrawerVisibility);
-  const editFeatureDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
-  const searchResultDrawerOpen = useAppSelector(state => state.searchResult.drawerVisibility);
-  const drawerOpen = stylingDrawerVisibility || editFeatureDrawerOpen || searchResultDrawerOpen;
-  const className = drawerOpen ? 'drawer-open' : '';
-
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
     tooltipProps: {
@@ -58,60 +53,55 @@ export const MapToolbar: React.FC = (): JSX.Element => {
   };
 
   return (
-    <>
-      {mapToolbarVisible &&
-        <Toolbar
-          id='map-toolbar'
-          className={className}
-          alignment="vertical"
-          role="toolbar"
-        >
-          {map &&
-            <ZoomButton
-              aria-label='zoom-in'
-              tooltip={t('MapToolbar.zoomInTooltip')}
-              icon={
-                <FontAwesomeIcon
-                  icon={faPlus}
-                />
-              }
-              {...btnTooltipProps}
-            />}
-          {map &&
-            <ZoomButton
-              aria-label='zoom-out'
-              tooltip={t('MapToolbar.zoomOutTooltip')}
-              delta={-1}
-              icon={
-                <FontAwesomeIcon
-                  icon={faMinus}
-                />
-              }
-              {...btnTooltipProps}
-            />}
-          {map &&
-            <GeoLocationButton
-              aria-label='geolocation'
-              showMarker={true}
-              follow={true}
-              pressed={geolocationButtonPressed}
-              onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
-              tooltip={t('MapToolbar.geoLocation')}
-              icon={
-                <FontAwesomeIcon
-                  icon={faLocation}
-                />
-              }
-              pressedIcon={
-                <FontAwesomeIcon
-                  icon={faLocationPin}
-                />
-              }
-              {...btnTooltipProps}
-            />}
-        </Toolbar>
-      }
-    </>
+    <Toolbar
+      id="map-toolbar"
+      alignment="vertical"
+      role="toolbar"
+    >
+      {map &&
+        <ZoomButton
+          aria-label="zoom-in"
+          tooltip={t('MapToolbar.zoomInTooltip')}
+          icon={
+            <FontAwesomeIcon
+              icon={faPlus}
+            />
+          }
+          {...btnTooltipProps}
+        />}
+      {map &&
+        <ZoomButton
+          aria-label="zoom-out"
+          tooltip={t('MapToolbar.zoomOutTooltip')}
+          delta={-1}
+          icon={
+            <FontAwesomeIcon
+              icon={faMinus}
+            />
+          }
+          {...btnTooltipProps}
+        />}
+      {map &&
+        <GeoLocationButton
+          aria-label="geolocation"
+          showMarker={true}
+          follow={true}
+          pressed={geolocationButtonPressed}
+          onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
+          tooltip={t('MapToolbar.geoLocation')}
+          icon={
+            <FontAwesomeIcon
+              icon={faLocation}
+            />
+          }
+          pressedIcon={
+            <FontAwesomeIcon
+              icon={faLocationPin}
+            />
+          }
+          {...btnTooltipProps}
+        />}
+    </Toolbar>
   );
 };
 

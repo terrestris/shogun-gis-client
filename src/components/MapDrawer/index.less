@@ -1,3 +1,19 @@
+#map {
+  transition: width 0.3s;
+
+  &.bisected {
+    width: calc(100vw - var(--drawerWidth));
+  }
+
+  .ol-control {
+    transition: right 0.3s;
+
+    &.bisected {
+      right: calc(10px + var(--drawerWidth));
+    }
+  }
+}
+
 .ant-drawer.map-drawer {
   position: absolute;
   top: var(--headerHeight);
