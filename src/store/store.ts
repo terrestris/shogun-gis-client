@@ -30,6 +30,7 @@ import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
 import user from './user';
 import userMenu from './userMenu';
+import measure from "./measure";
 
 export type AsyncReducer = Record<string, Reducer>;
 
@@ -50,6 +51,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     legal,
     logoPath,
     mapToolbar,
+    measure,
     print,
     searchEngines,
     searchResult,
