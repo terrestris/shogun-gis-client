@@ -45,19 +45,9 @@ export const NewsModal: React.FC = (): JSX.Element => {
   const [markdownContents, setMarkdownContents] = useState<{ title: string | undefined; markdown: string | undefined; checked: boolean }[]>([]);
 
   const fetchTextualContents = useCallback(async (id: number) => {
-    const reqOpts = {
-      method: 'GET',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak())
-      }
-    };
-
     try {
-      const textualContentService = new TextualContentService();
-      const textualContents = await textualContentService.findOne(id, reqOpts);
-
+      const textualContents = client?.textualContent().findOne(id);
       return textualContents;
-
     } catch (error) {
       Logger.error(`Error fetching textual content with id ${id}: ${error}`);
     }
