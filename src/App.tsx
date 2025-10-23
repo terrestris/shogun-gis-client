@@ -10,7 +10,6 @@ import EditFeatureDrawer from './components/EditFeatureDrawer';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import LayerDetailsModal from './components/LayerDetailsModal';
-import MapToolbar from './components/MapToolbar';
 import NewsModal from './components/NewsModal';
 import SearchResultDrawer from './components/SearchResultDrawer';
 import StylingDrawer from './components/StylingDrawer';
@@ -45,7 +44,6 @@ export const App: React.FC<AppProps> = ({
       <Header />
       <BasicMapComponent />
       <ToolMenu />
-      <MapToolbar />
       <Footer />
       <CookieBanner />
       <AddLayerModal />

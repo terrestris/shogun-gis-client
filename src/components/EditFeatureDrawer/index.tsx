@@ -157,6 +157,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       className="map-drawer edit-feature-drawer"
       onClose={onDrawerClose}
       open={isDrawerOpen}
+      shrinkMapOnOpen={false}
       title={drawerTitle}
       {...passThroughProps}
     >

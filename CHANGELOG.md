@@ -1,3 +1,35 @@
+## [11.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.1...v11.0.0-next.2) (2025-10-23)
+
+
+### Features
+
+* add showSegmentLengths option to measure tools ([1aa53e2](https://github.com/terrestris/shogun-gis-client/commit/1aa53e2fb2d58b9c7276780ca5c95616ff0906c1))
+
+## [11.0.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.10...v11.0.0-next.1) (2025-10-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename mapToolbarVisible store to mapToolbar
+
+### Features
+
+* make GeoLocation tool configurable ([eca7059](https://github.com/terrestris/shogun-gis-client/commit/eca7059cf292edbadafab3fa4fa091b663a2e026))
+
+## [10.2.0-next.10](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.9...v10.2.0-next.10) (2025-10-23)
+
+
+### Features
+
+* refactor handling of shrinked map if drawer is opened ([bd149d2](https://github.com/terrestris/shogun-gis-client/commit/bd149d21670ac76e0bf3e91d2e438ed106d2ef2c))
+
+## [10.2.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.8...v10.2.0-next.9) (2025-10-17)
+
+
+### Bugfixes
+
+* remove hardcoded width ([9500093](https://github.com/terrestris/shogun-gis-client/commit/9500093edd5dffc41ac067002d1f9e6918b75f93))
+
 ## [10.2.0-next.8](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.7...v10.2.0-next.8) (2025-10-14)
 
 

@@ -85,6 +85,7 @@ export const ClassificationDrawer: FC<ClassificationDrawerProps> = ({
       open={isOpen}
       maskClosable={false}
       destroyOnHidden={true}
+      shrinkMapOnOpen={false}
       mask={false}
       {...passThroughProps}
     >

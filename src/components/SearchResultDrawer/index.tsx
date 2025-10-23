@@ -219,6 +219,7 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
       placement="right"
       onClose={onClose}
       open={isSearchResultDrawerVisible}
+      shrinkMapOnOpen={false}
       maskClosable={false}
       mask={false}
       {...passThroughProps}

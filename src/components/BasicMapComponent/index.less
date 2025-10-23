@@ -1,7 +1,19 @@
 .map {
+  .toolbar-control {
+    top: calc(var(--headerHeight) + 10px);
+    right: 10px;
+
+    &.ol-control {
+      background-color: unset;
+
+      button {
+        height: var(--ant-control-height);
+      }
+    }
+  }
+
   .bg-layer-chooser {
     bottom: 95px;
-    width: 99%;
     right: 10px;
 
     .layer-cards {

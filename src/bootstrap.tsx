@@ -114,8 +114,12 @@ import {
   setLogoPath
 } from './store/logoPath';
 import {
+  setGeoLocationVisible,
   setMapToolbarVisible
-} from './store/mapToolbarVisible';
+} from './store/mapToolbar';
+import {
+  setShowSegmentLengths
+} from './store/measure';
 import { setNewsText } from './store/newsText';
 import { setPrintApp } from './store/print';
 import {
@@ -331,6 +335,10 @@ export const setApplicationToStore = async (application?: Application) => {
       // eslint-disable-next-line camelcase
       map_toolbar: (config) => {
         store.dispatch(setMapToolbarVisible(config?.visible));
+        store.dispatch(setGeoLocationVisible(config?.showGeolocation));
+      },
+      measure: (config) => {
+        store.dispatch(setShowSegmentLengths(config?.showSegmentLengths ?? false));
       },
       // eslint-disable-next-line camelcase
       user_menu: (config) => {
