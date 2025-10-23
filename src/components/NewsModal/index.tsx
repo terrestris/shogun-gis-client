@@ -20,10 +20,6 @@ import remarkGfm from 'remark-gfm';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-
-import TextualContentService from '@terrestris/shogun-util/dist/service/TextualContentService';
-
 import useAppSelector from '../../hooks/useAppSelector';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
