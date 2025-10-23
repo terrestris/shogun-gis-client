@@ -4,7 +4,7 @@ import {
   render,
   screen,
   fireEvent,
-  waitFor,
+  waitFor
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
