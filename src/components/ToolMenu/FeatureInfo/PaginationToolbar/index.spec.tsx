@@ -4,7 +4,8 @@ import {
   render,
   screen,
   fireEvent,
-  waitFor
+  waitFor,
+  prettyDOM
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -39,16 +40,20 @@ jest.mock('@terrestris/base-util/dist/Logger', () => ({
 const mockDispatch = jest.fn();
 
 describe('PaginationToolbar', () => {
-  let feature: OlFeature;
+  let features: OlFeature[];
   let layer: OlLayer;
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    feature = new OlFeature({
+    features = [new OlFeature({
       id: 1,
       name: 'Test Feature'
-    });
+    }),
+    new OlFeature({
+      id: 1,
+      name: 'Test Feature'
+    })];
     layer = new OlLayer({});
     layer.set('editable', true);
 
@@ -64,21 +69,25 @@ describe('PaginationToolbar', () => {
   it('renders pagination with correct total', () => {
     render(
       <PaginationToolbar
-        features={[feature]}
-        selectedFeature={feature}
+        features={features}
+        selectedFeature={features[0]}
         layer={layer}
       />
     );
     expect(screen.getByRole('list')).toBeInTheDocument();
     expect(screen.getByTitle('Previous Page')).toBeInTheDocument();
     expect(screen.getByTitle('Next Page')).toBeInTheDocument();
+
+    const total = features.length.toString();
+    expect(screen.getByTitle(`1/${total}`)).toBeInTheDocument();
+    expect(screen.getByRole('list')).toHaveTextContent(total);
   });
 
   it('renders copy buttons when activeCopyTools contains options', () => {
     render(
       <PaginationToolbar
-        features={[feature]}
-        selectedFeature={feature}
+        features={features}
+        selectedFeature={features[0]}
         layer={layer}
       />
     );
@@ -88,8 +97,8 @@ describe('PaginationToolbar', () => {
   it('calls copy with JSON object when copy as Object clicked', async () => {
     render(
       <PaginationToolbar
-        features={[feature]}
-        selectedFeature={feature}
+        features={features}
+        selectedFeature={features[0]}
         layer={layer}
       />
     );
