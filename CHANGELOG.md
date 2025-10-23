@@ -1,3 +1,10 @@
+## [10.2.0-next.10](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.9...v10.2.0-next.10) (2025-10-23)
+
+
+### Features
+
+* refactor handling of shrinked map if drawer is opened ([bd149d2](https://github.com/terrestris/shogun-gis-client/commit/bd149d21670ac76e0bf3e91d2e438ed106d2ef2c))
+
 ## [10.2.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.8...v10.2.0-next.9) (2025-10-17)
 
 
