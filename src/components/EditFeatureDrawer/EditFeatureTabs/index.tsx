@@ -18,6 +18,8 @@ import {
   PropertyFormTabConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
+import useLocalize from '../../../hooks/useLocalize';
+
 import EditFeatureForm from '../EditFeatureForm';
 
 export type EditFeatureTabsProps = TabsProps & {
@@ -32,10 +34,11 @@ export const EditFeatureTabs: React.FC<EditFeatureTabsProps> = ({
   initialValues,
   ...passThroughProps
 }) => {
+  const localize = useLocalize();
 
   const items = tabConfig?.map((config, idx) => {
     return {
-      label: config.title,
+      label: localize(config.title),
       key: `${idx}`,
       forceRender: true,
       children: (
