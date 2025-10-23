@@ -1,3 +1,10 @@
+## [11.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.1...v11.0.0-next.2) (2025-10-23)
+
+
+### Features
+
+* add showSegmentLengths option to measure tools ([1aa53e2](https://github.com/terrestris/shogun-gis-client/commit/1aa53e2fb2d58b9c7276780ca5c95616ff0906c1))
+
 ## [11.0.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.10...v11.0.0-next.1) (2025-10-23)
 
 
