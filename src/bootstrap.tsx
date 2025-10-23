@@ -114,8 +114,9 @@ import {
   setLogoPath
 } from './store/logoPath';
 import {
+  setGeoLocationVisible,
   setMapToolbarVisible
-} from './store/mapToolbarVisible';
+} from './store/mapToolbar';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines
@@ -326,6 +327,7 @@ export const setApplicationToStore = async (application?: Application) => {
       // eslint-disable-next-line camelcase
       map_toolbar: (config) => {
         store.dispatch(setMapToolbarVisible(config?.visible));
+        store.dispatch(setGeoLocationVisible(config?.showGeolocation));
       },
       // eslint-disable-next-line camelcase
       user_menu: (config) => {

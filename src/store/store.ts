@@ -19,7 +19,7 @@ import layerDetailsModal from './layerDetailsModal';
 import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
-import mapToolbarVisible from './mapToolbarVisible';
+import mapToolbar from './mapToolbar';
 import print from './print';
 import searchEngines from './searchEngines';
 import searchResult from './searchResult';
@@ -49,7 +49,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     layerTree,
     legal,
     logoPath,
-    mapToolbarVisible,
+    mapToolbar,
     print,
     searchEngines,
     searchResult,

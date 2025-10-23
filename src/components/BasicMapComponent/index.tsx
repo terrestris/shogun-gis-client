@@ -1,5 +1,7 @@
 import React, {
-  useEffect
+  useEffect,
+  FC,
+  JSX
 } from 'react';
 
 import {
@@ -38,7 +40,7 @@ import MapToolbar from '../MapToolbar';
 
 import './index.less';
 
-export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
+export const BasicMapComponent: FC<Partial<MapComponentProps>> = ({
   ...restProps
 }): JSX.Element => {
   const map = useMap();
@@ -51,7 +53,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
 
   const blcVisible = useAppSelector(state => state.backgroundLayerChooser.visible);
   const allowEmptyBackground = useAppSelector(state => state.backgroundLayerChooser.allowEmptyBackground);
-  const mapToolbarVisible = useAppSelector(state => state.mapToolbarVisible.visible);
+  const mapToolbarVisible = useAppSelector(state => state.mapToolbar.visible);
 
   /**
    * Updates external layer group name when language changes.
