@@ -25,6 +25,7 @@ import searchEngines from './searchEngines';
 import searchResult from './searchResult';
 import selectedFeatures from './selectedFeatures';
 import stylingDrawerVisibility from './stylingDrawerVisibility';
+import timeLayerModal from './timeLayerModal';
 import title from './title';
 import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
@@ -57,6 +58,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     searchResult,
     selectedFeatures,
     stylingDrawerVisibility,
+    timeLayerModal,
     title,
     toolMenu,
     uploadDataModal,
