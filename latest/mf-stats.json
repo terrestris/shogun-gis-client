@@ -2625,17 +2625,17 @@
     },
     {
       "singleton": true,
-      "requiredVersion": "^15.4.0",
+      "requiredVersion": "^16.1.5",
       "shareScope": "default",
       "name": "react-i18next",
-      "version": "15.7.3",
+      "version": "16.1.5",
       "eager": false,
       "id": "SHOGunGISClient:react-i18next",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5100.91f55f0bfa12327b.js"
+            "1267.d0c7ab55544cf3fa.js"
           ]
         },
         "css": {
