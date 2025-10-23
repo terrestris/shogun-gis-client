@@ -2,13 +2,17 @@ import React, {
   useEffect
 } from 'react';
 
-import { ObjectEvent as OlObjectEvent } from 'ol/Object';
+import {
+  ObjectEvent as OlObjectEvent
+} from 'ol/Object';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import {
+  MapUtil
+} from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   BackgroundLayerChooser
@@ -18,7 +22,9 @@ import {
   MapComponent,
   MapComponentProps
 } from '@terrestris/react-geo/dist/Map/MapComponent/MapComponent';
-import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppSelector from '../../hooks/useAppSelector';
 import usePlugins from '../../hooks/usePlugins';
@@ -26,6 +32,9 @@ import usePlugins from '../../hooks/usePlugins';
 import {
   isMapIntegration
 } from '../../plugin';
+
+import MapControl from '../MapControl';
+import MapToolbar from '../MapToolbar';
 
 import './index.less';
 
@@ -42,6 +51,7 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
 
   const blcVisible = useAppSelector(state => state.backgroundLayerChooser.visible);
   const allowEmptyBackground = useAppSelector(state => state.backgroundLayerChooser.allowEmptyBackground);
+  const mapToolbarVisible = useAppSelector(state => state.mapToolbarVisible.visible);
 
   /**
    * Updates external layer group name when language changes.
@@ -90,11 +100,22 @@ export const BasicMapComponent: React.FC<Partial<MapComponentProps>> = ({
       map={map}
       {...restProps}
     >
-      {blcVisible &&
-        <BackgroundLayerChooser
-          layers={map.getAllLayers().filter(l => l.get('isBackgroundLayer') === true).reverse()}
-          allowEmptyBackground = {allowEmptyBackground}
-        />
+      {
+        mapToolbarVisible && (
+          <MapControl
+            className="toolbar-control"
+          >
+            <MapToolbar />
+          </MapControl>
+        )
+      }
+      {
+        blcVisible && (
+          <BackgroundLayerChooser
+            layers={map.getAllLayers().filter(l => l.get('isBackgroundLayer') === true).reverse()}
+            allowEmptyBackground = {allowEmptyBackground}
+          />
+        )
       }
       {
         pluginComponents
