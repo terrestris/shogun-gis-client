@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { configureStore } from '@reduxjs/toolkit';
-
 import {
   render,
   screen
 } from '@testing-library/react';
 
 import OlFeature from 'ol/Feature';
+import OlGeomPoint from 'ol/geom/Point';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlMap from 'ol/Map';
@@ -17,15 +17,45 @@ import OlView from 'ol/View';
 
 import { Provider } from 'react-redux';
 
-import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
+import { EditLevel } from 'store/editFeature';
 
-import { FeatureInfoForm } from './FeatureInfoForm';
+import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 
 import FeatureInfo from './index';
 
-jest.mock('../../DisplayField', () => (props: any) => (
-  <div data-testid="display-field">{props.label}</div>
-));
+let mockResultRenderer: any = null;
+let mockLayerFilter: any = null;
+const mockAllowedEditMode: EditLevel[] = ['UPDATE'];
+
+jest.mock('@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo', () => ({
+  CoordinateInfo: (props: any) => {
+    mockResultRenderer = props.resultRenderer;
+    mockLayerFilter = props.layerFilter;
+
+    return (
+      <div data-testid="coordinate-info">
+        {props.active && 'CoordinateInfo Active'}
+      </div>
+    );
+  }
+}));
+
+jest.mock('../../../hooks/useAppDispatch', () => ({
+  __esModule: true,
+  default: () => jest.fn()
+}));
+
+jest.mock('../../../hooks/useAppSelector', () => ({
+  __esModule: true,
+  default: (selector: any) => selector({
+    featureInfo: { enabled: true },
+    selectedFeatures: {},
+    editFeature: {
+      userEditMode: mockAllowedEditMode
+    }
+  })
+}));
+
 describe('<FeatureInfo />', () => {
   let map: OlMap;
   let store: any;
@@ -44,25 +74,25 @@ describe('<FeatureInfo />', () => {
       source: new OlSourceTileWMS({
         url: 'http://example.com/wms',
         params: {
-          LAYERS: 'test:layer1'
+          LAYERS: 'layer1'
         }
       }),
       visible: true
     });
     tileLayer.set('hoverable', true);
-    tileLayer.set('name', 'Test Layer 1');
+    tileLayer.set('name', 'TestLayer1');
 
     imageLayer = new OlLayerImage({
       source: new OlSourceImageWMS({
         url: 'http://example.com/wms',
         params: {
-          LAYERS: 'test:layer2'
+          LAYERS: 'layer2'
         }
       }),
       visible: true
     });
     imageLayer.set('hoverable', true);
-    imageLayer.set('name', 'Test Layer 2');
+    imageLayer.set('name', 'TestLayer2');
 
     map.addLayer(tileLayer);
     map.addLayer(imageLayer);
@@ -73,122 +103,126 @@ describe('<FeatureInfo />', () => {
         selectedFeatures: () => ({})
       }
     });
+
+    mockResultRenderer = null;
+    mockLayerFilter = null;
   });
 
-  it('is defined', () => {
-    expect(FeatureInfo).not.toBeUndefined();
-  });
-
-  it('renders nothing when map is not available', () => {
-    const { container } = render(
+  it('can be rendered with coordinate info', () => {
+    render(
       <Provider store={store}>
-        <MapContext.Provider value={null}>
-          <FeatureInfo />
-        </MapContext.Provider>
-      </Provider>
-    );
-
-    expect(container.firstChild).toBeNull();
-  });
-
-  it('renders nothing when featureInfo is disabled', () => {
-    const disabledStore = configureStore({
-      reducer: {
-        featureInfo: () => ({ enabled: false }),
-        selectedFeatures: () => ({})
-      }
-    });
-
-    const { container } = render(
-      <Provider store={disabledStore}>
         <MapContext.Provider value={map}>
           <FeatureInfo />
         </MapContext.Provider>
       </Provider>
     );
 
-    expect(container.firstChild).toBeNull();
+    expect(screen.getByTestId('coordinate-info')).toBeInTheDocument();
+    expect(screen.getByText('CoordinateInfo Active')).toBeInTheDocument();
   });
 
-  it('renders empty form when no formConfig is set', () => {
-    const feature = new OlFeature({
-      foo: 'bar',
-      baz: 42
+  it('renders usage hint when no features are selected', () => {
+    render(
+      <Provider store={store}>
+        <MapContext.Provider value={map}>
+          <FeatureInfo />
+        </MapContext.Provider>
+      </Provider>
+    );
+
+    const rendered = mockResultRenderer({
+      features: [],
+      loading: false
+    });
+
+    const { container } = render(rendered);
+    expect(container.textContent).toContain('FeatureInfo.usageHint');
+  });
+
+  it('groups features by layer and renders multiple tabs when features are found', () => {
+    const feature1 = new OlFeature({
+      geometry: new OlGeomPoint([0, 0]),
+      name: 'Feature1 from Layer1'
+    });
+
+    const feature2 = new OlFeature({
+      geometry: new OlGeomPoint([1, 1]),
+      name: 'Feature2 from Layer2'
     });
 
     render(
-      <FeatureInfoForm
-        feature={feature}
-      />
+      <Provider store={store}>
+        <MapContext.Provider value={map}>
+          <FeatureInfo />
+        </MapContext.Provider>
+      </Provider>
     );
 
-    expect(document.querySelector('.feature-info-form')).toBeInTheDocument();
-    expect(screen.queryByTestId('display-field')).toBeNull();
+    const coordinateInfoState = {
+      features: [
+        {
+          feature: feature1,
+          featureType: 'layer1'
+        },
+        {
+          feature: feature2,
+          featureType: 'layer2'
+        }
+      ],
+      loading: false
+    };
+
+    const rendered = mockResultRenderer(coordinateInfoState);
+    const { getByText } = render(rendered);
+
+    expect(getByText('TestLayer1')).toBeInTheDocument();
+    expect(getByText('TestLayer2')).toBeInTheDocument();
   });
 
-  it('renders form items based on formConfig', () => {
-    const feature = new OlFeature({
-      foo: 'bar',
-      baz: 42
-    });
-    const formConfig = [
-      {
-        propertyName: 'foo',
-        displayName: 'Foo Label',
-        fieldProps: {}
-      },
-      {
-        propertyName: 'baz',
-        fieldProps: {}
-      }
-    ];
+  it('filters out non-visible layers', () => {
+    tileLayer.setVisible(false);
 
     render(
-      <FeatureInfoForm
-        feature={feature}
-        formConfig={formConfig}
-      />
+      <Provider store={store}>
+        <MapContext.Provider value={map}>
+          <FeatureInfo />
+        </MapContext.Provider>
+      </Provider>
     );
 
-    expect(screen.getAllByText('Foo Label')[0]).toBeInTheDocument();
-    expect(screen.getByTitle('baz')).toBeInTheDocument();
-    expect(screen.getAllByTestId('display-field')).toHaveLength(2);
+    expect(mockLayerFilter(tileLayer)).toBe(false);
+    expect(mockLayerFilter(imageLayer)).toBe(true);
   });
 
-  it('passes additional props to Form', () => {
-    const feature = new OlFeature({ foo: 'bar' });
-    const { container } = render(
-      <FeatureInfoForm
-        feature={feature}
-        data-testid="my-form"
-      />
+  it('filters out non-hoverable layers', () => {
+    tileLayer.set('hoverable', false);
+
+    render(
+      <Provider store={store}>
+        <MapContext.Provider value={map}>
+          <FeatureInfo />
+        </MapContext.Provider>
+      </Provider>
     );
-    expect(container.querySelector('.feature-info-form')).toBeInTheDocument();
-    expect(screen.getByTestId('my-form')).toBeInTheDocument();
+
+    expect(mockLayerFilter(tileLayer)).toBe(false);
+    expect(mockLayerFilter(imageLayer)).toBe(true);
   });
 
-  it('calls resetFields and setFieldsValue on feature change', () => {
-    const feature1 = new OlFeature({ foo: 'bar' });
-    const feature2 = new OlFeature({ foo: 'baz' });
-    const formConfig = [{
-      propertyName: 'foo',
-      fieldProps: {}
-    }];
+  it('only allows WMS layers', () => {
+    const nonWmsLayer = new OlLayerTile({
+      visible: true
+    });
+    nonWmsLayer.set('hoverable', true);
 
-    const { rerender } = render(
-      <FeatureInfoForm
-        feature={feature1}
-        formConfig={formConfig}
-      />
-    );
-    rerender(
-      <FeatureInfoForm
-        feature={feature2}
-        formConfig={formConfig}
-      />
+    render(
+      <Provider store={store}>
+        <MapContext.Provider value={map}>
+          <FeatureInfo />
+        </MapContext.Provider>
+      </Provider>
     );
 
-    expect(screen.getAllByText('foo')[0]).toBeInTheDocument();
+    expect(mockLayerFilter(nonWmsLayer)).toBe(false);
   });
 });
-

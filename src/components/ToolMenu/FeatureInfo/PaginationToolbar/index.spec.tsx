@@ -5,7 +5,6 @@ import {
   screen,
   fireEvent,
   waitFor,
-  prettyDOM
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
