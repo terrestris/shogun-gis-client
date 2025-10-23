@@ -1,5 +1,7 @@
 import React, {
-  useState
+  useState,
+  FC,
+  JSX
 } from 'react';
 
 import {
@@ -29,6 +31,7 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import useAppSelector from '../../hooks/useAppSelector';
 import Toolbar, {
   ToolbarProps
 } from '../Toolbar';
@@ -37,13 +40,15 @@ import './index.less';
 
 export type MapToolbarProps = React.HTMLAttributes<HTMLDivElement> & ToolbarProps;
 
-export const MapToolbar: React.FC = (): JSX.Element => {
+export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
   const {
     t
   } = useTranslation();
   const map = useMap();
 
   const [geolocationButtonPressed, setGeolocationButtonPressed] = useState(false);
+
+  const showGeolocation = useAppSelector(state => state.mapToolbar.showGeolocation);
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
@@ -81,27 +86,31 @@ export const MapToolbar: React.FC = (): JSX.Element => {
           }
           {...btnTooltipProps}
         />}
-      {map &&
-        <GeoLocationButton
-          aria-label="geolocation"
-          showMarker={true}
-          follow={true}
-          pressed={geolocationButtonPressed}
-          onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
-          tooltip={t('MapToolbar.geoLocation')}
-          icon={
-            <FontAwesomeIcon
-              icon={faLocation}
-            />
-          }
-          pressedIcon={
-            <FontAwesomeIcon
-              icon={faLocationPin}
-            />
-          }
-          {...btnTooltipProps}
-        />}
+      {
+        map && showGeolocation && (
+          <GeoLocationButton
+            aria-label="geolocation"
+            follow={true}
+            icon={
+              <FontAwesomeIcon
+                icon={faLocation}
+              />
+            }
+            onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
+            pressed={geolocationButtonPressed}
+            pressedIcon={
+              <FontAwesomeIcon
+                icon={faLocationPin}
+              />
+            }
+            showMarker={true}
+            tooltip={t('MapToolbar.geoLocation')}
+            {...btnTooltipProps}
+          />
+        )
+      }
     </Toolbar>
+
   );
 };
 
