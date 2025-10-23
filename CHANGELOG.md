@@ -1,3 +1,14 @@
+## [11.0.0-next.1](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.10...v11.0.0-next.1) (2025-10-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename mapToolbarVisible store to mapToolbar
+
+### Features
+
+* make GeoLocation tool configurable ([eca7059](https://github.com/terrestris/shogun-gis-client/commit/eca7059cf292edbadafab3fa4fa091b663a2e026))
+
 ## [10.2.0-next.10](https://github.com/terrestris/shogun-gis-client/compare/v10.2.0-next.9...v10.2.0-next.10) (2025-10-23)
 
 
