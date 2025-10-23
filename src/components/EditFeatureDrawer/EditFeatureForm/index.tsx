@@ -34,6 +34,7 @@ import {
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useLocalize from '../../../hooks/useLocalize';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 import {
   setFormDirty
@@ -76,6 +77,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
 
   const client = useSHOGunAPIClient();
   const dispatch = useAppDispatch();
+  const localize = useLocalize();
 
   const formDirty = useAppSelector(
     state => state.editFeature.formDirty
@@ -126,7 +128,7 @@ export const EditFeatureForm: React.FC<EditFeatureFormProps> = ({
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
-        label={fieldCfg.displayName ?? fieldCfg.propertyName}
+        label={localize(fieldCfg.displayName ?? fieldCfg.propertyName)}
         {...formItemProps}
       >
         {field}

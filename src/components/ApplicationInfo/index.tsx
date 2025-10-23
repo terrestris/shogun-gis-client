@@ -16,6 +16,7 @@ import {
 } from 'react-i18next';
 
 import useAppSelector from '../../hooks/useAppSelector';
+import useLocalize from '../../hooks/useLocalize';
 
 import {
   useClientVersion
@@ -31,15 +32,17 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   opener,
   ...restProps
 }) => {
-  const {
-    t
-  } = useTranslation();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const appInfo = useAppSelector(state => state.appInfo);
   const logoPath = useAppSelector(state => state.logoPath);
   const appDescription = useAppSelector(state => state.description);
 
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const localize = useLocalize();
+
+  const {
+    t
+  } = useTranslation();
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -80,7 +83,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
         <div
           className="description"
         >
-          {appDescription}
+          {localize(appDescription)}
         </div>
         <Statistic
           title={t('ApplicationInfo.clientVersionTitle')}

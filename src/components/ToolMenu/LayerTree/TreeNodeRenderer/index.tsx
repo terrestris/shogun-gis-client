@@ -51,6 +51,7 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useLocalize from '../../../../hooks/useLocalize';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 import WmsTimeSlider from '../../../WmsTimeSlider';
@@ -93,6 +94,7 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
   const {
     t
   } = useTranslation();
+  const localize = useLocalize();
 
   const [sldBody, setSldBody] = useState<string | undefined>();
 
@@ -134,7 +136,7 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
       <div
         aria-label="layer-group"
       >
-        {layer.get('name')}
+        {localize(layer.get('name'))}
       </div>
     );
   } else {
@@ -148,7 +150,7 @@ export const TreeNodeRenderer: React.FC<TreeNodeRendererProps> = ({
             aria-label="layer-name"
             className="layer-name"
           >
-            {layer.get('name')}
+            {localize(layer.get('name'))}
           </span>
           <div
             className="layer-icons-group"
