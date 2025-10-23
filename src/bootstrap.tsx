@@ -51,7 +51,9 @@ import {
 } from 'react-redux';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import {
+  UrlUtil
+} from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 
@@ -64,11 +66,17 @@ import Application, {
 } from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import {
+  SHOGunAPIClient
+} from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import {
+  getLocalizedString
+} from '@terrestris/shogun-util/dist/util/getLocalizedString';
 
 const App = React.lazy(() => import('./App'));
 
 import RerouteToLogin from './components/RerouteToLogin';
+
 import {
   PluginProvider
 } from './context/PluginContext';
@@ -129,6 +137,7 @@ import {
   AsyncReducer,
   createReducer,
   dynamicMiddleware,
+  observeStore,
   store
 } from './store/store';
 import {
@@ -442,10 +451,17 @@ const initKeycloak = async () => {
   return keycloak;
 };
 
-const setApplicationTitle = () => {
-  store.subscribe(() => {
-    document.title = store.getState().title;
-  });
+const setApplicationTitle = (title: string, language: string) => {
+  document.title = getLocalizedString(title, language);
+};
+
+const observeApplicationTitle = () => {
+  observeStore(
+    state => state.title,
+    title => {
+      setApplicationTitle(title, i18n.language);
+    }
+  );
 };
 
 const setupMap = async (application?: Application) => {
@@ -821,6 +837,10 @@ export const matchRole = (role: string | RegExp, element: string): boolean => {
   return false;
 };
 
+const onLanguageChanged = (lng: string) => {
+  setApplicationTitle(store.getState().title, lng);
+};
+
 const renderApp = async () => {
   const container = document.getElementById('app');
   const root = createRoot(container!);
@@ -882,6 +902,8 @@ const renderApp = async () => {
       i18n.changeLanguage(defaultLanguage);
     }
 
+    i18n.on('languageChanged', onLanguageChanged);
+
     const printApp = appConfig?.clientConfig?.printApp;
     if (printApp) {
       store.dispatch(setPrintApp(printApp));
@@ -903,7 +925,7 @@ const renderApp = async () => {
 
     setApplicationToStore(appConfig);
 
-    setApplicationTitle();
+    observeApplicationTitle();
 
     if (client) {
       const appInfo = await getApplicationInfo(client);

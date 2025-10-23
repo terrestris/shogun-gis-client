@@ -58,6 +58,7 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import useLocalize from '../../hooks/useLocalize';
 import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import './index.less';
@@ -77,6 +78,8 @@ export const SldClassificationPanel: React.FC<SldClassificationPanelProps> = ({
   const {
     t
   } = useTranslation();
+
+  const localize = useLocalize();
 
   const map = useMap();
 
@@ -229,7 +232,7 @@ export const SldClassificationPanel: React.FC<SldClassificationPanelProps> = ({
       name: layer.getSource()?.getParams().LAYERS,
       rules: activeRules
     };
-    const layerName = layer.get('name');
+    const layerName = localize(layer.get('name'));
 
     try {
       const sld: WriteStyleResult<string> = await sldParser.writeStyle(layerStyleObject);

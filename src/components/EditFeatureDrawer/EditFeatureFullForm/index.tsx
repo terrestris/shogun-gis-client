@@ -30,6 +30,7 @@ import {
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useConvertImageUrl from '../../../hooks/useConvertImageUrl';
 import useExecuteGetFeature from '../../../hooks/useExecuteGetFeature';
+import useLocalize from '../../../hooks/useLocalize';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
 import { setFeature } from '../../../store/editFeature';
@@ -62,6 +63,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
   const map = useMap();
   const dispatch = useAppDispatch();
   const client = useSHOGunAPIClient();
+  const localize = useLocalize();
 
   const reloadFeature = useCallback(async (id: string) => {
     if (!layer || !isWmsLayer(layer)) {
@@ -96,7 +98,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     const editFormConfig = layer.get('editFormConfig') as PropertyFormTabConfig<PropertyFormItemEditConfig>[];
 
     if (editFormConfig?.length === 0) {
-      Logger.warn(`Layer ${layer.get('name')} has no 'editFormConfig' set`);
+      Logger.warn(`Layer ${localize(layer.get('name'))} has no 'editFormConfig' set`);
       return;
     }
 
@@ -181,7 +183,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
     form.setFieldsValue(properties);
 
     setTabConfig(editFormConfig);
-  }, [map, client, layer, feature?.properties, form, imageUrlToBase64]);
+  }, [map, client, layer, feature?.properties, form, imageUrlToBase64, localize]);
 
   useEffect(() => {
     update();

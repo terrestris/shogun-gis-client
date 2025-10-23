@@ -62,6 +62,7 @@ import {
 import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useAppSelector from '../../../../hooks/useAppSelector';
 import useGetFitPadding from '../../../../hooks/useGetFitPadding';
+import useLocalize from '../../../../hooks/useLocalize';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
 import {
@@ -101,6 +102,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const client = useSHOGunAPIClient();
   const map = useMap();
   const getFitPadding = useGetFitPadding();
+  const localize = useLocalize();
   const {
     t
   } = useTranslation();
@@ -261,7 +263,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     const blob = await res.blob();
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.setAttribute('download', layer.get('name'));
+    a.setAttribute('download', localize(layer.get('name')));
     a.click();
   };
 
