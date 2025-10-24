@@ -20,6 +20,7 @@ import layerTree from './layerTree';
 import legal from './legal';
 import logoPath from './logoPath';
 import mapToolbar from './mapToolbar';
+import newsTextIds from './newsText';
 import print from './print';
 import searchEngines from './searchEngines';
 import searchResult from './searchResult';
@@ -30,7 +31,7 @@ import toolMenu from './toolMenu';
 import uploadDataModal from './uploadDataModal';
 import user from './user';
 import userMenu from './userMenu';
-import measure from "./measure";
+import measure from './measure';
 
 export type AsyncReducer = Record<string, Reducer>;
 
@@ -52,6 +53,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     logoPath,
     mapToolbar,
     measure,
+    newsTextIds,
     print,
     searchEngines,
     searchResult,
