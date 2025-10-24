@@ -57,9 +57,9 @@ export const NewsModal: React.FC = (): JSX.Element => {
         const markdownResults = contentsResults
           .filter(r => r && r.markdown && r.title)
           .map(r => ({
-            title: r!.title,
-            markdown: r!.markdown,
-            checked: JSON.parse(localStorage.getItem('hide-news-modal-' + r!.id) || 'false')
+            title: r?.title,
+            markdown: r?.markdown,
+            checked: JSON.parse(localStorage.getItem('hide-news-modal-' + r?.id) || 'false')
           }));
         setMarkdownContents(markdownResults);
       } catch (error) {
