@@ -337,7 +337,7 @@ export const setApplicationToStore = async (application?: Application) => {
         store.dispatch(setMapToolbarVisible(config?.visible));
         store.dispatch(setGeoLocationVisible(config?.showGeolocation));
       },
-      measure: (config) => {
+      measure_tools: (config) => {
         store.dispatch(setShowSegmentLengths(config?.showSegmentLengths ?? false));
       },
       // eslint-disable-next-line camelcase
