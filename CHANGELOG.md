@@ -1,3 +1,10 @@
+## [11.0.0-next.5](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.4...v11.0.0-next.5) (2025-10-27)
+
+
+### Bugfixes
+
+* **measure:** apply showSegmentsLength to correct tool name ([7267a9a](https://github.com/terrestris/shogun-gis-client/commit/7267a9adfefdd134cc87fd7c434b07fcfc543141))
+
 ## [11.0.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.3...v11.0.0-next.4) (2025-10-27)
 
 
