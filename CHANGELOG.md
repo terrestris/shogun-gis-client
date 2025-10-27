@@ -1,3 +1,10 @@
+## [11.0.0-next.4](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.3...v11.0.0-next.4) (2025-10-27)
+
+
+### Bugfixes
+
+* **deps:** update react-util to required version for showing measure segments length ([891d463](https://github.com/terrestris/shogun-gis-client/commit/891d4632d9e9b80cf3139cf10e417db8df5c048e))
+
 ## [11.0.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.2...v11.0.0-next.3) (2025-10-27)
 
 
