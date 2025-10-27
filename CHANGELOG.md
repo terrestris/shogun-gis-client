@@ -1,3 +1,24 @@
+## [11.0.0-next.3](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.2...v11.0.0-next.3) (2025-10-27)
+
+
+### Dependencies
+
+* merge branch 'next' into textual-contents-and-news-modal ([37c5716](https://github.com/terrestris/shogun-gis-client/commit/37c571692a4095c20cb5a96e5dc16367d3b00ced))
+
+
+### Features
+
+* introduce news modal ([f85e7e0](https://github.com/terrestris/shogun-gis-client/commit/f85e7e0df0aeb345ccc3d1c70c0822d73a12e66c))
+
+
+### Bugfixes
+
+* apply suggestions ([5ecaf6c](https://github.com/terrestris/shogun-gis-client/commit/5ecaf6cec163f1b2742a389c4468dbb2b0ffc624))
+* imports ([fbe3b49](https://github.com/terrestris/shogun-gis-client/commit/fbe3b494275370647423ad2fa944aa77ad9c1018))
+* service from util ([8eb9212](https://github.com/terrestris/shogun-gis-client/commit/8eb9212b097bdce56c2edd33e7dbd434e4c52bbd))
+* textualContentService ([789955f](https://github.com/terrestris/shogun-gis-client/commit/789955f726f4e75048cbfae0eaff7071258854cd))
+* update shogun-util version ([3a71c20](https://github.com/terrestris/shogun-gis-client/commit/3a71c20ac3133a26cf74cc571e0f00f26e5faa0c))
+
 ## [11.0.0-next.2](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.1...v11.0.0-next.2) (2025-10-23)
 
 
