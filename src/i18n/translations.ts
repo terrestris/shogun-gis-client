@@ -349,6 +349,9 @@ export default {
         scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
         scaleDenominatorText2: '(ab 1:${{min}})',
         scaleDenominatorText3: '(bis 1:${{max}})'
+      },
+      NewsModal: {
+        hideModalCheckboxTitle: 'Nicht erneut anzeigen'
       }
     }
   },
@@ -694,6 +697,9 @@ export default {
         scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
         scaleDenominatorText2: '(from 1:${{min}})',
         scaleDenominatorText3: '(until 1:${{max}})'
+      },
+      NewsModal: {
+        hideModalCheckboxTitle: 'Don\'t show again'
       }
     }
   }
