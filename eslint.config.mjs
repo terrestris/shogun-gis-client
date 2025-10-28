@@ -9,8 +9,9 @@ import eslint from '@eslint/js';
 import globals from 'globals';
 
 import eslintTerrestris from '@terrestris/eslint-config-typescript';
+import { defineConfig } from 'eslint/config';
 
-export default tsEslint.config({
+export default defineConfig({
   extends: [
     eslint.configs.recommended,
     ...tsEslint.configs.recommended,
