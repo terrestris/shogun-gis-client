@@ -1,3 +1,16 @@
+## [11.0.0-next.7](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.6...v11.0.0-next.7) (2025-10-28)
+
+
+### Dependencies
+
+* fix linter warnings ([5205d48](https://github.com/terrestris/shogun-gis-client/commit/5205d48e938e6ad6f3859b9b3d838003125e80a1))
+* fix tests ([69edb26](https://github.com/terrestris/shogun-gis-client/commit/69edb26029d36642abf949c7150ab614034bcdce))
+
+
+### Features
+
+* add support for localized config strings ([10c67ed](https://github.com/terrestris/shogun-gis-client/commit/10c67edfaa7ba0fc0c3ca09742ec2fc28e1f8851))
+
 ## [11.0.0-next.6](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.5...v11.0.0-next.6) (2025-10-28)
 
 
