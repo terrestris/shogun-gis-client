@@ -45,6 +45,7 @@ import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getB
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useLocalize from '../../../hooks/useLocalize';
 import usePlugins from '../../../hooks/usePlugins';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
@@ -85,6 +86,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
   const client = useSHOGunAPIClient();
   const plugins = usePlugins();
   const dispatch = useAppDispatch();
+  const localize = useLocalize();
 
   const [activeTabKey, setActiveTabKey] = useState<string | undefined>(undefined);
   const featureInfoEnabled = useAppSelector(state => state.featureInfo.enabled);
@@ -186,7 +188,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
 
       if (!pluginRendererAvailable) {
         items.push({
-          label: mapLayer?.get('name') || layerName,
+          label: localize(mapLayer?.get('name')) || layerName,
           index: mapLayerIndex,
           key: layerName,
           children: (

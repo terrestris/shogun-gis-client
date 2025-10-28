@@ -74,5 +74,23 @@ export const store = configureStore({
     getDefaultMiddleware().prepend(dynamicMiddleware.middleware)
 });
 
+export const observeStore = <T, >(select: (state: RootState) => T, onChange: (selected: T) => void) => {
+  let currentState: T;
+
+  const handleChange = () => {
+    const nextState = select(store.getState());
+    if (nextState !== currentState) {
+      currentState = nextState;
+      onChange(currentState);
+    }
+  };
+
+  const unsubscribe = store.subscribe(handleChange);
+
+  handleChange();
+
+  return unsubscribe;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch & ThunkDispatch<RootState, undefined, Action>;
