@@ -28,8 +28,9 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import useAppSelector from '../../../hooks/useAppSelector';
+
 import './index.less';
-import useAppSelector from "../../../hooks/useAppSelector";
 
 interface DefaultMeasureProps {
   showMeasureDistance?: boolean;
