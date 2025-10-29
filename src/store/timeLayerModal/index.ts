@@ -5,28 +5,30 @@ import {
 
 export interface TimeLayerModalState {
   layerId: string | null;
+  visible: boolean;
 }
 
 const initialState: TimeLayerModalState = {
-  layerId: null
+  layerId: null,
+  visible: false
 };
 
 export const slice = createSlice({
   name: 'timeLayerModal',
   initialState,
   reducers: {
-    openTimeLayerModal(state, action: PayloadAction<string>) {
+    setLayerId(state, action: PayloadAction<string>) {
       state.layerId = action.payload;
     },
-    closeTimeLayerModal(state) {
-      state.layerId = null;
+    setModalVisible(state, action: PayloadAction<boolean>) {
+      state.visible = action.payload;
     }
   }
 });
 
 export const {
-  openTimeLayerModal,
-  closeTimeLayerModal
+  setLayerId,
+  setModalVisible
 } = slice.actions;
 
 export default slice.reducer;

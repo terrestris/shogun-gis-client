@@ -34,7 +34,8 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 
 import {
-  openTimeLayerModal
+  setLayerId,
+  setModalVisible
 } from '../../../store/timeLayerModal';
 
 import TreeNodeRenderer from './TreeNodeRenderer';
@@ -67,7 +68,8 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
 
   const handleTimeModalOpen = useCallback((layer: OlLayer) => {
     const layerId = getUid(layer);
-    dispatch(openTimeLayerModal(layerId));
+    dispatch(setLayerId(layerId));
+    dispatch(setModalVisible(true));
   }, [dispatch]);
 
   const registerTileLoadHandler = useCallback(() => {
