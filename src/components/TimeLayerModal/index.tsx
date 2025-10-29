@@ -22,7 +22,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { useTimeLayerData } from '../../hooks/useTimeLayerData';
 
-import { closeTimeLayerModal } from '../../store/timeLayerModal';
+import { setModalVisible } from '../../store/timeLayerModal';
 
 import './index.less';
 
@@ -38,6 +38,9 @@ export const TimeLayerModal: React.FC<
   const map = useMap();
   const timeModalLayerId = useAppSelector(
     state => state.timeLayerModal.layerId
+  );
+  const timeModalVisible = useAppSelector(
+    state => state.timeLayerModal.visible
   );
 
   const layer = useMemo(() => {
@@ -60,7 +63,7 @@ export const TimeLayerModal: React.FC<
     isValidTimeLayer
   } = timeLayerData;
 
-  const visible = !!layer && isValidTimeLayer;
+  const visible = timeModalVisible && !!layer && isValidTimeLayer;
 
   const tooltips = useMemo(
     () => ({
@@ -146,7 +149,7 @@ export const TimeLayerModal: React.FC<
   }, []);
 
   const handleClose = useCallback(() => {
-    dispatch(closeTimeLayerModal());
+    dispatch(setModalVisible(false));
   }, [dispatch]);
 
   const modalWidth = window.innerWidth * 0.8;
