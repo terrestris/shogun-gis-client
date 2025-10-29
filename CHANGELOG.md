@@ -1,3 +1,19 @@
+## [11.0.0-next.8](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.7...v11.0.0-next.8) (2025-10-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **docker:** unprivileged container exposes port 8080 instead of 80
+
+### Dependencies
+
+* **docker:** use unpriviledged nginx image and add OCI metadata ([cc6ac37](https://github.com/terrestris/shogun-gis-client/commit/cc6ac37ba9c0af2abe52310ae7a900cc134cca06))
+
+
+### Features
+
+* pass commit and version to docker build ([50d7a17](https://github.com/terrestris/shogun-gis-client/commit/50d7a17381bbd1e922c3cdf825a6a1bf6dff5f95))
+
 ## [11.0.0-next.7](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.6...v11.0.0-next.7) (2025-10-28)
 
 
