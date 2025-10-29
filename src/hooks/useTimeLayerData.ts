@@ -10,9 +10,9 @@ dayjs.extend(utc);
 
 export interface TimeLayerData {
   timeAwareLayers: WmsLayer[];
-  initialTime: Dayjs | undefined;
-  minTime: Dayjs | undefined;
-  maxTime: Dayjs | undefined;
+  initialTime?: Dayjs;
+  minTime?: Dayjs;
+  maxTime?: Dayjs;
   availableTimePoints: string[];
   isValidTimeLayer: boolean;
 }
