@@ -23,7 +23,7 @@ COPY default.conf /etc/nginx/templates/default.conf.template
 # Metadata according to OCI Image Spec
 LABEL org.opencontainers.image.authors="info@terrestris.de"
 LABEL org.opencontainers.image.created="$(date -u +%Y-%m-%dT%H:%M:%S%z)"
-LABEL org.opencontainers.image.source="https://github.com/terrestris/shogun-gis-client.git"
+LABEL org.opencontainers.image.source="https://github.com/terrestris/shogun-gis-client"
 LABEL org.opencontainers.image.title="The SHOGun WebGIS client"
 LABEL org.opencontainers.image.description="Docker image for SHOGun WebGIS client"
 LABEL org.opencontainers.image.url=https://terrestris.de
