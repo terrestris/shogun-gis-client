@@ -1,6 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import {
+  setSqljsWasmLocateFile
+} from '@ngageoint/geopackage';
+
 import OlGeometryCollection from 'ol/geom/GeometryCollection';
 import OlGeomLineString from 'ol/geom/LineString';
 import OlGeomPoint from 'ol/geom/Point';
@@ -249,6 +253,9 @@ describe('readFeaturesFromFile', () => {
   });
 
   it('reads *.gpkg file (POINT, LINESTRING, POLYGON)', async () => {
+    const sqlWasmPath = path.join(process.cwd(), 'node_modules', '@ngageoint', 'geopackage', 'dist');
+    setSqljsWasmLocateFile(f => `${sqlWasmPath}/${f}`);
+
     const gpkgFile = await readFile('../../resources/test-files/gpkg/multiple.gpkg', 'application/geopackage+sqlite3');
 
     const features = await readFeaturesFromFile(gpkgFile);

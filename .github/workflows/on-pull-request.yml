@@ -20,7 +20,7 @@ jobs:
     - name: Setup Node.js 🧮
       uses: actions/setup-node@v6
       with:
-        node-version: 20
+        node-version: 24
 
     - name: Cache Node.js modules 💾
       uses: actions/cache@v4
@@ -85,7 +85,7 @@ jobs:
         hide-summary: false
         multiple-files: |
           ${{ env.MULTIPLE_FILES }}
-      
+
     - name: Get Coverage Comment Id ➡️
       if: ${{ env.no_tests_found == 'true' && github.actor != 'dependabot[bot]' }}
       id: get-comment-id
