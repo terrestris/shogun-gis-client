@@ -25,6 +25,8 @@ import Logger from '@terrestris/base-util/dist/Logger';
 
 export type ParserFunction = (content: ArrayBuffer) => Promise<Record<string, OlFeature[]>>;
 
+setSqljsWasmLocateFile(f => `./geopackage/${f}`);
+
 const readFile = async (file: File, parser: ParserFunction) => {
   const fileReader = new FileReader();
 
@@ -55,8 +57,6 @@ const readFile = async (file: File, parser: ParserFunction) => {
 
 const readFeaturesFromGeopackage = async (file: File, featureProjection?: OlProjectionLike,
   dataProjection?: OlProjectionLike) => {
-  setSqljsWasmLocateFile(f => './geopackage/' + f);
-
   return readFile(file, async fileContent => {
     const geopackage = await GeoPackageAPI.open(new Uint8Array(fileContent));
 

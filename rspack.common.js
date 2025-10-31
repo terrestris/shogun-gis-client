@@ -69,7 +69,12 @@ module.exports = {
   resolve: {
     alias: {
       fs: false,
-      path: false
+      path: false,
+      // Exclude 'better-sqlite3' and 'vm' to omit warnings
+      // from @ngageoint/geopackage, it can fallback to internal
+      // SqljsAdapter implementation.
+      'better-sqlite3': false,
+      vm: false
     },
     extensions: [
       '.tsx',
