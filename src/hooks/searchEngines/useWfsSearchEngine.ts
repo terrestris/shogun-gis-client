@@ -39,6 +39,7 @@ import {
 
 import useExecuteGetFeature from '../useExecuteGetFeature';
 import useExecuteWfsDescribeFeatureType from '../useExecuteWfsDescribeFeatureType';
+import useLocalize from '../useLocalize';
 
 export const isFulfilled = <T, >(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
 export const isRejected = <T, >(p: PromiseSettledResult<T>): p is PromiseRejectedResult => p.status === 'rejected';
@@ -47,12 +48,13 @@ export const useWfsSearchEngine = () => {
   const map = useMap();
   const executeGetFeature = useExecuteGetFeature();
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
+  const localize = useLocalize();
 
   const replaceTemplates = useCallback((template: string, feature: OlFeature): string => {
     // regex for template string with values in brackets, e.g. {name}
     const pattern = /{\s*(\w+?)\s*}/g;
-    return template.replace(pattern, (_, token) => feature.getProperties()[token] || '');
-  }, []);
+    return localize(template.replace(pattern, (_, token) => feature.getProperties()[token] || ''));
+  }, [localize]);
 
   const getFeatureTitle = useCallback((searchValue: string, feature: OlFeature, layer: WmsLayer) => {
     const searchConfig = layer?.get('searchConfig') as SearchConfig;
@@ -131,7 +133,7 @@ export const useWfsSearchEngine = () => {
 
           if (!attr) {
             Logger.warn(`Attribute "${attribute}" not found in feature type `+
-              `"${featureType.typeName}" for layer "${searchableLayer.get('name')}".`);
+              `"${featureType.typeName}" for layer "${localize(searchableLayer.get('name'))}".`);
             return null;
           }
 
@@ -147,7 +149,7 @@ export const useWfsSearchEngine = () => {
             return equalTo(attribute, numValue);
           } else {
             Logger.warn(`Attribute "${attribute}" with type "${attr.localType}" ` +
-              `not supported for search in layer "${searchableLayer.get('name')}".`);
+              `not supported for search in layer "${localize(searchableLayer.get('name'))}".`);
             return null;
           }
         })
@@ -198,7 +200,7 @@ export const useWfsSearchEngine = () => {
     const rejectedResponses = results.filter(res => res.status === 'rejected');
 
     rejectedResponses.forEach(res => {
-      Logger.error(`Error while fetching the layer search results for layer "${res.layer.get('name')}": `, res.reason);
+      Logger.error(`Error while fetching the layer search results for layer "${localize(res.layer.get('name'))}": `, res.reason);
     });
 
     const OlFormatGeoJson = new OlFormatGeoJSON();
@@ -216,13 +218,13 @@ export const useWfsSearchEngine = () => {
       });
 
       wfsResults.push({
-        title: fulfilledResponse.layer.get('name'),
+        title: localize(fulfilledResponse.layer.get('name')),
         features: features
       });
     }
 
     return wfsResults;
-  }, [executeGetFeature, executeWfsDescribeFeatureType, getFeatureTitle, map]);
+  }, [executeGetFeature, executeWfsDescribeFeatureType, getFeatureTitle, localize, map]);
 
   return performWfsSearch;
 };

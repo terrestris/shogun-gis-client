@@ -24,13 +24,12 @@ import {
 } from 'ol';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
-import OlLayerImage from 'ol/layer/Image';
-import OlLayerTile from 'ol/layer/Tile';
+import OlLayer from 'ol/layer/Layer';
+import OlLayerVector from 'ol/layer/Vector';
 import {
   transformExtent
 } from 'ol/proj';
-import OlSourceImageWMS from 'ol/source/ImageWMS';
-import OlSourceTileWMS from 'ol/source/TileWMS';
+import OlSourceVector from 'ol/source/Vector';
 
 import {
   MenuInfo
@@ -63,8 +62,13 @@ import {
 import useAppDispatch from '../../../../hooks/useAppDispatch';
 import useAppSelector from '../../../../hooks/useAppSelector';
 import useGetFitPadding from '../../../../hooks/useGetFitPadding';
+import useLocalize from '../../../../hooks/useLocalize';
 import useSHOGunAPIClient from '../../../../hooks/useSHOGunAPIClient';
 
+import {
+  setVisibility as setClassificationDrawerVisibility,
+  setLayerId as setClassificationDrawerLayerId
+} from '../../../../store/classificationDrawer';
 import {
   setLayerId,
   setFeature
@@ -79,7 +83,7 @@ import {
 } from '../../../../store/layerDetailsModal';
 
 export type LayerTreeContextMenuProps = {
-  layer: OlLayerTile<OlSourceTileWMS> | OlLayerImage<OlSourceImageWMS>;
+  layer: OlLayer;
   visibleLegendsIds: string[];
   setVisibleLegendsIds: (ids: string[]) => void;
 } & Partial<DropDownProps>;
@@ -98,6 +102,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
   const client = useSHOGunAPIClient();
   const map = useMap();
   const getFitPadding = useGetFitPadding();
+  const localize = useLocalize();
   const {
     t
   } = useTranslation();
@@ -140,6 +145,10 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         dispatch(setLayerDetailsLayer(getUid(layer)));
         dispatch(showLayerDetailsModal());
         break;
+      case 'legendFilter':
+        dispatch(setClassificationDrawerVisibility(true));
+        dispatch(setClassificationDrawerLayerId(getUid(layer)));
+        break;
       default:
         break;
     }
@@ -151,25 +160,41 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       return;
     }
 
-    setExtentLoading(true);
+    if (isWmsLayer(layer)) {
+      setExtentLoading(true);
 
-    try {
-      let extent = await LayerUtil.getExtentForLayer(layer, {
-        headers: layer.get('useBearerToken') ? {
-          ...getBearerTokenHeader(client?.getKeycloak())
-        } : {}
-      });
-      extent = transformExtent(extent, 'EPSG:4326', map.getView().getProjection());
-      map.getView().fit(extent, {
+      try {
+        let extent = await LayerUtil.getExtentForLayer(layer, {
+          headers: layer.get('useBearerToken') ? {
+            ...getBearerTokenHeader(client?.getKeycloak())
+          } : {}
+        });
+        extent = transformExtent(extent, 'EPSG:4326', map.getView().getProjection());
+        map.getView().fit(extent, {
+          padding: getFitPadding()
+        });
+      } catch (error) {
+        Logger.error(error);
+        notification.error({
+          message: t('LayerTreeContextMenu.extentError')
+        });
+      } finally {
+        setExtentLoading(false);
+      }
+    } else if (layer instanceof OlLayerVector) {
+      const source = layer.getSource();
+
+      if (!source || !(source instanceof OlSourceVector)) {
+        return;
+      }
+
+      map.getView().fit(source.getExtent(), {
         padding: getFitPadding()
       });
-    } catch (error) {
-      Logger.error(error);
-      notification.error({
-        message: t('LayerTreeContextMenu.extentError')
+    } else {
+      notification.warning({
+        message: t('LayerTreeContextMenu.extentNotSupportedWarning')
       });
-    } finally {
-      setExtentLoading(false);
     }
   };
 
@@ -238,24 +263,22 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     const blob = await res.blob();
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.setAttribute('download', layer.get('name'));
+    a.setAttribute('download', localize(layer.get('name')));
     a.click();
   };
 
   const dropdownMenuItems: ItemType[] = [];
 
-  if (isWmsLayer(layer)) {
-    dropdownMenuItems.push({
-      label: (
-        <Spin
-          spinning={extentLoading}
-        >
-          {t('LayerTreeContextMenu.layerZoomToExtent')}
-        </Spin>
-      ),
-      key: 'zoomToExtent'
-    });
-  }
+  dropdownMenuItems.push({
+    label: (
+      <Spin
+        spinning={extentLoading}
+      >
+        {t('LayerTreeContextMenu.layerZoomToExtent')}
+      </Spin>
+    ),
+    key: 'zoomToExtent'
+  });
 
   if (isWmsLayer(layer) && layer.getVisible()) {
     const legendVisible = visibleLegendsIds.includes(getUid(layer));
@@ -263,6 +286,13 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     dropdownMenuItems.push({
       label: legendVisible ? t('LayerTreeContextMenu.hideLegend') : t('LayerTreeContextMenu.showLegend'),
       key: 'toggleLegend'
+    });
+  }
+
+  if (layer.get('styleUrl')) {
+    dropdownMenuItems.push({
+      label: t('LayerTreeContextMenu.legendFilter'),
+      key: 'legendFilter'
     });
   }
 
@@ -297,7 +327,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
     });
   }
 
-  if (metadataVisible) {
+  if (metadataVisible && !layer.get('isUploadedLayer')) {
     dropdownMenuItems.push({
       label: t('LayerTreeContextMenu.layerDetails'),
       key: 'layerDetails'

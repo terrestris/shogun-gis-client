@@ -48,16 +48,9 @@ declare module 'clientConfig' {
     };
     print?: {
       url?: string;
+      outputFormats?: string[];
     };
     plugins?: PluginConfiguration[];
-    geoserver?: {
-      base?: string;
-      upload?: {
-        workspace?: string;
-        limit?: number;
-        authorizedRoles?: string[];
-      };
-    };
     search?: SearchConfiguration;
     featureEditRoles?: FeatureEditConfiguration;
     wfsLockFeatureEnabled?: boolean;

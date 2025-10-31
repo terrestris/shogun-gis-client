@@ -64,18 +64,34 @@ describe('LayerTree component', () => {
   });
 
   it('renders empty fragment if no map', () => {
-    renderWithProvider(<LayerTree />, { layerTree: {} }, null);
+    renderWithProvider(
+      <LayerTree />,
+      {
+        editFeature: {
+          userEditMode: 'NONE'
+        },
+        layerTree: {}
+      },
+      null
+    );
     expect(screen.queryByLabelText('layertree')).not.toBeInTheDocument();
   });
 
   it('renders a basic layer tree when map is provided', () => {
     mockMap.addLayer(mockLayer);
-    renderWithProvider(<LayerTree />, {
-      layerTree: {
-        showLegends: false,
-        layerIconsVisible: false
-      }
-    }, mockMap);
+    renderWithProvider(
+      <LayerTree />,
+      {
+        editFeature: {
+          userEditMode: 'NONE'
+        },
+        layerTree: {
+          showLegends: false,
+          layerIconsVisible: false
+        }
+      },
+      mockMap
+    );
 
     expect(screen.getByLabelText('layertree')).toBeInTheDocument();
   });
@@ -84,7 +100,18 @@ describe('LayerTree component', () => {
     mockLayer.set('name', 'Tile Layer');
     mockMap.addLayer(mockLayer);
 
-    renderWithProvider(<LayerTree />, { layerTree: { layerIconsVisible: true } }, mockMap);
+    renderWithProvider(
+      <LayerTree />,
+      {
+        editFeature: {
+          userEditMode: 'NONE'
+        },
+        layerTree: {
+          layerIconsVisible: true
+        }
+      },
+      mockMap
+    );
 
     expect(screen.getByLabelText('layertree')).toBeInTheDocument();
     expect(document.querySelector('.ant-tree-treenode')).toBeInTheDocument();
@@ -94,7 +121,18 @@ describe('LayerTree component', () => {
     mockLayer.set('name', 'Loading Layer');
     mockMap.addLayer(mockLayer);
 
-    renderWithProvider(<LayerTree />, { layerTree: { layerIconsVisible: true } }, mockMap);
+    renderWithProvider(
+      <LayerTree />,
+      {
+        editFeature: {
+          userEditMode: 'NONE'
+        },
+        layerTree: {
+          layerIconsVisible: true
+        }
+      },
+      mockMap
+    );
 
     act(() => {
       mockLayer.getSource()?.dispatchEvent('tileloadstart');
@@ -110,7 +148,16 @@ describe('LayerTree component', () => {
     mockLayer.set('name', 'Finished Layer');
     mockMap.addLayer(mockLayer);
 
-    renderWithProvider(<LayerTree />, { layerTree: {} }, mockMap);
+    renderWithProvider(
+      <LayerTree />,
+      {
+        editFeature: {
+          userEditMode: 'NONE'
+        },
+        layerTree: {}
+      },
+      mockMap
+    );
 
     act(() => {
       mockLayer.getSource()?.dispatchEvent('tileloadstart');

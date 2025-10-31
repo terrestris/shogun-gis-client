@@ -50,7 +50,7 @@ describe('<LayerTreeContextMenu />', () => {
   beforeEach(() => {
     mockLayer = new OlTileLayer({
       source: new OlTileWMS({
-        url: 'https://shogun2022.intranet.terrestris.de/geoserver/ows?',
+        url: 'https://ows.terrestris.de/osm/service?',
         params: {
           LAYERS: ['some_layer'],
           useBearerToken: true

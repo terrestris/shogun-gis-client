@@ -88,9 +88,11 @@ export default {
       LayerTreeContextMenu: {
         layerZoomToExtent: 'Auf Layerausdehnung zoomen',
         extentError: 'Konnte nicht auf die Layerausdehnung zoomen',
+        extentNotSupportedWarning: 'Zoom auf Layerausdehnung wird für diesen Layertyp nicht unterstützt',
         removeLayer: 'Layer entfernen',
         showLegend: 'Legende anzeigen',
         hideLegend: 'Legende ausblenden',
+        legendFilter: 'Legende filtern',
         downloadLayer: 'Layer exportieren ({{formatName}})',
         editLayer: 'Layer bearbeiten',
         layerDetails: 'Eigenschaften'
@@ -130,7 +132,8 @@ export default {
         languageSelect: 'Sprachauswahl',
         searchable: 'Der Inhalt dieses Layers kann im Suchfeld abgefragt werden',
         queryable: 'Der Inhalt dieses Layers kann mit dem Werkzeug \'Karteninhalte abfragen\' abgefragt werden',
-        editable: 'Die Features dieses Layers sind editierbar'
+        editable: 'Die Features dieses Layers sind editierbar',
+        filtered: 'Die Inhalte des Layers sind gefiltert'
       },
       MapToolbar: {
         zoomInTooltip: 'Hereinzoomen',
@@ -200,14 +203,19 @@ export default {
         title: 'Daten hochladen',
         uploadedDataFolder: 'Hochgeladene Daten',
         description: 'Klicken Sie oder ziehen Sie die Datei zum Hochladen in diesen Bereich',
-        hint: 'Unterstützte Dateiformate sind Shapefile (gebündelt als *.zip) und GeoTIFF',
-        success: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt',
+        hint: 'Die üblichen Dateiformate wie Geopackage, GeoJSON, Shapefile (gebündelt als *.zip) und GeoTIFF werden unterstützt',
+        success: 'Datei {{fileName}} wurde erfolgreich geladen',
         error: {
           general: 'Fehler beim Hochladen der Datei {{fileName}}',
-          maxSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
-          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
-          zipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
-        }
+          supportedFormats: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})'
+        },
+        selectEntriesHint: 'Wählen Sie die Einträge aus, die der Karte hinzugefügt werden sollen:',
+        nameColumnTitle: 'Name',
+        addSelectedButtonTitle: 'Ausgewählte Einträge hinzufügen',
+        advancedOptionsLabel: 'Erweiterte Optionen',
+        selectProjectionPlaceholder: 'Wählen Sie das Koordinatensystem der Daten (optional)',
+        favouritesLabel: 'Favoriten',
+        othersLabel: 'Alle'
       },
       MultiSearch: {
         searchInViewBox: 'Im aktuellen Kartenausschnitt suchen',
@@ -325,6 +333,25 @@ export default {
         defaultLineStyleName: 'Linie',
         defaultPointStyleName: 'Punkt',
         defaultTextStyleName: 'Text'
+      },
+      ClassificationDrawer: {
+        title: 'Legendenfilter',
+        noLayerSelected: 'Kein Layer ausgewählt'
+      },
+      SldClassificationPanel: {
+        errorMessage: 'Fehler',
+        filterApplyError: 'Fehler beim Anwenden des Filters',
+        updateRulesError: 'Fehler beim Auslesen der Regeln',
+        applyButtonText: 'Übernehmen',
+        applyButtonTooltip: 'Filter übernehmen',
+        restoreButtonText: 'Zurücksetzen',
+        restoreButtonTooltip: 'Filter zurücksetzen',
+        scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
+        scaleDenominatorText2: '(ab 1:${{min}})',
+        scaleDenominatorText3: '(bis 1:${{max}})'
+      },
+      NewsModal: {
+        hideModalCheckboxTitle: 'Nicht erneut anzeigen'
       }
     }
   },
@@ -411,9 +438,11 @@ export default {
       LayerTreeContextMenu: {
         layerZoomToExtent: 'Zoom to layer extent',
         extentError: 'Could not zoom to layer extent',
+        extentNotSupportedWarning: 'Zoom to layer extent is not supported for this layer type',
         removeLayer: 'Remove layer',
         showLegend: 'Show legend',
         hideLegend: 'Hide legend',
+        legendFilter: 'Filter legend',
         downloadLayer: 'Export layer as {{formatName}}',
         editLayer: 'Edit layer',
         layerDetails: 'Properties'
@@ -453,7 +482,8 @@ export default {
         languageSelect: 'Language selector',
         searchable: 'The contents of this layer can be queried in the search input',
         queryable: 'The contents of this layer can be queried in the query map features tool',
-        editable: 'The features of this layer are editable'
+        editable: 'The features of this layer are editable',
+        filtered: 'The layer contents are filtered'
       },
       MapToolbar: {
         zoomInTooltip: 'Zoom-in',
@@ -522,14 +552,19 @@ export default {
         title: 'Upload data',
         uploadedDataFolder: 'Uploaded data',
         description: 'Click or drag file to this area to upload',
-        hint: 'Supported file formats are Shapefile (bundled as *.zip) and GeoTIFF',
-        success: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}',
+        hint: 'The common formats like Geopackage, GeoJSON, Shapefile (bundled as *.zip) and GeoTIFF are supported',
+        success: 'Successfully uploaded file {{fileName}}',
         error: {
           general: 'Error while uploading file {{fileName}}',
-          maxSize: 'The file exceeds the upload limit of {{maxSize}} MB',
-          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})',
-          zipContent: 'Multiple geodatasets within one archive are not supported'
-        }
+          supportedFormats: 'The given file type does not match the supported ones ({{supportedFormats}})'
+        },
+        selectEntriesHint: 'Please select the entries you want to add to the map:',
+        nameColumnTitle: 'Name',
+        addSelectedButtonTitle: 'Add selected entries',
+        advancedOptionsLabel: 'Advanced options',
+        selectProjectionPlaceholder: 'Select the projection of the dataset (optional)',
+        favouritesLabel: 'Favourites',
+        othersLabel: 'All'
       },
       MultiSearch: {
         searchInViewBox: 'Search in current extent',
@@ -646,6 +681,25 @@ export default {
         defaultLineStyleName: 'Line',
         defaultPointStyleName: 'Point',
         defaultTextStyleName: 'Text'
+      },
+      ClassificationDrawer: {
+        title: 'Legend filter',
+        noLayerSelected: 'No layer selected'
+      },
+      SldClassificationPanel: {
+        errorMessage: 'Error',
+        filterApplyError: 'Error applying the filter style',
+        updateRulesError: 'Error reading the rules',
+        applyButtonText: 'Apply',
+        applyButtonTooltip: 'Apply filter',
+        restoreButtonText: 'Clear filter',
+        restoreButtonTooltip: 'Reset the filter',
+        scaleDenominatorText1: '(1:${{min}} - 1:${{max}})',
+        scaleDenominatorText2: '(from 1:${{min}})',
+        scaleDenominatorText3: '(until 1:${{max}})'
+      },
+      NewsModal: {
+        hideModalCheckboxTitle: 'Don\'t show again'
       }
     }
   }

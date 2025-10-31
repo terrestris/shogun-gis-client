@@ -9,7 +9,6 @@ import {
 } from '../store/store';
 
 export const createReduxWrapper = () => {
-
   return ({
     children
   }: any) => (

@@ -42,6 +42,9 @@ jobs:
           tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
           load: true
+          build-args: |
+            APP_VERSION=latest
+            GIT_COMMIT=${{ github.sha }}
 
       - name: Build docker image (version)
         if: ${{ inputs.release_is_published }} == 'true'
@@ -51,6 +54,9 @@ jobs:
           tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ inputs.release_version }}
           load: true
+          build-args: |
+            APP_VERSION=${{ inputs.release_version }}
+            GIT_COMMIT=${{ github.sha }}
 
       - name: Push docker image to Nexus (latest)
         run: |

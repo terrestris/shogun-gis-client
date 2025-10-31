@@ -79,7 +79,9 @@ module.exports = {
       '.mjs'
     ],
     fallback: {
-      buffer: require.resolve('buffer/')
+      buffer: require.resolve('buffer'),
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('streamx')
     }
   },
   output: {
@@ -107,6 +109,9 @@ module.exports = {
       }, {
         from: path.join(__dirname, 'node_modules', 'monaco-editor', 'min', 'vs'),
         to: 'vs'
+      }, {
+        from: path.join(__dirname, 'node_modules', '@ngageoint', 'geopackage', 'dist', 'sql-wasm.wasm'),
+        to: 'geopackage'
       }]
     }),
     new rspack.DefinePlugin({
