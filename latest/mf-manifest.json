@@ -2158,11 +2158,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "6659.e8abc90334336d30.js",
-            "7094.56fc6699cc267158.js",
-            "9040.51361a3817abef71.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2200,11 +2196,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "1801.a3e279b26eb70cdc.js",
-            "1840.6f47949750f5b105.js",
-            "8697.486b542da4e7326f.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2259,10 +2251,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js",
-            "7239.99ff0f93eb58543e.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2278,9 +2267,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2296,11 +2283,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "1840.6f47949750f5b105.js",
-            "2139.4e1ce651ec0e8fe1.js",
-            "3416.1f577f756574d78b.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2824,7 +2807,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "6178.284ed797b754b2ed.js",
+            "8055.53842a57360703d3.js",
+            "8559.4eb8d281906d81de.js",
+            "940.535ad7d7afd05d56.js",
+            "9965.edb6122962befbd4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2998,9 +2987,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "588.c647f5a44415e350.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
