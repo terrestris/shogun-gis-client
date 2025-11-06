@@ -1,3 +1,26 @@
+## [11.0.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.8...v11.0.0-next.9) (2025-11-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimum required node version is 24
+
+### Dependencies
+
+* **deps-dev:** bump @module-federation/enhanced from 0.21.1 to 0.21.2 ([94b927b](https://github.com/terrestris/shogun-gis-client/commit/94b927bd6784c8505c85d241415d4551b6ca7424))
+* **deps-dev:** bump @rspack/cli from 1.5.8 to 1.6.0 ([4362aef](https://github.com/terrestris/shogun-gis-client/commit/4362aeff655e1012f8f314142772fe777c05f988))
+* **deps-dev:** bump @rspack/core from 1.5.8 to 1.6.0 ([805c03d](https://github.com/terrestris/shogun-gis-client/commit/805c03d6a4d4418463f5fff5dd37324132d76144))
+* **deps-dev:** bump @types/node from 24.9.1 to 24.9.2 ([285bb1f](https://github.com/terrestris/shogun-gis-client/commit/285bb1ffabbf49c53c6e311405f8e5c5d2b09074))
+* **deps-dev:** bump rimraf from 6.0.1 to 6.1.0 ([f100a03](https://github.com/terrestris/shogun-gis-client/commit/f100a03c048a785b9b1503d04b0c330c5ce9f887))
+* **deps:** bump @terrestris/mapfish-print-manager ([f18e53f](https://github.com/terrestris/shogun-gis-client/commit/f18e53f366f4561663d9961cbfc57ce0b7b09f59))
+* **deps:** bump @terrestris/mapfish-print-manager ([b1ced21](https://github.com/terrestris/shogun-gis-client/commit/b1ced2178cf28209868910617632a6ff79ab3c87))
+* **deps:** bump geostyler from 18.1.2 to 18.2.0 ([07a9877](https://github.com/terrestris/shogun-gis-client/commit/07a9877a310c99d61b249573947079d5f7886c40))
+* **deps:** bump nginx from 1.29.2-alpine-slim to 1.29.3-alpine-slim ([3d69059](https://github.com/terrestris/shogun-gis-client/commit/3d69059453a611befc2062e659922a368821ce1a))
+* **deps:** bump react-i18next from 16.2.1 to 16.2.3 ([cb6c57f](https://github.com/terrestris/shogun-gis-client/commit/cb6c57f8d587dea624de5724cceb466dccf88437))
+* **deps:** bump SonarSource/sonarqube-scan-action from 5.3.1 to 6.0.0 ([337d858](https://github.com/terrestris/shogun-gis-client/commit/337d858bea4bb4ed8f08ff54379acf662ffdc3a2))
+* merge main ([059971a](https://github.com/terrestris/shogun-gis-client/commit/059971a7f2ef1ce5681052d10850c48c51e90ae7))
+* update to node 24 ([67c9a78](https://github.com/terrestris/shogun-gis-client/commit/67c9a78fd75c8bedfcb3f161b1a6429adedb8894))
+
 ## [11.0.0-next.8](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.7...v11.0.0-next.8) (2025-10-29)
 
 
