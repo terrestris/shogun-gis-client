@@ -1,3 +1,10 @@
+## [11.0.0-next.10](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.9...v11.0.0-next.10) (2025-11-11)
+
+
+### Bugfixes
+
+* fix print app selection logic ([538987a](https://github.com/terrestris/shogun-gis-client/commit/538987a320b9cfcb44525bcd68e6db4582d74d41))
+
 ## [11.0.0-next.9](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.8...v11.0.0-next.9) (2025-11-06)
 
 
