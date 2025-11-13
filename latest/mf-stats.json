@@ -27,15 +27,15 @@
   "shared": [
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/BackgroundLayerChooser/BackgroundLayerChooser",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2855.8cf11208fbd0b46c.js",
-            "5236.85777de3fd15bb2c.js"
+            "2855.bb1658b2c19c90bc.js",
+            "5236.8d5441e5fc2ab4ce.js"
           ]
         },
         "css": {
@@ -50,9 +50,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -73,9 +73,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/DrawButton/DrawButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/DrawButton/DrawButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -96,15 +96,15 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/GeoLocationButton/GeoLocationButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/GeoLocationButton/GeoLocationButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3775.20b8abe04071ec06.js",
-            "6156.fa17d0d19a531e4a.js"
+            "3775.6e6c3cd62382cd38.js",
+            "6156.7e0a54b2d431f4c0.js"
           ]
         },
         "css": {
@@ -119,9 +119,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -138,9 +138,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -161,17 +161,17 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "1914.dcb24bfe23bd26dd.js",
-            "2855.8cf11208fbd0b46c.js",
+            "2855.bb1658b2c19c90bc.js",
             "4431.edbea883925065a2.js",
-            "5236.85777de3fd15bb2c.js",
+            "5236.8d5441e5fc2ab4ce.js",
             "6812.eafb403278196455.js",
             "9533.74a94af3d2c7ddbc.js"
           ]
@@ -188,9 +188,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -211,9 +211,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ZoomButton/ZoomButton",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Button/ZoomButton/ZoomButton",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -231,9 +231,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -251,9 +251,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -274,9 +274,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -297,9 +297,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/LayerTree/LayerTree",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/LayerTree/LayerTree",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -320,15 +320,15 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Legend/Legend",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Legend/Legend",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2449.85a0a60f45dd8f2b.js",
-            "404.26c3a8b7560e1e6a.js"
+            "2449.036774eeaf6bac2d.js",
+            "404.0915aa133860d05e.js"
           ]
         },
         "css": {
@@ -340,16 +340,16 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Map/MapComponent/MapComponent",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Map/MapComponent/MapComponent",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "2170.693c232549f011f9.js",
-            "2855.8cf11208fbd0b46c.js",
-            "5236.85777de3fd15bb2c.js",
+            "2855.bb1658b2c19c90bc.js",
+            "5236.8d5441e5fc2ab4ce.js",
             "9789.a6311791924103bd.js"
           ]
         },
@@ -365,9 +365,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -384,9 +384,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -404,9 +404,9 @@
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Slider/TimeSlider/TimeSlider",
-      "requiredVersion": "^32.5.0",
+      "requiredVersion": "^32.5.1",
       "name": "@terrestris/react-geo/dist/Slider/TimeSlider/TimeSlider",
-      "version": "32.5.0",
+      "version": "32.5.1",
       "assets": {
         "js": {
           "async": [],
@@ -2259,11 +2259,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "6659.e8abc90334336d30.js",
-            "7094.56fc6699cc267158.js",
-            "9040.b4b64a4afd0f8754.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2280,13 +2276,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2139.a5821038bd5a7882.js",
-            "2905.5397427aa92ba261.js",
-            "3414.5ffe7368e9547f8a.js",
-            "3416.015f7bd64fa35200.js",
-            "7094.56fc6699cc267158.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2365,10 +2355,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js",
-            "7239.99ff0f93eb58543e.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2385,9 +2372,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2965,7 +2950,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "6178.2dd6643a5187c719.js",
+            "8055.53842a57360703d3.js",
+            "8559.86308c25545e42a0.js",
+            "940.f3e77f9fdd8932cf.js",
+            "9965.edb6122962befbd4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3149,7 +3140,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "588.5f97dcb43ee24249.js"
+          ]
         },
         "css": {
           "async": [],
