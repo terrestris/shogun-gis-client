@@ -19,8 +19,10 @@ import OlFormatGeoJSON from 'ol/format/GeoJSON';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
+import OlLayerVector from 'ol/layer/Vector';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
+import OlSourceVector from 'ol/source/Vector';
 
 import { Tab } from 'rc-tabs/lib/interface';
 
@@ -43,6 +45,7 @@ import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getB
 
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useLocalize from '../../../hooks/useLocalize';
 import usePlugins from '../../../hooks/usePlugins';
 import useSHOGunAPIClient from '../../../hooks/useSHOGunAPIClient';
 
@@ -83,6 +86,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
   const client = useSHOGunAPIClient();
   const plugins = usePlugins();
   const dispatch = useAppDispatch();
+  const localize = useLocalize();
 
   const [activeTabKey, setActiveTabKey] = useState<string | undefined>(undefined);
   const featureInfoEnabled = useAppSelector(state => state.featureInfo.enabled);
@@ -97,7 +101,13 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
     if (layer instanceof OlLayerImage && layer.getSource() instanceof OlSourceImageWMS) {
       return true;
     }
-    return layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS;
+    if (layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS) {
+      return true;
+    }
+    if (layer instanceof OlLayerVector && layer.getSource() instanceof OlSourceVector) {
+      return true;
+    }
+    return false;
   };
 
   const changeActiveKey = (key: string) => {
@@ -178,7 +188,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
 
       if (!pluginRendererAvailable) {
         items.push({
-          label: mapLayer?.get('name') || layerName,
+          label: localize(mapLayer?.get('name')) || layerName,
           index: mapLayerIndex,
           key: layerName,
           children: (
@@ -212,7 +222,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
         spinning={loading}
       >
         <Tabs
-          destroyInactiveTabPane={true}
+          destroyOnHidden={true}
           items={items}
           activeKey={activeTabKey}
           defaultActiveKey={items[0].key}

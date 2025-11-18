@@ -28,6 +28,7 @@ import {
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import useLocalize from '../../hooks/useLocalize';
 
 import {
   hide as hideLayerDetailsModal,
@@ -53,6 +54,8 @@ export const LayerDetailsModal: React.FC<LayerDetailsModalProps> = ({
   const dispatch = useAppDispatch();
 
   const map = useMap();
+
+  const localize = useLocalize();
 
   const {
     t
@@ -94,7 +97,7 @@ export const LayerDetailsModal: React.FC<LayerDetailsModalProps> = ({
           className="title-group"
         >
           <span>{t('LayerDetailsModal.title', {
-            layerName: layer?.get('name')
+            layerName: localize(layer?.get('name'))
           })}
           </span>
           {

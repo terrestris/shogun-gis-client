@@ -18,9 +18,13 @@ import {
   Tab
 } from 'rc-tabs/lib/interface';
 
-import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import {
+  MapUtil
+} from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
-import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
+import {
+  useMap
+} from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import {
   PropertyFormItemReadConfig,
@@ -28,6 +32,7 @@ import {
 } from '@terrestris/shogun-util/dist/model/Layer';
 
 import useHighlightVectorLayer from '../../../../hooks/useHighlightVectorLayer';
+import useLocalize from '../../../../hooks/useLocalize';
 
 import FeatureInfoForm from '../FeatureInfoForm';
 import PaginationToolbar from '../PaginationToolbar';
@@ -51,6 +56,8 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
   const [activeKey, setActiveKey] = useState<string>('0');
 
   const map = useMap();
+
+  const localize = useLocalize();
 
   const vectorLayerName = `selection-layer-${layerName}`;
 
@@ -129,7 +136,7 @@ export const FeatureInfoTabs: React.FC<FeatureInfoTabsProps> = ({
     .filter(config => !_isNil(config))
     .map((config, idx) => {
       return {
-        label: config.title,
+        label: localize(config.title),
         key: `${idx}`,
         forceRender: true,
         children: (

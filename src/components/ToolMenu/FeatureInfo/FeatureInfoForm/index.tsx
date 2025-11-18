@@ -17,6 +17,8 @@ import {
   PropertyFormItemReadConfig
 } from '@terrestris/shogun-util/dist/model/Layer';
 
+import useLocalize from '../../../../hooks/useLocalize';
+
 import DisplayField from '../../../DisplayField';
 
 import './index.less';
@@ -31,6 +33,7 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
   formConfig,
   ...passThroughProps
 }): JSX.Element => {
+  const localize = useLocalize();
 
   const [form] = useForm();
 
@@ -44,10 +47,10 @@ export const FeatureInfoForm: React.FC<FeatureInfoFormProps> = ({
       <Form.Item
         key={fieldCfg.propertyName}
         name={fieldCfg.propertyName}
-        label={fieldCfg.displayName ?? fieldCfg.propertyName}
+        label={localize(fieldCfg.displayName ?? fieldCfg.propertyName)}
       >
         <DisplayField
-          label={fieldCfg.displayName ?? fieldCfg.propertyName}
+          label={localize(fieldCfg.displayName ?? fieldCfg.propertyName)}
           {...fieldCfg.fieldProps}
         />
       </Form.Item>

@@ -4,14 +4,19 @@ import {
   render
 } from '@testing-library/react';
 
-import LoadingIndicator from '.';
+import { createReduxWrapper } from '../../utils/testUtils';
 
-describe('LoadingIndicator', () => {
+import NewsModal from './index';
+
+describe('<NewsModal />', () => {
+
   it('can be rendered', () => {
     const {
       container
     } = render(
-      <LoadingIndicator />
+      <NewsModal />, {
+        wrapper: createReduxWrapper()
+      }
     );
     expect(container).toBeVisible();
   });

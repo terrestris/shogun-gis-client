@@ -22,7 +22,7 @@ export const LanguageSelect = () => {
   return (
     <div
       className="language-select"
-      aria-label='language-selector'
+      aria-label="language-selector"
     >
       <Select
         defaultValue={i18n.language || 'en'}

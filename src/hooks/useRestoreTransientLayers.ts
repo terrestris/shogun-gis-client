@@ -22,6 +22,7 @@ import {
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
 
+import useLocalize from './useLocalize';
 import useQueryParams from './useQueryParams';
 import useSHOGunAPIClient from './useSHOGunAPIClient';
 
@@ -36,6 +37,8 @@ export const useRestoreTransientLayers = async () => {
     t
   // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useTranslation();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const localize = useLocalize();
 
   const layers = queryParams.get('layers');
 
@@ -43,7 +46,7 @@ export const useRestoreTransientLayers = async () => {
     return;
   }
 
-  const identifier = (l: BaseLayer) => l.get('name');
+  const identifier = (l: BaseLayer) => localize(l.get('name'));
   const filter = (l: BaseLayer) => (l instanceof OlLayerTile || l instanceof OlLayerImage);
   const configString = PermalinkUtil.applyLink(map, ';', identifier, filter);
 
@@ -117,7 +120,7 @@ export const useRestoreTransientLayers = async () => {
           }
         }
 
-        if (!MapUtil.getLayerByName(map, olLayer.get('name'))) {
+        if (!MapUtil.getLayerByName(map, localize(olLayer.get('name')))) {
           targetGroup.getLayers().push(olLayer);
         }
       }

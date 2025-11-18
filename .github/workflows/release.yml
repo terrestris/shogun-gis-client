@@ -20,7 +20,16 @@ jobs:
       - name: Setup Node.js 🧮
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
+
+      - name: Cache Node.js modules 💾
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
 
       - name: Install dependencies ⏬
         run: npm ci
@@ -35,7 +44,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
-          semantic_version: 23
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
   release-docker:
     needs: release-npm
     uses: ./.github/workflows/release_docker.yml
