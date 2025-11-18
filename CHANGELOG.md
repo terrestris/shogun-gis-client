@@ -1,3 +1,10 @@
+# [11.0.0-next.13](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.12...v11.0.0-next.13) (2025-11-18)
+
+
+### Bug Fixes
+
+* cache node modules during release (and also make use of existing) ([c4fffb3](https://github.com/terrestris/shogun-gis-client/commit/c4fffb3cba937bd527624f90d274fafdcf4afbc6))
+
 # [11.0.0-next.12](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.11...v11.0.0-next.12) (2025-11-18)
 
 
