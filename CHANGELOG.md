@@ -1,3 +1,11 @@
+# [11.0.0-next.12](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.11...v11.0.0-next.12) (2025-11-18)
+
+
+### Bug Fixes
+
+* cleanup semantic-release ([f56636a](https://github.com/terrestris/shogun-gis-client/commit/f56636a87fbcfc021454412a9d57fefea305360e))
+* update release config to fix releases ([c934aef](https://github.com/terrestris/shogun-gis-client/commit/c934aef1035eec707a76db6199e559c724c5e2dd))
+
 ## [11.0.0-next.11](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.10...v11.0.0-next.11) (2025-11-18)
 
 
