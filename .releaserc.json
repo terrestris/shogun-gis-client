@@ -6,6 +6,21 @@
       "channel": "8.x"
     },
     {
+      "name": "9.x",
+      "range": "9.x",
+      "channel": "9.x"
+    },
+    {
+      "name": "10.x",
+      "range": "10.x",
+      "channel": "10.x"
+    },
+    {
+      "name": "11.x",
+      "range": "11.x",
+      "channel": "11.x"
+    },
+    {
       "name": "main"
     },
     {
