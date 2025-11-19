@@ -2276,7 +2276,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7094.56fc6699cc267158.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2462,14 +2464,14 @@
     {
       "id": "SHOGunGISClient:proj4",
       "name": "proj4",
-      "version": "2.20.1",
+      "version": "2.20.2",
       "singleton": true,
       "requiredVersion": "^2.15.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "710.5594d2669b03a6c5.js"
+            "710.0b33ddec8baa1f05.js"
           ]
         },
         "css": {
@@ -2823,13 +2825,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "6178.2dd6643a5187c719.js",
-            "8055.53842a57360703d3.js",
-            "8559.86308c25545e42a0.js",
-            "940.f3e77f9fdd8932cf.js",
-            "9965.edb6122962befbd4.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
