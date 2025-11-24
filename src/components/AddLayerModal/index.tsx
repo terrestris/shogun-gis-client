@@ -75,7 +75,8 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
     if (!isModalVisible) {
       return;
     }
-    setSanitizedUrl(UrlUtil.createValidGetCapabilitiesRequest(url, 'WMS', version));
+    const validRequestUrl = UrlUtil.createValidGetCapabilitiesRequest(url, 'WMS', version);
+    setSanitizedUrl(validRequestUrl.replace('Version', 'VERSION'));
   }, [version, isModalVisible, url]);
 
   const onUrlChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
