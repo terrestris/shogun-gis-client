@@ -3005,9 +3005,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "588.5f97dcb43ee24249.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
