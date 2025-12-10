@@ -36,7 +36,7 @@ jobs:
       run: npm run build
 
     - name: Deploy (to latest) 🚀
-      uses: JamesIves/github-pages-deploy-action@v4.7.4
+      uses: JamesIves/github-pages-deploy-action@v4.7.6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
