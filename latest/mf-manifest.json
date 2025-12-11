@@ -2276,9 +2276,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2502,14 +2500,14 @@
     {
       "id": "SHOGunGISClient:react-i18next",
       "name": "react-i18next",
-      "version": "16.4.0",
+      "version": "16.4.1",
       "singleton": true,
       "requiredVersion": "^16.1.5",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1815.d0d506449ef1ebdc.js"
+            "1815.75bec78c6ae5e6d2.js"
           ]
         },
         "css": {
@@ -2825,7 +2823,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "6178.2dd6643a5187c719.js",
+            "8055.53842a57360703d3.js",
+            "8559.86308c25545e42a0.js",
+            "940.f3e77f9fdd8932cf.js",
+            "9965.edb6122962befbd4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2907,11 +2911,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "2399.e9108078fb3ad222.js",
-            "4780.c12db0eb1c87947e.js",
-            "8296.ede40ccff128f8c9.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
