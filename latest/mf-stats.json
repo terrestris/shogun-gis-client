@@ -2385,9 +2385,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "7094.56fc6699cc267158.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -2965,7 +2963,13 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "6178.2dd6643a5187c719.js",
+            "8055.53842a57360703d3.js",
+            "8559.86308c25545e42a0.js",
+            "940.f3e77f9fdd8932cf.js",
+            "9965.edb6122962befbd4.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3052,7 +3056,11 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "2399.e9108078fb3ad222.js",
+            "4780.c12db0eb1c87947e.js",
+            "8296.ede40ccff128f8c9.js"
+          ]
         },
         "css": {
           "async": [],
@@ -3308,10 +3316,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "5860.792be0c0a6e2c83e.js",
-            "6328.ae8a6c833490412e.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
