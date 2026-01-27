@@ -3318,7 +3318,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "5860.e27246b63c06a0fc.js",
+            "6328.ae8a6c833490412e.js"
+          ]
         },
         "css": {
           "async": [],
