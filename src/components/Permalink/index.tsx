@@ -1,5 +1,7 @@
 import React, {
-  useEffect, useState, useMemo
+  useEffect,
+  useState,
+  useMemo
 } from 'react';
 
 import {
@@ -9,10 +11,12 @@ import {
 } from '@ant-design/icons';
 import {
   Input,
-  Tooltip,
-  message
+  Tooltip
 } from 'antd';
+import useNotification from 'antd/lib/notification/useNotification';
+
 import copy from 'copy-to-clipboard';
+
 import {
   EventsKey
 } from 'ol/events';
@@ -53,6 +57,7 @@ export const Permalink: React.FC = () => {
     t
   } = useTranslation();
   const localize = useLocalize();
+  const [notification, contextHolder] = useNotification();
 
   const initialPermalink = map ? PermalinkUtil.getLink(
     map,
@@ -130,30 +135,35 @@ export const Permalink: React.FC = () => {
     };
   }, [layerAttributes, localize, map, t]);
 
-  function onWhatsAppClick() {
+  const onWhatsAppClick = () => {
     const whatsAppUrl = new URL('https://wa.me');
     whatsAppUrl.searchParams.set('text', mailBody);
     window.open(whatsAppUrl);
-  }
+  };
 
-  function onMailClick() {
+  const onMailClick = () => {
     const mailToUrl = new URL('mailto:');
     mailToUrl.searchParams.set('subject', mailSubject);
     mailToUrl.searchParams.set('body', mailBody);
     window.open(mailToUrl.toString().replace(/\+/g, '%20'), '_self');
-  }
+  };
 
-  function onCopyClick() {
+  const onCopyClick = () => {
     const success = copy(permalink);
     if (success) {
-      message.info(t('Permalink.copiedToClipboard'));
+      notification.info({
+        title: t('Permalink.copiedToClipboard')
+      });
     } else {
-      message.info(t('Permalink.copyToClipboardFailed'));
+      notification.info({
+        title: t('Permalink.copyToClipboardFailed')
+      });
     }
-  }
+  };
 
   return (
     <div className="permalink-wrapper">
+      {contextHolder}
       <div className="icons">
         <Tooltip title={t('Permalink.whatsAppTooltip')}>
           <WhatsAppOutlined onClick={onWhatsAppClick} />
