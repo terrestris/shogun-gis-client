@@ -164,7 +164,7 @@ export function ResizableDrawer({
         placement={placement}
         rootClassName={resizableDrawerClassName}
         title={title}
-        width="100%"
+        size="100%"
       >
         {children}
       </Drawer>

@@ -176,7 +176,7 @@ export const ImportDataModal: React.FC<ImportDataModalProps> = ({
       {
         importError && (
           <Alert
-            message={importError}
+            title={importError}
             closable={true}
             type="error"
           />

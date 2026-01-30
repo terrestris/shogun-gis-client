@@ -478,7 +478,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
       {
         uploadSuccess && (
           <Alert
-            message={uploadSuccess}
+            title={uploadSuccess}
             closable={true}
             type="success"
           />
@@ -487,7 +487,7 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
       {
         uploadError && (
           <Alert
-            message={uploadError}
+            title={uploadError}
             closable={true}
             type="error"
           />

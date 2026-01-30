@@ -16,7 +16,6 @@ import {
 
 import {
   Button,
-  Drawer,
   DrawerProps,
   Form,
   FormListFieldData,
@@ -40,6 +39,8 @@ import {
 import {
   DigitizeUtil
 } from '@terrestris/react-util/dist/Util/DigitizeUtil';
+
+import MapDrawer from '../../../MapDrawer';
 
 import AttributionRow from './AttributionRow';
 
@@ -128,7 +129,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
     }
     notification.destroy();
     notification.success({
-      message: (t('notificationApplyText.title')),
+      title: (t('notificationApplyText.title')),
       placement: 'top',
       duration: 3.5
     });
@@ -172,7 +173,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
       const removeAndMessage = () => {
         notification.destroy();
         notification.info({
-          message: (t('notificationDeleteText.title')),
+          title: (t('notificationDeleteText.title')),
           description: (t('notificationDeleteText.info')),
           placement: 'top',
           duration: 6
@@ -215,7 +216,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
   };
 
   return (
-    <Drawer
+    <MapDrawer
       title={t('Attribution.title')}
       className="attribution-drawer"
       placement="right"
@@ -284,7 +285,7 @@ const AttributionDrawer: React.FC<AttributionDrawerProps> = ({
           </Form.Item>
         </Form>
       </Row>
-    </Drawer>
+    </MapDrawer>
   );
 };
 

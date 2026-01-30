@@ -199,7 +199,7 @@ export const LayerDetails: React.FC<LayerDetailsProps> = ({
       <Alert
         type="error"
         closable={true}
-        message={errorMessage}
+        title={errorMessage}
       />
     );
   }
