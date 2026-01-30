@@ -1,12 +1,35 @@
 .map {
+  .toolbar-control {
+    top: calc(var(--headerHeight) + 10px);
+    right: 10px;
+
+    &.ol-control {
+      background-color: unset;
+
+      button {
+        height: var(--ant-control-height);
+      }
+    }
+  }
+
   .bg-layer-chooser {
     bottom: 95px;
-    width: 99%;
     right: 10px;
 
     .layer-cards {
       overflow: auto;
-      width: calc(100% - 170px);
+      box-sizing: border-box;
+      overflow: auto;
+      max-width: calc(100vw - 600px);
+    }
+
+    .bg-preview,
+    .layer-cards {
+      .no-background-preview,
+      span.layer-title {
+        box-sizing: border-box;
+        font-size: 14px;
+      }
     }
   }
 }

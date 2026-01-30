@@ -39,6 +39,7 @@ export const StylingDrawer: FC<StylingDrawerProps> = ({
       placement="right"
       onClose={onClose}
       open={isStylingDrawerVisible}
+      shrinkMapOnOpen={false}
       maskClosable={false}
       mask={false}
       {...passThroughProps}

@@ -28,6 +28,8 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import useAppSelector from '../../../hooks/useAppSelector';
+
 import './index.less';
 
 interface DefaultMeasureProps {
@@ -46,6 +48,8 @@ export const Measure: FC<MeasureProps> = ({
   } = useTranslation();
 
   const map = useMap();
+
+  const showSegmentLengths = useAppSelector(state => state.measure.showSegmentLengths);
 
   const isGeodesicMeasurement = useMemo(() => {
     if (_isNil(map)) {
@@ -78,6 +82,7 @@ export const Measure: FC<MeasureProps> = ({
           measureType="line"
           type="link"
           continueLineMsg={t('Measure.clicktodrawline')}
+          showSegmentLengths={showSegmentLengths}
         >
           <FontAwesomeIcon icon={faPenRuler} />
           <span className="measure-text">{t('Measure.line')}</span>
@@ -93,6 +98,7 @@ export const Measure: FC<MeasureProps> = ({
           measureType="polygon"
           type="link"
           continuePolygonMsg={t('Measure.clicktodrawarea')}
+          showSegmentLengths={showSegmentLengths}
         >
           <FontAwesomeIcon icon={faDrawPolygon} />
           <span className="measure-text">{t('Measure.area')}</span>

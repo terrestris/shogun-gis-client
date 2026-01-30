@@ -31,6 +31,7 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import useExecuteWfsTransaction from '../../hooks/useExecuteWfsTransaction';
+import useLocalize from '../../hooks/useLocalize';
 import useWriteWfsTransaction from '../../hooks/useWriteWfsTransaction';
 
 import {
@@ -72,6 +73,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
   const dispatch = useAppDispatch();
   const writeWfsTransaction = useWriteWfsTransaction();
   const executeWfsTransaction = useExecuteWfsTransaction();
+  const localize = useLocalize();
 
   useEffect(() => {
     if (!map || !layerId) {
@@ -85,9 +87,9 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       return;
     }
 
-    setDrawerTitle(`${t('EditFeatureDrawer.featureEditor')} - ${olLayer.get('name')}`);
+    setDrawerTitle(`${t('EditFeatureDrawer.featureEditor')} - ${localize(olLayer.get('name'))}`);
     setLayer(olLayer);
-  }, [map, layerId, t]);
+  }, [map, layerId, t, localize]);
 
   const releaseLock = async () => {
     if (!layer || !feature || !feature.id || !ClientConfiguration.wfsLockFeatureEnabled) {
@@ -157,6 +159,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       className="map-drawer edit-feature-drawer"
       onClose={onDrawerClose}
       open={isDrawerOpen}
+      shrinkMapOnOpen={false}
       title={drawerTitle}
       {...passThroughProps}
     >
