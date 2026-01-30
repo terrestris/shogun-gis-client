@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout sources 🔰
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Setup Node.js 🧮
       uses: actions/setup-node@v6
@@ -21,7 +21,7 @@ jobs:
         node-version: 24
 
     - name: Cache Node.js modules 💾
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ~/.npm
         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -36,7 +36,7 @@ jobs:
       run: npm run build
 
     - name: Deploy (to latest) 🚀
-      uses: JamesIves/github-pages-deploy-action@v4.7.4
+      uses: JamesIves/github-pages-deploy-action@v4.8.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources 🔰
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
@@ -92,7 +92,7 @@ jobs:
           node-version: 24
 
       - name: Cache Node.js modules 💾
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -113,7 +113,7 @@ jobs:
           echo "sonar.projectVersion=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
-        uses: SonarSource/sonarqube-scan-action@v6.0.0
+        uses: SonarSource/sonarqube-scan-action@v7.0.0
         with:
           projectBaseDir: .
         env:
