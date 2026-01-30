@@ -20,7 +20,7 @@
       "api": ""
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.22.1",
+    "pluginVersion": "0.23.0",
     "prefetchInterface": false,
     "publicPath": "auto"
   },
@@ -2276,7 +2276,9 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "7094.91d8be9c7a64d557.js"
+          ]
         },
         "css": {
           "async": [],
@@ -2823,13 +2825,7 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": [
-            "6178.2dd6643a5187c719.js",
-            "8055.53842a57360703d3.js",
-            "8559.86308c25545e42a0.js",
-            "940.f3e77f9fdd8932cf.js",
-            "9965.edb6122962befbd4.js"
-          ]
+          "sync": []
         },
         "css": {
           "async": [],
@@ -3157,7 +3153,10 @@
       "assets": {
         "js": {
           "async": [],
-          "sync": []
+          "sync": [
+            "5860.e27246b63c06a0fc.js",
+            "6328.ae8a6c833490412e.js"
+          ]
         },
         "css": {
           "async": [],
