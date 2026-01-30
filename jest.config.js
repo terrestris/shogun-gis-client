@@ -29,7 +29,7 @@ module.exports = {
     'query-string|decode-uri-component|strict-uri-encode|split-on-first|filter-obj|shpjs|geostyler|pbf|quickselect|lodash-es|quick-lru|' +
     'react-markdown|remark.*|unified|mdast-util.*|micromark.*|.*-util.*|devlop|vfile.*|.*-tokens|' +
     'html-.*|is-.*|.*-character-reference|.*-lines|bail|ccount|trough|rehype.*|hast-util.*|' +
-    'hastscript|web-namespaces|property-information|zwitch|markdown-table|longest-streak))'
+    'hastscript|web-namespaces|property-information|zwitch|markdown-table|longest-streak|kdbush|geokdbush))'
   ],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
