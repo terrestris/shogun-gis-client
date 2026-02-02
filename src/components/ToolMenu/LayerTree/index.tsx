@@ -30,7 +30,13 @@ import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
+import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+
+import {
+  setLayerId,
+  setModalVisible
+} from '../../../store/timeLayerModal';
 
 import TreeNodeRenderer from './TreeNodeRenderer';
 
@@ -49,6 +55,7 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   ...restProps
 }): JSX.Element => {
   const map = useMap();
+  const dispatch = useAppDispatch();
 
   const initialLayersUid = map?.getAllLayers().map(l => getUid(l));
 
@@ -58,6 +65,12 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
   const [visibleLegendsIds, setVisibleLegendsIds] = useState<string[]>(showLegendsState ? initialLayersUid ?? [] : []);
   const [layerTileLoadCounter, setLayerTileLoadCounter] = useState<LayerTileLoadCounter>({});
   const [mapScale, setMapScale] = useState<number>();
+
+  const handleTimeModalOpen = useCallback((layer: OlLayer) => {
+    const layerId = getUid(layer);
+    dispatch(setLayerId(layerId));
+    dispatch(setModalVisible(true));
+  }, [dispatch]);
 
   const registerTileLoadHandler = useCallback(() => {
     if (!map) {
@@ -227,9 +240,10 @@ export const LayerTree: React.FC<LayerTreeProps> = ({
         legendVisible={visibleLegendsIds.includes(getUid(layer))}
         visibleLegendsIds={visibleLegendsIds}
         setVisibleLegendsIds={setVisibleLegendsIds}
+        onTimeModalOpen={handleTimeModalOpen}
       />
     );
-  }, [layerIconsVisible, layerTileLoadCounter, mapScale, visibleLegendsIds]);
+  }, [layerIconsVisible, layerTileLoadCounter, mapScale, visibleLegendsIds, handleTimeModalOpen]);
 
   if (!map) {
     return <></>;
