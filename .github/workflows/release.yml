@@ -38,11 +38,10 @@ jobs:
         run: npm run build:dist
 
       - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v5
+        uses: cycjimmy/semantic-release-action@v6
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           extra_plugins: |
             @semantic-release/changelog
