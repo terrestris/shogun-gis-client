@@ -20,7 +20,7 @@
       "api": ""
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.23.0",
+    "pluginVersion": "0.24.0",
     "prefetchInterface": false,
     "publicPath": "auto"
   },
@@ -46,7 +46,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/DeleteButton/DeleteButton",
@@ -69,7 +71,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/DrawButton/DrawButton",
@@ -92,7 +96,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/GeoLocationButton/GeoLocationButton",
@@ -115,7 +121,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/MeasureButton/MeasureButton",
@@ -134,7 +142,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ModifyButton/ModifyButton",
@@ -157,7 +167,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/SimpleButton/SimpleButton",
@@ -184,7 +196,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ToggleGroup/ToggleGroup",
@@ -207,7 +221,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ZoomButton/ZoomButton",
@@ -227,7 +243,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo",
@@ -247,7 +265,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Field/ScaleCombo/ScaleCombo",
@@ -270,7 +290,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Grid/PropertyGrid/PropertyGrid",
@@ -293,7 +315,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/LayerTree/LayerTree",
@@ -316,7 +340,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Legend/Legend",
@@ -336,7 +362,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Map/MapComponent/MapComponent",
@@ -361,7 +389,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Panel/SearchResultsPanel/SearchResultsPanel",
@@ -380,7 +410,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Slider/LayerTransparencySlider/LayerTransparencySlider",
@@ -400,7 +432,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:@terrestris/react-geo/dist/Slider/TimeSlider/TimeSlider",
@@ -420,7 +454,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Collection",
@@ -445,7 +481,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Feature",
@@ -467,7 +505,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Geolocation",
@@ -486,7 +526,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/ImageState",
@@ -511,7 +553,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Map",
@@ -530,7 +574,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Object",
@@ -591,7 +637,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Observable",
@@ -653,7 +701,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Overlay",
@@ -673,7 +723,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/TileState",
@@ -696,7 +748,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/View",
@@ -715,7 +769,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/control/MousePosition",
@@ -736,7 +792,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/control/OverviewMap",
@@ -755,7 +813,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/control/ScaleLine",
@@ -776,7 +836,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/control",
@@ -795,7 +857,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/coordinate",
@@ -819,7 +883,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/easing",
@@ -862,7 +928,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/events/Event",
@@ -879,7 +947,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/events/EventType",
@@ -896,7 +966,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/events/condition",
@@ -930,7 +1002,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/extent",
@@ -947,7 +1021,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/GML2",
@@ -966,7 +1042,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/GML32",
@@ -987,7 +1065,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/GML3",
@@ -1006,7 +1086,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/GeoJSON",
@@ -1025,7 +1107,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/MVT",
@@ -1044,7 +1128,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/WFS",
@@ -1063,7 +1149,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/WKT",
@@ -1082,7 +1170,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/WMSGetFeatureInfo",
@@ -1101,7 +1191,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/WMTSCapabilities",
@@ -1120,7 +1212,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/filter/Filter",
@@ -1140,7 +1234,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/filter",
@@ -1157,7 +1253,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/functions",
@@ -1174,7 +1272,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/Circle",
@@ -1194,7 +1294,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/Geometry",
@@ -1216,7 +1318,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/GeometryCollection",
@@ -1237,7 +1341,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/LineString",
@@ -1257,7 +1363,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/MultiLineString",
@@ -1276,7 +1384,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/MultiPoint",
@@ -1298,7 +1408,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/MultiPolygon",
@@ -1318,7 +1430,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/Point",
@@ -1340,7 +1454,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/geom/Polygon",
@@ -1359,7 +1475,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/has",
@@ -1406,7 +1524,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DblClickDragZoom",
@@ -1423,7 +1543,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DoubleClickZoom",
@@ -1444,7 +1566,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DragPan",
@@ -1465,7 +1589,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DragRotate",
@@ -1486,7 +1612,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DragRotateAndZoom",
@@ -1505,7 +1633,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DragZoom",
@@ -1524,7 +1654,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/Draw",
@@ -1543,7 +1675,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/KeyboardPan",
@@ -1564,7 +1698,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/KeyboardZoom",
@@ -1585,7 +1721,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/Modify",
@@ -1604,7 +1742,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/MouseWheelZoom",
@@ -1625,7 +1765,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/PinchRotate",
@@ -1646,7 +1788,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/PinchZoom",
@@ -1667,7 +1811,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/Pointer",
@@ -1699,7 +1845,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/Select",
@@ -1718,7 +1866,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/Translate",
@@ -1737,7 +1887,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/defaults",
@@ -1756,7 +1908,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Group",
@@ -1777,7 +1931,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Image",
@@ -1798,7 +1954,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Layer",
@@ -1815,7 +1973,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Tile",
@@ -1834,7 +1994,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Vector",
@@ -1853,7 +2015,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/VectorTile",
@@ -1872,7 +2036,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/loadingstrategy",
@@ -1892,7 +2058,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/ol.css",
@@ -1914,7 +2082,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/proj/Units",
@@ -1931,7 +2101,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/proj/proj4",
@@ -1950,7 +2122,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/proj",
@@ -1969,7 +2143,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/render/Feature",
@@ -1986,7 +2162,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/render/canvas",
@@ -2003,7 +2181,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/render",
@@ -2022,7 +2202,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/ImageWMS",
@@ -2041,7 +2223,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/OSM",
@@ -2061,7 +2245,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/Raster",
@@ -2078,7 +2264,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/Source",
@@ -2095,7 +2283,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/StadiaMaps",
@@ -2114,7 +2304,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/TileJSON",
@@ -2131,7 +2323,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/TileWMS",
@@ -2150,7 +2344,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/Vector",
@@ -2169,7 +2365,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/VectorTile",
@@ -2188,7 +2386,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/WMTS",
@@ -2207,7 +2407,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/XYZ",
@@ -2229,7 +2431,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/sphere",
@@ -2249,7 +2453,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Circle",
@@ -2270,7 +2476,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Fill",
@@ -2293,7 +2501,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Icon",
@@ -2314,7 +2524,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Image",
@@ -2336,7 +2548,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/RegularShape",
@@ -2355,7 +2569,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Stroke",
@@ -2375,7 +2591,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Style",
@@ -2394,7 +2612,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Text",
@@ -2415,7 +2635,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/tilegrid/TileGrid",
@@ -2434,7 +2656,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/tilegrid/WMTS",
@@ -2457,7 +2681,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/tilegrid",
@@ -2474,7 +2700,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/util",
@@ -2574,7 +2802,9 @@
           ]
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "singleton": true,
@@ -2596,7 +2826,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "singleton": true,
@@ -2618,7 +2850,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "singleton": true,
@@ -2640,7 +2874,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "singleton": true,
@@ -2662,7 +2898,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "singleton": true,
@@ -2684,7 +2922,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/interaction/DblClickDragZoom.js",
@@ -2703,7 +2943,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Circle.js",
@@ -2724,7 +2966,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Fill.js",
@@ -2747,7 +2991,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Icon.js",
@@ -2768,7 +3014,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/render/Feature.js",
@@ -2787,7 +3035,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Stroke.js",
@@ -2807,7 +3057,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Style.js",
@@ -2826,7 +3078,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/style/Text.js",
@@ -2847,7 +3101,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/functions.js",
@@ -2934,7 +3190,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/render/canvas.js",
@@ -2955,7 +3213,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/TileState.js",
@@ -2972,7 +3232,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/util.js",
@@ -2989,7 +3251,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/GeoJSON.js",
@@ -3006,7 +3270,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Image.js",
@@ -3023,7 +3289,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Layer.js",
@@ -3042,7 +3310,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Group.js",
@@ -3063,7 +3333,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/MVT.js",
@@ -3080,7 +3352,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/Map.js",
@@ -3097,7 +3371,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/Raster.js",
@@ -3116,7 +3392,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/Source.js",
@@ -3139,7 +3417,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/tilegrid/TileGrid.js",
@@ -3158,7 +3438,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/TileJSON.js",
@@ -3178,7 +3460,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Tile.js",
@@ -3195,7 +3479,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/Vector.js",
@@ -3212,7 +3498,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/Vector.js",
@@ -3231,7 +3519,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/layer/VectorTile.js",
@@ -3248,7 +3538,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/source/VectorTile.js",
@@ -3265,7 +3557,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/View.js",
@@ -3282,7 +3576,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/proj/Units.js",
@@ -3302,7 +3598,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/loadingstrategy.js",
@@ -3322,7 +3620,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/tilegrid.js",
@@ -3343,7 +3643,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/proj.js",
@@ -3360,7 +3662,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/extent.js",
@@ -3379,7 +3683,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/events/Event.js",
@@ -3465,7 +3771,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/events/EventType.js",
@@ -3552,7 +3860,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/filter.js",
@@ -3571,7 +3881,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/format/WFS.js",
@@ -3590,7 +3902,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     },
     {
       "id": "SHOGunGISClient:ol/proj/proj4.js",
@@ -3609,7 +3923,9 @@
           "sync": []
         }
       },
-      "usedIn": []
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
     }
   ],
   "remotes": [],
