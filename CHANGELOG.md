@@ -1,3 +1,10 @@
+# [11.0.0-next.14](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.13...v11.0.0-next.14) (2026-02-03)
+
+
+### Bug Fixes
+
+* add typing for Slice ([d8c89cb](https://github.com/terrestris/shogun-gis-client/commit/d8c89cbf419c891cd4f4605d08314c2a4556c6c6))
+
 # [11.0.0-next.13](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.12...v11.0.0-next.13) (2025-11-18)
 
 
