@@ -14,10 +14,7 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 
-import _get from 'lodash/get';
-import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
-import proj4 from 'proj4';
 import {
   useTranslation
 } from 'react-i18next';
@@ -32,16 +29,68 @@ import useAppSelector from '../../../hooks/useAppSelector';
 
 import './index.less';
 
+export type MeasurementMode = 'auto' | 'geodesic' | 'planar';
+
+// Some common projection codes that should trigger geodesic measurements
+// when in auto mode. More could be added but these are probably the most
+// common ones.
+const WEB_MERCATOR_CODES = new Set([
+  'EPSG:3857', // official Web Mercator
+  'EPSG:900913', // unofficial legacy
+  'EPSG:3785', // deprecated EPSG variant
+  'EPSG:3395', // World Mercator
+  'ESRI:102100', // ESRI WKID matching 3857
+  'ESRI:102113', // ESRI WKID matching 3785
+  'OSGEO:41001' // another legacy alias sometimes seen
+]);
+
+// Projection units that indicate geographic/angular coordinate systems
+const GEOGRAPHIC_UNITS = new Set(['degrees', 'radians']);
+
 interface DefaultMeasureProps {
+  /**
+   * Show the distance measurement tool for measuring line lengths.
+   * @default false
+   */
   showMeasureDistance?: boolean;
+
+  /**
+   * Show the area measurement tool for measuring polygon areas.
+   * @default false
+   */
   showMeasureArea?: boolean;
+
+  /**
+   * Configures the measurement calculation method. By default (`'auto'`), the component
+   * attempts to choose the most appropriate method based on the map's projection. You
+   * can override this behavior by explicitly setting it to `'geodesic'` or `'planar'`.
+   *
+   * - `'auto'` (default): Automatically selects geodesic or planar calculations based
+   *   on the current projection. The built-in heuristics aim to provide reasonable
+   *   results across common projections. If measurement results appear unexpected,
+   *   consider switching to an explicit `'geodesic'` or `'planar'` mode.
+   * - `'geodesic'`: Always uses geodesic calculations that account for the Earth's
+   *   curvature. This is typically appropriate for global or long-distance
+   *   measurements, but may not match expected values in local or engineering
+   *   coordinate systems where planar measurements are commonly used.
+   * - `'planar'`: Always uses planar/cartesian calculations (straight-line distances
+   *   in the map projection). This can provide expected results in local projected
+   *   coordinate systems, but may produce inaccurate distances in geographic coordinate
+   *   systems (e.g. latitude/longitude).
+   *
+   * @default 'auto'
+   * @example
+   * <Measure measurementMode="geodesic" showMeasureDistance />
+   */
+  measurementMode?: MeasurementMode;
 }
 
 export type MeasureProps = Partial<DefaultMeasureProps>;
 
 export const Measure: FC<MeasureProps> = ({
   showMeasureDistance,
-  showMeasureArea
+  showMeasureArea,
+  measurementMode = 'auto'
 }): JSX.Element => {
   const {
     t
@@ -51,15 +100,35 @@ export const Measure: FC<MeasureProps> = ({
 
   const showSegmentLengths = useAppSelector(state => state.measure.showSegmentLengths);
 
-  const isGeodesicMeasurement = useMemo(() => {
-    if (_isNil(map)) {
+  const useGeodesic = useMemo((): boolean => {
+    // Explicit mode overrides take precedence
+    if (measurementMode === 'geodesic') {
+      return true;
+    }
+    if (measurementMode === 'planar') {
+      return false;
+    }
+
+    // Guard clauses for missing data - default to geodesic
+    const projection = map?.getView()?.getProjection();
+    if (_isNil(projection)) {
       return true;
     }
 
-    const proj = proj4.Proj(map.getView().getProjection().getCode());
-    const projName = _get(proj, 'projName');
-    return _isEmpty(projName) || projName === 'longlat' || projName === 'geocent';
-  }, [map]);
+    // Auto mode: inspect projection to determine measurement type
+    const units = projection.getUnits?.();
+    if (GEOGRAPHIC_UNITS.has(units)) {
+      return true;
+    }
+
+    const code = projection.getCode?.();
+    if (_isNil(code) || WEB_MERCATOR_CODES.has(code)) {
+      return true;
+    }
+
+    // Default to planar for projected metric CRS (e.g., UTM)
+    return false;
+  }, [map, measurementMode]);
 
   const [selected, setSelected] = useState<string>();
 
@@ -77,7 +146,8 @@ export const Measure: FC<MeasureProps> = ({
     >
       {showMeasureDistance ? (
         <MeasureButton
-          geodesic={isGeodesicMeasurement}
+          geodesic={useGeodesic}
+          key="line"
           value="line"
           measureType="line"
           type="link"
@@ -93,7 +163,8 @@ export const Measure: FC<MeasureProps> = ({
 
       {showMeasureArea ? (
         <MeasureButton
-          geodesic={isGeodesicMeasurement}
+          geodesic={useGeodesic}
+          key="poly"
           value="poly"
           measureType="polygon"
           type="link"
