@@ -1,3 +1,10 @@
+# [11.0.0-next.15](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.14...v11.0.0-next.15) (2026-02-06)
+
+
+### Bug Fixes
+
+* more robust and configurable measures ([a5a315f](https://github.com/terrestris/shogun-gis-client/commit/a5a315f0cb15a1d25824342a1b5aebfdd467e499))
+
 # [11.0.0-next.14](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.13...v11.0.0-next.14) (2026-02-03)
 
 
