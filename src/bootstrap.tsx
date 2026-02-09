@@ -126,7 +126,8 @@ import {
   setMapToolbarVisible
 } from './store/mapToolbar';
 import {
-  setShowSegmentLengths
+  setShowSegmentLengths,
+  setMeasurementMode
 } from './store/measure';
 import { setNewsText } from './store/newsText';
 import { setPrintApp } from './store/print';
@@ -349,6 +350,7 @@ export const setApplicationToStore = async (application?: Application) => {
       // eslint-disable-next-line camelcase
       measure_tools: (config) => {
         store.dispatch(setShowSegmentLengths(config?.showSegmentLengths ?? false));
+        store.dispatch(setMeasurementMode(config?.measurementMode ?? 'auto'));
       },
       // eslint-disable-next-line camelcase
       user_menu: (config) => {
