@@ -13,6 +13,7 @@ import LayerDetailsModal from './components/LayerDetailsModal';
 import NewsModal from './components/NewsModal';
 import SearchResultDrawer from './components/SearchResultDrawer';
 import StylingDrawer from './components/StylingDrawer';
+import TimeLayerModal from './components/TimeLayerModal';
 import ToolMenu from './components/ToolMenu';
 import UploadDataModal from './components/UploadDataModal';
 
@@ -54,6 +55,7 @@ export const App: React.FC<AppProps> = ({
       <SearchResultDrawer />
       <ClassificationDrawer />
       <NewsModal/>
+      <TimeLayerModal />
     </div>
   );
 };
