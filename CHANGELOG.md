@@ -1,3 +1,10 @@
+# [11.0.0-next.16](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.15...v11.0.0-next.16) (2026-02-13)
+
+
+### Bug Fixes
+
+* dayjs check in writeWfsTransaction ([092f043](https://github.com/terrestris/shogun-gis-client/commit/092f0436693340b7285253f27d9a63d008f31b17))
+
 # [11.0.0-next.15](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.14...v11.0.0-next.15) (2026-02-06)
 
 
