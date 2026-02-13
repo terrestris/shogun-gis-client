@@ -91,8 +91,8 @@ export const useWriteWfsTransaction = () => {
         delete formValues[key];
       }
 
-      // Transform moments back to iso string.
-      if (dayjs(value).isValid()) {
+      // transform date back to ISO string
+      if (dayjs.isDayjs(value)) {
         formValues[key] = value.toISOString();
       }
 
