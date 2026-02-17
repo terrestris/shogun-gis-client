@@ -1,3 +1,11 @@
+# [11.0.0-next.17](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.16...v11.0.0-next.17) (2026-02-17)
+
+
+### Bug Fixes
+
+* disable lazy compilation ([f67475c](https://github.com/terrestris/shogun-gis-client/commit/f67475c1390125694a97ee344cb79f3413abd6be))
+* git URL in package.json ([7a9222c](https://github.com/terrestris/shogun-gis-client/commit/7a9222ca84162ad94a08fb3dad710b4bb2aa7c3f))
+
 # [11.0.0-next.16](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.15...v11.0.0-next.16) (2026-02-13)
 
 
