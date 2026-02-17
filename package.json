@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:terrestris/shogun-gis-client.git"
+    "url": "git+ssh://git@github.com/terrestris/shogun-gis-client.git"
   },
   "license": "BSD-2-Clause",
   "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
