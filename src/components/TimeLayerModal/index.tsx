@@ -4,8 +4,6 @@ import React, {
   useCallback
 } from 'react';
 
-import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import OlLayer from 'ol/layer/Layer';
 
 import { useTranslation } from 'react-i18next';
@@ -24,11 +22,11 @@ import { useTimeLayerData } from '../../hooks/useTimeLayerData';
 
 import { setModalVisible } from '../../store/timeLayerModal';
 
+import dayjs, { Dayjs } from '../../utils/dayjs';
+
 import './index.less';
 
 export type TimeLayerModalProps = Record<string, never>;
-
-dayjs.extend(utc);
 
 export const TimeLayerModal: React.FC<
   TimeLayerModalProps
@@ -95,7 +93,13 @@ export const TimeLayerModal: React.FC<
   const handleTimeChange = useCallback(
     (newTime: Dayjs | [Dayjs, Dayjs]) => {
       if (!Array.isArray(newTime)) {
-        let timeToSet = newTime;
+        const normalizedTime = dayjs.utc(newTime.valueOf());
+
+        if (!normalizedTime.isValid()) {
+          return;
+        }
+
+        let timeToSet = normalizedTime;
 
         if (availableTimePoints && availableTimePoints.length > 0) {
           const firstTimePoint = dayjs.utc(availableTimePoints[0]);
@@ -104,14 +108,14 @@ export const TimeLayerModal: React.FC<
           }
 
           let closestTime = firstTimePoint;
-          let minDiff = Math.abs(newTime.diff(closestTime));
+          let minDiff = Math.abs(normalizedTime.diff(closestTime));
 
           for (const timePoint of availableTimePoints) {
             const availableTime = dayjs.utc(timePoint);
             if (!availableTime.isValid()) {
               continue;
             }
-            const diff = Math.abs(newTime.diff(availableTime));
+            const diff = Math.abs(normalizedTime.diff(availableTime));
             if (diff < minDiff) {
               minDiff = diff;
               closestTime = availableTime;
