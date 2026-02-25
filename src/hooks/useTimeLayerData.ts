@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
 
-import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import OlLayer from 'ol/layer/Layer';
 
 import { WmsLayer } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
-dayjs.extend(utc);
+import dayjs, { Dayjs } from '../utils/dayjs';
 
 export interface TimeLayerData {
   timeAwareLayers: WmsLayer[];
