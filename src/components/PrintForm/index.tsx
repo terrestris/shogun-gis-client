@@ -332,7 +332,7 @@ export const PrintForm: React.FC<PrintFormProps> = ({
         errorMsg && (
           <Alert
             className="print-alert"
-            message={errorMsg}
+            title={errorMsg}
             type="error"
             closable
             showIcon

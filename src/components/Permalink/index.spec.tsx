@@ -56,7 +56,7 @@ describe('<Permalink />', () => {
     } = renderInMapContext(
       map,
       <Provider store={store}>
-        <Permalink />,
+        <Permalink />
       </Provider>
     );
     expect(container).toBeVisible();
@@ -66,21 +66,21 @@ describe('<Permalink />', () => {
     renderInMapContext(
       map,
       <Provider store={store}>
-        <Permalink />,
+        <Permalink />
       </Provider>
     );
-    const iconsElem = await document.querySelector('.icons');
-    await expect(iconsElem).toBeVisible();
+    const iconsElem = document.querySelector('.icons');
+    expect(iconsElem).toBeVisible();
 
-    const mailElem = await screen.getByLabelText('mail');
-    await expect(mailElem).toBeVisible();
+    const mailElem = screen.getByLabelText('mail');
+    expect(mailElem).toBeVisible();
 
-    const whatsAppElem = await screen.getByLabelText('whats-app');
-    await expect(whatsAppElem).toBeVisible();
+    const whatsAppElem = screen.getByLabelText('whats-app');
+    expect(whatsAppElem).toBeVisible();
 
-    await fireEvent.click(mailElem);
-    await fireEvent.click(whatsAppElem);
-    await expect(windowSpy).toHaveBeenCalledTimes(2);
+    fireEvent.click(mailElem);
+    fireEvent.click(whatsAppElem);
+    expect(windowSpy).toHaveBeenCalledTimes(2);
   });
 
   it('permalink is available and can be copied', async () => {
@@ -89,17 +89,17 @@ describe('<Permalink />', () => {
     renderInMapContext(
       map,
       <Provider store={store}>
-        <Permalink />,
+        <Permalink />
       </Provider>
     );
-    const linkElem = await document.querySelector('.ant-input');
-    const link = await linkElem?.getAttribute('value');
-    await expect(link).toBe('http://localhost/?customLayerAttributes=%5B%5D&center=0%3B0&zoom=10&layers=');
+    const linkElem = document.querySelector('.ant-input');
+    const link = linkElem?.getAttribute('value');
+    expect(link).toBe('http://localhost/?customLayerAttributes=%5B%5D&center=0%3B0&zoom=10&layers=');
 
-    const copyElem = await screen.getByLabelText('copy');
-    await expect(copyElem).toBeVisible();
-    await fireEvent.click(copyElem);
-    await waitFor(() => expect(document.querySelector('.ant-message')).toBeInTheDocument());
-    await expect(document.execCommand).toHaveBeenCalledWith('copy');
+    const copyElem = screen.getByLabelText('copy');
+    expect(copyElem).toBeVisible();
+    fireEvent.click(copyElem);
+    await waitFor(() => expect(document.querySelector('.ant-notification')).toBeInTheDocument());
+    expect(document.execCommand).toHaveBeenCalledWith('copy');
   });
 });

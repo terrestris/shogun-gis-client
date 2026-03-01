@@ -176,7 +176,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       } catch (error) {
         Logger.error(error);
         notification.error({
-          message: t('LayerTreeContextMenu.extentError')
+          title: t('LayerTreeContextMenu.extentError')
         });
       } finally {
         setExtentLoading(false);
@@ -193,7 +193,7 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
       });
     } else {
       notification.warning({
-        message: t('LayerTreeContextMenu.extentNotSupportedWarning')
+        title: t('LayerTreeContextMenu.extentNotSupportedWarning')
       });
     }
   };

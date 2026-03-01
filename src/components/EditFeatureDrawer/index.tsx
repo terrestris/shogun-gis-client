@@ -166,7 +166,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       {
         !layer && (
           <Alert
-            message={t('EditFeatureDrawer.noLayerFoundError')}
+            title={t('EditFeatureDrawer.noLayerFoundError')}
             type="error"
             showIcon
           />
@@ -175,7 +175,7 @@ export const EditFeatureDrawer: React.FC<EditFeatureDrawerProps> = ({
       {
         isFeatureLocked && (
           <Alert
-            message={t('EditFeatureDrawer.isFeatureLockedErrorMsg')}
+            title={t('EditFeatureDrawer.isFeatureLockedErrorMsg')}
             type="error"
             showIcon
           />

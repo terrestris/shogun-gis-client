@@ -400,7 +400,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
       }}
     >
       <Collapse
-        expandIconPosition='end'
+        expandIconPlacement='end'
         activeKey={activeKeys}
         destroyOnHidden={true}
         onChange={(keys: string[] | string) => {

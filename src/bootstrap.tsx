@@ -958,7 +958,7 @@ const renderApp = async () => {
 
     if (!appConfig && applicationId) {
       notification.error({
-        message: i18n.t('Index.applicationLoadErrorMessage'),
+        title: i18n.t('Index.applicationLoadErrorMessage'),
         description: i18n.t('Index.applicationLoadErrorDescription', {
           applicationId: applicationId
         }),
@@ -966,7 +966,7 @@ const renderApp = async () => {
       });
     } else if (!appConfig && applicationName) {
       notification.error({
-        message: i18n.t('Index.applicationLoadErrorMessage'),
+        title: i18n.t('Index.applicationLoadErrorMessage'),
         description: i18n.t('Index.applicationLoadByNameErrorDescription', {
           applicationName: applicationName
         }),
@@ -1069,7 +1069,7 @@ const renderApp = async () => {
         <SHOGunAPIClientProvider client={client}>
           <Alert
             className="error-boundary"
-            message={i18n.t('Index.errorMessage')}
+            title={i18n.t('Index.errorMessage')}
             description={errorDescription}
             type={type}
             showIcon

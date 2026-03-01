@@ -260,7 +260,7 @@ export const EditFeatureFullForm: React.FC<EditFeatureFullFormProps> = ({
         errorMsg && (
           <Alert
             className="error-alert"
-            message={errorMsg}
+            title={errorMsg}
             type="error"
             showIcon
           />

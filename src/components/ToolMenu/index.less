@@ -8,7 +8,7 @@
   box-shadow: var(--componentShadow);
   overflow-y: auto;
 
-  .ant-collapse-header-text {
+  .ant-collapse-title {
     display: flex;
     width: 100%;
     transition: color .3s;
@@ -38,13 +38,13 @@
         justify-content: center;
         padding: 6px 0;
 
-        .ant-collapse-header-text {
+        .ant-collapse-title {
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
-        .ant-collapse-header-text>span:last-of-type,
+        .ant-collapse-title > span:last-of-type,
         .ant-collapse-expand-icon {
           display: none;
         }
@@ -64,12 +64,12 @@
         background-color: #fff;
         padding: 6px 15px 6px 16px;
 
-        .ant-collapse-header-text span {
+        .ant-collapse-title span {
           padding-left: 10px;
         }
       }
 
-      .ant-collapse-content-box {
+      .ant-collapse-body {
         padding: 10px;
         overflow-y: auto;
 
@@ -98,7 +98,7 @@
           background-color: var(--secondaryColor);
         }
 
-        .ant-collapse-header-text {
+        .ant-collapse-title {
           font-weight: bolder;
           color: var(--primaryColor);
         }
