@@ -376,6 +376,9 @@ export default {
       Draw: {
         point: 'Point',
         line: 'Line',
+        modalPromptCancelButtonText: 'Cancel',
+        modalPromptOkButtonText: 'Ok',
+        modalPromptTitle: 'Enter text',
         polygon: 'Polygon',
         circle: 'Circle',
         rectangle: 'Rectangle',
