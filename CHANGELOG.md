@@ -1,3 +1,16 @@
+# [11.0.0-next.18](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.17...v11.0.0-next.18) (2026-03-04)
+
+
+### Bug Fixes
+
+* normalize slider callback values to utc before WMS updates ([5763187](https://github.com/terrestris/shogun-gis-client/commit/5763187ce943509f91abb95aa5b90ff5741b1123))
+* simplify TimeLayerData interface ([b909082](https://github.com/terrestris/shogun-gis-client/commit/b909082e90ee398e31f3cd7e41e62f423cf2178e))
+
+
+### Features
+
+* add react-geos TimeLayerSliderPanel into a TimeLayerModal ([9cbd91d](https://github.com/terrestris/shogun-gis-client/commit/9cbd91d813bbaa2e4dc55be7b167ad16d27de307))
+
 # [11.0.0-next.17](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.16...v11.0.0-next.17) (2026-02-17)
 
 
