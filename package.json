@@ -43,7 +43,7 @@
     "@monaco-editor/react": "^4.6.0",
     "@ngageoint/geopackage": "^4.2.6",
     "@reduxjs/toolkit": "^2.5.0",
-    "@terrestris/base-util": "^4.0.0",
+    "@terrestris/base-util": "^4.0.2",
     "@terrestris/mapfish-print-manager": "^16.0.2",
     "@terrestris/ol-util": "^21.3.0",
     "@terrestris/react-geo": "^32.5.0",
