@@ -129,11 +129,15 @@ export const EditFeatureGeometryToolbar: React.FC<EditFeatureGeometryToolbarProp
       source.addFeature(olFeat);
       setRevision(r => r + 1);
 
-      if (!isEmptyOlExtent(source.getExtent())) {
-        map?.getView().fit(source.getExtent(), {
-          padding: getFitPadding(true)
-        });
+      const sourceExtent = source.getExtent();
+
+      if (!sourceExtent || isEmptyOlExtent(sourceExtent)) {
+        return;
       }
+
+      map?.getView().fit(sourceExtent, {
+        padding: getFitPadding(true)
+      });
     }
   }, [feature, editLayer, gjFormat, map, getFitPadding]);
 
