@@ -1,3 +1,12 @@
+# [11.0.0-next.19](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.18...v11.0.0-next.19) (2026-03-09)
+
+
+### Bug Fixes
+
+* add missing translations ([cf12cb5](https://github.com/terrestris/shogun-gis-client/commit/cf12cb56066781b85bb559293acb399922eafdef))
+* add null check ([53b54ef](https://github.com/terrestris/shogun-gis-client/commit/53b54ef5e2710aab672cdcac78a73ac56ca73df6))
+* merge current main ([398dbd1](https://github.com/terrestris/shogun-gis-client/commit/398dbd1e232f8ae2834c07eaf2717405a08e3e59))
+
 # [11.0.0-next.18](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.17...v11.0.0-next.18) (2026-03-04)
 
 
