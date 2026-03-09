@@ -149,11 +149,13 @@ export const PaginationToolbar: React.FC<PaginationToolbarProps> = ({
       source.clear();
       source.addFeature(selectedFeature);
 
-      if (isEmptyOlExtent(source.getExtent())) {
+      const sourceExtent = source.getExtent();
+
+      if (!sourceExtent || isEmptyOlExtent(sourceExtent)) {
         return;
       }
 
-      map.getView().fit(source.getExtent(), {
+      map.getView().fit(sourceExtent, {
         padding: getFitPadding()
       });
       dispatch(setLayerId(getUid(layer)));

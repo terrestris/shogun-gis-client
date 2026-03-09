@@ -22,6 +22,7 @@ import {
 import {
   getUid
 } from 'ol';
+import { isEmpty as isEmptyOlExtent } from 'ol/extent';
 import OlLayerBase from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayer from 'ol/layer/Layer';
@@ -188,7 +189,13 @@ export const LayerTreeContextMenu: React.FC<LayerTreeContextMenuProps> = ({
         return;
       }
 
-      map.getView().fit(source.getExtent(), {
+      const sourceExtent = source.getExtent();
+
+      if (!sourceExtent || isEmptyOlExtent(sourceExtent)) {
+        return;
+      }
+
+      map.getView().fit(sourceExtent, {
         padding: getFitPadding()
       });
     } else {
