@@ -1,3 +1,10 @@
+# [11.0.0-next.20](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.19...v11.0.0-next.20) (2026-04-10)
+
+
+### Bug Fixes
+
+* style time slider modal ([a7ded18](https://github.com/terrestris/shogun-gis-client/commit/a7ded18bd80111d8aba8bdfe07450227b879bd2c))
+
 # [11.0.0-next.19](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.18...v11.0.0-next.19) (2026-03-09)
 
 
