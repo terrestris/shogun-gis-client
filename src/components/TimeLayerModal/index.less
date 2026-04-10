@@ -24,6 +24,7 @@
     background-color: var(--primaryColor);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    color: var(--complementaryColor);
 
     h3 {
       margin: 0;
@@ -47,9 +48,10 @@
       justify-content: center;
       width: 24px;
       height: 24px;
+      color: var(--complementaryColor);
 
       &:hover {
-        background-color: #f0f0f0;
+        background-color: var(--secondaryColor);
       }
 
       &.close-button {
@@ -84,5 +86,20 @@
 
   .time-layer-slider {
     width: 100%;
+
+    .change-datarange-button {
+      background-color: var(--primaryColor);
+      color: var(--complementaryColor);
+    }
+
+    .sync-button {
+      background-color: var(--primaryColor);
+      color: var(--complementaryColor);
+    }
+
+    .playback {
+      background-color: var(--primaryColor);
+      color: var(--complementaryColor);
+    }
   }
 }
