@@ -1,3 +1,80 @@
+# [11.0.0](https://github.com/terrestris/shogun-gis-client/compare/v10.1.1...v11.0.0) (2026-04-13)
+
+
+### Bug Fixes
+
+* add missing translations ([cf12cb5](https://github.com/terrestris/shogun-gis-client/commit/cf12cb56066781b85bb559293acb399922eafdef))
+* add more tests WIP ([#1838](https://github.com/terrestris/shogun-gis-client/issues/1838)) ([48d1048](https://github.com/terrestris/shogun-gis-client/commit/48d1048169aa5d63460f1620a75e7334ee90c3ac))
+* add null check ([53b54ef](https://github.com/terrestris/shogun-gis-client/commit/53b54ef5e2710aab672cdcac78a73ac56ca73df6))
+* add typing for Slice ([d8c89cb](https://github.com/terrestris/shogun-gis-client/commit/d8c89cbf419c891cd4f4605d08314c2a4556c6c6))
+* apply suggestions ([5ecaf6c](https://github.com/terrestris/shogun-gis-client/commit/5ecaf6cec163f1b2742a389c4468dbb2b0ffc624))
+* cache node modules during release (and also make use of existing) ([c4fffb3](https://github.com/terrestris/shogun-gis-client/commit/c4fffb3cba937bd527624f90d274fafdcf4afbc6))
+* cleanup semantic-release ([f56636a](https://github.com/terrestris/shogun-gis-client/commit/f56636a87fbcfc021454412a9d57fefea305360e))
+* collect all plugin reducers ([b53f52d](https://github.com/terrestris/shogun-gis-client/commit/b53f52d82cb9c8c1e013033f571d925929e12695))
+* dayjs check in writeWfsTransaction ([092f043](https://github.com/terrestris/shogun-gis-client/commit/092f0436693340b7285253f27d9a63d008f31b17))
+* **deps:** update react-util to required version for showing measure segments length ([891d463](https://github.com/terrestris/shogun-gis-client/commit/891d4632d9e9b80cf3139cf10e417db8df5c048e))
+* disable lazy compilation ([f67475c](https://github.com/terrestris/shogun-gis-client/commit/f67475c1390125694a97ee344cb79f3413abd6be))
+* fix print app selection logic ([538987a](https://github.com/terrestris/shogun-gis-client/commit/538987a320b9cfcb44525bcd68e6db4582d74d41))
+* git URL in package.json ([7a9222c](https://github.com/terrestris/shogun-gis-client/commit/7a9222ca84162ad94a08fb3dad710b4bb2aa7c3f))
+* imports ([fbe3b49](https://github.com/terrestris/shogun-gis-client/commit/fbe3b494275370647423ad2fa944aa77ad9c1018))
+* linter warnings ([cd9016b](https://github.com/terrestris/shogun-gis-client/commit/cd9016be1a8dcd3d3e23d8b7a7a1b9a06fac15a8))
+* linting issues ([348a740](https://github.com/terrestris/shogun-gis-client/commit/348a740edc1ec8c528122b78e4b371be706824fd))
+* **measure:** apply showSegmentsLength to correct tool name ([7267a9a](https://github.com/terrestris/shogun-gis-client/commit/7267a9adfefdd134cc87fd7c434b07fcfc543141))
+* merge branch 'main' into next ([796fd40](https://github.com/terrestris/shogun-gis-client/commit/796fd402a18daf0857d92d920389f892462b6b58))
+* merge current main ([398dbd1](https://github.com/terrestris/shogun-gis-client/commit/398dbd1e232f8ae2834c07eaf2717405a08e3e59))
+* merge main ([f19b57e](https://github.com/terrestris/shogun-gis-client/commit/f19b57e54b858532863afb6b8d00ea8e89fe618c))
+* minor bug fixes ([5558642](https://github.com/terrestris/shogun-gis-client/commit/55586421feefbe23dc71576a9b5a7da206843a2e))
+* minor linting fix ([3def71b](https://github.com/terrestris/shogun-gis-client/commit/3def71bb1d74bdbd14e71039c25a07cf37178c6c))
+* more robust and configurable measures ([a5a315f](https://github.com/terrestris/shogun-gis-client/commit/a5a315f0cb15a1d25824342a1b5aebfdd467e499))
+* normalize slider callback values to utc before WMS updates ([5763187](https://github.com/terrestris/shogun-gis-client/commit/5763187ce943509f91abb95aa5b90ff5741b1123))
+* package lock json ([8879659](https://github.com/terrestris/shogun-gis-client/commit/8879659be805da35b65f8113acddcb50db176d7e))
+* refactor FeatureInfo test ([892d038](https://github.com/terrestris/shogun-gis-client/commit/892d0385de5d5cf134e39931a9fb703a50ab4377))
+* remove hardcoded width ([9500093](https://github.com/terrestris/shogun-gis-client/commit/9500093edd5dffc41ac067002d1f9e6918b75f93))
+* remove obsolete version ([a15bb6f](https://github.com/terrestris/shogun-gis-client/commit/a15bb6f8e548dbb06cb25a5ef5541feab9933f7a))
+* remove outdated spec file ([34a9844](https://github.com/terrestris/shogun-gis-client/commit/34a98449eb761519b152ff4e07cbce16e7fb563b))
+* render layer tree icons again ([adc2ab7](https://github.com/terrestris/shogun-gis-client/commit/adc2ab73b05c9c2277667f7a2973294ca42a76cc))
+* replace tsEslint.config usage with defineConfig ([1cae207](https://github.com/terrestris/shogun-gis-client/commit/1cae207370342774b1d6e693d9e20fbef95f5d16))
+* service from util ([8eb9212](https://github.com/terrestris/shogun-gis-client/commit/8eb9212b097bdce56c2edd33e7dbd434e4c52bbd))
+* simplify TimeLayerData interface ([b909082](https://github.com/terrestris/shogun-gis-client/commit/b909082e90ee398e31f3cd7e41e62f423cf2178e))
+* style time slider modal ([a7ded18](https://github.com/terrestris/shogun-gis-client/commit/a7ded18bd80111d8aba8bdfe07450227b879bd2c))
+* test actual total in PaginationToolbar ([713c304](https://github.com/terrestris/shogun-gis-client/commit/713c304ad179317713f2e0fadf9809e66d961bed))
+* textualContentService ([789955f](https://github.com/terrestris/shogun-gis-client/commit/789955f726f4e75048cbfae0eaff7071258854cd))
+* update release config to fix releases ([c934aef](https://github.com/terrestris/shogun-gis-client/commit/c934aef1035eec707a76db6199e559c724c5e2dd))
+* update shogun-util version ([3a71c20](https://github.com/terrestris/shogun-gis-client/commit/3a71c20ac3133a26cf74cc571e0f00f26e5faa0c))
+
+
+### chore
+
+* **docker:** use unpriviledged nginx image and add OCI metadata ([cc6ac37](https://github.com/terrestris/shogun-gis-client/commit/cc6ac37ba9c0af2abe52310ae7a900cc134cca06))
+* update to node 24 ([67c9a78](https://github.com/terrestris/shogun-gis-client/commit/67c9a78fd75c8bedfcb3f161b1a6429adedb8894))
+
+
+### Features
+
+* add classification drawer ([2318f5c](https://github.com/terrestris/shogun-gis-client/commit/2318f5ce5c1736b508d88fbbc20c3410cdffb65b))
+* add react-geos TimeLayerSliderPanel into a TimeLayerModal ([9cbd91d](https://github.com/terrestris/shogun-gis-client/commit/9cbd91d813bbaa2e4dc55be7b167ad16d27de307))
+* add showSegmentLengths option to measure tools ([1aa53e2](https://github.com/terrestris/shogun-gis-client/commit/1aa53e2fb2d58b9c7276780ca5c95616ff0906c1))
+* add support for localized config strings ([10c67ed](https://github.com/terrestris/shogun-gis-client/commit/10c67edfaa7ba0fc0c3ca09742ec2fc28e1f8851))
+* allow uploading multiple file formats to the client ([8fba359](https://github.com/terrestris/shogun-gis-client/commit/8fba359a1f23cecaed66726c1b158873015e7a5e))
+* **Header:** add logoLinkUrl config for customizable logo target ([3299953](https://github.com/terrestris/shogun-gis-client/commit/3299953967f318473975c1cf8153aa1810dd834e))
+* **Header:** adds logo link with tooltip and translations for back to home ([69984d7](https://github.com/terrestris/shogun-gis-client/commit/69984d750ebd0455bcd3d1618b5fe72c8085b3ef))
+* introduce background layer chooser ([#2385](https://github.com/terrestris/shogun-gis-client/issues/2385)) ([43636e8](https://github.com/terrestris/shogun-gis-client/commit/43636e869d5f8b4f55e3826c3687e3a76765d386))
+* introduce news modal ([f85e7e0](https://github.com/terrestris/shogun-gis-client/commit/f85e7e0df0aeb345ccc3d1c70c0822d73a12e66c))
+* make GeoLocation tool configurable ([eca7059](https://github.com/terrestris/shogun-gis-client/commit/eca7059cf292edbadafab3fa4fa091b663a2e026))
+* make print export output formats configurable ([085e0c3](https://github.com/terrestris/shogun-gis-client/commit/085e0c3a8cb617c6512eee1e83e7d68cbc5bf493))
+* make the initial tool menu width configurable ([535127c](https://github.com/terrestris/shogun-gis-client/commit/535127c55537c959c2474e5790dcdf679f3ffa30))
+* move the current tool menu width to the store ([a82c5e2](https://github.com/terrestris/shogun-gis-client/commit/a82c5e26509b79405afbae43acd9cfaed666587e))
+* pass commit and version to docker build ([50d7a17](https://github.com/terrestris/shogun-gis-client/commit/50d7a17381bbd1e922c3cdf825a6a1bf6dff5f95))
+* pass plugin config to plugin component ([d87bb75](https://github.com/terrestris/shogun-gis-client/commit/d87bb75102f65dd64d46f2c2b0adc3e199da7c01))
+* refactor handling of shrinked map if drawer is opened ([bd149d2](https://github.com/terrestris/shogun-gis-client/commit/bd149d21670ac76e0bf3e91d2e438ed106d2ef2c))
+
+
+### BREAKING CHANGES
+
+* minimum required node version is 24
+* **docker:** unprivileged container exposes port 8080 instead of 80
+* rename mapToolbarVisible store to mapToolbar
+
 # [11.0.0-next.21](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.20...v11.0.0-next.21) (2026-04-13)
 
 
