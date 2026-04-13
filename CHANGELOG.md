@@ -1,3 +1,11 @@
+# [11.0.0-next.21](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.20...v11.0.0-next.21) (2026-04-13)
+
+
+### Bug Fixes
+
+* merge branch 'main' into next ([796fd40](https://github.com/terrestris/shogun-gis-client/commit/796fd402a18daf0857d92d920389f892462b6b58))
+* package lock json ([8879659](https://github.com/terrestris/shogun-gis-client/commit/8879659be805da35b65f8113acddcb50db176d7e))
+
 # [11.0.0-next.20](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0-next.19...v11.0.0-next.20) (2026-04-10)
 
 
