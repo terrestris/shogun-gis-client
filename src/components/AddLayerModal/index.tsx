@@ -9,6 +9,7 @@ import {
   ModalProps,
   notification,
   Select,
+  Space,
   Table,
   Typography
 } from 'antd';
@@ -97,7 +98,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       setLayers(externalLayers);
     } catch (error) {
       notification.error({
-        message: t('AddLayerModal.errorMessage'),
+        title: t('AddLayerModal.errorMessage'),
         description: t('AddLayerModal.errorDescription')
       });
 
@@ -203,34 +204,35 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
       {...restProps}
     >
       <span>{t('AddLayerModal.requestWmsGetCapabilitiesInstruction')}</span>
-      <Input.Search
-        aria-label='input-search'
-        className='url-input'
-        placeholder={t('AddLayerModal.inputPlaceholder')}
-        value={url}
-        onChange={onUrlChange}
-        onSearch={getCapabilities}
-        status={validationStatus}
-        enterButton={true}
-        addonBefore={
-          <Select
-            aria-label='select-version'
-            defaultValue='1.3.0'
-            onChange={setVersion}
-            options={[
-              {
-                value: '1.3.0',
-                label: `${t('AddLayerModal.version')} 1.3.0`
-              },
-              {
-                value: '1.1.1',
-                label: `${t('AddLayerModal.version')} 1.1.1`
-              }
-            ]}
-          >
-          </Select>
-        }
-      />
+      <Space.Compact
+        className="url-input"
+      >
+        <Select
+          aria-label="select-version"
+          defaultValue="1.3.0"
+          onChange={setVersion}
+          options={[
+            {
+              value: '1.3.0',
+              label: `${t('AddLayerModal.version')} 1.3.0`
+            },
+            {
+              value: '1.1.1',
+              label: `${t('AddLayerModal.version')} 1.1.1`
+            }
+          ]}
+        >
+        </Select>
+        <Input.Search
+          aria-label="input-search"
+          placeholder={t('AddLayerModal.inputPlaceholder')}
+          value={url}
+          onChange={onUrlChange}
+          onSearch={getCapabilities}
+          status={validationStatus}
+          enterButton={true}
+        />
+      </Space.Compact>
       {
         validationStatus !== '' &&
         <Typography className='error'>
@@ -238,7 +240,7 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
         </Typography>
       }
       <Table
-        aria-label='wms-table'
+        aria-label="wms-table"
         loading={loading}
         columns={[
           {

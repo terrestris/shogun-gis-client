@@ -1,8 +1,7 @@
 .add-layer-modal {
-
   min-width: 60vw;
 
-  .ant-modal-content {
+  .ant-modal-container {
     display: flex;
     flex-direction: column;
     max-height: 75vh;
@@ -11,23 +10,22 @@
       display: flex;
       flex-direction: column;
       overflow-y: hidden;
+
+      .url-input {
+        padding: 1em 0;
+      }
+
+      .ant-typography.error {
+        color: red;
+      }
+
+      .ant-table-wrapper {
+        padding-top: 0.5rem;
+      }
+
+      .ant-table-cell {
+        padding: 0.2rem;
+      }
     }
   }
-
-  .ant-table-cell {
-    padding: 0.2rem;
-  }
-
-  .ant-table-wrapper {
-    padding-top: 0.5rem;
-  }
-
-  .ant-typography.error {
-    color: red;
-  }
-
-  .url-input {
-    padding: 1em 0;
-  }
-
 }

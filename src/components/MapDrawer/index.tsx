@@ -1,5 +1,6 @@
 import React, {
-  useEffect
+  useEffect,
+  useMemo
 } from 'react';
 
 import {
@@ -29,6 +30,12 @@ export const MapDrawer: React.FC<MapDrawerProps> = ({
 
   const map = useMap();
 
+  const drawerSize = useMemo(() => {
+    const computedSize = getComputedStyle(document.documentElement).getPropertyValue('--drawerWidth');
+
+    return computedSize?.endsWith('px') ? computedSize.slice(0, -2) : 450;
+  }, []);
+
   useEffect(() => {
     if (!shrinkMapOnOpen) {
       document.querySelectorAll('#map .ol-control')?.forEach(element => {
@@ -49,7 +56,7 @@ export const MapDrawer: React.FC<MapDrawerProps> = ({
       mask={false}
       open={open}
       placement="right"
-      width={getComputedStyle(document.documentElement).getPropertyValue('--drawerWidth')}
+      size={drawerSize}
       afterOpenChange={onAfterDrawerOpenChange}
       {...passThroughProps}
     >

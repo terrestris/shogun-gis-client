@@ -116,7 +116,7 @@ export const Footer: React.FC<FooterProps> = ({
       />,
       <Divider
         key="scale-line-divider"
-        type="vertical"
+        orientation="vertical"
       />,
       <div
         key="scale-combo-container"
@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({
           aria-label='scalecombo-dropdown'
         />
         <Divider
-          type="vertical"
+          orientation="vertical"
         />
       </div>,
       <div
@@ -138,7 +138,7 @@ export const Footer: React.FC<FooterProps> = ({
       >
         {t('Footer.refSystem')}: {map.getView().getProjection().getCode()}
         <Divider
-          type="vertical"
+          orientation="vertical"
         />
       </div>,
       <div

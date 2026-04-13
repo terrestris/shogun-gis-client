@@ -182,7 +182,7 @@ export const SldClassificationPanel: React.FC<SldClassificationPanelProps> = ({
       }
     } catch (error: any) {
       notification.error({
-        message: t('SldClassificationPanel.errorMessage'),
+        title: t('SldClassificationPanel.errorMessage'),
         description: `${t('SldClassificationPanel.updateRulesError')}`
       });
 
@@ -258,7 +258,7 @@ export const SldClassificationPanel: React.FC<SldClassificationPanelProps> = ({
       await updateStyleSource(true, sld.output);
     } catch (error) {
       notification.error({
-        message: t('SldClassificationPanel.error'),
+        title: t('SldClassificationPanel.error'),
         description: `${t('SldClassificationPanel.filterApplyError')} - ${error}`
       });
     }
