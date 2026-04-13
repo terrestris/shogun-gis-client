@@ -1,0 +1,1 @@
+define("vs/language/json/monaco.contribution",["exports","../../editor.api-CalNCsUg","../../monaco.contribution-EcChJV6a"],function(o,e,t){"use strict";o.getWorker=t.getWorker,o.jsonDefaults=t.jsonDefaults,Object.defineProperty(o,Symbol.toStringTag,{value:"Module"})});
