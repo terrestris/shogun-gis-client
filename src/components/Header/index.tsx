@@ -7,12 +7,17 @@ import {
 
 import ClientConfiguration from 'clientConfig';
 
-import { useTranslation } from 'react-i18next';
+import {
+  useTranslation
+} from 'react-i18next';
 
 import DocumentationButton from '../../components/DocumentationButton';
 import {
   useAppSelector
 } from '../../hooks/useAppSelector';
+import {
+  useLocalize
+} from '../../hooks/useLocalize';
 import {
   usePlugins
 } from '../../hooks/usePlugins';
@@ -35,6 +40,8 @@ export const Header: React.FC<HeaderProps> = ({
   const title = useAppSelector(state => state.title);
   const logoPath = useAppSelector(state => state.logoPath);
   const userMenuVisible = useAppSelector(state => state.userMenu.visible);
+
+  const localize = useLocalize();
 
   const { t } = useTranslation();
   const plugins = usePlugins();
@@ -88,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
         className="title"
         aria-label="title"
       >
-        {title}
+        {localize(title)}
       </div>
     ];
 
@@ -101,9 +108,9 @@ export const Header: React.FC<HeaderProps> = ({
     const items = [
       <SearchField
         key="search"
-        aria-label='search-input'
-        name='search-input'
-        className='search-input'
+        aria-label="search-input"
+        name="search-input"
+        className="search-input"
       />
     ];
 
@@ -150,6 +157,7 @@ export const Header: React.FC<HeaderProps> = ({
     });
 
     insertPlugins('right', items);
+
     return items;
   };
 

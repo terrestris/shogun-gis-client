@@ -14,7 +14,8 @@ export const initOpts: InitOptions = {
   interpolation: {
     escapeValue: false
   },
-  returnNull: false
+  returnNull: false,
+  showSupportNotice: false
 };
 
 // eslint-disable-next-line import/no-named-as-default-member

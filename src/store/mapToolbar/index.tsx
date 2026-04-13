@@ -4,7 +4,8 @@ import {
 } from '@reduxjs/toolkit';
 
 const initialState = {
-  visible: false
+  visible: false,
+  showGeolocation: true
 };
 
 export const slice = createSlice({
@@ -13,11 +14,15 @@ export const slice = createSlice({
   reducers: {
     setMapToolbarVisible(state, action: PayloadAction<boolean>) {
       state.visible = action.payload;
+    },
+    setGeoLocationVisible(state, action: PayloadAction<boolean>) {
+      state.showGeolocation = action.payload;
     }
   }
 });
 
 export const {
+  setGeoLocationVisible,
   setMapToolbarVisible
 } = slice.actions;
 

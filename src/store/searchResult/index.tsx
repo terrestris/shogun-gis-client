@@ -1,5 +1,6 @@
 import {
   createSlice,
+  Slice,
   PayloadAction
 } from '@reduxjs/toolkit';
 
@@ -19,7 +20,7 @@ const initialState: SearchResultState = {
   geoJSONFeature: null
 };
 
-export const slice = createSlice({
+export const slice: Slice<SearchResultState> = createSlice({
   name: 'searchResultDrawer',
   initialState,
   reducers: {

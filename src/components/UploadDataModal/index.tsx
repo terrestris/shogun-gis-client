@@ -11,13 +11,19 @@ import {
 
 import {
   Alert,
+  Button,
+  Collapse,
   Modal,
   ModalProps,
+  Select,
   Spin,
+  Table,
   Upload
 } from 'antd';
 
-const { Dragger } = Upload;
+const {
+  Dragger
+} = Upload;
 
 import {
   RcFile,
@@ -25,11 +31,27 @@ import {
   UploadFile
 } from 'antd/lib/upload/interface';
 
-import ClientConfiguration from 'clientConfig';
-
+import {
+  getUid
+} from 'ol';
+import {
+  Extent as OlExtent,
+  extend,
+  createEmpty
+} from 'ol/extent';
+import OlFeature from 'ol/Feature';
 import OlLayerGroup from 'ol/layer/Group';
-import TileLayer from 'ol/layer/Tile';
-import TileWMS from 'ol/source/TileWMS';
+import OlLayer from 'ol/layer/Layer';
+import OlLayerVector from 'ol/layer/Vector';
+import OlLayerWebGLTile from 'ol/layer/WebGLTile';
+import {
+  ProjectionLike as OlProjectionLike,
+  transformExtent
+} from 'ol/proj';
+import OlSourceGeoTIFF from 'ol/source/GeoTIFF';
+import OlSourceVector from 'ol/source/Vector';
+
+import proj4 from 'proj4';
 
 import {
   UploadRequestOption
@@ -39,59 +61,33 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  Shapefile
-} from 'shapefile.js';
-
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import { MapUtil } from '@terrestris/ol-util/dist/MapUtil/MapUtil';
+import {
+  MapUtil
+} from '@terrestris/ol-util/dist/MapUtil/MapUtil';
 
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
+import useGetFitPadding from '../../hooks/useGetFitPadding';
 import {
   hide
 } from '../../store/uploadDataModal';
 
+import {
+  readFeaturesFromFile
+} from '../../utils/readFeaturesFromFile';
+
 import './index.less';
 
-type FeatureTypeAttribute = {
-  name: string;
-  minOccurs: number;
-  maxOccurs: number;
-  nillable: boolean;
-  binding?: string | null;
-  length?: number;
-};
-
-type FeatureTypeAttributes = {
-  attribute: FeatureTypeAttribute[];
-};
-
-export type LayerUploadOptions = {
-  baseUrl: string;
-  workspace: string;
-  storeName: string;
-  layerName: string;
-  file: RcFile;
-};
-
-export type LayerUploadResponse = {
-  layerName: string;
-  workspace: string;
-  baseUrl: string;
-};
+export type SupportedFormats = Record<string, {
+  fileExtensions?: string[];
+  mimeTypes?: string[];
+}>;
 
 export type UploadDataModalProps = Partial<ModalProps>;
 
@@ -101,32 +97,173 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
   const [uploadError, setUploadError] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [isUploadFinished, setIsUploadFinished] = useState(false);
+  const [layerCandidates, setLayerCandidates] = useState<OlLayer[]>([]);
+  const [selectedProjection, setSelectedProjection] = useState<string>();
 
-  const isModalVisible = useAppSelector(state => state.uploadDataModal.visible);
-  const user = useAppSelector((state) => state.user);
+  const isModalOpen = useAppSelector(state => state.uploadDataModal.visible);
 
   const dispatch = useAppDispatch();
 
+  const getFitPadding = useGetFitPadding();
+
   const map = useMap();
-  const client = useSHOGunAPIClient();
 
   const {
     t
   } = useTranslation();
 
-  const closeModal = () => {
+  const supportedFormats: SupportedFormats = {
+    gml: {
+      fileExtensions: [
+        '.gml'
+      ],
+      mimeTypes: [
+        'application/gml+xml'
+      ]
+    },
+    gpx: {
+      fileExtensions: [
+        '.gpx'
+      ],
+      mimeTypes: [
+        'application/gpx+xml'
+      ]
+    },
+    kml: {
+      fileExtensions: [
+        '.kml'
+      ],
+      mimeTypes: [
+        'application/vnd.google-earth.kml+xml'
+      ]
+    },
+    geojson: {
+      fileExtensions: [
+        '.geojson',
+        '.json'
+      ],
+      mimeTypes: [
+        'application/geo+json',
+        'application/vnd.geo+json'
+      ]
+    },
+    zip: {
+      fileExtensions: [
+        '.zip'
+      ],
+      mimeTypes: [
+        'application/zip'
+      ]
+    },
+    gpkg: {
+      fileExtensions: [
+        '.gpkg'
+      ],
+      mimeTypes: [
+        'application/geopackage+sqlite3'
+      ]
+    },
+    geotiff: {
+      fileExtensions: [
+        '.tif',
+        '.tiff'
+      ],
+      mimeTypes: [
+        'image/tiff',
+        'image/geo+tiff'
+      ]
+    },
+    wkt: {
+      fileExtensions: [
+        '.wkt'
+      ],
+      mimeTypes: []
+    },
+    wkb: {
+      fileExtensions: [
+        '.wkb'
+      ],
+      mimeTypes: []
+    }
+  };
+
+  const reset = () => {
     setUploadError('');
     setUploadSuccess('');
+    setIsUploading(false);
+    setSelectedRowKeys([]);
+    setIsUploadFinished(false);
+    setLayerCandidates([]);
+    setSelectedProjection(undefined);
+  };
+
+  const closeModal = () => {
+    reset();
     dispatch(hide());
   };
 
-  const addLayer = (layer: TileLayer<TileWMS>) => {
+  const getRandomId = () => {
+    // Randomly generated negative ID between -2 and -1.000.000 to
+    // avoid conflicts with existing layers. The ID is needed to
+    // actually make the layer visible in the tree.
+    return Math.floor(Math.random() * -999999) - 1;
+  };
+
+  const createRasterLayer = (file: RcFile, dataProjection?: OlProjectionLike) => {
+    const rasterLayer = new OlLayerWebGLTile({
+      source: new OlSourceGeoTIFF({
+        projection: dataProjection,
+        sources: [{
+          blob: file
+        }]
+      }),
+      properties: {
+        shogunId: getRandomId(),
+        name: file.name,
+        hoverable: false,
+        isUploadedLayer: true,
+        groupName: t('UploadDataModal.uploadedDataFolder')
+      }
+    });
+
+    return rasterLayer;
+  };
+
+  const createVectorLayer = (features: OlFeature[], fileName: string) => {
+    const layer = new OlLayerVector({
+      visible: true,
+      source: new OlSourceVector({
+        features: features
+      }),
+      properties: {
+        shogunId: getRandomId(),
+        name: fileName,
+        hoverable: true,
+        isUploadedLayer: true,
+        groupName: t('UploadDataModal.uploadedDataFolder')
+      }
+    });
+
+    return layer;
+  };
+
+  const zoomTo = (extent: OlExtent) => {
+    map?.getView().fit(extent, {
+      duration: 500,
+      padding: getFitPadding(true)
+    });
+  };
+
+  const addLayer = (layer: OlLayer) => {
     if (!map) {
       return;
     }
 
     const targetFolderName = t('UploadDataModal.uploadedDataFolder');
     let targetGroup = MapUtil.getLayerByName(map, targetFolderName) as OlLayerGroup;
+    const targetGroupAvailableInMap = !!targetGroup;
 
     if (!targetGroup) {
       targetGroup = new OlLayerGroup({
@@ -135,35 +272,77 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
           name: targetFolderName
         }
       });
-      const existingGroups = map.getLayerGroup().getLayers();
-      existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
     }
 
     if (!targetGroup.getLayers().getArray().includes(layer)) {
       targetGroup.getLayers().push(layer);
     }
+
+    if (!targetGroupAvailableInMap) {
+      const existingGroups = map.getLayerGroup().getLayers();
+      existingGroups.insertAt(existingGroups?.getLength() || 0, targetGroup);
+    }
+  };
+
+  const generateExtent = async (layers: OlLayer[]) => {
+    const extent: OlExtent = createEmpty();
+
+    for (const layer of layers) {
+      let layerExtent = createEmpty();
+
+      if (layer instanceof OlLayerVector) {
+        layerExtent = layer.getSource().getExtent();
+      } else if (layer instanceof OlLayerWebGLTile) {
+        const view = await layer.getSource()?.getView();
+        const viewExtent = view?.extent;
+        const viewProjection = view?.projection;
+
+        if (!viewExtent) {
+          continue;
+        }
+
+        layerExtent = transformExtent(viewExtent, viewProjection, map?.getView().getProjection());
+      }
+
+      extend(extent, layerExtent);
+    }
+
+    return extent;
+  };
+
+  const isSupportedFile = (file: File) => {
+    const fileName = file.name;
+    const fileType = file.type;
+
+    for (const values of Object.values(supportedFormats)) {
+      const {
+        fileExtensions,
+        mimeTypes
+      } = values;
+
+      if (mimeTypes && mimeTypes.includes(fileType)) {
+        return true;
+      }
+
+      if (fileExtensions && fileExtensions.some(ext => fileName.toLowerCase().endsWith(ext))) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const getSupportedFileExtensions = () => {
+    return (Object.values(supportedFormats).map(format => format.fileExtensions).flat()).join(', ');
   };
 
   const onBeforeFileUpload = (file: RcFile) => {
-    const maxSize = ClientConfiguration.geoserver?.upload?.limit ?? 200000000;
-    const fileType = file.type;
-    const fileSize = file.size;
-
     setUploadError('');
     setUploadSuccess('');
 
-    if (fileSize > maxSize) {
-      setUploadError(t('UploadDataModal.error.maxSize', {
-        maxSize: maxSize / 1000000
-      }));
-
-      return false;
-    }
-
-    const supportedFormats = ['application/zip', 'image/tiff'];
-    if (!supportedFormats.includes(fileType)) {
+    if (!isSupportedFile(file)) {
       setUploadError(t('UploadDataModal.error.supportedFormats', {
-        supportedFormats: supportedFormats.join(', ')
+        supportedFormats: getSupportedFileExtensions()
       }));
 
       return false;
@@ -172,213 +351,28 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     return true;
   };
 
-  const uploadGeoTiff = async (options: LayerUploadOptions): Promise<void> => {
-    const {
-      baseUrl,
-      workspace,
-      storeName,
-      layerName,
-      file
-    } = options;
-
-    const coverageStoreUrl = `${baseUrl}/rest/workspaces/${workspace}/coveragestores/` +
-      `${storeName}/file.geotiff?configure=none`;
-
-    const coverageStoreResponse = await fetch(coverageStoreUrl, {
-      method: 'PUT',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'image/tiff'
-      },
-      body: file
-    });
-
-    if (!coverageStoreResponse.ok) {
-      throw new Error(t('UploadDataModal.error.general', {
-        fileName: file.name
-      }));
-    }
-
-    const coverageUrl = `${baseUrl}/rest/workspaces/${workspace}/coveragestores/${storeName}/coverages`;
-
-    const coverageResponse = await fetch(coverageUrl, {
-      method: 'POST',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        coverage: {
-          enabled: true,
-          name: layerName,
-          nativeName: layerName,
-          title: layerName,
-          keywords: {
-            // eslint-disable-next-line quote-props
-            'string': [
-              'User upload',
-              `Uploaded by ${user.providerDetails?.username}`
-            ]
-          }
-        }
-      })
-    });
-
-    if (!coverageResponse.ok) {
-      throw new Error(t('UploadDataModal.error.general', {
-        fileName: file.name
-      }));
-    }
-  };
-
-  const uploadShapeZip = async (options: LayerUploadOptions): Promise<void> => {
-    const {
-      baseUrl,
-      workspace,
-      storeName,
-      layerName,
-      file
-    } = options;
-
-    const shp = await Shapefile.load(file);
-
-    let featureTypeName = '';
-    const featureTypeAttributes: FeatureTypeAttributes = {
-      attribute: []
-    };
-
-    if (Object.entries(shp).length !== 1) {
-      throw new Error(t('UploadDataModal.error.zipContent'));
-    }
-
-    Object.entries(shp).forEach(([k, v]) => {
-      featureTypeName = k;
-
-      const dbfContent = v.parse('dbf', {
-        properties: false
-      });
-
-      featureTypeAttributes.attribute = dbfContent.fields.map(field => ({
-        name: field.name,
-        minOccurs: 0,
-        maxOccurs: 1,
-        nillable: true,
-        binding: getAttributeType(field.type),
-        length: field.length
-      }));
-
-      const shxContent = v.parse('shx');
-
-      featureTypeAttributes.attribute.push({
-        name: 'the_geom',
-        minOccurs: 0,
-        maxOccurs: 1,
-        nillable: true,
-        binding: getGeometryType(shxContent.header.type)
-      });
-    });
-
-    const url = `${baseUrl}/rest/workspaces/${workspace}/datastores/` +
-      `${storeName}/file.shp?configure=none`;
-
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'application/zip'
-      },
-      body: file
-    });
-
-    if (!response.ok) {
-      throw new Error(t('UploadDataModal.error.general', {
-        fileName: file.name
-      }));
-    }
-
-    const featureTypeUrl = `${baseUrl}/rest/workspaces/${workspace}/datastores/${storeName}/featuretypes`;
-
-    const featureTypeResponse = await fetch(featureTypeUrl, {
-      method: 'POST',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        featureType: {
-          enabled: true,
-          name: layerName,
-          nativeName: featureTypeName,
-          title: layerName,
-          attributes: featureTypeAttributes,
-          keywords: {
-            // eslint-disable-next-line quote-props
-            'string': [
-              'User upload',
-              `Uploaded by ${user.providerDetails?.username}`
-            ]
-          }
-        }
-      })
-    });
-
-    if (!featureTypeResponse.ok) {
-      throw new Error(t('UploadDataModal.error.general', {
-        fileName: file.name
-      }));
-    }
-  };
-
-  const onFileUploadAction = async (options: UploadRequestOption<LayerUploadResponse>) => {
+  const onFileUploadAction = async (options: UploadRequestOption) => {
     const {
       onError,
       onSuccess,
       file
     } = options;
 
-    const splittedFileName = (file as RcFile).name.split('.');
-    const fileType = (file as RcFile).type;
-    const geoServerBaseUrl = ClientConfiguration.geoserver?.base ?? '/geoserver';
-    const workspace = ClientConfiguration.geoserver?.upload?.workspace ?? 'SHOGUN';
-    const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
-
-    const uploadData = {
-      file: file as RcFile,
-      baseUrl: geoServerBaseUrl,
-      workspace: workspace,
-      storeName: layerName,
-      layerName: layerName
-    };
+    const rcFile = file as RcFile;
 
     try {
-      if (fileType === 'image/tiff') {
-        await uploadGeoTiff(uploadData);
-      }
-
-      if (fileType === 'application/zip') {
-        await uploadShapeZip(uploadData);
-      }
-
-      if (onSuccess) {
-        onSuccess({
-          baseUrl: geoServerBaseUrl,
-          workspace: workspace,
-          layerName: layerName
-        });
-      }
+      onSuccess?.({}, rcFile);
     } catch (error) {
-      if (onError) {
-        onError({
-          name: 'UploadError',
-          message: (error instanceof Error) ? error.message : t('UploadDataModal.error.general', {
-            fileName: (file as RcFile).name
-          })
-        });
-      }
+      onError?.({
+        name: 'UploadError',
+        message: (error instanceof Error) ? error.message : t('UploadDataModal.error.general', {
+          fileName: rcFile.name
+        })
+      });
     }
   };
 
-  const onFileUploadChange = async (info: UploadChangeParam<UploadFile<LayerUploadResponse>>) => {
+  const onFileUploadChange = async (info: UploadChangeParam<UploadFile>) => {
     const file = info.file;
 
     if (file.status === 'uploading') {
@@ -386,40 +380,50 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     }
 
     if (file.status === 'done') {
-      if (!client || !file.response) {
-        return;
-      }
+      try {
+        const layers: OlLayer[] = [];
 
-      const layerConfig: Layer = {
-        name: file.response.layerName,
-        type: 'TILEWMS',
-        clientConfig: {
-          hoverable: true
-        },
-        sourceConfig: {
-          url: `${file.response.baseUrl}/ows?`,
-          layerNames: `${file.response.workspace}:${file.response.layerName}`,
-          useBearerToken: true
+        if (file.type && ['image/tiff', 'image/geo+tiff'].includes(file.type)) {
+          if (file.originFileObj) {
+            layers.push(createRasterLayer(file.originFileObj, selectedProjection));
+          }
+        } else {
+          const features = await readFeaturesFromFile((file.originFileObj as File),
+            map?.getView().getProjection(), selectedProjection);
+
+          if (!features || Object.keys(features).length === 0) {
+            Logger.warn(`No features found in file ${file.name}`);
+          }
+
+          for (const [fileName, featureList] of Object.entries(features || {})) {
+            if (!featureList || featureList.length === 0) {
+              Logger.warn(`No features found in entry: ${fileName} of file ${file.name}`);
+              continue;
+            }
+
+            layers.push(createVectorLayer(featureList, fileName));
+          }
         }
-      };
 
-      const parser = new SHOGunApplicationUtil({
-        client
-      });
+        setUploadSuccess(t('UploadDataModal.success', {
+          fileName: file.name,
+          layerName: file.name
+        }));
+        setLayerCandidates(layers);
+        setSelectedRowKeys(layers.map(layer => getUid(layer)));
+      } catch (error) {
+        Logger.error(error);
 
-      const olLayer = parser.parseTileLayer(layerConfig);
-      olLayer.set('layerConfig', layerConfig);
-      olLayer.set('isUploadedLayer', true);
-      olLayer.set('groupName', t('UploadDataModal.uploadedDataFolder'));
-      addLayer(olLayer);
+        setUploadError(t('UploadDataModal.error.general', {
+          fileName: file.name
+        }));
+      } finally {
+        setIsUploading(false);
+        setIsUploadFinished(true);
+      }
+    }
 
-      setUploadSuccess(t('UploadDataModal.success', {
-        fileName: file.name,
-        layerName: file.response.layerName
-      }));
-
-      setIsUploading(false);
-    } else if (file.status === 'error') {
+    if (file.status === 'error') {
       setIsUploading(false);
 
       Logger.error(file.error);
@@ -434,51 +438,38 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
     }
   };
 
-  const getGeometryType = (type: number) => {
-    const types: Record<number, string | null> = {
-      0: null, // Null
-      1: 'org.locationtech.jts.geom.Point', // Point
-      3: 'org.locationtech.jts.geom.LineString', // Polyline
-      5: 'org.locationtech.jts.geom.Polygon', // Polygon
-      8: 'org.locationtech.jts.geom.MultiPoint', // MultiPoint
-      11: 'org.locationtech.jts.geom.Point', // PointZ
-      13: 'org.locationtech.jts.geom.LineString', // PolylineZ
-      15: 'org.locationtech.jts.geom.Polygon', // PolygonZ
-      18: 'org.locationtech.jts.geom.MultiPoint', // MultiPointZ
-      21: 'org.locationtech.jts.geom.Point', // PointM
-      23: 'org.locationtech.jts.geom.LineString', // PolylineM
-      25: 'org.locationtech.jts.geom.Polygon', // PolygonM
-      28: 'org.locationtech.jts.geom.MultiPoint', // MultiPointM
-      31: null // MultiPatch
-    };
+  const onAddClick = async () => {
+    const layers = layerCandidates.filter(layerCandidate => {
+      return selectedRowKeys.includes(getUid(layerCandidate));
+    });
 
-    return types[type];
+    layers.forEach(layer => addLayer(layer));
+
+    const extent = await generateExtent(layers);
+
+    zoomTo(extent);
+
+    closeModal();
   };
 
-  const getAttributeType = (dbfFieldType: string) => {
-    switch (dbfFieldType) {
-      case 'C': // Character
-        return 'java.lang.String';
-      case 'D': // Date
-        return 'java.util.Date';
-      case 'N': // Numeric
-        return 'java.lang.Long';
-      case 'F': // Floating point
-        return 'java.lang.Double';
-      case 'L': // Logical
-        return 'java.lang.Boolean';
-      case 'M': // Memo
-        return null;
-      default:
-        return null;
-    }
+  const getOptions = () => {
+    return Object.entries(proj4.defs || {})
+      .filter(([code]) => code.startsWith('EPSG:') && !isNaN(Number(code.split(':')[1])))
+      .sort(([codeA], [codeB]) => parseInt(codeA.split(':')[1], 10) - parseInt(codeB.split(':')[1], 10))
+      .map(([code, def]) => ({
+        label: `${code} - ${typeof def === 'string' ? def : def?.title || ''}`,
+        value: code
+      }));
   };
+
+  const favourites = ['EPSG:4326', 'EPSG:3857'];
 
   return (
     <Modal
       className="upload-data-modal"
+      maskClosable={false}
       title={t('UploadDataModal.title')}
-      open={isModalVisible}
+      open={isModalOpen}
       onCancel={closeModal}
       width={600}
       footer={false}
@@ -493,7 +484,6 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
           />
         )
       }
-
       {
         uploadError && (
           <Alert
@@ -503,31 +493,98 @@ export const UploadDataModal: React.FC<UploadDataModalProps> = ({
           />
         )
       }
-
-      <Spin
-        spinning={isUploading}
-      >
-        <Dragger
-          customRequest={onFileUploadAction}
-          accept='image/tiff,application/zip'
-          maxCount={1}
-          showUploadList={false}
-          beforeUpload={onBeforeFileUpload}
-          onChange={onFileUploadChange}
-        >
-          <p className="ant-upload-drag-icon">
-            <FontAwesomeIcon
-              icon={faUpload}
+      {
+        !isUploadFinished ? (
+          <Spin
+            spinning={isUploading}
+          >
+            <Dragger
+              customRequest={onFileUploadAction}
+              accept={getSupportedFileExtensions()}
+              maxCount={1}
+              showUploadList={false}
+              beforeUpload={onBeforeFileUpload}
+              onChange={onFileUploadChange}
+              directory={false}
+            >
+              <p className="ant-upload-drag-icon">
+                <FontAwesomeIcon
+                  icon={faUpload}
+                />
+              </p>
+              <p className="ant-upload-text">
+                {t('UploadDataModal.description')}
+              </p>
+              <p className="ant-upload-hint">
+                {t('UploadDataModal.hint')}
+              </p>
+            </Dragger>
+            <Collapse
+              ghost={true}
+              items={[{
+                key: '1',
+                label: t('UploadDataModal.advancedOptionsLabel'),
+                children: (
+                  <Select
+                    showSearch
+                    placeholder={t('UploadDataModal.selectProjectionPlaceholder')}
+                    value={selectedProjection}
+                    onSelect={setSelectedProjection}
+                    options={[{
+                      label: <span>{t('UploadDataModal.favouritesLabel')}</span>,
+                      title: 'favourites',
+                      options: getOptions().filter(obj => favourites.includes(obj.value))
+                    }, {
+                      label: <span>{t('UploadDataModal.othersLabel')}</span>,
+                      title: 'others',
+                      options: getOptions().filter(obj => !favourites.includes(obj.value))
+                    }]}
+                  >
+                  </Select>
+                )
+              }]}
             />
-          </p>
-          <p className="ant-upload-text">
-            {t('UploadDataModal.description')}
-          </p>
-          <p className="ant-upload-hint">
-            {t('UploadDataModal.hint')}
-          </p>
-        </Dragger>
-      </Spin>
+          </Spin>
+        ) : (
+          <div
+            className="file-selection-wrapper"
+          >
+            <p>
+              {t('UploadDataModal.selectEntriesHint')}
+            </p>
+            <Table
+              size="small"
+              columns={[{
+                title: t('UploadDataModal.nameColumnTitle'),
+                dataIndex: 'fileName',
+                key: 'fileName',
+                render: (text: string) => <code>{text}</code>
+              }]}
+              dataSource={layerCandidates.map(layerCandidate => ({
+                key: getUid(layerCandidate),
+                fileName: layerCandidate.get('name')
+              }))}
+              rowSelection={{
+                type: 'checkbox',
+                selectedRowKeys: selectedRowKeys,
+                onChange: (keys: React.Key[]) => {
+                  setSelectedRowKeys(keys);
+                }
+              }}
+            />
+            <div
+              className="bottom-button-toolbar"
+            >
+              <Button
+                disabled={selectedRowKeys.length === 0}
+                onClick={onAddClick}
+              >
+                {t('UploadDataModal.addSelectedButtonTitle')}
+              </Button>
+            </div>
+          </div>
+        )
+      }
     </Modal>
   );
 };

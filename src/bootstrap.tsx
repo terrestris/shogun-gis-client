@@ -31,11 +31,9 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import Keycloak from 'keycloak-js';
 
-import { Collection } from 'ol';
 import {
   defaults as OlControlDefaults
 } from 'ol/control';
-import BaseLayer from 'ol/layer/Base';
 import OlLayerGroup from 'ol/layer/Group';
 import OlLayerTile from 'ol/layer/Tile';
 import OlMap from 'ol/Map';
@@ -53,7 +51,9 @@ import {
 } from 'react-redux';
 
 import Logger from '@terrestris/base-util/dist/Logger';
-import { UrlUtil } from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
+import {
+  UrlUtil
+} from '@terrestris/base-util/dist/UrlUtil/UrlUtil';
 
 import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContext';
 
@@ -66,11 +66,17 @@ import Application, {
 } from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
 import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import {
+  SHOGunAPIClient
+} from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import {
+  getLocalizedString
+} from '@terrestris/shogun-util/dist/util/getLocalizedString';
 
 const App = React.lazy(() => import('./App'));
 
 import RerouteToLogin from './components/RerouteToLogin';
+
 import {
   PluginProvider
 } from './context/PluginContext';
@@ -91,6 +97,7 @@ import {
   setAppInfo
 } from './store/appInfo';
 import {
+  BackgroundLayerChooserConfig,
   setAllowEmptyBackground as setBackgroundLayerChooserAllowEmptyBackground,
   setVisible as setBackgroundLayerChooserVisible
 } from './store/backgroundLayerChooser';
@@ -115,15 +122,22 @@ import {
   setLogoPath
 } from './store/logoPath';
 import {
+  setGeoLocationVisible,
   setMapToolbarVisible
-} from './store/mapToolbarVisible';
+} from './store/mapToolbar';
+import {
+  setShowSegmentLengths
+} from './store/measure';
+import { setNewsText } from './store/newsText';
 import { setPrintApp } from './store/print';
 import {
   setSearchEngines
 } from './store/searchEngines';
 import {
+  AsyncReducer,
   createReducer,
   dynamicMiddleware,
+  observeStore,
   store
 } from './store/store';
 import {
@@ -292,6 +306,10 @@ export const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setLogoPath(application.clientConfig.theme.logoPath));
   }
 
+  if (application?.clientConfig?.newsTextIds) {
+    store.dispatch(setNewsText(application.clientConfig.newsTextIds));
+  }
+
   // nominatim search is active by default
   store.dispatch(setSearchEngines(['nominatim']));
 
@@ -326,6 +344,11 @@ export const setApplicationToStore = async (application?: Application) => {
       // eslint-disable-next-line camelcase
       map_toolbar: (config) => {
         store.dispatch(setMapToolbarVisible(config?.visible));
+        store.dispatch(setGeoLocationVisible(config?.showGeolocation));
+      },
+      // eslint-disable-next-line camelcase
+      measure_tools: (config) => {
+        store.dispatch(setShowSegmentLengths(config?.showSegmentLengths ?? false));
       },
       // eslint-disable-next-line camelcase
       user_menu: (config) => {
@@ -429,10 +452,17 @@ const initKeycloak = async () => {
   return keycloak;
 };
 
-const setApplicationTitle = () => {
-  store.subscribe(() => {
-    document.title = store.getState().title;
-  });
+const setApplicationTitle = (title: string, language: string) => {
+  document.title = getLocalizedString(title, language);
+};
+
+const observeApplicationTitle = () => {
+  observeStore(
+    state => state.title,
+    title => {
+      setApplicationTitle(title, i18n.language);
+    }
+  );
 };
 
 const setupMap = async (application?: Application) => {
@@ -469,7 +499,7 @@ const setupSHOGunMap = async (application: Application) => {
 
   view.setConstrainResolution(true);
 
-  let layers;
+  let layers: OlLayerGroup | undefined;
   if (!ClientConfiguration.layerConfigUrl) {
     layers = await parser.parseLayerTree(application, projection);
   } else {
@@ -492,65 +522,77 @@ const setupSHOGunMap = async (application: Application) => {
   });
 };
 
-const addBackgroundLayers = async (application: Application, layers: OlLayerGroup | undefined): Promise< Collection<BaseLayer> | undefined> => {
-  const blcLayers = application.toolConfig?.find(config => config.name === 'background_layer_chooser')?.config.layers;
-  const initiallySelectedLayerId = application.toolConfig?.find(config => config.name === 'background_layer_chooser')?.config.initiallySelectedLayer;
+const addBackgroundLayers = async (application: Application, layers?: OlLayerGroup) => {
+  const backgroundLayerChooserConfig: BackgroundLayerChooserConfig | undefined = application.toolConfig
+    ?.find(config => config.name === 'background_layer_chooser')?.config;
+  const blcLayers = backgroundLayerChooserConfig?.layers;
+  const initiallySelectedLayerId = backgroundLayerChooserConfig?.initiallySelectedLayer;
   const backgroundMapLayers = [];
 
-  if (blcLayers){
-    let initiallySelectedLayerPresent = false;
-
-    for (const layer of blcLayers) {
-      try {
-        if (!layer.layerId) {
-          continue;
-        }
-
-        const existingLayer = layers?.getLayersArray().find(item => item.get('shogunId')=== layer.layerId);
-        let olLayer;
-        if (existingLayer) {
-          olLayer = existingLayer;
-        } else {
-          const l = await client?.layer().findOne(layer.layerId);
-          if (!l) {
-            continue;
-          }
-          olLayer = await parser.parseLayer(l);
-        }
-
-        if (!olLayer || olLayer instanceof OlLayerGroup) {
-          continue;
-        }
-        olLayer.set('isBackgroundLayer', true);
-        olLayer.setVisible(false);
-
-        if (layer.title) {
-          olLayer.set('name', layer.title);
-        }
-
-        if (layer.layerId === initiallySelectedLayerId) {
-          olLayer.setVisible(true);
-          initiallySelectedLayerPresent = true;
-        }
-        if (!existingLayer) {
-          backgroundMapLayers.push(olLayer);
-        }
-      }
-      catch (error){
-        Logger.error(`Layer ${layer.layerId} could not be loaded successfully: `, error);
-      }
-    }
-
-    // Fallback for when no initiallySelectedLayerId is set. Choose first layer as default.
-    if (!initiallySelectedLayerPresent && backgroundMapLayers.length >= 1) {
-      backgroundMapLayers[0].setVisible(true);
-    }
-
-    for (const backgroundLayerMap of backgroundMapLayers) {
-      layers?.getLayers().insertAt(0, backgroundLayerMap);
-    }
-    return layers?.getLayers();
+  if (!blcLayers) {
+    return layers;
   }
+
+  let initiallySelectedLayerPresent = false;
+
+  for (const blcLayer of blcLayers) {
+    try {
+      if (!blcLayer.layerId) {
+        continue;
+      }
+
+      // TODO: This might result in an unexpected behaviour, if the same layer is used
+      //       in the tree config. The layer will be removed from the tree and added
+      //       to the background layers config instead.
+      const existingLayer = layers?.getLayersArray()
+        .find(item => item.get('shogunId')=== blcLayer.layerId);
+
+      let olLayer;
+      if (existingLayer) {
+        olLayer = existingLayer;
+      } else {
+        const layerConfig = await client?.layer().findOne(blcLayer.layerId);
+        if (!layerConfig) {
+          continue;
+        }
+        olLayer = await parser.parseLayer(layerConfig);
+      }
+
+      if (!olLayer || olLayer instanceof OlLayerGroup) {
+        continue;
+      }
+
+      olLayer.set('isBackgroundLayer', true);
+      olLayer.setVisible(false);
+
+      if (blcLayer.title) {
+        olLayer.set('name', blcLayer.title);
+      }
+
+      if (blcLayer.layerId === initiallySelectedLayerId) {
+        olLayer.setVisible(true);
+        initiallySelectedLayerPresent = true;
+      }
+
+      if (!existingLayer) {
+        backgroundMapLayers.push(olLayer);
+      }
+    }
+    catch (error){
+      Logger.error(`Layer ${blcLayer.layerId} could not be loaded successfully: `, error);
+    }
+  }
+
+  // Fallback for when no initiallySelectedLayerId is set. Choose first layer as default.
+  if (!initiallySelectedLayerPresent && backgroundMapLayers.length >= 1) {
+    backgroundMapLayers[0].setVisible(true);
+  }
+
+  for (const backgroundMapLayer of backgroundMapLayers) {
+    layers?.getLayers().insertAt(0, backgroundMapLayer);
+  }
+
+  return layers;
 };
 
 // TODO Make default/fallback app configurable?
@@ -671,6 +713,8 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
 
   const clientPlugins: ClientPluginInternal[] = [];
 
+  const reducers: AsyncReducer = {};
+
   for (const plugin of ClientConfiguration.plugins) {
     const name = plugin.name;
     const resourcePath = plugin.resourcePath;
@@ -731,8 +775,12 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
       }
 
       if (clientPluginDefault.reducers) {
-        const reducers = createReducer(clientPluginDefault.reducers);
-        store.replaceReducer(reducers);
+        Object.entries(clientPluginDefault.reducers).forEach(([key, value]) => {
+          if (reducers[key]) {
+            Logger.warn(`Reducer with ${key} already exists in store. The existing reducer will be overwritten.`);
+          }
+          reducers[key] = value;
+        });
       }
 
       if (Array.isArray(clientPluginDefault.middlewares)) {
@@ -741,6 +789,10 @@ const loadPlugins = async (map: OlMap, toolConfig?: DefaultApplicationToolConfig
 
       clientPlugins.push(clientPluginDefault);
     }
+  }
+
+  if (Object.keys(reducers).length > 0) {
+    store.replaceReducer(createReducer(reducers));
   }
 
   return clientPlugins;
@@ -784,6 +836,10 @@ export const matchRole = (role: string | RegExp, element: string): boolean => {
     return role.test(element);
   }
   return false;
+};
+
+const onLanguageChanged = (lng: string) => {
+  setApplicationTitle(store.getState().title, lng);
 };
 
 const renderApp = async () => {
@@ -847,6 +903,8 @@ const renderApp = async () => {
       i18n.changeLanguage(defaultLanguage);
     }
 
+    i18n.on('languageChanged', onLanguageChanged);
+
     const printApp = appConfig?.clientConfig?.printApp;
     if (printApp) {
       store.dispatch(setPrintApp(printApp));
@@ -868,7 +926,7 @@ const renderApp = async () => {
 
     setApplicationToStore(appConfig);
 
-    setApplicationTitle();
+    observeApplicationTitle();
 
     if (client) {
       const appInfo = await getApplicationInfo(client);

@@ -38,14 +38,11 @@ Several global settings for the client can be configured via the [`gis-client-co
 | keycloak.clientId | The Keycloak client that should be used for authentication, e.g. `shogun-client`                                                                                                                         | null                |
 | keycloak.onLoadAction | See [here](https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter) for details                                                                                                          | 'check-sso'         |
 | print.url | The url of the MapFish Print servlet                                                                                                                                                                     | '/print'            |
+| print.outputFormats | The list of output formats available in the combobox. Note: Only formats supported by your Mapfish print servlet should be entered here.                                                                                                                                                                     | '[\'pdf\', \'png\']'            |
 | plugins | The list of plugins to be loaded                                                                                                                                                                         | []                  |
 | plugin.name | The name of the plugin                                                                                                                                                                                   | undefined           |
 | plugin.exposedPaths | The list of exposed paths                                                                                                                                                                                | undefined           |
 | plugin.resourcePath | The resource path                                                                                                                                                                                        | undefined           |
-| geoserver.base | The base url of the GeoServer                                                                                                                                                                            | '/geoserver'        |
-| geoserver.upload.workspace | The workspace the uploads should be placed in                                                                                                                                                            | 'SHOGUN'            |
-| geoserver.upload.limit | The upload size limit in bytes (note: this is the client evaluation only!)                                                                                                                               | 200000000 (= 200MB) |
-| geoserver.upload.authorizedRoles | The list of role names the upload should be allowed/visible to (note: this is the client evaluation only!)                                                                                               | ['admin']           |
 | featureEditRoles.authorizedRolesForCreate | The list of role names the feature editing tools including the create options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported.    | []                  |
 | featureEditRoles.authorizedRolesForUpdate | The list of role names the feature editing tools including the update options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported.    | []                  |
 | featureEditRoles.authorizedRolesForDelete | The list of role names the feature editing tools including the delete options should be allowed/visible to (note: this is the client evaluation only!). String and regular expressions are supported.    | []                  |
@@ -70,7 +67,6 @@ Several global settings for the client can be configured via the [`gis-client-co
 The configuration file is not bundled and will be loaded before application start from `./gis-client-config.js`. Typically you want to override the file in a production environment and you can pass a custom file by mounting the desired one directly into the nginx container of the client. For example:
 
 ```yml
-version: '3.7'
 services:
   shogun-gis-client:
     image: docker-public.terrestris.de/terrestris/shogun-gis-client:latest

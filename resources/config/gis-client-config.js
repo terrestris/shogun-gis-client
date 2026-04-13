@@ -8,19 +8,13 @@ var clientConfig = {
     onLoadAction: 'check-sso'
   },
   print: {
-    url: '/print'
+    url: '/print',
+    outputFormats: [
+      'pdf',
+      'png'
+    ]
   },
   plugins: [],
-  geoserver: {
-    base: '/geoserver',
-    upload: {
-      workspace: 'SHOGUN-UPLOADS',
-      limit: 200000000, // ~200MB
-      authorizedRoles: [
-        'admin'
-      ]
-    }
-  },
   search: {
     nominatimUrl: 'https://nominatim.openstreetmap.org/search?',
     solrBasePath: '/search/query',
