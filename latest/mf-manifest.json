@@ -5,7 +5,7 @@
     "name": "SHOGunGISClient",
     "type": "app",
     "buildInfo": {
-      "buildVersion": "11.0.0-next.21",
+      "buildVersion": "11.0.0",
       "buildName": "@terrestris/shogun-gis-client"
     },
     "remoteEntry": {
