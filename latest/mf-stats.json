@@ -3156,14 +3156,14 @@
       "requiredVersion": "^2.15.0",
       "shareScope": "default",
       "name": "proj4",
-      "version": "2.20.4",
+      "version": "2.20.8",
       "eager": false,
       "id": "SHOGunGISClient:proj4",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "710.233f641bac97358f.js"
+            "710.6f636c44e7e26e8a.js"
           ]
         },
         "css": {
