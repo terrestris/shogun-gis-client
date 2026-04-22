@@ -80,7 +80,7 @@
         "js": {
           "async": [],
           "sync": [
-            "1799.96cdc61d4c112197.js",
+            "1799.61a7d20a29f74b45.js",
             "2852.44fc9785f1b71c2f.js"
           ]
         },
@@ -145,7 +145,7 @@
         "js": {
           "async": [],
           "sync": [
-            "3140.0692532653f11c66.js",
+            "3140.686e135c3d488b07.js",
             "3923.510b11211ba34c20.js"
           ]
         },
@@ -239,7 +239,7 @@
         "js": {
           "async": [],
           "sync": [
-            "6907.4dce8f6140d18f0f.js",
+            "6907.f7325130548cd845.js",
             "8242.a979a018689fcf58.js"
           ]
         },
@@ -282,7 +282,7 @@
         "js": {
           "async": [],
           "sync": [
-            "3107.5a71f62ef31ba161.js",
+            "3107.e83f9d980ecd4524.js",
             "9751.72b957f961ec6291.js"
           ]
         },
@@ -306,7 +306,7 @@
           "async": [],
           "sync": [
             "2637.39191334f09c019c.js",
-            "5597.cd1aa6949c97b9a7.js"
+            "5597.a7c42a49a8b17311.js"
           ]
         },
         "css": {
@@ -373,7 +373,7 @@
         "js": {
           "async": [],
           "sync": [
-            "2132.5f32657e8925783e.js"
+            "2132.9fac2a603b199301.js"
           ]
         },
         "css": {
@@ -425,18 +425,18 @@
     {
       "id": "SHOGunGISClient:ol/Collection",
       "name": "ol/Collection",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2244.5a0babc2170e9ced.js",
-            "4140.73e95940a488cdae.js",
-            "4497.cd1c2746a17237ab.js",
-            "4780.897752f9b44c556d.js",
-            "5860.98126bff36045ef3.js",
-            "8960.91dd316dca84ee7b.js"
+            "2244.983fdc1d88b2b099.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4497.28137169951f6c8f.js",
+            "4780.8f86153b73c6ad05.js",
+            "5860.683a4d60493e98d7.js",
+            "8960.c28090bdccce78a7.js"
           ]
         },
         "css": {
@@ -449,16 +449,16 @@
     {
       "id": "SHOGunGISClient:ol/Feature",
       "name": "ol/Feature",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2244.5a0babc2170e9ced.js",
-            "3594.f041d63e5f9b404e.js",
-            "4140.73e95940a488cdae.js",
-            "533.7acb6d9fd672f6ab.js"
+            "2244.983fdc1d88b2b099.js",
+            "3594.7d0342b24421e3c4.js",
+            "4140.12ec23049d2fe8c7.js",
+            "533.cf8de073502d1664.js"
           ]
         },
         "css": {
@@ -471,13 +471,13 @@
     {
       "id": "SHOGunGISClient:ol/Geolocation",
       "name": "ol/Geolocation",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3395.506389c5762cfa4d.js"
+            "3395.5c42c250a8337ea0.js"
           ]
         },
         "css": {
@@ -490,21 +490,21 @@
     {
       "id": "SHOGunGISClient:ol/ImageState",
       "name": "ol/ImageState",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "4007.83795db277222526.js",
-            "5103.3e45b55315116955.js",
-            "5160.cb701ec19c92896c.js",
-            "5176.adcd93fa9eb8148f.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "6388.a4a133d0d821e257.js",
-            "6564.613b1c44ac0997b1.js",
-            "6603.86df786ace5f889b.js",
-            "9292.70b996a3ad575138.js",
+            "4007.3e155ba425f7142c.js",
+            "5103.6abbd93005a433d5.js",
+            "5160.400cbdc05f36ee86.js",
+            "5176.48dcca8a2fd8bf91.js",
+            "5624.604422254d65c65a.js",
+            "6388.74a0d491888cbd45.js",
+            "6564.6ee267163b1c8674.js",
+            "6603.1852a551940cdd55.js",
+            "9292.43bb347a9ae951a6.js",
             "979.4c5b2bd13b57b515.js"
           ]
         },
@@ -518,13 +518,13 @@
     {
       "id": "SHOGunGISClient:ol/Map",
       "name": "ol/Map",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "8296.a44f1d7ad0b94241.js"
+            "8296.e22d450072a37baa.js"
           ]
         },
         "css": {
@@ -537,53 +537,53 @@
     {
       "id": "SHOGunGISClient:ol/Object",
       "name": "ol/Object",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1313.3d19a3e35b18017c.js",
-            "1973.36f18378088fd9df.js",
-            "2014.d7dc2ce63bc42045.js",
-            "2320.2fe274d50db04de9.js",
-            "2452.6fc63d881bf68439.js",
-            "2506.91a86a313582f49c.js",
-            "2783.c4fc606aaa2e7653.js",
-            "3010.1e5fefaca185800b.js",
-            "3292.d465859b566be1f2.js",
-            "3300.ad7ea3be9b492d79.js",
-            "3694.a33b4172a40d2f84.js",
-            "4140.73e95940a488cdae.js",
-            "4354.0b4789304114f48a.js",
-            "4497.cd1c2746a17237ab.js",
-            "453.bb3c2941daaccccf.js",
-            "4705.8697b68706942301.js",
-            "4780.897752f9b44c556d.js",
-            "4817.94d54b5faa2cff09.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5205.07a294ffcece2b75.js",
-            "5269.af07cdddd9e6d878.js",
-            "533.7acb6d9fd672f6ab.js",
-            "5691.7ae275d886a02f6c.js",
-            "5765.70d3071c4f4b78f1.js",
-            "5940.7f2722f88ddc79fb.js",
-            "629.f461f47bf4d30760.js",
-            "6809.5f071555efdada98.js",
-            "7086.91a08c9e72219add.js",
-            "71.9e7187c201a8bbb4.js",
-            "7198.c5c45b928901457e.js",
-            "7558.c652659fa5e5a6b2.js",
-            "7650.f7f26aed9ab1f8eb.js",
-            "7967.cd074f888053458b.js",
-            "8072.78717c7aa6af8726.js",
-            "827.4a5566b4ca6d6c73.js",
-            "9040.985c6b8d03c6dc5d.js",
-            "911.679ffa7537e14716.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "9609.6bd579513a620eaa.js",
-            "9633.a468602f3d681237.js"
+            "1313.edce7c6b91f10c6c.js",
+            "1973.d9894f9d5cc35947.js",
+            "2014.a08b4fab97fdd21a.js",
+            "2320.c483823a546d06c9.js",
+            "2452.5b33b362f8255dd5.js",
+            "2506.ecebb765a91a6cf5.js",
+            "2783.c23628b9cf33ad20.js",
+            "3010.b9987db4a316088a.js",
+            "3292.6ee7878d4b19d23f.js",
+            "3300.686d4983d59d74d5.js",
+            "3694.13a5f21d20d9a28f.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4354.ce9f0632ada85207.js",
+            "4497.28137169951f6c8f.js",
+            "453.61c534eee16a3cdc.js",
+            "4705.a4f4bb31c412e383.js",
+            "4780.8f86153b73c6ad05.js",
+            "4817.7101b0e9a5a7fa8d.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5205.145644f999d2ef99.js",
+            "5269.becb614ce7e8c9fe.js",
+            "533.cf8de073502d1664.js",
+            "5691.ef1b178e01c3800d.js",
+            "5765.3ef15fea536fc08e.js",
+            "5940.39b4dc04c3ced416.js",
+            "629.04954ca6880fb6c4.js",
+            "6809.f394803fe55bfbab.js",
+            "7086.24302d5d8c1863e4.js",
+            "71.05a857cb53fb5180.js",
+            "7198.a45655cc09b6ecca.js",
+            "7558.4bc0072be8cb6c2c.js",
+            "7650.c549f11f3a6d463c.js",
+            "7967.574703937877b074.js",
+            "8072.ac3a5b4b841e47ae.js",
+            "827.858691366476d272.js",
+            "9040.20c0cfc27ddbc763.js",
+            "911.45c5e9651cf41e04.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "9609.00dc75589cf98584.js",
+            "9633.b9cbff8e2c9ee274.js"
           ]
         },
         "css": {
@@ -596,54 +596,54 @@
     {
       "id": "SHOGunGISClient:ol/Observable",
       "name": "ol/Observable",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1313.3d19a3e35b18017c.js",
-            "1973.36f18378088fd9df.js",
-            "2014.d7dc2ce63bc42045.js",
-            "2320.2fe274d50db04de9.js",
-            "2452.6fc63d881bf68439.js",
-            "2506.91a86a313582f49c.js",
-            "2783.c4fc606aaa2e7653.js",
-            "3010.1e5fefaca185800b.js",
-            "3292.d465859b566be1f2.js",
-            "3300.ad7ea3be9b492d79.js",
-            "3618.af94c6b5f8f630ce.js",
-            "3694.a33b4172a40d2f84.js",
-            "4140.73e95940a488cdae.js",
-            "4354.0b4789304114f48a.js",
-            "4497.cd1c2746a17237ab.js",
-            "453.bb3c2941daaccccf.js",
-            "4705.8697b68706942301.js",
-            "4780.897752f9b44c556d.js",
-            "4817.94d54b5faa2cff09.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5205.07a294ffcece2b75.js",
-            "5269.af07cdddd9e6d878.js",
-            "533.7acb6d9fd672f6ab.js",
-            "5691.7ae275d886a02f6c.js",
-            "5765.70d3071c4f4b78f1.js",
-            "5940.7f2722f88ddc79fb.js",
-            "629.f461f47bf4d30760.js",
-            "6809.5f071555efdada98.js",
-            "7086.91a08c9e72219add.js",
-            "71.9e7187c201a8bbb4.js",
-            "7198.c5c45b928901457e.js",
-            "7558.c652659fa5e5a6b2.js",
-            "7650.f7f26aed9ab1f8eb.js",
-            "7967.cd074f888053458b.js",
-            "8072.78717c7aa6af8726.js",
-            "827.4a5566b4ca6d6c73.js",
-            "9040.985c6b8d03c6dc5d.js",
-            "911.679ffa7537e14716.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "9609.6bd579513a620eaa.js",
-            "9633.a468602f3d681237.js"
+            "1313.edce7c6b91f10c6c.js",
+            "1973.d9894f9d5cc35947.js",
+            "2014.a08b4fab97fdd21a.js",
+            "2320.c483823a546d06c9.js",
+            "2452.5b33b362f8255dd5.js",
+            "2506.ecebb765a91a6cf5.js",
+            "2783.c23628b9cf33ad20.js",
+            "3010.b9987db4a316088a.js",
+            "3292.6ee7878d4b19d23f.js",
+            "3300.686d4983d59d74d5.js",
+            "3618.9e44dbafa8498d35.js",
+            "3694.13a5f21d20d9a28f.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4354.ce9f0632ada85207.js",
+            "4497.28137169951f6c8f.js",
+            "453.61c534eee16a3cdc.js",
+            "4705.a4f4bb31c412e383.js",
+            "4780.8f86153b73c6ad05.js",
+            "4817.7101b0e9a5a7fa8d.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5205.145644f999d2ef99.js",
+            "5269.becb614ce7e8c9fe.js",
+            "533.cf8de073502d1664.js",
+            "5691.ef1b178e01c3800d.js",
+            "5765.3ef15fea536fc08e.js",
+            "5940.39b4dc04c3ced416.js",
+            "629.04954ca6880fb6c4.js",
+            "6809.f394803fe55bfbab.js",
+            "7086.24302d5d8c1863e4.js",
+            "71.05a857cb53fb5180.js",
+            "7198.a45655cc09b6ecca.js",
+            "7558.4bc0072be8cb6c2c.js",
+            "7650.c549f11f3a6d463c.js",
+            "7967.574703937877b074.js",
+            "8072.ac3a5b4b841e47ae.js",
+            "827.858691366476d272.js",
+            "9040.20c0cfc27ddbc763.js",
+            "911.45c5e9651cf41e04.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "9609.00dc75589cf98584.js",
+            "9633.b9cbff8e2c9ee274.js"
           ]
         },
         "css": {
@@ -656,14 +656,14 @@
     {
       "id": "SHOGunGISClient:ol/Overlay",
       "name": "ol/Overlay",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6724.096dab4a0df9cae3.js",
-            "7967.cd074f888053458b.js"
+            "6724.bda52558d5ed7566.js",
+            "7967.574703937877b074.js"
           ]
         },
         "css": {
@@ -676,16 +676,16 @@
     {
       "id": "SHOGunGISClient:ol/TileState",
       "name": "ol/TileState",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6178.332c2252800236fb.js",
+            "6178.145fe22320fee776.js",
             "8055.53842a57360703d3.js",
-            "8559.543c602b8da8bcbf.js",
-            "940.b0f33ff32f167eed.js",
+            "8559.b1bd42c256db4e2f.js",
+            "940.cbe1be0e2fbe2c58.js",
             "9965.edb6122962befbd4.js"
           ]
         },
@@ -699,8 +699,8 @@
     {
       "id": "SHOGunGISClient:ol/View",
       "name": "ol/View",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -718,15 +718,15 @@
     {
       "id": "SHOGunGISClient:ol/control/MousePosition",
       "name": "ol/control/MousePosition",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1313.3d19a3e35b18017c.js",
-            "3694.a33b4172a40d2f84.js",
-            "6431.eabbd81bafab4427.js"
+            "1313.edce7c6b91f10c6c.js",
+            "3694.13a5f21d20d9a28f.js",
+            "6431.ee214fdcc1c2727c.js"
           ]
         },
         "css": {
@@ -739,13 +739,13 @@
     {
       "id": "SHOGunGISClient:ol/control/OverviewMap",
       "name": "ol/control/OverviewMap",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6724.096dab4a0df9cae3.js"
+            "6724.bda52558d5ed7566.js"
           ]
         },
         "css": {
@@ -758,15 +758,15 @@
     {
       "id": "SHOGunGISClient:ol/control/ScaleLine",
       "name": "ol/control/ScaleLine",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1973.36f18378088fd9df.js",
-            "4354.0b4789304114f48a.js",
-            "6431.eabbd81bafab4427.js"
+            "1973.d9894f9d5cc35947.js",
+            "4354.ce9f0632ada85207.js",
+            "6431.ee214fdcc1c2727c.js"
           ]
         },
         "css": {
@@ -779,13 +779,13 @@
     {
       "id": "SHOGunGISClient:ol/control",
       "name": "ol/control",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6431.eabbd81bafab4427.js"
+            "6431.ee214fdcc1c2727c.js"
           ]
         },
         "css": {
@@ -798,8 +798,8 @@
     {
       "id": "SHOGunGISClient:ol/coordinate",
       "name": "ol/coordinate",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -817,33 +817,33 @@
     {
       "id": "SHOGunGISClient:ol/easing",
       "name": "ol/easing",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1517.a767fb7fef9c4686.js",
-            "2320.2fe274d50db04de9.js",
-            "2785.67bec1f191d8b31f.js",
-            "325.767bb23cc02b6e3f.js",
-            "3292.d465859b566be1f2.js",
-            "3898.31d8353c8fee78c2.js",
-            "4140.73e95940a488cdae.js",
-            "5160.cb701ec19c92896c.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5269.af07cdddd9e6d878.js",
+            "1517.2b5aaf1d3388a47b.js",
+            "2320.c483823a546d06c9.js",
+            "2785.aee29f16e42a807c.js",
+            "325.2dd03fee4fa33edb.js",
+            "3292.6ee7878d4b19d23f.js",
+            "3898.2465e76717c64fa4.js",
+            "4140.12ec23049d2fe8c7.js",
+            "5160.400cbdc05f36ee86.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5269.becb614ce7e8c9fe.js",
             "5486.0718cdcb24ad6c73.js",
-            "6178.332c2252800236fb.js",
-            "6279.75a0641c5c2caf24.js",
-            "7086.91a08c9e72219add.js",
-            "7198.c5c45b928901457e.js",
-            "8559.543c602b8da8bcbf.js",
-            "8660.8807fed778a050ef.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "940.b0f33ff32f167eed.js",
-            "9633.a468602f3d681237.js",
+            "6178.145fe22320fee776.js",
+            "6279.60ecb84a260c765f.js",
+            "7086.24302d5d8c1863e4.js",
+            "7198.a45655cc09b6ecca.js",
+            "8559.b1bd42c256db4e2f.js",
+            "8660.d412c9697def90f0.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "940.cbe1be0e2fbe2c58.js",
+            "9633.b9cbff8e2c9ee274.js",
             "9901.20b714c45608e9ac.js",
             "9965.edb6122962befbd4.js"
           ]
@@ -858,71 +858,71 @@
     {
       "id": "SHOGunGISClient:ol/events/Event",
       "name": "ol/events/Event",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1517.a767fb7fef9c4686.js",
+            "1517.2b5aaf1d3388a47b.js",
             "1758.2fc323baa03b63d7.js",
-            "2320.2fe274d50db04de9.js",
-            "2452.6fc63d881bf68439.js",
-            "2785.67bec1f191d8b31f.js",
-            "3010.1e5fefaca185800b.js",
-            "3193.756523caaac9291e.js",
-            "325.767bb23cc02b6e3f.js",
-            "3292.d465859b566be1f2.js",
-            "336.565a6f2f042a6213.js",
-            "3395.506389c5762cfa4d.js",
-            "3414.53ecccaba583ba7d.js",
-            "3416.b4bcb2bb7fc193ba.js",
-            "3618.af94c6b5f8f630ce.js",
-            "3669.f6b5e2a27a3d14c4.js",
-            "3694.a33b4172a40d2f84.js",
-            "3898.31d8353c8fee78c2.js",
-            "401.b656bbb04b1d78f5.js",
-            "4140.73e95940a488cdae.js",
-            "4354.0b4789304114f48a.js",
-            "4497.cd1c2746a17237ab.js",
-            "4780.897752f9b44c556d.js",
-            "484.c9258d444adb9d04.js",
-            "5160.cb701ec19c92896c.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5269.af07cdddd9e6d878.js",
-            "533.7acb6d9fd672f6ab.js",
+            "2320.c483823a546d06c9.js",
+            "2452.5b33b362f8255dd5.js",
+            "2785.aee29f16e42a807c.js",
+            "3010.b9987db4a316088a.js",
+            "3193.da6d18e8d71ebce0.js",
+            "325.2dd03fee4fa33edb.js",
+            "3292.6ee7878d4b19d23f.js",
+            "336.62c20ddfa6e6a074.js",
+            "3395.5c42c250a8337ea0.js",
+            "3414.ff68eaf99b997da1.js",
+            "3416.37b586358ab14bc3.js",
+            "3618.9e44dbafa8498d35.js",
+            "3669.67a4460a7f98f9b9.js",
+            "3694.13a5f21d20d9a28f.js",
+            "3898.2465e76717c64fa4.js",
+            "401.6d7828ef1ec10839.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4354.ce9f0632ada85207.js",
+            "4497.28137169951f6c8f.js",
+            "4780.8f86153b73c6ad05.js",
+            "484.b1d63c3c25e12a56.js",
+            "5160.400cbdc05f36ee86.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5269.becb614ce7e8c9fe.js",
+            "533.cf8de073502d1664.js",
             "5543.e26ed84b7228a0b8.js",
-            "5574.3eeebbc3710f4038.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "5765.70d3071c4f4b78f1.js",
-            "6050.f6f1f924859931b0.js",
-            "6178.332c2252800236fb.js",
-            "6279.75a0641c5c2caf24.js",
-            "7086.91a08c9e72219add.js",
-            "7162.c9b094f524cdbe80.js",
-            "7198.c5c45b928901457e.js",
-            "7322.3b1c68192dca0364.js",
+            "5574.2e6aa482bc0333de.js",
+            "5624.604422254d65c65a.js",
+            "5765.3ef15fea536fc08e.js",
+            "6050.f2f0b8686ad7bb2f.js",
+            "6178.145fe22320fee776.js",
+            "6279.60ecb84a260c765f.js",
+            "7086.24302d5d8c1863e4.js",
+            "7162.86145a29ee7d64b5.js",
+            "7198.a45655cc09b6ecca.js",
+            "7322.b5b83eae4ddb0981.js",
             "7356.e61d997eb4094b6d.js",
             "7663.04e4e00c91cd9fc9.js",
-            "7955.2cbe9033cd6af806.js",
-            "7967.cd074f888053458b.js",
-            "8072.78717c7aa6af8726.js",
-            "8073.711254b59c5f3047.js",
-            "812.637adf77b34ec734.js",
-            "8417.ca6f56a9b0cb1b06.js",
-            "8431.013e27d0cb46f49f.js",
-            "8433.e26fbddba3d09809.js",
-            "8559.543c602b8da8bcbf.js",
-            "8660.8807fed778a050ef.js",
-            "8697.0ca363f233f7779e.js",
-            "9040.985c6b8d03c6dc5d.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "940.b0f33ff32f167eed.js",
-            "9584.f3db6a00e17c3725.js",
-            "9609.6bd579513a620eaa.js",
-            "9633.a468602f3d681237.js",
-            "967.72ace0ca35778615.js",
+            "7955.255894670e1db50c.js",
+            "7967.574703937877b074.js",
+            "8072.ac3a5b4b841e47ae.js",
+            "8073.6a74063aabb62820.js",
+            "812.1d907f35b258166e.js",
+            "8417.215a80be19dfa8b3.js",
+            "8431.16db381a5eeb870b.js",
+            "8433.6ec63c3a43c0c006.js",
+            "8559.b1bd42c256db4e2f.js",
+            "8660.d412c9697def90f0.js",
+            "8697.e660de35479097d9.js",
+            "9040.20c0cfc27ddbc763.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "940.cbe1be0e2fbe2c58.js",
+            "9584.ab3358591947b360.js",
+            "9609.00dc75589cf98584.js",
+            "9633.b9cbff8e2c9ee274.js",
+            "967.dc2b6780744b6d4d.js",
             "9901.20b714c45608e9ac.js",
             "9965.edb6122962befbd4.js"
           ]
@@ -937,72 +937,72 @@
     {
       "id": "SHOGunGISClient:ol/events/EventType",
       "name": "ol/events/EventType",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1517.a767fb7fef9c4686.js",
+            "1517.2b5aaf1d3388a47b.js",
             "1758.2fc323baa03b63d7.js",
-            "2320.2fe274d50db04de9.js",
-            "2452.6fc63d881bf68439.js",
-            "2785.67bec1f191d8b31f.js",
-            "3010.1e5fefaca185800b.js",
-            "3193.756523caaac9291e.js",
-            "325.767bb23cc02b6e3f.js",
-            "3292.d465859b566be1f2.js",
-            "336.565a6f2f042a6213.js",
-            "3395.506389c5762cfa4d.js",
-            "3414.53ecccaba583ba7d.js",
-            "3416.b4bcb2bb7fc193ba.js",
-            "3618.af94c6b5f8f630ce.js",
-            "3669.f6b5e2a27a3d14c4.js",
-            "3694.a33b4172a40d2f84.js",
-            "3898.31d8353c8fee78c2.js",
-            "401.b656bbb04b1d78f5.js",
-            "4140.73e95940a488cdae.js",
-            "4354.0b4789304114f48a.js",
-            "4497.cd1c2746a17237ab.js",
-            "4780.897752f9b44c556d.js",
-            "484.c9258d444adb9d04.js",
-            "5160.cb701ec19c92896c.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5269.af07cdddd9e6d878.js",
-            "533.7acb6d9fd672f6ab.js",
-            "5574.3eeebbc3710f4038.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "5765.70d3071c4f4b78f1.js",
-            "6050.f6f1f924859931b0.js",
-            "6178.332c2252800236fb.js",
-            "6279.75a0641c5c2caf24.js",
+            "2320.c483823a546d06c9.js",
+            "2452.5b33b362f8255dd5.js",
+            "2785.aee29f16e42a807c.js",
+            "3010.b9987db4a316088a.js",
+            "3193.da6d18e8d71ebce0.js",
+            "325.2dd03fee4fa33edb.js",
+            "3292.6ee7878d4b19d23f.js",
+            "336.62c20ddfa6e6a074.js",
+            "3395.5c42c250a8337ea0.js",
+            "3414.ff68eaf99b997da1.js",
+            "3416.37b586358ab14bc3.js",
+            "3618.9e44dbafa8498d35.js",
+            "3669.67a4460a7f98f9b9.js",
+            "3694.13a5f21d20d9a28f.js",
+            "3898.2465e76717c64fa4.js",
+            "401.6d7828ef1ec10839.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4354.ce9f0632ada85207.js",
+            "4497.28137169951f6c8f.js",
+            "4780.8f86153b73c6ad05.js",
+            "484.b1d63c3c25e12a56.js",
+            "5160.400cbdc05f36ee86.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5269.becb614ce7e8c9fe.js",
+            "533.cf8de073502d1664.js",
+            "5574.2e6aa482bc0333de.js",
+            "5624.604422254d65c65a.js",
+            "5765.3ef15fea536fc08e.js",
+            "6050.f2f0b8686ad7bb2f.js",
+            "6178.145fe22320fee776.js",
+            "6279.60ecb84a260c765f.js",
             "6847.5a068793341bd920.js",
-            "7086.91a08c9e72219add.js",
-            "7162.c9b094f524cdbe80.js",
-            "7198.c5c45b928901457e.js",
-            "7322.3b1c68192dca0364.js",
+            "7086.24302d5d8c1863e4.js",
+            "7162.86145a29ee7d64b5.js",
+            "7198.a45655cc09b6ecca.js",
+            "7322.b5b83eae4ddb0981.js",
             "7356.e61d997eb4094b6d.js",
             "7663.04e4e00c91cd9fc9.js",
-            "7955.2cbe9033cd6af806.js",
-            "7967.cd074f888053458b.js",
+            "7955.255894670e1db50c.js",
+            "7967.574703937877b074.js",
             "8064.228b6dbd7eddb930.js",
-            "8072.78717c7aa6af8726.js",
-            "8073.711254b59c5f3047.js",
-            "812.637adf77b34ec734.js",
-            "8417.ca6f56a9b0cb1b06.js",
-            "8431.013e27d0cb46f49f.js",
-            "8433.e26fbddba3d09809.js",
-            "8559.543c602b8da8bcbf.js",
-            "8660.8807fed778a050ef.js",
-            "8697.0ca363f233f7779e.js",
-            "9040.985c6b8d03c6dc5d.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "940.b0f33ff32f167eed.js",
-            "9584.f3db6a00e17c3725.js",
-            "9609.6bd579513a620eaa.js",
-            "9633.a468602f3d681237.js",
-            "967.72ace0ca35778615.js",
+            "8072.ac3a5b4b841e47ae.js",
+            "8073.6a74063aabb62820.js",
+            "812.1d907f35b258166e.js",
+            "8417.215a80be19dfa8b3.js",
+            "8431.16db381a5eeb870b.js",
+            "8433.6ec63c3a43c0c006.js",
+            "8559.b1bd42c256db4e2f.js",
+            "8660.d412c9697def90f0.js",
+            "8697.e660de35479097d9.js",
+            "9040.20c0cfc27ddbc763.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "940.cbe1be0e2fbe2c58.js",
+            "9584.ab3358591947b360.js",
+            "9609.00dc75589cf98584.js",
+            "9633.b9cbff8e2c9ee274.js",
+            "967.dc2b6780744b6d4d.js",
             "9901.20b714c45608e9ac.js",
             "9965.edb6122962befbd4.js"
           ]
@@ -1017,28 +1017,28 @@
     {
       "id": "SHOGunGISClient:ol/events/condition",
       "name": "ol/events/condition",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1749.fd16132b7aefa381.js",
-            "2014.d7dc2ce63bc42045.js",
-            "2244.5a0babc2170e9ced.js",
-            "2320.2fe274d50db04de9.js",
-            "3300.ad7ea3be9b492d79.js",
-            "4140.73e95940a488cdae.js",
-            "4817.94d54b5faa2cff09.js",
+            "1749.1f44fb5a0f746b35.js",
+            "2014.a08b4fab97fdd21a.js",
+            "2244.983fdc1d88b2b099.js",
+            "2320.c483823a546d06c9.js",
+            "3300.686d4983d59d74d5.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4817.7101b0e9a5a7fa8d.js",
             "5086.1ac155d5113086f9.js",
-            "5205.07a294ffcece2b75.js",
-            "6809.5f071555efdada98.js",
-            "7198.c5c45b928901457e.js",
-            "7558.c652659fa5e5a6b2.js",
+            "5205.145644f999d2ef99.js",
+            "6809.f394803fe55bfbab.js",
+            "7198.a45655cc09b6ecca.js",
+            "7558.4bc0072be8cb6c2c.js",
             "8064.228b6dbd7eddb930.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "9633.a468602f3d681237.js"
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "9633.b9cbff8e2c9ee274.js"
           ]
         },
         "css": {
@@ -1051,8 +1051,8 @@
     {
       "id": "SHOGunGISClient:ol/extent",
       "name": "ol/extent",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1070,8 +1070,8 @@
     {
       "id": "SHOGunGISClient:ol/format/GML2",
       "name": "ol/format/GML2",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1089,15 +1089,15 @@
     {
       "id": "SHOGunGISClient:ol/format/GML32",
       "name": "ol/format/GML32",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "7842.a897d658ea4aca3c.js",
             "9939.3412cc850b97ca68.js",
-            "997.1c156eb9060ea0f4.js"
+            "997.5a1fbef734ff11e6.js"
           ]
         },
         "css": {
@@ -1110,8 +1110,8 @@
     {
       "id": "SHOGunGISClient:ol/format/GML3",
       "name": "ol/format/GML3",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1129,8 +1129,8 @@
     {
       "id": "SHOGunGISClient:ol/format/GPX",
       "name": "ol/format/GPX",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1148,13 +1148,13 @@
     {
       "id": "SHOGunGISClient:ol/format/GeoJSON",
       "name": "ol/format/GeoJSON",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "9584.f3db6a00e17c3725.js"
+            "9584.ab3358591947b360.js"
           ]
         },
         "css": {
@@ -1167,8 +1167,8 @@
     {
       "id": "SHOGunGISClient:ol/format/KML",
       "name": "ol/format/KML",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1186,13 +1186,13 @@
     {
       "id": "SHOGunGISClient:ol/format/MVT",
       "name": "ol/format/MVT",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "7345.c7d8de8b4277d12a.js"
+            "7345.7b4e86da0ca15058.js"
           ]
         },
         "css": {
@@ -1205,8 +1205,8 @@
     {
       "id": "SHOGunGISClient:ol/format/WFS",
       "name": "ol/format/WFS",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1224,8 +1224,8 @@
     {
       "id": "SHOGunGISClient:ol/format/WKB",
       "name": "ol/format/WKB",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1243,8 +1243,8 @@
     {
       "id": "SHOGunGISClient:ol/format/WKT",
       "name": "ol/format/WKT",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1262,14 +1262,14 @@
     {
       "id": "SHOGunGISClient:ol/format/WMSGetFeatureInfo",
       "name": "ol/format/WMSGetFeatureInfo",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "1808.75bde93b2e871482.js",
-            "4180.55a2806fd874c14c.js"
+            "4180.8e835458497a3449.js"
           ]
         },
         "css": {
@@ -1282,8 +1282,8 @@
     {
       "id": "SHOGunGISClient:ol/format/WMTSCapabilities",
       "name": "ol/format/WMTSCapabilities",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1301,8 +1301,8 @@
     {
       "id": "SHOGunGISClient:ol/format/filter/Filter",
       "name": "ol/format/filter/Filter",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1321,8 +1321,8 @@
     {
       "id": "SHOGunGISClient:ol/format/filter",
       "name": "ol/format/filter",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1340,72 +1340,72 @@
     {
       "id": "SHOGunGISClient:ol/functions",
       "name": "ol/functions",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1517.a767fb7fef9c4686.js",
+            "1517.2b5aaf1d3388a47b.js",
             "1758.2fc323baa03b63d7.js",
-            "2320.2fe274d50db04de9.js",
-            "2452.6fc63d881bf68439.js",
-            "2785.67bec1f191d8b31f.js",
-            "3010.1e5fefaca185800b.js",
-            "3193.756523caaac9291e.js",
-            "325.767bb23cc02b6e3f.js",
-            "3292.d465859b566be1f2.js",
-            "336.565a6f2f042a6213.js",
-            "3395.506389c5762cfa4d.js",
-            "3414.53ecccaba583ba7d.js",
-            "3416.b4bcb2bb7fc193ba.js",
-            "3618.af94c6b5f8f630ce.js",
-            "3669.f6b5e2a27a3d14c4.js",
-            "3694.a33b4172a40d2f84.js",
-            "3898.31d8353c8fee78c2.js",
-            "401.b656bbb04b1d78f5.js",
-            "4140.73e95940a488cdae.js",
-            "4354.0b4789304114f48a.js",
-            "4497.cd1c2746a17237ab.js",
-            "4780.897752f9b44c556d.js",
-            "484.c9258d444adb9d04.js",
-            "5160.cb701ec19c92896c.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5269.af07cdddd9e6d878.js",
-            "533.7acb6d9fd672f6ab.js",
-            "5574.3eeebbc3710f4038.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "5765.70d3071c4f4b78f1.js",
+            "2320.c483823a546d06c9.js",
+            "2452.5b33b362f8255dd5.js",
+            "2785.aee29f16e42a807c.js",
+            "3010.b9987db4a316088a.js",
+            "3193.da6d18e8d71ebce0.js",
+            "325.2dd03fee4fa33edb.js",
+            "3292.6ee7878d4b19d23f.js",
+            "336.62c20ddfa6e6a074.js",
+            "3395.5c42c250a8337ea0.js",
+            "3414.ff68eaf99b997da1.js",
+            "3416.37b586358ab14bc3.js",
+            "3618.9e44dbafa8498d35.js",
+            "3669.67a4460a7f98f9b9.js",
+            "3694.13a5f21d20d9a28f.js",
+            "3898.2465e76717c64fa4.js",
+            "401.6d7828ef1ec10839.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4354.ce9f0632ada85207.js",
+            "4497.28137169951f6c8f.js",
+            "4780.8f86153b73c6ad05.js",
+            "484.b1d63c3c25e12a56.js",
+            "5160.400cbdc05f36ee86.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5269.becb614ce7e8c9fe.js",
+            "533.cf8de073502d1664.js",
+            "5574.2e6aa482bc0333de.js",
+            "5624.604422254d65c65a.js",
+            "5765.3ef15fea536fc08e.js",
             "5964.6c228a7960ae18a9.js",
-            "6050.f6f1f924859931b0.js",
-            "6178.332c2252800236fb.js",
-            "6279.75a0641c5c2caf24.js",
-            "7086.91a08c9e72219add.js",
-            "7162.c9b094f524cdbe80.js",
-            "7198.c5c45b928901457e.js",
-            "7322.3b1c68192dca0364.js",
+            "6050.f2f0b8686ad7bb2f.js",
+            "6178.145fe22320fee776.js",
+            "6279.60ecb84a260c765f.js",
+            "7086.24302d5d8c1863e4.js",
+            "7162.86145a29ee7d64b5.js",
+            "7198.a45655cc09b6ecca.js",
+            "7322.b5b83eae4ddb0981.js",
             "7356.e61d997eb4094b6d.js",
             "7663.04e4e00c91cd9fc9.js",
-            "7955.2cbe9033cd6af806.js",
-            "7967.cd074f888053458b.js",
+            "7955.255894670e1db50c.js",
+            "7967.574703937877b074.js",
             "8064.228b6dbd7eddb930.js",
-            "8072.78717c7aa6af8726.js",
-            "8073.711254b59c5f3047.js",
-            "812.637adf77b34ec734.js",
-            "8417.ca6f56a9b0cb1b06.js",
-            "8431.013e27d0cb46f49f.js",
-            "8433.e26fbddba3d09809.js",
-            "8559.543c602b8da8bcbf.js",
-            "8660.8807fed778a050ef.js",
-            "8697.0ca363f233f7779e.js",
-            "9040.985c6b8d03c6dc5d.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "940.b0f33ff32f167eed.js",
-            "9584.f3db6a00e17c3725.js",
-            "9609.6bd579513a620eaa.js",
-            "9633.a468602f3d681237.js",
-            "967.72ace0ca35778615.js",
+            "8072.ac3a5b4b841e47ae.js",
+            "8073.6a74063aabb62820.js",
+            "812.1d907f35b258166e.js",
+            "8417.215a80be19dfa8b3.js",
+            "8431.16db381a5eeb870b.js",
+            "8433.6ec63c3a43c0c006.js",
+            "8559.b1bd42c256db4e2f.js",
+            "8660.d412c9697def90f0.js",
+            "8697.e660de35479097d9.js",
+            "9040.20c0cfc27ddbc763.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "940.cbe1be0e2fbe2c58.js",
+            "9584.ab3358591947b360.js",
+            "9609.00dc75589cf98584.js",
+            "9633.b9cbff8e2c9ee274.js",
+            "967.dc2b6780744b6d4d.js",
             "9901.20b714c45608e9ac.js",
             "9965.edb6122962befbd4.js"
           ]
@@ -1420,14 +1420,14 @@
     {
       "id": "SHOGunGISClient:ol/geom/Circle",
       "name": "ol/geom/Circle",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "6872.6ad55a74068866fe.js",
-            "7162.c9b094f524cdbe80.js"
+            "7162.86145a29ee7d64b5.js"
           ]
         },
         "css": {
@@ -1440,16 +1440,16 @@
     {
       "id": "SHOGunGISClient:ol/geom/Geometry",
       "name": "ol/geom/Geometry",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "484.c9258d444adb9d04.js",
+            "484.b1d63c3c25e12a56.js",
             "7384.22379b57c637ab00.js",
             "8150.0a9acabdeeb7910a.js",
-            "8433.e26fbddba3d09809.js"
+            "8433.6ec63c3a43c0c006.js"
           ]
         },
         "css": {
@@ -1462,15 +1462,15 @@
     {
       "id": "SHOGunGISClient:ol/geom/GeometryCollection",
       "name": "ol/geom/GeometryCollection",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1749.fd16132b7aefa381.js",
-            "484.c9258d444adb9d04.js",
-            "6183.52727914f595e1ce.js"
+            "1749.1f44fb5a0f746b35.js",
+            "484.b1d63c3c25e12a56.js",
+            "6183.93d8edc2fcb34066.js"
           ]
         },
         "css": {
@@ -1483,14 +1483,14 @@
     {
       "id": "SHOGunGISClient:ol/geom/LineString",
       "name": "ol/geom/LineString",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "8858.c68a0db590c86154.js",
-            "967.72ace0ca35778615.js"
+            "967.dc2b6780744b6d4d.js"
           ]
         },
         "css": {
@@ -1503,8 +1503,8 @@
     {
       "id": "SHOGunGISClient:ol/geom/MultiLineString",
       "name": "ol/geom/MultiLineString",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1522,16 +1522,16 @@
     {
       "id": "SHOGunGISClient:ol/geom/MultiPoint",
       "name": "ol/geom/MultiPoint",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "1758.2fc323baa03b63d7.js",
-            "3594.f041d63e5f9b404e.js",
-            "401.b656bbb04b1d78f5.js",
-            "8417.ca6f56a9b0cb1b06.js"
+            "3594.7d0342b24421e3c4.js",
+            "401.6d7828ef1ec10839.js",
+            "8417.215a80be19dfa8b3.js"
           ]
         },
         "css": {
@@ -1544,14 +1544,14 @@
     {
       "id": "SHOGunGISClient:ol/geom/MultiPolygon",
       "name": "ol/geom/MultiPolygon",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3594.f041d63e5f9b404e.js",
-            "401.b656bbb04b1d78f5.js"
+            "3594.7d0342b24421e3c4.js",
+            "401.6d7828ef1ec10839.js"
           ]
         },
         "css": {
@@ -1564,16 +1564,16 @@
     {
       "id": "SHOGunGISClient:ol/geom/Point",
       "name": "ol/geom/Point",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "1758.2fc323baa03b63d7.js",
             "3262.9b9a870646da0b61.js",
-            "7322.3b1c68192dca0364.js",
-            "8417.ca6f56a9b0cb1b06.js"
+            "7322.b5b83eae4ddb0981.js",
+            "8417.215a80be19dfa8b3.js"
           ]
         },
         "css": {
@@ -1586,8 +1586,8 @@
     {
       "id": "SHOGunGISClient:ol/geom/Polygon",
       "name": "ol/geom/Polygon",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1605,40 +1605,40 @@
     {
       "id": "SHOGunGISClient:ol/has",
       "name": "ol/has",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "1167.8d4d4786d73355c6.js",
-            "2014.d7dc2ce63bc42045.js",
-            "2320.2fe274d50db04de9.js",
-            "2785.67bec1f191d8b31f.js",
-            "325.767bb23cc02b6e3f.js",
-            "3300.ad7ea3be9b492d79.js",
-            "4007.83795db277222526.js",
-            "4140.73e95940a488cdae.js",
+            "2014.a08b4fab97fdd21a.js",
+            "2320.c483823a546d06c9.js",
+            "2785.aee29f16e42a807c.js",
+            "325.2dd03fee4fa33edb.js",
+            "3300.686d4983d59d74d5.js",
+            "4007.3e155ba425f7142c.js",
+            "4140.12ec23049d2fe8c7.js",
             "4615.73eeada0a5a56294.js",
-            "4817.94d54b5faa2cff09.js",
-            "5103.3e45b55315116955.js",
-            "5160.cb701ec19c92896c.js",
-            "5205.07a294ffcece2b75.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "5691.7ae275d886a02f6c.js",
-            "6388.a4a133d0d821e257.js",
-            "6809.5f071555efdada98.js",
+            "4817.7101b0e9a5a7fa8d.js",
+            "5103.6abbd93005a433d5.js",
+            "5160.400cbdc05f36ee86.js",
+            "5205.145644f999d2ef99.js",
+            "5624.604422254d65c65a.js",
+            "5691.ef1b178e01c3800d.js",
+            "6388.74a0d491888cbd45.js",
+            "6809.f394803fe55bfbab.js",
             "6996.f3b3565473ac1119.js",
-            "7198.c5c45b928901457e.js",
+            "7198.a45655cc09b6ecca.js",
             "7426.b8ea6c54a53f42db.js",
-            "7558.c652659fa5e5a6b2.js",
-            "7967.cd074f888053458b.js",
+            "7558.4bc0072be8cb6c2c.js",
+            "7967.574703937877b074.js",
             "8064.228b6dbd7eddb930.js",
-            "8072.78717c7aa6af8726.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "9292.70b996a3ad575138.js",
-            "9633.a468602f3d681237.js"
+            "8072.ac3a5b4b841e47ae.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "9292.43bb347a9ae951a6.js",
+            "9633.b9cbff8e2c9ee274.js"
           ]
         },
         "css": {
@@ -1651,13 +1651,13 @@
     {
       "id": "SHOGunGISClient:ol/interaction/DblClickDragZoom",
       "name": "ol/interaction/DblClickDragZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "827.4a5566b4ca6d6c73.js"
+            "827.858691366476d272.js"
           ]
         },
         "css": {
@@ -1670,15 +1670,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/DoubleClickZoom",
       "name": "ol/interaction/DoubleClickZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5269.af07cdddd9e6d878.js",
-            "7650.f7f26aed9ab1f8eb.js",
-            "8960.91dd316dca84ee7b.js"
+            "5269.becb614ce7e8c9fe.js",
+            "7650.c549f11f3a6d463c.js",
+            "8960.c28090bdccce78a7.js"
           ]
         },
         "css": {
@@ -1691,15 +1691,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/DragPan",
       "name": "ol/interaction/DragPan",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6809.5f071555efdada98.js",
-            "8960.91dd316dca84ee7b.js",
-            "9190.9d6d2af5b22074c6.js"
+            "6809.f394803fe55bfbab.js",
+            "8960.c28090bdccce78a7.js",
+            "9190.3e4fad34c274bf80.js"
           ]
         },
         "css": {
@@ -1712,15 +1712,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/DragRotate",
       "name": "ol/interaction/DragRotate",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "4817.94d54b5faa2cff09.js",
-            "7198.c5c45b928901457e.js",
-            "8960.91dd316dca84ee7b.js"
+            "4817.7101b0e9a5a7fa8d.js",
+            "7198.a45655cc09b6ecca.js",
+            "8960.c28090bdccce78a7.js"
           ]
         },
         "css": {
@@ -1733,13 +1733,13 @@
     {
       "id": "SHOGunGISClient:ol/interaction/DragRotateAndZoom",
       "name": "ol/interaction/DragRotateAndZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5205.07a294ffcece2b75.js"
+            "5205.145644f999d2ef99.js"
           ]
         },
         "css": {
@@ -1752,8 +1752,8 @@
     {
       "id": "SHOGunGISClient:ol/interaction/DragZoom",
       "name": "ol/interaction/DragZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1771,8 +1771,8 @@
     {
       "id": "SHOGunGISClient:ol/interaction/Draw",
       "name": "ol/interaction/Draw",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -1790,15 +1790,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/KeyboardPan",
       "name": "ol/interaction/KeyboardPan",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2014.d7dc2ce63bc42045.js",
-            "8960.91dd316dca84ee7b.js",
-            "9633.a468602f3d681237.js"
+            "2014.a08b4fab97fdd21a.js",
+            "8960.c28090bdccce78a7.js",
+            "9633.b9cbff8e2c9ee274.js"
           ]
         },
         "css": {
@@ -1811,15 +1811,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/KeyboardZoom",
       "name": "ol/interaction/KeyboardZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3300.ad7ea3be9b492d79.js",
-            "8960.91dd316dca84ee7b.js",
-            "919.61ec98be77e39716.js"
+            "3300.686d4983d59d74d5.js",
+            "8960.c28090bdccce78a7.js",
+            "919.38a46616982b5d17.js"
           ]
         },
         "css": {
@@ -1832,13 +1832,13 @@
     {
       "id": "SHOGunGISClient:ol/interaction/Modify",
       "name": "ol/interaction/Modify",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6804.b9adccfef0d0a7bc.js"
+            "6804.4d81f60b34ed82d8.js"
           ]
         },
         "css": {
@@ -1851,15 +1851,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/MouseWheelZoom",
       "name": "ol/interaction/MouseWheelZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2320.2fe274d50db04de9.js",
-            "7558.c652659fa5e5a6b2.js",
-            "8960.91dd316dca84ee7b.js"
+            "2320.c483823a546d06c9.js",
+            "7558.4bc0072be8cb6c2c.js",
+            "8960.c28090bdccce78a7.js"
           ]
         },
         "css": {
@@ -1872,15 +1872,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/PinchRotate",
       "name": "ol/interaction/PinchRotate",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3292.d465859b566be1f2.js",
-            "8960.91dd316dca84ee7b.js",
-            "911.679ffa7537e14716.js"
+            "3292.6ee7878d4b19d23f.js",
+            "8960.c28090bdccce78a7.js",
+            "911.45c5e9651cf41e04.js"
           ]
         },
         "css": {
@@ -1893,15 +1893,15 @@
     {
       "id": "SHOGunGISClient:ol/interaction/PinchZoom",
       "name": "ol/interaction/PinchZoom",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2783.c4fc606aaa2e7653.js",
-            "5164.44962d28bb8bd4e8.js",
-            "8960.91dd316dca84ee7b.js"
+            "2783.c23628b9cf33ad20.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "8960.c28090bdccce78a7.js"
           ]
         },
         "css": {
@@ -1914,26 +1914,26 @@
     {
       "id": "SHOGunGISClient:ol/interaction/Pointer",
       "name": "ol/interaction/Pointer",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1749.fd16132b7aefa381.js",
-            "2783.c4fc606aaa2e7653.js",
-            "3292.d465859b566be1f2.js",
-            "4140.73e95940a488cdae.js",
-            "4705.8697b68706942301.js",
-            "4817.94d54b5faa2cff09.js",
+            "1749.1f44fb5a0f746b35.js",
+            "2783.c23628b9cf33ad20.js",
+            "3292.6ee7878d4b19d23f.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4705.a4f4bb31c412e383.js",
+            "4817.7101b0e9a5a7fa8d.js",
             "5086.1ac155d5113086f9.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5205.07a294ffcece2b75.js",
-            "6809.5f071555efdada98.js",
-            "7086.91a08c9e72219add.js",
-            "7198.c5c45b928901457e.js",
-            "911.679ffa7537e14716.js",
-            "9190.9d6d2af5b22074c6.js"
+            "5164.e9874cfb3a9e03c7.js",
+            "5205.145644f999d2ef99.js",
+            "6809.f394803fe55bfbab.js",
+            "7086.24302d5d8c1863e4.js",
+            "7198.a45655cc09b6ecca.js",
+            "911.45c5e9651cf41e04.js",
+            "9190.3e4fad34c274bf80.js"
           ]
         },
         "css": {
@@ -1946,13 +1946,13 @@
     {
       "id": "SHOGunGISClient:ol/interaction/Select",
       "name": "ol/interaction/Select",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2244.5a0babc2170e9ced.js"
+            "2244.983fdc1d88b2b099.js"
           ]
         },
         "css": {
@@ -1965,13 +1965,13 @@
     {
       "id": "SHOGunGISClient:ol/interaction/Translate",
       "name": "ol/interaction/Translate",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "4140.73e95940a488cdae.js"
+            "4140.12ec23049d2fe8c7.js"
           ]
         },
         "css": {
@@ -1984,13 +1984,13 @@
     {
       "id": "SHOGunGISClient:ol/interaction/defaults",
       "name": "ol/interaction/defaults",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "8960.91dd316dca84ee7b.js"
+            "8960.c28090bdccce78a7.js"
           ]
         },
         "css": {
@@ -2003,14 +2003,14 @@
     {
       "id": "SHOGunGISClient:ol/layer/Group",
       "name": "ol/layer/Group",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "4780.897752f9b44c556d.js",
-            "8296.a44f1d7ad0b94241.js"
+            "4780.8f86153b73c6ad05.js",
+            "8296.e22d450072a37baa.js"
           ]
         },
         "css": {
@@ -2023,8 +2023,8 @@
     {
       "id": "SHOGunGISClient:ol/layer/Image",
       "name": "ol/layer/Image",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2042,13 +2042,13 @@
     {
       "id": "SHOGunGISClient:ol/layer/Layer",
       "name": "ol/layer/Layer",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "4486.20a749c418b9e78a.js"
+            "4486.ad7671e4d269d499.js"
           ]
         },
         "css": {
@@ -2061,15 +2061,15 @@
     {
       "id": "SHOGunGISClient:ol/layer/Tile",
       "name": "ol/layer/Tile",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "4007.83795db277222526.js",
+            "4007.3e155ba425f7142c.js",
             "6350.aaaa123e9087e96b.js",
-            "6388.a4a133d0d821e257.js"
+            "6388.74a0d491888cbd45.js"
           ]
         },
         "css": {
@@ -2082,8 +2082,8 @@
     {
       "id": "SHOGunGISClient:ol/layer/Vector",
       "name": "ol/layer/Vector",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2101,13 +2101,13 @@
     {
       "id": "SHOGunGISClient:ol/layer/VectorTile",
       "name": "ol/layer/VectorTile",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3808.9ef296cd1423ec1a.js"
+            "3808.46958e3f93d6e80a.js"
           ]
         },
         "css": {
@@ -2120,13 +2120,13 @@
     {
       "id": "SHOGunGISClient:ol/layer/WebGLTile",
       "name": "ol/layer/WebGLTile",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "9292.70b996a3ad575138.js"
+            "9292.43bb347a9ae951a6.js"
           ]
         },
         "css": {
@@ -2139,13 +2139,13 @@
     {
       "id": "SHOGunGISClient:ol/loadingstrategy",
       "name": "ol/loadingstrategy",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5860.98126bff36045ef3.js",
+            "5860.683a4d60493e98d7.js",
             "6328.ae8a6c833490412e.js"
           ]
         },
@@ -2159,8 +2159,8 @@
     {
       "id": "SHOGunGISClient:ol/ol.css",
       "name": "ol/ol.css",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2181,8 +2181,8 @@
     {
       "id": "SHOGunGISClient:ol/proj/Units",
       "name": "ol/proj/Units",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2201,13 +2201,14 @@
     {
       "id": "SHOGunGISClient:ol/proj/proj4",
       "name": "ol/proj/proj4",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6914.bd454d36b7c22871.js"
+            "6914.bd454d36b7c22871.js",
+            "8265.5c7eef14cc6eafd4.js"
           ]
         },
         "css": {
@@ -2220,8 +2221,8 @@
     {
       "id": "SHOGunGISClient:ol/proj",
       "name": "ol/proj",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2239,13 +2240,13 @@
     {
       "id": "SHOGunGISClient:ol/render/Feature",
       "name": "ol/render/Feature",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3594.f041d63e5f9b404e.js"
+            "3594.7d0342b24421e3c4.js"
           ]
         },
         "css": {
@@ -2258,15 +2259,15 @@
     {
       "id": "SHOGunGISClient:ol/render/canvas",
       "name": "ol/render/canvas",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5691.7ae275d886a02f6c.js",
+            "5691.ef1b178e01c3800d.js",
             "6275.8feb84d154c43886.js",
-            "8072.78717c7aa6af8726.js"
+            "8072.ac3a5b4b841e47ae.js"
           ]
         },
         "css": {
@@ -2279,13 +2280,13 @@
     {
       "id": "SHOGunGISClient:ol/render",
       "name": "ol/render",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "8073.711254b59c5f3047.js"
+            "8073.6a74063aabb62820.js"
           ]
         },
         "css": {
@@ -2298,13 +2299,13 @@
     {
       "id": "SHOGunGISClient:ol/source/GeoTIFF",
       "name": "ol/source/GeoTIFF",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "8265.ee67a2f287d87d47.js"
+            "8265.5c7eef14cc6eafd4.js"
           ]
         },
         "css": {
@@ -2317,14 +2318,14 @@
     {
       "id": "SHOGunGISClient:ol/source/ImageWMS",
       "name": "ol/source/ImageWMS",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5624.1f810f6cadd6a7c8.js",
-            "9102.3dafe10238492afc.js"
+            "5624.604422254d65c65a.js",
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2337,15 +2338,15 @@
     {
       "id": "SHOGunGISClient:ol/source/OSM",
       "name": "ol/source/OSM",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "623.ad74ac88b6c01e5d.js",
-            "7031.ea9233cc1a475b17.js",
-            "9102.3dafe10238492afc.js"
+            "623.574007291da03540.js",
+            "7031.0a6d4c83486f2e91.js",
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2358,8 +2359,8 @@
     {
       "id": "SHOGunGISClient:ol/source/Raster",
       "name": "ol/source/Raster",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2377,16 +2378,16 @@
     {
       "id": "SHOGunGISClient:ol/source/Source",
       "name": "ol/source/Source",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1749.fd16132b7aefa381.js",
-            "3010.1e5fefaca185800b.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "629.f461f47bf4d30760.js",
+            "1749.1f44fb5a0f746b35.js",
+            "3010.b9987db4a316088a.js",
+            "5624.604422254d65c65a.js",
+            "629.04954ca6880fb6c4.js",
             "7426.b8ea6c54a53f42db.js",
             "7663.04e4e00c91cd9fc9.js"
           ]
@@ -2401,14 +2402,14 @@
     {
       "id": "SHOGunGISClient:ol/source/StadiaMaps",
       "name": "ol/source/StadiaMaps",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "623.ad74ac88b6c01e5d.js",
-            "9102.3dafe10238492afc.js"
+            "623.574007291da03540.js",
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2421,15 +2422,15 @@
     {
       "id": "SHOGunGISClient:ol/source/TileJSON",
       "name": "ol/source/TileJSON",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "460.6bbdbb40c1f456b6.js",
+            "460.c41e689920f83e37.js",
             "8079.da156ee32bed1f3b.js",
-            "9102.3dafe10238492afc.js"
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2442,8 +2443,8 @@
     {
       "id": "SHOGunGISClient:ol/source/TileWMS",
       "name": "ol/source/TileWMS",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2461,13 +2462,13 @@
     {
       "id": "SHOGunGISClient:ol/source/Vector",
       "name": "ol/source/Vector",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "5860.98126bff36045ef3.js"
+            "5860.683a4d60493e98d7.js"
           ]
         },
         "css": {
@@ -2480,13 +2481,13 @@
     {
       "id": "SHOGunGISClient:ol/source/VectorTile",
       "name": "ol/source/VectorTile",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "9332.5030f3bf2ef5ddf0.js"
+            "9332.b8ac46afb29cbcf6.js"
           ]
         },
         "css": {
@@ -2499,14 +2500,14 @@
     {
       "id": "SHOGunGISClient:ol/source/WMTS",
       "name": "ol/source/WMTS",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3021.e579e76c80fcd7b5.js",
-            "9102.3dafe10238492afc.js"
+            "3021.a714c2eede37c01b.js",
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2519,17 +2520,17 @@
     {
       "id": "SHOGunGISClient:ol/source/XYZ",
       "name": "ol/source/XYZ",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "4606.f9716b3e801dacd9.js",
-            "5889.ad7aa817b15fea16.js",
-            "623.ad74ac88b6c01e5d.js",
-            "7031.ea9233cc1a475b17.js",
-            "9102.3dafe10238492afc.js"
+            "5889.e533a3ea61019411.js",
+            "623.574007291da03540.js",
+            "7031.0a6d4c83486f2e91.js",
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2542,13 +2543,13 @@
     {
       "id": "SHOGunGISClient:ol/source",
       "name": "ol/source",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "9102.3dafe10238492afc.js"
+            "9102.5bd7671278492598.js"
           ]
         },
         "css": {
@@ -2561,8 +2562,8 @@
     {
       "id": "SHOGunGISClient:ol/sphere",
       "name": "ol/sphere",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2581,14 +2582,14 @@
     {
       "id": "SHOGunGISClient:ol/style/Circle",
       "name": "ol/style/Circle",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "7094.53c12a349f82ba25.js",
-            "9040.985c6b8d03c6dc5d.js"
+            "9040.20c0cfc27ddbc763.js"
           ]
         },
         "css": {
@@ -2601,14 +2602,14 @@
     {
       "id": "SHOGunGISClient:ol/style/Fill",
       "name": "ol/style/Fill",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3414.53ecccaba583ba7d.js",
-            "3416.b4bcb2bb7fc193ba.js",
+            "3414.ff68eaf99b997da1.js",
+            "3416.37b586358ab14bc3.js",
             "7094.53c12a349f82ba25.js"
           ]
         },
@@ -2622,15 +2623,15 @@
     {
       "id": "SHOGunGISClient:ol/style/Icon",
       "name": "ol/style/Icon",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "6957.95f8703f18f5e2ee.js",
             "7610.710d6b95f39b10e2.js",
-            "8697.0ca363f233f7779e.js"
+            "8697.e660de35479097d9.js"
           ]
         },
         "css": {
@@ -2643,15 +2644,15 @@
     {
       "id": "SHOGunGISClient:ol/style/Image",
       "name": "ol/style/Image",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "1104.2d9d6613abd2d382.js",
-            "6570.b22bdc8b82ed4897.js",
-            "8697.0ca363f233f7779e.js"
+            "6570.a5c868d65b0f3245.js",
+            "8697.e660de35479097d9.js"
           ]
         },
         "css": {
@@ -2664,8 +2665,8 @@
     {
       "id": "SHOGunGISClient:ol/style/RegularShape",
       "name": "ol/style/RegularShape",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2683,8 +2684,8 @@
     {
       "id": "SHOGunGISClient:ol/style/Stroke",
       "name": "ol/style/Stroke",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2703,8 +2704,8 @@
     {
       "id": "SHOGunGISClient:ol/style/Style",
       "name": "ol/style/Style",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2722,13 +2723,13 @@
     {
       "id": "SHOGunGISClient:ol/style/Text",
       "name": "ol/style/Text",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "3416.b4bcb2bb7fc193ba.js",
+            "3416.37b586358ab14bc3.js",
             "6957.95f8703f18f5e2ee.js",
             "7610.710d6b95f39b10e2.js"
           ]
@@ -2743,8 +2744,8 @@
     {
       "id": "SHOGunGISClient:ol/tilegrid/TileGrid",
       "name": "ol/tilegrid/TileGrid",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
@@ -2762,15 +2763,15 @@
     {
       "id": "SHOGunGISClient:ol/tilegrid/WMTS",
       "name": "ol/tilegrid/WMTS",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1094.de2062118f765e05.js",
+            "1094.76309f59d7bf5a7a.js",
             "5257.0766f24c4c96d955.js",
-            "6636.4125c77f39b3fd0f.js",
+            "6636.83d7d218f37303a7.js",
             "7095.83111e7d1e33b8b7.js",
             "7426.b8ea6c54a53f42db.js"
           ]
@@ -2785,14 +2786,14 @@
     {
       "id": "SHOGunGISClient:ol/tilegrid",
       "name": "ol/tilegrid",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
             "5257.0766f24c4c96d955.js",
-            "6636.4125c77f39b3fd0f.js",
+            "6636.83d7d218f37303a7.js",
             "7426.b8ea6c54a53f42db.js"
           ]
         },
@@ -2806,96 +2807,96 @@
     {
       "id": "SHOGunGISClient:ol/util",
       "name": "ol/util",
-      "version": "10.8.0",
-      "requiredVersion": "^10.8.0",
+      "version": "10.9.0",
+      "requiredVersion": "^10.9.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "1094.de2062118f765e05.js",
-            "1268.f2b64090acd9d77f.js",
-            "1517.a767fb7fef9c4686.js",
-            "1812.95ec02375359381e.js",
-            "2146.da07d055314c0468.js",
-            "2244.5a0babc2170e9ced.js",
-            "2320.2fe274d50db04de9.js",
-            "2452.6fc63d881bf68439.js",
-            "2506.91a86a313582f49c.js",
-            "2785.67bec1f191d8b31f.js",
-            "3010.1e5fefaca185800b.js",
-            "3021.e579e76c80fcd7b5.js",
-            "3107.5a71f62ef31ba161.js",
-            "3193.756523caaac9291e.js",
-            "325.767bb23cc02b6e3f.js",
-            "3292.d465859b566be1f2.js",
-            "336.565a6f2f042a6213.js",
-            "3395.506389c5762cfa4d.js",
-            "3414.53ecccaba583ba7d.js",
-            "3416.b4bcb2bb7fc193ba.js",
-            "3649.1d61a7fd4b82f4fb.js",
-            "3669.f6b5e2a27a3d14c4.js",
-            "3694.a33b4172a40d2f84.js",
-            "3898.31d8353c8fee78c2.js",
-            "4006.0a93b9b02a90b508.js",
-            "401.b656bbb04b1d78f5.js",
-            "4125.d7bab9a97dbcff3d.js",
-            "4140.73e95940a488cdae.js",
-            "4180.55a2806fd874c14c.js",
-            "4354.0b4789304114f48a.js",
-            "4497.cd1c2746a17237ab.js",
-            "460.6bbdbb40c1f456b6.js",
-            "4780.897752f9b44c556d.js",
-            "484.c9258d444adb9d04.js",
-            "5160.cb701ec19c92896c.js",
-            "5164.44962d28bb8bd4e8.js",
-            "5269.af07cdddd9e6d878.js",
-            "533.7acb6d9fd672f6ab.js",
-            "5361.c7aa2df6415a0382.js",
-            "5435.e6742c5c6a297bc6.js",
-            "5574.3eeebbc3710f4038.js",
-            "5597.cd1aa6949c97b9a7.js",
-            "5624.1f810f6cadd6a7c8.js",
-            "5765.70d3071c4f4b78f1.js",
-            "5860.98126bff36045ef3.js",
-            "5889.ad7aa817b15fea16.js",
-            "6030.3ca8569b8087d030.js",
-            "6050.f6f1f924859931b0.js",
-            "6178.332c2252800236fb.js",
-            "623.ad74ac88b6c01e5d.js",
-            "6279.75a0641c5c2caf24.js",
-            "6388.a4a133d0d821e257.js",
-            "6506.7df6276bb42eda18.js",
-            "6570.b22bdc8b82ed4897.js",
-            "6603.86df786ace5f889b.js",
-            "6636.4125c77f39b3fd0f.js",
-            "6907.4dce8f6140d18f0f.js",
-            "7031.ea9233cc1a475b17.js",
-            "7086.91a08c9e72219add.js",
-            "7162.c9b094f524cdbe80.js",
-            "7198.c5c45b928901457e.js",
-            "7322.3b1c68192dca0364.js",
-            "7955.2cbe9033cd6af806.js",
-            "7967.cd074f888053458b.js",
-            "8072.78717c7aa6af8726.js",
-            "8073.711254b59c5f3047.js",
-            "812.637adf77b34ec734.js",
-            "8417.ca6f56a9b0cb1b06.js",
-            "8431.013e27d0cb46f49f.js",
-            "8433.e26fbddba3d09809.js",
-            "8559.543c602b8da8bcbf.js",
-            "8660.8807fed778a050ef.js",
-            "8697.0ca363f233f7779e.js",
-            "8887.beebfb3fa44c607a.js",
-            "9019.4c5e066dfcbed650.js",
-            "9040.985c6b8d03c6dc5d.js",
-            "919.61ec98be77e39716.js",
-            "9190.9d6d2af5b22074c6.js",
-            "940.b0f33ff32f167eed.js",
-            "9584.f3db6a00e17c3725.js",
-            "9609.6bd579513a620eaa.js",
-            "9633.a468602f3d681237.js",
-            "967.72ace0ca35778615.js",
-            "997.1c156eb9060ea0f4.js"
+            "1094.76309f59d7bf5a7a.js",
+            "1268.3fa4b5187bd2e71a.js",
+            "1517.2b5aaf1d3388a47b.js",
+            "1812.586687da616d1378.js",
+            "2146.51592650deaea36b.js",
+            "2244.983fdc1d88b2b099.js",
+            "2320.c483823a546d06c9.js",
+            "2452.5b33b362f8255dd5.js",
+            "2506.ecebb765a91a6cf5.js",
+            "2785.aee29f16e42a807c.js",
+            "3010.b9987db4a316088a.js",
+            "3021.a714c2eede37c01b.js",
+            "3107.e83f9d980ecd4524.js",
+            "3193.da6d18e8d71ebce0.js",
+            "325.2dd03fee4fa33edb.js",
+            "3292.6ee7878d4b19d23f.js",
+            "336.62c20ddfa6e6a074.js",
+            "3395.5c42c250a8337ea0.js",
+            "3414.ff68eaf99b997da1.js",
+            "3416.37b586358ab14bc3.js",
+            "3649.1d31ba906f08320d.js",
+            "3669.67a4460a7f98f9b9.js",
+            "3694.13a5f21d20d9a28f.js",
+            "3898.2465e76717c64fa4.js",
+            "4006.eefeb382cd5676de.js",
+            "401.6d7828ef1ec10839.js",
+            "4125.7a0f4e9c6e530b03.js",
+            "4140.12ec23049d2fe8c7.js",
+            "4180.8e835458497a3449.js",
+            "4354.ce9f0632ada85207.js",
+            "4497.28137169951f6c8f.js",
+            "460.c41e689920f83e37.js",
+            "4780.8f86153b73c6ad05.js",
+            "484.b1d63c3c25e12a56.js",
+            "5160.400cbdc05f36ee86.js",
+            "5164.e9874cfb3a9e03c7.js",
+            "5269.becb614ce7e8c9fe.js",
+            "533.cf8de073502d1664.js",
+            "5361.d8ff5b0bcd1a80b4.js",
+            "5435.b4ba0ddfae18444e.js",
+            "5574.2e6aa482bc0333de.js",
+            "5597.a7c42a49a8b17311.js",
+            "5624.604422254d65c65a.js",
+            "5765.3ef15fea536fc08e.js",
+            "5860.683a4d60493e98d7.js",
+            "5889.e533a3ea61019411.js",
+            "6030.69857d58b485df7c.js",
+            "6050.f2f0b8686ad7bb2f.js",
+            "6178.145fe22320fee776.js",
+            "623.574007291da03540.js",
+            "6279.60ecb84a260c765f.js",
+            "6388.74a0d491888cbd45.js",
+            "6506.d509269c77a2887e.js",
+            "6570.a5c868d65b0f3245.js",
+            "6603.1852a551940cdd55.js",
+            "6636.83d7d218f37303a7.js",
+            "6907.f7325130548cd845.js",
+            "7031.0a6d4c83486f2e91.js",
+            "7086.24302d5d8c1863e4.js",
+            "7162.86145a29ee7d64b5.js",
+            "7198.a45655cc09b6ecca.js",
+            "7322.b5b83eae4ddb0981.js",
+            "7955.255894670e1db50c.js",
+            "7967.574703937877b074.js",
+            "8072.ac3a5b4b841e47ae.js",
+            "8073.6a74063aabb62820.js",
+            "812.1d907f35b258166e.js",
+            "8417.215a80be19dfa8b3.js",
+            "8431.16db381a5eeb870b.js",
+            "8433.6ec63c3a43c0c006.js",
+            "8559.b1bd42c256db4e2f.js",
+            "8660.d412c9697def90f0.js",
+            "8697.e660de35479097d9.js",
+            "8887.11a7c8ccd3e5bd63.js",
+            "9019.d08ce71649036d1b.js",
+            "9040.20c0cfc27ddbc763.js",
+            "919.38a46616982b5d17.js",
+            "9190.3e4fad34c274bf80.js",
+            "940.cbe1be0e2fbe2c58.js",
+            "9584.ab3358591947b360.js",
+            "9609.00dc75589cf98584.js",
+            "9633.b9cbff8e2c9ee274.js",
+            "967.dc2b6780744b6d4d.js",
+            "997.5a1fbef734ff11e6.js"
           ]
         },
         "css": {
