@@ -1,3 +1,10 @@
+## [11.0.1](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0...v11.0.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* bump print-manager to 16.1.3 to fix tileSize problem ([0df3619](https://github.com/terrestris/shogun-gis-client/commit/0df361985a4a035b4e62aa7f957d2c714c51e1d0))
+
 # [11.0.0](https://github.com/terrestris/shogun-gis-client/compare/v10.1.1...v11.0.0) (2026-04-13)
 
 
