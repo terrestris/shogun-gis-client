@@ -1,6 +1,7 @@
 const path = require('path');
 
-const ReactRefreshPlugin = require('@rspack/plugin-react-refresh');
+const reactRefresh = require('@rspack/plugin-react-refresh');
+const ReactRefreshPlugin = reactRefresh.ReactRefreshRspackPlugin || reactRefresh.default || reactRefresh;
 const { merge } = require('webpack-merge');
 
 const common = require('./rspack.common.js');
