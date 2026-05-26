@@ -22,6 +22,7 @@ import {
 import {
   useTranslation
 } from 'react-i18next';
+import { fromLonLat } from 'ol/proj';
 
 import {
   GeoLocationButton
@@ -52,6 +53,8 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
 
   const showGeolocation = useAppSelector(state => state.mapToolbar.showGeolocation);
   const showZoomFullExtent = useAppSelector(state => state.mapToolbar.showZoomFullExtent);
+  const zoomFullExtentCenter = useAppSelector(state => state.mapToolbar.zoomFullExtentCenter);
+  const zoomFullExtentLevel = useAppSelector(state => state.mapToolbar.zoomFullExtentLevel);
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
@@ -60,8 +63,9 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
     }
   };
 
-  const initialCenter = map?.getView().getCenter();
-  const initialZoom = map?.getView().getZoom();
+  const zoomToExtentCenter = map && zoomFullExtentCenter
+    ? fromLonLat(zoomFullExtentCenter, map.getView().getProjection())
+    : undefined;
 
   return (
     <Toolbar
@@ -69,12 +73,12 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
       alignment="vertical"
       role="toolbar"
     >
-      {map && showZoomFullExtent && initialCenter && Number.isFinite(initialZoom) &&
+      {map && showZoomFullExtent && zoomToExtentCenter && Number.isFinite(zoomFullExtentLevel) &&
         <ZoomToExtentButton
           aria-label="zoom-to-full-extent"
           tooltip={t('MapToolbar.zoomToExtentTooltip')}
-          center={initialCenter}
-          zoom={initialZoom as number}
+          center={zoomToExtentCenter}
+          zoom={zoomFullExtentLevel as number}
           icon={
             <FontAwesomeIcon
               icon={faGlobe}

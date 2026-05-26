@@ -123,6 +123,7 @@ import {
 } from './store/logoPath';
 import {
   setGeoLocationVisible,
+  setZoomFullExtentTarget,
   setZoomFullExtentVisible,
   setMapToolbarVisible
 } from './store/mapToolbar';
@@ -310,6 +311,11 @@ export const setApplicationToStore = async (application?: Application) => {
   if (application?.clientConfig?.newsTextIds) {
     store.dispatch(setNewsText(application.clientConfig.newsTextIds));
   }
+
+  store.dispatch(setZoomFullExtentTarget({
+    center: application.clientConfig?.mapView?.center,
+    zoom: application.clientConfig?.mapView?.zoom
+  }));
 
   // nominatim search is active by default
   store.dispatch(setSearchEngines(['nominatim']));
