@@ -5,7 +5,8 @@ import {
 
 const initialState = {
   visible: false,
-  showGeolocation: true
+  showGeolocation: true,
+  showZoomFullExtent: true
 };
 
 export const slice = createSlice({
@@ -17,12 +18,16 @@ export const slice = createSlice({
     },
     setGeoLocationVisible(state, action: PayloadAction<boolean>) {
       state.showGeolocation = action.payload;
+    },
+    setZoomFullExtentVisible(state, action: PayloadAction<boolean>) {
+      state.showZoomFullExtent = action.payload;
     }
   }
 });
 
 export const {
   setGeoLocationVisible,
+  setZoomFullExtentVisible,
   setMapToolbarVisible
 } = slice.actions;
 

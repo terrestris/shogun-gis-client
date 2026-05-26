@@ -8,6 +8,7 @@ import {
   faPlus,
   faMinus,
   faLocation,
+  faGlobe,
   faLocationPin
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,6 +27,7 @@ import {
   GeoLocationButton
 } from '@terrestris/react-geo/dist/Button/GeoLocationButton/GeoLocationButton';
 import ZoomButton from '@terrestris/react-geo/dist/Button/ZoomButton/ZoomButton';
+import ZoomToExtentButton from '@terrestris/react-geo/dist/Button/ZoomToExtentButton/ZoomToExtentButton';
 
 import {
   useMap
@@ -49,6 +51,7 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
   const [geolocationButtonPressed, setGeolocationButtonPressed] = useState(false);
 
   const showGeolocation = useAppSelector(state => state.mapToolbar.showGeolocation);
+  const showZoomFullExtent = useAppSelector(state => state.mapToolbar.showZoomFullExtent);
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
@@ -57,12 +60,28 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
     }
   };
 
+  const initialCenter = map?.getView().getCenter();
+  const initialZoom = map?.getView().getZoom();
+
   return (
     <Toolbar
       id="map-toolbar"
       alignment="vertical"
       role="toolbar"
     >
+      {map && showZoomFullExtent && initialCenter && Number.isFinite(initialZoom) &&
+        <ZoomToExtentButton
+          aria-label="zoom-to-full-extent"
+          tooltip={t('MapToolbar.zoomToExtentTooltip')}
+          center={initialCenter}
+          zoom={initialZoom as number}
+          icon={
+            <FontAwesomeIcon
+              icon={faGlobe}
+            />
+          }
+          {...btnTooltipProps}
+        />}
       {map &&
         <ZoomButton
           aria-label="zoom-in"

@@ -123,6 +123,7 @@ import {
 } from './store/logoPath';
 import {
   setGeoLocationVisible,
+  setZoomFullExtentVisible,
   setMapToolbarVisible
 } from './store/mapToolbar';
 import {
@@ -345,6 +346,7 @@ export const setApplicationToStore = async (application?: Application) => {
       map_toolbar: (config) => {
         store.dispatch(setMapToolbarVisible(config?.visible));
         store.dispatch(setGeoLocationVisible(config?.showGeolocation));
+        store.dispatch(setZoomFullExtentVisible(config?.showZoomFullExtent));
       },
       // eslint-disable-next-line camelcase
       measure_tools: (config) => {
