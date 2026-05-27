@@ -168,8 +168,10 @@
         "js": {
           "async": [],
           "sync": [
+            "1205.88c9b1bf8ad6c3dd.js",
             "1914.1d451b17faef97e7.js",
             "2031.3f45a899ed77567b.js",
+            "3586.4dbf609b99eada3e.js",
             "4412.a138c284e519d1d3.js",
             "4431.6b4cd8ea9f609561.js",
             "6812.87da38a906f24b3b.js",
@@ -221,6 +223,26 @@
           "sync": [
             "4431.6b4cd8ea9f609561.js",
             "6812.87da38a906f24b3b.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "fallback": ""
+    },
+    {
+      "id": "SHOGunGISClient:@terrestris/react-geo/dist/Button/ZoomToExtentButton/ZoomToExtentButton",
+      "name": "@terrestris/react-geo/dist/Button/ZoomToExtentButton/ZoomToExtentButton",
+      "version": "32.7.0",
+      "requiredVersion": "^32.7.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "1205.88c9b1bf8ad6c3dd.js",
+            "3586.4dbf609b99eada3e.js"
           ]
         },
         "css": {
