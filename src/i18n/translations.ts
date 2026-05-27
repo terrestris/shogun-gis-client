@@ -139,6 +139,7 @@ export default {
       MapToolbar: {
         zoomInTooltip: 'Hereinzoomen',
         zoomOutTooltip: 'Herauszoomen',
+        zoomToExtentTooltip: 'Auf Startansicht zoomen',
         geoLocation: 'Geolokalisierung'
       },
       PrintForm: {
@@ -507,6 +508,7 @@ export default {
       MapToolbar: {
         zoomInTooltip: 'Zoom-in',
         zoomOutTooltip: 'Zoom-out',
+        zoomToExtentTooltip: 'Zoom to initial view',
         geoLocation: 'Geolocation'
       },
       PrintForm: {

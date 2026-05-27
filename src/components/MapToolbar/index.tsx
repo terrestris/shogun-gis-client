@@ -8,6 +8,7 @@ import {
   faPlus,
   faMinus,
   faLocation,
+  faGlobe,
   faLocationPin
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,11 +22,13 @@ import {
 import {
   useTranslation
 } from 'react-i18next';
+import { fromLonLat } from 'ol/proj';
 
 import {
   GeoLocationButton
 } from '@terrestris/react-geo/dist/Button/GeoLocationButton/GeoLocationButton';
 import ZoomButton from '@terrestris/react-geo/dist/Button/ZoomButton/ZoomButton';
+import ZoomToExtentButton from '@terrestris/react-geo/dist/Button/ZoomToExtentButton/ZoomToExtentButton';
 
 import {
   useMap
@@ -49,6 +52,9 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
   const [geolocationButtonPressed, setGeolocationButtonPressed] = useState(false);
 
   const showGeolocation = useAppSelector(state => state.mapToolbar.showGeolocation);
+  const showZoomFullExtent = useAppSelector(state => state.mapToolbar.showZoomFullExtent);
+  const zoomFullExtentCenter = useAppSelector(state => state.mapToolbar.zoomFullExtentCenter);
+  const zoomFullExtentLevel = useAppSelector(state => state.mapToolbar.zoomFullExtentLevel);
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
@@ -57,12 +63,29 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
     }
   };
 
+  const zoomToExtentCenter = map && zoomFullExtentCenter
+    ? fromLonLat(zoomFullExtentCenter, map.getView().getProjection())
+    : undefined;
+
   return (
     <Toolbar
       id="map-toolbar"
       alignment="vertical"
       role="toolbar"
     >
+      {map && showZoomFullExtent && zoomToExtentCenter && Number.isFinite(zoomFullExtentLevel) &&
+        <ZoomToExtentButton
+          aria-label="zoom-to-full-extent"
+          tooltip={t('MapToolbar.zoomToExtentTooltip')}
+          center={zoomToExtentCenter}
+          zoom={zoomFullExtentLevel as number}
+          icon={
+            <FontAwesomeIcon
+              icon={faGlobe}
+            />
+          }
+          {...btnTooltipProps}
+        />}
       {map &&
         <ZoomButton
           aria-label="zoom-in"

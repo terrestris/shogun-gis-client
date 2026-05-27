@@ -123,6 +123,8 @@ import {
 } from './store/logoPath';
 import {
   setGeoLocationVisible,
+  setZoomFullExtentTarget,
+  setZoomFullExtentVisible,
   setMapToolbarVisible
 } from './store/mapToolbar';
 import {
@@ -310,6 +312,11 @@ export const setApplicationToStore = async (application?: Application) => {
     store.dispatch(setNewsText(application.clientConfig.newsTextIds));
   }
 
+  store.dispatch(setZoomFullExtentTarget({
+    center: application.clientConfig?.mapView?.center,
+    zoom: application.clientConfig?.mapView?.zoom
+  }));
+
   // nominatim search is active by default
   store.dispatch(setSearchEngines(['nominatim']));
 
@@ -345,6 +352,7 @@ export const setApplicationToStore = async (application?: Application) => {
       map_toolbar: (config) => {
         store.dispatch(setMapToolbarVisible(config?.visible));
         store.dispatch(setGeoLocationVisible(config?.showGeolocation));
+        store.dispatch(setZoomFullExtentVisible(config?.showZoomFullExtent));
       },
       // eslint-disable-next-line camelcase
       measure_tools: (config) => {
