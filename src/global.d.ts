@@ -59,6 +59,7 @@ declare module 'clientConfig' {
     staticAppConfigUrl?: string;
     layerConfigUrl?: string;
     logoLinkUrl?: string;
+    exclusiveTools?: string[];
   };
   const config: ClientConfiguration;
 

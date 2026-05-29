@@ -161,7 +161,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   }, [menuTools, availableTools]);
 
   useEffect(() => {
-    const exclusiveTools = [
+    const exclusiveTools = ClientConfiguration.exclusiveTools ?? [
       'print',
       'measure_tools',
       'draw_tools',
