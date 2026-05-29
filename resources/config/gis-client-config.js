@@ -40,5 +40,12 @@ var clientConfig = {
   },
   wfsLockFeatureEnabled: false,
   documentationButtonVisible: true,
-  enableFallbackConfig: true
+  enableFallbackConfig: true,
+  exclusiveTools: [
+    'print',
+    'measure_tools',
+    'draw_tools',
+    'feature_info',
+    'tree'
+  ]
 };
