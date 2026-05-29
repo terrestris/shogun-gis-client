@@ -1,3 +1,17 @@
+# [11.1.0](https://github.com/terrestris/shogun-gis-client/compare/v11.0.1...v11.1.0) (2026-05-29)
+
+
+### Bug Fixes
+
+* update ReactRefreshPlugin import to ensure compatibility ([135a42e](https://github.com/terrestris/shogun-gis-client/commit/135a42e338f9da3e4f8c4e4ad9615a5b967a7b6a))
+* use application config to determine initial view ([c3433a9](https://github.com/terrestris/shogun-gis-client/commit/c3433a9b2266fb3161e0697f3cf867ef0b7c1116))
+
+
+### Features
+
+* add zoom to full extent functionality in map toolbar ([7f5fc47](https://github.com/terrestris/shogun-gis-client/commit/7f5fc47e30ad908e8e85ab4d23a9d3a6dad50cc5))
+* make exclusiveTools configurable ([d7e291c](https://github.com/terrestris/shogun-gis-client/commit/d7e291c604a4b92f90b5a8950cf15d3e893d4115))
+
 ## [11.0.1](https://github.com/terrestris/shogun-gis-client/compare/v11.0.0...v11.0.1) (2026-04-23)
 
 
