@@ -146,6 +146,7 @@ import {
   setTitle
 } from './store/title';
 import {
+  setActiveKeys,
   setAvailableTools,
   setToolMenuWidth
 } from './store/toolMenu';
@@ -322,6 +323,7 @@ export const setApplicationToStore = async (application?: Application) => {
 
   if (application.toolConfig?.length) {
     const availableTools: string[] = [];
+    const activeTools: string[] = [];
     const toolActions: Record<string, (config: any) => void> = {
       search: (config) => {
         if (config.engines?.length) {
@@ -376,10 +378,14 @@ export const setApplicationToStore = async (application?: Application) => {
       if (config?.visible && !['search', 'user_menu', 'map_toolbar'].includes(name)) {
         availableTools.push(name);
       }
+      if (config?.active && config?.visible && !['search', 'user_menu', 'map_toolbar'].includes(name)) {
+        activeTools.push(name);
+      }
       toolActions[name]?.(config);
     });
 
     store.dispatch(setAvailableTools(availableTools));
+    store.dispatch(setActiveKeys(activeTools));
   }
 };
 
