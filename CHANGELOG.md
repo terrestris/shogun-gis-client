@@ -1,3 +1,10 @@
+## [11.1.1](https://github.com/terrestris/shogun-gis-client/compare/v11.1.0...v11.1.1) (2026-06-01)
+
+
+### Bug Fixes
+
+* add active tools management in application store ([8c8a2aa](https://github.com/terrestris/shogun-gis-client/commit/8c8a2aa3695084de286d149454441def9d9960ca))
+
 # [11.1.0](https://github.com/terrestris/shogun-gis-client/compare/v11.0.1...v11.1.0) (2026-05-29)
 
 
