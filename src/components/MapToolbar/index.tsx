@@ -114,6 +114,7 @@ export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
           <GeoLocationButton
             aria-label="geolocation"
             follow={true}
+            enableTracking={true}
             icon={
               <FontAwesomeIcon
                 icon={faLocation}
