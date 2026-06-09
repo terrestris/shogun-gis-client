@@ -1,49 +1,58 @@
-import {
-  defineConfig
-} from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-  globalSetup: './global-setup',
-  testDir: './src/e2e-tests',
-  snapshotPathTemplate: './e2e-tests/additional-files/screenshots/{arg}{ext}',
-  timeout: 30 * 1000,
+  globalSetup: require.resolve("./global-setup.ts"),
+  testDir: "./src/e2e-tests",
+  snapshotPathTemplate: "./e2e-tests/additional-files/screenshots/{arg}{ext}",
+  timeout: 120 * 1000,
   expect: {
-    timeout: 5000
+    timeout: 120 * 1000,
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: 4,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [['html', {
-    open: 'never'
-  }]],
+  retries: 0,
+  workers: 1,
+  reporter: [
+    [
+      "html",
+      {
+        open: "never",
+      },
+    ],
+  ],
   use: {
-    baseURL: `https://${process.env.HOST}`,
+    headless: false,
+    // launchOptions: {
+    //   slowMo: 300
+    // },
+    // video: 'on',
+    baseURL: process.env.HOST,
     actionTimeout: 0,
-    trace: 'on-first-retry',
-    permissions: ['geolocation'],
+    trace: "on-first-retry",
+    permissions: ["geolocation"],
 
     ignoreHTTPSErrors: true,
 
     viewport: {
       width: 1200,
-      height: 800
+      height: 800,
     }
   },
-
   projects: [
     {
-      name: 'setup',
-      testMatch: /auth.setup\.ts/
+      name: "setup",
+      testMatch: /.*\.setup\.ts/,
     },
     {
-      name: 'chromium',
+      name: "chromium",
       use: {
-        browserName: 'chromium',
-        locale: 'en-EN'
+        browserName: "chromium",
+        locale: "en-EN",
+        viewport: { width: 1400, height: 850 },
+        storageState: "playwright/.auth/admin.json",
       },
-      dependencies: ['setup']
-    }
+      dependencies: ["setup"],
+    },
 
     // {
     //   name: 'firefox',
@@ -65,5 +74,5 @@ export default defineConfig({
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: './src/e2e-tests/test-results/'
+  outputDir: "./src/e2e-tests/test-results/",
 });
