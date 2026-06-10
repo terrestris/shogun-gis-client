@@ -3,7 +3,10 @@ import {
   expect
 } from '@playwright/test';
 
-import { closeWelcomeScreen, highlight } from './helpers';
+import {
+  closeWelcomeScreen,
+  highlight
+} from './helpers';
 
 export const header = async (page: any) => {
   await expect(page.locator('[data-testid="logo"]')).toBeVisible();
