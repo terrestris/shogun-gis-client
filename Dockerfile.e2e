@@ -1,14 +1,12 @@
-FROM mcr.microsoft.com/playwright:v1.58.2-jammy
+FROM mcr.microsoft.com/playwright:v1.60.0-noble-amd64@sha256:83192064c7510f7ee73dd63dc5f22a5e01a92c81a2e6a9c715d9e3fe55471fd9
 
-WORKDIR /app
-
-RUN npm install -D @playwright/test@v1.36.1
-
-# Need to be installed since the package.json is not copied
-RUN npm i @terrestris/shogun-e2e-tests@v1.0.8
-RUN npm i dotenv@v16.3.1
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY playwright.config.js ./
 COPY global-setup.ts ./
 COPY ./src/e2e-tests ./src/e2e-tests
 COPY ./playwright ./playwright
+
+CMD [ "npm", "run", "e2e-tests" ]
+
