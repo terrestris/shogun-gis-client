@@ -1,6 +1,12 @@
-import { test } from '@playwright/test';
+import {
+  test,
+  expect
+} from '@playwright/test';
 
-import { languageSelector } from '@terrestris/shogun-e2e-tests/dist/shogun-gis-client/toolbox/languageSelector';
+import {
+  closeWelcomeScreen,
+  switchLanguage
+} from './helpers';
 
 test.use({
   storageState: 'playwright/.auth/admin.json'
@@ -10,9 +16,12 @@ test('language-selector', async ({
   page
 }) => {
 
-  await page.goto(`https://${process.env.HOST}/client/?applicationId=${process.env.ID}`);
+  await page.goto(`/client/?applicationId=${process.env.ID}`);
+  await closeWelcomeScreen(page);
 
   await page.waitForLoadState('networkidle');
-  await page.getByRole('button', { name: 'Language selector' }).click();
-  await languageSelector(page);
+  expect(page.getByText('Karten').first()).toBeVisible();
+  await switchLanguage(page, 'EN');
+  await page.waitForTimeout(500);
+  expect(page.getByText('Maps')).toBeVisible();
 });

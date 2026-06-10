@@ -31,6 +31,7 @@
     "prepare": "husky",
     "start": "rspack serve --config rspack.dev.js",
     "test": "jest --maxWorkers=50% --coverage",
+    "e2e-tests": "npx playwright test",
     "tsc": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "watch:buildto": "node watchBuild.js"
