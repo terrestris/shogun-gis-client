@@ -6,7 +6,7 @@ const adminFile = 'playwright/.auth/admin.json';
 
 setup('authenticate as admin', async ({ page }) => {
 
-  await page.goto(`/admin`);
+  await page.goto('/admin');
 
   if (await page.getByLabel('Username or email').isVisible()) {
     await page.getByLabel('Username or email').fill(`${process.env.ADMIN_LOGIN}`);
@@ -15,7 +15,7 @@ setup('authenticate as admin', async ({ page }) => {
       name: 'Sign in'
     }).click();
 
-    await page.waitForURL(`/admin/**`, { timeout: 15000 });
+    await page.waitForURL('/admin/**', { timeout: 15000 });
     await page.waitForLoadState('networkidle');
 
     await page.waitForSelector('.header-logo');

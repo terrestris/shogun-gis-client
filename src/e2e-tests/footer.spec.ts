@@ -37,6 +37,6 @@ test('footer', async ({
   await switchLanguage(page, 'EN');
   await page.waitForTimeout(500);
   expect(page.getByText('Maps')).toBeVisible();
-  
+
   await footer(page);
 });

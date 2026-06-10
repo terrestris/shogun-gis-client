@@ -1,4 +1,7 @@
-import { Locator, Page } from '@playwright/test';
+import {
+  Locator,
+  Page
+} from '@playwright/test';
 
 export const switchLanguage = async (page: any, language: string) => {
   page.locator('.fa-language').click();
