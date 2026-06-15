@@ -93,7 +93,7 @@
     "@babel/preset-typescript": "7.28.5",
     "@babel/runtime": "7.28.6",
     "@casualbot/jest-sonar-reporter": "2.7.0",
-    "@commitlint/cli": "20.5.0",
+    "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "@eslint/js": "9.39.4",
     "@module-federation/enhanced": "0.24.1",
