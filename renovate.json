@@ -4,5 +4,6 @@
     "config:best-practices",
     ":prHourlyLimitNone",
     ":prConcurrentLimit20"
-  ]
+  ],
+  "labels": ["renovate"]
 }
