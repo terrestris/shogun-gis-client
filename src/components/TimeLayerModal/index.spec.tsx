@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { act, render, waitFor } from '@testing-library/react';
+import {
+  act,
+  render,
+  waitFor
+} from '@testing-library/react';
 
 import dayjs from 'dayjs';
 

@@ -1,7 +1,9 @@
 import React, {
   useMemo,
   useState,
-  useCallback
+  useCallback,
+  JSX,
+  FC
 } from 'react';
 
 import OlLayer from 'ol/layer/Layer';
@@ -28,9 +30,7 @@ import './index.less';
 
 export type TimeLayerModalProps = Record<string, never>;
 
-export const TimeLayerModal: React.FC<
-  TimeLayerModalProps
-> = (): JSX.Element => {
+export const TimeLayerModal: FC<TimeLayerModalProps> = (): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const map = useMap();

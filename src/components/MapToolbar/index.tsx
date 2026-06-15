@@ -19,10 +19,10 @@ import {
   TooltipPlacement
 } from 'antd/es/tooltip';
 
+import { fromLonLat } from 'ol/proj';
 import {
   useTranslation
 } from 'react-i18next';
-import { fromLonLat } from 'ol/proj';
 
 import {
   GeoLocationButton
