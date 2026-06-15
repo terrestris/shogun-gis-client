@@ -17,6 +17,7 @@ module.exports = merge(common, {
       webSocketURL: process.env.WEB_SOCKET_URL ?? 'http://0.0.0.0:0/client/ws'
     },
     hot: true,
+    allowedHosts: 'all',
     static: path.join(__dirname, 'resources', 'public')
   },
   module: {
