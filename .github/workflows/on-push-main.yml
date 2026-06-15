@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout sources 🔰
-      uses: actions/checkout@v6
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
 
     - name: Setup Node.js 🧮
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
       with:
         node-version: 24
 
     - name: Cache Node.js modules 💾
-      uses: actions/cache@v5
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       with:
         path: ~/.npm
         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -36,7 +36,7 @@ jobs:
       run: npm run build
 
     - name: Deploy (to latest) 🚀
-      uses: JamesIves/github-pages-deploy-action@v4.8.0
+      uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4.8.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
@@ -44,14 +44,14 @@ jobs:
         target-folder: latest
 
     - name: Login to Nexus ⌨️
-      uses: docker/login-action@v3
+      uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
       with:
         registry: ${{ env.DOCKER_REGISTRY }}
         username: ${{ secrets.NEXUS_USERNAME }}
         password: ${{ secrets.NEXUS_PASSWORD }}
 
     - name: Build docker image (main) 🏗️
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
       with:
         context: .
         tags: |
@@ -63,7 +63,7 @@ jobs:
         docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:main
 
     - name: Build docker image e2e-tests (main) 🏗️
-      uses: docker/build-push-action@v6
+      uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
       with:
         file: Dockerfile.e2e
         context: .
@@ -81,18 +81,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources 🔰
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
       - name: Setup Node.js 🧮
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
 
       - name: Cache Node.js modules 💾
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -113,7 +113,7 @@ jobs:
           echo "sonar.projectVersion=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> ./sonar-project.properties
 
       - name: SonarQube Scan 🔬
-        uses: SonarSource/sonarqube-scan-action@v8.2.0
+        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e # v8.2.0
         with:
           projectBaseDir: .
         env:

@@ -1,4 +1,4 @@
-FROM node:24-alpine AS build
+FROM node:24-alpine@sha256:fb71d01345f11b708a3553c66e7c74074f2d506400ea81973343d915cb64eef0 AS build
 
 RUN apk update && apk upgrade --no-cache
 
@@ -13,7 +13,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl AS app
+FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl@sha256:cb4fb86d2a93065dce4451d99b6a96ca0fd83caeee98a3bc24c5f5c6d6d58e5d AS app
 
 ENV SHOGUN_GIS_CLIENT_HOST=shogun-gis-client
 
