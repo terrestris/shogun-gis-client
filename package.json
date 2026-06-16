@@ -70,7 +70,7 @@
     "normalize.css": "8.0.1",
     "ol": "10.9.0",
     "ol-mapbox-style": "12.4.0",
-    "proj4": "2.20.8",
+    "proj4": "2.20.9",
     "react": "18.3.1",
     "react-cookie-consent": "10.0.1",
     "react-dom": "18.3.1",
