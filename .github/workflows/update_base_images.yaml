@@ -88,8 +88,8 @@ jobs:
       release_is_published: "true"
       release_version: ${{ matrix.tag }}
     secrets:
-      nexus_user: ${{ secrets.NEXUS_USERNAME }}
-      nexus_pass: ${{ secrets.NEXUS_PASSWORD }}
+      docker_registry_user: ${{ secrets.DOCKER_REGISTRY_USER }}
+      docker_registry_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
   run-latest-tag:
     needs: [latest-tags, run-for-tag]
@@ -98,5 +98,5 @@ jobs:
       release_is_published: "true"
       release_version: ${{ needs.latest-tags.outputs.latest_tag }}
     secrets:
-      nexus_user: ${{ secrets.NEXUS_USERNAME }}
-      nexus_pass: ${{ secrets.NEXUS_PASSWORD }}
+      docker_registry_user: ${{ secrets.DOCKER_REGISTRY_USER }}
+      docker_registry_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}

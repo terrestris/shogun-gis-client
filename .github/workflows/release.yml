@@ -58,5 +58,5 @@ jobs:
       release_is_published: ${{ needs.release-npm.outputs.new_release_published }}
       release_version: ${{ needs.release-npm.outputs.new_release_version }}
     secrets:
-      nexus_user: ${{ secrets.NEXUS_USERNAME }}
-      nexus_pass: ${{ secrets.NEXUS_PASSWORD }}
+      docker_registry_user: ${{ secrets.DOCKER_REGISTRY_USER }}
+      docker_registry_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}

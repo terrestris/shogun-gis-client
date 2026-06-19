@@ -10,13 +10,13 @@ on:
         required: true
         type: string
     secrets:
-      nexus_user:
+      docker_registry_user:
         required: true
-      nexus_pass:
+      docker_registry_pass:
         required: true
 
 env:
-  DOCKER_REGISTRY: docker-public.terrestris.de/terrestris
+  DOCKER_REGISTRY: hub.terrestris.de/shogun
 
 jobs:
   release-docker:
@@ -28,12 +28,12 @@ jobs:
         with:
           ref: v${{ inputs.release_version }}
 
-      - name: Login to Nexus
+      - name: Login to Docker Registry ⌨️
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
-          username: ${{ secrets.nexus_user }}
-          password: ${{ secrets.nexus_pass }}
+          username: ${{ secrets.docker_registry_user }}
+          password: ${{ secrets.docker_registry_pass }}
 
       - name: Build docker image (latest)
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7
@@ -58,11 +58,11 @@ jobs:
             APP_VERSION=${{ inputs.release_version }}
             GIT_COMMIT=${{ github.sha }}
 
-      - name: Push docker image to Nexus (latest)
+      - name: Push docker image to Docker registry (latest)
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
 
-      - name: Push docker image to Nexus (version)
+      - name: Push docker image to Docker registry (version)
         if: ${{ inputs.release_is_published }} == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ inputs.release_version }}
@@ -86,11 +86,11 @@ jobs:
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:${{ inputs.release_version }}
           load: true
 
-      - name: Push docker image to Nexus e2e-tests (latest) 📠
+      - name: Push e2e-tests docker image to Docker registry (latest) 📠
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:latest
 
-      - name: Push docker image to Nexus e2e-tests (version) 📠
+      - name: Push e2e-tests docker image to Docker registry (version) 📠
         if: ${{ inputs.release_is_published }} == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:${{ inputs.release_version }}
