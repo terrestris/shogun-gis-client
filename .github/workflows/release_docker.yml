@@ -29,7 +29,7 @@ jobs:
           ref: v${{ inputs.release_version }}
 
       - name: Login to Docker Registry ⌨️
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        uses: docker/login-action@c99871dec2022cc055c062a10cc1a1310835ceb4 # v4
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
           username: ${{ secrets.docker_registry_user }}
