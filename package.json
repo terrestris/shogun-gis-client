@@ -55,7 +55,7 @@
     "@types/proj4": "2.19.0",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
-    "antd": "5.29.3",
+    "antd": "6.5.1",
     "clsx": "2.1.1",
     "color": "5.0.3",
     "dayjs": "1.11.21",
