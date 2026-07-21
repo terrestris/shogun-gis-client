@@ -129,7 +129,7 @@
     "ignore-loader": "0.1.2",
     "jest": "30.3.0",
     "jest-canvas-mock": "2.5.8",
-    "jest-environment-jsdom": "29.7.0",
+    "jest-environment-jsdom": "30.4.1",
     "less": "4.7.0",
     "less-loader": "12.3.3",
     "nwsapi": "2.2.24",
