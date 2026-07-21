@@ -96,7 +96,7 @@
     "@commitlint/cli": "21.2.1",
     "@commitlint/config-conventional": "21.2.0",
     "@eslint/js": "9.39.5",
-    "@module-federation/enhanced": "0.24.1",
+    "@module-federation/enhanced": "2.8.0",
     "@playwright/test": "1.61.1",
     "@rspack/cli": "1.7.12",
     "@rspack/core": "1.7.12",
