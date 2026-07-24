@@ -4,14 +4,16 @@ import React, {
 
 import AddLayerModal from './components/AddLayerModal/index';
 import BasicMapComponent from './components/BasicMapComponent';
+import ClassificationDrawer from './components/ClassificationDrawer';
 import CookieBanner from './components/CookieBanner';
 import EditFeatureDrawer from './components/EditFeatureDrawer';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import LayerDetailsModal from './components/LayerDetailsModal';
-import MapToolbar from './components/MapToolbar';
+import NewsModal from './components/NewsModal';
 import SearchResultDrawer from './components/SearchResultDrawer';
 import StylingDrawer from './components/StylingDrawer';
+import TimeLayerModal from './components/TimeLayerModal';
 import ToolMenu from './components/ToolMenu';
 import UploadDataModal from './components/UploadDataModal';
 
@@ -43,7 +45,6 @@ export const App: React.FC<AppProps> = ({
       <Header />
       <BasicMapComponent />
       <ToolMenu />
-      <MapToolbar />
       <Footer />
       <CookieBanner />
       <AddLayerModal />
@@ -52,6 +53,9 @@ export const App: React.FC<AppProps> = ({
       <LayerDetailsModal />
       <StylingDrawer />
       <SearchResultDrawer />
+      <ClassificationDrawer />
+      <NewsModal/>
+      <TimeLayerModal />
     </div>
   );
 };

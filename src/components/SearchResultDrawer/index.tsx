@@ -35,6 +35,8 @@ import {
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import useLocalize from '../../hooks/useLocalize';
+
 import {
   setSearchResultState
 } from '../../store/searchResult';
@@ -55,9 +57,9 @@ type AttributeRecord = {
 export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
   ...passThroughProps
 }): JSX.Element => {
-
   const dispatch = useAppDispatch();
   const map = useMap();
+  const localize = useLocalize();
   const isSearchResultDrawerVisible = useAppSelector(state => state.searchResult.drawerVisibility);
   const geoJSONFeature = useAppSelector(state => state.searchResult.geoJSONFeature);
   const targetLayerId = useAppSelector(state => state.searchResult.layerId);
@@ -184,11 +186,11 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
       ? Object.fromEntries(
         resultDrawerConfig.children.map(c => [
           c.propertyName,
-          c.displayName ?? ''
+          localize(c.displayName || '')
         ])
       )
       : undefined;
-  }, [resultDrawerConfig]);
+  }, [resultDrawerConfig, localize]);
 
   const columns: ColumnType<AttributeRecord>[] = [{
     title: t('FeaturePropertyGrid.key'),
@@ -219,6 +221,7 @@ export const SearchResultDrawer: React.FC<SearchResultDrawerProps> = ({
       placement="right"
       onClose={onClose}
       open={isSearchResultDrawerVisible}
+      shrinkMapOnOpen={false}
       maskClosable={false}
       mask={false}
       {...passThroughProps}

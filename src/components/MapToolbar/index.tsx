@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  FC,
+  JSX
+} from 'react';
 
 import {
   faPlus,
   faMinus,
   faLocation,
+  faGlobe,
   faLocationPin
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,6 +19,7 @@ import {
   TooltipPlacement
 } from 'antd/es/tooltip';
 
+import { fromLonLat } from 'ol/proj';
 import {
   useTranslation
 } from 'react-i18next';
@@ -22,19 +28,22 @@ import {
   GeoLocationButton
 } from '@terrestris/react-geo/dist/Button/GeoLocationButton/GeoLocationButton';
 import ZoomButton from '@terrestris/react-geo/dist/Button/ZoomButton/ZoomButton';
+import ZoomToExtentButton from '@terrestris/react-geo/dist/Button/ZoomToExtentButton/ZoomToExtentButton';
 
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import useAppSelector from '../../hooks/useAppSelector';
-import Toolbar, { ToolbarProps } from '../Toolbar';
+import Toolbar, {
+  ToolbarProps
+} from '../Toolbar';
 
 import './index.less';
 
 export type MapToolbarProps = React.HTMLAttributes<HTMLDivElement> & ToolbarProps;
 
-export const MapToolbar: React.FC = (): JSX.Element => {
+export const MapToolbar: FC<MapToolbarProps> = (): JSX.Element => {
   const {
     t
   } = useTranslation();
@@ -42,13 +51,10 @@ export const MapToolbar: React.FC = (): JSX.Element => {
 
   const [geolocationButtonPressed, setGeolocationButtonPressed] = useState(false);
 
-  const mapToolbarVisible = useAppSelector(state => state.mapToolbarVisible.visible);
-
-  const stylingDrawerVisibility = useAppSelector(state => state.stylingDrawerVisibility);
-  const editFeatureDrawerOpen = useAppSelector(state => state.editFeatureDrawerOpen);
-  const searchResultDrawerOpen = useAppSelector(state => state.searchResult.drawerVisibility);
-  const drawerOpen = stylingDrawerVisibility || editFeatureDrawerOpen || searchResultDrawerOpen;
-  const className = drawerOpen ? 'drawer-open' : '';
+  const showGeolocation = useAppSelector(state => state.mapToolbar.showGeolocation);
+  const showZoomFullExtent = useAppSelector(state => state.mapToolbar.showZoomFullExtent);
+  const zoomFullExtentCenter = useAppSelector(state => state.mapToolbar.zoomFullExtentCenter);
+  const zoomFullExtentLevel = useAppSelector(state => state.mapToolbar.zoomFullExtentLevel);
 
   const btnTooltipProps = {
     tooltipPlacement: 'left' as TooltipPlacement,
@@ -57,61 +63,78 @@ export const MapToolbar: React.FC = (): JSX.Element => {
     }
   };
 
+  const zoomToExtentCenter = map && zoomFullExtentCenter
+    ? fromLonLat(zoomFullExtentCenter, map.getView().getProjection())
+    : undefined;
+
   return (
-    <>
-      {mapToolbarVisible &&
-        <Toolbar
-          id='map-toolbar'
-          className={className}
-          alignment="vertical"
-          role="toolbar"
-        >
-          {map &&
-            <ZoomButton
-              aria-label='zoom-in'
-              tooltip={t('MapToolbar.zoomInTooltip')}
-              icon={
-                <FontAwesomeIcon
-                  icon={faPlus}
-                />
-              }
-              {...btnTooltipProps}
-            />}
-          {map &&
-            <ZoomButton
-              aria-label='zoom-out'
-              tooltip={t('MapToolbar.zoomOutTooltip')}
-              delta={-1}
-              icon={
-                <FontAwesomeIcon
-                  icon={faMinus}
-                />
-              }
-              {...btnTooltipProps}
-            />}
-          {map &&
-            <GeoLocationButton
-              aria-label='geolocation'
-              showMarker={true}
-              follow={true}
-              pressed={geolocationButtonPressed}
-              onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
-              tooltip={t('MapToolbar.geoLocation')}
-              icon={
-                <FontAwesomeIcon
-                  icon={faLocation}
-                />
-              }
-              pressedIcon={
-                <FontAwesomeIcon
-                  icon={faLocationPin}
-                />
-              }
-              {...btnTooltipProps}
-            />}
-        </Toolbar>
+    <Toolbar
+      id="map-toolbar"
+      alignment="vertical"
+      role="toolbar"
+    >
+      {map && showZoomFullExtent && zoomToExtentCenter && Number.isFinite(zoomFullExtentLevel) &&
+        <ZoomToExtentButton
+          aria-label="zoom-to-full-extent"
+          tooltip={t('MapToolbar.zoomToExtentTooltip')}
+          center={zoomToExtentCenter}
+          zoom={zoomFullExtentLevel as number}
+          icon={
+            <FontAwesomeIcon
+              icon={faGlobe}
+            />
+          }
+          {...btnTooltipProps}
+        />}
+      {map &&
+        <ZoomButton
+          aria-label="zoom-in"
+          tooltip={t('MapToolbar.zoomInTooltip')}
+          icon={
+            <FontAwesomeIcon
+              icon={faPlus}
+            />
+          }
+          {...btnTooltipProps}
+        />}
+      {map &&
+        <ZoomButton
+          aria-label="zoom-out"
+          tooltip={t('MapToolbar.zoomOutTooltip')}
+          delta={-1}
+          icon={
+            <FontAwesomeIcon
+              icon={faMinus}
+            />
+          }
+          {...btnTooltipProps}
+        />}
+      {
+        map && showGeolocation && (
+          <GeoLocationButton
+            aria-label="geolocation"
+            follow={true}
+            enableTracking={true}
+            icon={
+              <FontAwesomeIcon
+                icon={faLocation}
+              />
+            }
+            onChange={() => setGeolocationButtonPressed(!geolocationButtonPressed)}
+            pressed={geolocationButtonPressed}
+            pressedIcon={
+              <FontAwesomeIcon
+                icon={faLocationPin}
+              />
+            }
+            showMarker={true}
+            tooltip={t('MapToolbar.geoLocation')}
+            {...btnTooltipProps}
+          />
+        )
       }
-    </>
+    </Toolbar>
+
   );
 };
 

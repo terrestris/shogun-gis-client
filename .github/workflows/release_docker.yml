@@ -10,13 +10,13 @@ on:
         required: true
         type: string
     secrets:
-      nexus_user:
+      docker_registry_user:
         required: true
-      nexus_pass:
+      docker_registry_pass:
         required: true
 
 env:
-  DOCKER_REGISTRY: docker-public.terrestris.de/terrestris
+  DOCKER_REGISTRY: hub.terrestris.de/shogun
 
 jobs:
   release-docker:
@@ -24,45 +24,51 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources 🔰
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: v${{ inputs.release_version }}
 
-      - name: Login to Nexus
-        uses: docker/login-action@v3
+      - name: Login to Docker Registry ⌨️
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
-          username: ${{ secrets.nexus_user }}
-          password: ${{ secrets.nexus_pass }}
+          username: ${{ secrets.docker_registry_user }}
+          password: ${{ secrets.docker_registry_pass }}
 
       - name: Build docker image (latest)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
         with:
           context: .
           tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
           load: true
+          build-args: |
+            APP_VERSION=latest
+            GIT_COMMIT=${{ github.sha }}
 
       - name: Build docker image (version)
         if: ${{ inputs.release_is_published }} == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
         with:
           context: .
           tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ inputs.release_version }}
           load: true
+          build-args: |
+            APP_VERSION=${{ inputs.release_version }}
+            GIT_COMMIT=${{ github.sha }}
 
-      - name: Push docker image to Nexus (latest)
+      - name: Push docker image to Docker registry (latest)
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:latest
 
-      - name: Push docker image to Nexus (version)
+      - name: Push docker image to Docker registry (version)
         if: ${{ inputs.release_is_published }} == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:${{ inputs.release_version }}
 
       - name: Build docker image e2e-tests (latest) 🏗️
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
         with:
           file: Dockerfile.e2e
           context: .
@@ -72,7 +78,7 @@ jobs:
 
       - name: Build docker image e2e-tests (version) 🏗️
         if: ${{ inputs.release_is_published }} == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
         with:
           file: Dockerfile.e2e
           context: .
@@ -80,11 +86,11 @@ jobs:
             ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ inputs.release_version }}
           load: true
 
-      - name: Push docker image to Nexus e2e-tests (latest) 📠
+      - name: Push e2e-tests docker image to Docker registry (latest) 📠
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:latest
 
-      - name: Push docker image to Nexus e2e-tests (version) 📠
+      - name: Push e2e-tests docker image to Docker registry (version) 📠
         if: ${{ inputs.release_is_published }} == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:${{ inputs.release_version }}

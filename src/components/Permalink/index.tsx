@@ -27,13 +27,17 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import { PermalinkUtil } from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
+import {
+  PermalinkUtil
+} from '@terrestris/ol-util/dist/PermalinkUtil/PermalinkUtil';
 
 import {
   useMap
 } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
+
+import useLocalize from '../../hooks/useLocalize';
 
 import './index.less';
 
@@ -48,11 +52,12 @@ export const Permalink: React.FC = () => {
   const {
     t
   } = useTranslation();
+  const localize = useLocalize();
 
   const initialPermalink = map ? PermalinkUtil.getLink(
     map,
     ';',
-    l => l.get('name'),
+    l => localize(l.get('name')),
     l => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible(),
     layerAttributes
   ) : '';
@@ -68,7 +73,7 @@ export const Permalink: React.FC = () => {
     }
     const eventKeys: EventsKey[] = [];
 
-    const identifierFunction = (l: BaseLayer) => l.get('name');
+    const identifierFunction = (l: BaseLayer) => localize(l.get('name'));
     const filterFunction = (l: BaseLayer) => (l instanceof TileLayer || l instanceof ImageLayer) && l.getVisible();
     const updatePermalink = () => {
       setPermalink(PermalinkUtil.getLink(
@@ -123,7 +128,7 @@ export const Permalink: React.FC = () => {
       unByKey(listenerKeyResolution);
       unByKey(eventKeys);
     };
-  }, [layerAttributes, map, t]);
+  }, [layerAttributes, localize, map, t]);
 
   function onWhatsAppClick() {
     const whatsAppUrl = new URL('https://wa.me');

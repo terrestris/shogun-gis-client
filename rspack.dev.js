@@ -1,6 +1,7 @@
 const path = require('path');
 
-const ReactRefreshPlugin = require('@rspack/plugin-react-refresh');
+const reactRefresh = require('@rspack/plugin-react-refresh');
+const ReactRefreshPlugin = reactRefresh.ReactRefreshRspackPlugin || reactRefresh.default || reactRefresh;
 const { merge } = require('webpack-merge');
 
 const common = require('./rspack.common.js');
@@ -16,6 +17,7 @@ module.exports = merge(common, {
       webSocketURL: process.env.WEB_SOCKET_URL ?? 'http://0.0.0.0:0/client/ws'
     },
     hot: true,
+    allowedHosts: 'all',
     static: path.join(__dirname, 'resources', 'public')
   },
   module: {
@@ -34,5 +36,6 @@ module.exports = merge(common, {
   },
   plugins: [
     new ReactRefreshPlugin()
-  ]
+  ],
+  lazyCompilation: false // REMOVE WHEN FIXED IN RSPACK
 });

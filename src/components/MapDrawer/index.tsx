@@ -14,19 +14,30 @@ import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import './index.less';
 
-export type MapDrawerProps = DrawerProps;
+export type MapDrawerProps = {
+  shrinkMapOnOpen?: boolean;
+  additionalMapElementClassName?: string;
+} & DrawerProps;
 
 export const MapDrawer: React.FC<MapDrawerProps> = ({
   open,
   children,
+  shrinkMapOnOpen = true,
+  additionalMapElementClassName = 'bisected',
   ...passThroughProps
 }) => {
 
   const map = useMap();
 
   useEffect(() => {
-    document.querySelectorAll('#map')[0]?.classList.toggle('bisected', !!open);
-  }, [open]);
+    if (!shrinkMapOnOpen) {
+      document.querySelectorAll('#map .ol-control')?.forEach(element => {
+        element.classList.toggle(additionalMapElementClassName, !!open);
+      });
+    } else {
+      document.querySelectorAll('#map')[0]?.classList.toggle(additionalMapElementClassName, !!open);
+    }
+  }, [open, additionalMapElementClassName, shrinkMapOnOpen]);
 
   const onAfterDrawerOpenChange = () => {
     map?.updateSize();

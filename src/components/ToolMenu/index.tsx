@@ -53,7 +53,6 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import usePlugins from '../../hooks/usePlugins';
-import useSHOGunAPIClient from '../../hooks/useSHOGunAPIClient';
 
 import {
   isToolMenuIntegration
@@ -125,9 +124,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   const maxHeight = useAppSelector(state => state.toolMenu.maxHeight);
   const width = useAppSelector(state => state.toolMenu.width);
 
-  const client = useSHOGunAPIClient();
-  const keycloak = client?.getKeycloak();
-
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [menuTools, setMenuTools] = useState<string[]>([]);
   const [isResizing, setIsResizing] = useState(false);
@@ -165,7 +161,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
   }, [menuTools, availableTools]);
 
   useEffect(() => {
-    const exclusiveTools = [
+    const exclusiveTools = ClientConfiguration.exclusiveTools ?? [
       'print',
       'measure_tools',
       'draw_tools',
@@ -310,6 +306,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           wrappedComponent: map ? (
             <PrintForm
               active={activeKeys.includes('print')}
+              outputFormats={ClientConfiguration.print?.outputFormats ?? undefined}
               layerBlackList={[
                 'react-geo_measure',
                 'hoverVectorLayer'
@@ -322,7 +319,7 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
           icon: faStream,
           title: t('ToolMenu.layertree'),
           wrappedComponent: (
-            <div className='tree-wrapper'>
+            <div className="tree-wrapper">
               <LayerTree />
               {activeUploadTools?.includes(UploadTools.addWMS) && (
                 <Button
@@ -335,8 +332,6 @@ export const ToolMenu: React.FC<ToolMenuProps> = ({
               )
               }
               {
-                keycloak && ClientConfiguration.geoserver?.upload?.authorizedRoles?.some(
-                  role => keycloak.hasResourceRole(role, keycloak.clientId)) &&
                 activeUploadTools?.includes(UploadTools.dataUpload) && (
                   <Button
                     className='upload-data-button tool-menu-button'

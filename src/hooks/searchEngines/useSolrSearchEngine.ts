@@ -38,6 +38,7 @@ import {
 import generateSolrQuery from '../../utils/generateSolrQuery';
 
 import useExecuteSolrQuery from '../useExecuteSolrQuery';
+import useLocalize from '../useLocalize';
 
 export type DataSearchResult = Record<string, string | string[] | number[]>;
 
@@ -51,11 +52,12 @@ export const isRejected = <T, >(p: PromiseSettledResult<T>): p is PromiseRejecte
 export const useSolrSearchEngine = () => {
   const map = useMap();
   const executeSolrQuery = useExecuteSolrQuery();
+  const localize = useLocalize();
 
   const replaceTemplates = useCallback((template: string, data: DataSearchResult): string => {
     const pattern = /{\s*(\w+?)\s*}/g; // regex for template string with values in brackets, e.g. {name}
-    return template.replace(pattern, (_, token) => data[token]?.toString() || '');
-  }, []);
+    return localize(template.replace(pattern, (_, token) => data[token]?.toString() || ''));
+  }, [localize]);
 
   const getFeatureTitle = useCallback((value: string, dsResult: DataSearchResult, highlightResult?: HighlightingResult): string => {
     if (!map) {
@@ -183,9 +185,9 @@ export const useSolrSearchEngine = () => {
     } else {
       const sarchableLayers = map.getAllLayers().filter(l => l.get('searchable'));
       const resultsWithLayerName = dataResults.map(result => {
-        const layerTitle = sarchableLayers.filter(l => isWmsLayer(l))
+        const layerTitle = localize(sarchableLayers.filter(l => isWmsLayer(l))
           .find((l) => (l as WmsLayer).getSource()?.getParams()?.LAYERS === result?.featureType?.[0])
-          ?.get('name');
+          ?.get('name'));
 
         return {
           layerTitle,
@@ -235,7 +237,7 @@ export const useSolrSearchEngine = () => {
     });
 
     return solrResults;
-  }, [applyAttributesToFeature, executeSolrQuery, getFeatureTitle, map]);
+  }, [applyAttributesToFeature, executeSolrQuery, getFeatureTitle, localize, map]);
 
   return performSolrSearch;
 };

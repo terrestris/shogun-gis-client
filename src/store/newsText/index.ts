@@ -3,22 +3,20 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 
-const initialState = {
-  visible: false
-};
+const initialState: number[] = [];
 
 export const slice = createSlice({
-  name: 'map_toolbar',
+  name: 'newsTextIds',
   initialState,
   reducers: {
-    setMapToolbarVisible(state, action: PayloadAction<boolean>) {
-      state.visible = action.payload;
+    setNewsText: (state, action: PayloadAction<number[]>) => {
+      return action.payload;
     }
   }
 });
 
 export const {
-  setMapToolbarVisible
+  setNewsText
 } = slice.actions;
 
 export default slice.reducer;
