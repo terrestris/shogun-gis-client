@@ -10,7 +10,7 @@ import {
 } from './helpers';
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 const annotations = async (page: any, workerInfo: any) => {

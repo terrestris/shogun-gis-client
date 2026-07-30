@@ -45,7 +45,7 @@ const share = async (page: any, context: any, workerInfo: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('share', async ({

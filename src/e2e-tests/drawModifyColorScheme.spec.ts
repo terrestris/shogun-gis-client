@@ -16,7 +16,7 @@ export const drawModifyColorScheme = async (page: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('draw-modify', async ({

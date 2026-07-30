@@ -27,7 +27,7 @@ export const drawUpload = async (page: any, workerInfo: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('draw-upload', async ({

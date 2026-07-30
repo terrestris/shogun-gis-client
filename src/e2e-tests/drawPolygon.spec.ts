@@ -28,7 +28,7 @@ export const drawPolygon = async (page: any, workerInfo: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('draw-polygon', async ({
