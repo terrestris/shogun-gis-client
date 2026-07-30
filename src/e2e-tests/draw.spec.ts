@@ -61,6 +61,6 @@ test('draw', async ({
 
   await page.waitForLoadState('networkidle');
   await switchLanguage(page, 'EN');
-  await page.getByRole('button', { name: 'draw' }).click();
+  await page.getByRole('button', { name: 'Draw' }).click();
   await draw(page);
 });

@@ -22,9 +22,9 @@ export const measure = async (page: any) => {
   await page.mouse.click(500, 400);
   await page.mouse.move(600, 200);
   await page.mouse.dblclick(600, 200);
-  await page.waitForSelector('.react-geo-measure-tooltip');
+  await expect(page.locator('.react-geo-measure-tooltip').first()).toBeVisible();
   await page.getByRole('button', { name: 'Distance' }).click();
-  await page.waitForSelector('.react-geo-measure-tooltip', { state: 'hidden' });
+  await expect(page.locator('.react-geo-measure-tooltip').first()).toBeHidden();
 
   // testing area-tool
   await page.getByRole('button', { name: 'Area' }).click();
@@ -34,9 +34,9 @@ export const measure = async (page: any) => {
   await page.mouse.click(500, 400);
   await page.mouse.move(600, 200);
   await page.mouse.dblclick(600, 200);
-  await page.waitForSelector('.react-geo-measure-tooltip');
+  await expect(page.locator('.react-geo-measure-tooltip').first()).toBeVisible();
   await page.getByRole('button', { name: 'Area' }).click();
-  await page.waitForSelector('.react-geo-measure-tooltip', { state: 'hidden' });
+  await expect(page.locator('.react-geo-measure-tooltip').first()).toBeHidden();
 };
 
 test.use({

@@ -133,7 +133,8 @@ test-results/
 /playwright-report/
 /playwright/.cache/
 /storageState.json
-/playwright/.auth
+.auth/
+.playwright-cli/
 
 # SonarQube
 .scannerwork/

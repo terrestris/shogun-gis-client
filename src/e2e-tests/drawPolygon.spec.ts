@@ -11,7 +11,7 @@ import {
 export const drawPolygon = async (page: any, workerInfo: any) => {
   await page.getByRole('button', { name: 'Polygon' }).click();
   await page.screenshot({
-    path: './e2e-tests/additional-files/screenshots/draw-polygon-'
+    path: './src/e2e-tests//additional-files/screenshots/draw-polygon-'
       + workerInfo.project.name + '-linux.png'
   });
 

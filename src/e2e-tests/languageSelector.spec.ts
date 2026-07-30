@@ -20,8 +20,8 @@ test('language-selector', async ({
   await closeWelcomeScreen(page);
 
   await page.waitForLoadState('networkidle');
-  expect(page.getByText('Karten').first()).toBeVisible();
+  await expect(page.getByText('Karten').first()).toBeVisible();
   await switchLanguage(page, 'EN');
-  await page.waitForTimeout(500);
-  expect(page.getByText('Maps')).toBeVisible();
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByText('Maps')).toBeVisible();
 });

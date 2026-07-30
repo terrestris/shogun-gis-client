@@ -16,7 +16,7 @@ export const drawExport = async (page: any, workerInfo: any) => {
 
   await page.waitForLoadState('networkidle');
   await page.screenshot({
-    path: './e2e-tests/additional-files/screenshots/draw-export-'
+    path: './src/e2e-tests//additional-files/screenshots/draw-export-'
       + workerInfo.project.name + '-linux.png'
   });
 
@@ -28,7 +28,7 @@ export const drawExport = async (page: any, workerInfo: any) => {
   }).click();
   const download = await downloadPromise;
   // console.log(await download.path());
-  await download.saveAs('./additional-files/download-example.geojson');
+  await download.saveAs('./src/e2e-tests/additional-files/download-example.geojson');
 
   await page.reload();
   await closeWelcomeScreen(page);
@@ -41,7 +41,13 @@ export const drawExport = async (page: any, workerInfo: any) => {
     page.getByText('Click or drag file to this').click()
   ]);
 
-  await fileChooser.setFiles('./additional-files/download-example.geojson');
+  await fileChooser.setFiles('./src/e2e-tests/additional-files/download-example.geojson');
+  await expect(page.getByText('Successfully imported the features')).toBeVisible();
+  await expect(page.getByText('Successfully imported the features')).not.toBeVisible();
+  const cookieBanner = page.getByRole('button', { name: 'Accept cookies' });
+  if (await cookieBanner.isVisible()) {
+    await cookieBanner.click();
+  }
   await expect(page).toHaveScreenshot('draw-export-'
     + workerInfo.project.name
     + '-linux.png', { maxDiffPixelRatio: 0.04 });

@@ -9,9 +9,6 @@ import {
 } from './helpers';
 
 const share = async (page: any, context: any, workerInfo: any) => {
-  function timeout(ms: any) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
   await expect(page.getByLabel('whats-app')).toBeVisible();
   await expect(page.getByLabel('mail')).toBeVisible();
   await expect(page.getByLabel('copy')).toBeVisible();
@@ -26,19 +23,17 @@ const share = async (page: any, context: any, workerInfo: any) => {
 
   await page.waitForLoadState('networkidle');
 
-  await timeout(5000);
   await page.screenshot({
-    path: './e2e-tests/additional-files/screenshots/permalink-'
+    path: './src/e2e-tests//additional-files/screenshots/permalink-'
       + workerInfo.project.name + '-linux.png'
   });
 
-  const url = await page.locator('#app input[type="text"]').nth(1).inputValue();
+  const url = await page.getByLabel('permalink-url').locator('input').inputValue();
 
   await page.goto(`${url}`);
   await closeWelcomeScreen(page);
   await page.waitForLoadState('networkidle');
 
-  await timeout(5000);
   await expect(page).toHaveScreenshot('permalink-'
     + workerInfo.project.name
     + '-linux.png', { maxDiffPixelRatio: 0.05 });
