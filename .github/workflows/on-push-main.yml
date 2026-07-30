@@ -62,18 +62,18 @@ jobs:
       run: |
         docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client:main
 
-    - name: Build docker image e2e-tests (main) 🏗️
+    - name: Build docker image e2e-tests (latest) 🏗️
       uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
       with:
         file: Dockerfile.e2e
         context: .
         tags: |
-          ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:main
+          ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
         load: true
 
-    - name: Push docker image to Docker Registry (main) 📠
+    - name: Push docker image e2e-tests to Docker Registry (latest) 📠
       run: |
-        docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:main
+        docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
 
   sonarqube:
     if: ${{ github.actor != 'dependabot[bot]' }}
