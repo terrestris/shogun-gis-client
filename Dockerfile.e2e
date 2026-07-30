@@ -5,10 +5,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY playwright.config.ts ./
+COPY playwright.config.js ./
 COPY global-setup.ts ./
 COPY ./src/e2e-tests ./src/e2e-tests
-COPY ./playwright ./playwright
 
 CMD [ "npm", "run", "e2e-tests" ]
 

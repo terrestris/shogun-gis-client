@@ -11,7 +11,7 @@ const searchBar = async (page: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('search-bar', async ({

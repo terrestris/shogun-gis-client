@@ -35,7 +35,7 @@ export const exportPrint = async (page: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('draw-print', async ({

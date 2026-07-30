@@ -40,7 +40,7 @@ export const queryMapFeatures = async (page: Page) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('query-map-features', async ({

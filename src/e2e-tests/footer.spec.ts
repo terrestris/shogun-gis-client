@@ -23,7 +23,7 @@ export const footer = async (page: any) => {
 };
 
 test.use({
-  storageState: 'playwright/.auth/admin.json'
+  storageState: './src/e2e-tests/.auth/admin.json'
 });
 
 test('footer', async ({

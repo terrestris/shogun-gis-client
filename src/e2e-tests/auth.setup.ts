@@ -2,7 +2,7 @@ import {
   test as setup
 } from '@playwright/test';
 
-const adminFile = 'playwright/.auth/admin.json';
+const adminFile = './src/e2e-tests/.auth/admin.json';
 
 setup('authenticate as admin', async ({ page }) => {
 

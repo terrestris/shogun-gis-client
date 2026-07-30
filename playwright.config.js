@@ -49,7 +49,7 @@ export default defineConfig({
         browserName: "chromium",
         locale: "en-EN",
         viewport: { width: 1400, height: 850 },
-        storageState: "playwright/.auth/admin.json",
+        storageState: './src/e2e-tests/.auth/admin.json',
       },
       dependencies: ["setup"],
     },
