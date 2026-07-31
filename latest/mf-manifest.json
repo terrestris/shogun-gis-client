@@ -261,7 +261,7 @@
         "js": {
           "async": [],
           "sync": [
-            "6907.adc5af8b93b15734.js",
+            "6907.75d6cb473341f383.js",
             "8242.e351f2d7df67b6f2.js"
           ]
         },
@@ -2871,7 +2871,7 @@
             "5164.e757332ca9d6b82a.js",
             "5269.c32f3e364b3198e4.js",
             "533.743181767456e1de.js",
-            "5361.ef1893f96300886e.js",
+            "5361.a4a01246a47a0b85.js",
             "5435.5768c0a9103f0f24.js",
             "5574.cd53b229d633daae.js",
             "5597.534674f1c9e94694.js",
@@ -2889,7 +2889,7 @@
             "6570.7328c6dac3f51d22.js",
             "6603.58f5ad4fa2b250c1.js",
             "6636.6574e08bf397992e.js",
-            "6907.adc5af8b93b15734.js",
+            "6907.75d6cb473341f383.js",
             "6963.28a08660d8466473.js",
             "7031.b6d889a61d75035e.js",
             "7086.b71c633245ed2072.js",
@@ -2934,14 +2934,14 @@
     {
       "id": "SHOGunGISClient:proj4",
       "name": "proj4",
-      "version": "2.20.9",
+      "version": "2.21.0",
       "singleton": true,
-      "requiredVersion": "2.20.9",
+      "requiredVersion": "2.21.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2083.2e96888a129ca73f.js"
+            "2083.0b6c160901537bbb.js"
           ]
         },
         "css": {
