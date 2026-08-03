@@ -135,6 +135,7 @@ test-results/
 /storageState.json
 .auth/
 .playwright-cli/
+additional-files/
 
 # SonarQube
 .scannerwork/

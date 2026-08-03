@@ -3,7 +3,7 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   globalSetup: require.resolve("./global-setup.ts"),
   testDir: "./src/e2e-tests",
-  snapshotPathTemplate: "./src/e2e-tests//additional-files/screenshots/{arg}{ext}",
+  snapshotPathTemplate: "./src/e2e-tests/additional-files/screenshots/{arg}{ext}",
   timeout: 120 * 1000,
   expect: {
     timeout: 120 * 1000,
