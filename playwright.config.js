@@ -21,7 +21,7 @@ export default defineConfig({
     ],
   ],
   use: {
-    headless: true,
+    headless: process.env.CI ? true : process.env.HEADLESS,
     // launchOptions: {
     //   slowMo: 300
     // },
