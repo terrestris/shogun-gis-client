@@ -31,7 +31,7 @@ export const exportPrint = async (page: any) => {
   const downloadPromise = page.waitForEvent('download');
   await page.getByLabel('create-print').click();
   const download = await downloadPromise;
-  await download.saveAs('./additional-files/print-download-example.pdf');
+  await download.saveAs('./src/e2e-tests/additional-files/print-download-example.pdf');
 };
 
 test.use({

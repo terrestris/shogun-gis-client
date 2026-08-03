@@ -4,23 +4,22 @@ import {
 } from '@playwright/test';
 
 export const switchLanguage = async (page: any, language: string) => {
-  page.locator('.fa-language').click();
-  const languageIndicator = !(await page
-    .locator('#root')
-    .getByText(language)
-    .isVisible());
-  if (languageIndicator) {
-    await page.locator('.language-select').click();
-    await page
-      .locator('.ant-select-item-option-content')
-      .getByText(language, { exact: true })
-      .click();
+  const isAlreadySet = await page.locator('#root').getByText(language).isVisible();
+  if (isAlreadySet) {
+    return;
   }
+  await page.locator('.fa-language').click();
+  await page.locator('.language-select').click();
+  await page
+    .locator('.ant-select-item-option-content')
+    .getByText(language, { exact: true })
+    .click();
+  await page.locator('.fa-language').click();
 };
 
 export const closeWelcomeScreen = async (page: Page) => {
   await page.waitForLoadState('networkidle');
-  const closeButton = page.locator('.ant-modal-close-x');
+  const closeButton = page.getByRole('dialog').getByRole('button', { name: 'Close' });
   try {
     await closeButton.waitFor({
       state: 'visible',
@@ -41,6 +40,5 @@ export async function highlight(locator: Locator) {
       el.style.backgroundColor = '';
     }, 800);
   });
-  await new Promise(resolve => setTimeout(resolve, 2000));
 }
 

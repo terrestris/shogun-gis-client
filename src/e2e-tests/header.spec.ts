@@ -9,16 +9,16 @@ import {
 } from './helpers';
 
 export const header = async (page: any) => {
-  await expect(page.locator('[data-testid="logo"]')).toBeVisible();
-  await highlight(page.locator('[data-testid="logo"]'));
-  await expect(page.locator('[aria-label="title"]')).toBeVisible();
-  await highlight(page.locator('[aria-label="title"]'));
-  await expect(page.locator('[aria-label="search-field"]')).toBeVisible();
-  await highlight(page.locator('[aria-label="search-field"]'));
-  await expect(page.locator('[aria-label="documentation-button"]')).toBeVisible();
-  await highlight(page.locator('[aria-label="documentation-button"]'));
-  await expect(page.locator('[aria-label="user-menu"]')).toBeVisible();
-  await highlight(page.locator('[aria-label="user-menu"]'));
+  await expect(page.getByTestId('logo')).toBeVisible();
+  await highlight(page.getByTestId('logo'));
+  await expect(page.getByLabel('title')).toBeVisible();
+  await highlight(page.getByLabel('title'));
+  await expect(page.getByLabel('search-field')).toBeVisible();
+  await highlight(page.getByLabel('search-field'));
+  await expect(page.getByLabel('documentation-button')).toBeVisible();
+  await highlight(page.getByLabel('documentation-button'));
+  await expect(page.getByLabel('user-menu')).toBeVisible();
+  await highlight(page.getByLabel('user-menu'));
 };
 
 test.use({

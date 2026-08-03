@@ -5,7 +5,7 @@ import {
 import { closeWelcomeScreen } from './helpers';
 
 const searchBar = async (page: any) => {
-  await page.locator('.ant-input').fill('Bonn');
+  await page.getByLabel('search-field').locator('input').fill('Bonn');
   await page.getByText('Bonn, North Rhine-Westphalia, Germany').first().click({ delay: 500 });
   await page.waitForLoadState('networkidle');
 };

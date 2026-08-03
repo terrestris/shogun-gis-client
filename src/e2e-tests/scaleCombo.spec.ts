@@ -22,7 +22,10 @@ export const scaleCombo = async (page: any) => {
     hasText: initialScaleLine[0].toString()
   }));
 
-  await page.getByText('Akzeptieren').click();
+  const cookieBanner = page.getByRole('button', { name: 'Accept cookies' });
+  if (await cookieBanner.isVisible()) {
+    await cookieBanner.click();
+  }
   await page.getByLabel('scalecombo-dropdown').filter({
     hasText: /1:/
   }).click();

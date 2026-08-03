@@ -10,6 +10,7 @@ async function globalSetup(config: FullConfig) {
     process.env.HOST = process.env.HOST ?? DEFAULT_HOST;
     process.env.ADMIN_LOGIN =  process.env.ADMIN_LOGIN;
     process.env.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+    process.env.HEADLESS = process.env.HEADLESS ?? 'true';
 }
 
 

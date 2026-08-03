@@ -10,7 +10,10 @@ import {
 } from './helpers';
 
 export const footer = async (page: any) => {
-  await page.getByText('Accept').click();
+  const cookieBanner = page.getByRole('button', { name: 'Accept cookies' });
+  if (await cookieBanner.isVisible()) {
+    await cookieBanner.click();
+  }
 
   await expect(page.getByLabel('scale-line')).toBeVisible();
   await highlight(page.getByLabel('scale-line'));
@@ -35,8 +38,8 @@ test('footer', async ({
 
   await page.waitForLoadState('networkidle');
   await switchLanguage(page, 'EN');
-  await page.waitForTimeout(500);
-  expect(page.getByText('Maps')).toBeVisible();
+  // Wait for the language switch to reflect in the UI before proceeding
+  await expect(page.getByText('Maps')).toBeVisible();
 
   await footer(page);
 });

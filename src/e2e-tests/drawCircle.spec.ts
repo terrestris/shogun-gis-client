@@ -11,7 +11,7 @@ import {
 export const drawCircle = async (page: any, workerInfo: any) => {
   await page.getByRole('button', { name: 'Circle' }).click();
   await page.screenshot({
-    path: './e2e-tests/additional-files/screenshots/draw-circle-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-circle-'
       + workerInfo.project.name + '-linux.png'
   });
   await page.mouse.click(500, 300, { delay: 500 });
@@ -35,6 +35,6 @@ test('draw-circle', async ({
 
   await page.waitForLoadState('networkidle');
   await switchLanguage(page, 'EN');
-  await page.getByText('Draw').click();
+  await page.getByRole('button', { name: 'Draw' }).click();
   await drawCircle(page, workerInfo);
 });
