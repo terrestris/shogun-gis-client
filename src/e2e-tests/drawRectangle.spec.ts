@@ -11,7 +11,7 @@ import {
 export const drawRectangle = async (page: any, workerInfo: any) => {
   await page.getByRole('button', { name: 'Rectangle' }).click();
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/draw-rectangle-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-rectangle-'
       + workerInfo.project.name + '-linux.png'
   });
 

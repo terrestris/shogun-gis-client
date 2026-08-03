@@ -24,7 +24,7 @@ const share = async (page: any, context: any, workerInfo: any) => {
   await page.waitForLoadState('networkidle');
 
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/permalink-'
+    path: './src/e2e-tests/additional-files/screenshots/permalink-'
       + workerInfo.project.name + '-linux.png'
   });
 

@@ -16,7 +16,7 @@ test.use({
 const annotations = async (page: any, workerInfo: any) => {
   await page.getByRole('button', { name: 'Anmerkung' }).click();
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/draw-annotation-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-annotation-'
       + workerInfo.project.name + '-linux.png'
   });
   await page.mouse.click(500, 300, { delay: 500 });
@@ -40,7 +40,7 @@ const annotations = async (page: any, workerInfo: any) => {
   await page.getByRole('button', { name: 'Zeichnen' }).click();
   await page.getByRole('button', { name: 'Anmerkung' }).click();
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/draw-annotation-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-annotation-'
       + workerInfo.project.name + '-linux.png'
   });
   await page.mouse.click(500, 300, { delay: 500 });

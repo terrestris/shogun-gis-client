@@ -10,7 +10,7 @@ import {
 
 export const drawUpload = async (page: any, workerInfo: any) => {
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/draw-upload-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-upload-'
       + workerInfo.project.name + '-linux.png'
   });
   await page.getByRole('button', { name: 'Upload' }).click();

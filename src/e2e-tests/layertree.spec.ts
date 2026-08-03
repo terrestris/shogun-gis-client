@@ -95,7 +95,7 @@ export const layertree = async (page: any, workerInfo: any) => {
   // test layer context - zoom to extent
   await page.waitForLoadState('networkidle');
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/zoom-'
+    path: './src/e2e-tests/additional-files/screenshots/zoom-'
       + workerInfo.project.name + '-linux.png'
   });
   await clickLayerContextMenuItem(page, 'Zoom to layer extent');
@@ -114,7 +114,7 @@ export const layertree = async (page: any, workerInfo: any) => {
   await highlight(page.getByLabel('layer-name').filter({ hasText: 'TopPlusOpen Light Grau' }));
   await page.waitForLoadState('networkidle');
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/delete-layer-'
+    path: './src/e2e-tests/additional-files/screenshots/delete-layer-'
       + workerInfo.project.name + '-linux.png'
   });
   await clickLayerContextMenuItem(page, 'Remove layer');

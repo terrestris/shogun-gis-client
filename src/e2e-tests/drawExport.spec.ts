@@ -16,7 +16,7 @@ export const drawExport = async (page: any, workerInfo: any) => {
 
   await page.waitForLoadState('networkidle');
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/draw-export-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-export-'
       + workerInfo.project.name + '-linux.png'
   });
 

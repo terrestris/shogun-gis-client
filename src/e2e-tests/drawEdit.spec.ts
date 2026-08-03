@@ -13,7 +13,7 @@ export const drawEdit = async (page: any, workerInfo: any) => {
   await page.getByRole('button', { name: 'Point' }).click();
   await page.mouse.click(500, 300, { delay: 500 });
   await page.screenshot({
-    path: './src/e2e-tests//additional-files/screenshots/draw-edit-'
+    path: './src/e2e-tests/additional-files/screenshots/draw-edit-'
       + workerInfo.project.name + '-linux.png'
   });
 
