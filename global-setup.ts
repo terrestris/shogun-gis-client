@@ -11,6 +11,7 @@ async function globalSetup(config: FullConfig) {
     process.env.ADMIN_LOGIN =  process.env.ADMIN_LOGIN;
     process.env.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
     process.env.HEADLESS = process.env.HEADLESS ?? 'true';
+    process.env.TEST_IGNORE = process.env.TEST_IGNORE ?? '';
 }
 
 
