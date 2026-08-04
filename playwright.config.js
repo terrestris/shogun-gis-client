@@ -3,6 +3,12 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   globalSetup: require.resolve("./global-setup.ts"),
   testDir: "./src/e2e-tests",
+  testIgnore: process.env.TEST_IGNORE
+    ? process.env.TEST_IGNORE.split(',').map(f => {
+        const name = f.trim().replace(/^src\/e2e-tests\//, '');
+        return `**/${name}`;
+      })
+    : [],
   snapshotPathTemplate: "./src/e2e-tests/additional-files/screenshots/{arg}{ext}",
   timeout: 120 * 1000,
   expect: {

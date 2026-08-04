@@ -20,8 +20,8 @@ export const draw = async (page: any) => {
   await highlight(page.getByRole('button', { name: 'Line' }));
   await expect(page.getByRole('button', { name: 'Polygon' })).toBeVisible();
   await highlight(page.getByRole('button', { name: 'Polygon' }));
-  await expect(page.getByRole('button', { name: 'Circle' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Circle' }));
+  await expect(page.getByRole('button', { name: 'Circle' }).first()).toBeVisible();
+  await highlight(page.getByRole('button', { name: 'Circle' }).first());
   await expect(page.getByRole('button', { name: 'Rectangle' })).toBeVisible();
   await highlight(page.getByRole('button', { name: 'Rectangle' }));
   await expect(page.getByRole('button', { name: 'Annotation' })).toBeVisible();
