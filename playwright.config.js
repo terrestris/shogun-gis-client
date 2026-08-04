@@ -25,6 +25,7 @@ export default defineConfig({
         open: "never",
       },
     ],
+    ["json", { outputFile: "./src/e2e-tests/test-results/gis-client-results.json" }],
   ],
   use: {
     headless: process.env.CI ? true : Boolean(process.env.HEADLESS),
