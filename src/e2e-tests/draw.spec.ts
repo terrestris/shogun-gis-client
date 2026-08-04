@@ -14,22 +14,70 @@ test.use({
 });
 
 export const draw = async (page: any) => {
-  await expect(page.getByRole('button', { name: 'Point' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Point' }));
-  await expect(page.getByRole('button', { name: 'Line' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Line' }));
-  await expect(page.getByRole('button', { name: 'Polygon' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Polygon' }));
-  await expect(page.getByRole('button', { name: 'Circle' }).first()).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Circle' }).first());
-  await expect(page.getByRole('button', { name: 'Rectangle' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Rectangle' }));
-  await expect(page.getByRole('button', { name: 'Annotation' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Annotation' }));
-  await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Edit' }));
-  await expect(page.getByRole('button', { name: 'Upload' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Upload' }));
+  await expect(page.getByRole('button', {
+    name: 'Point',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Point',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Line',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Line',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Polygon',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Polygon',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Circle',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Circle',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Rectangle',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Rectangle',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Annotation',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Annotation',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Edit',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Edit',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'draw-upload',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'draw-upload',
+    exact: true
+  }));
   await expect(page.getByRole('button', {
     name: 'Export',
     exact: true
@@ -46,10 +94,22 @@ export const draw = async (page: any) => {
     name: 'Delete',
     exact: true
   }));
-  await expect(page.getByRole('button', { name: 'Delete all' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Delete all' }));
-  await expect(page.getByRole('button', { name: 'Open color palette' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Open color palette' }));
+  await expect(page.getByRole('button', { 
+    name: 'Delete all',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Delete all',
+    exact: true
+  }));
+  await expect(page.getByRole('button', { 
+    name: 'Open color palette',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', { 
+    name: 'Open color palette',
+    exact: true
+  }));
 };
 
 test('draw', async ({

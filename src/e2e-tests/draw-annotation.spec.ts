@@ -38,7 +38,10 @@ const annotations = async (page: any, workerInfo: any) => {
   await closeWelcomeScreen(page);
   await page.waitForLoadState('networkidle');
   await page.getByRole('button', { name: 'Zeichnen' }).click();
-  await page.getByRole('button', { name: 'Anmerkung' }).click();
+  await page.getByRole('button', {
+    name: 'Anmerkung',
+    exact: true
+  }).click();
   await page.screenshot({
     path: './src/e2e-tests/additional-files/screenshots/draw-annotation-'
       + workerInfo.project.name + '-linux.png'
