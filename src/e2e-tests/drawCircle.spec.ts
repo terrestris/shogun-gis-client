@@ -9,7 +9,10 @@ import {
 } from './helpers';
 
 export const drawCircle = async (page: any, workerInfo: any) => {
-  await page.getByRole('button', { name: 'Circle' }).first().click();
+  await page.getByRole('button', {
+    name: 'Circle',
+    exact: true
+  }).click();
   await page.screenshot({
     path: './src/e2e-tests/additional-files/screenshots/draw-circle-'
       + workerInfo.project.name + '-linux.png'

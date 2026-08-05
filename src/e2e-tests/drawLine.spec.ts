@@ -9,7 +9,10 @@ import {
 } from './helpers';
 
 export const drawLine = async (page: any, workerInfo: any) => {
-  await page.getByRole('button', { name: 'Line' }).click();
+  await page.getByRole('button', {
+    name: 'Line',
+    exact: true
+  }).click();
   await page.screenshot({
     path: './src/e2e-tests/additional-files/screenshots/draw-line-'
       + workerInfo.project.name + '-linux.png'

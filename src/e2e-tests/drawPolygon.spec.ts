@@ -9,7 +9,10 @@ import {
 } from './helpers';
 
 export const drawPolygon = async (page: any, workerInfo: any) => {
-  await page.getByRole('button', { name: 'Polygon' }).click();
+  await page.getByRole('button', {
+    name: 'Polygon',
+    exact: true
+  }).click();
   await page.screenshot({
     path: './src/e2e-tests/additional-files/screenshots/draw-polygon-'
       + workerInfo.project.name + '-linux.png'

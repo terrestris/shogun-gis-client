@@ -10,7 +10,10 @@ import {
 
 export const drawDelete = async (page: any, workerInfo: any) => {
   // add point to map
-  await page.getByRole('button', { name: 'Point' }).click();
+  await page.getByRole('button', {
+    name: 'Point',
+    exact: true
+  }).click();
   await page.mouse.click(500, 300, { delay: 500 });
   await page.screenshot({
     path: './src/e2e-tests/additional-files/screenshots/draw-delete-'
@@ -18,7 +21,10 @@ export const drawDelete = async (page: any, workerInfo: any) => {
   });
 
   // delete point
-  await page.getByRole('button', { name: 'Delete all' }).click({ delay: 1000 });
+  await page.getByRole('button', {
+    name: 'Delete all',
+    exact: true
+  }).click({ delay: 1000 });
   await page.mouse.click(500, 300, { delay: 500 });
 
   await expect(page).not.toHaveScreenshot('draw-delete-'

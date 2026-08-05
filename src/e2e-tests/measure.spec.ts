@@ -10,12 +10,27 @@ import {
 } from './helpers';
 
 export const measure = async (page: any) => {
-  await expect(page.getByRole('button', { name: 'Distance' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Distance' }));
-  await expect(page.getByRole('button', { name: 'Area' })).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'Area' }));
+  await expect(page.getByRole('button', {
+    name: 'Distance',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', {
+    name: 'Distance',
+    exact: true
+  }));
+  await expect(page.getByRole('button', {
+    name: 'Area',
+    exact: true
+  })).toBeVisible();
+  await highlight(page.getByRole('button', {
+    name: 'Area',
+    exact: true
+  }));
 
-  await page.getByRole('button', { name: 'Distance' }).click();
+  await page.getByRole('button', {
+    name: 'Distance',
+    exact: true
+  }).click();
   await page.mouse.move(500, 300);
   await page.mouse.click(500, 300);
   await page.mouse.move(500, 400);
@@ -23,11 +38,17 @@ export const measure = async (page: any) => {
   await page.mouse.move(600, 200);
   await page.mouse.dblclick(600, 200);
   await expect(page.locator('.react-geo-measure-tooltip').first()).toBeVisible();
-  await page.getByRole('button', { name: 'Distance' }).click();
+  await page.getByRole('button', {
+    name: 'Distance',
+    exact: true
+  }).click();
   await expect(page.locator('.react-geo-measure-tooltip').first()).toBeHidden();
 
   // testing area-tool
-  await page.getByRole('button', { name: 'Area' }).click();
+  await page.getByRole('button', {
+    name: 'Area',
+    exact: true
+  }).click();
   await page.mouse.move(500, 300);
   await page.mouse.click(500, 300);
   await page.mouse.move(500, 400);
@@ -35,7 +56,10 @@ export const measure = async (page: any) => {
   await page.mouse.move(600, 200);
   await page.mouse.dblclick(600, 200);
   await expect(page.locator('.react-geo-measure-tooltip').first()).toBeVisible();
-  await page.getByRole('button', { name: 'Area' }).click();
+  await page.getByRole('button', {
+    name: 'Area',
+    exact: true
+  }).click();
   await expect(page.locator('.react-geo-measure-tooltip').first()).toBeHidden();
 };
 

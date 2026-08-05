@@ -13,7 +13,10 @@ export const drawUpload = async (page: any, workerInfo: any) => {
     path: './src/e2e-tests/additional-files/screenshots/draw-upload-'
       + workerInfo.project.name + '-linux.png'
   });
-  await page.getByRole('button', { name: 'Upload' }).click();
+  await page.getByRole('button', {
+    name: 'draw-upload',
+    exact: true
+  }).click();
 
   const [fileChooser] = await Promise.all([
     page.waitForEvent('filechooser'),

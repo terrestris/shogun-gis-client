@@ -18,8 +18,14 @@ export const drawEdit = async (page: any, workerInfo: any) => {
   });
 
   // modify point
-  await page.getByRole('button', { name: 'Edit' }).click({ delay: 1000 });
-  await expect(page.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', {
+    name: 'Edit',
+    exact: true
+  }).click({ delay: 1000 });
+  await expect(page.getByRole('button', {
+    name: 'Edit',
+    exact: true
+  })).toHaveAttribute('aria-pressed', 'true');
   await page.mouse.click(500, 300, { delay: 500 });
 
   await page.mouse.move(500, 300);

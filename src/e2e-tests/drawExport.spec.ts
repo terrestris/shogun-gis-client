@@ -34,7 +34,10 @@ export const drawExport = async (page: any, workerInfo: any) => {
   await closeWelcomeScreen(page);
   await page.waitForLoadState('networkidle');
   await page.getByRole('button', { name: 'Draw' }).click();
-  await page.getByRole('button', { name: 'Upload' }).click();
+  await page.getByRole('button', {
+    name: 'draw-upload',
+    exact: true
+  }).click();
 
   const [fileChooser] = await Promise.all([
     page.waitForEvent('filechooser'),
