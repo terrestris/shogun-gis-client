@@ -10,7 +10,7 @@ import {
 
 export const drawDelete = async (page: any, workerInfo: any) => {
   // add point to map
-  await page.getByRole('button', { 
+  await page.getByRole('button', {
     name: 'Point',
     exact: true
   }).click();
@@ -21,7 +21,7 @@ export const drawDelete = async (page: any, workerInfo: any) => {
   });
 
   // delete point
-  await page.getByRole('button', { 
+  await page.getByRole('button', {
     name: 'Delete all',
     exact: true
   }).click({ delay: 1000 });

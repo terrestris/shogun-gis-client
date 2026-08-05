@@ -3,7 +3,9 @@ import {
   expect
 } from '@playwright/test';
 
-import { closeWelcomeScreen, highlight } from './helpers';
+import {
+  closeWelcomeScreen, highlight
+} from './helpers';
 
 export const scaleCombo = async (page: any) => {
   const initialScaleCombo = await page.getByLabel('scale-combo').innerText();
