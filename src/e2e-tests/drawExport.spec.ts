@@ -33,6 +33,7 @@ export const drawExport = async (page: any, workerInfo: any) => {
   await page.reload();
   await closeWelcomeScreen(page);
   await page.waitForLoadState('networkidle');
+  await switchLanguage(page, 'EN');
   await page.getByRole('button', { name: 'Draw' }).click();
   await page.getByRole('button', {
     name: 'draw-upload',
