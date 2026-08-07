@@ -57,8 +57,8 @@ export const layertree = async (page: any, workerInfo: any) => {
   await expect(page.getByLabel('add-selected')).toBeVisible();
   await highlight(page.getByLabel('add-selected'));
   await expect(page.getByLabel('add-selected')).toBeDisabled();
-  await expect(page.getByLabel('Select all').nth(1)).toBeVisible();
-  await expect(page.getByLabel('input-search')).toBeVisible();
+  await expect(page.locator('input[aria-label="Select all"]').last()).toBeVisible();
+  await expect(page.locator('input[aria-label="input-search"]')).toBeVisible();
   await expect(page.getByRole('combobox', { name: 'select-version' })).toBeVisible();
   await highlight(page.getByRole('combobox', { name: 'select-version' }));
   await expect(page.getByRole('button', { name: 'Close' })).toBeVisible();
