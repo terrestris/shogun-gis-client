@@ -20,8 +20,7 @@
       "api": ""
     },
     "globalName": "SHOGunGISClient",
-    "pluginVersion": "0.24.1",
-    "prefetchInterface": false,
+    "pluginVersion": "2.8.2",
     "publicPath": "auto"
   },
   "shared": [
@@ -185,8 +184,8 @@
             "2031.b1ecc03caea1bc1a.js",
             "3586.15572a17f7ae171b.js",
             "4412.4dff97acb7a186a2.js",
-            "4431.9539f95e062e7933.js",
-            "6812.b73e4c94ac895085.js",
+            "4431.a1a3c109387eca79.js",
+            "6812.2ed0ffbc9361f0c8.js",
             "8955.0456ae15b0edd16e.js",
             "9533.7b30f8cda08f5133.js"
           ]
@@ -237,8 +236,8 @@
         "js": {
           "async": [],
           "sync": [
-            "4431.9539f95e062e7933.js",
-            "6812.b73e4c94ac895085.js"
+            "4431.a1a3c109387eca79.js",
+            "6812.2ed0ffbc9361f0c8.js"
           ]
         },
         "css": {
