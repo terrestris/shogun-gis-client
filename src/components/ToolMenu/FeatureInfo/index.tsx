@@ -1,7 +1,7 @@
 import React, {
   useState,
   FC,
-  JSX
+  JSX, useEffect, useCallback
 } from 'react';
 
 import {
@@ -20,6 +20,7 @@ import OlLayerBase from 'ol/layer/Base';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayerTile from 'ol/layer/Tile';
 import OlLayerVector from 'ol/layer/Vector';
+import OlMap from 'ol/Map';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceVector from 'ol/source/Vector';
@@ -30,15 +31,15 @@ import { useTranslation } from 'react-i18next';
 
 import {
   isWmsLayer,
-  WmsLayer
+  WmsLayer,
+  WmtsLayer
 } from '@terrestris/ol-util/dist/typeUtils/typeUtils';
 
 import {
-  CoordinateInfo,
-  CoordinateInfoProps
-} from '@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo';
-
-import { CoordinateInfoResult } from '@terrestris/react-util/dist/Hooks/useCoordinateInfo/useCoordinateInfo';
+  CoordinateInfoResult,
+  UseCoordinateInfoArgs,
+  useCoordinateInfo
+} from '@terrestris/react-util/dist/Hooks/useCoordinateInfo/useCoordinateInfo';
 import { useMap } from '@terrestris/react-util/dist/Hooks/useMap/useMap';
 
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
@@ -67,7 +68,7 @@ export type FeatureInfoConfig = {
   activeCopyTools?: CopyTools[];
 };
 
-export type FeatureInfoProps = FormProps & Partial<CoordinateInfoProps>;
+export type FeatureInfoProps = FormProps & Partial<UseCoordinateInfoArgs>;
 
 type LayerIndex = {
   layerName: string;
@@ -104,21 +105,37 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
     if (layer instanceof OlLayerTile && layer.getSource() instanceof OlSourceTileWMS) {
       return true;
     }
-    if (layer instanceof OlLayerVector && layer.getSource() instanceof OlSourceVector) {
-      return true;
-    }
-    return false;
+    return layer instanceof OlLayerVector && layer.getSource() instanceof OlSourceVector;
   };
+
+  const getFetchOpts = (layer: WmsLayer | WmtsLayer) => {
+    return {
+      headers: {
+        ...layer.get('useBearerToken') ? {
+          ...getBearerTokenHeader(client?.getKeycloak())
+        } : undefined
+      }
+    };
+  };
+
+  const coordinateInfoResult = useCoordinateInfo({
+    active: featureInfoEnabled ?? false,
+    drillDown: true,
+    featureCount: 10,
+    fetchOpts: getFetchOpts,
+    layerFilter,
+    ...restProps
+  });
 
   const changeActiveKey = (key: string) => {
     setActiveTabKey(key);
   };
 
-  const findMapLayerIndex = (layerName: string) => {
-    if (_isNil(map)) {
+  const findMapLayerIndex = useCallback((olMap: OlMap, layerName: string) => {
+    if (_isNil(olMap)) {
       return;
     }
-    const allLayers = map.getAllLayers();
+    const allLayers = olMap.getAllLayers();
 
     return allLayers.findIndex(l => {
       if (isWmsLayer(l)) {
@@ -130,7 +147,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
       }
       return false;
     });
-  };
+  }, []);
 
   const resultRenderer = (coordinateInfoState: CoordinateInfoResult) => {
     if (_isNil(map)) {
@@ -139,7 +156,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
     const featureLayerResult = coordinateInfoState.features;
     const loading = coordinateInfoState.loading;
 
-    if (featureLayerResult.length === 0) {
+    if (_isNil(featureLayerResult) || featureLayerResult.length === 0) {
       return (
         <span className='usage-hint'>
           {t('FeatureInfo.usageHint')}
@@ -156,7 +173,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
 
       const features = featureLayerResults.map(flr => flr.feature);
       const allLayers = map.getAllLayers();
-      const mapLayerIndex = findMapLayerIndex(layerName);
+      const mapLayerIndex = findMapLayerIndex(map, layerName);
       if (_isNil(mapLayerIndex)) {
         return;
       }
@@ -238,18 +255,12 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
       layerName.split(':')[0];
   };
 
-  const getFetchOpts = (layer: WmsLayer) => {
-    return {
-      headers: {
-        ...layer.get('useBearerToken') ? {
-          ...getBearerTokenHeader(client?.getKeycloak())
-        } : undefined
-      }
-    };
-  };
-
-  const onSuccess = (coordinateInfoState: CoordinateInfoResult) => {
+  const onSuccess = useCallback((coordinateInfoState: CoordinateInfoResult) => {
     const featureLayerResult = coordinateInfoState.features;
+    if (_isNil(featureLayerResult) || featureLayerResult.length === 0 || _isNil(map)) {
+      dispatch(setSelectedFeatures({}));
+      return;
+    }
 
     const grouped = groupBy(featureLayerResult, 'featureType');
     const mapped = mapValues(grouped, g => g.map(flr => flr.feature));
@@ -262,7 +273,7 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
     const layers: LayerIndex[] = featureLayerResult
       .map(result => ({
         layerName: result.featureType,
-        index: findMapLayerIndex(result.featureType)
+        index: findMapLayerIndex(map, result.featureType)
       }))
       .sort((a, b) => {
         if (_isNil(a.index) || _isNil(b.index)) {
@@ -276,7 +287,13 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
     }
 
     dispatch(setSelectedFeatures(serializedFeatures));
-  };
+  }, [dispatch, map, findMapLayerIndex]);
+
+  useEffect(() => {
+    if (!coordinateInfoResult?.loading) {
+      onSuccess(coordinateInfoResult);
+    }
+  }, [coordinateInfoResult, onSuccess]);
 
   if (!map) {
     return <></>;
@@ -288,16 +305,9 @@ export const FeatureInfo: FC<FeatureInfoProps> = ({
 
   return (
     <div className='feature-info-panel'>
-      <CoordinateInfo
-        active={featureInfoEnabled}
-        drillDown={true}
-        featureCount={10}
-        fetchOpts={getFetchOpts}
-        layerFilter={layerFilter}
-        onSuccess={onSuccess}
-        resultRenderer={resultRenderer}
-        {...restProps}
-      />
+      <>
+        {resultRenderer(coordinateInfoResult)}
+      </>
     </div>
   );
 };

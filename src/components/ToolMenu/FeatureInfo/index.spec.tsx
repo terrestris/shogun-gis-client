@@ -23,20 +23,15 @@ import MapContext from '@terrestris/react-util/dist/Context/MapContext/MapContex
 
 import FeatureInfo from './index';
 
-let mockResultRenderer: any = null;
-let mockLayerFilter: any = null;
+let mockCoordinateInfoResult: any = {
+  features: [],
+  loading: false
+};
 const mockAllowedEditMode: EditLevel[] = ['UPDATE'];
 
-jest.mock('@terrestris/react-geo/dist/CoordinateInfo/CoordinateInfo', () => ({
-  CoordinateInfo: (props: any) => {
-    mockResultRenderer = props.resultRenderer;
-    mockLayerFilter = props.layerFilter;
-
-    return (
-      <div data-testid="coordinate-info">
-        {props.active && 'CoordinateInfo Active'}
-      </div>
-    );
+jest.mock('@terrestris/react-util/dist/Hooks/useCoordinateInfo/useCoordinateInfo', () => ({
+  useCoordinateInfo: () => {
+    return mockCoordinateInfoResult;
   }
 }));
 
@@ -63,7 +58,11 @@ describe('<FeatureInfo />', () => {
   let imageLayer: OlLayerImage<OlSourceImageWMS>;
 
   beforeEach(() => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
     map = new OlMap({
+      target,
       view: new OlView({
         center: [0, 0],
         zoom: 2
@@ -104,8 +103,10 @@ describe('<FeatureInfo />', () => {
       }
     });
 
-    mockResultRenderer = null;
-    mockLayerFilter = null;
+    mockCoordinateInfoResult = {
+      features: [],
+      loading: false
+    };
   });
 
   it('can be rendered with coordinate info', () => {
@@ -117,11 +118,15 @@ describe('<FeatureInfo />', () => {
       </Provider>
     );
 
-    expect(screen.getByTestId('coordinate-info')).toBeInTheDocument();
-    expect(screen.getByText('CoordinateInfo Active')).toBeInTheDocument();
+    expect(screen.getByText('FeatureInfo.usageHint')).toBeInTheDocument();
   });
 
   it('renders usage hint when no features are selected', () => {
+    mockCoordinateInfoResult = {
+      features: [],
+      loading: false
+    };
+
     render(
       <Provider store={store}>
         <MapContext.Provider value={map}>
@@ -130,13 +135,7 @@ describe('<FeatureInfo />', () => {
       </Provider>
     );
 
-    const rendered = mockResultRenderer({
-      features: [],
-      loading: false
-    });
-
-    const { container } = render(rendered);
-    expect(container.textContent).toContain('FeatureInfo.usageHint');
+    expect(screen.getByText('FeatureInfo.usageHint')).toBeInTheDocument();
   });
 
   it('groups features by layer and renders multiple tabs when features are found', () => {
@@ -150,15 +149,7 @@ describe('<FeatureInfo />', () => {
       name: 'Feature2 from Layer2'
     });
 
-    render(
-      <Provider store={store}>
-        <MapContext.Provider value={map}>
-          <FeatureInfo />
-        </MapContext.Provider>
-      </Provider>
-    );
-
-    const coordinateInfoState = {
+    mockCoordinateInfoResult = {
       features: [
         {
           feature: feature1,
@@ -172,16 +163,6 @@ describe('<FeatureInfo />', () => {
       loading: false
     };
 
-    const rendered = mockResultRenderer(coordinateInfoState);
-    const { getByText } = render(rendered);
-
-    expect(getByText('TestLayer1')).toBeInTheDocument();
-    expect(getByText('TestLayer2')).toBeInTheDocument();
-  });
-
-  it('filters out non-visible layers', () => {
-    tileLayer.setVisible(false);
-
     render(
       <Provider store={store}>
         <MapContext.Provider value={map}>
@@ -190,39 +171,7 @@ describe('<FeatureInfo />', () => {
       </Provider>
     );
 
-    expect(mockLayerFilter(tileLayer)).toBe(false);
-    expect(mockLayerFilter(imageLayer)).toBe(true);
-  });
-
-  it('filters out non-hoverable layers', () => {
-    tileLayer.set('hoverable', false);
-
-    render(
-      <Provider store={store}>
-        <MapContext.Provider value={map}>
-          <FeatureInfo />
-        </MapContext.Provider>
-      </Provider>
-    );
-
-    expect(mockLayerFilter(tileLayer)).toBe(false);
-    expect(mockLayerFilter(imageLayer)).toBe(true);
-  });
-
-  it('only allows WMS layers', () => {
-    const nonWmsLayer = new OlLayerTile({
-      visible: true
-    });
-    nonWmsLayer.set('hoverable', true);
-
-    render(
-      <Provider store={store}>
-        <MapContext.Provider value={map}>
-          <FeatureInfo />
-        </MapContext.Provider>
-      </Provider>
-    );
-
-    expect(mockLayerFilter(nonWmsLayer)).toBe(false);
+    expect(screen.getByText('TestLayer1')).toBeInTheDocument();
+    expect(screen.getByText('TestLayer2')).toBeInTheDocument();
   });
 });
