@@ -12,7 +12,7 @@ on:
     secrets:
       docker_registry_user:
         required: true
-      docker_registry_pass:
+      docker_registry_password:
         required: true
 
 env:
@@ -33,7 +33,7 @@ jobs:
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
           username: ${{ secrets.docker_registry_user }}
-          password: ${{ secrets.docker_registry_pass }}
+          password: ${{ secrets.docker_registry_password }}
 
       - name: Build docker image (latest)
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
