@@ -1,3 +1,59 @@
+# [12.0.0](https://github.com/terrestris/shogun-gis-client/compare/v11.1.2...v12.0.0) (2026-08-25)
+
+
+### Bug Fixes
+
+* adjust e2e-tests ([4de1476](https://github.com/terrestris/shogun-gis-client/commit/4de1476f398903817a74f8f1ab97a9e4ffd67b6d))
+* broken dependencies ([5698c6b](https://github.com/terrestris/shogun-gis-client/commit/5698c6b661f6b7f7ff5bdea41556952db585d586))
+* copy playwright directory in dockerfile for e2e-tests ([19aac48](https://github.com/terrestris/shogun-gis-client/commit/19aac484d6780d259554b5bf22e74d138b44400a))
+* **deps:** update dependency @ngageoint/geopackage to v4.2.8 ([#2963](https://github.com/terrestris/shogun-gis-client/issues/2963)) ([c6be8b2](https://github.com/terrestris/shogun-gis-client/commit/c6be8b2d45e42e2bb520896ec33e35993bc8e549))
+* **deps:** update dependency @ngageoint/geopackage to v4.2.9 ([#3022](https://github.com/terrestris/shogun-gis-client/issues/3022)) ([e7429a6](https://github.com/terrestris/shogun-gis-client/commit/e7429a6fa3d554d487f012bf29a1b968c3f23c31))
+* **deps:** update dependency @reduxjs/toolkit to v2.12.0 ([7cba175](https://github.com/terrestris/shogun-gis-client/commit/7cba17525e9ecc2562440fbb4ca0e4666b101192))
+* **deps:** update dependency @terrestris/react-util to v12.4.4 ([aee6158](https://github.com/terrestris/shogun-gis-client/commit/aee6158577f12b7d7832b3b631c754d7242b1322))
+* **deps:** update dependency @terrestris/shogun-util to v10.12.0 ([dc7bead](https://github.com/terrestris/shogun-gis-client/commit/dc7beadca3b83095324a3e19935f8c5c1537350e))
+* **deps:** update dependency @types/color to v4.2.1 ([3d67477](https://github.com/terrestris/shogun-gis-client/commit/3d674773e190729209952cc3d1fbdcf9078353c1))
+* **deps:** update dependency dayjs to v1.11.21 ([9244bd2](https://github.com/terrestris/shogun-gis-client/commit/9244bd2864dc73d5b71f922a9d400acbef6130c1))
+* **deps:** update dependency dayjs to v1.11.23 ([#3021](https://github.com/terrestris/shogun-gis-client/issues/3021)) ([c0d3c02](https://github.com/terrestris/shogun-gis-client/commit/c0d3c0294b5da526ecd84cc8965ee5b329ae37db))
+* **deps:** update dependency geostyler to v18.6.0 ([#2918](https://github.com/terrestris/shogun-gis-client/issues/2918)) ([421b9a8](https://github.com/terrestris/shogun-gis-client/commit/421b9a8236bc0931bf607c323c3ed47ef74f713a))
+* **deps:** update dependency geostyler-openlayers-parser to v5.7.0 ([#2919](https://github.com/terrestris/shogun-gis-client/issues/2919)) ([123eb4e](https://github.com/terrestris/shogun-gis-client/commit/123eb4e6127b5f1f9e5e055f847476257c1b0c14))
+* **deps:** update dependency geostyler-openlayers-parser to v5.7.1 ([#2964](https://github.com/terrestris/shogun-gis-client/issues/2964)) ([3c6b83d](https://github.com/terrestris/shogun-gis-client/commit/3c6b83d2805a0666119f3136d2249d228ead0aeb))
+* **deps:** update dependency geostyler-style to v11.1.0 ([#2920](https://github.com/terrestris/shogun-gis-client/issues/2920)) ([5e60f62](https://github.com/terrestris/shogun-gis-client/commit/5e60f628d7857d612b790d44b6323a9a0006961a))
+* **deps:** update dependency i18next to v25.10.10 ([6cd8a23](https://github.com/terrestris/shogun-gis-client/commit/6cd8a237e6f17dd037d62555ed51c071e5c98bfc))
+* **deps:** update dependency js-md5 to v0.9.2 ([#2978](https://github.com/terrestris/shogun-gis-client/issues/2978)) ([d698eef](https://github.com/terrestris/shogun-gis-client/commit/d698eef66c7d0a2700ba5fdb5e25da0ee16f94c5))
+* **deps:** update dependency ol to v10.10.0 ([#2995](https://github.com/terrestris/shogun-gis-client/issues/2995)) ([3f6f504](https://github.com/terrestris/shogun-gis-client/commit/3f6f50449ab3b9fba53de6936c17a7ad724cb151))
+* **deps:** update dependency proj4 to v2.20.9 ([7a8e65f](https://github.com/terrestris/shogun-gis-client/commit/7a8e65f3d432c6de5a818e4d0b158d208b88e054))
+* **deps:** update dependency proj4 to v2.21.0 ([#2996](https://github.com/terrestris/shogun-gis-client/issues/2996)) ([5db86be](https://github.com/terrestris/shogun-gis-client/commit/5db86be14ac1b7cbc72c8375273377e5b12b8609))
+* **deps:** update dependency react-cookie-consent to v10.0.2 ([#3005](https://github.com/terrestris/shogun-gis-client/issues/3005)) ([a62f879](https://github.com/terrestris/shogun-gis-client/commit/a62f8795c266b56f94447f0525d96da45e8c0c66))
+* **deps:** update dependency react-i18next to v16.6.6 ([265edef](https://github.com/terrestris/shogun-gis-client/commit/265edef9d678bde9d0bfd32bd1a36715abcc311f))
+* **deps:** update dependency react-redux to v9.3.0 ([e05352e](https://github.com/terrestris/shogun-gis-client/commit/e05352ece15d5fe1b6e7b999dfcac0e0bc1f61c8))
+* **deps:** update react monorepo to v18.3.31 ([8998808](https://github.com/terrestris/shogun-gis-client/commit/89988082b797276cc619aca0c16bfdb37be3ae4c))
+* downgrade @rspack/plugin-react-refresh to match rspack version ([e533a2d](https://github.com/terrestris/shogun-gis-client/commit/e533a2dc51076883f497439c2cb0e751d68781c3))
+* fix linting errors ([8c0cf59](https://github.com/terrestris/shogun-gis-client/commit/8c0cf59983848ce93f8a84c2c5a47de0752e1c2b))
+* get correct element in draw test ([8ac86e7](https://github.com/terrestris/shogun-gis-client/commit/8ac86e769cbd9e819de1b322ef05836a8845c376))
+* linting issues ([eb9198a](https://github.com/terrestris/shogun-gis-client/commit/eb9198a9cae553e7b5b318ebeda3dbac0c406efc))
+* make headless boolean ([5101d6c](https://github.com/terrestris/shogun-gis-client/commit/5101d6cef31f25560d5d2ea84027752bfa3db586))
+* minor formatting issues ([e1eb786](https://github.com/terrestris/shogun-gis-client/commit/e1eb786f09900fff966aaeb519b89d9fed00d322))
+* remove default credentials ([209e3f7](https://github.com/terrestris/shogun-gis-client/commit/209e3f7fc7f6c09b699ccca83ebb032ad721c7c4))
+* remove unneeded additional files for e2e-tests ([ddc5710](https://github.com/terrestris/shogun-gis-client/commit/ddc5710acc4d9ad957cf2f086817e6ab3269e988))
+* remove unneeded screenshots ([84194a4](https://github.com/terrestris/shogun-gis-client/commit/84194a49bc1bce81b5e36e7cae8d0f51bfd397f9))
+* unify path of authentication state in e2e-tests ([0368e8e](https://github.com/terrestris/shogun-gis-client/commit/0368e8e0eacd802798c508e3815b01f0610e0208))
+* update dockerfile for e2e-tests ([4d3fb22](https://github.com/terrestris/shogun-gis-client/commit/4d3fb22089afac283365f23afc624eeeaf7f2bed))
+* update Dockerfile for e2e-tests ([b80ecb4](https://github.com/terrestris/shogun-gis-client/commit/b80ecb4e609db546b1826f07715c6a011e7cbf02))
+* update id for e2e-tests ([3029a7a](https://github.com/terrestris/shogun-gis-client/commit/3029a7a8f17c0d5fee55c56a533ae23928688421))
+* update image name ([a35cb78](https://github.com/terrestris/shogun-gis-client/commit/a35cb7817ef551ee6052d86b765af9a517541b39))
+* use useCoordinateInfo hook directly in FeatureInfo component ([69a086f](https://github.com/terrestris/shogun-gis-client/commit/69a086fc4d295b1395700c1b1bdc1f01a627428b))
+* variable name of docker registry password ([6a2c472](https://github.com/terrestris/shogun-gis-client/commit/6a2c472c2908ed8ca0dc65913cd16b392347c5d6))
+
+
+### Continuous Integration
+
+* make use of new registry ([ec87156](https://github.com/terrestris/shogun-gis-client/commit/ec87156a69eb1ab3f4b0d1215507e8dd7b717215))
+
+
+### BREAKING CHANGES
+
+* registry changed to hub.terrestris.de/shogun
+
 ## [11.1.2](https://github.com/terrestris/shogun-gis-client/compare/v11.1.1...v11.1.2) (2026-06-02)
 
 
