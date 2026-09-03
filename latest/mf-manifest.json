@@ -2935,14 +2935,14 @@
     {
       "id": "SHOGunGISClient:proj4",
       "name": "proj4",
-      "version": "2.21.0",
+      "version": "2.22.0",
       "singleton": true,
-      "requiredVersion": "2.21.0",
+      "requiredVersion": "2.22.0",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "2048.b855e1b2481b76fd.js"
+            "2048.766e9138da427c99.js"
           ]
         },
         "css": {
