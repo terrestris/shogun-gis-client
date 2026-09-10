@@ -70,7 +70,7 @@
     "keycloak-js": "26.2.4",
     "normalize.css": "8.0.1",
     "ol": "10.10.0",
-    "ol-mapbox-style": "12.4.0",
+    "ol-mapbox-style": "13.4.3",
     "proj4": "2.22.0",
     "react": "18.3.1",
     "react-cookie-consent": "10.0.2",
