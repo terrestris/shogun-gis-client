@@ -13,7 +13,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl@sha256:9f89cd2fc9bd1e093c6447b2fc2aba3ce0e9e27d1e35c20457a5ae48be72f76b AS app
+FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl@sha256:3237d8f5d6c0956fdc12e18de1a3bb757582750f90435993eff9e0cff5d0a4d8 AS app
 
 ENV SHOGUN_GIS_CLIENT_HOST=shogun-gis-client
 
