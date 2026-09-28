@@ -108,6 +108,11 @@ jobs:
         env:
           CI: true
 
+      - name: Fix lcov source paths 🩹
+        run: |
+          sed -i -E 's#^SF:.*file:/#SF:/#' coverage/all/lcov.info
+          grep '^SF:' coverage/all/lcov.info | head -3
+
       - name: Get shogun-gis-client version 🔖
         run: |
           echo "sonar.projectVersion=$(git describe --tags --abbrev=0 | sed 's/^v//')" >> ./sonar-project.properties
