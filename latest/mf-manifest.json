@@ -868,6 +868,7 @@
             "1044.53c75f983f91870e.js",
             "1517.b74fa3b2cff57380.js",
             "2452.c1d10f09dc984aa5.js",
+            "2719.e8a10550f1f2f466.js",
             "2785.ba3214787739672a.js",
             "3010.db2570a00e8db1b3.js",
             "3193.7f16fb746821529a.js",
@@ -950,6 +951,7 @@
             "1044.53c75f983f91870e.js",
             "1517.b74fa3b2cff57380.js",
             "2452.c1d10f09dc984aa5.js",
+            "2719.e8a10550f1f2f466.js",
             "2785.ba3214787739672a.js",
             "3010.db2570a00e8db1b3.js",
             "3193.7f16fb746821529a.js",
@@ -1083,7 +1085,7 @@
         "js": {
           "async": [],
           "sync": [
-            "8881.efb4608b68ea46d0.js"
+            "8881.4cb10d0aff9a057d.js"
           ]
         },
         "css": {
@@ -1356,6 +1358,7 @@
             "1044.53c75f983f91870e.js",
             "1517.b74fa3b2cff57380.js",
             "2452.c1d10f09dc984aa5.js",
+            "2719.e8a10550f1f2f466.js",
             "2785.ba3214787739672a.js",
             "3010.db2570a00e8db1b3.js",
             "3193.7f16fb746821529a.js",
@@ -1457,7 +1460,6 @@
           "async": [],
           "sync": [
             "484.8660f5dd30e0e1d2.js",
-            "7384.22379b57c637ab00.js",
             "8150.0a9acabdeeb7910a.js",
             "8433.3ac0b69620957832.js"
           ]
@@ -1511,6 +1513,26 @@
       "fallback": ""
     },
     {
+      "id": "SHOGunGISClient:ol/geom/LinearRing",
+      "name": "ol/geom/LinearRing",
+      "version": "10.10.0",
+      "requiredVersion": "^10.10.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "2719.e8a10550f1f2f466.js",
+            "3262.bb8203c2f5828818.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "fallback": ""
+    },
+    {
       "id": "SHOGunGISClient:ol/geom/MultiLineString",
       "name": "ol/geom/MultiLineString",
       "version": "10.10.0",
@@ -1540,7 +1562,6 @@
           "sync": [
             "3594.ca93430a03ea9932.js",
             "401.3ee9eb18cd6d12a5.js",
-            "6347.cac1d7ef7841064b.js",
             "8417.8a66adf3efb4c83c.js"
           ]
         },
@@ -1580,8 +1601,7 @@
         "js": {
           "async": [],
           "sync": [
-            "3262.cf92d404309e9045.js",
-            "6347.cac1d7ef7841064b.js",
+            "3262.bb8203c2f5828818.js",
             "7322.ce1db57420ee84e6.js",
             "8417.8a66adf3efb4c83c.js"
           ]
@@ -1602,7 +1622,7 @@
         "js": {
           "async": [],
           "sync": [
-            "3262.cf92d404309e9045.js"
+            "3262.bb8203c2f5828818.js"
           ]
         },
         "css": {
@@ -2855,6 +2875,7 @@
             "1517.b74fa3b2cff57380.js",
             "2146.ef07ca1a678c812f.js",
             "2452.c1d10f09dc984aa5.js",
+            "2719.e8a10550f1f2f466.js",
             "2785.ba3214787739672a.js",
             "3010.db2570a00e8db1b3.js",
             "3107.d34fd469e5eec545.js",
