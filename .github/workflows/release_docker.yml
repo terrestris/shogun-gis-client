@@ -88,9 +88,9 @@ jobs:
 
       - name: Push e2e-tests docker image to Docker registry (latest) 📠
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:latest
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:latest
 
       - name: Push e2e-tests docker image to Docker registry (version) 📠
         if: ${{ inputs.release_is_published }} == 'true'
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-client-e2e-tests:${{ inputs.release_version }}
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-gis-client-e2e-tests:${{ inputs.release_version }}
