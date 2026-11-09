@@ -1,3 +1,10 @@
+## [12.0.2](https://github.com/terrestris/shogun-gis-client/compare/v12.0.1...v12.0.2) (2026-11-09)
+
+
+### Bug Fixes
+
+* docker image name of e2e image ([2fe2664](https://github.com/terrestris/shogun-gis-client/commit/2fe2664c0a7609fe4760c3cf7d20f3bfdb12e097))
+
 ## [12.0.1](https://github.com/terrestris/shogun-gis-client/compare/v12.0.0...v12.0.1) (2026-11-09)
 
 
