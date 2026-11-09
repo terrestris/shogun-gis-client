@@ -3276,17 +3276,17 @@
     },
     {
       "singleton": true,
-      "requiredVersion": "9.3.0",
+      "requiredVersion": "9.3.1",
       "shareScope": "default",
       "name": "react-redux",
-      "version": "9.3.0",
+      "version": "9.3.1",
       "eager": false,
       "id": "SHOGunGISClient:react-redux",
       "assets": {
         "js": {
           "async": [],
           "sync": [
-            "6612.631c29786187e482.js"
+            "6612.7a51deb4d08d9083.js"
           ]
         },
         "css": {
