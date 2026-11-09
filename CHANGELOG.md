@@ -1,3 +1,21 @@
+## [12.0.1](https://github.com/terrestris/shogun-gis-client/compare/v12.0.0...v12.0.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @ngageoint/geopackage to v4.2.10 ([#3088](https://github.com/terrestris/shogun-gis-client/issues/3088)) ([ba8dd04](https://github.com/terrestris/shogun-gis-client/commit/ba8dd04f20df6a258b34ed77c1a60fa9a6487caf))
+* **deps:** update dependency @reduxjs/toolkit to v2.13.0 ([#3077](https://github.com/terrestris/shogun-gis-client/issues/3077)) ([eefc4c9](https://github.com/terrestris/shogun-gis-client/commit/eefc4c948b0e8c57955b78fca7a8550dcd66a742))
+* **deps:** update dependency @reduxjs/toolkit to v2.14.0 ([7bc2d66](https://github.com/terrestris/shogun-gis-client/commit/7bc2d666608531c7f10e7d2cbe347dc5a35aaf18))
+* **deps:** update dependency @terrestris/shogun-util to v10.13.1 ([d24c10e](https://github.com/terrestris/shogun-gis-client/commit/d24c10e828205ed133778f7d45a3792723b96574))
+* **deps:** update dependency geostyler-openlayers-parser to v5.8.0 ([#3079](https://github.com/terrestris/shogun-gis-client/issues/3079)) ([c6abe5f](https://github.com/terrestris/shogun-gis-client/commit/c6abe5f0e3fc6e433a6b7937b3436e6f96a5fbf8))
+* **deps:** update dependency i18next-browser-languagedetector to v8.3.0 ([ba85682](https://github.com/terrestris/shogun-gis-client/commit/ba85682eabf1a3580b2f6190b924f3e08c784664))
+* **deps:** update dependency keycloak-js to v26.2.5 ([f5bbbc4](https://github.com/terrestris/shogun-gis-client/commit/f5bbbc42742f780e1062e474b43293d91426bfa2))
+* **deps:** update dependency ol to v10.11.0 ([ae9c273](https://github.com/terrestris/shogun-gis-client/commit/ae9c2738b957bc493273184fa8b31f5c8528945d))
+* **deps:** update dependency proj4 to v2.22.0 ([#3037](https://github.com/terrestris/shogun-gis-client/issues/3037)) ([af97541](https://github.com/terrestris/shogun-gis-client/commit/af97541c3731ad81fd5fa6c32f4b866ccc35de8e))
+* **deps:** update dependency react-redux to v9.3.1 ([cb6879a](https://github.com/terrestris/shogun-gis-client/commit/cb6879a95e58457ebb9d7c14508b6716759de911))
+* lcov source paths for sonarqube ([bdc4eb1](https://github.com/terrestris/shogun-gis-client/commit/bdc4eb1b4fafffe762b28837aa93bdc166ad069e))
+* typings and null checks ([a34377b](https://github.com/terrestris/shogun-gis-client/commit/a34377bcd8441587480aac2787fee1666acec317))
+
 # [12.0.0](https://github.com/terrestris/shogun-gis-client/compare/v11.1.2...v12.0.0) (2026-08-25)
 
 
