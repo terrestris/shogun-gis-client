@@ -1,0 +1,1 @@
+define("vs/html.worker-C1TNvQ72",["require","exports"],function(e,r){"use strict";r.__worker_url_0__=""+new URL(e.toUrl("./assets/html.worker-CLuInTTy.js"),document.baseURI).href});

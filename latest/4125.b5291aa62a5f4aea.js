@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_terrestris_shogun_gis_client=self.webpackChunk_terrestris_shogun_gis_client||[]).push([["4125"],{94092:function(t,n,e){function r(){throw Error("Unimplemented abstract method.")}e.r(n),e.d(n,{VERSION:function(){return c},abstract:function(){return r},getUid:function(){return i},isThenable:function(){return o}});let u=0;function i(t){return t.ol_uid||(t.ol_uid=String(++u))}let c="10.11.0";function o(t){return!!t&&"function"==typeof t.then&&"function"==typeof t.catch}}}]);
+//# sourceMappingURL=4125.b5291aa62a5f4aea.js.map
