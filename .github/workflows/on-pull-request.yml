@@ -78,7 +78,7 @@ jobs:
 
     - name: Jest Coverage Comment 💬
       if: ${{ github.actor != 'dependabot[bot]' }}
-      uses: MishaKav/jest-coverage-comment@1b5d15445c8afba0c13bd00167bd31130b812d0a # main
+      uses: MishaKav/jest-coverage-comment@f60ef1424e21d4c96b96db6308591f91f2bf4f60 # main
       with:
         hide-comment: false
         create-new-comment: false
