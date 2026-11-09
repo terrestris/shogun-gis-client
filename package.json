@@ -103,7 +103,7 @@
     "@rspack/core": "1.7.12",
     "@rspack/plugin-react-refresh": "1.6.2",
     "@stylistic/eslint-plugin": "5.10.0",
-    "@swc/helpers": "0.5.23",
+    "@swc/helpers": "0.5.24",
     "@terrestris/eslint-config-typescript": "10.0.0",
     "@terrestris/eslint-config-typescript-react": "6.0.0",
     "@testing-library/jest-dom": "7.0.1",
