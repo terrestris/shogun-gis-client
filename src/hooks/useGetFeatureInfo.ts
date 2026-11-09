@@ -7,6 +7,7 @@ import {
   FeatureCollection
 } from 'geojson';
 
+import _isNil from 'lodash/isNil';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 
 import Logger from '@terrestris/base-util/dist/Logger';
@@ -62,7 +63,9 @@ export const useGetFeatureInfo = (layer?: WmsLayer, onSuccess?: (featureCollecti
     }
 
     try {
-      map.getTargetElement().style.cursor = 'wait';
+      if (!_isNil(map?.getTargetElement())) {
+        map.getTargetElement()!.style.cursor = 'wait';
+      }
 
       const response = await fetch(url, {
         method: 'GET',
@@ -88,7 +91,9 @@ export const useGetFeatureInfo = (layer?: WmsLayer, onSuccess?: (featureCollecti
         onFailure();
       }
     } finally {
-      map.getTargetElement().style.cursor = '';
+      if (!_isNil(map?.getTargetElement())) {
+        map.getTargetElement()!.style.cursor = '';
+      }
     }
   }, [client, layer, map, onSuccess, onFailure]);
 
@@ -109,7 +114,9 @@ export const useGetFeatureInfo = (layer?: WmsLayer, onSuccess?: (featureCollecti
 
     const hit = data && data[3] > 0;
 
-    map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+    if (!_isNil(map?.getTargetElement())) {
+      map.getTargetElement()!.style.cursor = hit ? 'pointer' : '';
+    }
   }, [layer, map]);
 
   useEffect(() => {

@@ -145,7 +145,7 @@ export const readFeaturesFromFile = async (file: File, featureProjection?: OlPro
   } else if (['application/vnd.google-earth.kml+xml'].includes(file.type) || file.name.endsWith('.kml')) {
     features = await readFeaturesFromPlainFile(file, new OlFormatKML({extractStyles: true}), featureProjection, dataProjection);
   } else if (['application/geo+json', 'application/vnd.geo+json'].includes(file.type) || file.name.endsWith('.geojson')) {
-    features = await readFeaturesFromPlainFile(file, new OlFormatGeoJSON(), featureProjection, dataProjection);
+    features = await readFeaturesFromPlainFile(file, new OlFormatGeoJSON<OlFeature>(), featureProjection, dataProjection);
   } else if (file.name.endsWith('.wkb')) {
     features = await readFeaturesFromPlainFile(file, new OlFormatWKB(), featureProjection, dataProjection);
   } else if (file.name.endsWith('.wkt')) {
