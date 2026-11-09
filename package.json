@@ -67,7 +67,7 @@
     "i18next": "25.10.10",
     "i18next-browser-languagedetector": "8.3.0",
     "js-md5": "0.9.2",
-    "keycloak-js": "26.2.4",
+    "keycloak-js": "26.2.5",
     "normalize.css": "8.0.1",
     "ol": "10.10.0",
     "ol-mapbox-style": "12.4.0",
