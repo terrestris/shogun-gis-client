@@ -1,3 +1,10 @@
+## [12.0.3](https://github.com/terrestris/shogun-gis-client/compare/v12.0.2...v12.0.3) (2026-11-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dotenv to v18 ([8b1b142](https://github.com/terrestris/shogun-gis-client/commit/8b1b14289ba9ab220b7f0acd310e439a34fe1498))
+
 ## [12.0.2](https://github.com/terrestris/shogun-gis-client/compare/v12.0.1...v12.0.2) (2026-11-09)
 
 
