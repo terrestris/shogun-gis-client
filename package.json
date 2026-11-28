@@ -54,7 +54,7 @@
     "@types/color": "4.2.1",
     "@types/js-md5": "0.8.0",
     "@types/proj4": "2.19.0",
-    "@types/react": "18.3.31",
+    "@types/react": "18.3.32",
     "@types/react-dom": "18.3.7",
     "antd": "5.29.3",
     "clsx": "2.1.1",
